@@ -1,0 +1,298 @@
+.pie-cluster{
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0px 1px 1px #999;
+}
+/* 
+make each pie piece a rectangle twice as high as it is wide.
+move the transform origin to the middle of the left side.
+Also ensure that overflow is set to hidden.
+*/
+.pie {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    overflow: hidden;
+    left: 20px;
+    -moz-transform-origin:left center;
+    -ms-transform-origin:left center;
+    -o-transform-origin:left center;
+    -webkit-transform-origin:left center;
+    transform-origin:left center;
+    z-index: 2;
+
+}
+/*
+unless the piece represents more than 50% of the whole chart.
+then make it a square, and ensure the transform origin is
+back in the center.
+
+NOTE: since this is only ever a single piece, you could
+move this to a piece specific rule and remove the extra class
+*/
+
+/*
+this is the actual visible part of the pie. 
+Give it the same dimensions as the regular piece.
+Use border radius make it a half circle.
+move transform origin to the middle of the right side.
+Push it out to the left of the containing box.
+*/
+.pie.big {
+    width: 40px;
+    height: 40px;
+    left: 0px;
+    z-index: 1;
+    -moz-transform-origin:center center;
+    -ms-transform-origin:center center;
+    -o-transform-origin:center center;
+    -webkit-transform-origin:center center;
+    transform-origin:center center;
+}
+/* if it's part of a big piece, bring it back into the square */
+.pie.big:before {
+    left:0px;
+}
+.pie.big:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    left: 20px;
+    //background: inherit;    
+    border-radius: 0px 20px 20px 0px;
+    -moz-radius: 0px 20px 20px 0px;
+    -webkit-radius: 0px 20px 20px 0px;
+    -o-radius: 0px 20px 20px 0px;
+    -ms-radius: 0px 20px 20px 0px;
+}
+.pie:before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    left: -20px;
+    //background: inherit;
+    border-radius: 20px 0px 0px 20px;
+    -moz--radius: 20px 0px 0px 20px;
+    -webkit-radius: 20px 0px 0px 20px;
+    -o-radius: 20px 0px 0px 20px;
+    -ms-radius: 20px 0px 0px 20px;
+    -moz-transform-origin:right center;
+    -ms-transform-origin:right center;
+    -o-transform-origin:right center;
+    -webkit-transform-origin:right center;
+    transform-origin:right center;
+
+}
+
+/* 
+big pieces will also need a second semicircle, pointed in the
+opposite direction to hide the first part behind.
+*/
+
+.outer {
+    margin: -5px 0px 0px 0px;
+    width: 40px;
+    height: 40px;
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+.inner {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue",Arial,Helvetica,sans-serif;
+    background-color: #FFF;
+    position: relative;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+}
+.inner span {
+    line-height: 25px;
+}
+/*
+add colour to each piece.
+
+.pie:nth-of-type(1):before,
+.pie:nth-of-type(1):AFTER {
+    background-color:blue;	
+}
+.pie:nth-of-type(2):before,
+.pie:nth-of-type(2):BEFORE {
+    background-color:green;	
+}
+.pie:nth-of-type(3):AFTER,
+.pie:nth-of-type(3):BEFORE {
+    background-color:red;	
+}
+.pie:nth-of-type(4):AFTER,
+.pie:nth-of-type(4):BEFORE {
+    background-color:orange;	
+}
+*/
+/*
+now rotate each piece based on their cumulative starting
+position
+*/
+.pie[data-start="0"] {-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);-o-transform: rotate(0deg);transform:rotate(0deg);}
+.pie[data-start="5"] {-moz-transform: rotate(5deg);-ms-transform: rotate(5deg);-webkit-transform: rotate(5deg);-o-transform: rotate(5deg);transform:rotate(5deg);}
+.pie[data-start="10"] {-moz-transform: rotate(10deg);-ms-transform: rotate(10deg);-webkit-transform: rotate(10deg);-o-transform: rotate(10deg);transform:rotate(10deg);}
+.pie[data-start="15"] {-moz-transform: rotate(15deg);-ms-transform: rotate(15deg);-webkit-transform: rotate(15deg);-o-transform: rotate(15deg);transform:rotate(15deg);}
+.pie[data-start="20"] {-moz-transform: rotate(20deg);-ms-transform: rotate(20deg);-webkit-transform: rotate(20deg);-o-transform: rotate(20deg);transform:rotate(20deg);}
+.pie[data-start="25"] {-moz-transform: rotate(25deg);-ms-transform: rotate(25deg);-webkit-transform: rotate(25deg);-o-transform: rotate(25deg);transform:rotate(25deg);}
+.pie[data-start="30"] {-moz-transform: rotate(30deg);-ms-transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);transform:rotate(30deg);}
+.pie[data-start="35"] {-moz-transform: rotate(35deg);-ms-transform: rotate(35deg);-webkit-transform: rotate(35deg);-o-transform: rotate(35deg);transform:rotate(35deg);}
+.pie[data-start="40"] {-moz-transform: rotate(40deg);-ms-transform: rotate(40deg);-webkit-transform: rotate(40deg);-o-transform: rotate(40deg);transform:rotate(40deg);}
+.pie[data-start="45"] {-moz-transform: rotate(45deg);-ms-transform: rotate(45deg);-webkit-transform: rotate(45deg);-o-transform: rotate(45deg);transform:rotate(45deg);}
+.pie[data-start="50"] {-moz-transform: rotate(50deg);-ms-transform: rotate(50deg);-webkit-transform: rotate(50deg);-o-transform: rotate(50deg);transform:rotate(50deg);}
+.pie[data-start="55"] {-moz-transform: rotate(55deg);-ms-transform: rotate(55deg);-webkit-transform: rotate(55deg);-o-transform: rotate(55deg);transform:rotate(55deg);}
+.pie[data-start="60"] {-moz-transform: rotate(60deg);-ms-transform: rotate(60deg);-webkit-transform: rotate(60deg);-o-transform: rotate(60deg);transform:rotate(60deg);}
+.pie[data-start="65"] {-moz-transform: rotate(65deg);-ms-transform: rotate(65deg);-webkit-transform: rotate(65deg);-o-transform: rotate(65deg);transform:rotate(65deg);}
+.pie[data-start="70"] {-moz-transform: rotate(70deg);-ms-transform: rotate(70deg);-webkit-transform: rotate(70deg);-o-transform: rotate(70deg);transform:rotate(70deg);}
+.pie[data-start="75"] {-moz-transform: rotate(75deg);-ms-transform: rotate(75deg);-webkit-transform: rotate(75deg);-o-transform: rotate(75deg);transform:rotate(75deg);}
+.pie[data-start="80"] {-moz-transform: rotate(80deg);-ms-transform: rotate(80deg);-webkit-transform: rotate(80deg);-o-transform: rotate(80deg);transform:rotate(80deg);}
+.pie[data-start="85"] {-moz-transform: rotate(85deg);-ms-transform: rotate(85deg);-webkit-transform: rotate(85deg);-o-transform: rotate(85deg);transform:rotate(85deg);}
+.pie[data-start="90"] {-moz-transform: rotate(90deg);-ms-transform: rotate(90deg);-webkit-transform: rotate(90deg);-o-transform: rotate(90deg);transform:rotate(90deg);}
+.pie[data-start="95"] {-moz-transform: rotate(95deg);-ms-transform: rotate(95deg);-webkit-transform: rotate(95deg);-o-transform: rotate(95deg);transform:rotate(95deg);}
+.pie[data-start="100"] {-moz-transform: rotate(100deg);-ms-transform: rotate(100deg);-webkit-transform: rotate(100deg);-o-transform: rotate(100deg);transform:rotate(100deg);}
+.pie[data-start="105"] {-moz-transform: rotate(105deg);-ms-transform: rotate(105deg);-webkit-transform: rotate(105deg);-o-transform: rotate(105deg);transform:rotate(105deg);}
+.pie[data-start="110"] {-moz-transform: rotate(110deg);-ms-transform: rotate(110deg);-webkit-transform: rotate(110deg);-o-transform: rotate(110deg);transform:rotate(110deg);}
+.pie[data-start="115"] {-moz-transform: rotate(115deg);-ms-transform: rotate(115deg);-webkit-transform: rotate(115deg);-o-transform: rotate(115deg);transform:rotate(115deg);}
+.pie[data-start="120"] {-moz-transform: rotate(120deg);-ms-transform: rotate(120deg);-webkit-transform: rotate(120deg);-o-transform: rotate(120deg);transform:rotate(120deg);}
+.pie[data-start="125"] {-moz-transform: rotate(125deg);-ms-transform: rotate(125deg);-webkit-transform: rotate(125deg);-o-transform: rotate(125deg);transform:rotate(125deg);}
+.pie[data-start="130"] {-moz-transform: rotate(130deg);-ms-transform: rotate(130deg);-webkit-transform: rotate(130deg);-o-transform: rotate(130deg);transform:rotate(130deg);}
+.pie[data-start="135"] {-moz-transform: rotate(135deg);-ms-transform: rotate(135deg);-webkit-transform: rotate(135deg);-o-transform: rotate(135deg);transform:rotate(135deg);}
+.pie[data-start="140"] {-moz-transform: rotate(140deg);-ms-transform: rotate(140deg);-webkit-transform: rotate(140deg);-o-transform: rotate(140deg);transform:rotate(140deg);}
+.pie[data-start="145"] {-moz-transform: rotate(145deg);-ms-transform: rotate(145deg);-webkit-transform: rotate(145deg);-o-transform: rotate(145deg);transform:rotate(145deg);}
+.pie[data-start="150"] {-moz-transform: rotate(150deg);-ms-transform: rotate(150deg);-webkit-transform: rotate(150deg);-o-transform: rotate(150deg);transform:rotate(150deg);}
+.pie[data-start="155"] {-moz-transform: rotate(155deg);-ms-transform: rotate(155deg);-webkit-transform: rotate(155deg);-o-transform: rotate(155deg);transform:rotate(155deg);}
+.pie[data-start="160"] {-moz-transform: rotate(160deg);-ms-transform: rotate(160deg);-webkit-transform: rotate(160deg);-o-transform: rotate(160deg);transform:rotate(160deg);}
+.pie[data-start="165"] {-moz-transform: rotate(165deg);-ms-transform: rotate(165deg);-webkit-transform: rotate(165deg);-o-transform: rotate(165deg);transform:rotate(165deg);}
+.pie[data-start="170"] {-moz-transform: rotate(170deg);-ms-transform: rotate(170deg);-webkit-transform: rotate(170deg);-o-transform: rotate(170deg);transform:rotate(170deg);}
+.pie[data-start="175"] {-moz-transform: rotate(175deg);-ms-transform: rotate(175deg);-webkit-transform: rotate(175deg);-o-transform: rotate(175deg);transform:rotate(175deg);}
+.pie[data-start="180"] {-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-webkit-transform: rotate(180deg);-o-transform: rotate(180deg);transform:rotate(180deg);}
+.pie[data-start="185"] {-moz-transform: rotate(185deg);-ms-transform: rotate(185deg);-webkit-transform: rotate(185deg);-o-transform: rotate(185deg);transform:rotate(185deg);}
+.pie[data-start="190"] {-moz-transform: rotate(190deg);-ms-transform: rotate(190deg);-webkit-transform: rotate(190deg);-o-transform: rotate(190deg);transform:rotate(190deg);}
+.pie[data-start="195"] {-moz-transform: rotate(195deg);-ms-transform: rotate(195deg);-webkit-transform: rotate(195deg);-o-transform: rotate(195deg);transform:rotate(195deg);}
+.pie[data-start="200"] {-moz-transform: rotate(200deg);-ms-transform: rotate(200deg);-webkit-transform: rotate(200deg);-o-transform: rotate(200deg);transform:rotate(200deg);}
+.pie[data-start="205"] {-moz-transform: rotate(205deg);-ms-transform: rotate(205deg);-webkit-transform: rotate(205deg);-o-transform: rotate(205deg);transform:rotate(205deg);}
+.pie[data-start="210"] {-moz-transform: rotate(210deg);-ms-transform: rotate(210deg);-webkit-transform: rotate(210deg);-o-transform: rotate(210deg);transform:rotate(210deg);}
+.pie[data-start="215"] {-moz-transform: rotate(215deg);-ms-transform: rotate(215deg);-webkit-transform: rotate(215deg);-o-transform: rotate(215deg);transform:rotate(215deg);}
+.pie[data-start="220"] {-moz-transform: rotate(220deg);-ms-transform: rotate(220deg);-webkit-transform: rotate(220deg);-o-transform: rotate(220deg);transform:rotate(220deg);}
+.pie[data-start="225"] {-moz-transform: rotate(225deg);-ms-transform: rotate(225deg);-webkit-transform: rotate(225deg);-o-transform: rotate(225deg);transform:rotate(225deg);}
+.pie[data-start="230"] {-moz-transform: rotate(230deg);-ms-transform: rotate(230deg);-webkit-transform: rotate(230deg);-o-transform: rotate(230deg);transform:rotate(230deg);}
+.pie[data-start="235"] {-moz-transform: rotate(235deg);-ms-transform: rotate(235deg);-webkit-transform: rotate(235deg);-o-transform: rotate(235deg);transform:rotate(235deg);}
+.pie[data-start="240"] {-moz-transform: rotate(240deg);-ms-transform: rotate(240deg);-webkit-transform: rotate(240deg);-o-transform: rotate(240deg);transform:rotate(240deg);}
+.pie[data-start="245"] {-moz-transform: rotate(245deg);-ms-transform: rotate(245deg);-webkit-transform: rotate(245deg);-o-transform: rotate(245deg);transform:rotate(245deg);}
+.pie[data-start="250"] {-moz-transform: rotate(250deg);-ms-transform: rotate(250deg);-webkit-transform: rotate(250deg);-o-transform: rotate(250deg);transform:rotate(250deg);}
+.pie[data-start="255"] {-moz-transform: rotate(255deg);-ms-transform: rotate(255deg);-webkit-transform: rotate(255deg);-o-transform: rotate(255deg);transform:rotate(255deg);}
+.pie[data-start="260"] {-moz-transform: rotate(260deg);-ms-transform: rotate(260deg);-webkit-transform: rotate(260deg);-o-transform: rotate(260deg);transform:rotate(260deg);}
+.pie[data-start="265"] {-moz-transform: rotate(265deg);-ms-transform: rotate(265deg);-webkit-transform: rotate(265deg);-o-transform: rotate(265deg);transform:rotate(265deg);}
+.pie[data-start="270"] {-moz-transform: rotate(270deg);-ms-transform: rotate(270deg);-webkit-transform: rotate(270deg);-o-transform: rotate(270deg);transform:rotate(270deg);}
+.pie[data-start="275"] {-moz-transform: rotate(275deg);-ms-transform: rotate(275deg);-webkit-transform: rotate(275deg);-o-transform: rotate(275deg);transform:rotate(275deg);}
+.pie[data-start="280"] {-moz-transform: rotate(280deg);-ms-transform: rotate(280deg);-webkit-transform: rotate(280deg);-o-transform: rotate(280deg);transform:rotate(280deg);}
+.pie[data-start="285"] {-moz-transform: rotate(285deg);-ms-transform: rotate(285deg);-webkit-transform: rotate(285deg);-o-transform: rotate(285deg);transform:rotate(285deg);}
+.pie[data-start="290"] {-moz-transform: rotate(290deg);-ms-transform: rotate(290deg);-webkit-transform: rotate(290deg);-o-transform: rotate(290deg);transform:rotate(290deg);}
+.pie[data-start="295"] {-moz-transform: rotate(295deg);-ms-transform: rotate(295deg);-webkit-transform: rotate(295deg);-o-transform: rotate(295deg);transform:rotate(295deg);}
+.pie[data-start="300"] {-moz-transform: rotate(300deg);-ms-transform: rotate(300deg);-webkit-transform: rotate(300deg);-o-transform: rotate(300deg);transform:rotate(300deg);}
+.pie[data-start="305"] {-moz-transform: rotate(305deg);-ms-transform: rotate(305deg);-webkit-transform: rotate(305deg);-o-transform: rotate(305deg);transform:rotate(305deg);}
+.pie[data-start="310"] {-moz-transform: rotate(310deg);-ms-transform: rotate(310deg);-webkit-transform: rotate(310deg);-o-transform: rotate(310deg);transform:rotate(310deg);}
+.pie[data-start="315"] {-moz-transform: rotate(315deg);-ms-transform: rotate(315deg);-webkit-transform: rotate(315deg);-o-transform: rotate(315deg);transform:rotate(315deg);}
+.pie[data-start="320"] {-moz-transform: rotate(320deg);-ms-transform: rotate(320deg);-webkit-transform: rotate(320deg);-o-transform: rotate(320deg);transform:rotate(320deg);}
+.pie[data-start="325"] {-moz-transform: rotate(325deg);-ms-transform: rotate(325deg);-webkit-transform: rotate(325deg);-o-transform: rotate(325deg);transform:rotate(325deg);}
+.pie[data-start="330"] {-moz-transform: rotate(330deg);-ms-transform: rotate(330deg);-webkit-transform: rotate(330deg);-o-transform: rotate(330deg);transform:rotate(330deg);}
+.pie[data-start="335"] {-moz-transform: rotate(335deg);-ms-transform: rotate(335deg);-webkit-transform: rotate(335deg);-o-transform: rotate(335deg);transform:rotate(335deg);}
+.pie[data-start="340"] {-moz-transform: rotate(340deg);-ms-transform: rotate(340deg);-webkit-transform: rotate(340deg);-o-transform: rotate(340deg);transform:rotate(340deg);}
+.pie[data-start="345"] {-moz-transform: rotate(345deg);-ms-transform: rotate(345deg);-webkit-transform: rotate(345deg);-o-transform: rotate(345deg);transform:rotate(345deg);}
+.pie[data-start="350"] {-moz-transform: rotate(350deg);-ms-transform: rotate(350deg);-webkit-transform: rotate(350deg);-o-transform: rotate(350deg);transform:rotate(350deg);}
+.pie[data-start="355"] {-moz-transform: rotate(355deg);-ms-transform: rotate(355deg);-webkit-transform: rotate(355deg);-o-transform: rotate(355deg);transform:rotate(355deg);}
+.pie[data-start="360"] {-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);transform:rotate(360deg);}
+.pie[data-value="0"]:before {-moz-transform: rotate(5deg);-ms-transform: rotate(5deg);-webkit-transform: rotate(5deg);-o-transform: rotate(5deg);transform:rotate(5deg);}
+.pie[data-value="5"]:before {-moz-transform: rotate(10deg);-ms-transform: rotate(10deg);-webkit-transform: rotate(10deg);-o-transform: rotate(10deg);transform:rotate(10deg);}
+.pie[data-value="10"]:before {-moz-transform: rotate(15deg);-ms-transform: rotate(15deg);-webkit-transform: rotate(15deg);-o-transform: rotate(15deg);transform:rotate(15deg);}
+.pie[data-value="15"]:before {-moz-transform: rotate(20deg);-ms-transform: rotate(20deg);-webkit-transform: rotate(20deg);-o-transform: rotate(20deg);transform:rotate(20deg);}
+.pie[data-value="20"]:before {-moz-transform: rotate(25deg);-ms-transform: rotate(25deg);-webkit-transform: rotate(25deg);-o-transform: rotate(25deg);transform:rotate(25deg);}
+.pie[data-value="25"]:before {-moz-transform: rotate(30deg);-ms-transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);transform:rotate(30deg);}
+.pie[data-value="30"]:before {-moz-transform: rotate(35deg);-ms-transform: rotate(35deg);-webkit-transform: rotate(35deg);-o-transform: rotate(35deg);transform:rotate(35deg);}
+.pie[data-value="35"]:before {-moz-transform: rotate(40deg);-ms-transform: rotate(40deg);-webkit-transform: rotate(40deg);-o-transform: rotate(40deg);transform:rotate(40deg);}
+.pie[data-value="40"]:before {-moz-transform: rotate(45deg);-ms-transform: rotate(45deg);-webkit-transform: rotate(45deg);-o-transform: rotate(45deg);transform:rotate(45deg);}
+.pie[data-value="45"]:before {-moz-transform: rotate(50deg);-ms-transform: rotate(50deg);-webkit-transform: rotate(50deg);-o-transform: rotate(50deg);transform:rotate(50deg);}
+.pie[data-value="50"]:before {-moz-transform: rotate(55deg);-ms-transform: rotate(55deg);-webkit-transform: rotate(55deg);-o-transform: rotate(55deg);transform:rotate(55deg);}
+.pie[data-value="55"]:before {-moz-transform: rotate(60deg);-ms-transform: rotate(60deg);-webkit-transform: rotate(60deg);-o-transform: rotate(60deg);transform:rotate(60deg);}
+.pie[data-value="60"]:before {-moz-transform: rotate(65deg);-ms-transform: rotate(65deg);-webkit-transform: rotate(65deg);-o-transform: rotate(65deg);transform:rotate(65deg);}
+.pie[data-value="65"]:before {-moz-transform: rotate(70deg);-ms-transform: rotate(70deg);-webkit-transform: rotate(70deg);-o-transform: rotate(70deg);transform:rotate(70deg);}
+.pie[data-value="70"]:before {-moz-transform: rotate(75deg);-ms-transform: rotate(75deg);-webkit-transform: rotate(75deg);-o-transform: rotate(75deg);transform:rotate(75deg);}
+.pie[data-value="75"]:before {-moz-transform: rotate(80deg);-ms-transform: rotate(80deg);-webkit-transform: rotate(80deg);-o-transform: rotate(80deg);transform:rotate(80deg);}
+.pie[data-value="80"]:before {-moz-transform: rotate(85deg);-ms-transform: rotate(85deg);-webkit-transform: rotate(85deg);-o-transform: rotate(85deg);transform:rotate(85deg);}
+.pie[data-value="85"]:before {-moz-transform: rotate(90deg);-ms-transform: rotate(90deg);-webkit-transform: rotate(90deg);-o-transform: rotate(90deg);transform:rotate(90deg);}
+.pie[data-value="90"]:before {-moz-transform: rotate(95deg);-ms-transform: rotate(95deg);-webkit-transform: rotate(95deg);-o-transform: rotate(95deg);transform:rotate(95deg);}
+.pie[data-value="95"]:before {-moz-transform: rotate(100deg);-ms-transform: rotate(100deg);-webkit-transform: rotate(100deg);-o-transform: rotate(100deg);transform:rotate(100deg);}
+.pie[data-value="100"]:before {-moz-transform: rotate(105deg);-ms-transform: rotate(105deg);-webkit-transform: rotate(105deg);-o-transform: rotate(105deg);transform:rotate(105deg);}
+.pie[data-value="105"]:before {-moz-transform: rotate(110deg);-ms-transform: rotate(110deg);-webkit-transform: rotate(110deg);-o-transform: rotate(110deg);transform:rotate(110deg);}
+.pie[data-value="110"]:before {-moz-transform: rotate(115deg);-ms-transform: rotate(115deg);-webkit-transform: rotate(115deg);-o-transform: rotate(115deg);transform:rotate(115deg);}
+.pie[data-value="115"]:before {-moz-transform: rotate(120deg);-ms-transform: rotate(120deg);-webkit-transform: rotate(120deg);-o-transform: rotate(120deg);transform:rotate(120deg);}
+.pie[data-value="120"]:before {-moz-transform: rotate(125deg);-ms-transform: rotate(125deg);-webkit-transform: rotate(125deg);-o-transform: rotate(125deg);transform:rotate(125deg);}
+.pie[data-value="125"]:before {-moz-transform: rotate(130deg);-ms-transform: rotate(130deg);-webkit-transform: rotate(130deg);-o-transform: rotate(130deg);transform:rotate(130deg);}
+.pie[data-value="130"]:before {-moz-transform: rotate(135deg);-ms-transform: rotate(135deg);-webkit-transform: rotate(135deg);-o-transform: rotate(135deg);transform:rotate(135deg);}
+.pie[data-value="135"]:before {-moz-transform: rotate(140deg);-ms-transform: rotate(140deg);-webkit-transform: rotate(140deg);-o-transform: rotate(140deg);transform:rotate(140deg);}
+.pie[data-value="140"]:before {-moz-transform: rotate(145deg);-ms-transform: rotate(145deg);-webkit-transform: rotate(145deg);-o-transform: rotate(145deg);transform:rotate(145deg);}
+.pie[data-value="145"]:before {-moz-transform: rotate(150deg);-ms-transform: rotate(150deg);-webkit-transform: rotate(150deg);-o-transform: rotate(150deg);transform:rotate(150deg);}
+.pie[data-value="150"]:before {-moz-transform: rotate(155deg);-ms-transform: rotate(155deg);-webkit-transform: rotate(155deg);-o-transform: rotate(155deg);transform:rotate(155deg);}
+.pie[data-value="155"]:before {-moz-transform: rotate(160deg);-ms-transform: rotate(160deg);-webkit-transform: rotate(160deg);-o-transform: rotate(160deg);transform:rotate(160deg);}
+.pie[data-value="160"]:before {-moz-transform: rotate(165deg);-ms-transform: rotate(165deg);-webkit-transform: rotate(165deg);-o-transform: rotate(165deg);transform:rotate(165deg);}
+.pie[data-value="165"]:before {-moz-transform: rotate(170deg);-ms-transform: rotate(170deg);-webkit-transform: rotate(170deg);-o-transform: rotate(170deg);transform:rotate(170deg);}
+.pie[data-value="170"]:before {-moz-transform: rotate(175deg);-ms-transform: rotate(175deg);-webkit-transform: rotate(175deg);-o-transform: rotate(175deg);transform:rotate(175deg);}
+.pie[data-value="175"]:before {-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-webkit-transform: rotate(180deg);-o-transform: rotate(180deg);transform:rotate(180deg);}
+.pie[data-value="180"]:before {-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-webkit-transform: rotate(180deg);-o-transform: rotate(180deg);transform:rotate(180deg);}
+.pie[data-value="185"]:before {-moz-transform: rotate(190deg);-ms-transform: rotate(190deg);-webkit-transform: rotate(190deg);-o-transform: rotate(190deg);transform:rotate(190deg);}
+.pie[data-value="190"]:before {-moz-transform: rotate(195deg);-ms-transform: rotate(195deg);-webkit-transform: rotate(195deg);-o-transform: rotate(195deg);transform:rotate(195deg);}
+.pie[data-value="195"]:before {-moz-transform: rotate(200deg);-ms-transform: rotate(200deg);-webkit-transform: rotate(200deg);-o-transform: rotate(200deg);transform:rotate(200deg);}
+.pie[data-value="200"]:before {-moz-transform: rotate(205deg);-ms-transform: rotate(205deg);-webkit-transform: rotate(205deg);-o-transform: rotate(205deg);transform:rotate(205deg);}
+.pie[data-value="205"]:before {-moz-transform: rotate(210deg);-ms-transform: rotate(210deg);-webkit-transform: rotate(210deg);-o-transform: rotate(210deg);transform:rotate(210deg);}
+.pie[data-value="210"]:before {-moz-transform: rotate(215deg);-ms-transform: rotate(215deg);-webkit-transform: rotate(215deg);-o-transform: rotate(215deg);transform:rotate(215deg);}
+.pie[data-value="215"]:before {-moz-transform: rotate(220deg);-ms-transform: rotate(220deg);-webkit-transform: rotate(220deg);-o-transform: rotate(220deg);transform:rotate(220deg);}
+.pie[data-value="220"]:before {-moz-transform: rotate(225deg);-ms-transform: rotate(225deg);-webkit-transform: rotate(225deg);-o-transform: rotate(225deg);transform:rotate(225deg);}
+.pie[data-value="225"]:before {-moz-transform: rotate(230deg);-ms-transform: rotate(230deg);-webkit-transform: rotate(230deg);-o-transform: rotate(230deg);transform:rotate(230deg);}
+.pie[data-value="230"]:before {-moz-transform: rotate(235deg);-ms-transform: rotate(235deg);-webkit-transform: rotate(235deg);-o-transform: rotate(235deg);transform:rotate(235deg);}
+.pie[data-value="235"]:before {-moz-transform: rotate(240deg);-ms-transform: rotate(240deg);-webkit-transform: rotate(240deg);-o-transform: rotate(240deg);transform:rotate(240deg);}
+.pie[data-value="240"]:before {-moz-transform: rotate(245deg);-ms-transform: rotate(245deg);-webkit-transform: rotate(245deg);-o-transform: rotate(245deg);transform:rotate(245deg);}
+.pie[data-value="245"]:before {-moz-transform: rotate(250deg);-ms-transform: rotate(250deg);-webkit-transform: rotate(250deg);-o-transform: rotate(250deg);transform:rotate(250deg);}
+.pie[data-value="250"]:before {-moz-transform: rotate(255deg);-ms-transform: rotate(255deg);-webkit-transform: rotate(255deg);-o-transform: rotate(255deg);transform:rotate(255deg);}
+.pie[data-value="255"]:before {-moz-transform: rotate(260deg);-ms-transform: rotate(260deg);-webkit-transform: rotate(260deg);-o-transform: rotate(260deg);transform:rotate(260deg);}
+.pie[data-value="260"]:before {-moz-transform: rotate(265deg);-ms-transform: rotate(265deg);-webkit-transform: rotate(265deg);-o-transform: rotate(265deg);transform:rotate(265deg);}
+.pie[data-value="265"]:before {-moz-transform: rotate(270deg);-ms-transform: rotate(270deg);-webkit-transform: rotate(270deg);-o-transform: rotate(270deg);transform:rotate(270deg);}
+.pie[data-value="270"]:before {-moz-transform: rotate(275deg);-ms-transform: rotate(275deg);-webkit-transform: rotate(275deg);-o-transform: rotate(275deg);transform:rotate(275deg);}
+.pie[data-value="275"]:before {-moz-transform: rotate(280deg);-ms-transform: rotate(280deg);-webkit-transform: rotate(280deg);-o-transform: rotate(280deg);transform:rotate(280deg);}
+.pie[data-value="280"]:before {-moz-transform: rotate(285deg);-ms-transform: rotate(285deg);-webkit-transform: rotate(285deg);-o-transform: rotate(285deg);transform:rotate(285deg);}
+.pie[data-value="285"]:before {-moz-transform: rotate(290deg);-ms-transform: rotate(290deg);-webkit-transform: rotate(290deg);-o-transform: rotate(290deg);transform:rotate(290deg);}
+.pie[data-value="290"]:before {-moz-transform: rotate(295deg);-ms-transform: rotate(295deg);-webkit-transform: rotate(295deg);-o-transform: rotate(295deg);transform:rotate(295deg);}
+.pie[data-value="295"]:before {-moz-transform: rotate(300deg);-ms-transform: rotate(300deg);-webkit-transform: rotate(300deg);-o-transform: rotate(300deg);transform:rotate(300deg);}
+.pie[data-value="300"]:before {-moz-transform: rotate(305deg);-ms-transform: rotate(305deg);-webkit-transform: rotate(305deg);-o-transform: rotate(305deg);transform:rotate(305deg);}
+.pie[data-value="305"]:before {-moz-transform: rotate(310deg);-ms-transform: rotate(310deg);-webkit-transform: rotate(310deg);-o-transform: rotate(310deg);transform:rotate(310deg);}
+.pie[data-value="310"]:before {-moz-transform: rotate(315deg);-ms-transform: rotate(315deg);-webkit-transform: rotate(315deg);-o-transform: rotate(315deg);transform:rotate(315deg);}
+.pie[data-value="315"]:before {-moz-transform: rotate(320deg);-ms-transform: rotate(320deg);-webkit-transform: rotate(320deg);-o-transform: rotate(320deg);transform:rotate(320deg);}
+.pie[data-value="320"]:before {-moz-transform: rotate(325deg);-ms-transform: rotate(325deg);-webkit-transform: rotate(325deg);-o-transform: rotate(325deg);transform:rotate(325deg);}
+.pie[data-value="325"]:before {-moz-transform: rotate(330deg);-ms-transform: rotate(330deg);-webkit-transform: rotate(330deg);-o-transform: rotate(330deg);transform:rotate(330deg);}
+.pie[data-value="330"]:before {-moz-transform: rotate(335deg);-ms-transform: rotate(335deg);-webkit-transform: rotate(335deg);-o-transform: rotate(335deg);transform:rotate(335deg);}
+.pie[data-value="335"]:before {-moz-transform: rotate(340deg);-ms-transform: rotate(340deg);-webkit-transform: rotate(340deg);-o-transform: rotate(340deg);transform:rotate(340deg);}
+.pie[data-value="340"]:before {-moz-transform: rotate(345deg);-ms-transform: rotate(345deg);-webkit-transform: rotate(345deg);-o-transform: rotate(345deg);transform:rotate(345deg);}
+.pie[data-value="345"]:before {-moz-transform: rotate(350deg);-ms-transform: rotate(350deg);-webkit-transform: rotate(350deg);-o-transform: rotate(350deg);transform:rotate(350deg);}
+.pie[data-value="350"]:before {-moz-transform: rotate(355deg);-ms-transform: rotate(355deg);-webkit-transform: rotate(355deg);-o-transform: rotate(355deg);transform:rotate(355deg);}
+.pie[data-value="355"]:before {-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);transform:rotate(360deg);}
+.pie[data-value="360"]:before {-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);-o-transform: rotate(0deg);transform:rotate(0deg);}
+/*
+NOTE: you could also apply custom classes (i.e. .s0 .v30)
+but if the CSS3 attr() function proposal ever gets implemented,
+then all the above custom piece rules could be replaced with
+the following:
+
+.pie[data-start] {
+transform:rotate(attr(data-start,deg,0);
+}
+.pie[data-value]:BEFORE {
+transform:rotate(attr(data-value,deg,0);
+}
+*/

@@ -1,0 +1,30 @@
+<ion-modal-view on-swipe-left="closeFilterCat()" on-swipe-right="closeFilterCat()">
+    <ion-header-bar class="modal-header" >
+        <h1 class="title title-modal">Filtri</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <div ng-repeat="(key, cats) in filters">
+                <ion-item class="item-divider item-icon-left item-icon-right">
+                    <i ng-click="changeFavCat(cats.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != cats.category_space, 'ion-android-star': favCat == cats.category_space }"></i>
+                    {{cats.label}}<span ng-if="config.dev">-- toggleFilter({{key}})</span>
+                    <i ng-click="toggleFilter(key)" class="icon medium-dark" ng-class="{ 'ion-minus-circled': cats.toggle == 1, 'ion-checkmark-circled': cats.toggle == 2, 'ion-ios-circle-outline': cats.toggle == 3}"></i>
+                </ion-item>
+                <ion-item ng-show="cats.toggle == 1" ng-repeat="category in cats.list | orderBy: 'index' | filter:{name: '!null'} | filter:  differentThan( 'id', 0 ) track by $index" 
+                    class="item-checkbox item-icon-left item-icon-right" on-tap="toggleFilter(cats.name,category[cats.check])" ng-style="{'color' : category.color}" >
+                    <i class="icon {{category.icon}}"></i> 
+                    <span class="dark">{{category.name}} 
+                        <span ng-if="config.dev">-- togleFilter({{cats.name}},{{category[cats.check]}})</span>
+                    </span>
+                    <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
+                </ion-item>
+            </div>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-outline icon ion-arrow-down-b" on-tap="closeFilterCat()" ></button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

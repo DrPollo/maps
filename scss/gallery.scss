@@ -1,0 +1,47 @@
+.gallery-view{
+    background: #333;
+    text-align: center;
+    vertical-align: middle;
+    .slider-box{
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        img{
+            min-width:100%;
+            min-height: 100%;
+        }
+    }
+    .slider-button{
+        width:50%;
+        height:100%;
+        position:absolute;
+        z-index:9;
+        top: 0px;
+        i {
+            position: absolute;
+            top: 48%;
+            color: rgba(255,255,255,0.8);
+            //text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    }
+    .slider-button-left{
+        left:0px;    
+        i {left:40px;}
+    }
+    .slider-button-right{
+        right:0px;    
+        i {right: 40px;}
+    }
+
+    .slider-close{
+        position: absolute;
+        z-index: 10;
+        top: 0px;
+        right: 0px;
+    }
+    .slider-close:before{
+        color: rgba(255,255,255,0.8);
+    }
+}

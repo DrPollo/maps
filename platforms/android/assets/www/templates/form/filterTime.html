@@ -1,0 +1,67 @@
+<ion-modal-view on-swipe="closeFilterCat()">
+    <ion-header-bar class="modal-header" >
+        <h1 class="title title-modal">Filtri</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-divider">
+                Da
+            </ion-item>
+            <ionic-datepicker class="item item-checkbox item-icon-left"
+                              disableafter="time.to" disableafterenabled="time.to"
+                              idate="time.from" 
+                              mondayfirst="true" 
+                              callback="time.callbackFrom">
+                <i class="icon ion-android-calendar"></i>
+                <span ng-show="!time.from">Scegli data</span>
+                <span ng-show="time.from">
+                    {{ time.from | date:'dd - MMMM - yyyy' }}
+                </span> 
+            </ionic-datepicker>
+            <ion-item class="item-divider">
+                A
+            </ion-item>
+            <ionic-datepicker class="item item-checkbox item-icon-left"
+                              disablebefore="time.from" disablebeforeenabled="time.from"
+                              idate="time.to" 
+                              mondayfirst="true" 
+                              callback="time.callbackTo">
+                <i class="icon ion-android-calendar"></i>
+                <span ng-show="!time.to">Scegli data</span>
+                <span ng-show="time.to">
+                    {{ time.to | date:'dd - MMMM - yyyy' }}
+                </span>
+            </ionic-datepicker>
+            <ion-item class="item-divider" ng-click="toggleFilter(key)">
+                Quando
+            </ion-item>
+            <ion-item class="item-checkbox item-icon-left item-icon-right" on-tap="" >
+                <i class="icon ion-ios-partlysunny"></i> 
+                Mattina
+                <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
+            </ion-item>
+            <ion-item class="item-checkbox item-icon-left item-icon-right" on-tap="" >
+                <i class="icon ion-ios-sunny"></i> 
+                Pomeriggio
+                <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
+            </ion-item>
+            <ion-item class="item-checkbox item-icon-left item-icon-right" on-tap="" >
+                <i class="icon ion-ios-cloudy-night"></i> 
+                Sera
+                <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
+            </ion-item>
+            <ion-item class="item-checkbox item-icon-left item-icon-right" on-tap="" >
+                <i class="icon ion-ios-moon"></i> 
+                Notte
+                <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-outline icon ion-arrow-down-b" on-tap="closeFilterCat()" ></button>
+        </div>
+    </ion-footer-bar>
+
+</ion-modal-view>

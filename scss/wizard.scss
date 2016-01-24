@@ -1,0 +1,72 @@
+#place_creation{
+    .nav-bar-title{
+        h1{
+            color: white;
+            text-align: left;
+            font-weight: 200;
+            letter-spacing: 1px;
+        }
+    }
+
+}
+.content{
+    form{
+        .has-error{
+            border-bottom:$error 2px solid;
+        }
+        .no-error{
+            border-bottom:$valid 2px solid;
+        }
+        .form-errors{
+            .form-error{
+                color: $error;
+            }
+        }
+        #description-textarea{
+            border-left: 0px;
+            border-right: 0px;
+            height: auto;
+            textarea{
+                height: auto;
+            }
+        }
+        #date-form{
+            margin: 0px;
+            label{
+                padding: 8px 16px;
+                border: 0px;
+            }
+        }
+        .angucomplete-dropdown{
+            position: relative;
+            z-index: 99;
+        }
+    }
+    .autocompletetags {
+        overflow: visible;
+        tags-input{ 
+            .tags{
+                box-shadow:none;
+                border:0px solid;
+                
+                ul.tag-list{
+                    background-color: $positive;
+                    li.tag-item{
+                        background: white;
+                        color: $positive;
+                        border-color: $positive;
+                        .remove-button{
+                            color: $positive;
+                        }
+                    }
+                }
+                input.input{
+                    padding-left: 0px;
+                }
+            } 
+            .tags.focused{
+                box-shadow:none;
+            }
+        }
+    }
+}

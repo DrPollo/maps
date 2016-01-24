@@ -1,0 +1,105 @@
+<ion-view class="maps-view">
+    <div id="mapHeader" ng-controller="SearchCtrl">
+        <!--<button ng-if="config.actions.show_menu" id="sideMenuToggler" class="button button-clear button-dark icon ion-navicon" ng-click="toggleSideLeft()"></button>-->
+        <div id="omnibox">
+            <div id="floating-search-bar">
+
+                <button ng-if="config.actions.show_menu" tooltips tooltip-side="bottom" tooltip-content="Menu" class="button button-clear button-dark" ng-click="toggleSideLeft()">
+                    <img id="barlogo" ng-src="{{config.design.logo_menu}}"/>
+                </button>
+                <span class="separatore"></span>
+                <form tooltips tooltip-side="bottom" tooltip-content="Cerca" name="ricerca" class="item-input-wrapper">
+                    <input type="search" placeholder="Cerca su {{config.app_name}}" ng-model="form.query" ng-focus="focus=true;" />
+                    <!--<button class="button button-dark button-clear icon-button ion-android-search"></button>-->
+                </form>
+                <span class="separatore"></span>
+                <button tooltips tooltip-side="bottom" tooltip-content="{{form.query != ''? 'Cancella' : 'Trova la mia posizione'}}" class="button button-dark button-clear button-icon" ng-class="form.query != ''? 'ion-close-round' : 'ion-android-locate'" ng-click="form.query != ''? clearSearch() : locate('user')"></button>
+                <span ng-if="!isMobile" class="separatore"></span>
+                <button ng-if="!isMobile" tooltips tooltip-side="bottom" tooltip-content="Aree d'interesse" class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
+            </div>
+            <div id="cronologia-box" ng-show="focus">
+                <button class="button button-clear button-dark" id="results-box" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
+                    <i class="icon ion-android-time"></i>
+                    <span>{{b.query}}</span>
+                </button>
+            </div>
+            <div id="results-box" ng-show="focus">
+                <button class="button button-clear button-dark" id="results-box" ng-repeat="r in form.results track by $index" ng-click="entryClick(r.id)">
+                    <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
+                    <span>{{r.name}}</span>
+                </button>
+            </div>
+            <div id="results-box" ng-show="focus">
+                <button class="button button-clear button-dark" id="results-box" ng-repeat="l in form.locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
+                    <i class="icon {{l.icon}}"></i>
+                    <span>{{l.name}}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <ion-content ng-controller="ModalPlaceCtrl" scroll="false" class="has-bottom" data-tap-disabled="true">
+
+        <leaflet id="mymap"  defaults="map.defaults" bounds="bounds" center="map.center" width="100%" height="100%" controls="map.controls" markers="markersFiltered" geojson="map.geojson" layers="map.layers"  event-broadcast="map.events" ng-if="map"></leaflet>
+
+    </ion-content >
+
+    <!--on-hold="showASEdit()" -->
+    <div id="pointer" class="padding"  on-tap="showASEdit()" ng-show="editMode">
+        <div class='pin'></div>
+        <div class='pulse'></div>
+    </div>
+
+    <!-- action buttons -->
+    <div id="map-action-menu">
+        <div class="flex-container flex-container-style fixed-height">
+            <div class="flex-item" ng-if="isMobile">
+                <span contenteditable=""></span>
+                <button tooltips tooltip-side="left" tooltip-content="Aree d'interesse" class="button button-float" ng-click="showModalFavPlace()">
+                    <i class="icon ion-android-compass"></i>
+                </button>
+            </div>
+            <div class="flex-item" ng-if="config.actions.wall_tab">
+                <span contenteditable=""></span>
+                <button tooltips tooltip-side="left" tooltip-content="Mostra contenuto della mappa" class="button button-float" ng-click="showWall()">
+                    <i class="icon ion-android-list"></i>
+                </button>
+            </div>
+            <div class="flex-item" ng-if="config.actions.category_filter">
+                <span contenteditable=""></span>
+                <button tooltips tooltip-side="left" tooltip-content="Filtra per categoria" class="button button-float" ng-click="showMFilterCat()">
+                    <i class="icon ion-android-checkmark-circle"></i>
+                </button>
+            </div>
+            <div class="flex-item"  ng-if="config.actions.edit_mode && isLoggedIn" >
+                <span contenteditable=""></span>
+                <button tooltips tooltip-side="left" tooltip-content="Aggiungi un luogo o evento alla mappa" class="button button-float" ng-click="switchEditMode()">
+                    <i class="icon" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
+                </button>
+            </div>
+        </div>
+        <div id="bottom-bar-toggler" class="flex-item" ng-if="config.actions.time_filter" tooltips tooltip-side="left" tooltip-content="Filtra per data">
+            <div id="time-box">
+                <button class="button button-icon ion-arrow-left-b" ng-click="time.scrollDays(-1)"></button>
+                <ionic-datepicker class="button" idate="time.from" 
+                                  mondayfirst="true" 
+                                  callback="time.setFrom">
+                    <i class="icon ion-android-calendar"></i>
+                    <span ng-show="!time.from">Sempre</span>
+                    <span ng-show="time.from">
+                        {{ time.from | date:'dd/MM/yyyy' }}
+                    </span> 
+                </ionic-datepicker>
+                <button class="button button-icon ion-arrow-right-b" ng-click="time.scrollDays(1)"></button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- barra filtri -->
+    
+    <div id="bottom-bar">
+    </div>
+    <style type="text/css">{{map.css}}</style>
+</ion-view>

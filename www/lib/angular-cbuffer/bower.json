@@ -1,0 +1,26 @@
+{
+  "name": "angular-cbuffer",
+  "version": "1.1.0",
+  "author": "magiccrafter",
+  "description": "Circular Buffer/Array implementation for AngularJS apps",
+  "keywords": [
+    "angular",
+    "cbuffer",
+    "circular",
+    "buffer"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/magiccrafter/angular-cbuffer.git"
+  },
+  "main": [
+    "angular-cbuffer.js"
+  ],
+  "ignore": [
+    "package.json",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "angular": ">= 1.0.8"
+  }
+}

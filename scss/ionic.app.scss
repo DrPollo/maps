@@ -1,0 +1,92 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #FC4A00 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+$positive:                        #FC4A00 !default;
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$calm:                            rgb(63, 127, 145) !default;
+$balanced:                        rgb(136, 186, 92) !default;
+$energized:                       rgb(255, 179, 16) !default;
+$assertive:                       rgb(174, 10, 10) !default;
+$royal:                           rgb(45, 69, 104) !default;
+$dark:                            #333 !default;
+$mediumDark:                      #666 !default;
+
+$error:                           #ef473a !default;
+$valid:                           #33cd5f !default;
+$warning:                         #ffc900 !default;
+$neutral:                         #11c1f3 !default;
+
+
+$small : 150px;
+$medium: 300px;
+$large: 600px;
+
+.medium-dark{color:#666;}
+
+.error {color:$error !important;}
+.warning {color:$warning !important;}
+.neutral {color:$neutral !important;}
+.valid {color:$valid !important;}
+
+.icon-bold:before {font-weight: bold !important;}
+.icon-light:before {font-weight: 400 !important;}
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+// $ionicons-font-path: "../lib/ionic/fonts" !default;
+// Load new fonts (have more icons)
+$ionicons-font-path: "../lib/ionicons/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+// We are loading ionicons from independant bower repository (because of this bug: http://goo.gl/TgngFM)
+// We are loading both ionicons from ionic and independant bower repository because of legacy requirements for ionic (ion-ios7 bugs if not)
+@import "www/lib/ionicons/scss/ionicons";
+
+
+@import "scss/ion-full-app";
+
+// menu laterale
+@import "scss/side-menu";
+
+// login e registrazione
+@import "scss/walkthrough";
+
+// scheda del place
+@import "scss/modal";
+
+// scheda del menu popover della modal
+@import "scss/popover";
+
+// mappa, marker e pointer di creazione
+@import "scss/maps";
+
+// form di creazione dei place
+@import "scss/wizard";
+
+// form editor del profilo utente
+@import "scss/user";
+
+// galleria immagini modal
+@import "scss/gallery";
+
+// wall marker
+@import "scss/wall";
+
+// marker cluster pie
+@import "scss/pie";

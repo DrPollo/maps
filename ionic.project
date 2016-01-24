@@ -1,0 +1,13 @@
+{
+  "name": "FirstLife",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch",
+    "templatecache"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

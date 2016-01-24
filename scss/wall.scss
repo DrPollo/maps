@@ -1,0 +1,27 @@
+#wall{
+    .modal-header{
+        
+    }
+    .modal-content{
+        color:green;
+        .list{
+            color:green;
+            .item{
+                i:before {width: 14px;text-align: center;}
+                .sublist{
+                    margin-top: 8px;
+                    .sublist-block{
+                        padding-left: 32px;
+                        .sublist-title{
+                            font-weight: 400;
+                            color:#999;
+                            font-style: italic;
+                            margin-bottom: 8px;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+}

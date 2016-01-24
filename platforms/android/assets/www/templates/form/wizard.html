@@ -1,0 +1,192 @@
+<ion-view>
+    <ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button ng-if="config.actions.show_menu" id="sideMenuToggler" class="button button-positive button-clear icon ion-navicon" ng-click="toggleSideLeft()"></button>
+        </ion-nav-buttons>
+        <ion-nav-title>
+            <span>{{wizard.dataForm.title}}</span>
+        </ion-nav-title>
+        <ion-nav-buttons side="right">
+            <button class="button button-clear no-animation button-positive"
+                    ng-click="close()" ng-if="!slideIndex">
+                <i class="icon ion-close-round"></i>
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content class="content">
+        <div ng-switch="wizard.getCurrentStep()" >
+
+            <div ng-switch-when="Info">
+                <ion-list>
+                    <form name="form.wizardform1" novalidate>   
+                        <label ng-if="checkList.name" class="item item-input item-floating-label" ng-class="{ 'has-error' : form.wizardform1.name.$invalid, 'no-error' : !form.wizardform1.name.$invalid }">
+                            <span class="input-label">{{checkList.name.label}}</span>
+                            <input type="text" name="name" ng-model="wizard.dataForm.name" placeholder="{{checkList.name.placeholder}}" ng-minlength="3" ng-maxlength="100" ng-required="checkList.name.required">
+
+                        </label>
+                        <div class="form-errors" ng-messages="form.wizardform1.name.$error"> 
+                            <div class="form-error" ng-message="minlength">Il campo deve essere almeno di 3 caratteri</div>
+                            <div class="form-error" ng-message="maxlength">Il campo non deve superare i 100 caratteri</div>
+                            <div class="form-error" ng-message="required">Campo richiesto</div>  
+                        </div> 
+
+                        <label ng-if="checkList.description" id="description-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : form.wizardform1.description.$invalid, 'no-error' : !form.wizardform1.description.$invalid}">
+                            <span class="input-label">{{checkList.description.label}}</span>
+                            <textarea name="description" ng-model="wizard.dataForm.description" placeholder="{{checkList.description.placeholder}}" ng-minlength="30" ng-maxlength="1000" rows="6" ng-required="checkList.description.required">
+
+                            </textarea><!--
+<input type="text" name="description" ng-model="wizard.dataForm.description" placeholder="What's happen?" ng-minlength="5" ng-maxlength="150" required>-->
+                        </label>
+                        <div class="form-errors" ng-messages="form.wizardform1.description.$error">  
+                            <div class="form-error" ng-message="minlength">Il campo deve essere almeno di 30 caratteri</div>
+                            <div class="form-error" ng-message="maxlength">Il campo non deve superare i 1000 caratteri</div>
+                            <div class="form-error" ng-message="required">Campo richiesto</div> 
+                        </div> 
+
+                        <label ng-if="checkList.link_url" class="item item-input item-floating-label">
+                            <span class="input-label">{{checkList.link_url.label}}</span>
+                            <input type="text" name="link_url" ng-model="wizard.dataForm.link_url" placeholder="{{checkList.link_url.placeholder}}" ng-required="checkList.link_url.required">
+                        </label>
+
+                        <div ng-if="checkList.valid_from && checkList.valid_to" id="date-form" class="row responsive-sm">
+                            <label ng-if="checkList.valid_from" class="item item-input col">
+                                <div class="input-label">
+                                    {{checkList.valid_from.label}}
+                                </div>
+                                <ionic-datepicker 
+                                                  disableafter="wizard.dataForm.valid_to" disableafterenabled="valid_to"
+                                                  idate="wizard.dataForm.valid_from" mondayfirst="true" 
+                                                  callback="datePickerFrom" title="Inizio" 
+                                                  ng-required="checkList.valid_from.required">
+                                    <button class="button button-block button-positive button-outline ng-binding">
+                                        <span ng-show="!wizard.dataForm.valid_from">{{checkList.valid_from.placeholder}}</span>
+                                        <span ng-show="wizard.dataForm.valid_from">
+                                            {{ wizard.dataForm.valid_from | date:'dd/MM/yyyy' }}
+                                        </span>
+                                    </button>
+                                </ionic-datepicker>
+                            </label>
+                            <label ng-if="checkList.door_time" class="item item-input col">
+                                <div class="input-label">
+                                        {{checkList.door_time.label}} 
+                                    </div>
+                                <ionic-timepicker input-obj="checkList.door_time.template" ng-required="checkList.door_time.required">
+                                  <button class="button button-block button-positive button-outline overflowShow">
+                                    <standard-time-no-meridian etime='wizard.dataForm.door_time' placeholder="{{checkList.door_time.placeholder}}"></standard-time-no-meridian>
+                                  </button>
+                                </ionic-timepicker>
+                            </label>
+                        </div>
+                        <div ng-if="checkList.valid_from && checkList.valid_to" id="date-form" class="row responsive-sm">
+                            <label ng-if="checkList.valid_to" class="item item-input col">
+                                <div class="input-label">
+                                    {{checkList.valid_to.label}} 
+                                </div>
+                                <ionic-datepicker 
+                                                  disablebefore="wizard.dataForm.valid_from" disablebeforeenabled="valid_from"
+                                                  idate="wizard.dataForm.valid_to" 
+                                                  mondayfirst="true" 
+                                                  callback="datePickerTo" title="Fine"
+                                                  ng-required="checkList.valid_to.required">
+                                    <button class="button button-block button-positive button-outline ng-binding">
+                                        <span ng-show="!wizard.dataForm.valid_to">{{checkList.valid_to.placeholder}}</span>
+                                        <span ng-show="wizard.dataForm.valid_to">
+                                            {{ wizard.dataForm.valid_to | date:'dd/MM/yyyy' }}
+                                        </span> 
+                                    </button>
+                                </ionic-datepicker>
+                            </label>
+                            <label ng-if="checkList.close_time" class="item item-input col">
+                                <div class="input-label">
+                                        {{checkList.close_time.label}} 
+                                    </div>
+                                <ionic-timepicker input-obj="checkList.close_time.template" ng-required="checkList.close_time.required">
+                                  <button class="button button-block button-positive button-outline overflowShow">
+                                    <standard-time-no-meridian etime='wizard.dataForm.close_time' placeholder="{{checkList.close_time.placeholder}}"></standard-time-no-meridian>
+                                  </button>
+                                </ionic-timepicker>
+                            </label>
+                        </div>
+                        <!--
+                        <label ng-if="checkList.parent" class="item item-input item-floating-label">
+                            <span class="input-label">{{checkList.parent.label}}</span><!--url="{{config.backend_autocomplete}}" datafield="results"-->
+                         <!--   <angucomplete id="parent_id" placeholder="{{checkList.parent.placeholder}}" name="parent" pause="100"
+                                          selectedobject="wizard.dataForm.parent_id"
+                                          localdata="searchSource"
+                                          searchfields="name"
+                                          titlefield="name"
+                                          minlength="1"
+                                          inputclass="form-control form-control-small"
+                                          initialValue="{{wizard.dataForm.parent_id.name}}"
+                                          ng-required="checkList.parent.required"/>
+                        </label>
+                        -->
+                        <label ng-if="checkList.tags" class="item item-input item-floating-label autocompletetags">
+                            <span class="input-label">{{checkList.tags.label}}</span>
+                            <tags-input ng-model="wizard.dataForm.tags" display-property="tag" placeholder="{{checkList.tags.placeholder}}" replace-spaces-with-dashes="true">
+                                <auto-complete source="loadTags($query)"
+                                               min-length="0"
+                                               load-on-focus="true"
+                                               load-on-empty="false"
+                                               max-results-to-show="10"
+                                               ng-required="checkList.tags.required"
+                                               ></auto-complete>
+                            </tags-input>
+                        </label>
+                    </form>
+                </ion-list>      
+            </div>
+
+            <div ng-if="checkList.categories" ng-switch-when="Category">
+                <div class="list">
+                    <form name="form.wizardform2" novalidate>
+                        <ng-form ng-repeat="space in categories track by $index" ng-if="(space.entities.indexOf(wizard.dataForm.entity_type) > -1)" name="form.wizardform2.{{space.category_space}}" novalidate>
+                                <div class="item item-divider">
+                                    {{space.name}}
+                                </div>
+                                <ion-radio name="form.wizardform2.{{space.category_space}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  differentThan( 'id', 0 )"
+                                           ng-value="{{category.id}}"
+                                           ng-model="wizard.dataForm.categories[$parent.$index].categories[0]"
+                                           class="item"
+                                           ng-required="true">
+                                    <span class="item-icon-left" >
+                                        <i class="icon {{category.icon}}" ng-style="{'color' : config.design.colors[ category.colorIndex % config.design.colors.length]}"></i>
+                                        {{ category.name }}
+                                    </span>
+                                </ion-radio>
+                        </ng-form>
+                    </form>
+                </div>
+            </div>
+
+            <div ng-if="config.dev">
+                <p>
+                    {{ wizard.dataForm | json }}
+                </p>
+            </div>
+        </div>
+
+
+    </ion-content>
+    <script id="templates/form-errors.html" type="text/ng-template">  
+        <div class="form-error" ng-message="required">Campo richiesto.</div>
+        <div class="form-error" ng-message="minlength">Questo campo deve essere lungo almeno 3 caratteri.</div>
+        <div class="form-error" ng-message="maxlength">Questo campo non deve essere pi&ugrave; lungo di 100 caratteri.</div>
+    </script> 
+
+    <ion-footer-bar class="bar-light">
+        <div class="buttons" ng-click="wizard.handlePrevious()" ng-show="!wizard.isFirstStep()">
+            <button class="button button-positive button-clear icon-left ion-chevron-left" >Indietro</button>
+        </div>
+        <h1 class="title">{{wizard.step+1}}/{{wizard.steps.length}}</h1>
+
+        <div class="buttons">
+            <button ng-if="!(wizard.isLastStep())" ng-disabled="form.wizardform1.$invalid" class="button button-positive button-clear icon-right ion-chevron-right" ng-click="wizard.handleNext(form.wizardform1.$valid)">Avanti</button>
+            <button ng-if="(wizard.isLastStep())" ng-disabled="form.wizardform2.$invalid" class="button button-positive button-clear icon ion-checkmark-round" ng-click="wizard.handleNext(form.wizardform2.$valid)">Salva</button>
+        </div>
+
+
+    </ion-footer-bar>
+
+</ion-view>

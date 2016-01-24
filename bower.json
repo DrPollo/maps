@@ -1,0 +1,36 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.0",
+    "ui-router-extras": "~0.1.0"
+  },
+  "resolutions": {
+    "angular": "1.4.7",
+    "angular-ui-router": "~0.2.15"
+  },
+  "dependencies": {
+    "angular-base64": "~2.0.5",
+    "angular-base64-upload": "~0.1.12",
+    "angular-jwt": "~0.0.9",
+    "angular-leaflet-directive": "~0.8.7",
+    "angular-messages": "~1.4.5",
+    "angular-moment": "~0.10.2",
+    "angular-resource": "~1.4.5",
+    "angular-route": "~1.4.5",
+    "angular-slugify": "~1.0.1",
+    "angular-tooltips": "~0.1.23",
+    "angular-ui-router": "~0.2.15",
+    "angular-underscore": "~0.5.0",
+    "font-awesome": "~4.4.0",
+    "ionic-wizard": "~1.0.5",
+    "Ionicons": "ionicons#~2.0.1",
+    "leaflet.markercluster": "~0.4.0",
+    "ng-cordova": "~0.0.3",
+    "ng-tags-input": "~3.0.0",
+    "underscore": "~1.8.3",
+    "angular-cbuffer": "~1.1.0",
+    "angular-localization": "~1.2.1",
+    "ui-router-extras": "~0.1.0"
+  }
+}

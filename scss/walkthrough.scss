@@ -1,0 +1,166 @@
+.login-view,
+.signup-view,
+.forgot-password-view
+{
+	$images-path: "../img";
+	
+    ion-header{
+    
+    }
+    
+    ion-content{
+        background-position:fixed center top;
+        background-repeat: no-repeat;
+        background-size:  cover;
+        -moz-background-size:  cover;
+        -webkit-background-size:  cover;
+        z-index:-1;
+        opacity: 1;
+    }
+    //min-height: 440px;
+	ion-content:before
+	{
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: -1;
+		opacity: 0.6;
+		display: block;
+//		//background:transparent url("../img/torino1.jpg") no-repeat fixed left top;
+        background-color: $dark;
+        
+		
+	}
+}
+
+.signup-view, .login-view
+{
+	background-color:white !important;
+    
+	.row
+	{
+        
+        
+		
+	}
+    
+   .top-content
+    {
+        height:45%;
+        text-align: center;
+        .col-logo{
+            height: 100%;
+            //background-size: auto 100% !important;
+            max-height: 243px;
+        }
+        #logo{
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        #text-logo{
+            
+        }
+        
+    }
+
+    .bottom-content
+    {
+        height:45%;
+        .form-container{
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+               .signup-form, .login-form
+	           {
+                .list{
+                    .has-error{border-bottom:$error 2px solid !important;}
+                    .no-error{border-bottom:$valid 2px solid !important;}
+                    .item{
+                        border: 0px;
+                        padding: 0px;
+                        .input-label{
+
+                        }
+                        .input-label.has-input{
+                            color: white;
+                        }
+                        input {
+                            background-color: rgba(0, 0, 0, 0.6) !important;
+                            color:white;
+                              bottom: 0;
+                              color: #fff;
+                              letter-spacing: 0.25rem;
+                              padding: 0px 10px;
+                              position: relative;
+                              z-index: 1;
+                        }
+                        input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+                            background-color: rgba(0, 0, 0, 0.6) !important;
+                            color:white !important;
+                            background-image: none;
+                        }
+                        input[type=text]{
+                            width: 100% !important;
+                        }
+                    }
+                    .inner-content{
+                        padding: 0px;
+                        margin: 0px;
+                        .left-col, .right-col{
+                            padding: 0px;
+                        }
+                        .left-col{
+                            margin: 0px;
+                            padding: 0px;
+                            margin-right: 5px;
+                        }
+                        .right-col{
+                            
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        .alternative-actions
+        {
+
+            margin: 20px 0px 0px;
+
+            .button
+            {
+
+                padding:0px;
+                font-size:14px;
+            }
+            .button.disabled, .button[disabled] {
+                opacity: 0.9;
+            }
+        }
+    }
+    .footer-content {
+        height:10%;
+        text-align: center;
+        span{
+            margin: 0 10px;
+            display: inline-block;
+            position: relative;
+            img {
+                vertical-align: top;
+            }
+            label{
+                position: absolute;
+                color: #fff;
+                width: 100%;
+                display: block;
+                font-size: 8px;
+            }
+        }
+    }
+	
+}

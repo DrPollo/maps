@@ -1,0 +1,36 @@
+#user_profile{
+    #user_header{
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        display: inline-block;
+        z-index: 12;
+        #sideMenuToggler, #floating-logo{
+            display: inline-block;
+        }
+        #sideMenuToggler{
+            background-color: rgba(255,255,255,0.8);
+            min-width: 40px;
+            min-height: 20px;
+            max-height: 40px;
+            vertical-align: top;
+            margin-right: 16px;
+        }
+        #sideMenuToggler:before{
+            font-size: 30px;
+        }
+        #floating-logo{
+            img{
+                max-height: 35px;
+            }
+        }
+
+    }
+    label.item{
+        position: relative;
+        .toggle-view-anchor{
+            bottom:0px;
+        }
+    }
+    
+}
