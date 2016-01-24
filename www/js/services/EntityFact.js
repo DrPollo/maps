@@ -20,7 +20,8 @@ angular.module('firstlife.factories')
             bboxBaseParams = bboxBaseParams.concat('&detail=full');
         }
         
-        var format = '.json';
+        //var format = '.json';
+        var format = '';
         var response = null;
 
         //self.placeList = [];
@@ -146,7 +147,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
             update: function(entity, id) {
-                var urlId = types[entity.entity_type].concat("/").concat(id).concat(format);
+                var urlId = types[entity.entity_type].concat("/").concat(id).concat("/update").concat(format);
                 var deferred =$q.defer();
                 //console.log("UPDATE TO: ", urlId, place);
                 var feature = markerConverter(entity);
@@ -187,7 +188,7 @@ angular.module('firstlife.factories')
 
             },
             create: function(entity) {
-                var urlId = types[entity.entity_type].concat(format);
+                var urlId = types[entity.entity_type].concat('/add').concat(format);
                 var deferred = $q.defer();
                 var feature = markerConverter(entity);
                 var token = MemoryFactory.getToken();
@@ -235,7 +236,7 @@ angular.module('firstlife.factories')
 
             getBBox: function(bbox,reset) {
                 var deferred = $q.defer();
-                var urlId = myConfig.domain_signature.concat('thing/boundingbox').concat(format);
+                var urlId = myConfig.backend_things.concat('/boundingbox').concat(format);
                 var eType = ['FL_PLACES','FL_EVENTS'];
                 var checkRst=checkBboxHistory(bbox);
                 var bboxParamsString = bboxBaseParams;

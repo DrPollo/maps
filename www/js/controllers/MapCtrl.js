@@ -59,7 +59,7 @@ angular.module('firstlife.controllers')
         // bug da sistemare, infilo la categoria in catIndex in entityFactory, da tenere allineati!!!!
         categoriesFactory.getAll().then(
             function(response){
-                //console.log("MapCtrl, init filtri: ",response);
+                console.log("MapCtrl, init filtri: ",response);
                 // costruisco regola per le categorizzazione
                 for(i = 0; i< response.length; i++){
                     var cats = response[i];

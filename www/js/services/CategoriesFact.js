@@ -4,13 +4,23 @@ angular.module('firstlife.factories')
         self.config = myConfig;
         var url = config.backend_categories;
         var format = '.json';
-        var categories = [];
+        var categories = set(myConfig.types.categories);
         var cssClusterIcon = [];
 
 
         // Public API here
         return {
             getAll: function() {
+                var deferred = $q.defer();
+                console.log("CategoriesFactory, getAll :",myConfig.types.categories);
+                deferred.resolve(set(myConfig.types.categories));
+                //Now return the promise.
+                return deferred.promise;
+            },
+            gets: function() {
+                return set(myConfig.types.categories);
+            },
+            /*getAll: function() {
                 var deferred = $q.defer();
                 var urlId = url.concat(format);
                 //console.log("CategoriesFactory getAll");
@@ -42,7 +52,7 @@ angular.module('firstlife.factories')
 
                 //Now return the promise.
                 return deferred.promise;
-            },
+            },*/
             
             set: function(cats) {
                 //console.log("CategoriesFactory from memory: ", cats);
@@ -71,10 +81,8 @@ angular.module('firstlife.factories')
         function set(cats){
             // imposto i colori nelle cateogorie
             var catsR = setupColor(cats);
-            MemoryFactory.saveConfig(catsR);
-            categories = catsR;
-            $rootScope.categories = catsR;
-            $rootScope.mainCategories = catsR[0];
+            //MemoryFactory.saveConfig(catsR);
+            //categories = catsR;
             return catsR;
         };
 
@@ -116,64 +124,6 @@ angular.module('firstlife.factories')
             return catsList;
         }
         
-        /* da cancellare, overlay unico
-        function setCategoryOverlays(cats){
-            //console.log("categorie dal server: ",cats);
-            categories[0] = {
-                id: 0,
-                name: 'AllCategories',
-                type: "markercluster",
-                visible: true,
-                colorIndex: 0
-
-            }
-
-            for(var el in cats){
-                var classColor = config.design.colors[cats[el].category_index - 1 % config.design.colors.length]; 
-                //console.log("CategoryFactory, setCategoryOverlays, categoria da convertire: ", el);
-                categories[parseInt(cats[el].category_index)] = {
-                    id: cats[el].id,
-                    name: cats[el].name,
-                    type: "marker",
-                    visible: true, 
-                    description: cats[el].description,
-                    icon: cats[el].icon_name,
-                    index:parseInt(cats[el].category_index),
-                    colorIndex: cats[el].category_index - 1,
-                    color: classColor,
-//                    layerOptions: {
-//                        //chunkedLoading: true,
-//                        spiderfyDistanceMultiplier: 2,
-//                        iconCreateFunction :
-//
-//                        // funzione di creazione delle icone dei cluster
-//                        function (cluster) {
-//                            //console.log(cluster.getAllChildMarkers());
-//                            var array = cluster.getAllChildMarkers();
-//                            //console.log("ARR CAT: ", array[0].options.categories[0])
-//
-//                            var childCount = cluster.getChildCount();
-//                            var color = array[0].options.categoryColor;
-//
-//                            return new L.DivIcon(
-//                                { 
-//                                    html: '<div class="outer" style="background-color: '+ 
-//                                    color 
-//                                    +'" ><div class="inner"><span>' + childCount + '</span></div></div>', 
-//                                    className: 'marker-cluster', 
-//                                    iconSize: new L.Point(40, 40) 
-//                                });
-//
-//                        }
-//                    }
-
-                }
-                //console.log('marker-cluster-' + (cats[el].id).toString());
-                
-            }
-            
-            //console.log("setCategoryOverlays: ", categories);
-        }*/
 
     }])
     .run(function(categoriesFactory){

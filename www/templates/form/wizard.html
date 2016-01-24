@@ -137,7 +137,6 @@
                     </form>
                 </ion-list>      
             </div>
-
             <div ng-if="editor.checkList.categories" ng-switch-when="Category">
                 <div class="list">
                     <form name="editor.form.wizardform2" novalidate>
@@ -152,7 +151,7 @@
                                            ng-required="true">
                                     <span class="item-icon-left" >
                                         <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
-                                        {{ category.name }}
+                                        {{ category.name }} 
                                     </span>
                                 </ion-radio>
                         </ng-form>

@@ -3,10 +3,11 @@ angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
     'dev': true,
-    'project': 5,
-    'api_base_domain' : 'firstlife-dev.di.unito.it/api/index.php/api/',
+    'project': 1,
+    'api_base_domain' : 'firstlife-dev.di.unito.it:3090/',
+    //'api_base_domain' : 'firstlife-dev.di.unito.it/api/index.php/api/',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
-    'api_version' : 'v3',
+    'api_version' : 'v4',
     'ssl': false,
     'version': '0.3.1',
 
@@ -52,7 +53,7 @@ angular.module('firstlife.config')
                  relations:{'FL_EVENTS':{slug:'parent',field:'parent_id',label:'Parte di',childrenLabel:'Contiene'}}
                 }
             ],
-            'categories': [{"category_space":1,"name":"Categorie","slug":"categorie","description":"Tipologie di attivit\u00e0","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-1,"name":"Cultura e arte","description":"Cultura e arte","category_index":1,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":2,"icon_name":"ion-university"},{"id":-6,"name":"Attivit\u00e0 per il sociale","description":"Attivit\u00e0 per il sociale","category_index":3,"icon_name":"ion-android-people"},{"id":-3,"name":"Sport","description":"Sport","category_index":4,"icon_name":"ion-ios-football"},{"id":-4,"name":"Alimentazione e ristorazione","description":"Alimentazione e ristorazione","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-5,"name":"Tempo libero","description":"Tempo libero","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-500,"name":"Uffici pubblici","description":"Uffici pubblici","category_index":7,"icon_name":"ion-social-buffer"},{"id":-7,"name":"Servizi professionali","description":"Servizi professionali","category_index":8,"icon_name":"ion-briefcase"},{"id":-501,"name":"Artigianato e industria","description":"Artigianato e industria","category_index":9,"icon_name":"ion-settings"},{"id":-9,"name":"Commercio","description":"Commercio","category_index":10,"icon_name":"ion-bag"},{"id":-10,"name":"Trasporti e mobilit\u00e0","description":"Trasporti e mobilit\u00e0","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immegine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":13,"name":"Tipologia di spazio","slug":"tipologia-di spazio","description":"Tipologia di spazio","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-90,"name":"Spazi aperti e aree verdi","description":"Spazi aperti e aree verdi","category_index":1,"icon_name":"ion-leaf"},{"id":-91,"name":"Spazi istituzionali","description":"Spazi istituzionali","category_index":2,"icon_name":"ion-ios-flag"},{"id":-92,"name":"Residenze e vicinato","description":"Residenze e vicinato","category_index":3,"icon_name":"ion-ios-home"},{"id":-93,"name":"Spazi produttivi","description":"Spazi produttivi","category_index":4,"icon_name":"ion-gear-a"},{"id":-94,"name":"Monumenti e luoghi storici","description":"Monumenti e luoghi storici","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":14,"name":"Costo","slug":"costo","description":"Costo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-100,"name":"Gratuito","description":"Gratuito","category_index":1,"icon_name":"ion-happy-outline"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":15,"name":"Accesso","slug":"accesso","description":"Accesso","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-110,"name":"Accesso libero","description":"Accesso libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-111,"name":"Su invito o prenotazione","description":"Su invito o prenotazione","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-112,"name":"Riservato al gruppo","description":"Riservato al gruppo","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":16,"name":"Partecipazione","slug":"partecipazione","description":"Partecipazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-120,"name":"Per tutti","description":"Per tutti","category_index":1,"icon_name":"ion-load-b"},{"id":-121,"name":"Per bambini e ragazzi","description":"Per bambini e ragazzi","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-122,"name":"Per giovani","description":"Per giovani","category_index":3,"icon_name":"ion-android-bar"},{"id":-123,"name":"Per famiglie","description":"Per famiglie","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]}]
+            'categories': [{"category_space":1,"name":"Categorie","slug":"categorie","description":"Tipologie di attivit\u00e0","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-1,"name":"Cultura e arte","description":"Cultura e arte","category_index":1,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":2,"icon_name":"ion-university"},{"id":-6,"name":"Attivit\u00e0 per il sociale","description":"Attivit\u00e0 per il sociale","category_index":3,"icon_name":"ion-android-people"},{"id":-3,"name":"Sport","description":"Sport","category_index":4,"icon_name":"ion-ios-football"},{"id":-4,"name":"Alimentazione e ristorazione","description":"Alimentazione e ristorazione","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-5,"name":"Tempo libero","description":"Tempo libero","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-500,"name":"Uffici pubblici","description":"Uffici pubblici","category_index":7,"icon_name":"ion-social-buffer"},{"id":-7,"name":"Servizi professionali","description":"Servizi professionali","category_index":8,"icon_name":"ion-briefcase"},{"id":-501,"name":"Artigianato e industria","description":"Artigianato e industria","category_index":9,"icon_name":"ion-settings"},{"id":-9,"name":"Commercio","description":"Commercio","category_index":10,"icon_name":"ion-bag"},{"id":-10,"name":"Trasporti e mobilit\u00e0","description":"Trasporti e mobilit\u00e0","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":13,"name":"Tipologia di spazio","slug":"tipologia-di spazio","description":"Tipologia di spazio","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-90,"name":"Spazi aperti e aree verdi","description":"Spazi aperti e aree verdi","category_index":1,"icon_name":"ion-leaf"},{"id":-91,"name":"Spazi istituzionali","description":"Spazi istituzionali","category_index":2,"icon_name":"ion-ios-flag"},{"id":-92,"name":"Residenze e vicinato","description":"Residenze e vicinato","category_index":3,"icon_name":"ion-ios-home"},{"id":-93,"name":"Spazi produttivi","description":"Spazi produttivi","category_index":4,"icon_name":"ion-gear-a"},{"id":-94,"name":"Monumenti e luoghi storici","description":"Monumenti e luoghi storici","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":14,"name":"Costo","slug":"costo","description":"Costo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-100,"name":"Gratuito","description":"Gratuito","category_index":1,"icon_name":"ion-happy-outline"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":15,"name":"Accesso","slug":"accesso","description":"Accesso","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-110,"name":"Accesso libero","description":"Accesso libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-111,"name":"Su invito o prenotazione","description":"Su invito o prenotazione","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-112,"name":"Riservato al gruppo","description":"Riservato al gruppo","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":16,"name":"Partecipazione","slug":"partecipazione","description":"Partecipazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-120,"name":"Per tutti","description":"Per tutti","category_index":1,"icon_name":"ion-load-b"},{"id":-121,"name":"Per bambini e ragazzi","description":"Per bambini e ragazzi","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-122,"name":"Per giovani","description":"Per giovani","category_index":3,"icon_name":"ion-android-bar"},{"id":-123,"name":"Per famiglie","description":"Per famiglie","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},{"category_space":17,"name":"Contributi","slug":"contributi","description":"Contributi","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-130,"name":"Storie","description":"Storie","category_index":1,"icon_name":"account_balance"},{"id":-131,"name":"Racconti","description":"Racconti","category_index":2,"icon_name":"recent_actors"},{"id":-132,"name":"Report","description":"Report","category_index":3,"icon_name":"subject"},{"id":-133,"name":"Notizie","description":"Notizie","category_index":4,"icon_name":"hearing"}],"entities":["FL_ARTICLES"]}]
         },
         'design':{
             'logo' : {url: 'img/logo-fl.png', title: 'FirstLife', alt:'FirstLife', label:{text: 'FirstLife', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
@@ -400,15 +401,17 @@ angular.module('firstlife.config')
             ssl = "http://";
 
         var url = "";
-        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/domains/").concat(myConfig.domain_id).concat("/");
+        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat('/fl').concat("/domains/").concat(myConfig.domain_id).concat("/");
 
         myConfig.domain_signature = url;
         myConfig.backend_places = url.concat('places');
         myConfig.backend_events = url.concat('events');
         myConfig.backend_things = url.concat('things');
         myConfig.backend_categories = url.concat('categories');
-        myConfig.backend_users = url.concat('users');
-        myConfig.update_user = url.concat('user/update');
+        //myConfig.backend_users = url.concat('users');
+        // da sistemare dopo
+        myConfig.backend_users = 'http://firstlife-dev.di.unito.it/api/index.php/api/v3/domains/1/users';
+        myConfig.update_user = myConfig.backend_users.concat('/update');
         myConfig.retrieve_password = myConfig.backend_users.concat('/retrieves/password');
         myConfig.reset_password = myConfig.backend_users.concat('/resets/passwords');
         myConfig.backend_tags = url.concat('tags');
@@ -593,61 +596,3 @@ angular.module('firstlife.config')
         } 
 
     });
-
-
-
-/* da valutare dopo properties:[
-                          { key: 'name', type: 'input',
-                           templateOptions: {
-                               type: 'text',
-                               label: 'Nome',
-                               placeholder: 'Nome',
-                               required:true
-                           }
-                          },
-                          { key: 'description', type: 'textarea',
-                           templateOptions: {
-                               label: 'Descrizione',
-                               placeholder: 'Descrizione',
-                               required:true
-                           }
-                          },
-                          { key: 'link_url', type: 'input',
-                           templateOptions: {
-                               type: 'text',
-                               label: 'Collegamento esterno',
-                               placeholder: 'Es. http://www...'
-                           }
-                          },
-                          { key: 'valid_from', type: 'ionic-datepicker',
-                           templateOptions: {
-                               label: "Data d'inizio",
-                               mondayfirst: "true",
-                               callback:"datePickerFrom",
-                               title:"Inizio"
-                           }
-                          },
-                          { key: 'valid_to', type: 'ionic-datepicker',
-                           templateOptions: {
-                               label: "Data di fine",
-                               mondayfirst: "true",
-                               callback:"datePickerTo",
-                               title:"Fine"
-                           }
-                          },
-                          { key: 'tags', type: 'auto-complete',
-                           templateOptions: {
-                               label:"Tags",
-                               source:"loadTags($query)",
-                               'min-length':"0",
-                               'load-on-focus':true,
-                               'load-on-empty':false,
-                               'max-results-to-show':10
-                           }
-                          },
-                          { key: 'categories', type: 'ion-radio',
-                           templateOptions: {
-                               label:"Categoria",
-                           }
-                          },
-                      ]*/

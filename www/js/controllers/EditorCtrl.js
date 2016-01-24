@@ -11,17 +11,26 @@ angular.module('firstlife.controllers')
         console.log("categorie in EditorCtrl", _this.categories);
 
 
+        // init del wizard
         _this.wizard = {};
         _this.wizard.steps = ['Info', 'Category'];
         _this.wizard.step = 0; 
-        _this.categories = [];
+        
+        
+        // init delle categorie
+        _this.categories = categoriesFactory.gets();
 
+        // init particolari: campi temporali
         _this.valid_from = false;
         _this.valid_to = false;
 
+        // recupero i tipi dal file di configurazione
         _this.types = _this.config.types;
 
+        // recupero l'utente corrente
         self.currentUser = MemoryFactory.readUser();
+        
+        // setup dei labels
         self.labels = {
             edit: "Modifica ",
             create: "Creazione "
@@ -54,24 +63,7 @@ angular.module('firstlife.controllers')
         function timePickerCallback(val){}
 
 
-        
-        /* da cancellare se funziona il sistema passando da mapcCtrl */
-        categoriesFactory.getAll().then(
-            function(categories) {
-                // bug da fixare per le categorie multiple
-                _this.categories = categories;
-                console.log("EditorCtrl, init categorie, categorie: ", categories);
-            },
-
-            function(error) {
-                console.log("Failed to get all categories (from EditorCtrl), result is " + error); 
-            }
-        );    
-        
-        /**/
-
-
-
+    
 
         /*
          * Listner
@@ -119,7 +111,7 @@ angular.module('firstlife.controllers')
                     if($stateParams.entity_type){
                         typeIndex = _this.types.list.map(function(e){return e.slug;}).indexOf($stateParams.entity_type);
                         type = _this.types.list[typeIndex].key;
-                        //console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
+                        console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
                     }
 
                     //imposto i permessi
@@ -153,10 +145,9 @@ angular.module('firstlife.controllers')
                     for( j = 0; j < _this.categories.length; j++){
                         var cat = _this.categories[j];
                         console.log("EditorCtrl, init form, init category, cat: ",cat,type);
-                        //if(cat.entities.indexOf(type) > -1){
-                            _this.wizard.dataForm.categories[j] = {categories:[],category_space:cat.category_space}; 
-                        //}else{
-                        //    _this.wizard.dataForm.categories[j] = {};
+                        //non controllo ma lavoro sul risultato prima di mandarlo al server
+                        //if(cat.entities.indexOf(type) > -1 ){
+                            _this.wizard.dataForm.categories.push( {categories:[],category_space:cat.category_space}); 
                         //}
                     }
                     console.log("EditorCtrl, end init form, init categories: ",_this.categories, _this.wizard.dataForm.categories);
@@ -345,7 +336,18 @@ angular.module('firstlife.controllers')
             for(var el in _this.wizard.dataForm.tags){
                 dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;   
             }
-
+            // elimino categorizzazioni vuote
+            var catsTmp = [];
+            //console.log("EditorCtrl, processData, check categorie: ",_this.wizard.dataForm.categories);
+            for(var i = 0; i < _this.wizard.dataForm.categories.length; i++){
+                var c = _this.wizard.dataForm.categories[i];
+                if(c.categories.length > 0){
+                    catsTmp.push(c);
+                }
+            }
+            _this.wizard.dataForm.categories = catsTmp;
+            //console.log("EditorCtrl, processData, check categorie: ",catsTmp, _this.wizard.dataForm.categories);
+            
             //accettaz. date
             if(!_this.valid_from)
                 dataForServer.valid_from = null;
