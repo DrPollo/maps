@@ -69,7 +69,7 @@ angular.module('firstlife.controllers')
                     // todo aggiungi slug
                     var filter_name = cats.name;//'catIndex',
                     var check = 'id';
-                    var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities};
+                    var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities,includeCondition:{value:{category_space:cats.category_space},property:'categories'}};
                     // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
                     $scope.filters[filter_name] = {list: response[i].categories, toggle:1, label:filter_name,check:check,name:filter_name,category_space:cats.category_space};
                     // bug init i = 1
@@ -1000,8 +1000,16 @@ angular.module('firstlife.controllers')
             //console.log("entry: ",val, " Condizioni: ", $scope.filterConditions);
             for(key in $scope.filterConditions){
                 // se non devo escludere la regola 
-                //console.log("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
-                if(!$scope.filterConditions[key].excludeRule  && $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1){
+                var indexCheck = 0;
+                if($scope.filterConditions[key].includeCondition){
+                    var checkField = val[$scope.filterConditions[key].includeCondition.property];
+                    //console.log("check per includeCondition",$scope.filterConditions[key].includeCondition,checkField);
+                    var k = Object.keys($scope.filterConditions[key].includeCondition.value)[0];
+                    indexCheck = checkField.map(function(e){return e[k]}).indexOf($scope.filterConditions[key].includeCondition.value[k]);
+                    //console.log("check per includeCondition",indexCheck);
+                }
+                if(!$scope.filterConditions[key].excludeRule  && $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
+
                     // se devo escludere ogni valore possibile
                     if($scope.filterConditions[key].excludeProperty){
                         var valore = (val[$scope.filterConditions[key].key]);

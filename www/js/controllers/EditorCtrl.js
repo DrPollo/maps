@@ -341,7 +341,7 @@ angular.module('firstlife.controllers')
             //console.log("EditorCtrl, processData, check categorie: ",_this.wizard.dataForm.categories);
             for(var i = 0; i < _this.wizard.dataForm.categories.length; i++){
                 var c = _this.wizard.dataForm.categories[i];
-                if(c.categories.length > 0){
+                if(c && c.categories.length > 0){
                     catsTmp.push(c);
                 }
             }

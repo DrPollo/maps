@@ -662,11 +662,13 @@ angular.module('firstlife.factories')
             }else if(place.lat){
                 feature.geometry = {"type": "Point", "coordinates":[parseFloat(place.lng),parseFloat(place.lat)]};
             }
-            var templateCollection = '{"type":"FeatureCollection","features":[]}';
+            /*var templateCollection = '{"type":"FeatureCollection","features":[]}';
             var featureCollection = angular.fromJson(templateCollection);
             featureCollection.features.push(feature);
             console.log("PlaceFactory, markerConverter, from: ",place," to: ", angular.toJson(featureCollection));
-            return featureCollection;
+            return featureCollection;*/
+            console.log("PlaceFactory, markerConverter, from: ",place," to: ", angular.toJson(feature));
+            return feature;
         }
 
     }]).run(function initCats(entityFactory,categoriesFactory){
