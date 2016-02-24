@@ -1,3 +1,17 @@
+.leaflet-control{
+    border-radius:0px !important;
+    box-shadow: 1px 1px 3px #666;
+    margin-right: 8px;
+    margin-top:8px;
+    .leaflet-bar a:first-child {
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+    }
+    .leaflet-bar a:last-child {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    }
+}
 .maps-view{
     #mapHeader{
         position: fixed;
@@ -22,6 +36,7 @@
             border-radius: 0px;
             box-shadow: 1px 1px 3px #666;
         }
+        
         #omnibox{
             min-width: 350px;
             top:8px;
@@ -49,7 +64,7 @@
                 button {
                     min-height: 48px;
                     height: 48px;
-                    width: 48px;
+                    width: 46px;
                 }
                 button:before{
                     font-size: 1.2em;
@@ -219,7 +234,7 @@
             transform: rotate(-45deg);
             left: 50%;
             top: 50%;
-            margin: -20px 0 0 -20px;
+            margin: -36px 0 0 -15px;
             -webkit-animation-name: bounce;
             -moz-animation-name: bounce;
             -o-animation-name: bounce;
@@ -255,7 +270,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            margin: 11px 0px 0px -12px;
+            margin: -4px 0px 0px -7px;
             -webkit-transform: rotateX(55deg);
             -moz-transform: rotateX(55deg);
             -o-transform: rotateX(55deg);
@@ -297,9 +312,10 @@
 
     #map-action-menu{
         position: absolute; 
-        bottom: 8px; 
+        bottom: 80px; 
         right:8px;
         display:inline-block;
+        z-index: 2000;
         #bottom-bar-toggler{
             
             #time-box{

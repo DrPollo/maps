@@ -3,8 +3,8 @@ angular.module('firstlife.controllers')
 
         $scope.config = myConfig;
         
-        self.text_limit = 3;
-        self.result_limit = 5;
+        var text_limit = 3;
+        var result_limit = 5;
         
         initForm();
         
@@ -29,15 +29,16 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $scope.form.query; }, 
             function(e, old){
-                //console.log("SearchCtrl, old: ",old, " new: ",e);
-                if(e && old != e && e.length > self.text_limit){
+                console.log("SearchCtrl, old: ",old, " new: ",e);
+                if(e && old != e && e.length > text_limit){
                     if (SEARCH_DELAY > 0) {
                         if (searchendSetTimeout) {
-                            //console.log("clearTimeout");
+                            console.log("clearTimeout");
                             clearTimeout(searchendSetTimeout);
                         }
                         searchendSetTimeout = setTimeout(
                             function(){
+                                console.log("cerco ",$scope.form.query);
                                 checkQuery(e);
                             }, SEARCH_DELAY);
                     } 
@@ -49,8 +50,8 @@ angular.module('firstlife.controllers')
             });
 
         // listner click sulla mappa
-        $scope.$on('leafletDirectiveMap.focus', function(event, args) {
-            //console.log("SearchCtrl, leafletDirectiveMap.focus");
+        $scope.$on('leafletDirectiveMap.mymap.focus', function(event, args) {
+            console.log("SearchCtrl, leafletDirectiveMap.mymap.focus");
             $scope.focus = false;
             initForm();
         });
@@ -75,7 +76,7 @@ angular.module('firstlife.controllers')
         }
         // click su risultato della ricerca
         $scope.entryClick = function(id){
-            $location.search('place',id);
+            $location.search('entity',id);
             //todo salva in cache la scelta
         }
         // cancellazione dei risultati della ricerca e del campo di ricerca

@@ -1,15 +1,18 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate',  'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, myConfig, MemoryFactory ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, myConfig, MemoryFactory ) {
         
         
         $scope.config = myConfig;
         $scope.isLoggedIn = false;
+        $rootScope.currentLang = $translate.use();
         
+        
+        var consoleCheck = false;
         
         // gestore del cambio di stato
         $scope.$on("$stateChangeSuccess", function() {
-            console.log("sono in AppCtrl e vengo da ", $rootScope.previousState, $rootScope.isLoggedIn, $rootScope.currentUser);
+            if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState, $rootScope.isLoggedIn, $rootScope.currentUser);
             $scope.user = MemoryFactory.readUser();
             // valuto lo stato da dove arrivo e decido cosa fare
             if($scope.user){
@@ -20,11 +23,11 @@ angular.module('firstlife.controllers')
                 }
                 
                 $scope.isLoggedIn = true;
-                console.log("Benvenuto", $rootScope.currentUser);
+                if(consoleCheck) console.log("Benvenuto", $rootScope.currentUser);
             } else {
                 $scope.username = "Guest";
                 $scope.isLoggedIn = false;
-                console.log("Non loggato");
+                if(consoleCheck) console.log("Non loggato");
             }
             
         });
@@ -34,6 +37,7 @@ angular.module('firstlife.controllers')
          * 1) login: va nello stato login con azione = login
          * 2) toggleSideLeft: apre/chiude il menu laterale
          * 3) showConfirmLogout: chiede conferma prima del logout
+         * 4) langSelector: switch lingua
          */
         $scope.login = function(){
             $state.go('login', {action:'login'});
@@ -53,13 +57,20 @@ angular.module('firstlife.controllers')
             });
             $scope.confirmPopup.then(function(res) {
                 if(res) {
-                    //console.log('Yes');
+                    //if(consoleCheck) console.log('Yes');
                     logout();
                 } else {
-                    //console.log('No');
+                    //if(consoleCheck) console.log('No');
                 }
             });
         };
+        
+        $scope.langSelector = function(key){
+            if(consoleCheck) console.log("Seleziono linguaggio ",key);
+            $translate.use(key);
+            $rootScope.currentLang = $translate.use();
+            if(consoleCheck) console.log("Linguaggio corrente ",$rootScope.currentLang);
+          };
         
         /*
          * Funzioni private

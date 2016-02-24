@@ -2,40 +2,40 @@ angular.module('firstlife.controllers')
 
     .controller('ImagesCtrl', ['$scope', '$state', '$q', '$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', '$rootScope', 'myConfig', 'ImageService', 'CamerasFactory', 'SenderFactory', 'PlatformService', 'MemoryFactory', function( $scope, $state, $q, $ionicModal, $rootScope, $ionicSlideBoxDelegate, $ionicLoading, myConfig, ImageService, Cameras, Sender, PlatformService, MemoryFactory) { 
 
-        var _this = this;
+        //var $scope = this;
 
-        _this.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
-        _this.isLoggedIn = $rootScope.isLoggedIn;
-        _this.config = myConfig;
-        _this.images = [];
-        _this.imageCache = [];
+        $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+        $scope.isLoggedIn = $rootScope.isLoggedIn;
+        $scope.config = myConfig;
+        $scope.images = [];
+        $scope.imageCache = [];
         
-        _this.isPendingImages = false;
-        _this.gallery = {};
+        $scope.isPendingImages = false;
+        $scope.gallery = {};
         
-        _this.slider = {};
-        _this.slider.images = [];
-        _this.slider.pointer = 0;
+        $scope.slider = {};
+        $scope.slider.images = [];
+        $scope.slider.pointer = 0;
         
-        _this.isLoggedIn = false;
+        $scope.isLoggedIn = false;
         // check autenticazione
         var user = MemoryFactory.readUser();
         if(user){
             console.log("isLoggedIn? ", true);
-            _this.isLoggedIn = true;
+            $scope.isLoggedIn = true;
         }
 
 
         // listner per l'apertura della modal *click sul marker*
         // se le foto nelle modal sono abilitate
-        console.log("ImagesCtrl, immagini abilitate? ", _this.config.design.show_thumbs, _this);
-        if(_this.config.design.show_thumbs){
+        console.log("ImagesCtrl, immagini abilitate? ", $scope.config.design.show_thumbs, $scope);
+        if($scope.config.design.show_thumbs){
             $scope.$on('checkImagePlaceModal', function(event, args) {
                 console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
                 if (!event.defaultPrevented) {
                     event.defaultPrevented = true;
                     //console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
-                    _this.loadImages(args.marker.id,args.marker.entity_type);
+                    $scope.loadImages(args.marker.id,args.marker.entity_type);
                 }
             });   
         }
@@ -49,7 +49,7 @@ angular.module('firstlife.controllers')
         /*
          * modal galleria ------> carico la galleria immagini per il click
          */
-        _this.loadGallery = function(entityId, index, entity_type) {
+        $scope.loadGallery = function(entityId, index, entity_type) {
             console.log("ImagesCtrl, loadGallery, entityId: ", entityId, ", index: ", index);
             var param = {size : "full", cache : false};
             ImageService.getImages(entityId, param,entity_type)
@@ -57,7 +57,7 @@ angular.module('firstlife.controllers')
                 console.log("getImages, risultato: ",data);
                 var images = data["images"],
                     placeId = data["id"];
-                angular.extend(_this.slider.images,images);
+                angular.extend($scope.slider.images,images);
                 openGallery(index);
             }, function(err){
                 console.log("getImages, errore: ",err);
@@ -68,96 +68,98 @@ angular.module('firstlife.controllers')
             var deferred = $q.defer();
             console.log("ImagesCtrl, openGallery, params: ", index);
             if(!isNaN(index)){
-                _this.slider.pointer = index;
+                $scope.slider.pointer = index;
             }
             $ionicModal.fromTemplateUrl('templates/gallery.html', {
-                scope: _this,
+                scope: $scope,
                 animation: 'fade-in'
-            }).then(function(modal) {
-                _this.gallery = modal; 
+            }).then(function(modal){
+                console.log("gallery ",modal);
+                $scope.gallery = modal; 
                 if(index > 0){
-                    //_this.galery.goToSlide(index);
+                    //$scope.galery.goToSlide(index);
                 }
-                _this.gallery.show();
+                $scope.gallery.show();
                 
                 //$ionicSlideBoxDelegate.slide(index);
                 deferred.resolve(true);
             }, function(err){
+                console.log("gallery error",err);
                 console.log(err);
                 deferred.reject(false);
             });
 
-            _this.gallery.close = function() {
+            $scope.gallery.close = function() {
                 console.log("ImageCtrl, gallery.close, close!");
-                _this.gallery.hide();
+                $scope.gallery.hide();
                 $rootScope.galleryStatus = false;
             };
             // Cleanup the modal when we're done with it!
-            _this.$on('$destroy', function() {
-                _this.gallery.remove();
+            $scope.$on('$destroy', function() {
+                $scope.gallery.remove();
             });
             // Execute action on hide modal
-            _this.$on('gallery.hide', function() {
+            $scope.$on('gallery.hide', function() {
                 // Execute action
             });
             // Execute action on remove modal
-            _this.$on('gallery.removed', function() {
+            $scope.$on('gallery.removed', function() {
                 // Execute action
             });
-            _this.$on('gallery.shown', function() {
+            $scope.$on('gallery.shown', function() {
                 console.log('Gallery is shown!');
             });
 
 
 
             // Called each time the slide changes
-            _this.gallery.slideChanged = function(index) {
-                _this.gallery.slideIndex = index;
+            $scope.gallery.slideChanged = function(index) {
+                $scope.gallery.slideIndex = index;
             };
-            console.log("ImagesCtrl, openGallery, gallery: ",_this.gallery);
+            console.log("ImagesCtrl, openGallery, gallery: ",$scope.gallery);
             return deferred.promise;
         };
 
 
-        _this.slider.next = function(){
-            if(_this.slider.pointer < _this.slider.images.length -1){
-                _this.slider.pointer++;
+        $scope.slider.next = function(){
+            if($scope.slider.pointer < $scope.slider.images.length -1){
+                $scope.slider.pointer++;
             }else{
-                _this.slider.pointer = 0;
+                $scope.slider.pointer = 0;
             }
-            console.log("ImageCtrl, slider.pointer: ", _this.slider.pointer);
+            console.log("ImageCtrl, slider.pointer: ", $scope.slider.pointer);
         }
-        _this.slider.prev = function(){
-            if(_this.slider.pointer > 0){
-                _this.slider.pointer--;
+        $scope.slider.prev = function(){
+            if($scope.slider.pointer > 0){
+                $scope.slider.pointer--;
             }else{
-                _this.slider.pointer =  _this.slider.images.length -1;
+                $scope.slider.pointer =  $scope.slider.images.length -1;
             }
-            console.log("ImageCtrl, slider.pointer: ", _this.slider.pointer);
+            console.log("ImageCtrl, slider.pointer: ", $scope.slider.pointer);
         }
-        _this.slider.slideTo = function(index){
-            if(index > -1 && index < _this.slider.images.length-1){
-                _this.slider.pointer = index;
+        $scope.slider.slideTo = function(index){
+            if(index > -1 && index < $scope.slider.images.length-1){
+                $scope.slider.pointer = index;
             }
-            console.log("ImageCtrl, slider.pointer: ", _this.slider.pointer);
+            console.log("ImageCtrl, slider.pointer: ", $scope.slider.pointer);
         }
 
 
 
-        _this.removeImage = function(index) {
-            if(_this.imageCache.length > 0){
-                _this.imageCache.splice(index, 1);
+        $scope.removeImage = function(index) {
+            if($scope.imageCache.length > 0){
+                $scope.imageCache.splice(index, 1);
             }
 
 
-            if(_this.imageCache.length < 1){
-                _this.isPendingImages = false;
+            if($scope.imageCache.length < 1){
+                $scope.isPendingImages = false;
             }
 
         };
 
         //action to upload photos
-        _this.loadCamera = function(){
+        $scope.loadCamera = function(){
             console.log('Getting camera');
             Cameras.getPicture({
                 destinationType : Camera.DestinationType.DATA_URL,
@@ -168,14 +170,14 @@ angular.module('firstlife.controllers')
                 saveToPhotoAlbum: false
             }).then(function(imageURI) {
                 //  alert(imageURI);
-                _this.addToImageCache(imageURI);
+                $scope.addToImageCache(imageURI);
             }, function(err) {
                 console.log(err);
             });    
         };
 
         //action to choose images
-        _this.imagePicker = function(){
+        $scope.imagePicker = function(){
 
             var options = {
                 quality: 70,
@@ -187,7 +189,7 @@ angular.module('firstlife.controllers')
 
             $cordovaCamera.getPicture(options).then(function(imageUri) {
                 //  alert('img' + imageUri);
-                _this.addToImageCache(imageUri);
+                $scope.addToImageCache(imageUri);
 
             }, function(err) {
                 console.log('error'+ err);
@@ -196,25 +198,24 @@ angular.module('firstlife.controllers')
         };
 
 
-
-        _this.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
+        $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
             console.log("ImagesCtrl, onLoad, fileObj: ", fileObj);
-            _this.addToImageCache(fileObj.base64);
+            $scope.addToImageCache(fileObj.base64);
         }
 
 
         // send photo to api
-        _this.sendPhoto = function(entity_id,entity_type) {
+        $scope.sendPhoto = function(entity_id,entity_type) {
             
-            console.log("immagini da salvare", _this.imageCache, entity_id);
-            if(Array(_this.imageCache).length > 0){
-                Sender.images(_this.imageCache, entity_id,entity_type).then(
+            console.log("immagini da salvare", $scope.imageCache, entity_id);
+            if(Array($scope.imageCache).length > 0){
+                Sender.images($scope.imageCache, entity_id,entity_type).then(
                     function(data){
                     // reset immagini
-                    _this.resetImageCache();
+                    $scope.resetImageCache();
                     //console.log('Immagini caricate!',data);
                     // ho salvato le immagini, le ricarico dal server
-                    _this.refreshImages(entity_id,entity_type);
+                    $scope.refreshImages(entity_id,entity_type);
                 },
                     function(err){
                     console.log('errore' + err);
@@ -224,41 +225,41 @@ angular.module('firstlife.controllers')
         };
 
         // send photo to api
-        _this.resetImageCache = function(markerId) {
+        $scope.resetImageCache = function(markerId) {
             //console.log("reset immagini");
-            _this.imageCache = [];
-            _this.isPendingImages = false;
+            $scope.imageCache = [];
+            $scope.isPendingImages = false;
 
         };
 
 
         // carico le immagini 
-        _this.loadImages = function(entityId, entity_type){
+        $scope.loadImages = function(entityId, entity_type){
             //console.log("carico le immagini di: ",placeId);
             var param = {cache : true};
             // se mobile chiedo i thumbs
-            if(_this.isMobile){
+            if($scope.isMobile){
                 param["size"] = "small";
             }
 
-            _this.getImages(entityId, param, entity_type);
+            $scope.getImages(entityId, param, entity_type);
         };
 
         // refresh immagini del place
-        _this.refreshImages = function(entityId, entity_type){
+        $scope.refreshImages = function(entityId, entity_type){
             //console.log("reset immagini");
             var param = {cache : false};
             // se mobile chiedo i thumbs
-            if(_this.isMobile){
+            if($scope.isMobile){
                 param["size"] = "small";
             }
-            _this.getImages(entityId, param, entity_type);
+            $scope.getImages(entityId, param, entity_type);
         };
 
 
 
         // chiamata al service delle immagini
-        _this.getImages = function(entityId, param, entity_type){
+        $scope.getImages = function(entityId, param, entity_type){
             ImageService.getImages(entityId, param, entity_type)
                 .then(function (data){
                 console.log("getImages, risultato: ",data);
@@ -276,26 +277,26 @@ angular.module('firstlife.controllers')
         function addImages (entityId,images){
 
             //aggiungo le immagini al marker
-            //console.log("aggiorno le immagini", images, placeId, _this.infoPlace.marker.images );
+            //console.log("aggiorno le immagini", images, placeId, $scope.infoPlace.marker.images );
             // pulisco l'array di immagini della modal
-            _this.images = [];
+            $scope.images = [];
             for(i = 0 ; i < images.length; i++){
                 images[i].position = i;
-                _this.images[i] = images[i];
+                $scope.images[i] = images[i];
             }
-            console.log("salvo le immagini: ", _this.images);
+            console.log("salvo le immagini: ", $scope.images);
 
         }
 
-        _this.addToImageCache = function(image){
+        $scope.addToImageCache = function(image){
             // aggiungo le immagini alla cache, senza duplicati
             // console.log("immagini da aggiungere", image);
-            if(_this.imageCache.indexOf(image) < 0){
-                _this.imageCache.push(image);
-                _this.isPendingImages = true;
+            if($scope.imageCache.indexOf(image) < 0){
+                $scope.imageCache.push(image);
+                $scope.isPendingImages = true;
             }
 
-            console.log("cache", _this.imageCache, _this.isPendingImages);
+            console.log("cache", $scope.imageCache, $scope.isPendingImages);
         }
 
 

@@ -116,7 +116,7 @@ angular.module('firstlife.controllers')
          */
 
         $scope.makeEditable = function(){
-            $scope.user = angular.copy(userCache);
+            $scope.user = angular.copy(self.userCache);
             $location.search('action','edit');
         }
         $scope.exitEdit = function(){
@@ -125,7 +125,7 @@ angular.module('firstlife.controllers')
 
         $scope.close = function (){
             // recupero l'ultima posizione della mappa
-            var param = {lat:$rootScope.info_position.lat,lng:$rootScope.info_position.lng,zoom:$rootScope.info_position.zoom};
+            var param = {};
             // torno alla mappa
             $state.go("app.maps", param);
         }

@@ -70,6 +70,12 @@
         line-height: 24px;
         letter-spacing: 0.1;
         border-bottom:1px solid rgba(221, 221, 221, 0.5);
+        form{
+            padding: 20px 0;
+            textarea{
+                width: 100%;
+            }
+        }
     }
     .description-field:first-letter {
         text-transform: uppercase;
@@ -113,6 +119,7 @@
         }
     }
 
+    
     .foto-box{
         //border-bottom:1px solid rgba(221, 221, 221, 0.5);
         //margin-bottom: 32px;

@@ -9,14 +9,14 @@ angular.module('firstlife.factories')
 //                    deferred.resolve(self.comments[entityId]);
 //                }else{
                     var req = {
-                        url: url.concat('/').concat(entityId).concat("/comments").concat(self.format),
+                        url: url.concat('/').concat(entityId).concat("/comments").concat(format),
                         method: 'GET',
                         headers:{"Content-Type":"application/json"}
                     };
                     $http(req).then(
                         function(response) {
                             console.log("CommentsFactory, get, response: ", response);
-                            self.comments[entityId] = response;
+                            comments[entityId] = response;
                             deferred.resolve(response.data.data);
                         },
                         function(err){
@@ -32,8 +32,8 @@ angular.module('firstlife.factories')
                     user = MemoryFactory.readUser();
                 var comment = {user_id:user.id,message:message};
                 var req = {
-                    url: url.concat('/').concat(entityId).concat("/comments").concat(self.format),
-                    method: 'POST',
+                    url: url.concat('/').concat(entityId).concat("/comments").concat(format),
+                    method: 'PUT',
                     headers:{"Content-Type":"application/json", Authentication:token},
                     data:comment
                 };
@@ -52,7 +52,7 @@ angular.module('firstlife.factories')
                 var deferred = $q.defer();
                 var token = MemoryFactory.getToken();
                 var req = {
-                    url: url.concat('/').concat(commentId).concat("/comments").concat(self.format),
+                    url: url.concat('/').concat(commentId).concat(format),
                     method: 'DELETE',
                     headers:{"Content-Type":"application/json", Authentication:token},
                     data:{}

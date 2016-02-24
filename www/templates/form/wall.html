@@ -3,7 +3,7 @@
         <div class="bar bar-header">
             <form id="ricerca" name="ricerca" class="item-input-wrapper" ng-init="searchName = ''">
                 <i class="icon ion-android-search"></i>
-                <input type="search" placeholder="Cerca" ng-model="searchName">
+                <input type="search" placeholder="{{'SEARCH'| translate}}" ng-model="searchName">
                 <i ng-show="searchName.length > 0" ng-click="searchName = '' " class="icon ion-close"></i>
             </form>
         </div>
@@ -12,17 +12,17 @@
         <ion-list>
             <div ng-repeat="marker in markersFilteredArray | orderBy:['name'] |filter:searchName">
                 <ion-item ng-init="loadChildren(marker)" ng-click="clickWallItem(marker)">
-                    <i ng-if="marker.type_info" class="icon {{marker.type_info.icon}}"  style="color:{{marker.type_info.color}}"></i>
-                    <i ng-if="marker.icon && marker.icon.icon != marker.type_info.icon" class="icon {{marker.icon.icon}}"  style="color:{{marker.icon.color}}"></i>
+                    <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
+                    </i>
                     {{marker.name}}
                     <div class="sublist" ng-show="markerChildren[marker.id]">
                         <div class="sublist-block" ng-repeat="(key, rel) in markerChildren[marker.id]">
                             <div class="sublist-title">
-                                {{rel.childrenLabel}}
+                                {{rel.childrenLabel |translate}}
                             </div>
-                            <div class="sublist-item" ng-repeat="c in rel.list">  
-                                <i ng-if="c.type_info" class="icon {{c.type_info.icon}}"  style="color:{{c.type_info.color}}"></i>
-                                <i ng-if="c.icon && c.icon != c.type_info.icon" class="icon {{c.icon.icon}}"  style="color:{{c.icon.color}}"></i>
+                            <div class="sublist-item" ng-repeat="c in rel.list"> 
+                                <i ng-repeat="cIcon in c.icons" class="icon {{cIcon.icon}}"  style="color:{{cIcon.color}}">
+                                </i>
                                 {{c.name}}
                             </div>
                         </div>

@@ -14,9 +14,9 @@ Requires angular version greater than or equal to `1.2.0`. Tested on angular ver
 ```
 
 `$scope.myfile` :
-```json
+```javascript
   {
-    "filesize": 54836 (bytes),
+    "filesize": 54836, /* bytes */
     "filetype": "image/jpeg",
     "filename": "profile.jpg",
     "base64":   "/9j/4AAQSkZJRgABAgAAAQABAAD//gAEKgD/4gIctcwIQA..."
@@ -62,7 +62,7 @@ Validations
  - `maxnum` = Maximum number of items to select (applicable only for multi-select)
  - `minnum` = Minimum number of items to select (applicable only for multi-select)
  - `accept` = [Input file accept attribute](http://www.w3schools.com/tags/att_input_accept.asp). `file_extension|audio/*|video/*|image/*|media_type` comma separated
- - `required` = required
+ - `required` = Checks if the model value is `null`, empty array `[]` or empty object `{}`
 
 ```html
 <form name="form">
@@ -134,6 +134,15 @@ Events
    - Event - Event object.
    - FileList - Array of selected files.
 
+<b>on-after-validate</b> - Ran after the validations are executed and after file object(s) are added to the model.
+
+`<input on-after-validate="onAfterValidateFunc">`
+
+ - Params:
+   - Event - Event object.
+   - FileObjects - Array of base64-encoded files.
+   - FileList - Array of selected files.
+
 Example event handler implementation:
    ```
    $scope.errorHandler = function (event, reader, fileList, fileObjs, file) {
@@ -145,6 +154,10 @@ Example event handler implementation:
     <input type="file" base-sixty-four-input ng-model="myfile" onerror="errorHandler">
    <form>
    ```
+
+Clearing the input element
+--------------------------
+Just assign your model with `null`, `{}` or `[]` and it will automatically clear the input element
 
 Server-Side
 ---------------
@@ -187,9 +200,11 @@ end
 Contribution
 ------------
  - Using [Grunt](http://gruntjs.com) as build tool
- - `grunt build` to build the project
- - `grunt test` to run unit tests
  - Uses [jasmine 1.3](http://jasmine.github.io/1.3/introduction.html) in writing unit test specs
+ - `grunt test` to run unit tests
+ - `grunt build` to build the project
+ - Update `README.md` and `CHANGELOG.md` to reflect the new changes
+ - Update the version number of `package.json` and `bower.json`
 
 Change Log
 ----------------------------
@@ -209,6 +224,8 @@ Contributors
  - [@boxfrommars](https://github.com/boxfrommars)
  - [@kermit666](https://github.com/kermit666)
  - [@marksyzm](https://github.com/marksyzm)
+ - [@arturgspb](https://github.com/arturgspb)
+ - [@pegasuspect](https://github.com/pegasuspect)
 
 ## License
 

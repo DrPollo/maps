@@ -17,12 +17,12 @@
                     <form  name="login_form" class="login-form" novalidate>
                         <div class="list">
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : login_form.user_email.$invalid, 'no-error' : !login_form.user_email.$invalid }">
-                                <span class="input-label">Email</span>
+                                <span class="input-label">{{'EMAIL'|translate}}</span>
                                 <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
                             </label>
 
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : login_form.user_password.$invalid, 'no-error' : !login_form.user_password.$invalid }">
-                                <span class="input-label">Password</span>
+                                <span class="input-label">{{'PASSWORD'|translate}}</span>
                                 <input type="password" placeholder="Password" name="user_password" ng-model="user.password" required show-hide>
                             </label>
 
@@ -31,10 +31,10 @@
 
                     <div class="alternative-actions">
                         <button type="submit" class="button icon ion-log-in button-block" ng-click="doLogIn()" ng-disabled="login_form.$invalid" ng-class="{ 'button-stable' : login_form.$invalid, 'button-positive' : !login_form.$invalid}">
-                            Accesso
+                            {{'LOGIN'|translate}}
                         </button>
                         <button class="sign-up button button-small button-block button-stable ion-android-person-add" ng-click="goToSignUp()">
-                            Registrazione
+                            {{'SIGNUP'|translate}}
                         </button>
                     </div>
 
@@ -47,37 +47,40 @@
                             <div class="row inner-content responsive-sm">
                                 <div class="col left-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_firstname.$invalid, 'no-error' : !signup_form.user_firstname.$invalid }">
-                                        <span class="input-label">Nome</span>
+                                        <span class="input-label">{{'NAME'|translate}}</span>
                                         <input type="text" placeholder="Nome" name="user_firstname" ng-model="user.firstName" required>
                                     </label>
                                 </div>
                                 <div class="col right-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_lastname.$invalid, 'no-error' : !signup_form.user_lastname.$invalid }">
-                                        <span class="input-label">Cognome</span>
+                                        <span class="input-label">{{'LASTNAME'|translate}}</span>
                                         <input type="text" placeholder="Cognome" name="user_lastname" ng-model="user.lastName" required>
                                     </label>
                                 </div>
                             </div>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_email.$invalid, 'no-error' : !signup_form.user_email.$invalid }">
-                                <span class="input-label">Email</span>
+                                <span class="input-label">{{'EMAIL'|translate}}</span>
                                 <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
                             </label>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_password.$invalid, 'no-error' : !signup_form.user_password.$invalid }">
-                                <span class="input-label">Password</span>
+                                <span class="input-label">{{'PASSWORD'|translate}}</span>
                                 <input type="password" placeholder="Password" name="user_password" ng-model="user.password" ng-minlength="6" required show-hide>
                             </label>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_password2.$error.nxEqual, 'no-error' : !signup_form.user_password2.$error.nxEqual }">
-                                <span class="input-label">Conferma Password</span>
+                                <span class="input-label">{{'CONTROLL_PASSWORD'|translate}}</span>
                                 <input type="password" placeholder="Confirm password" name="user_password2" ng-model="user.password2" nx-equal="user.password" required show-hide>
+                            </label>
+                            <label class="termini-duso">
+                                {{'CLICKING'|translate}} {{'SIGNUP'|translate}}, {{'APPROVE'|translate}} <a ng-href="{{'TERMS_LINK'|translate}}" target="_blank">{{'TERMS'|translate}}</a> {{'READING'|translate}} <a ng-href="{{'DATA_NORMS_LINK'|translate}}" target="_blank">{{'DATA_NORMS'|translate}}</a>. {{'LICENSE_DISCLAIMER'|translate}} <a ng-href="{{'LICENSE_LINK'|translate}}" target="_blank">{{'LICENSE'|translate}}</a>.
                             </label>
                         </div>
                     </form>
                     <div class="alternative-actions">
                         <button type="submit" class="button icon ion-android-person-add button-block" ng-disabled="signup_form.$invalid" ng-class="{'button-stable' : signup_form.$invalid, 'button-positive' : ! signup_form.$invalid }" ng-click="doSignUp()" >
-                            Registrazione
+                            {{'SIGNUP'|translate}}
                         </button>
                         <button class="log-in button button-small button-stable button-block ion-log-in" ng-click="backToLogin()">
-                            Accesso
+                            {{'LOGIN'|translate}}
                         </button>
                     </div>
                 </div>
@@ -87,19 +90,19 @@
                     <form name="login_form" class="login-form" novalidate>
                         <div class="list">
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : login_form.user_email.$invalid, 'no-error' : !login_form.user_email.$invalid }">
-                                <span class="input-label">Email</span>
+                                <span class="input-label">{{'EMAIL'|translate}}</span>
                                 <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
                             </label>
 
                         </div>
                     </form>
-                    <div style="color:white;">Si riceverà una nuova password tramite e-mail</div>
+                    <div style="color:white;">{{'SIGNUP_MESSAGE'|translate}}</div>
                     <div class="alternative-actions">
                         <button type="submit" class="button icon ion-key button-block" ng-click="retrievePassword()" ng-disabled="login_form.$invalid" ng-class="{ 'button-stable' : login_form.$invalid, 'button-positive' : !login_form.$invalid}">
-                            Recupera password
+                            {{'PASSWORD_RETRIEVE'|translate}}
                         </button>
                     </div>
-                    <a style="color:white;cursor:pointer;" on-tap="backToLogin()">Accedi</a>
+                    <a style="color:white;cursor:pointer;" on-tap="backToLogin()">{{'LOGIN'|translate}}</a>
                 </div>
             </div>
 

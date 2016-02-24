@@ -1,5 +1,5 @@
 .gallery-view{
-    background: #333;
+    background: #fff;
     text-align: center;
     vertical-align: middle;
     .slider-box{
@@ -21,7 +21,7 @@
             position: absolute;
             top: 48%;
             color: rgba(255,255,255,0.8);
-            //text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
+            text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
             font-size: 2em;
             cursor: pointer;
         }
@@ -40,6 +40,7 @@
         z-index: 10;
         top: 0px;
         right: 0px;
+        text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
     }
     .slider-close:before{
         color: rgba(255,255,255,0.8);

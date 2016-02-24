@@ -5,7 +5,26 @@ angular.module('firstlife.factories')
         //C: (P&(~Q))
         
         return {
-            checkPerms: function(action,source){
+            checkPerms: function(source){
+                
+                var checkPerms = {};
+                for(a in actions){
+                    checkPerms[a] = checkAction(a,source,perms,actions);
+                }
+                console.log("AuthFactory, perms ",source,perms,actions,checkPerms);
+                return checkPerms;
+            },
+            
+            checkPerm: function(action,source){
+                console.log("AuthFactory, perm ",action,source,perms,actions);
+                
+                return checkAction(action,source,perms,actions);
+            },
+        };
+
+        
+        function checkAction (action,source,perms,actions){
+                
                 var index = 2;
                 switch(source){
                     case 'self':
@@ -17,14 +36,13 @@ angular.module('firstlife.factories')
                     default:
                         index = 2;
                 }
-                var mask = self.perms[index];
+                var mask = perms[index];
                 //console.log("authFactory, checkPerms, action e source ",action,source,mask);
                 //console.log("Result (P&(notQ)) ",self.actions[action],(mask), (self.actions[action]&(mask)));
                 
-                return (self.actions[action]&(~mask));
-            },
-        };
-
+                return (actions[action]&(~mask));
+        }
+        
     }]).run(function(myConfig){
     // conversione da decimale a binario
         function dec2bin(dec){

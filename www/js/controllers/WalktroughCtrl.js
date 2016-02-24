@@ -5,13 +5,15 @@ angular.module('firstlife.controllers')
         $scope.user = {};
         $scope.defaults = myConfig;
 
+        var consoleCheck = false;
+        
         // azione di default
         $scope.action = 'login';
 
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             event.preventDefault();
             var action = $stateParams.action;
-            console.log("sono in login, questi i parametri ",toState, action);
+            if(consoleCheck) console.log("sono in login, questi i parametri ",toState, action);
             if(toState.name === 'login'){
                 //if(!$scope.defaults.actions.alow_login && !$scope.defaults.is_login_required){
                 //    goToMap();
@@ -19,7 +21,7 @@ angular.module('firstlife.controllers')
                     // entro in login con azione "logout"
                     switch(action){
                         case "logout":
-                            console.log("Richiesta di logout...");
+                            if(consoleCheck) console.log("Richiesta di logout...");
                             // effettuo logout
                             UserService.logout();
                             // elimino ?action=logout
@@ -27,34 +29,34 @@ angular.module('firstlife.controllers')
                             $scope.action = "login";
                             break;
                         case "signup":
-                            console.log("Richiesta di registrazione...");
+                            if(consoleCheck) console.log("Richiesta di registrazione...");
                             //todo registrazione chiusa
                             $scope.action = "signup";
                             break;
                         case "password-retrieve":
-                            console.log("Richiesta di recupero password...");
+                            if(consoleCheck) console.log("Richiesta di recupero password...");
                             $scope.action = "password-retrieve";
                             break;
                         case "redirect":
-                            console.log("redirect a login, parametri: ", $stateParams);
+                            if(consoleCheck) console.log("redirect a login, parametri: ", $stateParams);
                             break;
                         default:
-                            console.log("Richiesta di login...");
+                            if(consoleCheck) console.log("Richiesta di login...");
                             $scope.action = "login";
                     }
                     // controllo se l'utente e' in memoria
                     if(!$rootScope.isLoggedIn){
-                        //console.log("check se l'utente e' loggato");
+                        //if(consoleCheck) console.log("check se l'utente e' loggato");
                         MemoryFactory.getUser();
                     }
                     //se l'utente e' gia' loggato lo reindirizzo alla mappa
                     if($rootScope.isLoggedIn || (!config.behaviour.is_login_required && action == null)){
-                        console.log("parametri di login: ", $stateParams);
+                        if(consoleCheck) console.log("parametri di login: ", $stateParams);
 
                         goToMap();
                     }
                     else{ //login
-                        console.log("User undefined!");
+                        if(consoleCheck) console.log("User undefined!");
                     }
                 //}
             }
@@ -93,7 +95,7 @@ angular.module('firstlife.controllers')
             UserService.login($scope.user.email, $scope.user.password)
                 .then(
                 function(data) {
-                    console.log("Login data...", data);
+                    if(consoleCheck) console.log("Login data...", data);
                     hideLoadingScreen();
                     if(data === 0){
                         alertPopup = $ionicPopup.alert({
@@ -108,7 +110,7 @@ angular.module('firstlife.controllers')
                         });
                     }
                     else { 
-                        console.log("utente loggato: ", data);
+                        if(consoleCheck) console.log("utente loggato: ", data);
                         $rootScope.currentUser = data;
                         $rootScope.isLoggedIn = true;
                         $scope.isLoggedIn = true;
@@ -118,7 +120,7 @@ angular.module('firstlife.controllers')
                 },
                 function(data) {
                     hideLoadingScreen();
-                    console.log("Login fallito, codice: ",data);
+                    if(consoleCheck) console.log("Login fallito, codice: ",data);
                     var message = 'Per favore, controlla le tue credenziali!';
                     if(data.status){
                         switch(data.status){
@@ -154,7 +156,7 @@ angular.module('firstlife.controllers')
                     .then(
                     function(data) {
                         hideLoadingScreen();
-                        console.log("SignupCtrl, doSignUp, response: ", data);    
+                        if(consoleCheck) console.log("SignupCtrl, doSignUp, response: ", data);    
                         if(data['error']){
                             var alertPopup = $ionicPopup.alert({
                                 title: '<center>'+data['error']+'</center>',
@@ -167,14 +169,14 @@ angular.module('firstlife.controllers')
                                 title: '<center>Registrazione conclusa con successo</center>',
                                 template: '<center>Benvenuto in FirstLife!</center>'
                             });
-                            console.log("Register data...", data);
+                            if(consoleCheck) console.log("Register data...", data);
                             $rootScope.currentUser = data;
                             $scope.backToLogin();
                         }
                     },
                     function(data) {
                         hideLoadingScreen();
-                        console.log("SignupCtrl, doSignUp, error: ", data);
+                        if(consoleCheck) console.log("SignupCtrl, doSignUp, error: ", data);
                         if(data.status === 409){
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Registrazione fallita!',
@@ -203,7 +205,7 @@ angular.module('firstlife.controllers')
             showLoadingScreen('Invio richiesta...');
             UserService.retrievePassword($scope.user.email).then(
                 function(response){
-                    console.log("LoginCtrl, retrievePassword, response: ",response);
+                    if(consoleCheck) console.log("LoginCtrl, retrievePassword, response: ",response);
                     hideLoadingScreen();
                     var alertPopup = $ionicPopup.alert({
                         title: 'Richiesta inviata!',
@@ -213,7 +215,7 @@ angular.module('firstlife.controllers')
                 },
                 function(response){
                     hideLoadingScreen();
-                    console.log("LoginCtrl, retrievePassword, error: ",response);
+                    if(consoleCheck) console.log("LoginCtrl, retrievePassword, error: ",response);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Invio fallito!',
                         template: 'Riprovare in seguito!'
@@ -281,13 +283,13 @@ angular.module('firstlife.controllers')
             if($stateParams.action === "redirect"){
                 var params = {};
                 if($stateParams.params && !angular.equals({}, $stateParams.params)){
-                    console.log("LoginCtrl, pre redirect a: ", $stateParams.from, " con parametri: ",$stateParams.params, angular.equals({}, $stateParams.params));
+                    if(consoleCheck) console.log("LoginCtrl, pre redirect a: ", $stateParams.from, " con parametri: ",$stateParams.params, angular.equals({}, $stateParams.params));
                     params = angular.fromJson($stateParams.params);
                 }
                 var goTo = $stateParams.from;
                 delete $stateParams.from;
                 delete $stateParams.params;
-                console.log("LoginCtrl, redirect a: ", goTo, " con parametri: ",params);
+                if(consoleCheck) console.log("LoginCtrl, redirect a: ", goTo, " con parametri: ",params);
                 $state.go(goTo, params);
             }else{
                 $state.go("app.maps");

@@ -1,13 +1,13 @@
 <ion-popover-view>
     <ion-content>
         <ion-list>
-            <ion-item ng-if="config.actions.can_modify && checkPerms('u')" class="item-icon-left" on-tap="updateButtonPopover()">
+            <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="item-icon-left" on-tap="updateButtonPopover()">
                 <i ng-if="config.actions.can_modify" class="icon ion-android-create"></i>
-                Modifica
+                {{'EDIT'|translate}}
             </ion-item>
-            <ion-item ng-if="config.actions.can_delete && checkPerms('d')" class="item-icon-left" on-tap="removeButtonPopover()">
+            <ion-item ng-if="config.actions.can_delete && checkPerms['d']" class="item-icon-left" on-tap="removeButtonPopover()">
                 <i ng-if="config.actions.can_delete" class="icon ion-android-delete"></i>
-                Cancella
+                {{'CANCEL'|translate}}
             </ion-item>
         </ion-list>
     </ion-content>

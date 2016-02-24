@@ -3,7 +3,7 @@
         <div class="bar bar-header">
                 <form name="ricerca" class="item-input-wrapper" ng-init="searchName = ''">
                     <i class="icon ion-android-search"></i>
-                    <input type="search" placeholder="Cerca in {{area.name}}" ng-model="searchName">
+                    <input type="search" placeholder="{{'SEARCH_IN'|translate}} {{area.name}}" ng-model="searchName">
                     <i ng-show="searchName.length > 0" ng-click="searchName = '' " class="icon ion-close"></i>
                 </form>
             </div>

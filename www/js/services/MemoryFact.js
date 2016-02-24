@@ -31,7 +31,7 @@ angular.module('firstlife.factories')
                 $rootScope.currentUser = user;
                 // converto in stringa per la memoria
                 var userJson = angular.toJson(user);
-                //console.log("salvo l'utente ", userJson);
+                if(self.config.dev)console.log("salvo l'utente ", userJson);
                 $window.localStorage && $window.localStorage.setItem(keys.user, userJson);
                 return this;
             },
@@ -39,7 +39,7 @@ angular.module('firstlife.factories')
                 // se la memoria e' impostata
                 if($window.localStorage && $window.localStorage.getItem(keys.user)){
                     var user = $window.localStorage.getItem(keys.user);
-                    //console.log("utente in memoria? ", user);
+                    if(self.config.dev)console.log("utente in memoria? ", user);
                     // se c'e' un utente in memoria
                     if(user && user != '' && user != 'undefined'){
                         // converto la stringa in oggetto
@@ -48,7 +48,7 @@ angular.module('firstlife.factories')
                         $rootScope.isLoggedIn = true;
                         // salvo l'utente nello scope globale
                         $rootScope.currentUser = user;
-                        console.log("utente recuperato! ", user);
+                        if(self.config.dev)console.log("utente recuperato! ", user);
                         return user;
                     }
                 }
@@ -58,7 +58,7 @@ angular.module('firstlife.factories')
                  // se la memoria e' impostata
                 if($window.localStorage && $window.localStorage.getItem(keys.user)){
                     var user = $window.localStorage.getItem(keys.user);
-                    //console.log("utente in memoria? ", user);
+                    if(self.config.dev)console.log("utente in memoria? ", user);
                     // se c'e' un utente in memoria
                     if(user && user != '' && user != 'undefined'){
                         // converto la stringa in oggetto
@@ -76,7 +76,7 @@ angular.module('firstlife.factories')
                 return $window.localStorage && $window.localStorage.setItem(keys.user, '');
             },
             setToken: function(token) {
-                console.log("salvo il token: ", token);
+                if(self.config.dev)console.log("salvo il token: ", token);
                 // imposto l'header delle chiamate http
                 //$http.defaults.headers.common.Authentication = token;
                 $window.localStorage && $window.localStorage.setItem(keys.token, token);
@@ -86,7 +86,7 @@ angular.module('firstlife.factories')
                 // se la memoria e' impostata
                 if($window.localStorage && $window.localStorage.getItem(keys.token)){
                     var token = $window.localStorage.getItem(keys.token);
-                    console.log("MemoryFactory, getToken, token: ", token);
+                    if(self.config.dev)console.log("MemoryFactory, getToken, token: ", token);
                     if(token == '')
                         return null;
                     //$http.defaults.headers.common.Authentication = token;
@@ -94,7 +94,7 @@ angular.module('firstlife.factories')
                 }
                 return null;  
             },
-            deleteToken: function() {//console.log("MemoryFactory, deleteToken!");
+            deleteToken: function() {if(self.config.dev)console.log("MemoryFactory, deleteToken!");
                 // $http.defaults.headers.common.Authentication = '';
                 // azzero la memoria del browser
                 return $window.localStorage && $window.localStorage.setItem(keys.token, '');
@@ -110,7 +110,7 @@ angular.module('firstlife.factories')
                 $rootScope.config = val;
                 // converto in stringa per la memoria
                 var conf = angular.toJson(val);
-                //console.log("salvo configurazione ", conf);
+                if(self.config.dev)console.log("salvo configurazione ", conf);
                 $window.localStorage && $window.localStorage.setItem(keys.config, conf);
                 return this;
             },
@@ -118,7 +118,7 @@ angular.module('firstlife.factories')
                 // se la memoria e' impostata
                 if($window.localStorage && $window.localStorage.getItem(keys.config)){
                     var conf = $window.localStorage.getItem(keys.config);
-                    //console.log("confgirazione? ", conf);
+                    if(self.config.dev)console.log("confgirazione? ", conf);
                     // se la configurazione dell'app in memoria
                     if(conf && conf != '' && conf != 'undefined'){
                         // converto la stringa in oggetto
@@ -127,7 +127,7 @@ angular.module('firstlife.factories')
                         $rootScope.isCachedConfig = true;
                         // salvo la configurazione nello scope globale
                         $rootScope.config = conf;
-                        //console.log("Configurazione recuperata: ", conf);
+                        if(self.config.dev)console.log("Configurazione recuperata: ", conf);
                         return conf;
                     }
                 }
@@ -152,6 +152,6 @@ angular.module('firstlife.factories')
         for (key in keys){
             keys[key] = sign.concat($base64.encode(keys[key].concat("-").concat(url_base)));
         }
-        console.log("MermoryFactory, config, applico la firma: ",keys);
+        if(self.config.dev)console.log("MermoryFactory, config, applico la firma: ",keys);
 
 });

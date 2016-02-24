@@ -1,7 +1,7 @@
 {
   "name": "angular-base64-upload",
   "main": "src/angular-base64-upload.js",
-  "version": "0.1.12",
+  "version": "0.1.17",
   "homepage": "https://github.com/adonespitogo/angular-base64-upload",
   "authors": [
     "Adones Pitogo <pitogo.adones@gmail.com>"
@@ -125,14 +125,13 @@
   "resolutions": {
     "angular": "1.2.0"
   },
-  "_release": "0.1.12",
+  "_release": "0.1.17",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.12",
-    "commit": "f8cb06a5f02aed1a010531253e95db25e2d9e8c9"
+    "tag": "v0.1.17",
+    "commit": "2c87c78442d68b858e85759ad9e78df8581b9fbf"
   },
   "_source": "git://github.com/adonespitogo/angular-base64-upload.git",
   "_target": "~0.1.12",
-  "_originalSource": "angular-base64-upload",
-  "_direct": true
+  "_originalSource": "angular-base64-upload"
 }

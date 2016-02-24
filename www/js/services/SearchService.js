@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .service('SearchService', ['$q', '$http', 'myConfig', 'MemoryFactory', 'MapService','categoriesFactory', function($q, $http, myConfig, MemoryFactory, MapService,categoriesFactory) {
+    .service('SearchService', ['$q', '$http', 'myConfig', 'MemoryFactory', 'MapService', function($q, $http, myConfig, MemoryFactory, MapService) {
     
         self.config = myConfig;
         var format = '.json';
@@ -8,14 +8,9 @@ angular.module('firstlife.services')
         var tmpUrl = "http://130.192.157.150:3030/v3/fl/domains/1/things/search?q=palazzo&detail=full&limit=7&types=ALL";
         var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
         
-        var center = MapService.getCenterFromMap();
-        categoriesFactory.getAll().then(
-            function(results){
-                self.categories = results;
-            },
-            function(results){
-                console.log("SearchService, categoriesFactory.getAll(), errore: ",results);
-            });
+        //var center = MapService.getCenterFromMap();
+        
+        self.categories = self.config.types.categories;
         
         return {
             query: function(val){
