@@ -72,7 +72,7 @@ angular.module('firstlife.factories')
         };
 
     }]).run(function(myConfig){
-    self.format = '.json';
+    self.format = myConfig.format;
     self.config = myConfig;
     self.url = myConfig.backend_things;
     self.comments = {};

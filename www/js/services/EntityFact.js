@@ -5,7 +5,7 @@ angular.module('firstlife.factories')
         var self = this;
         self.config = myConfig;
         
-        var consoleCheck = false;
+        var consoleCheck = true;
         
 
         var urlThings= myConfig.backend_things;
@@ -467,7 +467,19 @@ angular.module('firstlife.factories')
             var htmlIcon = '';
             htmlIcon = htmlIcon.concat('<i class="dotEventIcon icon ').concat(icons[0].icon).concat(' color').concat(icons[0].index).concat('"></i>');
             var checkRange = (!angular.equals(entity.properties.valid_to, entity.properties.valid_from) || !entity.properties.valid_from || !entity.properties.valid_to);
-
+            
+            
+            var groupLabel = null;
+            
+            if(config.map &&  config.map.area && config.map.area.levels){
+                var levels = config.map.area.levels;
+                var index = levels.map(function(e){return e.key;}).indexOf(entity.properties.level ? entity.properties.level: 0);
+                if(index > -1) {
+                    groupLabel = levels[index].name;
+                }
+            }
+             
+            
             var marker = {
                 popupOptions : {closeOnClick:true},
                 id: parseInt(entity.properties.id),
@@ -500,7 +512,7 @@ angular.module('firstlife.factories')
                 location: entity.properties.location ? entity.properties.location : null,
                 "article_of": entity.properties['article_of'] ? entity.properties['article_of'] : null,
                 "comment_of": entity.properties['comment_of'] ? entity.properties['comment_of'] : null,
-                level: entity.level ? entity.level : 0,
+                level: entity.properties.level ? entity.properties.level : 0,
                 children_id: entity.properties.children,
                 children: {},
                 valid_from: entity.properties.valid_from,
@@ -518,7 +530,7 @@ angular.module('firstlife.factories')
                     'start': new Date(entity.properties.valid_from),
                     'end': new Date(entity.properties.valid_to),  // end is optional
                     'content':  htmlIcon,
-                    "group": entity.level ? entity.level : 0,
+                    "group": groupLabel ? groupLabel : null,
                     "editable":false,
                     "type": "box"
                 } : null

@@ -14689,10 +14689,23 @@ transform:rotate(attr(data-value,deg,0);
     #timelines #timeline div.timeline-event {
       background-color: #fafafa;
       border-color: #6C93B3;
-      box-shadow: 1px 0px 2px #c9c9c9; }
+      box-shadow: 1px 0px 2px #c9c9c9;
+      z-index: 1001; }
     #timelines #timeline div.timeline-event-cluster {
       background-color: #599caf;
       color: white; }
+    #timelines #timeline .timeline-frame {
+      width: 100% !important; }
+    #timelines #timeline .timeline-groups-axis {
+      width: 0px !important;
+      left: 100% !important;
+      overflow: visible; }
+      #timelines #timeline .timeline-groups-axis .timeline-groups-text {
+        right: 70px;
+        font-weight: 700;
+        text-shadow: 1px 1px 1px white;
+        font-size: 1em;
+        color: #888; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }

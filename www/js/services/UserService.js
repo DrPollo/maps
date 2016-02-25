@@ -8,15 +8,15 @@ angular.module('firstlife.services')
     var urlResetPassword = config.reset_password;
     var urlRetrievePassword = config.retrieve_password;
     var urlUpdate = config.update_user;
-    
+    var format = myConfig.format;
     
     
     return {
         
         login: function(mail, pw) {
-            var urlId = url.concat("/logins.json");
+            var urlId = url.concat("/login").concat(format);
             var deferred = $q.defer();
-            var data = angular.toJson({ username: mail, password: pw }, true);
+            var data = angular.toJson({ email: mail, password: pw }, true);
             
             //console.log("tentativo di login", urlId);
             
@@ -32,9 +32,10 @@ angular.module('firstlife.services')
             $http(req)
                 .then(
                 function(response, status, headers, config) {
-                    console.log("UserService, login, response: ",response, headers);
+                    console.log("UserService, login, response: ",response, response.headers('token'));
                     //var user = setUser(headers.Authentication);
-                    var user = setUser(response.data.token);
+                    
+                    var user = setUser(headers.token);
                     deferred.resolve(user);
                 },
                 function(response) {
@@ -47,7 +48,7 @@ angular.module('firstlife.services')
         
         register: function(user){
             var deferred = $q.defer();
-            var urlId = url.concat(".json");
+            var urlId = url.concat(format);
             var data = angular.toJson(user, true);
             var req = {
                 url: urlId,
@@ -82,7 +83,7 @@ angular.module('firstlife.services')
         
         update: function(user){
             var deferred = $q.defer();
-            var urlId = urlUpdate.concat(".json");
+            var urlId = urlUpdate.concat(format);
             var data = angular.toJson(user, true);
             var token = MemoryFactory.getToken();
             
@@ -108,7 +109,7 @@ angular.module('firstlife.services')
             
             var token = MemoryFactory.getToken();
             
-            var urlId = urlResetPassword.concat(".json");
+            var urlId = urlResetPassword.concat(format);
             var data = {};
             data.new_pass = pass;
             var user = MemoryFactory.readUser();
@@ -136,7 +137,7 @@ angular.module('firstlife.services')
         retrievePassword: function(email){
             var deferred = $q.defer();
             
-            var urlId = urlRetrievePassword.concat(".json").concat("?username=").concat(email);
+            var urlId = urlRetrievePassword.concat(format).concat("?username=").concat(email);
             var req = {
                 url: urlId,
                 method: 'GET',

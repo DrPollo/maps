@@ -463,6 +463,7 @@ angular.module('firstlife.config')
                 "map_default_lat":37.794203,
                 "map_default_lng":-122.395806,
                 "zoom_level":20,
+                "zoom_create":22,
                 'max_zoom' : 22,
                 'min_zoom' : 10, //https://api.tiles.mapbox.com/v4/alessiacalafiore.1a8075f6/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxlc3NpYWNhbGFmaW9yZSIsImEiOiJkNTljMmIwMzQ4MTNmNWVkYmNiMDM0NjFiOTAwNGNiOCJ9.sAiwGQm8n0AuWIX4zF8vJw
                 'tile_edit' : 'http://api.mapbox.com/v4/mapbox.high-contrast/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
@@ -637,7 +638,7 @@ angular.module('firstlife.config')
         myConfig.backend_things = url.concat('things');
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');
-        myConfig.backend_users = url.concat('users');
+        myConfig.backend_users = url.concat('user');
         myConfig.update_user = url.concat('user/update');
         myConfig.retrieve_password = myConfig.backend_users.concat('/retrieves/password');
         myConfig.reset_password = myConfig.backend_users.concat('/resets/passwords');

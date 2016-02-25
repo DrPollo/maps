@@ -38,7 +38,7 @@
                         </button>
                     </div>
 
-                    <a style="color:white;cursor:pointer;" on-tap="goToRetrieve()">Password dimenticata?</a>
+                    <a style="color:white;cursor:pointer;" on-tap="goToRetrieve()">{{'PASSWORD_FORGOT'|translate}}</a>
                 </div>
                 <!-- inizio registrazione --> 
                 <div ng-if="(action == 'signup')" class="form-container">
@@ -48,13 +48,13 @@
                                 <div class="col left-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_firstname.$invalid, 'no-error' : !signup_form.user_firstname.$invalid }">
                                         <span class="input-label">{{'NAME'|translate}}</span>
-                                        <input type="text" placeholder="Nome" name="user_firstname" ng-model="user.firstName" required>
+                                        <input type="text" placeholder="{{'NAME'|translate}}" name="user_firstname" ng-model="user.firstName" required>
                                     </label>
                                 </div>
                                 <div class="col right-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_lastname.$invalid, 'no-error' : !signup_form.user_lastname.$invalid }">
                                         <span class="input-label">{{'LASTNAME'|translate}}</span>
-                                        <input type="text" placeholder="Cognome" name="user_lastname" ng-model="user.lastName" required>
+                                        <input type="text" placeholder="{{'LASTNAME'|translate}}" name="user_lastname" ng-model="user.lastName" required>
                                     </label>
                                 </div>
                             </div>

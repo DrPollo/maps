@@ -3,7 +3,7 @@ angular.module('firstlife.services')
 .service('TagsService', [ '$q', '$resource', '$http', 'myConfig', function($q, $resource, $http, myConfig) {
     
     var url = myConfig.backend_tags;
-    var format = '.json';
+    var format = myConfig.format;
 
     var tags = [
         { "text": "Tag1" }

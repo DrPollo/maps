@@ -2,10 +2,9 @@ angular.module('firstlife.services')
     .service('SearchService', ['$q', '$http', 'myConfig', 'MemoryFactory', 'MapService', function($q, $http, myConfig, MemoryFactory, MapService) {
     
         self.config = myConfig;
-        var format = '.json';
+        var format = myConfig.format;
         var searchUrl = self.config.backend_search,
             geoUrl = self.config.navigator.search.geocoding;
-        var tmpUrl = "http://130.192.157.150:3030/v3/fl/domains/1/things/search?q=palazzo&detail=full&limit=7&types=ALL";
         var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
         
         //var center = MapService.getCenterFromMap();

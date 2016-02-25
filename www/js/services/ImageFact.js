@@ -19,7 +19,7 @@ angular.module('firstlife.factories')
     .factory('SenderFactory', ['$http', '$rootScope', 'myConfig', 'MemoryFactory', function($http , $rootScope, myConfig, MemoryFactory) {
         var sendUrl = {};// myConfig.backend_images;
         var urlThings = myConfig.backend_things;
-        var format = '.json';
+        var format = myConfig.format;
         var response = null;
         var token = MemoryFactory.getToken();
         

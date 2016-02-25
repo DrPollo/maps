@@ -229,6 +229,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CANCEL: 'Cancella',
         // walktrhough
         SIGNUP: 'Registrazione',
+        EMAIL: 'Email',
         PASSWORD_RETRIEVE:'Recupera password',
         SIGNUP_MESSAGE:'Si riceverà una nuova password tramite e-mail',
         CLICKING:'Cliccando su',
@@ -241,6 +242,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TERMS_LINK:'http://firstlife.org/',
         LICENSE:'Licenza Creative Commons Attribuzione 3.0 Italia',
         LICENSE_LINK:'http://creativecommons.org/licenses/by/3.0/it/',
+        PASSWORD_FORGOT:"Password dimenticata?",
         // wall
         WALL_HEADER:'Bacheca',
         // maps
@@ -373,6 +375,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CANCEL: 'Trash',
         // walktrhough
         SIGNUP: 'Signup',
+        EMAIL: 'Email',
         PASSWORD_RETRIEVE:'Recupera password',
         SIGNUP_MESSAGE:'Si riceverà una nuova password tramite e-mail',
         CLICKING:'Cliccando su',
@@ -385,6 +388,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TERMS_LINK:'http://firstlife.org/',
         LICENSE:'Licenza Creative Commons Attribuzione 3.0 Italia',
         LICENSE_LINK:'http://creativecommons.org/licenses/by/3.0/it/',
+        PASSWORD_FORGOT:"Forgot password?",
         // wall
         WALL_HEADER:'Wall',
         // maps
@@ -399,7 +403,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         MENU:'Menu',
         TODAY:'Today, ',
         // wizard
-        MANDATORY_FIELD:'Campo richiesto',
+        MANDATORY_FIELD:'Required field',
         BACK:'Back',
         NEXT:'Next',
         MORE_THAN_MESSAGE:'Il campo deve essere almeno di',
