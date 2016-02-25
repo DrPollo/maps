@@ -24,9 +24,10 @@ angular.module('firstlife.services')
                 url: urlId,
                 method: 'POST',
                 data: data,
+                "transformResponse": function(response){console.log("transformResponse",response); return response;},
                 //skipAuthorization: true,
                 // devo togliere gli header esplicitamente fintanto che il login e' una get (wp non supporta la chiamata preflight)
-                headers:{"Content-Type":"application/json"}
+                headers:{"Content-Type":"application/json","Access-Control-Expose-Headers":["Authorization","token","Authentication"]}
             };
             
             $http(req)
@@ -180,4 +181,17 @@ angular.module('firstlife.services')
     function deleteUser(){
     
     }
+}]).factory('myInterceptor', ['$log', function($log) {  
+    $log.debug('$log is here to show you that this is a regular factory with injection');
+
+    var myInterceptor = {
+        response: function(response) {
+            console.log("intercept ", response, response.headers(), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
+            return response;
+        }
+    };
+
+    return myInterceptor;
+}]).config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.interceptors.push('myInterceptor');
 }]);

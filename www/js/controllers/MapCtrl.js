@@ -5,11 +5,16 @@ angular.module('firstlife.controllers')
 
 
         var consoleCheck = true;
-
+        
+        var levels = {check:false};
+        if (myConfig.map.area.levels){
+            levels = {check:true};
+            levels.list = $scope.config.map.area.levels;
+        }
 
         if(!$scope.geojson && $scope.config.map.area && $scope.config.map.area.data){
             $scope.geojson = {
-                levels: $scope.config.map.area.levels ? $scope.config.map.area.levels : null,
+                levels: levels.check ? levels.list : null,
                 data: $scope.config.map.area.data,
                 style: $scope.config.map.area.style,
 //                onEachFeature: function (feature, layer) {
@@ -609,7 +614,12 @@ angular.module('firstlife.controllers')
                     // centro la mappa sul marker
                     // fatto nel listner $scope.locate(parseInt(marker.id));
                     $scope.$broadcast("markerClick", {marker:marker});
-
+                    
+                    // se i livelli sono abilitati e se marker ha un livello
+                    if(levels.check && marker.level || marker.level===0){
+                        // cambio il livello sulla mappa
+                        selectGeoJSONLevel(marker.level);
+                    }
                     //locate(marker.id);
                 },
                 function(err){
@@ -1135,10 +1145,9 @@ angular.module('firstlife.controllers')
             
             // init filtro per livelli in area
             // es. level: 0, level:1, etc....
-            if( $scope.config.map.area && $scope.config.map.area.levels){
+            if( $scope.config.map.area && levels.check){
                 // filtri livello
-                var levels = $scope.config.map.area.levels,
-                    checkL = 'level',
+                var checkL = 'level',
                     filter_nameL = 'Levels';
                 // costruisco regola per gli entity_type
                 var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList, 
@@ -1146,11 +1155,11 @@ angular.module('firstlife.controllers')
                                 selectGeoJSONLevel(value);
                             },
                             callbackPop:function(value){
-                                nextGeoJSONLevel(value);
+                                //nextGeoJSONLevel(value);
                             }
                            };
                 // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-                $scope.filters[filter_nameL] = {list:levels, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
+                $scope.filters[filter_nameL] = {list: levels.list, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
                 for(var i = 0; i < $scope.filters[filter_nameL].list.length; i++){
                     $scope.filters[filter_nameL].list[i].visible = true;
                     rule.values.push($scope.filters[filter_nameL].list[i].key);
@@ -1421,6 +1430,7 @@ angular.module('firstlife.controllers')
             console.log("MapCtrl, selectGeoJSONLevel ",value);
             if($scope.geojson && $scope.geojson.data){
                 $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
+                markerDisabler('level',value);
                 console.log("MapCtrl, selectGeoJSONLevel: risultato ", $scope.geojson.data);
             }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
         }
@@ -1433,6 +1443,27 @@ angular.module('firstlife.controllers')
                 return false;
             }
         }
+        
+        function markerDisabler(prop,value){
+            var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
+            console.log("develop ",value,$scope.favCat);
+            for(var k in $scope.markersFiltered){
+                console.log("develop",$scope.markersFiltered[k]);
+                if($scope.markersFiltered[k][prop] !== value){
+                    var icon = angular.copy($scope.markersFiltered[k].icon);
+                    
+                    var disabledHtml = '<div class="pin-marker" style="background-color:'+ disabledColor +'"></div>'+
+                        '<div class="icon-box"><i class="icon ' + icon.icon + '"></i></div>';
+                    icon.html = disabledHtml;
+                    icon.color = disabledColor;
+                    icon.index = $scope.config.design.disabled_color;
+                    $scope.markersFiltered[k].icon = icon;
+                }else{
+                    $scope.markersFiltered[k].icon = $scope.markersFiltered[k].icons[$scope.favCat] ? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icons[0];
+                }
+            }
+        }
+        
         
     }]).run(function(MapService,myConfig,$timeout,$rootScope){
 

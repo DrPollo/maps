@@ -6,14 +6,14 @@ angular.module('underscore', [])
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline'])
 
-    .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig) {
+    .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
     self.config = myConfig;
     // init utente
     $rootScope.isLoggedIn = false;
 
-    
-    
+
+
     $ionicPlatform.ready(function() {
         if(window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -33,7 +33,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     //self.cache.isStateCached = false;
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
-
+        $ionicLoading.hide();
         console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",$stateParams);
         // console.log($rootScope.currentUser);
         // aggiorno delle variabili sullo stato precendete e corrente
@@ -43,7 +43,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         var authenticate = toState.data.authenticate;
         console.log("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
 
-        
+
         // se ti trovi in uno stato che richiede autenticazione e non sei loggato
         if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn)  {
             // da cancellare self.cache.isStateCached = true;
@@ -53,9 +53,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             // vai a login per effettuare l'autenticazione
             $state.go('login',{action: 'redirect', from:toState.name, params: params});
         } else {
-        
+
             console.log("Continuo a ", toState.name);
-        
+
         }
 
 
@@ -94,20 +94,20 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
         }
         */
-        
+
     }); 
-    
+
     // parser di url
     function getJsonFromUrl(query) {
         var result = {};
-        
+
         if(query && query != null && query != 'undefined' && query != ''){
             query.split("&").forEach(function(part) {
                 var item = part.split("=");
                 result[item[0]] = decodeURIComponent(item[1]);
             });
         }
-        
+
         return angular.toJson(result);
     }
 
@@ -335,7 +335,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Approfondimenti',
         REL_COMMENT_OF_LABEL:'Parla di',
         REL_COMMENT_OF_CHILD_LABEL:'Notizie',
-      });
+    });
     $translateProvider.translations('en', {
         TYPES: 'Types',
         SEARCH: 'Search',
@@ -481,8 +481,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Approfondimenti',
         REL_COMMENT_OF_LABEL:'About of',
         REL_COMMENT_OF_CHILD_LABEL:'News',
-        
-      });
+
+    });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
