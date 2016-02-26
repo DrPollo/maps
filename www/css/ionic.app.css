@@ -14708,7 +14708,8 @@ transform:rotate(attr(data-value,deg,0);
         font-weight: 700;
         text-shadow: 1px 1px 1px white;
         font-size: 1em;
-        color: #888; }
+        color: #888;
+        cursor: pointer; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }

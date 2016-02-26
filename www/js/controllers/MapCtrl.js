@@ -4,7 +4,7 @@ angular.module('firstlife.controllers')
 
 
 
-        var consoleCheck = true;
+        var consoleCheck = false;
         
         var levels = {check:false};
         if (myConfig.map.area.levels){
@@ -1439,8 +1439,10 @@ angular.module('firstlife.controllers')
             if($scope.geojson && $scope.geojson.data){
                 $scope.$apply(function(){
                     $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
+                    markerDisabler('level',value);
+                    $scope.$broadcast('timeline.groups.setgroup',{group:value});
                 });
-                markerDisabler('level',value);
+                
             }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
         }
         function filterGeoJSON(prop,value){
