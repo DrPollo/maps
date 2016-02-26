@@ -302,6 +302,15 @@ angular.module('firstlife.controllers')
             event.preventDefault();
         });
         
+        // richiesta di cambio di livello 
+        $scope.$on("switchMapLevel",function(event,args){
+            // click cambio il livello della mappa
+            if(levels.check)
+                selectGeoJSONLevel(args.level);
+            
+            event.preventDefault();
+        });
+        
         /*
          * Funzioni pubbliche
          * 1) isString, filtro
@@ -1419,7 +1428,6 @@ angular.module('firstlife.controllers')
         }
         function nextGeoJSONLevel(value){
             if($scope.geojson && $scope.geojson.data && $scope.geojson.levels){
-                console.log("MapCtrl, selectGeoJSONLevel ", $scope.geojson.levels);
                 var index = $scope.geojson.levels.map(function(e){return e.key;}).indexOf(value);
                 var newIndex = (index + 1) %$scope.geojson.levels.length;
                 var newVal = $scope.geojson.levels[newIndex].key
@@ -1429,14 +1437,14 @@ angular.module('firstlife.controllers')
         function selectGeoJSONLevel(value){
             console.log("MapCtrl, selectGeoJSONLevel ",value);
             if($scope.geojson && $scope.geojson.data){
-                $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
+                $scope.$apply(function(){
+                    $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
+                });
                 markerDisabler('level',value);
-                console.log("MapCtrl, selectGeoJSONLevel: risultato ", $scope.geojson.data);
             }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
         }
         function filterGeoJSON(prop,value){
             return function (feature){
-                console.log("MapCtrl, filterGeoJSON ",prop,feature,feature.properties[prop],value, (feature.properties[prop] == value));
                 if((!feature.properties[prop] && feature.properties[prop] !== 0) || feature.properties[prop] == value){
                         return true;
                 }
@@ -1446,9 +1454,9 @@ angular.module('firstlife.controllers')
         
         function markerDisabler(prop,value){
             var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
-            console.log("develop ",value,$scope.favCat);
+            //console.log("develop ",value,$scope.favCat);
             for(var k in $scope.markersFiltered){
-                console.log("develop",$scope.markersFiltered[k]);
+                //console.log("develop",$scope.markersFiltered[k]);
                 if($scope.markersFiltered[k][prop] !== value){
                     var icon = angular.copy($scope.markersFiltered[k].icon);
                     

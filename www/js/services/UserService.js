@@ -36,7 +36,7 @@ angular.module('firstlife.services')
                     console.log("UserService, login, response: ",response, response.headers);
                     //var user = setUser(headers.Authentication);
                     
-                    var user = setUser(headers.token);
+                    var user = setUser(response.headers.authorization);
                     deferred.resolve(user);
                 },
                 function(response) {
@@ -186,7 +186,7 @@ angular.module('firstlife.services')
 
     var myInterceptor = {
         response: function(response) {
-            console.log("intercept ", response, response.headers(),response.headers("content-type"), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
+            //console.log("intercept ", response, response.headers(),response.headers("content-type"), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
             response.headers = response.headers();
             return response;
         }

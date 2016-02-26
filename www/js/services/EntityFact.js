@@ -475,7 +475,7 @@ angular.module('firstlife.factories')
                 var levels = config.map.area.levels;
                 var index = levels.map(function(e){return e.key;}).indexOf(entity.properties.level ? entity.properties.level: 0);
                 if(index > -1) {
-                    groupLabel = (levels[index].key).toString();
+                    groupLabel = levels[index].name;
                 }
             }
              

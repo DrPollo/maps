@@ -14700,6 +14700,9 @@ transform:rotate(attr(data-value,deg,0);
       width: 0px !important;
       left: 100% !important;
       overflow: visible; }
+      #timelines #timeline .timeline-groups-axis #selectedGroup {
+        color: #6C93B3;
+        font-size: 1.2em; }
       #timelines #timeline .timeline-groups-axis .timeline-groups-text {
         right: 70px;
         font-weight: 700;
