@@ -191,12 +191,16 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        EXIT_MESSAGE: "Uscire dall'applicazione?",
+        EXIT_FROM:"Esci da",
         TYPES: 'Tipi',
         SEARCH: 'Cerca',
         ERROR: 'Errore',
         CONTENT: 'Contenuto',
         CREATED_BY:'pubblicato da',
         OF:'del',
+        LOADING_MESSAGE:'Caricamente in corso...',
+        SAVING_MESSAGE:'Salvataggio in corso...',
         // side-menu
         WELCOME: 'Ciao',
         WELCOME_MESSAGE: 'Benvenuto in',
@@ -337,12 +341,16 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_COMMENT_OF_CHILD_LABEL:'Notizie',
     });
     $translateProvider.translations('en', {
+        EXIT_MESSAGE: "Do you really want to log out?",
+        EXIT_FROM: "Leaving",
         TYPES: 'Types',
         SEARCH: 'Search',
         ERROR:'Error',
         CONTENT:'Content',
         CREATED_BY:'posted by',
         OF:'of',
+        LOADING_MESSAGE:'Loading...',
+        SAVING_MESSAGE:'Saving...',
         // side-menu
         WELCOME: 'Hello',
         WELCOME_MESSAGE: 'Welcome in',

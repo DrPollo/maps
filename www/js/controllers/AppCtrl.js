@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, myConfig, MemoryFactory ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, myConfig, MemoryFactory ) {
         
         
         $scope.config = myConfig;
@@ -19,7 +19,7 @@ angular.module('firstlife.controllers')
                 if($scope.user.displayName && $scope.user.displayName != ''){
                     $scope.displayName = $scope.user.displayName;
                 }else if($scope.user.email && $scope.user.email != ''){
-                    $scope.displayName = user.email;
+                    $scope.displayName = $scope.user.email;
                 }
                 
                 $scope.isLoggedIn = true;
@@ -51,9 +51,13 @@ angular.module('firstlife.controllers')
         
         // A confirm dialog
         $scope.showConfirmLogout = function() {
+            var message = '';
+            var title ='';
+            message = message.concat('<center>').concat($filter('translate')('EXIT_MESSAGE')).concat('</center>');
+            title = title.concat($filter('translate')('EXIT_FROM')).concat(" ").concat(config.app_name);
             $scope.confirmPopup = $ionicPopup.confirm({
-                title: "Esci da "+config.app_name,
-                template: '<center>Vuoi veramente uscire?</center>'
+                title: title,
+                template: message
             });
             $scope.confirmPopup.then(function(res) {
                 if(res) {
@@ -66,10 +70,8 @@ angular.module('firstlife.controllers')
         };
         
         $scope.langSelector = function(key){
-            if(consoleCheck) console.log("Seleziono linguaggio ",key);
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
-            if(consoleCheck) console.log("Linguaggio corrente ",$rootScope.currentLang);
           };
         
         /*

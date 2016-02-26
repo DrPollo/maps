@@ -460,6 +460,15 @@ angular.module('firstlife.config')
             "actions":{
                 'favourite_place' : false,
             },
+            "navigator":{//[[[-122.3963988,37.7938376],[-122.3963988,37.7947639],[-122.3950612,37.7947639],[-122.3950612,37.7938376],[-122.3963988,37.7938376]]]
+                'default_area' : {visible: true, name: 'San Francisco',bound:[[-122.520905,37.700987],[-122.339973,37.834243]]},
+                'places' :[
+                    {id:19, visible:true, name: 'Hyatt Regency Hotel (CSCW venue)', bound: [[37.7938376,-122.3963988],[37.7947639,-122.3950612]]}
+                ],
+                'search':{
+                    'geocoding':'http://nominatim.openstreetmap.org/search'
+                }
+            },
             "map":{
                 "map_default_lat":37.794203,
                 "map_default_lng":-122.395806,

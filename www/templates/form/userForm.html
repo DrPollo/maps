@@ -18,24 +18,24 @@
                 <label class="item item-divider">{{'PROFILE'|translate}}</label>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.firstName.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
                     <span class="input-label">{{'NAME'|translate}}</span>
-                    <input type="text" placeholder="Nome" name="firstName" ng-model="user.firstName" ng-readonly="!editable" required>
+                    <input type="text" placeholder="{{'NAME'|translate}}" name="firstName" ng-model="user.firstName" ng-readonly="!editable" required>
                 </label>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.lastName.$invalid, 'no-error' : !user_form.lastName.$invalid }">
                     <span class="input-label">{{'LASTNAME'|translate}}</span>
-                    <input type="text" placeholder="Cognome" name="lastName" ng-model="user.lastName" ng-readonly="!editable" required>
+                    <input type="text" placeholder="{{'LASTNAME'|translate}}" name="lastName" ng-model="user.lastName" ng-readonly="!editable" required>
                 </label>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.email.$invalid, 'no-error' : !user_form.email.$invalid }">
                     <span class="input-label">{{'EMAIL'|translate}}</span>
-                    <input type="text" placeholder="Email" name="email" ng-model="user.email" ng-readonly="!editable" required>
+                    <input type="text" placeholder="{{'EMAIL'|translate}}" name="email" ng-model="user.email" ng-readonly="!editable" required>
                 </label>
                 <label ng-if="editable" class="item item-divider">{{'PASSWORD'|translate}}</label>
                 <label ng-if="editable" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_password.password.$invalid, 'no-error' : !user_password.password.$invalid }">
                     <span class="input-label">{{'PASSWORD'|translate}}</span>
-                    <input type="password" placeholder="Nuova password" name="new_password" ng-model="user.new_password"  ng-readonly="!editable" show-hide>
+                    <input type="password" placeholder="{{'PASSWORD'|translate}}" name="new_password" ng-model="user.new_password"  ng-readonly="!editable" show-hide>
                 </label>
                 <label ng-if="editable" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.new_2.$error.nxEqual, 'no-error' : !user_form.user_password2.$error.nxEqual }">
                     <span class="input-label">{{'CONTROLL_PASSWORD'|translate}}</span>
-                    <input type="password" placeholder="Conferma password" name="new_password2" ng-model="user.new_password2" nx-equal="user.new_password" ng-readonly="!editable" show-hide>
+                    <input type="password" placeholder="{{'CONTROLL_PASSWORD'|translate}}" name="new_password2" ng-model="user.new_password2" nx-equal="user.new_password" ng-readonly="!editable" show-hide>
                 </label>
             </ion-list>
 
@@ -52,6 +52,9 @@
                 </div>
             </div>
         </form>
+        <div ng-if="config.dev">
+            {{user | json}}
+        </div>
     </ion-content>
     <ion-footer-bar>
         <button ng-if="!editable && config.actions.profile_tab" class="button button-clear button-dark icon ion-compose" on-tap="makeEditable()">{{'EDIT'|translate}}</button>

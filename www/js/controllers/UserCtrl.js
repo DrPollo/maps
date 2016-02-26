@@ -1,11 +1,13 @@
 angular.module('firstlife.controllers')
 
-    .controller('UserCtrl', ['$scope', '$state', '$ionicPopup', 'UserService', 'myConfig', '$rootScope', '$stateParams', '$ionicLoading', '$ionicPopup', '$location', function($scope, $state, $ionicPopup, UserService, myConfig, $rootScope, $stateParams, $ionicLoading, $ionicPopup, $location) {
+    .controller('UserCtrl', ['$scope', '$state', '$ionicPopup', 'UserService', 'myConfig', '$rootScope', '$stateParams', '$ionicLoading', '$ionicPopup', '$location', '$filter', function($scope, $state, $ionicPopup, UserService, myConfig, $rootScope, $stateParams, $ionicLoading, $ionicPopup, $location, $filter) {
 
         $scope.config = myConfig;
         // recupero l'utente corrente
         $scope.editable = false;
 
+        var dev = false;
+        
         function user (name, surname, email, username, displayname){
             this.firstName = name;
             this.lastName = surname;
@@ -19,7 +21,7 @@ angular.module('firstlife.controllers')
             }
         }
 
-
+        $scope.user = {};
 
 
         // gestione del cambio di stato
@@ -27,7 +29,9 @@ angular.module('firstlife.controllers')
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             var action = $stateParams.action;
             console.log("sono in UserCtrl, questi i parametri ", action);
-            checkUser();
+            // recupero le informazioni dell'utente se non le ho
+            if(angular.equals({},$scope.user))
+                checkUser();
             // entro in login con azione "logout"
             switch(action){
                 case "edit":
@@ -44,7 +48,7 @@ angular.module('firstlife.controllers')
         // salvo le modifiche
         $scope.save = function(){
             console.log("UserCtrl, save form: ",$scope.user);
-            showLoadingScreen();
+            showLoadingScreen(0);
             var data = angular.copy($scope.user);
             //pulisco la struttura dati prima di salvare
             if(data.new_password2)
@@ -88,7 +92,7 @@ angular.module('firstlife.controllers')
         // cambio password, attualmente non utilizzato
         $scope.resetPassword = function(){
             console.log("UserCtrl, reset password form: ",$scope.user);
-            showLoadingScreen();
+            showLoadingScreen(0);
             UserService.resetPassword($scope.user.new_password).then(
                 function(response){
                     hideLoadingScreen();
@@ -139,10 +143,13 @@ angular.module('firstlife.controllers')
          */
 
         function showLoadingScreen(text){
-            if(!text || text === 'undefined'){
-                text = 'Salvataggio in corso...';
+            switch(text){
+                case 1:
+                    text = $filter('translate')('LOADING_MESSAGE');
+                    break;
+                default:
+                    text = $filter('translate')('SAVING_MESSAGE');
             }
-
             $ionicLoading.show({
                 template: text
             });
@@ -154,11 +161,20 @@ angular.module('firstlife.controllers')
 
 
         function checkUser(){
-            $scope.user = new user();
-            //console.log("UserCtrl, setup form: ",$scope.user_form, $rootScope.currentUser);
-            self.userCache = angular.copy(angular.merge($scope.user, $rootScope.currentUser));
-
-            console.log("UserCtrl, setup form: ",$scope.user);
+            showLoadingScreen(1);
+            UserService.getInfo().then(
+                function(response){
+                    //console.log("Develop UserCtrl, checkUser UserService.getInfo(), response: ",response);
+                    self.userCache = response;
+                    $scope.user = response;
+                    hideLoadingScreen();
+                },
+                function(err){
+                    hideLoadingScreen();
+                    console.log("UserCtrl, checkUser UserService.getInfo(), errore: ",err);
+                }
+            );
+            if(dev) console.log("Develop UserCtrl, checkUser UserService.getInfo(), response: ",response);
         }
     }]);
 // todo run e config

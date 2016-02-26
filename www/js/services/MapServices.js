@@ -5,7 +5,7 @@ angular.module('firstlife.services')
         self.config = myConfig;
 
         var consoleCheck = false;
-        
+
         var baseLayer = {
             edit: {
                 name: 'edit',
@@ -76,6 +76,12 @@ angular.module('firstlife.services')
                     self.filters = {};
                 if(consoleCheck) console.log("MapService, setTimeFilters, time: ",self.filters.time, time);
                 self.filters.time = time;
+            },
+            getTimeFilters: function(){
+                if(angular.equals({}, self.filters) || angular.equals({}, self.filters.time)){
+                    return false;
+                }
+                return self.filters.time;
             },
             initMap: function(){
                 return initMap();
@@ -215,7 +221,7 @@ angular.module('firstlife.services')
                 );
                 return  deferred.promise;
             },
-            
+
             updateMarker :function(entity){
                 var deferred = $q.defer();
                 if(consoleCheck) console.log("update marker: ", entity.id);
@@ -320,12 +326,12 @@ angular.module('firstlife.services')
             return true;
         };
 
-        
+
 
 
         // init della mappa
         function setInitOptions(){
-            
+
             self.map = {
                 defaults : {
                     maxZoom: config.map.max_zoom,
@@ -385,7 +391,7 @@ angular.module('firstlife.services')
                               //chunkDelay:500,
                               //chunkInterval:200,
                               iconCreateFunction :bakeThePie,
-
+                              zoomToBoundsOnClick:true
 
                           }
                          }
@@ -400,7 +406,7 @@ angular.module('firstlife.services')
             self.map.categories = cats;
             self.map.mainCategories = cats[0];
             self.map.css = self.config.design.css;
-                
+
             return cats;
         };
 

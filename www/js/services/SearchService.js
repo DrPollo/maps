@@ -14,7 +14,14 @@ angular.module('firstlife.services')
         return {
             query: function(val){
                 var deferred = $q.defer();
+                var timeParams = MapService.getTimeFilters();
                 var params = "&detail=full&limit=7&types=ALL";
+                if(timeParams){
+                    if(timeParams.from)
+                        params = params.concat("&from=").concat(timeParams.from.toISOString());
+                    if(timeParams.to)
+                        params = params.concat("&to=").concat(timeParams.to.toISOString());
+                }
                 var query = escape(val);
                 console.log("SearchService, query, url: ", searchUrl);
                 var url = searchUrl.concat(format).concat("?q=").concat(query).concat(params);

@@ -12,6 +12,28 @@ angular.module('firstlife.services')
     
     
     return {
+        getInfo: function() {
+            var user = MemoryFactory.getUser();
+            console.log("develop ",user);
+            var urlId = url.concat("/").concat(user.username).concat(format);
+            var deferred = $q.defer();
+            var req = {
+                url: urlId,
+                method: 'GET',
+                headers:{"Content-Type":"application/json"}
+            };
+            
+            $http(req).then(
+                function(response) {
+                    console.log("UserService, getInfo, response ",response);
+                    deferred.resolve(response.data);
+                },
+                function(err){
+                    deferred.reject(err);
+                    console.log("UserService, getInfo, error ",err);
+                });
+            return deferred.promise;
+        },
         
         login: function(mail, pw) {
             var urlId = url.concat("/login").concat(format);
@@ -24,10 +46,9 @@ angular.module('firstlife.services')
                 url: urlId,
                 method: 'POST',
                 data: data,
-                "transformResponse": function(response){console.log("transformResponse",response); return response;},
                 //skipAuthorization: true,
                 // devo togliere gli header esplicitamente fintanto che il login e' una get (wp non supporta la chiamata preflight)
-                headers:{"Content-Type":"application/json","Access-Control-Expose-Headers":["Authorization"]}
+                headers:{"Content-Type":"application/json"}
             };
             
             $http(req)
