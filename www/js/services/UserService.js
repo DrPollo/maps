@@ -27,13 +27,13 @@ angular.module('firstlife.services')
                 "transformResponse": function(response){console.log("transformResponse",response); return response;},
                 //skipAuthorization: true,
                 // devo togliere gli header esplicitamente fintanto che il login e' una get (wp non supporta la chiamata preflight)
-                headers:{"Content-Type":"application/json","Access-Control-Expose-Headers":["Authorization","token","Authentication"]}
+                headers:{"Content-Type":"application/json","Access-Control-Expose-Headers":["Authorization"]}
             };
             
             $http(req)
                 .then(
                 function(response, status, headers, config) {
-                    console.log("UserService, login, response: ",response, response.headers('token'));
+                    console.log("UserService, login, response: ",response, response.headers);
                     //var user = setUser(headers.Authentication);
                     
                     var user = setUser(headers.token);
@@ -186,7 +186,8 @@ angular.module('firstlife.services')
 
     var myInterceptor = {
         response: function(response) {
-            console.log("intercept ", response, response.headers(), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
+            console.log("intercept ", response, response.headers(),response.headers("content-type"), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
+            response.headers = response.headers();
             return response;
         }
     };

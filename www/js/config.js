@@ -645,7 +645,7 @@ angular.module('firstlife.config')
         myConfig.reset_password = myConfig.backend_users.concat('/resets/passwords');
         myConfig.backend_tags = url.concat('tags');
         //myConfig.backend_images = url.concat('places/');
-        myConfig.backend_search = url.concat('thing/search');
+        myConfig.backend_search = url.concat('things/search');
         myConfig.backend_autocomplete = myConfig.backend_search.concat("?q="); 
 
         for(k in myConfig.types.list){

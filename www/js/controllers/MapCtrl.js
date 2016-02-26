@@ -69,7 +69,7 @@ angular.module('firstlife.controllers')
         //definizione dei listner su mappa
         $scope.events = {
             map: {
-                enable: ['click', 'moveend','focus'],
+                enable: ['click', 'moveend','focus','drag'],
                 logic: 'broadcast'
             },
             marker: {
