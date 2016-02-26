@@ -1,0 +1,41 @@
+<ion-modal-view id="simpleEditorBox">
+    <ion-header-bar class="modal-header">
+        <h1 class="title title-modal">
+            <i class="icon {{simpleEditor.type_info.icon}}"  style="color:{{simpleEditor.type_info.color}}"></i>
+            {{simpleEditor.type_info.name |translate}}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="content modal-content">
+            <div class="message">
+                <span class="username">{{simpleEditor.currentUser.displayName}}</span>
+                <span>{{'COMMENT_ALLERT'|translate}}</span>
+            </div>
+            <form name="boxEntity" novalidate>
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                    <span class="input-label">{{'CONTENT'|translate}}</span>
+                    <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEditor.simpleEntity[simpleEditor.contentKey]" ng-minlength="10" maxlength="500" required></textarea>
+                </label>
+                
+                <div class="form-errors" ng-messages="boxEntity.content.$error">  
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 10 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
+                </div> 
+            </form>
+            
+        </div>
+        <div ng-if="simpleEditor.config.dev">
+            {{simpleEditor.simpleEntity |json}}
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons">
+            <button class="button button-stable button-clear icon ion-close-round" on-tap="simpleEditor.abort()" >{{'ABORT'|translate}}</button>
+        </div>
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="simpleEditor.save()" ng-disabled="boxEntity.$invalid" >{{'PUBLISH'|translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

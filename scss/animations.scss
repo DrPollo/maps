@@ -1,0 +1,47 @@
+.linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+.ease-in-animation.ng-hide-add, .ease-in-animation.ng-hide-remove {
+    transition: all ease-in 0.5s;
+}
+.ease-out-animation.ng-hide-add, .ease-out-animation.ng-hide-remove {
+    transition: all ease-out 0.5s;
+}
+.ease-animation.ng-hide-add, .ease-animation.ng-hide-remove {
+    transition: all ease 0.5s;
+}
+.ease-in-out-animation.ng-hide-add, .ease-in-out-animation.ng-hide-remove {
+    transition: all ease-in-out 0.5s;
+}
+
+
+.vertical-show {
+    //line-height: 20px;
+    //opacity: 1;
+    max-height: 500px;
+    //padding: 10px;
+    //border: 1px solid black;
+    //background: white;
+}
+
+.vertical-show.ng-hide {
+    //line-height: 0;
+    //opacity: 0;
+    max-height: 0px;
+    //padding: 0 10px;
+}
+
+.horizontal-enlarge {
+    min-width: 100%;
+    text-align: center;
+}
+.horizontal-enlarge.ng-hide{
+    min-width: 0%;
+    text-align: initial;
+}
+.fade-in {
+    opacity: 1;
+}
+.fade-in.ng-hide{
+    opacity: 0;
+}

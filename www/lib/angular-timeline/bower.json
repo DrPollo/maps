@@ -1,0 +1,18 @@
+{
+  "name": "angular-timeline",
+  "version": "0.1.0",
+  "homepage": "https://github.com/windward-ltd/angular-timeline",
+  "authors": [],
+  "description": "A really simple angular directive to display a loader image while loading ajax resources, relying on Almende Timeline.",
+  "main": "./timeline.js",
+  "keywords": [
+    "angularjs",
+    "timeline"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "bower_components"
+  ],
+  "dependencies": {
+  }
+}
