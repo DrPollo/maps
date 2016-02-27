@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('WalktroughCtrl',  ['$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', 'UserService', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, UserService, myConfig, MemoryFactory) {
+    .controller('WalktroughCtrl',  ['$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter', 'UserService', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, $filter, UserService, myConfig, MemoryFactory) {
 
         $scope.user = {};
         $scope.defaults = myConfig;
@@ -151,49 +151,46 @@ angular.module('firstlife.controllers')
             if($scope.user.password===$scope.user.password2){
                 var user = $scope.user;
                 delete user.password2;
-                showLoadingScreen('Registrazione in corso...');
-                UserService.register(user)
-                    .then(
+                showLoadingScreen($filter('translate')('SAVING_MESSAGE'));
+                UserService.register(user).then(
                     function(data) {
                         hideLoadingScreen();
-                        if(consoleCheck) console.log("SignupCtrl, doSignUp, response: ", data);    
-                        if(data['error']){
-                            var alertPopup = $ionicPopup.alert({
-                                title: '<center>'+data['error']+'</center>',
-                                template: '<center>Spiacente, riprova in seguito!</center>'
-                            });
-                        }
-
-                        else {
-                            var alertPopup = $ionicPopup.alert({
-                                title: '<center>Registrazione conclusa con successo</center>',
-                                template: '<center>Benvenuto in FirstLife!</center>'
-                            });
-                            if(consoleCheck) console.log("Register data...", data);
-                            $rootScope.currentUser = data;
-                            $scope.backToLogin();
-                        }
+                        var title = $filter('translate')('SUCCESS');
+                        var template = $filter('translate')('REGISTRATION_SUCCESS');
+                        var alertPopup = $ionicPopup.alert({
+                            title: title,
+                            template: template
+                        });
+                        if(consoleCheck) console.log("Register data...", data);
+                        $scope.backToLogin();
+                        
                     },
                     function(data) {
                         hideLoadingScreen();
                         if(consoleCheck) console.log("SignupCtrl, doSignUp, error: ", data);
-                        if(data.status === 409){
+                        if(data.status === 401){
+                            var title = $filter('translate')('ERROR');
+                            var template = $filter('translate')('USED_EMAIL');
                             var alertPopup = $ionicPopup.alert({
-                                title: 'Registrazione fallita!',
-                                template: 'Email già registrata.'
+                                title: title,
+                                template: template
                             });
                         }else{
+                            var title = $filter('translate')('ERROR');
+                            var template = $filter('translate')('UNKNOWN_ERROR');
                             var alertPopup = $ionicPopup.alert({
-                                title: 'Registrazione fallita!',
-                                template: 'Controllare la connessione di rete e riprovare.'
+                                title: title,
+                                template: template
                             });
                         }
                     });
             }
             else {
+                var title = $filter('translate')('ERROR');
+                var template = $filter('translate')('UNKNOWN_ERROR');
                 var alertPopup = $ionicPopup.alert({
-                    title: 'Errore:',
-                    template: 'la password di conferma deve coincidere!'
+                    title: title,
+                    template: template
                 });
             }
 
@@ -202,23 +199,28 @@ angular.module('firstlife.controllers')
 
         // invio richiesta recupero password
         $scope.retrievePassword = function (){
-            showLoadingScreen('Invio richiesta...');
+            
+            showLoadingScreen($filter('translate')('SENDING_REQUEST'));
             UserService.retrievePassword($scope.user.email).then(
                 function(response){
                     if(consoleCheck) console.log("LoginCtrl, retrievePassword, response: ",response);
                     hideLoadingScreen();
+                    var title = $filter('translate')('SUCCESS');
+                    var template = $filter('translate')('CHECK_EMAIL');
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Richiesta inviata!',
-                        template: "Controlla l'email con le istruzioni per il recupero della password."
+                        title: title,
+                        template: template
                     });
                     $scope.backToLogin();
                 },
                 function(response){
                     hideLoadingScreen();
                     if(consoleCheck) console.log("LoginCtrl, retrievePassword, error: ",response);
+                    var title = $filter('translate')('ERROR');
+                    var template = $filter('translate')('UNKNOWN_ERROR');
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Invio fallito!',
-                        template: 'Riprovare in seguito!'
+                        title: title,
+                        template: template
                     });
                 }
             );
@@ -265,7 +267,7 @@ angular.module('firstlife.controllers')
          */
         function showLoadingScreen(text){
             if(!text || text === 'undefined'){
-                text = 'Login in corso...';
+                text = $filter('translate')('LOGGIN_IN');
             }
 
             $ionicLoading.show({

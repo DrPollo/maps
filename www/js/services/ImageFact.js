@@ -49,24 +49,26 @@ angular.module('firstlife.factories')
         return {
             images:function(images, id, entity_type){
                 var data = {};
-                data.images = toObject(images);
                 data.user = user_id;
-                data.description  = id;
-                var json =  JSON.stringify(data);
-                var req = {
-                    method: 'POST',
-                    url: sendUrl[entity_type].concat('/').concat(id).concat('/images').concat(format),
-                    //url: urlThings.concat('/').concat(id).concat('/images').concat(format),
-                    headers: { 'Content-Type': 'application/json', Authentication:token},
-                    data: json
-                }
+                for (var i = 0; i < images.length; i++){
+                    data.image = images[i];
+                    var json =  JSON.stringify(data);
+                    var req = {
+                        method: 'PUT',
+                        url: urlThings.concat('/').concat(id).concat('/images').concat('/add').concat(format),
+                        //url: urlThings.concat('/').concat(id).concat('/images').concat(format),
+                        headers: { 'Content-Type': 'application/json', Authentication:token},
+                        data: json
+                    }
 
-                return $http(req).success(function(data){ 
-                    return data +'saved'; 
-                })
-                    .error(function(){ 
-                    return 'error';
-                });
+                    return $http(req).success(function(data){ 
+                        return data +'saved'; 
+                    })
+                        .error(function(){ 
+                        return 'error';
+                    });
+                    
+                }
 
             }
         }

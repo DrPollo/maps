@@ -1152,34 +1152,6 @@ angular.module('firstlife.controllers')
 
             
             
-            // init filtro per livelli in area
-            // es. level: 0, level:1, etc....
-            if( $scope.config.map.area && levels.check){
-                // filtri livello
-                var checkL = 'level',
-                    filter_nameL = 'Levels';
-                // costruisco regola per gli entity_type
-                var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList, 
-                            callbackPush:function(value){
-                                selectGeoJSONLevel(value);
-                            },
-                            callbackPop:function(value){
-                                //nextGeoJSONLevel(value);
-                            }
-                           };
-                // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-                $scope.filters[filter_nameL] = {list: levels.list, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
-                for(var i = 0; i < $scope.filters[filter_nameL].list.length; i++){
-                    $scope.filters[filter_nameL].list[i].visible = true;
-                    rule.values.push($scope.filters[filter_nameL].list[i].key);
-                }
-                $scope.filterConditions.push(rule);
-                if(consoleCheck) console.log("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
-            }
-            
-            
-            
-            
             
             // init category
             // bug da sistemare, infilo la categoria in catIndex in entityFactory, da tenere allineati!!!!
@@ -1207,6 +1179,34 @@ angular.module('firstlife.controllers')
                 }
                 $scope.filterConditions.push(rule);
                 if(consoleCheck) console.log("MapCtrl, init filtro categoria: ",$scope.filters[filter_name],rule);
+            }
+            
+            
+            
+            
+            // init filtro per livelli in area
+            // es. level: 0, level:1, etc....
+            if( $scope.config.map.area && levels.check){
+                // filtri livello
+                var checkL = 'level',
+                    filter_nameL = 'Levels';
+                // costruisco regola per gli entity_type
+                var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList, 
+                            callbackPush:function(value){
+                                selectGeoJSONLevel(value);
+                            },
+                            callbackPop:function(value){
+                                //nextGeoJSONLevel(value);
+                            }
+                           };
+                // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
+                $scope.filters[filter_nameL] = {list: levels.list, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
+                for(var i = 0; i < $scope.filters[filter_nameL].list.length; i++){
+                    $scope.filters[filter_nameL].list[i].visible = true;
+                    rule.values.push($scope.filters[filter_nameL].list[i].key);
+                }
+                $scope.filterConditions.push(rule);
+                if(consoleCheck) console.log("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
             }
             
             
@@ -1439,9 +1439,10 @@ angular.module('firstlife.controllers')
             if($scope.geojson && $scope.geojson.data){
                 $scope.$apply(function(){
                     $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
-                    markerDisabler('level',value);
+                    
                     $scope.$broadcast('timeline.groups.setgroup',{group:value});
                 });
+                markerDisabler('level',value);
                 
             }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
         }

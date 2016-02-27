@@ -16,13 +16,13 @@
         <form name="user_form" class="user-form" novalidate>
             <ion-list>
                 <label class="item item-divider">{{'PROFILE'|translate}}</label>
-                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.firstName.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.first_name.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
                     <span class="input-label">{{'NAME'|translate}}</span>
-                    <input type="text" placeholder="{{'NAME'|translate}}" name="firstName" ng-model="user.firstName" ng-readonly="!editable" required>
+                    <input type="text" placeholder="{{'NAME'|translate}}" name="firstName" ng-model="user.first_name" ng-readonly="!editable" required>
                 </label>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.lastName.$invalid, 'no-error' : !user_form.lastName.$invalid }">
                     <span class="input-label">{{'LASTNAME'|translate}}</span>
-                    <input type="text" placeholder="{{'LASTNAME'|translate}}" name="lastName" ng-model="user.lastName" ng-readonly="!editable" required>
+                    <input type="text" placeholder="{{'LASTNAME'|translate}}" name="lastName" ng-model="user.last_name" ng-readonly="!editable" required>
                 </label>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.email.$invalid, 'no-error' : !user_form.email.$invalid }">
                     <span class="input-label">{{'EMAIL'|translate}}</span>

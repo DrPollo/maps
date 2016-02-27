@@ -4,9 +4,9 @@ angular.module('firstlife.factories')
         //var url = 'http://firstlife-dev.di.unito.it/api/index.php/api/v2/places';
         var self = this;
         self.config = myConfig;
-        
+
         var consoleCheck = false;
-        
+
 
         var urlThings= myConfig.backend_things;
         var urlBbox= myConfig.backend_bbox;
@@ -21,7 +21,7 @@ angular.module('firstlife.factories')
         if(self.config.map.bbox_details){
             bboxBaseParams = bboxBaseParams.concat('&detail=full');
         }
-        
+
         var format = config.format;
         var response = null;
 
@@ -65,48 +65,7 @@ angular.module('firstlife.factories')
                 return self.markerList;
             },
             get: function(id, details) {
-                if(consoleCheck)console.log("Get Marker: ",id," details? ",details);
-                var deferred = $q.defer();
-                // se faccio una richiesta con per i dettagli
-                if(self.markerDetailsList[id]) {
-                    if(consoleCheck)console.log("Get Marker from cache!", self.markerDetailsList[id]);
-                    deferred.resolve(self.markerDetailsList[id]);
-                } else if(!details && self.markerList[id]){
-                    if(consoleCheck)console.log("Get Marker from cache!", self.markerList[id]);
-                    deferred.resolve(self.markerList[id]);
-                }else {
-                    // altrimenti chiamo il server per i dettagli
-                    var urlId = urlThings.concat('/').concat(id).concat(format).concat("?detail=full").concat(" ");
-
-                    var req = {
-                        url: urlId,
-                        method: 'GET',
-                        //headers:{"Content-Type":"application/json"},
-                        data:''
-                    };
-                    $http(req)
-                        .success(function(response) {
-                        if(consoleCheck)console.log("PlaceFactory, get, rensponse: ", response);
-                        entityToMarker(response.data).then(
-                            function(marker){
-                                //aggiorno anche la lista dei dettagli
-                                if(consoleCheck)console.log("PlaceFactory, get, rensponse > marker: ", marker);
-                                updateMarkerList(marker,true);
-                                deferred.resolve(marker);
-                            },
-                            function(err){
-                                deferred.reject(err);
-                                if(consoleCheck)console.log("placeFactory, get, entityToMarker, error: ",err);
-                            }
-                        );
-
-                    })
-                        .error(function(response) {
-                        deferred.reject(response);
-                        if(consoleCheck)console.log("Get Marker from server: error! ", response);
-                    });
-                }
-                return deferred.promise;
+                return getMarker(id,details);
             },
             getList: function(ids, details) {
                 if(consoleCheck)console.log("Get Marker: ",id," details? ",details);
@@ -133,11 +92,11 @@ angular.module('firstlife.factories')
                         //aggiorno anche la lista dei dettagli
                         updateMarkerList(markerList,true);
                         deferred.resolve(markerList);
-                        },
-                        function(err){
-                            deferred.reject(err);
-                            if(consoleCheck)console.log("entityFactory, get, entityToMarker, error: ",err);
-                        });
+                    },
+                                    function(err){
+                        deferred.reject(err);
+                        if(consoleCheck)console.log("entityFactory, get, entityToMarker, error: ",err);
+                    });
                 }
                 return deferred.promise;
             },
@@ -183,7 +142,7 @@ angular.module('firstlife.factories')
 
             },
             create: function(entity) {
-                var urlId = types[entity.entity_type].concat(format);
+                var urlId = types[entity.entity_type].concat('/add').concat(format);
                 var deferred = $q.defer();
                 var feature = markerConverter(entity);
                 var token = MemoryFactory.getToken();
@@ -198,12 +157,18 @@ angular.module('firstlife.factories')
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
                 $http(req)
                     .success(function(response) {
-                    if(consoleCheck)console.log("entityFactory, create, response: ",response);
-                    //angular.merge(self.geoJSON,response.data.data[0]);
-                    if(consoleCheck)console.log("PlaceFactory, getBBox, rensponse, merge with geoJSON: ", self.geoJSON);
-                    var marker = entityToMarker(response.data);
-                    updateMarkerList(marker,true);
-                    deferred.resolve(marker);
+                    console.log("entityFactory, create, response: ",response);
+                    getMarker(response.id, true).then(
+                        function(response){
+                            var marker = entityToMarker(response.data);
+                            updateMarkerList(marker,true);
+                            deferred.resolve(marker);
+                        },
+                        function(err){
+                            console.log("entityFactory, create, get del risultato ",err);
+                            deferred.resolve(response.data);
+                        }
+                    );
                 }).error(function(response) {
                     deferred.reject(response);
                     if(consoleCheck)console.log("Created entity on the server: error! ", response);
@@ -213,7 +178,7 @@ angular.module('firstlife.factories')
             remove: function(entityId){
                 if(consoleCheck)console.log("placeFactory, remove id: ",entityId);
                 //trova id da id_wp
-                var urlId = urlThings.concat("/").concat(entityId).concat(format);
+                var urlId = urlThings.concat("/").concat(entityId).concat('/delete').concat(format);
                 //var urlId = types[entity.entity_type].concat("/").concat(entity.id).concat(format);
                 // cancello i marker dalla cache
                 delete self.markerDetailsList[entityId];
@@ -255,14 +220,14 @@ angular.module('firstlife.factories')
                 if (self.config.behaviour.marker_cache && checkRst > -1 && !reset) {
                     // già in cache, aggiorno solo con since, al netto del timeout
                     var bboxTmp = self.bboxHistory[checkRst];
-                    
+
                     if(consoleCheck)console.log("EntityFactory, getBBoxPlace, check if 2: ",(bboxTmp.timestamp.getTime()+self.BBOX_TIMEOUT<(new Date()).getTime()));
-                    
+
                     if (bboxTmp.timestamp.getTime()+self.BBOX_TIMEOUT<(new Date()).getTime()) {
                         bboxParamsString += "&since="+bboxTmp.timestamp.toISOString();
                         if(consoleCheck)console.log("check bboxParamsString: ", bboxParamsString);
-                        
-                        
+
+
                     } else{
                         deferred.reject("nothing to check");
                         skip = true;
@@ -285,6 +250,51 @@ angular.module('firstlife.factories')
         };
 
 
+        //get marker details
+        function getMarker(id, details) {
+            if(consoleCheck)console.log("Get Marker: ",id," details? ",details);
+            var deferred = $q.defer();
+            // se faccio una richiesta con per i dettagli
+            if(self.markerDetailsList[id]) {
+                if(consoleCheck)console.log("Get Marker from cache!", self.markerDetailsList[id]);
+                deferred.resolve(self.markerDetailsList[id]);
+            } else if(!details && self.markerList[id]){
+                if(consoleCheck)console.log("Get Marker from cache!", self.markerList[id]);
+                deferred.resolve(self.markerList[id]);
+            }else {
+                // altrimenti chiamo il server per i dettagli
+                var urlId = urlThings.concat('/').concat(id).concat('/details').concat(format).concat("?detail=full").concat(" ");
+
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    //headers:{"Content-Type":"application/json"},
+                    data:''
+                };
+                $http(req)
+                    .success(function(response) {
+                    if(consoleCheck)console.log("PlaceFactory, get, rensponse: ", response);
+                    entityToMarker(response.data).then(
+                        function(marker){
+                            //aggiorno anche la lista dei dettagli
+                            if(consoleCheck)console.log("PlaceFactory, get, rensponse > marker: ", marker);
+                            updateMarkerList(marker,true);
+                            deferred.resolve(marker);
+                        },
+                        function(err){
+                            deferred.reject(err);
+                            if(consoleCheck)console.log("placeFactory, get, entityToMarker, error: ",err);
+                        }
+                    );
+
+                })
+                    .error(function(response) {
+                    deferred.reject(response);
+                    if(consoleCheck)console.log("Get Marker from server: error! ", response);
+                });
+            }
+            return deferred.promise;
+        }
         //update lista di marker
         function updateMarkersList(newMarkers,details){
             for(el in newMarkers){
@@ -299,13 +309,13 @@ angular.module('firstlife.factories')
         }
 
         function updateMarkerList(newMarker,details){
-            if(consoleCheck)console.log("updateMarkersList, place caricato ",newMarker, " anche nella lista dettagli? ",details); 
+            console.log("updateMarkersList, place caricato ",newMarker, " anche nella lista dettagli? ",details); 
             if(details){
                 self.markerDetailsList[newMarker.id] = newMarker;
             }else{
                 self.markerList[newMarker.id] = newMarker;
             }
-            if(consoleCheck)console.log("aggiorno marker nella lista", self.markerList[newMarker.id], newMarker);
+            console.log("aggiorno marker nella lista", self.markerList[newMarker.id], newMarker);
         }
 
         //upsert PLace per update e create!!!
@@ -314,12 +324,12 @@ angular.module('firstlife.factories')
         function entitiesToMarker(data) {
             if(!data)
                 return [];
-            
+
             var featureCollection = data;
             if(consoleCheck)console.log("placeFactory, entitiesToMarker, featureCollection: ", featureCollection);
             var entityList = featureCollection.features;
             if(consoleCheck)console.log("entitiesToMarker entityFact", data, featureCollection, entityList);
-            
+
             var markers = [];
             for (i = 0; i < entityList.length; i++) {
                 if(consoleCheck)console.log("place da trasformare in marker", entityList[i], " numero: ",i);
@@ -391,7 +401,7 @@ angular.module('firstlife.factories')
             // gestione categorie multiple
             var mainCat = entity.properties.categories[0];
 
-            
+
             var catIndex = self.categories.map(function(e){return e.category_space;}).indexOf(mainCat.category_space.id);
             var categories = self.categories[catIndex].categories;
             var colors = myConfig.design.colors;
@@ -402,13 +412,13 @@ angular.module('firstlife.factories')
             var icons = {};
             var types = self.config.types.list,
                 type = types[types.map(function(e){return e.key}).indexOf(entity.properties.entity_type)];
-            
+
             if(consoleCheck)console.log("EntityFactory, markerCreate, type ",types, type, entity,self.categories);
             // se non e' definito il tipo nel file di configurazione
             if(!type) {
                 return null;
             }
-            
+
             // icona di default sul tipo di entita'
             icons[0] = {
                 type: 'div',    
@@ -444,7 +454,7 @@ angular.module('firstlife.factories')
                     };
                 }
             }
-            
+
             var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].category_space.categories[0].id)),
                 category = categories[catIndex],
                 entity_type = entity.properties.entity_type;
@@ -463,14 +473,14 @@ angular.module('firstlife.factories')
 
 
             if(consoleCheck) console.log("markerCreate, entity: ", entity,category, categories, icons,type,mainCat.category_space, icons[mainCat.category_space]);
-            
+
             var htmlIcon = '';
             htmlIcon = htmlIcon.concat('<i class="dotEventIcon icon ').concat(icons[0].icon).concat(' color').concat(icons[0].index).concat('"></i>');
             var checkRange = (!angular.equals(entity.properties.valid_to, entity.properties.valid_from) || !entity.properties.valid_from || !entity.properties.valid_to);
-            
-            
+
+
             var groupLabel = null;
-            
+
             if(config.map &&  config.map.area && config.map.area.levels){
                 var levels = config.map.area.levels;
                 var index = levels.map(function(e){return e.key;}).indexOf(entity.properties.level ? entity.properties.level: 0);
@@ -478,8 +488,8 @@ angular.module('firstlife.factories')
                     groupLabel = levels[index].name;
                 }
             }
-             
-            
+
+
             var marker = {
                 popupOptions : {closeOnClick:true},
                 id: parseInt(entity.properties.id),
@@ -557,7 +567,7 @@ angular.module('firstlife.factories')
             if(self.config.map.bbox_details){
                 details = true;
             }
-            
+
             $http(req).then(
                 function(response) {
                     if(consoleCheck)console.log("EntityFactory, bboxQuery no since, get, response: ", response);
@@ -601,7 +611,7 @@ angular.module('firstlife.factories')
                 bbox.timestamp = new Date();
                 bbox.valid = true;
                 self.bboxHistory.push(bbox);
-                
+
                 return -1;
             } else {
                 //DISTRIBUTED!
@@ -662,11 +672,11 @@ angular.module('firstlife.factories')
             }else if(place.lat){
                 feature.geometry = {"type": "Point", "coordinates":[parseFloat(place.lng),parseFloat(place.lat)]};
             }
-            var templateCollection = '{"type":"FeatureCollection","features":[]}';
-            var featureCollection = angular.fromJson(templateCollection);
-            featureCollection.features.push(feature);
-            if(consoleCheck)console.log("PlaceFactory, markerConverter, from: ",place," to: ", angular.toJson(featureCollection));
-            return featureCollection;
+            //            var templateCollection = '{"type":"FeatureCollection","features":[]}';
+            //            var featureCollection = angular.fromJson(templateCollection);
+            //            featureCollection.features.push(feature);
+            //            if(consoleCheck)console.log("PlaceFactory, markerConverter, from: ",place," to: ", angular.toJson(featureCollection));
+            return feature;
         }
 
     }]);

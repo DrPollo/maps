@@ -442,7 +442,9 @@ angular.module('firstlife.controllers')
          */
 
         // imposto il form con i dati del marker da modificare
-        function setToEdit(mark){
+        function setToEdit(data){
+            
+            var mark = EntityService.preprocessMarker(data);
             // se il type e' settato
             if(mark.entity_type){
                 typeIndex = _this.types.list.map(function(e){return e.key;}).indexOf(mark.entity_type);

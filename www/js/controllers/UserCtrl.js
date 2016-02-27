@@ -28,9 +28,9 @@ angular.module('firstlife.controllers')
 
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             var action = $stateParams.action;
-            console.log("sono in UserCtrl, questi i parametri ", action);
+            console.log("sono in UserCtrl, questi i parametri ", action,$scope.user);
             // recupero le informazioni dell'utente se non le ho
-            if(angular.equals({},$scope.user))
+            //if(angular.equals({},$scope.user))
                 checkUser();
             // entro in login con azione "logout"
             switch(action){

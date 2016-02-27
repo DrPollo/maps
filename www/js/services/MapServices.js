@@ -29,11 +29,11 @@ angular.module('firstlife.services')
 
         self.filters = {};
         self.filters.time = {
-            from: self.config.map.time_from,
+            from: self.config.map.time_from ,
             to: self.config.map.time_to
         };
 
-
+        console.log("debug ",self.config.map,self.filters.time);
         // se mobile disattivo i controlli di zoom
         var controlZoom = true;
         if ( ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone() ) {

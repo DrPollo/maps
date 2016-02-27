@@ -8,7 +8,7 @@ angular.module('firstlife.services')
         self = this;
         self.config = myConfig;
         self.categories = self.config.types.categories;
-        var dev = false;
+        var dev = true;
 
 
         return {
@@ -20,7 +20,13 @@ angular.module('firstlife.services')
             // regole speciali per il trattamento dei campi e delle entita'
             processData: function(data){
                 return processData(data);
+            },
+            
+            // regole di conversione del marker per l'update
+            preprocessMarker: function(data){
+                return editPreProcessing(data);
             }
+            
         }
 
 
@@ -115,7 +121,26 @@ angular.module('firstlife.services')
         }
 
 
-
+        //todo conversione del marker nel formato per l'editor
+        
+        function editPreProcessing(marker){
+            var tmp = angular.copy(marker);
+            
+            // fix categorie
+            var tmpCats  = [];
+            for(var i =0; i < tmp.categories.length; i++){
+                console.log("develop ", tmp.categories[i]);  
+                var c = tmp.categories[i];
+                var cats = [];
+                for(var j =0 ; j<c.category_space.categories.length;j++){
+                    cats.push(c.category_space.categories[j].id);
+                }
+                tmpCats.push({category_space:c.category_space.id, categories:cats});
+            }
+            tmp.categories = tmpCats;
+            if(dev) console.log("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
+            return tmp;    
+        }
 
         // preparo i dati del form per le chiamate al server
         function processData(data) {
@@ -163,8 +188,8 @@ angular.module('firstlife.services')
                     }
 
             }
-            if(dev)console.log("EntityService, processData, semantica del tipo: ", data, dataForServer);
-
+            console.log("EntityService, processData, semantica del tipo: ", data, dataForServer);
+            
 
             // entity_type, serve per la create
             dataForServer.entity_type = data.entity_type;

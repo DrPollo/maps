@@ -200,7 +200,9 @@ angular.module('firstlife.controllers')
 
         $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
             console.log("ImagesCtrl, onLoad, fileObj: ", fileObj);
-            $scope.addToImageCache(fileObj.base64);
+            var img = 'data:';
+            img = img.concat(fileObj.filetype).concat(';base64,').concat(fileObj.base64);
+            $scope.addToImageCache(img);
         }
 
 

@@ -10,6 +10,8 @@ angular.module('firstlife.services')
     var urlUpdate = config.update_user;
     var format = myConfig.format;
     
+    var dev = true;
+    
     
     return {
         getInfo: function() {
@@ -25,7 +27,7 @@ angular.module('firstlife.services')
             
             $http(req).then(
                 function(response) {
-                    console.log("UserService, getInfo, response ",response);
+                    if(dev) console.log("UserService, getInfo, response ",response);
                     deferred.resolve(response.data);
                 },
                 function(err){
@@ -54,9 +56,7 @@ angular.module('firstlife.services')
             $http(req)
                 .then(
                 function(response, status, headers, config) {
-                    console.log("UserService, login, response: ",response, response.headers);
-                    //var user = setUser(headers.Authentication);
-                    
+                    if(dev) console.log("UserService, login, response: ",response, response.headers);
                     var user = setUser(response.headers.authorization);
                     deferred.resolve(user);
                 },
@@ -81,13 +81,8 @@ angular.module('firstlife.services')
             };
             $http(req)
             .then(function(response, status, headers, config) {
-                console.log("UserService, register, response: ",response);
-                if(response && response.data && response.data.token){
-                    var user = setUser(response.data.token);
-                    deferred.resolve(user);
-                }else{
-                    deferred.reject("Bug, errore ma con exit code 200");
-                }
+                if(dev) console.log("UserService, register, response: ",response);
+                deferred.resolve(response.data);
             },function(response) {
                 console.log("UserService, register, errore: ",response);
                 deferred.reject(response);
@@ -99,13 +94,13 @@ angular.module('firstlife.services')
             MemoryFactory.deleteUser();
             MemoryFactory.deleteToken();
             MemoryFactory.deleteConfig();
-            console.log("cose rimaste in memoria: ", MemoryFactory.getConfig(), MemoryFactory.getToken(), MemoryFactory.getUser());
+            if(dev) console.log("cose rimaste in memoria: ", MemoryFactory.getConfig(), MemoryFactory.getToken(), MemoryFactory.getUser());
             return true;
         },
         
         update: function(user){
             var deferred = $q.defer();
-            var urlId = urlUpdate.concat(format);
+            var urlId = url.concat(format);
             var data = angular.toJson(user, true);
             var token = MemoryFactory.getToken();
             
@@ -117,8 +112,7 @@ angular.module('firstlife.services')
             };
             $http(req)
             .then(function(response, status, headers, config) {
-                //console.log("AuthServices, update, response: ",response);
-                var user = setUser(response.data.token);
+                console.log("AuthServices, update, response: ",response);
                 deferred.resolve(user);
             },function(response) {
                 deferred.reject(response);
@@ -207,12 +201,13 @@ angular.module('firstlife.services')
 
     var myInterceptor = {
         response: function(response) {
-            //console.log("intercept ", response, response.headers(),response.headers("content-type"), response.headers('Authorization'),response.headers('token'),response.headers('Authentication'));
+            console.log("intercepted response", response, response.headers());
             response.headers = response.headers();
+            //todo response.meta = 
             return response;
         }
     };
-
+    
     return myInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push('myInterceptor');

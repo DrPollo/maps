@@ -2,7 +2,7 @@ angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
     'dev': true,
-    'project': 6,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
@@ -28,7 +28,7 @@ angular.module('firstlife.config')
                           'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
                           'thumbnail':{ key: 'thumbnail', label:"THUMBNAIL_LABEL",placeholder:"THUMBNAIL_PLACEHOLDER", default:null},
                           'user':{ key: 'user', label:"USER",placeholder:"USER" , default:-1},
-                          'wp_id':{ key: 'wp_id', required:true, default:null},
+                          'wp_id':{ key: 'id_wp', required:true, default:1},
                           'id':{ key: 'id', default:null},
                           "level":{key:"level", default:0, label:"LEVEL_LABEL",placeholder:"LEVEL_PLACEHOLDER"}
                       }
@@ -39,7 +39,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
-                     'parent':{ key: 'parent', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
+                     'parent':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
                  },
                  relations:{
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
@@ -472,7 +472,7 @@ angular.module('firstlife.config')
             "map":{
                 "map_default_lat":37.794203,
                 "map_default_lng":-122.395806,
-                "zoom_level":20,
+                "zoom_level":19,
                 "zoom_create":22,
                 'max_zoom' : 22,
                 'min_zoom' : 10, //https://api.tiles.mapbox.com/v4/alessiacalafiore.1a8075f6/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxlc3NpYWNhbGFmaW9yZSIsImEiOiJkNTljMmIwMzQ4MTNmNWVkYmNiMDM0NjFiOTAwNGNiOCJ9.sAiwGQm8n0AuWIX4zF8vJw

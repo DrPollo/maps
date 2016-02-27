@@ -177,13 +177,17 @@ angular.module('firstlife.services')
         function searchEntryParser(feature,center){
             console.log("SearchCtrl, searchEntryParser, entry: ",feature, self.categories);
             var r = {};
-            var spaceIndex = self.categories.map(function(e) { return e.category_space; }).indexOf(feature.properties.categories[0].category_space),
-                cat = feature.properties.categories[0].categories[0],
-                catIndex = self.categories[spaceIndex].categories.map(function(e){return e.id;}).indexOf(cat);
-            console.log("SearchCtrl, searchEntryParser, indici: ",spaceIndex,cat,catIndex);
+            var spaceIndex = self.categories.map(function(e) { return e.category_space; }).indexOf(feature.properties.categories[0].category_space.id);
+            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",spaceIndex);
+            var cat = feature.properties.categories[0].category_space.categories[0];
+            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",cat);
+            var catIndex = self.categories[spaceIndex].categories.map(function(e){return e.id;}).indexOf(cat.id);
+            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",catIndex);
+            console.log("SearchCtrl, searchEntryParser, indici: ",self.categories[spaceIndex],self.categories[spaceIndex].categories,self.categories[spaceIndex].categories[catIndex]);
             r.name = feature.properties.name;
             // icona e colore da categoria
             r.icon = self.categories[spaceIndex].categories[catIndex].icon;
+            
             r.color = self.categories[spaceIndex].categories[catIndex].color;
             
             r.id = parseInt(feature.id);

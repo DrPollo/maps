@@ -2,7 +2,7 @@ angular.module('firstlife.services')
     .service('ImageService',['$http', '$q', 'myConfig', 'PlatformService', function($http, $q, myConfig, PlatformService) {
         var config  = myConfig;
         var urlThings     = myConfig.backend_things;//myConfig.backend_images;
-        var format = '.json';
+        var format = config.format;
         var response = null;
         var req = 'images'
         var small = "?size=small";
