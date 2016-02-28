@@ -57,9 +57,12 @@
                         </div> 
                         <label ng-if="editor.checkList.link_url" class="item item-input item-floating-label">
                             <span class="input-label">{{editor.checkList.link_url.label|translate}}</span>
-                            <input type="text" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{editor.checkList.link_url.placeholder |translate}}" ng-required="editor.checkList.link_url.required">
+                            <input type="url" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{editor.checkList.link_url.placeholder |translate}}" ng-required="editor.checkList.link_url.required">
                         </label>
-
+                        <div class="form-errors" ng-messages="editor.form.wizardform1.link_url.$error">  
+                            <div class="form-error" ng-message="url">{{'NOT_VALID_URL'|translate}}</div>
+                            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
+                        </div> 
                         <div ng-if="editor.checkList.valid_from && editor.checkList.valid_to" id="date-form" class="row responsive-sm">
                             <label ng-if="editor.checkList.valid_from" class="item item-input col">
                                 <div class="input-label">

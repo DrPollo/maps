@@ -110,7 +110,7 @@ angular.module('firstlife.config')
             'colors' : ['rgba(246,213,59, 1)', 'rgba(255,179,16, 1)', 'rgba(243,164,106, 1)','rgba(221,91,42, 1)','rgba(174,10,10, 1)','rgba(130,50,86, 1)','rgba(45,69,104, 1)','rgba(63,127,145, 1)','rgba(61,131,97, 1)','rgba(136,186,92, 1)','rgba(246,213,59, 1)', 'rgba(255,179,16, 1)', 'rgba(243,164,106, 1)','rgba(221,91,42, 1)','rgba(174,10,10, 1)','rgba(130,50,86, 1)','rgba(45,69,104, 1)','rgba(63,127,145, 1)','rgba(61,131,97, 1)','rgba(136,186,92, 1)','#ccc'],
             'show_thumbs' : true,
             'can_permalink': false,
-            'default_language' : 'it',
+            'default_language' : 'en',
             "disabled_color":20
         },
         'actions':{
