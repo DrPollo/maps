@@ -217,6 +217,13 @@ angular.module('firstlife.services')
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
             if(dev) console.log("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
+            
+            
+            // se per qualche ragione le date sono invertite faccio il fix
+            if(dataForServer.valid_from.getTime() > dataForServer.valid_to.getTime()){
+                dataForServer.valid_to = angular.copy(dataForServer.valid_from);
+            }
+            
             if(dataForServer.valid_from){
                 dataForServer.valid_to.setHours(0,0,0,0);
                 if(data.door_time){
