@@ -135,7 +135,7 @@
                 
                 <div>
                     <span ng-if="comment.display_name" class="username">{{comment.display_name}}</span>
-                    <span ng-if="comment.timestamp" class="message"> {{'WHEN'|translate}} {{comment.timestamp | date:'dd/MM/yyyy'}}</span>
+                    <span ng-if="comment.timestamp" class="message"> {{'WHEN'|translate}} {{comment.timestamp | date:'dd/MM/yyyy (hh:mm)'}}</span>
                 </div>
                 <pre>{{comment.message}}</pre>
                 

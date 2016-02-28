@@ -515,12 +515,29 @@ angular.module('firstlife.controllers')
 
         // richiedo i commenti per il marker
         function loadComments(marker){
-            $scope.infoPlace.marker.comments = [];
+            if(!$scope.infoPlace.marker.comments)
+                $scope.infoPlace.marker.comments = [];
             if(consoleCheck)console.log("ModalEntityCtrl, loadComments per il marker ", marker);
             CommentsFactory.get(marker.id).then(
                 function(response){
                     if(consoleCheck)console.log("ModalEntityCtrl, loadComments, CommentsFactory.get, response: ",response);
-                    $scope.infoPlace.marker.comments = response;
+                    for (var i in response){
+                        var c = response[i];
+                        var index  = $scope.infoPlace.marker.comments.map(function(e){return e.comment_id;}).indexOf(c.comment_id);
+                        if(index < 0){
+                            if(consoleCheck)console.log("ModalEntityCtrl, loadComments, something new ",c);
+                            $scope.infoPlace.marker.comments.push(c);
+                        }
+                    }
+                    for(var i in $scope.infoPlace.marker.comments){
+                        var c = $scope.infoPlace.marker.comments[i];
+                        var index = response.map(function(e){return e.comment_id;}).indexOf(c.comment_id);
+                        if(index < 0){
+                            if(consoleCheck)console.log("ModalEntityCtrl, loadComments, something old ",c);
+                            $scope.infoPlace.marker.comments.splice(i,1);
+                        }
+                    }
+                    //$scope.infoPlace.marker.comments = response;
                 },
                 function(response){
                     if(consoleCheck)console.log("ModalEntityCtrl, loadComments, CommentsFactory.get, error: ",response);
