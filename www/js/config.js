@@ -489,9 +489,9 @@ angular.module('firstlife.config')
                         clickable:false,
                     },
                     "levels":[
-                        {"level":0,name:'0 Street level',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1},
-                        {"level":1,name:'1 Bay level',id:2,icon:'ion-social-buffer-outline',slug:'first-level',key:1,index:2},
-                        {"level":2,name:'2 Atrium level',id:3,icon:'ion-social-buffer-outline',slug:'second-level',key:2,index:3}
+                        {"level":0,name:'1 Street level',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1},
+                        {"level":1,name:'2 Bay level',id:2,icon:'ion-social-buffer-outline',slug:'first-level',key:1,index:2},
+                        {"level":2,name:'3 Atrium level',id:3,icon:'ion-social-buffer-outline',slug:'second-level',key:2,index:3}
                     ],
                     "data":{
                         "type": "FeatureCollection",

@@ -20,6 +20,9 @@ angular.module('firstlife.controllers')
 
         self.currentUser = MemoryFactory.readUser();
 
+        // switch tra create (true) e update mode (false)
+        self.createMode = true;
+        
         /*
          * Listners:
          * 1) richiesta di aperura editor, ascolta su evento "simpleInsert" da MapCtrl o CardPlaceCtrl
@@ -33,6 +36,7 @@ angular.module('firstlife.controllers')
                 event.defaultPrevented = true;
                 if(args){
                     initEntity(args);
+                    self.createMode = true;
                     openEditor();
 
                 }
@@ -56,8 +60,10 @@ angular.module('firstlife.controllers')
                         self.contentKey = self.config.types.list[index].simple_editor;
 
                         hideLoadingScreen();
-                        self.simpleEntity = mark;
-                        initLabel(mark.entity_type)
+                        marker = EntityService.preprocessMarker(mark);
+                        self.simpleEntity = marker;
+                        initLabel(marker.entity_type);
+                        self.createMode = false;
                         openEditor();
                     },function(error) {
                         hideLoadingScreen();
@@ -77,6 +83,10 @@ angular.module('firstlife.controllers')
         self.save = function(){
             if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, salvo l'entita': ",self.simpleEntity);
             saveEntity();
+        };
+        self.update = function(){
+            if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, salvo l'entita': ",self.simpleEntity);
+            updateEntity();
         };
         self.abort = function(){
             if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, chiudo la modal");
@@ -187,8 +197,34 @@ angular.module('firstlife.controllers')
             },function(error){
                 if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, addComment, error: ",error);
                 hideLoadingScreen();
+                var marker = {id:-1};
+                backToMap({marker:marker});
+                //showAlert();
+                //todo manda messaggio a mapctrl per la gestione del risultato
+            });
+        }
+        function updateEntity(){
+            showLoadingScreen();
 
-                backToMap({id:-1});
+            // todo da far processare 
+            var dataForServer = EntityService.processData(self.simpleEntity);
+            MapService.updateMarker(dataForServer)
+                .then(function(response){
+                if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, addComment, response: ",response);
+                hideLoadingScreen();
+                self.abort();
+
+                // restituisce l'id del padre o quello del marker
+                var id = findParent(response);
+
+                backToMap({id:id,marker:response});
+                //todo manda messaggio a mapctrl per la gestione del risultato
+
+            },function(error){
+                if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, addComment, error: ",error);
+                hideLoadingScreen();
+                var marker = {id:-1};
+                backToMap({marker:marker});
                 //showAlert();
                 //todo manda messaggio a mapctrl per la gestione del risultato
             });

@@ -109,8 +109,11 @@ angular.module('firstlife.controllers')
                 $scope.$emit("switchMapLevel",{level:level});
         });
         $scope.$on('timeline.groups.setgroup', function(event,args){
-            if(args.group != levels.current)
+            console.log("timeline.groups.setgroup",args);
+            if(args.group != levels.current){
+                //levels.current = args.group;
                 $scope.timelineGroups.current = args.group;
+            }
         });
         
 //        // listner focus sulla mappa

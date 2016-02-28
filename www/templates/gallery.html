@@ -1,11 +1,11 @@
 <ion-modal-view class="gallery-view">
-    <ion-content scroll="false" on-swipe-right="images.slider.next()" on-swipe-left="images.slider.prev()" on-swipe-down="images.gallery.hide()" on-swipe-up="images.gallery.hide()">
-        <button class="slider-close button button-stable button-clear icon ion-close-round" on-tap="images.gallery.hide()" ></button>
+    <ion-content scroll="false" on-swipe-right="slider.next()" on-swipe-left="slider.prev()" on-swipe-down="gallery.hide()" on-swipe-up="gallery.hide()">
+        <button class="slider-close button button-stable button-clear icon ion-close-round" on-tap="gallery.hide()" ></button>
         <div class="row row-center slider-box" 
-             ng-click="images.gallery.close()">
-            <img ng-src="{{images.slider.images[images.slider.pointer].url}}" class="fullscreen-image" on-tap="images.slider.next()" />
+             ng-click="gallery.close()">
+            <img ng-src="{{slider.images[slider.pointer].url}}" class="fullscreen-image" on-tap="slider.next()" />
         </div>
-        <div class="slider-button slider-button-left" on-tap="images.slider.prev()"><i class="icon ion-chevron-left"></i></div>
-        <div class="slider-button slider-button-right" on-tap="images.slider.next()"><i class="icon ion-chevron-right"></i></div>
+        <div class="slider-button slider-button-left" on-tap="slider.prev()"><i class="icon ion-chevron-left"></i></div>
+        <div class="slider-button slider-button-right" on-tap="slider.next()"><i class="icon ion-chevron-right"></i></div>
     </ion-content>
 </ion-modal-view>

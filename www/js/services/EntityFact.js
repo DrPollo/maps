@@ -5,7 +5,7 @@ angular.module('firstlife.factories')
         var self = this;
         self.config = myConfig;
 
-        var consoleCheck = false;
+        var consoleCheck = true;
 
 
         var urlThings= myConfig.backend_things;
@@ -101,7 +101,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
             update: function(entity, id) {
-                var urlId = types[entity.entity_type].concat("/").concat(id).concat(format);
+                var urlId = types[entity.entity_type].concat("/").concat(entity.id).concat("/update").concat(format);
                 var deferred =$q.defer();
                 if(consoleCheck)console.log("UPDATE TO: ", urlId, entity);
                 var feature = markerConverter(entity);
@@ -115,26 +115,24 @@ angular.module('firstlife.factories')
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, update: ",angular.toJson(feature));
-                $http(req)
-                    .success(function(response) {
+                $http(req).then(function(response) {
                     if(consoleCheck)console.log("entityFactory, update, response: ",response);
-                    //angular.merge(self.geoJSON,response.data.data[0]);
-                    if(consoleCheck)console.log("PlaceFactory, getBBox, rensponse, merge with geoJSON: ", self.geoJSON);
-                    var marker = entityToMarker(response.data);
-                    entityToMarker(response.data).then(
-                        function(marker){
-                            //aggiorno anche la lista dei dettagli
+                    delete self.markerDetailsList[response.data.data.id];
+                    delete self.markerList[response.data.data.id];
+                    getMarker(response.data.data.id, true).then(
+                        function(response){
+                            if(consoleCheck)console.log("entityFactory, update getMarker, response: ",response);
+                            var marker = entityToMarker(response);
                             updateMarkerList(marker,true);
+                            if(consoleCheck)console.log("entityFactory, update getMarker, resolve: ",marker);
                             deferred.resolve(marker);
                         },
                         function(err){
-                            deferred.reject(err);
-                            if(consoleCheck)console.log("placeFactory, get, entityToMarker, error: ",err);
+                            console.log("entityFactory, update, get del risultato ",err);
+                            deferred.resolve(response.data);
                         }
                     );
-
-                })
-                    .error(function(response) {
+                },function(response) {
                     deferred.reject(response);
                     if(consoleCheck)console.log("Update Place on the server: error! ", response);
                 });

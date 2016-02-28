@@ -35,7 +35,8 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="simpleEditor.save()" ng-disabled="boxEntity.$invalid" >{{'PUBLISH'|translate}}</button>
+            <button ng-if="simpleEditor.createMode" class="button button-stable button-clear icon ion-checkmark-round" on-tap="simpleEditor.save()" ng-disabled="boxEntity.$invalid" >{{'PUBLISH'|translate}}</button>
+            <button ng-if="!simpleEditor.createMode" class="button button-stable button-clear icon ion-checkmark-round" on-tap="simpleEditor.update()" ng-disabled="boxEntity.$invalid" >{{'UPDATE'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-modal-view>

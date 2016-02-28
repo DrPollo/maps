@@ -20,16 +20,16 @@ angular.module('firstlife.controllers')
 
 
             /*
-* modal place ------> carico la galleria immagini per il click
-*/
-            $scope.loadGallery = function(placeId) {
+             * modal place ------> carico la galleria immagini per il click
+             */
+            $scope.loadGallery = function(entityId) {
                 var deferred = $q.defer();
                 
-                
+                console.log("debug gallery",entityId);
                 $scope.gallery = {};
 
                 // carico le immagini
-                $scope.loadGalleryImages(placeId);
+                $scope.loadGalleryImages(entityId);
 
                 $ionicModal.fromTemplateUrl('gallery.html', {
                     scope: $scope,
@@ -98,18 +98,22 @@ angular.module('firstlife.controllers')
             $scope.loadGalleryImages = function(entityId,entity_type){
                 var deferred = $q.defer();
                 var param = {size : "full", cache : false};
-                ImageService.getImages(entityId, param,entity_type)
+                console.log("debug immagini ",param);
+                ImageService.getImages(entityId, param, entity_type)
                     .then(function (data){
                     var images = data["images"],
-                        placeId = data["id"];
+                        entityId = data["id"];
                     // salvo la gallery nella cache della modal
                     $scope.infoPlace.marker.gallery = [];
+                    console.log("debug immagini ",data);
                     for(image in images){
-                        $scope.infoPlace.marker.gallery.push(image);
+                        var img = angular.copy(image);
+                        img.url = img[param.size];
+                        $scope.infoPlace.marker.gallery.push(img);
                     }
                     deferred.resolve(true);
                 }, function(err){
-                    console.log(err);
+                    console.log("GalleryCtrl, loadGalleryImages, ImageService.getImages, errore ",err);
                     deferred.resolve(false);
                 });
                 return deferred.promise;

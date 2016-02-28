@@ -215,52 +215,59 @@ angular.module('firstlife.services')
 
         function checkEventTime(data, dataForServer){
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
-
+            if(dev) console.log("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
             if(dataForServer.valid_from){
-                var tmp = data.valid_from.getTime();
-                if(dev) console.log("Set data ",dataForServer.valid_from," con orario ",data.door_time);
-                dataForServer.valid_from.setTime(tmp + data.door_time * 1000);
-                if(dev) console.log("Risultato ",dataForServer.valid_from);
+                dataForServer.valid_to.setHours(0,0,0,0);
+                if(data.door_time){
+                    var tmp = data.valid_from.getTime();
+                    if(dev) console.log("Set data ",dataForServer.valid_from," con orario ",data.door_time);
+                    dataForServer.valid_from.setTime(tmp + data.door_time * 1000);
+                }
+                if(dev) console.log("Set data valid_from Risultato ",dataForServer.valid_from);
             }
             if(dataForServer.valid_to){
-                dataForServer.valid_to.setHours(0,0,0,0);
-                var tmp = data.valid_to.getTime();
-                if(dev) console.log("Set data ",dataForServer.valid_to," con orario ",data.close_time);
-                dataForServer.valid_to.setTime(tmp + data.close_time * 1000);
-                if(dev) console.log("Risultato ",dataForServer.valid_to);
+                dataForServer.valid_to.setHours(23,59,59,999);
+                if(data.close_time){
+                    if(dev) console.log("Set data ",dataForServer.valid_to," con orario ",data.close_time);
+                    var tmp = data.valid_to.getTime();
+                    dataForServer.valid_to.setTime(tmp + data.close_time * 1000);
+                }
+                if(dev) console.log("Set data valid_to Risultato ",dataForServer.valid_to);
             }
 
             // calcolo da durata come differenza tra le due date
             if(dataForServer.valid_from && dataForServer.valid_to){
                 // differenza tra giorni
                 duration = (dataForServer.valid_to.getTime() - dataForServer.valid_from.getTime());
-                if(dev) console.log("EditorCtrl, calcolo durata:",duration);
+                if(dev) console.log("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
                 dataForServer.duration = duration;
-            }else{
-                dataForServer.duration = data.close_time - data.door_time;
             }
+//            else if(data.close_time && data.door_time){
+//                if(dev) console.log("EditorCtrl, calcolo durata da close_time - door_time:",data.close_time, data.door_time,(data.close_time - data.door_time));
+//                dataForServer.duration = data.close_time - data.door_time;
+//            }
 
             //fix campo durata
-            if(dataForServer.duration){
-                dataForServer.duration = dataForServer.duration/1000;
-                var h = parseInt(dataForServer.duration/3600);
-                var m = parseInt(dataForServer.duration % 60);
-                if(m < 10)
-                    m = '0'+m;
-                if(h < 10 )
-                    h = '0'+h;
-                dataForServer.duration = h+':'+m;
-            }
+//            if(!data.duration){
+//                dataForServer.duration = parseInt(dataForServer.duration/1000);
+//                var h = parseInt(dataForServer.duration/3600);
+//                var m = parseInt(dataForServer.duration % 60);
+//                if(m < 10)
+//                    m = '0'+m;
+//                if(h < 10 )
+//                    h = '0'+h;
+//                dataForServer.duration = h+':'+m;
+//            }
             // fix campo door_time
             if(dataForServer.door_time){
-                var h = parseInt((data.door_time/3600)%24);
+                //var h = parseInt((data.door_time/3600)%24);
                 var m = parseInt(data.door_time % 60);
-                if(m < 10)
-                    m = '0'+m;
-                if(h < 10 )
-                    h = '0'+h;
-                dataForServer.door_time = h+':'+m;
+//                if(m < 10)
+//                    m = '0'+m;
+//                if(h < 10 )
+//                    h = '0'+h;
+                dataForServer.door_time = m;
             }
 
 
@@ -274,7 +281,9 @@ angular.module('firstlife.services')
             if(dev) console.log("EntityService, processData, check categorie: ",data.categories);
             for(var i = 0; i < data.categories.length; i++){
                 var c = data.categories[i];
-                if(c && c.categories.length > 0){
+                if(c && c.categories && c.categories.length > 0){
+                    catsTmp.push(c);
+                } else if(c && c.category_space && c.category_space.categories && c.category_space.categories.length > 0){
                     catsTmp.push(c);
                 }
             }

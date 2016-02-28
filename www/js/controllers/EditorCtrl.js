@@ -349,7 +349,7 @@ angular.module('firstlife.controllers')
                 dataForServer.parent_id = dataForServer.parent_id.originalObject.id;
             }
             
-            dataForServer = EntityService.processData(dataForServer);
+            
             
             /*
              * Regole dell'editor
@@ -363,13 +363,9 @@ angular.module('firstlife.controllers')
             //accettaz. date
             if(!_this.valid_from){ // null se non sono state impostate
                 dataForServer.valid_from = null;
-            } else { // per il from metto orario di mattina
-                dataForServer.valid_from.setHours(0,0,0,0);
-            }
+            } 
             if(!_this.valid_to){
                 dataForServer.valid_to = null;
-            }else{ // per il to metto orario di notte
-                dataForServer.valid_to.setHours(23,59,59,999);
             }
 
             // fix editor
@@ -377,7 +373,7 @@ angular.module('firstlife.controllers')
             if(dataForServer.title)
                 delete dataForServer.title;
             
-            
+            dataForServer = EntityService.processData(dataForServer);
 
             //update a place
             if($stateParams.id !=null && $stateParams.id !=""){

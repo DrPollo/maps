@@ -26,6 +26,11 @@ angular.module('firstlife.controllers')
         }
 
 
+        // dimensioni delle immagini
+        var small = "thumb";
+        var medium = "medium";
+        var large = "full";
+        
         // listner per l'apertura della modal *click sul marker*
         // se le foto nelle modal sono abilitate
         console.log("ImagesCtrl, immagini abilitate? ", $scope.config.design.show_thumbs, $scope);
@@ -54,13 +59,16 @@ angular.module('firstlife.controllers')
             var param = {size : "full", cache : false};
             ImageService.getImages(entityId, param,entity_type)
                 .then(function (data){
-                console.log("getImages, risultato: ",data);
-                var images = data["images"],
-                    placeId = data["id"];
+                console.log("loadGallery, getImages, risultato: ",data);
+                var images = data.images;
+                for(var i in images){
+                    images[i].url = '//'+images[i][param.size];
+                }
                 angular.extend($scope.slider.images,images);
+                console.log("loadGallery, getImages, slider: ",$scope.slider.images);
                 openGallery(index);
             }, function(err){
-                console.log("getImages, errore: ",err);
+                console.log("loadGallery, getImages, errore: ",err);
             });
 
         }
@@ -251,10 +259,6 @@ angular.module('firstlife.controllers')
         $scope.refreshImages = function(entityId, entity_type){
             //console.log("reset immagini");
             var param = {cache : false};
-            // se mobile chiedo i thumbs
-            if($scope.isMobile){
-                param["size"] = "small";
-            }
             $scope.getImages(entityId, param, entity_type);
         };
 
@@ -277,14 +281,21 @@ angular.module('firstlife.controllers')
 
         // salvo le immagini nei marker
         function addImages (entityId,images){
-
+            // se mobile chiedo i thumbs
+            if($scope.isMobile){
+                size = small;
+            } else{
+                size = medium;
+            }
             //aggiungo le immagini al marker
-            //console.log("aggiorno le immagini", images, placeId, $scope.infoPlace.marker.images );
+            console.log("aggiorno le immagini", images);
             // pulisco l'array di immagini della modal
             $scope.images = [];
             for(i = 0 ; i < images.length; i++){
                 images[i].position = i;
-                $scope.images[i] = images[i];
+                var img = angular.copy(images[i]);
+                img.url = '//'+images[i][size];
+                $scope.images[i] = img;
             }
             console.log("salvo le immagini: ", $scope.images);
 

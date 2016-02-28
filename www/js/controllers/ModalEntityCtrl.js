@@ -6,7 +6,7 @@ angular.module('firstlife.controllers')
         $scope.infoPlace = {};
         $scope.now = new Date();
 
-        var consoleCheck = true;
+        var consoleCheck = false;
         var MODAL_RELOAD_TIME = $scope.config.behaviour.modal_relaod_time;
         // variabile dove inserisco il timer per il polling
         var timer = false;

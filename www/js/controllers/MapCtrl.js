@@ -4,7 +4,7 @@ angular.module('firstlife.controllers')
 
 
 
-        var consoleCheck = false;
+        var consoleCheck = true;
         
         var levels = {check:false};
         if (myConfig.map.area.levels){
@@ -128,7 +128,9 @@ angular.module('firstlife.controllers')
                             //clickMarker($stateParams.entity.id);
                         }
                         //else if($stateParams){
-                        locate($stateParams);
+                        if($stateParams.entity && $stateParams.entity > -1){
+                            locate($stateParams);
+                        }
                         //}
                         break;
 
@@ -704,7 +706,7 @@ angular.module('firstlife.controllers')
                 });
                 */
                 setMapCenter(coord);
-            } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord){
+            } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
 
                 // centro su coordinate
                 /*
@@ -716,12 +718,13 @@ angular.module('firstlife.controllers')
                     self.map.center.zoom = parseInt($scope.config.map.zoom_create);
                 }*/
                 if(consoleCheck) console.log("centro su coordinate: ",coord);
-
                 var params = {
-                    lat:parseFloat(coord.lat),
-                    lng:parseFloat(coord.lng),
-                    zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
-                };
+                        lat:parseFloat(coord.lat),
+                        lng:parseFloat(coord.lng),
+                        zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
+                    };
+                    
+                
                 if(consoleCheck) console.log("centro su coordinate: ",params);
                 setMapCenter(params);
             } else if(coord === 'user'){
@@ -786,6 +789,8 @@ angular.module('firstlife.controllers')
         };
 
         function setMapCenter(params){
+            console.log("MapService, setMapCenter, params ",params);
+            
             leafletData.getMap("mymap").then(function(map) {
                 if(consoleCheck) console.log("MapService, setMapCenter, response: ",map, " params ",params);
                 if(params.bound){

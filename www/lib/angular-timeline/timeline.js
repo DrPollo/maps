@@ -110,14 +110,12 @@ angular.module('destegabry.timeline', [])
             },true);
 
             var groupLabels = document.getElementsByClassName("timeline-groups-text");
-            var listners = {};
 
             function initListner(o){
                 var index = getGroupIndex(o.innerHTML);
-                if(index > -1 && !listners[index]){
+                if(index > -1){
+                     console.log("debug listner",index);
                     o.addEventListener('click', emitGroupSignal, false);
-                    // evito che venga creato un nuovo listner
-                    listners[index] = true;
                 }
             }
 
@@ -126,6 +124,8 @@ angular.module('destegabry.timeline', [])
             }
 
             function emitGroupSignal(e){
+                
+                console.log("debug emit",this.innerHTML);
                 var index = this.getAttribute("group-index");
                 $scope.groups.current = index;
                 $scope.$emit("timeline.groups.click",{group:this.innerHTML});
@@ -149,7 +149,8 @@ angular.module('destegabry.timeline', [])
                     // init del listner se necessario
                     initListner(o);
                 }
-                
+                // se il livello corrente non e' nella lista cambio al piu' basso
+                    //if(!$scope.groups.current)
             }
         }
     };

@@ -5,14 +5,14 @@ angular.module('firstlife.services')
         var format = config.format;
         var response = null;
         var req = 'images'
-        var small = "?size=small";
-        var medium = "?size=medium";
-        var large = "?size=large";
+        var small = "thumb";
+        var medium = "medium";
+        var large = "full";
         var size = medium;
         var self = this;
         var isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
         
-        var consoleCheck = false;
+        var consoleCheck = true;
         
         
         self.imageList = [];
@@ -48,10 +48,10 @@ angular.module('firstlife.services')
                         size = small; 
                         break;
                     case "large" : 
-                        size = large; 
+                        size = medium; 
                         break;
                     case "full" :
-                        size = "";
+                        size = large;
                         break;
                     default: 
                         size = medium;
@@ -60,21 +60,19 @@ angular.module('firstlife.services')
                 // chiamata al server o alla cache
                 var deferred = $q.defer();
                 if(consoleCheck) console.log("Get Images of entity, preparo url: "+idEntity, url,entity_type);
-                var urlId = urlThings.concat('/').concat(idEntity).concat('/').concat(req).concat(format).concat(size);
-                //var urlId = url[entity_type].concat('/').concat(idEntity).concat('/').concat(req).concat(format).concat(size).concat(" ");
+                var urlId = urlThings.concat('/').concat(idEntity).concat('/').concat(req).concat(format);
                 if(consoleCheck) console.log("Get Images of entity: "+idEntity," url: ", urlId);
                 // se posso controllare la cache > da parametro di funzione
-                if (cache && self.imageList[idEntity]) {
+                if (cache && self.imageList[idEntity] && self.imageList[idEntity][size]) {
                     //if(consoleCheck) console.log("Get Images from cache!", self.imageList[idPlace]);
-                    deferred.resolve( {images: self.imageList[idEntity], id:idEntity} );
+                    deferred.resolve( {images: self.imageList[idEntity][size], id:idEntity} );
                 }else{
                     $http.get(urlId)
                         .success(function(response) {
-                        //if(consoleCheck) console.log("Get images of "+idPlace+" from server: ", response.data);
-                        
+                        if(consoleCheck) console.log("Get images of ",idEntity," size ",size," from server: ", response.data);
                         // salvo le immagini nella cache
                         self.imageList[idEntity] = response.data;
-
+                        if(consoleCheck) console.log("Get images of.. results ",idEntity," ",response.data);
                         deferred.resolve({images: response.data, id:idEntity});
                     })
                         .error(function(response) {
