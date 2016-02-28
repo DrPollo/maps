@@ -117,14 +117,11 @@ angular.module('firstlife.factories')
                 if(consoleCheck)console.log("entityFactory, update: ",angular.toJson(feature));
                 $http(req).then(function(response) {
                     if(consoleCheck)console.log("entityFactory, update, response: ",response);
-                    delete self.markerDetailsList[response.data.data.id];
-                    delete self.markerList[response.data.data.id];
-                    getMarker(response.data.data.id, true).then(
-                        function(response){
-                            if(consoleCheck)console.log("entityFactory, update getMarker, response: ",response);
-                            var marker = entityToMarker(response);
-                            updateMarkerList(marker,true);
-                            if(consoleCheck)console.log("entityFactory, update getMarker, resolve: ",marker);
+                    delete self.markerDetailsList[response.data.id];
+                    delete self.markerList[response.data.id];
+                    getMarker(response.data.id, true).then(
+                        function(marker){
+                            if(consoleCheck)console.log("entityFactory, update getMarker, marker: ",marker);
                             deferred.resolve(marker);
                         },
                         function(err){
@@ -153,13 +150,11 @@ angular.module('firstlife.factories')
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
-                $http(req)
-                    .success(function(response) {
+                $http(req).success(function(response) {
                     console.log("entityFactory, create, response: ",response);
                     getMarker(response.id, true).then(
-                        function(response){
-                            var marker = entityToMarker(response.data);
-                            updateMarkerList(marker,true);
+                        function(marker){
+                            console.log("entityFactory, create, getMarker, response: ",marker);
                             deferred.resolve(marker);
                         },
                         function(err){
@@ -271,24 +266,24 @@ angular.module('firstlife.factories')
                 };
                 $http(req)
                     .success(function(response) {
-                    if(consoleCheck)console.log("PlaceFactory, get, rensponse: ", response);
-                    entityToMarker(response.data).then(
+                    if(consoleCheck)console.log("EntityFactory, get, rensponse: ", response);
+                    entityToMarker(response).then(
                         function(marker){
                             //aggiorno anche la lista dei dettagli
-                            if(consoleCheck)console.log("PlaceFactory, get, rensponse > marker: ", marker);
+                            if(consoleCheck)console.log("EntityFactory, get, rensponse > marker: ", marker);
                             updateMarkerList(marker,true);
                             deferred.resolve(marker);
                         },
                         function(err){
                             deferred.reject(err);
-                            if(consoleCheck)console.log("placeFactory, get, entityToMarker, error: ",err);
+                            if(consoleCheck)console.log("EntityFactory, get, entityToMarker, error: ",err);
                         }
                     );
 
                 })
                     .error(function(response) {
                     deferred.reject(response);
-                    if(consoleCheck)console.log("Get Marker from server: error! ", response);
+                    if(consoleCheck)console.log("EntityFactory, Get Marker from server: error! ", response);
                 });
             }
             return deferred.promise;
@@ -353,9 +348,7 @@ angular.module('firstlife.factories')
             if(data === "22P02"){
                 deferred.reject("Bug, risposta: 22P02");
             }else {
-                if(data && data[0] && data[0].features && data[0].features)
-                    features = data[0].features;
-                else if(data && data.features && data.features)
+                if(data && data.features)
                     features = data.features;
                 //fine bug
 
@@ -375,7 +368,7 @@ angular.module('firstlife.factories')
                         else
                             deferred.reject("Impossibile creare il marker!");
                     }
-                }else if(data.id){
+                } else if(data.id){
                     if(consoleCheck)console.log("risposta vuota ma ok ",data);
                     deferred.resolve({id:-2});
                 }else {
@@ -569,9 +562,9 @@ angular.module('firstlife.factories')
             $http(req).then(
                 function(response) {
                     if(consoleCheck)console.log("EntityFactory, bboxQuery no since, get, response: ", response);
-                    //angular.merge(self.geoJSON,response.data.data[0]);
+                    //angular.merge(self.geoJSON,response.data[0]);
                     if(consoleCheck)console.log("EntityFactory, bboxQuery, rensponse: ", response);
-                    var markers = entitiesToMarker(response.data.data);
+                    var markers = entitiesToMarker(response.data);
                     // aggiorno lista marker
                     updateMarkersList(markers,details);
                     deferred.resolve(markers);

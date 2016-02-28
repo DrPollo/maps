@@ -37,8 +37,8 @@ angular.module('firstlife.services')
                     console.log("SearchService, query, response: ", response);
                     // bug data in data
                     var entries = [];
-                    if(response.data && response.data.data){
-                        entries = searchDecoder(response.data.data)
+                    if(response.data){
+                        entries = searchDecoder(response.data)
                     }
                     deferred.resolve(entries);
                 },function(response) {

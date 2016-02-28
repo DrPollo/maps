@@ -510,4 +510,26 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
+}]).factory('myInterceptor', ['$log', function($log) {  
+    $log.debug('$log is here to show you that this is a regular factory with injection');
+
+    var myInterceptor = {
+        response: function(response) {
+            console.log("intercepted response", response, response.headers());
+            response.headers = response.headers();
+            if(response.data && response.data.data){
+                console.log("debug nested data",response);
+                response.data = response.data.data;
+            }else{
+                console.log("debug nonnested data",response);
+            }
+            //todo response.meta = 
+            console.log("intercepted return response", response);
+            return response;
+        }
+    };
+    
+    return myInterceptor;
+}]).config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.interceptors.push('myInterceptor');
 }]);

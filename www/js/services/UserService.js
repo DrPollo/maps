@@ -196,19 +196,4 @@ angular.module('firstlife.services')
     function deleteUser(){
     
     }
-}]).factory('myInterceptor', ['$log', function($log) {  
-    $log.debug('$log is here to show you that this is a regular factory with injection');
-
-    var myInterceptor = {
-        response: function(response) {
-            console.log("intercepted response", response, response.headers());
-            response.headers = response.headers();
-            //todo response.meta = 
-            return response;
-        }
-    };
-    
-    return myInterceptor;
-}]).config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.interceptors.push('myInterceptor');
 }]);

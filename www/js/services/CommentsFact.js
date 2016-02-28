@@ -17,7 +17,7 @@ angular.module('firstlife.factories')
                         function(response) {
                             console.log("CommentsFactory, get, response: ", response);
                             comments[entityId] = response;
-                            deferred.resolve(response.data.data);
+                            deferred.resolve(response.data);
                         },
                         function(err){
                             console.log("CommentsFactory, get, error: ", err);

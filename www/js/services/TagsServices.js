@@ -46,7 +46,7 @@ angular.module('firstlife.services')
 
             $http.get(urlId, {cache: true})
             .then(function(response) {
-                //console.log("Tag Query from server success...", response.data.data);
+                //console.log("Tag Query from server success...", response.data);
                 //jsonObj = JSON.parse(response);
                 jsonObj = response.data;
                 console.log(jsonObj.data);

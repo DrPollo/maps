@@ -9,7 +9,7 @@ angular.module('firstlife.controllers')
         // oggetto contenente i form in modo da potene verificare la validità fuori scope
         _this.form = {};
 
-
+        var dev = false;
        
 
 
@@ -23,7 +23,7 @@ angular.module('firstlife.controllers')
 
         _this.types = _this.config.types;
         _this.categories = myConfig.types.categories;
-        if(_this.config.dev) console.log("categorie in EditorCtrl", _this.categories);
+        if(dev) console.log("categorie in EditorCtrl", _this.categories);
         
         
         _this.currentUser = MemoryFactory.readUser();
@@ -81,12 +81,12 @@ angular.module('firstlife.controllers')
 
             // attualmente non e' necessario gestire gli stati di arrivo
             if(previousState && previousState.state && previousState.state.name === 'app.maps'){
-                if(_this.config.dev) console.log("sono in EditorCtrl e vengo da ", previousState, " parametri di cambio stato: ",$stateParams, toState, toParams, fromState, fromParams);
+                if(dev) console.log("sono in EditorCtrl e vengo da ", previousState, " parametri di cambio stato: ",$stateParams, toState, toParams, fromState, fromParams);
 
                 // da cancellare initSearchSource();
 
                 _this.currentUser = MemoryFactory.readUser();
-                if(_this.config.dev) console.log("EditorCtrl, $on $stateChangeSuccess, MemoryFactory.readUser() : ", _this.currentUser);
+                if(dev) console.log("EditorCtrl, $on $stateChangeSuccess, MemoryFactory.readUser() : ", _this.currentUser);
 
                 // gestione del tipo
                 var type = _this.types.default.key,
@@ -95,11 +95,11 @@ angular.module('firstlife.controllers')
                 // scelgo se fare update di un marker esistente o crearne uno nuovo
                 // update place: init dataForm con dati del place...
                 if($stateParams.id!= null && $stateParams.id!= ""){
-                    if(_this.config.dev) console.log("EditorCtrl, update, id: ",$stateParams.id);
+                    if(dev) console.log("EditorCtrl, update, id: ",$stateParams.id);
                     //get place(id)
                     entityFactory.get($stateParams.id, true)
                         .then( function(mark) {
-                        if(_this.config.dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, response: ",mark);
+                        if(dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, response: ",mark);
 
                         //todo gestisco la nuova posizione
                         mark.coordinates = [$stateParams.lng,$stateParams.lat];
@@ -108,7 +108,7 @@ angular.module('firstlife.controllers')
                         // init dell'edit
                         setToEdit(mark);
                     },function(error) {
-                        if(_this.config.dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error); 
+                        if(dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error); 
                     });
                 }
                 //create place: init empty dataForm
@@ -117,16 +117,16 @@ angular.module('firstlife.controllers')
                     if($stateParams.entity_type){
                         typeIndex = _this.types.list.map(function(e){return e.slug;}).indexOf($stateParams.entity_type);
                         type = _this.types.list[typeIndex].key;
-                        if(_this.config.dev) console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
+                        if(dev) console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
                     }
 
                     //imposto i permessi
                     _this.checkList = _this.config.types.perms[type];
-                    if(_this.config.dev) console.log("EditorCtrl, checkList: ", _this.checkList);
+                    if(dev) console.log("EditorCtrl, checkList: ", _this.checkList);
                     
                     // recupero i default per l'init dell'entita'
                     angular.extend(_this.wizard.dataForm,EntityService.getDefaults($stateParams.entity_type));
-                    if(_this.config.dev) console.log("EditCtrl, init form: ",_this.wizard.dataForm);
+                    if(dev) console.log("EditCtrl, init form: ",_this.wizard.dataForm);
                     
                     // sistemo le coordinate
                     if($stateParams.lng && $stateParams.lng){
@@ -135,10 +135,10 @@ angular.module('firstlife.controllers')
 
                     //gestione categorie multiple, preparo il modello con un indice per ogni category space
 //                    _this.wizard.dataForm.categories = [];
-//                    if(_this.config.dev) console.log("EditorCtrl, init form, init categories, cat: ",_this.categories);
+//                    if(dev) console.log("EditorCtrl, init form, init categories, cat: ",_this.categories);
 //                    for( var j = 0; j < _this.categories.length; j++){
 //                        var cat = _this.categories[j];
-//                        if(_this.config.dev) console.log("EditorCtrl, init form, init category, cat: ",cat,type);
+//                        if(dev) console.log("EditorCtrl, init form, init category, cat: ",cat,type);
 //                        if( cat.entities.indexOf(type) > -1 && cat.is_editable ){
 //                            _this.wizard.dataForm.categories.push({categories:[],category_space:cat.category_space}); 
 //                        }
@@ -146,21 +146,21 @@ angular.module('firstlife.controllers')
 //                        //    _this.wizard.dataForm.categories[j] = {};
 //                        //}
 //                    }
-//                    if(_this.config.dev) console.log("EditorCtrl, end init form, init categories: ",_this.categories, _this.wizard.dataForm.categories);
+//                    if(dev) console.log("EditorCtrl, end init form, init categories: ",_this.categories, _this.wizard.dataForm.categories);
 
                     // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
                     // controllo che non sia settato una rel tra quelle definite per il tipo
                     var rels = _this.config.types.relations;
-                    if(_this.config.dev) console.log("relazioni da controllare ",rels.map, rels.list.length," in $stateParams ",$stateParams);
+                    if(dev) console.log("relazioni da controllare ",rels.map, rels.list.length," in $stateParams ",$stateParams);
                     for( var i = 0 ; i < rels.list.length ; i++ ){
-                        if(_this.config.dev) console.log("controllo regola ",i+1,rels[i]);
+                        if(dev) console.log("controllo regola ",i+1,rels[i]);
                         var key = rels.list[i],
                             field = rels.map[key];
                         // aggiungo il campo se trovo il parametro nella search
-                        if(_this.config.dev) console.log("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
+                        if(dev) console.log("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
                         if($stateParams[key] && $stateParams[key] !=='undefined'){
                             _this.wizard.dataForm[field] = parseInt($stateParams[key]);
-                            if(_this.config.dev) console.log("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
+                            if(dev) console.log("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
                         }
                     }
                     // fine gesione relazioni
@@ -199,13 +199,13 @@ angular.module('firstlife.controllers')
                     }
                     
                     // fine regole gestione campi speciali
-                    if(_this.config.dev) console.log("EditCtrl, init del form: ",_this.wizard.dataForm);
+                    if(dev) console.log("EditCtrl, init del form: ",_this.wizard.dataForm);
 
 
                 }
                 // gestione di stati di arrivo diversi non necessaria
             } else {
-                if(_this.config.dev) console.log("Ignoro perche' vengo da un altro stato o via link diretto, faccio redirect a app.maps");
+                if(dev) console.log("Ignoro perche' vengo da un altro stato o via link diretto, faccio redirect a app.maps");
                 if($stateParams && $stateParams.lat && $stateParams.lng)
                     $state.go('app.maps',{lat:$stateParams.lat,lng:$stateParams.lng});
                 else
@@ -231,34 +231,34 @@ angular.module('firstlife.controllers')
 
         // funzioni di callback per i datapicker 
         _this.datePickerFrom = function (val) {
-            if(_this.config.dev) console.log("date picker from!", val);
+            if(dev) console.log("date picker from!", val);
             if(typeof(val)==='undefined'){      
-                if(_this.config.dev) console.log('Date not selected');
+                if(dev) console.log('Date not selected');
                 _this.valid_from = false;
                 _this.wizard.dataForm.valid_from = null;
             }else{
-                if(_this.config.dev) console.log('Selected date is : ', val);
+                if(dev) console.log('Selected date is : ', val);
                 _this.valid_from = true;
 
             }
         };
         _this.datePickerTo = function (val) {
-            if(_this.config.dev) console.log("date picker to!", val);
+            if(dev) console.log("date picker to!", val);
             if(typeof(val)==='undefined'){      
-                if(_this.config.dev) console.log('Date not selected');
+                if(dev) console.log('Date not selected');
                 _this.valid_to = false;
                 _this.wizard.dataForm.valid_to = null;
             }else{
-                if(_this.config.dev) console.log('Selected date is : ', val);
+                if(dev) console.log('Selected date is : ', val);
                 _this.valid_to = true;
             }
         };
 
         _this.loadTags = function($query) {
             return TagsService.query($query).then(function(response) {
-                if(_this.config.dev) console.log("EditorCtrl, loadTags response: ",response);
+                if(dev) console.log("EditorCtrl, loadTags response: ",response);
                 return response.filter(function(resp) {
-                    if(_this.config.dev) console.log(resp);
+                    if(dev) console.log(resp);
                     return resp.tag.toLowerCase().indexOf($query.toLowerCase()) != -1;
                 });
             });
@@ -266,7 +266,7 @@ angular.module('firstlife.controllers')
 
         $scope.isCatRelevant = function (item) { 
             var check = ((item.entities.indexOf(_this.wizard.dataForm.entity_type) > -1) && item.is_editable);    
-            if(_this.config.dev) console.log("filtro ",item, check);
+            if(dev) console.log("filtro ",item, check);
             return check; 
         };
 
@@ -277,7 +277,7 @@ angular.module('firstlife.controllers')
 
             for(i in tags){
                 newTag += String(oldTags[i].tag)+",";
-                if(_this.config.dev) console.log("tag", newTag[i]);
+                if(dev) console.log("tag", newTag[i]);
             }
             return newTag.substring(0,newTag.length-1).split(",");
         }
@@ -285,7 +285,7 @@ angular.module('firstlife.controllers')
 
 
         _this.close = function() {
-            if(_this.config.dev) console.log("Editor Ctrl, chiudo wizard ", $stateParams);
+            if(dev) console.log("Editor Ctrl, chiudo wizard ", $stateParams);
             //$state.mode = "cancel";
             //$window.history.back();
             _this.wizard.dataForm = {};
@@ -315,7 +315,7 @@ angular.module('firstlife.controllers')
         };
 
         _this.wizard.getNextLabel = function () {
-            if(_this.config.dev) console.log(_this.form);
+            if(dev) console.log(_this.form);
             return (_this.wizard.isLastStep()) ? 'Submit' : 'Next';
         };
 
@@ -324,12 +324,12 @@ angular.module('firstlife.controllers')
         };
 
         _this.wizard.handleNext = function (isValid) {
-            if(_this.config.dev) console.log("handlenext: ", _this.wizard.dataForm);
-            if(_this.config.dev) console.log(isValid);
+            if(dev) console.log("handlenext: ", _this.wizard.dataForm);
+            if(dev) console.log(isValid);
             if(!isValid){
-                if(_this.config.dev) console.log("errore, form non valido!");
+                if(dev) console.log("errore, form non valido!");
             } else if (_this.wizard.isLastStep()) {
-                if(_this.config.dev) console.log("form valido ",_this.wizard.dataForm);
+                if(dev) console.log("form valido ",_this.wizard.dataForm);
                 processData();
             } else {
                 _this.wizard.step += 1;
@@ -338,14 +338,14 @@ angular.module('firstlife.controllers')
 
         // preparo i dati del form per le chiamate al server
         function processData() {
-            if(_this.config.dev) console.log("process data:", _this.wizard.dataForm);
+            if(dev) console.log("process data:", _this.wizard.dataForm);
             // apro schermata di loading
             showLoadingScreen('Salvataggio in corso...', _this.wizard.dataForm);
             var dataForServer = _this.wizard.dataForm;
             
             // set del parent id
             if( dataForServer.parent_id != null && dataForServer.parent_id.originalObject != null && dataForServer.parent_id.originalObject.id != null){
-                if(_this.config.dev) console.log("parent_id normalizzato", dataForServer.parent_id.originalObject.id);
+                if(dev) console.log("parent_id normalizzato", dataForServer.parent_id.originalObject.id);
                 dataForServer.parent_id = dataForServer.parent_id.originalObject.id;
             }
             
@@ -381,7 +381,7 @@ angular.module('firstlife.controllers')
                 //dataForServer.id=$stateParams.id;
                 entityFactory.update(dataForServer, $stateParams.id)
                     .then(function(newplace){
-                    if(_this.config.dev) console.log("update completed: ", newplace);
+                    if(dev) console.log("update completed: ", newplace);
                     //$state.mode = "update";
 
                     // vado alla mappa e mostro la modal del place
@@ -391,7 +391,7 @@ angular.module('firstlife.controllers')
                     hideLoadingScreen();
                     return newplace.id;
                 },function(error){
-                    if(_this.config.dev) console.log("update failed: ", error);
+                    if(dev) console.log("update failed: ", error);
 
                     //$window.history.back();
                     $state.go("app.maps",{lat:$stateParams.lat,lng:$stateParams.lng,zoom:$stateParams.zoom,entity:-1});
@@ -405,7 +405,7 @@ angular.module('firstlife.controllers')
             else{
                 MapService.createMarker(dataForServer)
                     .then(function(newplace){
-                    if(_this.config.dev) console.log("creation completed: ", newplace);
+                    if(dev) console.log("creation completed: ", newplace);
                     //$state.mode = "create";
 
                     // vado alla mappa e mostro la modal del place
@@ -415,7 +415,7 @@ angular.module('firstlife.controllers')
                     hideLoadingScreen();
                     return newplace.id;
                 },function(error){
-                    if(_this.config.dev) console.log("creation failed: ", error);
+                    if(dev) console.log("creation failed: ", error);
                     $state.go("app.maps",{entity:-1});
                     //chiudo la schermata di loading
                     hideLoadingScreen();
@@ -445,14 +445,14 @@ angular.module('firstlife.controllers')
             if(mark.entity_type){
                 typeIndex = _this.types.list.map(function(e){return e.key;}).indexOf(mark.entity_type);
                 type = _this.types.list[typeIndex].key;
-                if(_this.config.dev) console.log('EditorCtrl, edit marker, tipo: ', type, " con indice: ", typeIndex, " permessi: ", _this.perms[typeIndex]);
+                if(dev) console.log('EditorCtrl, edit marker, tipo: ', type, " con indice: ", typeIndex, " permessi: ", _this.perms[typeIndex]);
             }
 
             //imposto i permessi
             _this.checkList = angular.copy(_this.types.perms[type]);
 
-            if(_this.config.dev) console.log("EditorCtrl, setToEdit, checkList: ", _this.checkList);
-            if(_this.config.dev) console.log("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
+            if(dev) console.log("EditorCtrl, setToEdit, checkList: ", _this.checkList);
+            if(dev) console.log("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
             _this.wizard.dataForm = angular.copy(mark);
             _this.wizard.dataForm.title = _this.labels.edit;
@@ -473,21 +473,21 @@ angular.module('firstlife.controllers')
                 _this.wizard.dataForm.id_wp = parseInt(mark.id_wp);
             // recupero le informazioni sul padre se gia' inserite
             if( mark.parent_id != null && mark.parent_id !== "undefined"){
-                if(_this.config.dev) console.log("ha un parent! ", mark.parent_id);
+                if(dev) console.log("ha un parent! ", mark.parent_id);
                 _this.wizard.dataForm.parent_id = parseInt(mark.parent_id);
                 setParent(mark.parent_id);
             }
             // se door_time e' richiesto e non e' nel marker
             if(_this.checkList.door_time && !_this.wizard.dataForm.door_time){
-                if(_this.config.dev) console.log("Entro in initDoorTime");
+                if(dev) console.log("Entro in initDoorTime");
                 initDoorTime();
             }
             // se duration e' richiesto e non e' nel marker
             if(_this.checkList.duration && !_this.wizard.dataForm.duration){
-                if(_this.config.dev) console.log("Entro in initDuration");
+                if(dev) console.log("Entro in initDuration");
                 initDuration();
             }
-            if(_this.config.dev) console.log("EditorCtrl, checkList: ", _this.checkList);
+            if(dev) console.log("EditorCtrl, checkList: ", _this.checkList);
 
         }
 
@@ -500,28 +500,28 @@ angular.module('firstlife.controllers')
             // creo il buffer di ricerca 
             entityFactory.getAll().then(function(markers){
 
-                if(_this.config.dev) console.log("EditorCtrl, initSearchSource, marker per il buffer: ", markers);
+                if(dev) console.log("EditorCtrl, initSearchSource, marker per il buffer: ", markers);
                 // bug deve essere dinamico            
                 for (i in markers){
                     _this.searchSource.push(angular.fromJson(angular.toJson(markers[i])));
                 }
 
-                if(_this.config.dev) console.log("init sorgente di ricerca per l'autocomplete del campo place_id", typeof(_this.searchSource),_this.searchSource);
+                if(dev) console.log("init sorgente di ricerca per l'autocomplete del campo place_id", typeof(_this.searchSource),_this.searchSource);
             });
 
 
         };*/
         function setParent(parent_id){
-            if(_this.config.dev) console.log("carico il parent ", parent_id);
+            if(dev) console.log("carico il parent ", parent_id);
             entityFactory.get(parseInt(parent_id)).then(
                 function(mark){
-                    if(_this.config.dev) console.log("parent ", mark);
+                    if(dev) console.log("parent ", mark);
                     _this.wizard.dataForm.parent_id = mark;
                     // originalObject e' un campo di angucomplete, lo simuliamo inserendoci solo l'id
                     // originalObject viene utilizzato per costruire i dati per l'inserimento nel server
                     _this.wizard.dataForm.parent_id.originalObject = {};
                     _this.wizard.dataForm.parent_id.originalObject.id = mark.id;
-                    if(_this.config.dev) console.log("set del parent ",_this.wizard.dataForm.parent_id);
+                    if(dev) console.log("set del parent ",_this.wizard.dataForm.parent_id);
                 }
             );
         }
@@ -539,7 +539,7 @@ angular.module('firstlife.controllers')
             $ionicLoading.hide();
         }
         function initDoorTime(){
-            if(_this.config.dev) console.log("EditorCtrl, initDoorTime, c'e' door_time? ",_this.checkList.door_time,_this.wizard.dataForm.door_time);
+            if(dev) console.log("EditorCtrl, initDoorTime, c'e' door_time? ",_this.checkList.door_time,_this.wizard.dataForm.door_time);
             var inputEpochTime = null;
 
             if(_this.wizard.dataForm.door_time)
@@ -560,11 +560,11 @@ angular.module('firstlife.controllers')
             }});
             //_this.checkList.door_time["template"] = template;
             _this.wizard.dataForm.door_time = angular.copy(_this.checkList.door_time.template.inputEpochTime);
-            if(_this.config.dev) console.log("EditorCtrl, initDoorTime, aggiunta durata ", _this.checkList.door_time.template," a ",_this.wizard.dataForm.door_time);
+            if(dev) console.log("EditorCtrl, initDoorTime, aggiunta durata ", _this.checkList.door_time.template," a ",_this.wizard.dataForm.door_time);
         }
         function doorTimeCallback(val) {    
             if(val){
-                if(_this.config.dev) console.log("Valore orario:",val);
+                if(dev) console.log("Valore orario:",val);
                 // se il door_time e' settato
                 if(_this.wizard.dataForm.close_time){
                     var duration = 0;
@@ -572,13 +572,13 @@ angular.module('firstlife.controllers')
                     duration += (_this.wizard.dataForm.valid_to - _this.wizard.dataForm.valid_from);
                     // bug la differenza tra date da un valore > 0 piccolo
                     // se la differenza e' minore di un giorno allora la setto a 0
-                    if(_this.config.dev) console.log("considero le date, durata:",duration);
+                    if(dev) console.log("considero le date, durata:",duration);
                     if(duration < 3600*24)
                         duration = 0;
-                    if(_this.config.dev) console.log("considero le date, durata:",duration, " differenza tra orari? ", _this.wizard.dataForm.close_time, val);
+                    if(dev) console.log("considero le date, durata:",duration, " differenza tra orari? ", _this.wizard.dataForm.close_time, val);
                     // differenza tra orari
                     duration += (_this.wizard.dataForm.close_time - val);  
-                    if(_this.config.dev) console.log("considero anche l'orario, durata:",duration);
+                    if(dev) console.log("considero anche l'orario, durata:",duration);
 
                     if(duration >= 0){
                         _this.wizard.dataForm.door_time = val;
@@ -591,7 +591,7 @@ angular.module('firstlife.controllers')
                                             template: "L'evento non pu&ograve; terminare prima dell'ora di inizio."
                                         });
                                         alertPopup.then(function(res) {
-                                         if(_this.config.dev) console.log('Reset orario');
+                                         if(dev) console.log('Reset orario');
                                        });*/
                     }
                 }else{
@@ -623,11 +623,11 @@ angular.module('firstlife.controllers')
             }});
 
             _this.wizard.dataForm.close_time = angular.copy(_this.checkList.close_time.template.inputEpochTime);
-            if(_this.config.dev) console.log("EditorCtrl, initDuration, aggiunta durata ",_this.checkList.close_time.template," a ",_this.wizard.dataForm.close_time);
+            if(dev) console.log("EditorCtrl, initDuration, aggiunta durata ",_this.checkList.close_time.template," a ",_this.wizard.dataForm.close_time);
         }
         function durationCallback(val){
             if(val){
-                if(_this.config.dev) console.log("Valore orario:",val);
+                if(dev) console.log("Valore orario:",val);
                 // se il door_time e' settato
                 if(_this.wizard.dataForm.door_time){
                     var duration = 0;
@@ -635,13 +635,13 @@ angular.module('firstlife.controllers')
                     duration += (_this.wizard.dataForm.valid_to - _this.wizard.dataForm.valid_from);
                     // bug la differenza tra date da un valore > 0 piccolo
                     // se la differenza e' minore di un giorno allora la setto a 0
-                    if(_this.config.dev) console.log("considero le date, durata:",duration);
+                    if(dev) console.log("considero le date, durata:",duration);
                     if(duration < 3600*24)
                         duration = 0;
-                    if(_this.config.dev) console.log("considero le date, durata:",duration, " differenza tra orari? ", _this.wizard.dataForm.close_time, val);
+                    if(dev) console.log("considero le date, durata:",duration, " differenza tra orari? ", _this.wizard.dataForm.close_time, val);
                     // differenza tra orari
                     duration += (val - _this.wizard.dataForm.door_time);  
-                    if(_this.config.dev) console.log("considero anche l'orario, durata:",duration);
+                    if(dev) console.log("considero anche l'orario, durata:",duration);
 
                     if(duration >= 0){
                         _this.wizard.dataForm.close_time = val;
@@ -654,7 +654,7 @@ angular.module('firstlife.controllers')
                                 template: "L'evento non pu&ograve; terminare prima dell'ora di inizio."
                             });
                             alertPopup.then(function(res) {
-                             if(_this.config.dev) console.log('Reset orario');
+                             if(dev) console.log('Reset orario');
                            });*/
                     }
                 }else{

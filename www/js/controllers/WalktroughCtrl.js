@@ -125,9 +125,9 @@ angular.module('firstlife.controllers')
                     if(data.status){
                         switch(data.status){
                             case 401:
-                                    if(data.data.error == 'account not active')
+                                    if(data.error == 'account not active')
                                         message = "Account non attivo, controlla l'email con le istruzioni per l'attivazione!";
-                                    else if(data.data.error == 'wrong password')
+                                    else if(data.error == 'wrong password')
                                         message = "Password errata, ritentare o effettuare la procedura di recupero password (password dimenticata?)";
                                     else
                                         message = 'Per favore, controlla le tue credenziali!';
