@@ -91,8 +91,8 @@ angular.module('firstlife.controllers')
         self.abort = function(){
             if($scope.config.dev)if(consoleCheck)console.log("SimpleEditorCtrl, chiudo la modal");
             if(self.modal){
-                self.modal.hide();
                 self.modal.remove();
+                self.modal = null;
             }
             delete self.simpleEntity;
         };

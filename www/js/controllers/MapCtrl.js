@@ -278,7 +278,7 @@ angular.module('firstlife.controllers')
             // chiamo la funzione che gestisce l'editing
             backFromEditor(args.marker.id);
             // click del markers
-            clickMarker(args.id);
+            //clickMarker(args.id);
             event.preventDefault();
         });
 

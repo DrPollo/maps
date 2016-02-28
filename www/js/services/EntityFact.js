@@ -392,7 +392,7 @@ angular.module('firstlife.factories')
             // gestione categorie multiple
             var mainCat = entity.properties.categories[0];
 
-
+            console.log("debug EntityFactory, markerCreate, entity ",entity,self.categories,mainCat);
             var catIndex = self.categories.map(function(e){return e.category_space;}).indexOf(mainCat.category_space.id);
             var categories = self.categories[catIndex].categories;
             var colors = myConfig.design.colors;

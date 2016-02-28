@@ -68,14 +68,13 @@ angular.module('firstlife.services')
                     deferred.resolve( {images: self.imageList[idEntity][size], id:idEntity} );
                 }else{
                     $http.get(urlId)
-                        .success(function(response) {
-                        if(consoleCheck) console.log("Get images of ",idEntity," size ",size," from server: ", response.data);
+                        .then(function(response) {
+                        if(consoleCheck) console.log("Get images of ",idEntity," size ",size," from server: ", response);
                         // salvo le immagini nella cache
-                        self.imageList[idEntity] = response.data;
-                        if(consoleCheck) console.log("Get images of.. results ",idEntity," ",response.data);
+                        self.imageList[idEntity] = response;
+                        if(consoleCheck) console.log("Get images of.. results ",idEntity," ",response);
                         deferred.resolve({images: response.data, id:idEntity});
-                    })
-                        .error(function(response) {
+                    },function(response) {
                         deferred.reject(response);
                         if(consoleCheck) console.log("Get images of "+idEntity+" from server: error!");
                     });

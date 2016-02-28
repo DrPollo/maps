@@ -6,7 +6,7 @@ angular.module('firstlife.controllers')
         $scope.infoPlace = {};
         $scope.now = new Date();
 
-        var consoleCheck = false;
+        var consoleCheck = true;
         var MODAL_RELOAD_TIME = $scope.config.behaviour.modal_relaod_time;
         // variabile dove inserisco il timer per il polling
         var timer = false;
@@ -108,7 +108,7 @@ angular.module('firstlife.controllers')
             };
 
             $scope.closeModalPlace = function() {
-
+                console.log("debug closeModalPlace");
                 // chiedo all'utente se vuole cancellare le immagini non salvate
                 if($scope.pendingImages){
                     var confirmPopup = $ionicPopup.confirm({
@@ -147,9 +147,9 @@ angular.module('firstlife.controllers')
                 }
                 if($scope.infoPlace.modal){
                     // nascondo la modal
-                    $scope.infoPlace.modal.hide();
-                    // distruggo la modal
-                    //$scope.infoPlace.modal.remove();
+                    $scope.infoPlace.modal.remove().then(function() {
+                        $scope.infoPlace.modal = null;
+                    });
                     // rimuovo il campo modal
                     delete $scope.infoPlace.modal;
                     // invio un segnale di chiusura modal
@@ -379,10 +379,9 @@ angular.module('firstlife.controllers')
                 (angular.isString(obj) && obj != '') ||
                 (angular.isNumber(obj))
             ) ) {
-                if(consoleCheck)console.log("Is empty ",obj, "? false");
+                
                 return false;
             }
-            if(consoleCheck)console.log("Is empty ",obj, "? true");
             return true;
 
         }
@@ -397,7 +396,9 @@ angular.module('firstlife.controllers')
                 "lng": $scope.infoPlace.marker.lng,
                 "lat": $scope.infoPlace.marker.lat,
             };
+            $scope.closeModalPlace();
             $rootScope.$broadcast("simpleInsert",params);
+            
             //            da cancellare
             //            $scope.infoPlace.commento = "";
             //            if(consoleCheck)console.log("init commento: ",$scope.infoPlace.commento);
