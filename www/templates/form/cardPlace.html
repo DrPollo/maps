@@ -69,19 +69,19 @@
                 <div ng-show="config.actions.can_foto && isPendingImages" class="foto-box">
                     <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
                         <div class="col col-25" ng-if="$index < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index]}}" width="100%" /> 
+                            <img data-ng-src="data:image/png;base64,{{imageCache[$index].base64}}" width="100%" /> 
                             <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
                         </div>
                         <div class="col col-25" ng-if="$index + 1 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 1]}}" width="100%" /> 
+                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 1].base64}}" width="100%" /> 
                             <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
                         </div>
                         <div class="col col-25" ng-if="$index + 2 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 2]}}" width="100%" /> 
+                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 2].base64}}" width="100%" /> 
                             <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
                         </div>
                         <div class="col col-25" ng-if="$index + 3 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 3]}}" width="100%" /> 
+                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 3].base64}}" width="100%" /> 
                             <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
                         </div>
                     </div>

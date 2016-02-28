@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ImagesCtrl', ['$scope', '$state', '$q', '$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', '$rootScope', 'myConfig', 'ImageService', 'CamerasFactory', 'SenderFactory', 'PlatformService', 'MemoryFactory', function( $scope, $state, $q, $ionicModal, $rootScope, $ionicSlideBoxDelegate, $ionicLoading, myConfig, ImageService, Cameras, Sender, PlatformService, MemoryFactory) { 
+    .controller('ImagesCtrl', ['$scope', '$state', '$q', '$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', '$ionicPopup', '$rootScope', '$filter', 'myConfig', 'ImageService', 'CamerasFactory', 'SenderFactory', 'PlatformService', 'MemoryFactory', function( $scope, $state, $q, $ionicModal, $rootScope, $ionicSlideBoxDelegate, $ionicLoading, $ionicPopup, $filter, myConfig, ImageService, Cameras, Sender, PlatformService, MemoryFactory) { 
 
         //var $scope = this;
 
@@ -208,9 +208,10 @@ angular.module('firstlife.controllers')
 
         $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
             console.log("ImagesCtrl, onLoad, fileObj: ", fileObj);
-            var img = 'data:';
-            img = img.concat(fileObj.filetype).concat(';base64,').concat(fileObj.base64);
-            $scope.addToImageCache(img);
+            //var img = 'data:';
+            //img = img.concat(fileObj.filetype).concat(';base64,').concat(fileObj.base64);
+            //img = fileObj.base64;
+            $scope.addToImageCache(fileObj);
         }
 
 
@@ -228,7 +229,26 @@ angular.module('firstlife.controllers')
                     $scope.refreshImages(entity_id,entity_type);
                 },
                     function(err){
-                    console.log('errore' + err);
+                    // reset immagini
+                    $scope.resetImageCache();
+                    // todo errore di caricamento
+                    var title = $filter('translate')('ERROR');
+                    var template = $filter('translate')('UNKNOWN_ERROR');
+                    switch(err.status){
+                        case '413':
+                            // immagine troppo grande
+                            // errore di rete
+                            template = $filter('translate')('SIZE_ERROR');
+                        break;
+                        default:
+                            // errore di rete
+                            
+                    }
+                    var alertPopup = $ionicPopup.alert({
+                            title: title,
+                            template: template
+                        });
+                    console.log('sendPhoto, errore',err);
                 });
             }
 

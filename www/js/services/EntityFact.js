@@ -111,7 +111,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'PUT',
-                    headers:{"Content-Type":"application/json", Authentication:token},
+                    headers:{"Content-Type":"application/json", Authorization:token},
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, update: ",angular.toJson(feature));
@@ -149,7 +149,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    headers:{"Content-Type":"application/json", Authentication:token},
+                    headers:{"Content-Type":"application/json", Authorization:token},
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
@@ -186,7 +186,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'DELETE',
-                    headers:{"Content-Type":"application/json", Authentication:token},
+                    headers:{"Content-Type":"application/json", Authorization:token},
                     data:''
                 };
                 return $http(req);

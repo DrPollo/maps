@@ -108,7 +108,7 @@ angular.module('firstlife.services')
                 url: urlId,
                 method: 'PUT',
                 data: data,
-                headers:{"Content-Type":"application/json", Authentication:token}
+                headers:{"Content-Type":"application/json", Authorization:token}
             };
             $http(req)
             .then(function(response, status, headers, config) {
@@ -135,7 +135,7 @@ angular.module('firstlife.services')
                 url: urlId,
                 method: 'POST',
                 data: data,
-                headers:{"Content-Type":"application/json", Authentication:token}
+                headers:{"Content-Type":"application/json", Authorization:token}
             };
             console.log("UserService, resetPassword, request: ",req);
             $http(req)
@@ -178,7 +178,7 @@ angular.module('firstlife.services')
      */
     
     function setUser(token){
-        console.log("UserService, login/registration, setUser headers.Authentication: ",token);
+        console.log("UserService, login/registration, setUser headers.Authorization: ",token);
         // salvo il token
         MemoryFactory.setToken(token);
         // decode token

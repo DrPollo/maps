@@ -34,7 +34,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: url.concat('/').concat(entityId).concat("/comments").concat(format),
                     method: 'PUT',
-                    headers:{"Content-Type":"application/json", Authentication:token},
+                    headers:{"Content-Type":"application/json", Authorization:token},
                     data:comment
                 };
                 $http(req).then(
@@ -54,7 +54,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: url.concat('/').concat(commentId).concat(format),
                     method: 'DELETE',
-                    headers:{"Content-Type":"application/json", Authentication:token},
+                    headers:{"Content-Type":"application/json", Authorization:token},
                     data:{}
                 };
                 $http(req).then(

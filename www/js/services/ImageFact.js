@@ -51,13 +51,16 @@ angular.module('firstlife.factories')
                 var data = {};
                 data.user = user_id;
                 for (var i = 0; i < images.length; i++){
-                    data.image = images[i];
+                    var img = 'data:';
+                    img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);
+                    data.image = img;
+                    console.log("debug sender ",data.image);
                     var json =  JSON.stringify(data);
                     var req = {
                         method: 'PUT',
                         url: urlThings.concat('/').concat(id).concat('/images').concat('/add').concat(format),
                         //url: urlThings.concat('/').concat(id).concat('/images').concat(format),
-                        headers: { 'Content-Type': 'application/json', Authentication:token},
+                        headers: { 'Content-Type': 'application/json', Authorization:token},
                         data: json
                     }
 

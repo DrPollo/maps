@@ -78,7 +78,7 @@ angular.module('firstlife.factories')
             setToken: function(token) {
                 if(self.config.dev)console.log("salvo il token: ", token);
                 // imposto l'header delle chiamate http
-                //$http.defaults.headers.common.Authentication = token;
+                //$http.defaults.headers.common.Authorization = token;
                 $window.localStorage && $window.localStorage.setItem(keys.token, token);
                 return this;
             },
@@ -89,13 +89,13 @@ angular.module('firstlife.factories')
                     if(self.config.dev)console.log("MemoryFactory, getToken, token: ", token);
                     if(token == '')
                         return null;
-                    //$http.defaults.headers.common.Authentication = token;
+                    //$http.defaults.headers.common.Authorization = token;
                     return token;
                 }
                 return null;  
             },
             deleteToken: function() {if(self.config.dev)console.log("MemoryFactory, deleteToken!");
-                // $http.defaults.headers.common.Authentication = '';
+                // $http.defaults.headers.common.Authorization = '';
                 // azzero la memoria del browser
                 return $window.localStorage && $window.localStorage.setItem(keys.token, '');
             },
