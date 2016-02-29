@@ -12809,7 +12809,8 @@ ion-side-menu#side-menu {
     text-align: center; }
     .signup-view .top-content .col-logo, .login-view .top-content .col-logo {
       height: 100%;
-      max-height: 243px; }
+      max-height: 243px;
+      background-size: auto 100%; }
     .signup-view .top-content #logo, .login-view .top-content #logo {
       background-color: transparent;
       background-repeat: no-repeat;
