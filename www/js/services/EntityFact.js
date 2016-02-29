@@ -230,6 +230,7 @@ angular.module('firstlife.factories')
                 if(!skip){
                     bboxQuery(urlId.concat(bboxParamsString)).then(
                         function(response){
+                            if(consoleCheck)console.log("Entity factory, bboxQuery ", response.length);
                             deferred.resolve(response);
                         },
                         function(response){
@@ -464,6 +465,8 @@ angular.module('firstlife.factories')
 
 
             if(consoleCheck) console.log("markerCreate, entity: ", entity,category, categories, icons,type,mainCat.category_space, icons[mainCat.category_space]);
+            
+            console.log("debug markerCreate, entity: ", entity,category, categories, icons,type,mainCat.category_space, icons[mainCat.category_space]);
 
             var htmlIcon = '';
             htmlIcon = htmlIcon.concat('<i class="dotEventIcon icon ').concat(icons[0].icon).concat(' color').concat(icons[0].index).concat('"></i>');

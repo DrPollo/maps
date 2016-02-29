@@ -290,9 +290,7 @@ angular.module('firstlife.controllers')
 
         $scope.$on("timeUpdate",function(event,args){
             // reset dei markers
-            MapService.resetMarkers();
-            // ricarico la bbox
-            $scope.$broadcast("leafletDirectiveMap.mymap.moveend");
+            resetMarkersDistributed();
             event.preventDefault();
         });
 
@@ -1031,6 +1029,8 @@ angular.module('firstlife.controllers')
 
                     if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
                     //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
+                    
+                   
                     updateMarkers($scope.markersFilteredArray);
                     removeMarkers($scope.markersFilteredArray);
                     
@@ -1061,11 +1061,13 @@ angular.module('firstlife.controllers')
                     var marker = $scope.markersFiltered[key];
                     if(consoleCheck) console.log("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
                     // il marker non e' nella lista dei marker filtrati lo rimuovo
+                    //console.log("debug removeMarkers, rimuovo?",(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
                     if(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0){
                         if(consoleCheck) console.log("Rimuovo ",$scope.markersFiltered[key]);
                         delete $scope.markersFiltered[key];
                     }
                 }
+                //console.log("debug removeMarkers",$scope.markersFiltered);
             }
             // filtro per il fix delle relazioni
             // se il padre non si vede il figlio viene visualizzato
@@ -1111,7 +1113,26 @@ angular.module('firstlife.controllers')
             MapService.updateMarkersDistributed().then(
                 function(markers){
                     if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
-                    angular.extend($scope.map.markers ,markers);
+                    $scope.map.markers = angular.copy(markers);
+                    if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
+                    // filtro dei marker sulla nuova posizione
+                    setMapMarkers();
+                },
+                function(err){
+                    console.log("updateMarkersDistributed, error", err);
+                }
+            );
+            // aggiornamento parametro search nell'url
+            updatePositionInSearch();
+
+        }
+        
+        function resetMarkersDistributed(){
+
+            MapService.resetMarkersDistributed().then(
+                function(markers){
+                    if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
+                    $scope.map.markers = angular.copy(markers);
                     if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
                     setMapMarkers();

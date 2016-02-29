@@ -473,6 +473,7 @@ angular.module('firstlife.services')
                                 if (markers) {
                                     updateMarkers(markers);
                                     if(consoleCheck) console.log("MapServices, updateMarkersDistributed, markers ",markers);
+                                    console.log("debug bbox ",markers.length);
                                 }
                                 deferred.resolve(markers);
                             },

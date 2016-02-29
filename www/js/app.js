@@ -511,16 +511,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     var myInterceptor = {
         response: function(response) {
-            console.log("intercepted response", response, response.headers());
             response.headers = response.headers();
             if(response.data && response.data.data){
-                console.log("debug nested data",response);
                 response.data = response.data.data;
-            }else{
-                console.log("debug nonnested data",response);
             }
-            //todo response.meta = 
-            console.log("intercepted return response", response);
             return response;
         }
     };

@@ -84,10 +84,9 @@ angular.module('firstlife.controllers')
                         }
                         timelineSetTimeout = setTimeout(
                             function(){
-                                if(consoleCheck) console.log("TimelineCtrl, cambio parametri from e to",e);
-                                $scope.time.from = $scope.timeline.start;
-                                $scope.time.to = $scope.timeline.end;
-                                if(consoleCheck) console.log("TimelineCtrl, cambio paramentri tempo e reset bbox ",$scope.time);
+                                $scope.time.from = new Date($scope.timeline.start);
+                                $scope.time.to = new Date($scope.timeline.end);
+                                if(consoleCheck) console.log("TimelineCtrl, cambio paramentri tempo e reset bbox ",$scope.time.from.toISOString(),$scope.time.to.toISOString());
                                 applyTimeFilters($scope.time);
                             }, SEARCH_DELAY);
                     } 
