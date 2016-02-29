@@ -4,7 +4,7 @@ angular.module('firstlife.controllers')
 
 
 
-        var consoleCheck = true;
+        var consoleCheck = false;
         
         var levels = {check:false};
         if (myConfig.map.area.levels){

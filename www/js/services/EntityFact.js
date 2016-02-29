@@ -393,7 +393,7 @@ angular.module('firstlife.factories')
             // gestione categorie multiple
             var mainCat = entity.properties.categories[0];
 
-            console.log("debug EntityFactory, markerCreate, entity ",entity,self.categories,mainCat);
+            
             var catIndex = self.categories.map(function(e){return e.category_space;}).indexOf(mainCat.category_space.id);
             var categories = self.categories[catIndex].categories;
             var colors = myConfig.design.colors;
@@ -466,8 +466,6 @@ angular.module('firstlife.factories')
 
             if(consoleCheck) console.log("markerCreate, entity: ", entity,category, categories, icons,type,mainCat.category_space, icons[mainCat.category_space]);
             
-            console.log("debug markerCreate, entity: ", entity,category, categories, icons,type,mainCat.category_space, icons[mainCat.category_space]);
-
             var htmlIcon = '';
             htmlIcon = htmlIcon.concat('<i class="dotEventIcon icon ').concat(icons[0].icon).concat(' color').concat(icons[0].index).concat('"></i>');
             var checkRange = (!angular.equals(entity.properties.valid_to, entity.properties.valid_from) || !entity.properties.valid_from || !entity.properties.valid_to);
@@ -504,7 +502,7 @@ angular.module('firstlife.factories')
                 layer:'pie',
                 images: Array(),
                 icons: icons,
-                icon: icons[mainCat.category_space] ? icons[mainCat.category_space] : icons[0],
+                icon: icons[mainCat.category_space.id] ? icons[mainCat.category_space.id] : icons[0],
                 name: entity.properties.name,
                 description: entity.properties.description,
                 text: entity.properties.text ? entity.properties.text : null,
