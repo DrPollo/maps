@@ -1,7 +1,7 @@
 angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
-    'dev': true,
+    'dev': false,
     'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',

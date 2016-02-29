@@ -2,7 +2,7 @@
     <ion-header-bar class="modal-header" >
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
-            <button ng-if="isLoggedIn" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
+            <button ng-if="isLoggedIn && (checkPerms['u']||checkPerms['d'])" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10">
