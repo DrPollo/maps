@@ -12825,9 +12825,12 @@ ion-side-menu#side-menu {
         display: block;
         margin-top: 20px;
         text-align: justify; }
-        .signup-view .bottom-content .form-container .termini-duso a, .login-view .bottom-content .form-container .termini-duso a {
+        .signup-view .bottom-content .form-container .termini-duso button, .login-view .bottom-content .form-container .termini-duso button {
           color: #fff;
-          text-decoration: underline; }
+          text-decoration: underline;
+          background: transparent;
+          border: none;
+          padding: 0px; }
       .signup-view .bottom-content .form-container .signup-form .list .has-error, .signup-view .bottom-content .form-container .login-form .list .has-error, .login-view .bottom-content .form-container .signup-form .list .has-error, .login-view .bottom-content .form-container .login-form .list .has-error {
         border-bottom: #ef473a 2px solid !important; }
       .signup-view .bottom-content .form-container .signup-form .list .no-error, .signup-view .bottom-content .form-container .login-form .list .no-error, .login-view .bottom-content .form-container .signup-form .list .no-error, .login-view .bottom-content .form-container .login-form .list .no-error {

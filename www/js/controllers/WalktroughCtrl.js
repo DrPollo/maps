@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('WalktroughCtrl',  ['$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter', 'UserService', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, $filter, UserService, myConfig, MemoryFactory) {
+    .controller('WalktroughCtrl',  ['$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig, MemoryFactory) {
 
         $scope.user = {};
         $scope.defaults = myConfig;
@@ -235,7 +235,7 @@ angular.module('firstlife.controllers')
         };
         $scope.openExternalLink = function (url){
             console.log('openExternalLink',url);
-            $window.open(url);
+            $window.open($scope.externalLinks[url]);
         }
         
         

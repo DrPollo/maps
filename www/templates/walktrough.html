@@ -72,8 +72,9 @@
                             </label>
                             <label class="termini-duso">
                                 {{'CLICKING'|translate}} {{'SIGNUP'|translate}}, {{'APPROVE'|translate}} 
-                                <a ng-click="openExternalLink(externalLinks['terms'])" ng-href="{{externalLinks['terms']}}">{{'TERMS'|translate}}</a>.
-                                {{'LICENSE_DISCLAIMER'|translate}} <a ng-click="openExternalLink(externalLinks['license'])" ng-href="{{externalLinks['license']}}">{{'LICENSE'|translate}}</a>.
+                                <button ng-click="openExternalLink('terms')">{{'TERMS'|translate}}</button>.
+                                {{'LICENSE_DISCLAIMER'|translate}} 
+                                {{'LICENSE'|translate}}.
                             </label>
                         </div>
                     </form>

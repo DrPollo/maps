@@ -409,7 +409,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         APPROVE:'you confirm to have read and you agree to our',
         LICENSE_DISCLAIMER:'First Life concents are licensed under',
         TERMS:'Terms of Use',
-        TERMS_LINK:'http://firstlife.org/',
+        TERMS_LINK:'http://www.firstlife.org/wp-content/uploads/2016/02/Terms-of-use-of-FirstLife.pdf',
         LICENSE:'International Creative Commons 4.0 attribution',
         LICENSE_LINK:'https://creativecommons.org/licenses/by/4.0/',
         PASSWORD_FORGOT:"Forgot password?",
