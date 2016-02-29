@@ -80,8 +80,8 @@ angular.module('firstlife.controllers')
                     hideLoadingScreen();
                     $location.search('action',null);
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Salvataggio fallito!',
-                        template: 'Un errore ha impedito il salvataggio. Provare nuovamente più tardi.'
+                        title: $filter('translate')('ERROR'),
+                        template: $filter('translate')('UNKNOWN_ERROR')
                     });
                     console.log("UserCtrl, save, error: ",error);
                 }

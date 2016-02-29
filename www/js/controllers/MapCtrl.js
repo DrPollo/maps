@@ -834,8 +834,8 @@ angular.module('firstlife.controllers')
             if(consoleCheck) console.log("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
             if(entityId == -1){
-                content.title = "Errore";
-                content.text = "Salvataggio fallito: per favore, riprova in seguito!";
+                content.title = $filter('translate')('ERROR');
+                content.text = $filter('translate')('UNKNOWN_ERROR');
 
 
                 var hideSheet = $ionicActionSheet.show({
@@ -850,8 +850,8 @@ angular.module('firstlife.controllers')
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }if(entityId == -2){
-                content.title = "Successo";
-                content.text = "Invio avvenuto con successo: il contenuto verr&agrave; valutato per l'approvazione, verr&agrave; inviata una notifica con il risultato della valutazione.";
+                content.title = $filter('translate')('SUCCESS');
+                content.text = $filter('translate')('SUCCESS_MODARATION');
 
 
                 var hideSheet = $ionicActionSheet.show({
@@ -866,8 +866,8 @@ angular.module('firstlife.controllers')
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }else if(entityId > 0){
-                content.title = "Successo";
-                content.text = "Salvataggio avvenuto con successo!";
+                content.title = $filter('translate')('SUCCESS');
+                content.text = $filter('translate')('SAVE_SUCCESS');
                 // aggiungi marker alla mappa
                 updateMarker(entityId);
                 clickMarker(entityId);
@@ -1251,7 +1251,7 @@ angular.module('firstlife.controllers')
 
         function showLoadingScreen(text){
             if(!text || text === 'undefined'){
-                text = 'Operazione in corso...';
+                text = $filter('translate')('LOADING');
             }
 
             $ionicLoading.show({

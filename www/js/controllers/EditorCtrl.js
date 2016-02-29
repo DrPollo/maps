@@ -340,7 +340,7 @@ angular.module('firstlife.controllers')
         function processData() {
             if(dev) console.log("process data:", _this.wizard.dataForm);
             // apro schermata di loading
-            showLoadingScreen('Salvataggio in corso...', _this.wizard.dataForm);
+            showLoadingScreen($filter('translate')('SAVING_MESSAGE'), _this.wizard.dataForm);
             var dataForServer = _this.wizard.dataForm;
             
             // set del parent id
@@ -527,7 +527,7 @@ angular.module('firstlife.controllers')
         }
         function showLoadingScreen(text){
             if(text === 'undefined'){
-                text = 'Caricamento...';
+                text = $filter('translate')('LOADING_MESSAGE');
             }
 
             $ionicLoading.show({
