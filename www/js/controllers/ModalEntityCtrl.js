@@ -70,37 +70,43 @@ angular.module('firstlife.controllers')
             if(consoleCheck)console.log("marker da visualizzare",marker);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
-            if($scope.infoPlace.modal){chiudoModal();}
-            if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
-            $scope.infoPlace = {};
-            $scope.infoPlace.marker = angular.copy(marker);
-            if(consoleCheck)console.log("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
-            $scope.infoPlace.modify = false;    
-            $scope.infoPlace.dataForm = {};
+            if($scope.infoPlace.modal){
+                console.log("debug children modal, chiudoModal()",$scope.infoPlace.modal);
+                // la modal esiste
+                changeModal(marker.id);
+            }else{
+                console.log("debug children modal, chiudoModal()",$scope.infoPlace.modal);
+                // la modal non esiste, la creo
+                if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
+                $scope.infoPlace = {};
+                $scope.infoPlace.marker = angular.copy(marker);
+                if(consoleCheck)console.log("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
+                $scope.infoPlace.modify = false;    
+                $scope.infoPlace.dataForm = {};
 
 
 
-            $ionicModal.fromTemplateUrl('templates/form/cardPlace.html', {
-                scope: $scope,
-                animation: 'fade-in',//'slide-in-up',
-                backdropClickToClose : true,
-                hardwareBackButtonClose : true
-            }).then(function(modal) {
-                $scope.infoPlace.modal = modal;
-                $scope.openModalPlace();
-                // parte l'update dopo 1 secondo
-                $ionicLoading.show({
-                    content: 'Apertura in corso...',
-                    animation: 'fade-in',
-                    noBackdrop : true,
-                    maxWidth: 50,
-                    showDelay: 0
-                });
-                console.log("modal?!?");
-                $scope.$emit('openPlaceModal', {marker: marker.id});
-                polling(marker.id);
-            });  
-
+                $ionicModal.fromTemplateUrl('templates/form/cardPlace.html', {
+                    scope: $scope,
+                    animation: 'fade-in',//'slide-in-up',
+                    backdropClickToClose : true,
+                    hardwareBackButtonClose : true
+                }).then(function(modal) {
+                    $scope.infoPlace.modal = modal;
+                    $scope.openModalPlace();
+                    // parte l'update dopo 1 secondo
+                    $ionicLoading.show({
+                        content: 'Apertura in corso...',
+                        animation: 'fade-in',
+                        noBackdrop : true,
+                        maxWidth: 50,
+                        showDelay: 0
+                    });
+                    console.log("modal?!?");
+                    $scope.$emit('openPlaceModal', {marker: marker.id});
+                    polling(marker.id);
+                });  
+            }
             $scope.openModalPlace = function() {
                 $scope.infoPlace.modal.show();
                 // creo il menu per la modal
@@ -135,7 +141,23 @@ angular.module('firstlife.controllers')
                 }
             };
 
+            function changeModal(marker){
+                console.log("changemodal ",marker);
+                // stop del polling
+                console.log("cancello il polling ",$scope.infoPlace.timer);
+                $timeout.cancel(timer);
+                MapService.getDetails(marker).then(
+                    function(marker){
+                        $scope.infoPlace.marker = angular.copy(marker);
+                        polling(marker.id);
+                        $scope.$emit('openPlaceModal', {marker: marker.id});
+                    },
+                    function(err){console.log("changeModal, errore ",err);}
+                );
+            }
+            
             function chiudoModal(){
+                var deferred = $q.defer();
                 // stop del polling
                 console.log("cancello il polling ",$scope.infoPlace.timer);
                 $timeout.cancel(timer);
@@ -149,13 +171,16 @@ angular.module('firstlife.controllers')
                     // nascondo la modal
                     $scope.infoPlace.modal.remove().then(function() {
                         $scope.infoPlace.modal = null;
+                        deferred.resolve(true);
                     });
                     // rimuovo il campo modal
-                    delete $scope.infoPlace.modal;
+                    //delete $scope.infoPlace.modal;
                     // invio un segnale di chiusura modal
                     //delete $scope.infoPlace.modal;
                     //$scope.$emit("closePlaceModal");
                 }
+                deferred.reject(false);
+                return deferred.promise;
             }
 
             $scope.$on('$destroy', function() {
@@ -379,7 +404,7 @@ angular.module('firstlife.controllers')
                 (angular.isString(obj) && obj != '') ||
                 (angular.isNumber(obj))
             ) ) {
-                
+
                 return false;
             }
             return true;
@@ -398,7 +423,7 @@ angular.module('firstlife.controllers')
             };
             $scope.closeModalPlace();
             $rootScope.$broadcast("simpleInsert",params);
-            
+
             //            da cancellare
             //            $scope.infoPlace.commento = "";
             //            if(consoleCheck)console.log("init commento: ",$scope.infoPlace.commento);
@@ -620,7 +645,7 @@ angular.module('firstlife.controllers')
 
         }
 
-        
+
         // pre editor nella mappa
         function toPreEditor(params){
             // controllo l'editor adeguato
@@ -641,7 +666,7 @@ angular.module('firstlife.controllers')
             }
 
         }
-        
+
         // va all'editor corretto
         function toEditor(params){
             // controllo l'editor adeguato

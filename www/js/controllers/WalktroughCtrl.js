@@ -86,6 +86,7 @@ angular.module('firstlife.controllers')
          * 1) login
          * 2) registrazione
          * 3) recupero password
+         * 4) apri link esterno
          */
 
         // invio richiesta di login
@@ -226,6 +227,18 @@ angular.module('firstlife.controllers')
             );
 
         }
+        
+        
+        $scope.externalLinks = {
+            'terms':$filter('translate')('TERMS_LINK'),
+            'license':$filter('translate')('LICENSE_LINK')
+        };
+        $scope.openExternalLink = function (url){
+            console.log('openExternalLink',url);
+            $window.open(url);
+        }
+        
+        
         /*
          * Fine azioni form
          */
