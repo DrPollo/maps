@@ -67,6 +67,18 @@ angular.module('destegabry.timeline', [])
                 timeline.draw($scope.model, $scope.options);
             }
 
+            
+            //rangechanged 
+            
+            links.events.addListener(timeline, 'rangechanged', function() {
+                    
+                $scope.$apply(function () {
+                    $scope.timeline;
+                    console.log("debug timeline, rangechanged",$scope.timeline);
+                });
+                
+            });
+            
             links.events.addListener(timeline, 'select', function() {
                 $scope.selection = undefined;
                 var sel = timeline.getSelection();

@@ -14,7 +14,7 @@ angular.module('firstlife.controllers')
         }
         $scope.timelineGroups = levels;
 
-        var consoleCheck = false;
+        var consoleCheck = true;
 
         if(!$scope.time)
             $scope.time={from: new Date(), to: new Date() };
@@ -33,7 +33,8 @@ angular.module('firstlife.controllers')
             locale : $rootScope.currentLang,
             showNavigation :false, 
             // un anno nella scrollbar
-            zoomMax:315360000000,
+            //zoomMax:315360000000,
+            zoomMax:259200000,//3giorni// 315360000000,//settimana
             // un'ora nella timeline
             zoomMin:3600000,
             zoomable: true,
@@ -74,7 +75,7 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $scope.timeline.end; }, 
             function(e, old){
-                if(consoleCheck) console.log("SearchCtrl, old: ",old, " new: ",e);
+                if(consoleCheck) console.log("TimelineCtrl, $watch, old: ",old, " new: ",e);
 
                 if( e && old != e){
                     if (SEARCH_DELAY > 0) {
