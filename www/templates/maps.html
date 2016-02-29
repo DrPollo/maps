@@ -7,7 +7,7 @@
                 <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()">
                 </button>
                 <span class="separatore"></span>
-                <form tooltips tooltip-side="bottom" tooltip-content="{{'SEARCH'|translate}}" name="ricerca" class="item-input-wrapper">
+                <form name="ricerca" class="item-input-wrapper">
                     <input type="search" placeholder="{{'SEARCH_IN'|translate}} {{config.app_name}}" ng-model="form.query" ng-focus="focus=true;" />
                     <!--<button class="button button-dark button-clear icon-button ion-android-search"></button>-->
                 </form>
@@ -60,25 +60,25 @@
             <div class="flex-container flex-container-style fixed-height">
                 <div class="flex-item" ng-if="isMobile && config.actions.favourite_place">
                     <span contenteditable=""></span>
-                    <button tooltips tooltip-side="left" tooltip-content="{{'ZONEMODE_TOOLTIP'|translate}}" class="button button-float" ng-click="showModalFavPlace()">
+                    <button class="button button-float" ng-click="showModalFavPlace()">
                         <i class="icon ion-android-compass"></i>
                     </button>
                 </div>
                 <div class="flex-item" ng-if="config.actions.wall_tab">
                     <span contenteditable=""></span>
-                    <button tooltips tooltip-side="left" tooltip-content="{{'WALLMODE_TOOLTIP'|translate}}" class="button button-float" ng-click="showWall()">
+                    <button class="button button-float" ng-click="showWall()">
                         <i class="icon ion-android-list"></i>
                     </button>
                 </div>
                 <div class="flex-item" ng-if="config.actions.category_filter">
                     <span contenteditable=""></span>
-                    <button tooltips tooltip-side="left" tooltip-content="{{'FILTERMODE_TOOLTIP'|translate}}" class="button button-float" ng-click="showMFilterCat()">
+                    <button class="button button-float" ng-click="showMFilterCat()">
                         <i class="icon ion-android-checkmark-circle"></i>
                     </button>
                 </div>
                 <div class="flex-item"  ng-if="config.actions.edit_mode && isLoggedIn" >
                     <span contenteditable=""></span>
-                    <button tooltips tooltip-side="left" tooltip-content="{{'EDITMODE_TOOLTIP'|translate}}" class="button button-float" ng-click="switchEditMode()">
+                    <button class="button button-float" ng-click="switchEditMode()">
                         <i class="icon" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
                     </button>
                 </div>

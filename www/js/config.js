@@ -110,7 +110,7 @@ angular.module('firstlife.config')
             'colors' : ['rgba(246,213,59, 1)', 'rgba(255,179,16, 1)', 'rgba(243,164,106, 1)','rgba(221,91,42, 1)','rgba(174,10,10, 1)','rgba(130,50,86, 1)','rgba(45,69,104, 1)','rgba(63,127,145, 1)','rgba(61,131,97, 1)','rgba(136,186,92, 1)','rgba(246,213,59, 1)', 'rgba(255,179,16, 1)', 'rgba(243,164,106, 1)','rgba(221,91,42, 1)','rgba(174,10,10, 1)','rgba(130,50,86, 1)','rgba(45,69,104, 1)','rgba(63,127,145, 1)','rgba(61,131,97, 1)','rgba(136,186,92, 1)','#ccc'],
             'show_thumbs' : true,
             'can_permalink': false,
-            'default_language' : 'en',
+            'default_language' : 'it',
             "disabled_color":20
         },
         'actions':{
@@ -463,7 +463,9 @@ angular.module('firstlife.config')
             "navigator":{//[[[-122.3963988,37.7938376],[-122.3963988,37.7947639],[-122.3950612,37.7947639],[-122.3950612,37.7938376],[-122.3963988,37.7938376]]]
                 'default_area' : {visible: true, name: 'San Francisco',bound:[[-122.520905,37.700987],[-122.339973,37.834243]]},
                 'places' :[
-                    {id:19, visible:true, name: 'Hyatt Regency Hotel (CSCW venue)', bound: [[37.7938376,-122.3963988],[37.7947639,-122.3950612]]}
+                    {id:19, visible:true, name: 'Hyatt Regency Hotel: CSCW2016 venue', bound: [[37.7938376,-122.3963988],[37.7947639,-122.3950612]]},
+                    //[[[-122.3991000652,37.8005205886],[-122.3991000652,37.8013476973],[-122.3979628086,37.8013476973],[-122.3979628086,37.8005205886],[-122.3991000652,37.8005205886]]]
+                    {id:19, visible:true, name: 'Exploratorium: Conference Banquet', bound: [[37.8005205886,-122.3991000652],[37.8013476973,-122.3979628086]]}
                 ],
                 'search':{
                     'geocoding':'http://nominatim.openstreetmap.org/search'

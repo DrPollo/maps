@@ -52,7 +52,7 @@ angular.module('firstlife.controllers')
 
         $scope.$on('modal.hidden', function(event) {
             if(!event.isDefaultPrevented){
-                console.log("modal hidden",event);
+                if(consoleCheck)console.log("modal hidden",event);
                 // cancello il polling
                 $timeout.cancel(timer);
                 event.defaultprevented = true; 
@@ -67,15 +67,13 @@ angular.module('firstlife.controllers')
             // recupero il tipo e lo metto dentro $scope.currentType
             initTypeChecks(marker.entity_type);
 
-            if(consoleCheck)console.log("marker da visualizzare",marker);
+            if(consoleCheck)console.log("marker da visualizzare",marker,$scope.infoPlace.modal);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
             if($scope.infoPlace.modal){
-                console.log("debug children modal, chiudoModal()",$scope.infoPlace.modal);
                 // la modal esiste
                 changeModal(marker.id);
             }else{
-                console.log("debug children modal, chiudoModal()",$scope.infoPlace.modal);
                 // la modal non esiste, la creo
                 if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
                 $scope.infoPlace = {};
@@ -92,6 +90,7 @@ angular.module('firstlife.controllers')
                     backdropClickToClose : true,
                     hardwareBackButtonClose : true
                 }).then(function(modal) {
+                    if(consoleCheck)console.log("infoPlace, apro modal modal: ", modal);
                     $scope.infoPlace.modal = modal;
                     $scope.openModalPlace();
                     // parte l'update dopo 1 secondo
@@ -114,7 +113,6 @@ angular.module('firstlife.controllers')
             };
 
             $scope.closeModalPlace = function() {
-                console.log("debug closeModalPlace");
                 // chiedo all'utente se vuole cancellare le immagini non salvate
                 if($scope.pendingImages){
                     var confirmPopup = $ionicPopup.confirm({
@@ -142,9 +140,8 @@ angular.module('firstlife.controllers')
             };
 
             function changeModal(marker){
-                console.log("changemodal ",marker);
                 // stop del polling
-                console.log("cancello il polling ",$scope.infoPlace.timer);
+                if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
                 $timeout.cancel(timer);
                 MapService.getDetails(marker).then(
                     function(marker){
@@ -158,10 +155,8 @@ angular.module('firstlife.controllers')
             
             function chiudoModal(){
                 var deferred = $q.defer();
-                // stop del polling
-                console.log("cancello il polling ",$scope.infoPlace.timer);
+                if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
                 $timeout.cancel(timer);
-
                 // distruggo il menu popover
                 if($scope.popover){
                     $scope.popover.hide();
@@ -176,7 +171,7 @@ angular.module('firstlife.controllers')
                     // rimuovo il campo modal
                     //delete $scope.infoPlace.modal;
                     // invio un segnale di chiusura modal
-                    //delete $scope.infoPlace.modal;
+                    delete $scope.infoPlace.modal;
                     //$scope.$emit("closePlaceModal");
                 }
                 deferred.reject(false);
@@ -191,6 +186,10 @@ angular.module('firstlife.controllers')
                     $scope.popover.remove();
             });
             $scope.$on('modal.hidden', function() {
+                // stop del polling
+                if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
+                $timeout.cancel(timer);
+                delete $scope.infoPlace.modal;
                 $scope.$emit("closePlaceModal");
             });
             $scope.infoPlace.changeMode = function(){
