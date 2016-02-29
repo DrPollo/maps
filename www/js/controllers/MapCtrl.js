@@ -1113,7 +1113,7 @@ angular.module('firstlife.controllers')
             MapService.updateMarkersDistributed().then(
                 function(markers){
                     if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
-                    $scope.map.markers = angular.copy(markers);
+                    angular.extend($scope.map.markers ,markers);
                     if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
                     setMapMarkers();
@@ -1132,7 +1132,7 @@ angular.module('firstlife.controllers')
             MapService.resetMarkersDistributed().then(
                 function(markers){
                     if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
-                    $scope.map.markers = angular.copy(markers);
+                    $scope.map.markers = angular.copy( markers);
                     if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
                     setMapMarkers();
