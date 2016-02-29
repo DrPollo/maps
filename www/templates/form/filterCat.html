@@ -7,14 +7,14 @@
             <div ng-repeat="(key, cats) in filters" ng-if="cats.visible">
                 <ion-item class="item-divider item-icon-right" ng-class="{'item-icon-left': cats.iconSwitcher}">
                     <i ng-if="cats.iconSwitcher" ng-click="changeFavCat(cats.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != cats.category_space, 'ion-android-star': favCat == cats.category_space }"></i>
-                    {{cats.label |translate}}<span ng-if="config.dev">-- toggleFilter({{key}}) -- {{cats.visible}}</span>
+                    {{cats.label |translate}}<span ng-if="config.dev">-- toggleFilter({{key}}) -- {{cats.category_space}}</span>
                     <i ng-click="toggleFilter(key)" class="icon medium-dark" ng-class="{ 'ion-minus-circled': cats.toggle == 1, 'ion-checkmark-circled': cats.toggle == 2, 'ion-ios-circle-outline': cats.toggle == 3}"></i>
                 </ion-item>
                 <ion-item ng-show="cats.toggle == 1" ng-repeat="category in cats.list | orderBy: 'index' | filter:{name: '!null'} | filter:  differentThan( 'id', 0 ) track by $index" 
                     class="item-checkbox item-icon-left item-icon-right" on-tap="toggleFilter(cats.name,category[cats.check])" ng-style="{'color' : category.color}" >
                     <i class="icon {{category.icon}}"></i> 
                     <span class="dark">{{category.name |translate}} 
-                        <span ng-if="config.dev">-- togleFilter({{cats.name}},{{category[cats.check]}})</span>
+                        <span ng-if="config.dev">-- togleFilter({{cats.name}},{{category[cats.check]}}) -- {{category.color}}</span>
                     </span>
                     <i class="icon" ng-class="{ 'ion-checkmark-circled': category.visible, 'ion-ios-circle-outline': !category.visible}"></i>
                 </ion-item>

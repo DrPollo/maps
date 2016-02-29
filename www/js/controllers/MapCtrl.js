@@ -1195,7 +1195,10 @@ angular.module('firstlife.controllers')
             for(var i = 0; i< categories.length; i++){
                 var cats = categories[i];
                 // imposto la prima come category_space di default
-                if(i == 0){$scope.favCat = cats.category_space;}
+                if($scope.favCat == 0 && cats.is_visible){
+                    console.log("debug $scope.favCat",cats);
+                    $scope.favCat = cats.category_space;
+                }
 
                 // todo aggiungi slug
                 var filter_name = cats.name;//'catIndex',
@@ -1474,7 +1477,7 @@ angular.module('firstlife.controllers')
                     
                     $scope.$broadcast('timeline.groups.setgroup',{group:value});
                 });
-                markerDisabler('level',value);
+                $scope.$apply(function(){markerDisabler('level',value);});
                 
             }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
         }
@@ -1491,15 +1494,16 @@ angular.module('firstlife.controllers')
             var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
             //console.log("develop ",value,$scope.favCat);
             for(var k in $scope.markersFiltered){
-                //console.log("develop",$scope.markersFiltered[k]);
+                
                 if($scope.markersFiltered[k][prop] !== value){
-                    var icon = angular.copy($scope.markersFiltered[k].icon);
-                    
+                    var icon = angular.copy($scope.markersFiltered[k].icons[$scope.favCat]? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icon);
+                    console.log("debug markerDisabler init",$scope.markersFiltered[k].icons[$scope.favCat]);
                     var disabledHtml = '<div class="pin-marker" style="background-color:'+ disabledColor +'"></div>'+
                         '<div class="icon-box"><i class="icon ' + icon.icon + '"></i></div>';
                     icon.html = disabledHtml;
                     icon.color = disabledColor;
                     icon.index = $scope.config.design.disabled_color;
+                    console.log("debug markerDisabler result",icon);
                     $scope.markersFiltered[k].icon = icon;
                 }else{
                     $scope.markersFiltered[k].icon = $scope.markersFiltered[k].icons[$scope.favCat] ? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icons[0];

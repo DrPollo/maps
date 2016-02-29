@@ -5,7 +5,7 @@ angular.module('firstlife.factories')
         var self = this;
         self.config = myConfig;
 
-        var consoleCheck = true;
+        var consoleCheck = false;
 
 
         var urlThings= myConfig.backend_things;

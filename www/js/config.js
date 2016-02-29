@@ -79,7 +79,7 @@ angular.module('firstlife.config')
                  }
                 },
                 // commenti
-                {name:'COMMENT_NAME',id:3,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:7,
+                {name:'COMMENT_NAME',id:3,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
                  simple_editor:'message_text',
                  disable_immages:false,
                  disable_comments:true,
