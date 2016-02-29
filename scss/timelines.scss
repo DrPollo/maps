@@ -93,15 +93,22 @@
             overflow: visible;
             #selectedGroup{
                 color: #6C93B3;
-                font-size: 1.2em;
+            }
+            .timeline-groups-text:hover,.timeline-groups-text:active,.timeline-groups-text:focus{
+                background-color: #efefef;
+                box-shadow: 1px 1px 3px #666;
+                transition: all linear 0.3s;
             }
             .timeline-groups-text {
-                right:70px;
-                font-weight: 700;
-                text-shadow: 1px 1px 1px white;
+                right: 70px;
                 font-size: 1em;
-                color:#888;
+                color: #333;
                 cursor: pointer;
+                display: inline-block;
+                background-color: #fcfcfc;
+                padding: 6px 6px;
+                margin-top: -15px;
+                box-shadow: 1px 1px 3px #aaa;
             }
         }
     }
