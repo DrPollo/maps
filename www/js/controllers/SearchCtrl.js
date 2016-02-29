@@ -3,7 +3,7 @@ angular.module('firstlife.controllers')
 
         $scope.config = myConfig;
         
-        var text_limit = 3;
+        var text_limit = 2;
         var result_limit = 5;
         
         initForm();

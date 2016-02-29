@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': false,
     'project': 1,
-    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
+    'api_base_domain' : 'firstlife-test.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
     'api_version' : 'v4/fl',
@@ -652,8 +652,8 @@ angular.module('firstlife.config')
         myConfig.backend_categories = url.concat('categories');
         myConfig.backend_users = url.concat('user');
         myConfig.update_user = url.concat('user/update');
-        myConfig.retrieve_password = myConfig.backend_users.concat('/retrieves/password');
-        myConfig.reset_password = myConfig.backend_users.concat('/resets/passwords');
+        myConfig.retrieve_password = myConfig.backend_users.concat('/resetpass');
+        myConfig.reset_password = myConfig.backend_users.concat('/resetpass');
         myConfig.backend_tags = url.concat('tags');
         //myConfig.backend_images = url.concat('places/');
         myConfig.backend_search = url.concat('things/search');
