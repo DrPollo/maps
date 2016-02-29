@@ -1,9 +1,9 @@
 angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
-    'dev': false,
-    'project': 1,
-    'api_base_domain' : 'firstlife-test.di.unito.it:3095/',
+    'dev': true,
+    'project': 6,
+    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
     'api_version' : 'v4/fl',
@@ -39,7 +39,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
-                     'parent':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
+                     'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
                  },
                  relations:{
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},

@@ -387,9 +387,12 @@ angular.module('firstlife.controllers')
             };
 
             $scope.closeFilterFavPlace = function() {
-                $scope.filterFavPlace.modal.hide();
                 $scope.filterFavPlace.modal.remove();
             };
+            
+            $scope.$on('modal.hidden', function() {
+                delete $scope.filterFavPlace.modal;
+            });
 
             $scope.$on('$destroy', function() {
                 $scope.filterFavPlace.modal.remove();
@@ -417,9 +420,11 @@ angular.module('firstlife.controllers')
             };
 
             $scope.closeFilterCat = function() {
-                $scope.filterCat.modal.hide();
                 $scope.filterCat.modal.remove();
             };
+            $scope.$on('modal.hidden', function() {
+                delete $scope.filterCat.modal;
+            });
 
             $scope.$on('$destroy', function() {
                 $scope.filterCat.modal.remove();
@@ -556,10 +561,11 @@ angular.module('firstlife.controllers')
             }); 
 
             $scope.closeWall = function() {
-                $scope.wall.hide();
                 $scope.wall.remove();
             };
-
+            $scope.$on('modal.hidden', function() {
+                delete $scope.wall;
+            });
             $scope.$on('$destroy', function() {
                 $scope.wall.remove();
             });
