@@ -63,7 +63,7 @@ angular.module('firstlife.controllers')
         // Leaflet Map: inizializzazioni
         if(!$scope.map || angular.equals($scope.map,{}) ){
             $scope.map = map;
-            console.log("Init map ",$scope.map, map);
+            if(consoleCheck) console.log("Init map ",$scope.map, map);
         }
         if(!$scope.categories) $scope.categories = $scope.config.types.categories;
         //definizione dei listner su mappa
@@ -1061,13 +1061,11 @@ angular.module('firstlife.controllers')
                     var marker = $scope.markersFiltered[key];
                     if(consoleCheck) console.log("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
                     // il marker non e' nella lista dei marker filtrati lo rimuovo
-                    //console.log("debug removeMarkers, rimuovo?",(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
                     if(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0){
                         if(consoleCheck) console.log("Rimuovo ",$scope.markersFiltered[key]);
                         delete $scope.markersFiltered[key];
                     }
                 }
-                //console.log("debug removeMarkers",$scope.markersFiltered);
             }
             // filtro per il fix delle relazioni
             // se il padre non si vede il figlio viene visualizzato
@@ -1196,7 +1194,6 @@ angular.module('firstlife.controllers')
                 var cats = categories[i];
                 // imposto la prima come category_space di default
                 if($scope.favCat == 0 && cats.is_visible){
-                    console.log("debug $scope.favCat",cats);
                     $scope.favCat = cats.category_space;
                 }
 
@@ -1497,13 +1494,12 @@ angular.module('firstlife.controllers')
                 
                 if($scope.markersFiltered[k][prop] !== value){
                     var icon = angular.copy($scope.markersFiltered[k].icons[$scope.favCat]? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icon);
-                    console.log("debug markerDisabler init",$scope.markersFiltered[k].icons[$scope.favCat]);
+                    
                     var disabledHtml = '<div class="pin-marker" style="background-color:'+ disabledColor +'"></div>'+
                         '<div class="icon-box"><i class="icon ' + icon.icon + '"></i></div>';
                     icon.html = disabledHtml;
                     icon.color = disabledColor;
                     icon.index = $scope.config.design.disabled_color;
-                    console.log("debug markerDisabler result",icon);
                     $scope.markersFiltered[k].icon = icon;
                 }else{
                     $scope.markersFiltered[k].icon = $scope.markersFiltered[k].icons[$scope.favCat] ? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icons[0];

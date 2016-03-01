@@ -12,7 +12,7 @@ angular.module('firstlife.services')
         var self = this;
         var isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
         
-        var consoleCheck = true;
+        var consoleCheck = false;
         
         
         self.imageList = [];

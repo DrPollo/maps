@@ -74,7 +74,7 @@ angular.module('destegabry.timeline', [])
                     
                 $scope.$apply(function () {
                     $scope.timeline;
-                    console.log("debug timeline, rangechanged",$scope.timeline);
+                    //console.log("debug timeline, rangechanged",$scope.timeline);
                 });
                 
             });
@@ -126,7 +126,7 @@ angular.module('destegabry.timeline', [])
             function initListner(o){
                 var index = getGroupIndex(o.innerHTML);
                 if(index > -1){
-                     console.log("debug listner",index);
+                    //console.log("debug listner",index);
                     o.addEventListener('click', emitGroupSignal, false);
                 }
             }

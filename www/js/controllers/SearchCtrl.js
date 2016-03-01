@@ -20,7 +20,7 @@ angular.module('firstlife.controllers')
         
         $scope.focus = false;
         
-
+        var dev = false;
         /*
          * Listners
          * 1) al cambio del form di ricerca
@@ -29,7 +29,7 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $scope.form.query; }, 
             function(e, old){
-                console.log("SearchCtrl, old: ",old, " new: ",e);
+                if(dev) console.log("SearchCtrl, old: ",old, " new: ",e);
                 if(e && old != e && e.length > text_limit){
                     if (SEARCH_DELAY > 0) {
                         if (searchendSetTimeout) {
@@ -51,7 +51,7 @@ angular.module('firstlife.controllers')
 
         // listner click sulla mappa
         $scope.$on('leafletDirectiveMap.mymap.focus', function(event, args) {
-            console.log("SearchCtrl, leafletDirectiveMap.mymap.focus");
+            if(dev) console.log("SearchCtrl, leafletDirectiveMap.mymap.focus");
             $scope.focus = false;
             initForm();
         });

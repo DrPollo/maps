@@ -25,7 +25,7 @@ angular.module('firstlife.controllers')
             $scope.loadGallery = function(entityId) {
                 var deferred = $q.defer();
                 
-                console.log("debug gallery",entityId);
+                
                 $scope.gallery = {};
 
                 // carico le immagini
@@ -98,14 +98,14 @@ angular.module('firstlife.controllers')
             $scope.loadGalleryImages = function(entityId,entity_type){
                 var deferred = $q.defer();
                 var param = {size : "full", cache : false};
-                console.log("debug immagini ",param);
+                
                 ImageService.getImages(entityId, param, entity_type)
                     .then(function (data){
                     var images = data["images"],
                         entityId = data["id"];
                     // salvo la gallery nella cache della modal
                     $scope.infoPlace.marker.gallery = [];
-                    console.log("debug immagini ",data);
+                    
                     for(image in images){
                         var img = angular.copy(image);
                         img.url = img[param.size];

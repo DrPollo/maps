@@ -14,7 +14,7 @@ angular.module('firstlife.controllers')
         }
         $scope.timelineGroups = levels;
 
-        var consoleCheck = true;
+        var consoleCheck = false;
 
         if(!$scope.time)
             $scope.time={from: new Date(), to: new Date() };

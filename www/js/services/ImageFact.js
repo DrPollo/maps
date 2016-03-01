@@ -54,7 +54,6 @@ angular.module('firstlife.factories')
                     var img = 'data:';
                     img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);
                     data.image = img;
-                    console.log("debug sender ",data.image);
                     var json =  JSON.stringify(data);
                     var req = {
                         method: 'PUT',

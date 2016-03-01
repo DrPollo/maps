@@ -1,7 +1,7 @@
 angular.module('firstlife.factories')
     .factory('AuthFactory', ['myConfig', 'MemoryFactory', function(myConfig, MemoryFactory) {
 
-
+        var dev = false;
         //C: (P&(~Q))
         
         return {
@@ -11,12 +11,12 @@ angular.module('firstlife.factories')
                 for(a in actions){
                     checkPerms[a] = checkAction(a,source,perms,actions);
                 }
-                console.log("AuthFactory, perms ",source,perms,actions,checkPerms);
+                if(dev) console.log("AuthFactory, perms ",source,perms,actions,checkPerms);
                 return checkPerms;
             },
             
             checkPerm: function(action,source){
-                console.log("AuthFactory, perm ",action,source,perms,actions);
+                if(dev) console.log("AuthFactory, perm ",action,source,perms,actions);
                 
                 return checkAction(action,source,perms,actions);
             },
@@ -54,5 +54,5 @@ angular.module('firstlife.factories')
     self.perms[1]    = dec2bin(~(myConfig.behaviour.umask.toString()[1])).slice(-3);
     self.perms[2]    = dec2bin(~(myConfig.behaviour.umask.toString()[2])).slice(-3);
     self.actions = {r:'100',u:'010',d:'001'};
-    console.log("authFactory, checkPerms, run ",myConfig.behaviour.umask, self.perms, self.actions);
+    //console.log("authFactory, checkPerms, run ",myConfig.behaviour.umask, self.perms, self.actions);
 });
