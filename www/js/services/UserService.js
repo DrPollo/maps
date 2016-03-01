@@ -57,8 +57,9 @@ angular.module('firstlife.services')
                 .then(
                 function(response, status, headers, config) {
                     if(dev) console.log("UserService, login, response: ",response, response.headers);
-                    var user = setUser(response.headers.authorization);
+                    var user = jwtHelper.decodeToken(response.headers.authorization);
                     deferred.resolve(user);
+                    setUser(response.headers.authorization);
                 },
                 function(response) {
                     console.log("UserService, login, errore: ",response);
@@ -142,8 +143,9 @@ angular.module('firstlife.services')
             .then(function(response, status, headers, config) {
                 console.log("UserService, resetPassword, response: ",response);
                 var user = {};
-                user = setUser(response.data.token);
+                user = jwtHelper.decodeToken(response.headers.authorization);
                 deferred.resolve(user);
+                setUser(response.headers.authorization);
             },function(response) {
                 deferred.reject(response);
             });
