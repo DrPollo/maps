@@ -450,7 +450,7 @@ angular.module('firstlife.config')
             },
             'behaviour':{
                 'is_login_required' : false,
-                'umask':744,
+                'umask':777,
                 'viewer':false
             },
 
