@@ -48,9 +48,8 @@ angular.module('firstlife.services')
             .then(function(response) {
                 //console.log("Tag Query from server success...", response.data);
                 //jsonObj = JSON.parse(response);
-                jsonObj = response.data;
-                console.log(jsonObj.data);
-                deferred.resolve(jsonObj.data);
+                console.log("TagService, query, response ",response.data);
+                deferred.resolve(response.data);
             },function(response) {
                 console.log("Tag Query from server error...", response);
                 deferred.reject(response);

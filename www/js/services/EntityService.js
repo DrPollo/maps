@@ -220,7 +220,7 @@ angular.module('firstlife.services')
             
             
             // se per qualche ragione le date sono invertite faccio il fix
-            if(dataForServer.valid_from.getTime() > dataForServer.valid_to.getTime()){
+            if(dataForServer.valid_from && dataForServer.valid_to && dataForServer.valid_from.getTime() > dataForServer.valid_to.getTime()){
                 dataForServer.valid_to = angular.copy(dataForServer.valid_from);
             }
             

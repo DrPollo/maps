@@ -140,7 +140,7 @@
                         -->
                         <label ng-if="editor.checkList.tags" class="item item-input item-floating-label autocompletetags">
                             <span class="input-label">{{editor.checkList.tags.label|translate}}</span>
-                            <tags-input ng-model="wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="true">
+                            <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="true">
                                 <auto-complete source="editor.loadTags($query)"
                                                min-length="0"
                                                load-on-focus="true"

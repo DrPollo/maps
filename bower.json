@@ -29,7 +29,6 @@
     "ionic-wizard": "~1.0.5",
     "Ionicons": "ionicons#~2.0.1",
     "leaflet.markercluster": "~0.4.0",
-    "ng-cordova": "~0.0.3",
     "ng-tags-input": "~3.0.0",
     "underscore": "~1.8.3",
     "angular-cbuffer": "~1.1.0",
