@@ -12839,6 +12839,8 @@ ion-side-menu#side-menu {
       .signup-view .bottom-content .form-container .signup-form .list .item, .signup-view .bottom-content .form-container .login-form .list .item, .login-view .bottom-content .form-container .signup-form .list .item, .login-view .bottom-content .form-container .login-form .list .item {
         border: 0px;
         padding: 0px; }
+        .signup-view .bottom-content .form-container .signup-form .list .item input[type=radio], .signup-view .bottom-content .form-container .login-form .list .item input[type=radio], .login-view .bottom-content .form-container .signup-form .list .item input[type=radio], .login-view .bottom-content .form-container .login-form .list .item input[type=radio] {
+          padding: 0px; }
         .signup-view .bottom-content .form-container .signup-form .list .item .input-label.has-input, .signup-view .bottom-content .form-container .login-form .list .item .input-label.has-input, .login-view .bottom-content .form-container .signup-form .list .item .input-label.has-input, .login-view .bottom-content .form-container .login-form .list .item .input-label.has-input {
           color: white; }
         .signup-view .bottom-content .form-container .signup-form .list .item input, .signup-view .bottom-content .form-container .login-form .list .item input, .login-view .bottom-content .form-container .signup-form .list .item input, .login-view .bottom-content .form-container .login-form .list .item input {
@@ -12856,6 +12858,20 @@ ion-side-menu#side-menu {
           background-image: none; }
         .signup-view .bottom-content .form-container .signup-form .list .item input[type=text], .signup-view .bottom-content .form-container .login-form .list .item input[type=text], .login-view .bottom-content .form-container .signup-form .list .item input[type=text], .login-view .bottom-content .form-container .login-form .list .item input[type=text] {
           width: 100% !important; }
+      .signup-view .bottom-content .form-container .signup-form .list .item.input-box, .signup-view .bottom-content .form-container .login-form .list .item.input-box, .login-view .bottom-content .form-container .signup-form .list .item.input-box, .login-view .bottom-content .form-container .login-form .list .item.input-box {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        color: white;
+        bottom: 0;
+        letter-spacing: 0.25rem;
+        padding: 8px 10px;
+        position: relative;
+        z-index: 1;
+        font-size: 14px;
+        cursor: pointer; }
+      .signup-view .bottom-content .form-container .signup-form .list .item.input-box.has-error, .signup-view .bottom-content .form-container .login-form .list .item.input-box.has-error, .login-view .bottom-content .form-container .signup-form .list .item.input-box.has-error, .login-view .bottom-content .form-container .login-form .list .item.input-box.has-error {
+        color: #666; }
+      .signup-view .bottom-content .form-container .signup-form .list .item.input-box.no-error, .signup-view .bottom-content .form-container .login-form .list .item.input-box.no-error, .login-view .bottom-content .form-container .signup-form .list .item.input-box.no-error, .login-view .bottom-content .form-container .login-form .list .item.input-box.no-error {
+        color: #fff; }
       .signup-view .bottom-content .form-container .signup-form .list .inner-content, .signup-view .bottom-content .form-container .login-form .list .inner-content, .login-view .bottom-content .form-container .signup-form .list .inner-content, .login-view .bottom-content .form-container .login-form .list .inner-content {
         padding: 0px;
         margin: 0px; }
@@ -13068,15 +13084,19 @@ ion-side-menu#side-menu {
   .popover-backdrop.active .popover-wrapper .popover .list .item {
     cursor: pointer; }
 
-.leaflet-control {
+.leaflet-bottom .leaflet-control {
+  position: relative;
+  bottom: 100px; }
+
+.leaflet-control-zoom {
   border-radius: 0px !important;
-  box-shadow: 1px 1px 3px #666;
+  box-shadow: none;
   margin-right: 8px;
   margin-top: 8px; }
-  .leaflet-control .leaflet-bar a:first-child {
+  .leaflet-control-zoom .leaflet-bar a:first-child {
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important; }
-  .leaflet-control .leaflet-bar a:last-child {
+  .leaflet-control-zoom .leaflet-bar a:last-child {
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important; }
 

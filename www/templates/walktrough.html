@@ -42,33 +42,58 @@
                 </div>
                 <!-- inizio registrazione --> 
                 <div ng-if="(action == 'signup')" class="form-container">
+
                     <form name="signup_form" class="signup-form" novalidate>
                         <div class="list">
-                            <div class="row inner-content responsive-sm">
+                            <div class="row inner-content responsive-sm" ng-init="user.type=1">
+                                <div class="col left-col">
+                                    <label class="item item-input item-floating-label input-box" ng-class="{ 'has-error' : user.type != 1, 'no-error' : user.type == 1}">
+                                        <i class="icon" ng-class="{'ion-android-checkmark-circle' : user.type == 1,'ion-android-radio-button-off' : user.type != 1 }"></i>
+                                        <input type="radio" ng-model="user.type" ng-value="1"/>
+                                        <span>{{'CITIZEN'|translate}}</span>
+                                    </label>
+                                </div>
+                                <div class="col right-col">
+                                    <label class="item item-input item-floating-label input-box" ng-class="{ 'has-error' : user.type != 2, 'no-error' : user.type == 2 }">
+                                        <i class="icon" ng-class="{'ion-android-checkmark-circle' : user.type == 2,'ion-android-radio-button-off' : user.type != 2 }"></i>
+                                        <input type="radio" ng-model="user.type" ng-value="2"/>
+                                        <span>{{'ORGANIZATION'|translate}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row inner-content responsive-sm" ng-if="user.type == 1">
                                 <div class="col left-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_firstname.$invalid, 'no-error' : !signup_form.user_firstname.$invalid }">
                                         <span class="input-label">{{'NAME'|translate}}</span>
-                                        <input type="text" placeholder="{{'NAME'|translate}}" name="user_firstname" ng-model="user.firstName" required>
+                                        <input type="text" placeholder="{{'NAME'|translate}}" name="user_firstname" ng-model="user.firstName" ng-required="user.type == 1">
                                     </label>
                                 </div>
                                 <div class="col right-col">
                                     <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_lastname.$invalid, 'no-error' : !signup_form.user_lastname.$invalid }">
                                         <span class="input-label">{{'LASTNAME'|translate}}</span>
-                                        <input type="text" placeholder="{{'LASTNAME'|translate}}" name="user_lastname" ng-model="user.lastName" required>
+                                        <input type="text" placeholder="{{'LASTNAME'|translate}}" name="user_lastname" ng-model="user.lastName" ng-required="user.type == 1">
                                     </label>
                                 </div>
                             </div>
+                            <label ng-if="user.type == 2" class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.organization_title.$invalid, 'no-error' : !signup_form.organization_title.$invalid }">
+                                <span class="input-label">{{'NAME'|translate}}</span>
+                                <input type="text" placeholder="{{'NAME'|translate}}" name="organization_title" ng-model="user.name" ng-required="user.type == 2">
+                            </label>
+                            <label ng-if="user.type == 2" class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.vatNumber.$invalid, 'no-error' : !signup_form.vatNumber.$invalid }">
+                                <span class="input-label">{{'CF'|translate}}</span>
+                                <input type="text" placeholder="{{'CF'|translate}}" name="vatNumber" ng-model="user.vatNumber" ng-required="user.type == 2">
+                            </label>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_email.$invalid, 'no-error' : !signup_form.user_email.$invalid }">
                                 <span class="input-label">{{'EMAIL'|translate}}</span>
-                                <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
+                                <input type="email" placeholder="{{'EMAIL'|translate}}" name="user_email" ng-model="user.email" required>
                             </label>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_password.$invalid, 'no-error' : !signup_form.user_password.$invalid }">
                                 <span class="input-label">{{'PASSWORD'|translate}}</span>
-                                <input type="password" placeholder="Password" name="user_password" ng-model="user.password" ng-minlength="6" required show-hide>
+                                <input type="password" placeholder="{{'PASSWORD'|translate}}" name="user_password" ng-model="user.password" ng-minlength="6" required show-hide>
                             </label>
                             <label class="item item-input item-floating-label" ng-class="{ 'has-error' : signup_form.user_password2.$error.nxEqual, 'no-error' : !signup_form.user_password2.$error.nxEqual }">
                                 <span class="input-label">{{'CONTROLL_PASSWORD'|translate}}</span>
-                                <input type="password" placeholder="Confirm password" name="user_password2" ng-model="user.password2" nx-equal="user.password" required show-hide>
+                                <input type="password" placeholder="{{'CONTROLL_PASSWORD'|translate}}" name="user_password2" ng-model="user.password2" nx-equal="user.password" required show-hide>
                             </label>
                             <label class="termini-duso">
                                 {{'CLICKING'|translate}} {{'SIGNUP'|translate}}, {{'APPROVE'|translate}} 

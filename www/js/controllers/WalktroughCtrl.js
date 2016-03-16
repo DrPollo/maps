@@ -64,8 +64,8 @@ angular.module('firstlife.controllers')
 
 
         if($scope.defaults.dev){
-            $scope.user.email = "test@firstlife.it";
-            $scope.user.password = "firstlife";
+            $scope.user.email = "test@firstlife.com";
+            $scope.user.password = "firstlife2014";
         }
         else {
             $scope.user.email = "";

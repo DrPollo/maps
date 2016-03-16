@@ -1,6 +1,10 @@
-.leaflet-control{
+.leaflet-bottom .leaflet-control{
+    position: relative;
+    bottom: 100px;
+}
+.leaflet-control-zoom{
     border-radius:0px !important;
-    box-shadow: 1px 1px 3px #666;
+    box-shadow: none;
     margin-right: 8px;
     margin-top:8px;
     .leaflet-bar a:first-child {

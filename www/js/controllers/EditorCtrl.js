@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['myConfig', 'entityFactory', '$state', '$scope','$stateParams', '$ionicPopup', 'entityFactory', 'EntityService', '$window', '$filter', 'TagsService', 'MemoryFactory', 'MapService', '$ionicLoading', '$previousState', function(myConfig, entityFactory, $state, $scope, $stateParams, $ionicPopup, entityFactory, EntityService, $window, $filter, TagsService, MemoryFactory, MapService, $ionicLoading, $previousState) {
+    .controller('EditorCtrl', ['myConfig', 'entityFactory', '$state', '$scope','$stateParams', '$ionicPopup', 'entityFactory', 'EntityService', '$window', '$filter', 'TagsService', 'MemoryFactory', 'MapService', '$ionicLoading', '$previousState', '$log', function(myConfig, entityFactory, $state, $scope, $stateParams, $ionicPopup, entityFactory, EntityService, $window, $filter, TagsService, MemoryFactory, MapService, $ionicLoading, $previousState, $log) {
 
         var _this = this;
         _this.config = myConfig;
@@ -356,6 +356,7 @@ angular.module('firstlife.controllers')
              */
             
             //normalizzazz. tags
+            $log.debug("_this.wizard.dataForm.tags ",_this.wizard.dataForm.tags);
             for(var el in _this.wizard.dataForm.tags){
                 dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;   
             }

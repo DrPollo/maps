@@ -2,7 +2,7 @@ angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
     'dev': true,
-    'project': 6,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
@@ -131,7 +131,7 @@ angular.module('firstlife.config')
             'geolocation' : true,
             'search' : true,
             'edit_mode' : true,
-            'favourite_place' : true,
+            'favourite_place' : false,
             'category_filter' : true,
             'time_filter' : true,
             // azioni modal
@@ -191,7 +191,7 @@ angular.module('firstlife.config')
             'northEast_bounds' : [7.655708, 45.083202],
             // controller zoom
             'zoom' : true,
-            'zoom_position' : 'topright',
+            'zoom_position' : 'bottomleft',
             // attribuzione della mappa
             'attribution' : false,
             // livelli di zoom

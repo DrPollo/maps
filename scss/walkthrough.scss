@@ -2,12 +2,12 @@
 .signup-view,
 .forgot-password-view
 {
-	$images-path: "../img";
-	
+    $images-path: "../img";
+
     ion-header{
-    
+
     }
-    
+
     ion-content{
         background-position:fixed center top;
         background-repeat: no-repeat;
@@ -18,36 +18,36 @@
         opacity: 1;
     }
     //min-height: 440px;
-	ion-content:before
-	{
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		z-index: -1;
-		opacity: 0.6;
-		display: block;
-//		//background:transparent url("../img/torino1.jpg") no-repeat fixed left top;
+    ion-content:before
+    {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: 0.6;
+        display: block;
+        //		//background:transparent url("../img/torino1.jpg") no-repeat fixed left top;
         background-color: $dark;
-        
-		
-	}
+
+
+    }
 }
 
 .signup-view, .login-view
 {
-	background-color:white !important;
-    
-	.row
-	{
-        
-        
-		
-	}
-    
-   .top-content
+    background-color:white !important;
+
+    .row
+    {
+
+
+
+    }
+
+    .top-content
     {
         height:45%;
         text-align: center;
@@ -63,9 +63,9 @@
             background-position: center center;
         }
         #text-logo{
-            
+
         }
-        
+
     }
 
     .bottom-content
@@ -88,14 +88,15 @@
                     padding: 0px;
                 }
             }
-               .signup-form, .login-form
-	           {
+            .signup-form, .login-form
+            {
                 .list{
                     .has-error{border-bottom:$error 2px solid !important;}
                     .no-error{border-bottom:$valid 2px solid !important;}
                     .item{
                         border: 0px;
                         padding: 0px;
+                        input[type=radio]{padding: 0px;}
                         .input-label{
 
                         }
@@ -105,12 +106,12 @@
                         input {
                             background-color: rgba(0, 0, 0, 0.6) !important;
                             color:white;
-                              bottom: 0;
-                              color: #fff;
-                              letter-spacing: 0.25rem;
-                              padding: 0px 10px;
-                              position: relative;
-                              z-index: 1;
+                            bottom: 0;
+                            color: #fff;
+                            letter-spacing: 0.25rem;
+                            padding: 0px 10px;
+                            position: relative;
+                            z-index: 1;
                         }
                         input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
                             background-color: rgba(0, 0, 0, 0.6) !important;
@@ -121,6 +122,20 @@
                             width: 100% !important;
                         }
                     }
+                    .item.input-box{
+                        background-color: rgba(0, 0, 0, 0.6) !important;
+                        color:white;
+                        bottom: 0;
+                        //color: #fff;
+                        letter-spacing: 0.25rem;
+                        padding: 8px 10px;
+                        position: relative;
+                        z-index: 1;
+                        font-size: 14px;
+                        cursor:pointer;
+                    }
+                    .item.input-box.has-error {color:#666;}
+                    .item.input-box.no-error {color:#fff;}
                     .inner-content{
                         padding: 0px;
                         margin: 0px;
@@ -133,14 +148,14 @@
                             margin-right: 5px;
                         }
                         .right-col{
-                            
+
                         }
                     }
                 }
-                
+
             }
         }
-        
+
         .alternative-actions
         {
 
@@ -176,5 +191,5 @@
             }
         }
     }
-	
+
 }

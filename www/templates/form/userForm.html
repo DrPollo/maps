@@ -16,18 +16,32 @@
         <form name="user_form" class="user-form" novalidate>
             <ion-list>
                 <label class="item item-divider">{{'PROFILE'|translate}}</label>
-                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.first_name.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
+                <label ng-if="user.type == 1" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.first_name.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
                     <span class="input-label">{{'NAME'|translate}}</span>
                     <input type="text" placeholder="{{'NAME'|translate}}" name="firstName" ng-model="user.first_name" ng-readonly="!editable" required>
                 </label>
-                <div class="form-errors" ng-messages="user_form.firstName.$error">
+                <div ng-if="user.type == 1" class="form-errors" ng-messages="user_form.firstName.$error">
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
-                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.lastName.$invalid, 'no-error' : !user_form.lastName.$invalid }">
+                <label ng-if="user.type == 1" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.lastName.$invalid, 'no-error' : !user_form.lastName.$invalid }">
                     <span class="input-label">{{'LASTNAME'|translate}}</span>
                     <input type="text" placeholder="{{'LASTNAME'|translate}}" name="lastName" ng-model="user.last_name" ng-readonly="!editable" required>
                 </label>
-                <div class="form-errors" ng-messages="user_form.lastName.$error">
+                <div ng-if="user.type == 1" class="form-errors" ng-messages="user_form.lastName.$error">
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
+                </div>
+                <label ng-if="user.type == 2" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.vatNumber.$invalid, 'no-error' : !user_form.vatNumber.$invalid }">
+                    <span class="input-label">{{'CF'|translate}}</span>
+                    <input type="text" placeholder="{{'CF'|translate}}" name="vatNumber" ng-model="user.vatNumber" ng-readonly="!editable" required>
+                </label>
+                <label ng-if="user.type == 2" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.name.$invalid, 'no-error' : !user_form.name.$invalid }" required>
+                    <span class="input-label">{{'NAME'|translate}}</span>
+                    <input type="text" placeholder="{{'NAME'|translate}}" name="name" ng-model="user.name" ng-readonly="!editable" required>
+                </label>
+                <div ng-if="user.type == 2" class="form-errors" ng-messages="user_form.name.$error">
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
+                </div>
+                <div ng-if="user.type == 2" class="form-errors" ng-messages="user_form.vatNumber.$error">
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.email.$invalid, 'no-error' : !user_form.email.$invalid }">
