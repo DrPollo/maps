@@ -517,11 +517,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }]).factory('myInterceptor', ['$log', function($log) {  
-    //$log.debug('$log is here to show you that this is a regular factory with injection');
 
     var myInterceptor = {
         response: function(response) {
             response.headers = response.headers();
+            //$log.debug("headers ",response.headers);
             if(response.data && response.data.data){
                 response.data = response.data.data;
             }

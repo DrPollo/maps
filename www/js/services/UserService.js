@@ -1,6 +1,6 @@
 angular.module('firstlife.services')
 
-.service('UserService', ['$q', '$http', 'myConfig', 'jwtHelper', 'MemoryFactory', function($q, $http, myConfig, jwtHelper, MemoryFactory) {
+.service('UserService', ['$q', '$http', '$log', 'myConfig', 'jwtHelper', 'MemoryFactory', function($q, $http, $log, myConfig, jwtHelper, MemoryFactory) {
     
     self.config = myConfig;
     
@@ -10,7 +10,7 @@ angular.module('firstlife.services')
     var urlUpdate = config.update_user;
     var format = myConfig.format;
     
-    var dev = true;
+    var dev = false;
     
     
     return {
@@ -58,6 +58,7 @@ angular.module('firstlife.services')
                 function(response, status, headers, config) {
                     if(dev) console.log("UserService, login, response: ",response, response.headers);
                     var user = jwtHelper.decodeToken(response.headers.authorization);
+                    $log.debug("token utente ",user);
                     deferred.resolve(user);
                     setUser(response.headers.authorization);
                 },

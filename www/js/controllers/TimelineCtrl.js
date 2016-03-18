@@ -34,8 +34,9 @@ angular.module('firstlife.controllers')
             showNavigation :false, 
             // un anno nella scrollbar
             //zoomMax:315360000000,
-            zoomMax:259200000,//3giorni// 315360000000,//settimana
-            // un'ora nella timeline
+            zoomMax:315360000000/2,
+            //zoomMax:259200000,//3giorni// 315360000000,//settimana
+            // 6 ore 
             zoomMin:3600000,
             zoomable: true,
             editable: false,

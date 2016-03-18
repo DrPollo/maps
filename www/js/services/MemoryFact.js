@@ -6,7 +6,7 @@ angular.module('firstlife.factories')
         self.keys = {user: 'user', token:'token', config:'config' };
          
         
-        var dev = false;
+        var dev = true;
         
         angular.element($window).on('storage', function(event) {
             //gestione utente

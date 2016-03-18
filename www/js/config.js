@@ -841,7 +841,10 @@ angular.module('firstlife.config')
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
-    function configDev(myConfig){
+        function($logProvider){
+            $logProvider.debugEnabled(false);
+    }).config(
+    function configDev(myConfig, $logProvider){
         if(myConfig.dev)console.log("setup modalità dev");
 
         // se in modalita' dev
@@ -857,5 +860,8 @@ angular.module('firstlife.config')
             }
 
         } 
+        // abilito i log di debug
+        $logProvider.debugEnabled(true);
+        
         if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
     });

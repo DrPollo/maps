@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .service('EntityService',['myConfig', 'MemoryFactory', '$filter', function(myConfig, MemoryFactory, $filter) {
+    .service('EntityService',['myConfig', 'MemoryFactory', '$filter', '$log', function(myConfig, MemoryFactory, $filter, $log) {
 
         /*
          * Service che implementa parte della logica delle proprieta' delle entita'
@@ -8,7 +8,7 @@ angular.module('firstlife.services')
         self = this;
         self.config = myConfig;
         self.categories = self.config.types.categories;
-        var dev = true;
+        var dev = false;
 
 
         return {
@@ -36,13 +36,13 @@ angular.module('firstlife.services')
             // recupero l'utente
             var user = MemoryFactory.readUser();
 
-            if(self.config.dev)console.log("EntityFactory, getDefaults ",entity_type,user);
+            if(self.config.dev)$log.debug("EntityFactory, getDefaults ",entity_type,user);
 
             var now = new Date();
             var day = $filter('date')(now,'dd/MM/yyyy, HH:mm');
             var type = getType(entity_type);
             var typeKey = type.key;
-            if(self.config.dev)console.log("EntityFactory, getDefaults, type ",type);
+            if(self.config.dev)$log.debug("EntityFactory, getDefaults, type ",type);
             // costruisco descrizione di default
             var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.displayName).concat(" - ").concat(day);
             
@@ -56,7 +56,7 @@ angular.module('firstlife.services')
             var defaults = {};
             for(key in checkList){
                 var property = checkList[key];
-                defaults[key] = property.default;
+                defaults[key] = angular.copy(property.default);
             }
             
             // regole di default per tutti
@@ -94,16 +94,16 @@ angular.module('firstlife.services')
 
             // setup categories
             var entityCategories = [];
-            if(dev) console.log("EntityService, getDefaults, init categories, cat: ",self.categories);
+            if(dev) $log.debug("EntityService, getDefaults, init categories, cat: ",self.categories);
             for( var j = 0; j < self.categories.length; j++){
                 var cat = self.categories[j];
-                if(dev) console.log("EntityService, getDefaults, init category, cat: ",cat,typeKey);
+                if(dev) $log.debug("EntityService, getDefaults, init category, cat: ",cat,typeKey);
 
                 if( cat.entities.indexOf(typeKey) > -1 && (cat.is_editable || !cat.is_visible && cat.is_mandatory)){
                     var c = {categories:[],category_space:cat.category_space};
-                    if(dev) console.log("EntityService, getDefaults, init category, c ",c);
+                    if(dev) $log.debug("EntityService, getDefaults, init category, c ",c);
                     if(!cat.is_visible && cat.is_mandatory){
-                        if(dev) console.log("Categoria invisibile e obbligatoria ",cat);
+                        if(dev) $log.debug("Categoria invisibile e obbligatoria ",cat);
                         // bug da sistemare
                         c.categories.push(cat.categories[0].id)
                     }
@@ -116,7 +116,7 @@ angular.module('firstlife.services')
             //dev rules
             if(self.config.dev) defaults.name = defaultName;
             
-            if(dev)console.log("EntityService, getDefaults ",defaults,defaultDescription);
+            if(dev)$log.debug("EntityService, getDefaults ",defaults,defaultDescription);
             return defaults;
         }
 
@@ -129,7 +129,7 @@ angular.module('firstlife.services')
             // fix categorie
             var tmpCats  = [];
             for(var i =0; i < tmp.categories.length; i++){
-                console.log("develop ", tmp.categories[i]);  
+                $log.debug("develop ", tmp.categories[i]);  
                 var c = tmp.categories[i];
                 var cats = [];
                 for(var j =0 ; j<c.category_space.categories.length;j++){
@@ -138,7 +138,7 @@ angular.module('firstlife.services')
                 tmpCats.push({category_space:c.category_space.id, categories:cats});
             }
             tmp.categories = tmpCats;
-            if(dev) console.log("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
+            if(dev) $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
             return tmp;    
         }
 
@@ -149,7 +149,7 @@ angular.module('firstlife.services')
             var dataForServer = {};
 
 
-            if(dev) console.log("processData init: ", data, typeInfo);
+            if(dev) $log.debug("processData init: ", data, typeInfo);
 
 
             var typeProperties = typeInfo.perms;
@@ -159,7 +159,7 @@ angular.module('firstlife.services')
                     dataForServer[key] = data[key];
                 }
             }
-            if(dev) console.log("processData, type properties : ", data, dataForServer);
+            if(dev) $log.debug("processData, type properties : ", data, dataForServer);
 
 
 
@@ -181,14 +181,14 @@ angular.module('firstlife.services')
                 default: // FL_PLACES
                     // gestione type
                     if(data.type){
-                        if(dev) console.log("trovato il type: ", data.type);
+                        if(dev) $log.debug("trovato il type: ", data.type);
                         dataForServer.type = parseInt(data.type);
                     } else {
                         dataForServer.type = 1;
                     }
 
             }
-            console.log("EntityService, processData, semantica del tipo: ", data, dataForServer);
+            if(dev) $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
 
             // entity_type, serve per la create
@@ -215,7 +215,7 @@ angular.module('firstlife.services')
 
         function checkEventTime(data, dataForServer){
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
-            if(dev) console.log("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
+            if(dev) $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
             
             
@@ -228,30 +228,30 @@ angular.module('firstlife.services')
                 dataForServer.valid_to.setHours(0,0,0,0);
                 if(data.door_time){
                     var tmp = data.valid_from.getTime();
-                    if(dev) console.log("Set data ",dataForServer.valid_from," con orario ",data.door_time);
+                    if(dev) $log.debug("Set data ",dataForServer.valid_from," con orario ",data.door_time);
                     dataForServer.valid_from.setTime(tmp + data.door_time * 1000);
                 }
-                if(dev) console.log("Set data valid_from Risultato ",dataForServer.valid_from);
+                if(dev) $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
             }
             if(dataForServer.valid_to){
                 dataForServer.valid_to.setHours(23,59,59,999);
                 if(data.close_time){
-                    if(dev) console.log("Set data ",dataForServer.valid_to," con orario ",data.close_time);
+                    if(dev) $log.debug("Set data ",dataForServer.valid_to," con orario ",data.close_time);
                     var tmp = data.valid_to.getTime();
                     dataForServer.valid_to.setTime(tmp + data.close_time * 1000);
                 }
-                if(dev) console.log("Set data valid_to Risultato ",dataForServer.valid_to);
+                if(dev) $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
             }
 
             // calcolo da durata come differenza tra le due date
             if(dataForServer.valid_from && dataForServer.valid_to){
                 // differenza tra giorni
                 duration = (dataForServer.valid_to.getTime() - dataForServer.valid_from.getTime());
-                if(dev) console.log("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
+                if(dev) $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
                 dataForServer.duration = duration;
             }
 //            else if(data.close_time && data.door_time){
-//                if(dev) console.log("EditorCtrl, calcolo durata da close_time - door_time:",data.close_time, data.door_time,(data.close_time - data.door_time));
+//                if(dev) $log.debug("EditorCtrl, calcolo durata da close_time - door_time:",data.close_time, data.door_time,(data.close_time - data.door_time));
 //                dataForServer.duration = data.close_time - data.door_time;
 //            }
 
@@ -285,7 +285,7 @@ angular.module('firstlife.services')
         function fillCats(data,dataForServer){
             // elimino categorizzazioni vuote
             var catsTmp = [];
-            if(dev) console.log("EntityService, processData, check categorie: ",data.categories);
+            if(dev) $log.debug("EntityService, processData, check categorie: ",data.categories);
             for(var i = 0; i < data.categories.length; i++){
                 var c = data.categories[i];
                 if(c && c.categories && c.categories.length > 0){
@@ -295,7 +295,7 @@ angular.module('firstlife.services')
                 }
             }
             dataForServer.categories = catsTmp;
-            if(dev) console.log("EntityService, processData, check categorie: ",catsTmp, data.categories,dataForServer);
+            if(dev) $log.debug("EntityService, processData, check categorie: ",catsTmp, data.categories,dataForServer);
             return dataForServer;
         }
 
