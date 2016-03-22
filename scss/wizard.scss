@@ -1,4 +1,4 @@
-#place_creation{
+#wizardEntity.content{
     .nav-bar-title{
         h1{
             color: white;
@@ -8,8 +8,6 @@
         }
     }
 
-}
-.content{
     form{
         .has-error{
             border-bottom:$error 2px solid;
@@ -48,7 +46,7 @@
             .tags{
                 box-shadow:none;
                 border:0px solid;
-                
+
                 ul.tag-list{
                     background-color: $positive;
                     li.tag-item{
@@ -69,4 +67,26 @@
             }
         }
     }
+    .thumbnail{
+        padding: 8px 16px;
+        display: block;
+        position: relative;
+        .remove-thumb{
+            position: absolute;
+            z-index: 1;
+            font-size: 1.4em;
+            left: 16px;
+            top:8px;
+            background: #FC4A00;
+            text-align: center;
+            color: white;
+            width: 30px;
+            height: 30px;
+            padding-top:5px; 
+            cursor: pointer;
+        }
+    }
+
 }
+
+

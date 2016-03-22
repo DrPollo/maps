@@ -651,6 +651,7 @@ angular.module('firstlife.config')
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');
         myConfig.backend_users = url.concat('user');
+        myConfig.backend_organization = url.concat('organization');
         myConfig.update_user = url.concat('user/update');
         myConfig.retrieve_password = myConfig.backend_users.concat('/resetpass');
         myConfig.reset_password = myConfig.backend_users.concat('/resetpass');

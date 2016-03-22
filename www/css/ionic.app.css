@@ -13358,55 +13358,73 @@ ion-side-menu#side-menu {
   to {
     transform: rotate(-45deg) scale(1.2); } }
 
-#place_creation .nav-bar-title h1 {
+#wizardEntity.content .nav-bar-title h1 {
   color: white;
   text-align: left;
   font-weight: 200;
   letter-spacing: 1px; }
 
-.content form .has-error {
+#wizardEntity.content form .has-error {
   border-bottom: #ef473a 2px solid; }
 
-.content form .no-error {
+#wizardEntity.content form .no-error {
   border-bottom: #33cd5f 2px solid; }
 
-.content form .form-errors .form-error {
+#wizardEntity.content form .form-errors .form-error {
   color: #ef473a; }
 
-.content form #description-textarea {
+#wizardEntity.content form #description-textarea {
   border-left: 0px;
   border-right: 0px;
   height: auto; }
-  .content form #description-textarea textarea {
+  #wizardEntity.content form #description-textarea textarea {
     height: auto; }
 
-.content form #date-form {
+#wizardEntity.content form #date-form {
   margin: 0px; }
-  .content form #date-form label {
+  #wizardEntity.content form #date-form label {
     padding: 8px 16px;
     border: 0px; }
 
-.content form .angucomplete-dropdown {
+#wizardEntity.content form .angucomplete-dropdown {
   position: relative;
   z-index: 99; }
 
-.content .autocompletetags {
+#wizardEntity.content .autocompletetags {
   overflow: visible; }
-  .content .autocompletetags tags-input .tags {
+  #wizardEntity.content .autocompletetags tags-input .tags {
     box-shadow: none;
     border: 0px solid; }
-    .content .autocompletetags tags-input .tags ul.tag-list {
+    #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list {
       background-color: #FC4A00; }
-      .content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
+      #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
         background: white;
         color: #FC4A00;
         border-color: #FC4A00; }
-        .content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
+        #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
           color: #FC4A00; }
-    .content .autocompletetags tags-input .tags input.input {
+    #wizardEntity.content .autocompletetags tags-input .tags input.input {
       padding-left: 0px; }
-  .content .autocompletetags tags-input .tags.focused {
+  #wizardEntity.content .autocompletetags tags-input .tags.focused {
     box-shadow: none; }
+
+#wizardEntity.content .thumbnail {
+  padding: 8px 16px;
+  display: block;
+  position: relative; }
+  #wizardEntity.content .thumbnail .remove-thumb {
+    position: absolute;
+    z-index: 1;
+    font-size: 1.4em;
+    left: 16px;
+    top: 8px;
+    background: #FC4A00;
+    text-align: center;
+    color: white;
+    width: 30px;
+    height: 30px;
+    padding-top: 5px;
+    cursor: pointer; }
 
 #user_profile #user_header {
   position: fixed;

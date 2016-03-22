@@ -245,6 +245,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // walktrhough
         SIGNUP: 'Registrazione',
         EMAIL: 'Email',
+        EMAIL_NOT_FOUND:'Email non registrata.',
         PASSWORD_RETRIEVE:'Recupera password',
         SIGNUP_MESSAGE:'Si riceverà una nuova password tramite e-mail',
         CLICKING:'Cliccando su',
@@ -406,6 +407,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // walktrhough
         SIGNUP: 'Signup',
         EMAIL: 'Email',
+        EMAIL_NOT_FOUND:'Email not found',
         PASSWORD_RETRIEVE:'Password retrieve',
         SIGNUP_MESSAGE:'An email with instructions will be sent.',
         CLICKING:'By clicking',

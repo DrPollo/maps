@@ -59,7 +59,10 @@ angular.module('firstlife.controllers')
         function timePickerCallback(val){}
 
 
-
+        _this.removeThumbnail = function(){
+            delete _this.wizard.dataForm.thumbnail;
+            return false;
+        }
 
 
 

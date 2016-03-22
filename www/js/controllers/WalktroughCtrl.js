@@ -216,9 +216,21 @@ angular.module('firstlife.controllers')
                 },
                 function(response){
                     hideLoadingScreen();
-                    if(consoleCheck) console.log("LoginCtrl, retrievePassword, error: ",response);
+                    //if(consoleCheck) 
+                        console.log("LoginCtrl, retrievePassword, error: ",response);
+                    
                     var title = $filter('translate')('ERROR');
                     var template = $filter('translate')('UNKNOWN_ERROR');
+                    
+                    switch(response.status){
+                        case 404:
+                            template = $filter('translate')('EMAIL_NOT_FOUND');
+                            break;
+                            
+                        default:
+                    
+                    }
+                    
                     var alertPopup = $ionicPopup.alert({
                         title: title,
                         template: template

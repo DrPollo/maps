@@ -5,6 +5,7 @@ angular.module('firstlife.services')
     self.config = myConfig;
     
     var url = config.backend_users;
+    var urlOrganization = config.backend_organization;
     var urlResetPassword = config.reset_password;
     var urlRetrievePassword = config.retrieve_password;
     var urlUpdate = config.update_user;
@@ -18,6 +19,9 @@ angular.module('firstlife.services')
             var user = MemoryFactory.getUser();
             console.log("develop ",user);
             var urlId = url.concat("/").concat(user.username).concat(format);
+            if(user.type == 2){
+                urlId = urlOrganization.concat("/").concat(user.id).concat(format);
+            } 
             var deferred = $q.defer();
             var req = {
                 url: urlId,
@@ -73,6 +77,9 @@ angular.module('firstlife.services')
         register: function(user){
             var deferred = $q.defer();
             var urlId = url.concat(format);
+            if(user.type == 2){
+                urlId = urlOrganization.concat(format);
+            } 
             var data = angular.toJson(user, true);
             var req = {
                 url: urlId,
@@ -103,6 +110,10 @@ angular.module('firstlife.services')
         update: function(user){
             var deferred = $q.defer();
             var urlId = url.concat(format);
+            if(user.type == 2){
+                urlId = urlOrganization.concat(format);
+            } 
+            
             var data = angular.toJson(user, true);
             var token = MemoryFactory.getToken();
             
@@ -156,7 +167,7 @@ angular.module('firstlife.services')
         retrievePassword: function(email){
             var deferred = $q.defer();
             
-            var urlId = urlRetrievePassword.concat(format).concat("?username=").concat(email);
+            var urlId = urlRetrievePassword.concat('/').concat(email);
             var req = {
                 url: urlId,
                 method: 'GET',

@@ -14,7 +14,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content class="content">
+    <ion-content class="content" id="wizardEntity">
         <div ng-switch="editor.wizard.getCurrentStep()" >
 
             <div ng-switch-when="Info">
@@ -84,12 +84,12 @@
                             </label>
                             <label ng-if="editor.checkList.door_time" class="item item-input col">
                                 <div class="input-label">
-                                        {{editor.checkList.door_time.label|translate}} 
-                                    </div>
+                                    {{editor.checkList.door_time.label|translate}} 
+                                </div>
                                 <ionic-timepicker input-obj="editor.checkList.door_time.template" ng-required="editor.checkList.door_time.required">
-                                  <button class="button button-block button-positive button-outline overflowShow">
-                                    <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
-                                  </button>
+                                    <button class="button button-block button-positive button-outline overflowShow">
+                                        <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
+                                    </button>
                                 </ionic-timepicker>
                             </label>
                         </div>
@@ -115,29 +115,23 @@
                             </label>
                             <label ng-if="editor.checkList.close_time" class="item item-input col">
                                 <div class="input-label">
-                                        {{editor.checkList.close_time.label|translate}}  
-                                    </div>
+                                    {{editor.checkList.close_time.label|translate}}  
+                                </div>
                                 <ionic-timepicker input-obj="editor.checkList.close_time.template" ng-required="editor.checkList.close_time.required">
-                                  <button class="button button-block button-positive button-outline overflowShow">
-                                    <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
-                                  </button>
+                                    <button class="button button-block button-positive button-outline overflowShow">
+                                        <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
+                                    </button>
                                 </ionic-timepicker>
                             </label>
                         </div>
-                        <!--
-                        <label ng-if="checkList.parent" class="item item-input item-floating-label">
-                            <span class="input-label">{{checkList.parent.label}}</span><!--url="{{config.backend_autocomplete}}" datafield="results"-->
-                         <!--   <angucomplete id="parent_id" placeholder="{{checkList.parent.placeholder |translate}}" name="parent" pause="100"
-                                          selectedobject="wizard.dataForm.parent_id"
-                                          localdata="searchSource"
-                                          searchfields="name"
-                                          titlefield="name"
-                                          minlength="1"
-                                          inputclass="form-control form-control-small"
-                                          initialValue="{{wizard.dataForm.parent_id.name}}"
-                                          ng-required="checkList.parent.required"/>
+                        <!--<label ng-if="editor.checkList.thumbnail" ng-show="!editor.wizard.dataForm.thumbnail" class="item item-input item-floating-label">
+                            <span class="input-label">{{editor.checkList.thumbnail.label|translate}}</span>
+                            <input id="input-fileUpload" type="file" ng-model="editor.wizard.dataForm.thumbnail" name="thumbnail" base-sixty-four-input accept="image/*">
                         </label>
-                        -->
+                        <div class="thumbnail" ng-show="editor.wizard.dataForm.thumbnail">
+                            <img data-ng-src="data:image/png;base64,{{editor.wizard.dataForm.thumbnail.base64}}" width="300" />
+                            <i class="icon ion-close-round remove-thumb" on-tap="editor.removeThumbnail()"></i>
+                        </div>-->
                         <label ng-if="editor.checkList.tags" class="item item-input item-floating-label autocompletetags">
                             <span class="input-label">{{editor.checkList.tags.label|translate}}</span>
                             <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="true">
@@ -158,23 +152,23 @@
                 <div class="list">
                     <form name="editor.form.wizardform2" novalidate>
                         <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="editor.form.wizardform2.{{space.category_space}}" novalidate>
-                                <div class="item item-divider">
-                                    {{space.name}} <span ng-if="config.dev">- {{space.category_space}} - {{$index}}</span>
+                            <div class="item item-divider">
+                                {{space.name}} <span ng-if="config.dev">- {{space.category_space}} - {{$index}}</span>
+                            </div>
+                            <ion-radio name="form.wizardform2.{{space.category_space}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
+                                       ng-value="{{category.id}}"
+                                       ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
+                                       class="item"
+                                       ng-required="true">
+                                <div class="item-icon-left" >
+                                    <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
+                                    {{ category.name }} <span ng-if="config.dev">- {{category.id}}</span>
+                                    <span class="item-note" ng-if="category.description">
+                                        {{category.description}}
+                                    </span>
                                 </div>
-                                <ion-radio name="form.wizardform2.{{space.category_space}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
-                                           ng-value="{{category.id}}"
-                                           ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
-                                           class="item"
-                                           ng-required="true">
-                                    <div class="item-icon-left" >
-                                        <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
-                                        {{ category.name }} <span ng-if="config.dev">- {{category.id}}</span>
-                                        <span class="item-note" ng-if="category.description">
-                                            {{category.description}}
-                                        </span>
-                                    </div>
-                                    
-                                </ion-radio>
+
+                            </ion-radio>
                         </ng-form>
                     </form>
                 </div>
