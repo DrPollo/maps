@@ -18,8 +18,12 @@ angular.module('firstlife.controllers')
             if($scope.user){
                 if($scope.user.displayName && $scope.user.displayName != ''){
                     $scope.displayName = $scope.user.displayName;
-                }else if($scope.user.email && $scope.user.email != ''){
-                    $scope.displayName = $scope.user.email;
+                }else if($scope.user.type == 1){
+                    $scope.displayName = $scope.user.name.concat(" ").concat($scope.user.lastname);
+                }else if($scope.user.type == 2){
+                    $scope.displayName = $scope.user.name;
+                }else{
+                    
                 }
                 
                 $scope.isLoggedIn = true;

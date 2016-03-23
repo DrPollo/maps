@@ -228,6 +228,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         FILTERS: 'Filtri',
         // user form
         PROFILE_HEADER: 'Gestione profilo',
+        TITLE:'Titolo',
         NAME:'Nome',
         LASTNAME:'Cognome',
         PASSWORD:'Password',
@@ -390,6 +391,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         FILTERS: 'Filters',
         // user form
         PROFILE_HEADER: 'Edit profile',
+        TITLE:'Title',
         NAME:'Name',
         LASTNAME:'Lastname',
         PASSWORD:'Password',
