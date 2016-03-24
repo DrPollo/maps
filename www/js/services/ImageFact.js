@@ -49,7 +49,7 @@ angular.module('firstlife.factories')
         return {
             images:function(images, id, entity_type){
                 var data = {};
-                data.user = user_id;
+                data.user_id = user_id;
                 for (var i = 0; i < images.length; i++){
                     var img = 'data:';
                     img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);
