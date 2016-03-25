@@ -19,7 +19,7 @@ angular.module('firstlife.controllers')
                 if($scope.user.displayName && $scope.user.displayName != ''){
                     $scope.displayName = $scope.user.displayName;
                 }else if($scope.user.type == 1){
-                    $scope.displayName = $scope.user.name.concat(" ").concat($scope.user.lastname);
+                    $scope.displayName = $scope.user.first_name.concat(" ").concat($scope.user.last_name);
                 }else if($scope.user.type == 2){
                     $scope.displayName = $scope.user.name;
                 }else{

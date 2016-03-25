@@ -209,7 +209,11 @@ angular.module('firstlife.config')
                 levels:[
                     {"level":0,name:'Livello strada',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1}
                 ]
-            }
+            },
+            filters:[
+                {key:'group',property:'group_id',search_param:'groups',type:'strict'},
+                {key:'user',property:'user',search_param:'users',type:'strict'}
+            ]
         },
         'behaviour':{
             // richiesto il login per la mappa

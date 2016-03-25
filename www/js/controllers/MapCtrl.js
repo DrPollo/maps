@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
 
 
 
@@ -218,6 +218,30 @@ angular.module('firstlife.controllers')
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
                     if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
+                    
+                    // controllo i parametri di posizione
+                    check4Position(e);
+                    // controllo i parametri di entita'
+                    check4entity(e,old);
+                    // controllo i filtri custom
+                    check4customFilters(e,old);
+                }
+                // abilito il listner (serve per gestire il pulsante back del browser)
+                // il listner si auto-abilita dopo ogni cambio di parametri
+                self.watchSearchEnabled = true;
+                
+                // controllo i parametri di posizione
+                function check4Position(e){
+                    // se ho settati i parametri di posizione
+                    if(e.lat && e.lng && e.zoom){
+                        if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
+                            locate(e);
+                        }
+                    }
+                
+                }
+                // controllo il parametro entity
+                function check4entity(e,old){
                     if(e.entity){
                         //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
                         // placeModal da aprire
@@ -226,20 +250,41 @@ angular.module('firstlife.controllers')
                         //localizzo perche' il marker potrebbe non essere nello scope
                         locate(parseInt(e.entity));
                         //}
-                    }else{
+                    }else if(old.entity){
                         // chiudo la modal
                         $scope.$broadcast("markerClickClose");
-                        // se ho settati i parametri di posizione
-                        if(e.lat && e.lng && e.zoom){
-                            if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
-                                locate(e);
+                        
+                    }
+                };
+                // controllo se trovo nei parametri search dei parametri 
+                // dei filtri custom
+                function check4customFilters(e,old){
+                    var filters = config.map.filters;
+                    for(var i = 0 ; i < filters.length; i ++){
+                        var param = filters[i].search_param;
+                        var filter = filters[i];
+                        var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                        if(e[param]){//trovato un parametro
+                            // filtro per per la property
+                            var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+                            
+                            if(index > -1){
+                                $scope.filterConditions[index] = rule;
+                            }else{
+                                $scope.filterConditions.push(rule);
                             }
+                            $log.debug("check4customFilters",filter,e[param],rule,config.types.list.map(function(e){return e.key;}));
+                        }else{
+                            // rimuovo filtro per la property
+                            var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                            if(index > -1 ){
+                                $log.debug("check4customFilters, rimuovo regola",index,$scope.filterConditions[index]);
+                                $scope.filterConditions.splice(index,1);
+                            }   
                         }
                     }
+                
                 }
-                // abilito il listner (serve per gestire il pulsante back del browser)
-                // il listner si auto-abilita dopo ogni cambio di parametri
-                self.watchSearchEnabled = true;
             },
             true);
 
@@ -255,9 +300,10 @@ angular.module('firstlife.controllers')
         // filtro sulle condizioni, se cambiano ricalcolo i marker filtrati
         $scope.$watch("filterConditions", function(newVal,oldVal) {
             if($scope.map && $scope.map.markers){
-                if(consoleCheck) console.log("cambio dei filtri, ecco i Markers che considero: ",$scope.map.markers,$scope.map.markers.length);
+                if(consoleCheck) console.log("cambio dei filtri, ecco i Markers che considero: ",$scope.map.markers,$scope.map.markers.length,$scope.filterConditions);
                 $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
-                if(consoleCheck) console.log("Cambio filtro, nuovi marker filtrati: ",$scope.filtred);
+                //if(consoleCheck) 
+                    console.log("Cambio filtro, nuovi marker filtrati: ",$scope.filtred);
             }
         },true);
         $scope.$watch("filtred", function(newVal,oldVal) {
@@ -956,7 +1002,8 @@ angular.module('firstlife.controllers')
                            (Array.isArray(valore) && valore.length == 0 ) || 
                            (angular.isObject(valore) && angular.equals(valore,{})) ){
                             // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
-                            if(consoleCheck) console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
+                            //if(consoleCheck) 
+                                console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
                         }else{return false;}
                     }
                     // se ha delle alternative
@@ -1159,8 +1206,8 @@ angular.module('firstlife.controllers')
                 //{key:'location',name:'location',values:[null],mandatory:{condition:true,values:true},equal:false,excludeRule:false,excludeProperty:true}
             ];
 
-
-
+    
+            
             // filtri tipo
             var types = $scope.config.types.list,
                 check = 'key',

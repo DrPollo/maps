@@ -58,43 +58,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
         }
 
-
-        // se l'utente e' loggato ed esce dallo stato login
-        // e non ho gia' creato il listner
-        /*if(!self.logoutHandler && fromState.name == "login" && $rootScope.isLoggedIn) {
-            // iscrivo un listner per prevenire il logout
-            self.logoutHandler = true;
-            self.onRouteChangeOff = $rootScope.$on('$locationChangeStart', function (event, next, current){
-                if($rootScope.isLoggedIn && $location.path() == "/login"){
-                    // console.log("cambio di location ", next, current);
-                    // prevengo il logout involontario con un popup
-                    // creazione del popup
-                    var confirmPopup = $ionicPopup.confirm({
-                        title: 'Logout',
-                        template: 'Stai per effettuare il logout. Vuoi continuare?'
-                    });
-
-                    confirmPopup.then(function(res) {
-                        if(res) {
-                            console.log("sono sicuro, vado a ", next);
-                            onRouteChangeOff(); //disiscrivo il listner
-                            self.logoutHandler = false;
-                            //$location.path($location.url(next));
-                            //instrado verso lo stato login specificando l'azione di logout
-                            $state.go("login",{action:'logout'})
-                        } else {
-                            console.log("resto nello stato ", current);
-                        }
-                    });
-                    //prevent navigation by default since we'll handle it
-                    //once the user selects a dialog option
-                    event.preventDefault();
-                }
-            }); 
-
-        }
-        */
-
     }); 
 
     // parser di url
@@ -115,7 +78,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     .config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
-    //console.log(self.config);
+    
     $stateProvider
 
         .state('login', {
@@ -134,7 +97,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         controller: 'AppCtrl as app'
     })
         .state('app.maps', {
-        url: "/maps?zoom&lat&lng&entity",
+        url: "/maps?zoom&lat&lng&entity&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false, 
         views: {
             'menuContent': {
@@ -530,6 +493,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             //$log.debug("headers ",response.headers);
             if(response.data && response.data.data){
                 response.data = response.data.data;
+            }
+            // bug
+            if(response.data.group_id){
+                response.data.id = response.data.group_id;
             }
             return response;
         }
