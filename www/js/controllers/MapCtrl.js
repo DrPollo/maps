@@ -136,10 +136,15 @@ angular.module('firstlife.controllers')
 
                     case 'login':
                         // vengo dal login
-                        if(consoleCheck) console.log("MapCtrl, gestore cambio di stato, case:login ", $stateParams);
+                        //if(consoleCheck) 
+                            console.log("MapCtrl, gestore cambio di stato, case:login ", $stateParams);
                         locate($stateParams);
+                        
                         if($stateParams.entity)
                             clickMarker($stateParams.entity);
+                        
+                        if($stateParams)
+                            check4customFilters($stateParams,{});
                         
                         break;
 
@@ -148,6 +153,12 @@ angular.module('firstlife.controllers')
                         if(consoleCheck) console.log("MapCtrl, gestione stato, default",$stateParams);
                         // posiziono la mappa se ci solo le coordinate, 
                         // altrimenti si lascia il centro della mappa 
+                        
+                        if($stateParams.entity)
+                            clickMarker($stateParams.entity);
+                        
+                        if($stateParams)
+                            check4customFilters($stateParams,{});
                 }
                 if(consoleCheck) console.log("Check parametri: ", $stateParams, $location.search());
             }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
@@ -300,7 +311,8 @@ angular.module('firstlife.controllers')
         // filtro sulle condizioni, se cambiano ricalcolo i marker filtrati
         $scope.$watch("filterConditions", function(newVal,oldVal) {
             if($scope.map && $scope.map.markers){
-                if(consoleCheck) console.log("cambio dei filtri, ecco i Markers che considero: ",$scope.map.markers,$scope.map.markers.length,$scope.filterConditions);
+                //if(consoleCheck) 
+                    console.log("cambio dei filtri, ecco i Markers che considero: ",$scope.map.markers,$scope.map.markers.length,$scope.filterConditions);
                 $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
                 //if(consoleCheck) 
                     console.log("Cambio filtro, nuovi marker filtrati: ",$scope.filtred);
@@ -1552,6 +1564,38 @@ angular.module('firstlife.controllers')
                     $scope.markersFiltered[k].icon = $scope.markersFiltered[k].icons[$scope.favCat] ? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icons[0];
                 }
             }
+        }
+        
+        
+        
+        // toggle dei parametri search custom
+        
+        function check4customFilters(e,old){
+            var filters = config.map.filters;
+            for(var i = 0 ; i < filters.length; i ++){
+                var param = filters[i].search_param;
+                var filter = filters[i];
+                var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                if(e[param]){//trovato un parametro
+                    // filtro per per la property
+                    var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+
+                    if(index > -1){
+                        $scope.filterConditions[index] = rule;
+                    }else{
+                        $scope.filterConditions.push(rule);
+                    }
+                    $log.debug("check4customFilters",filter,e[param],rule,config.types.list.map(function(e){return e.key;}));
+                }else{
+                    // rimuovo filtro per la property
+                    var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                    if(index > -1 ){
+                        $log.debug("check4customFilters, rimuovo regola",index,$scope.filterConditions[index]);
+                        $scope.filterConditions.splice(index,1);
+                    }   
+                }
+            }
+
         }
         
         

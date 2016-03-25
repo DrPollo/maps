@@ -316,6 +316,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Approfondimenti',
         REL_COMMENT_OF_LABEL:'Parla di',
         REL_COMMENT_OF_CHILD_LABEL:'Notizie',
+        REL_BY_GROUP_LABEL:"Inserito da"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -480,7 +481,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Posts',
         REL_COMMENT_OF_LABEL:'About of',
         REL_COMMENT_OF_CHILD_LABEL:'News',
-
+        REL_BY_GROUP_LABEL:"Posted by"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

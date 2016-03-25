@@ -511,6 +511,7 @@ angular.module('firstlife.factories')
                 user: entity.properties.user,
                 parent_id: entity.properties.parent_id ? entity.properties.parent_id : null,
                 parent: {},
+                "group_id":entity.properties.group_id ? entity.properties.group_id : null,
                 location: entity.properties.location ? entity.properties.location : null,
                 "article_of": entity.properties['article_of'] ? entity.properties['article_of'] : null,
                 "comment_of": entity.properties['comment_of'] ? entity.properties['comment_of'] : null,
