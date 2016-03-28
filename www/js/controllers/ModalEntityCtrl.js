@@ -716,7 +716,6 @@ angular.module('firstlife.controllers')
         templateUrl: '/templates/map-ui-template/ActionsModal.html',
         controller: ['$scope','$location',function($scope,$location){
             $scope.actionEntity = function(action, param){
-                console.log("test direttiva!",$scope.id,action,param);
                 switch(action){
                     case 'view':
                         break;

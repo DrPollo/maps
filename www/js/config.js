@@ -223,8 +223,8 @@ angular.module('firstlife.config')
                 ]
             },
             filters:[
-                {key:'group',property:'group_id',search_param:'groups',type:'strict',entity:"FL_GROUPS"},
-                {key:'user',property:'user',search_param:'users',type:'strict'}
+                {key:'group',property:'group_id',search_param:'groups',type:'strict',label:'GROUP_FILTERLING',entity_type:'FL_GROUPS'},
+                {key:'user',property:'user',search_param:'users',type:'strict',label:'USER_FILTERLING'}
             ]
         },
         'behaviour':{
