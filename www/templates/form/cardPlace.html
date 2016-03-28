@@ -18,13 +18,19 @@
                     <span ng-if="!isMobile">{{'COMMENTS'|translate}}</span>
                 </span>
             </div>
-            <div class="content modal-content">
+            <div class="modal-subheader">
                 <span class="message">
                     {{'LAST_UPDATE_MESSAGE'|translate}} {{infoPlace.marker.last_update | date:'dd/MM/yyyy (hh:mm)'}} 
                     <span ng-if="infoPlace.marker.display_name">
                         {{'BY_USER'|translate}} <span class="username">{{infoPlace.marker.display_name}}</span> 
                     </span> 
                 </span> 
+            </div>
+            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="content">
+                <i class="icon ion-android-time"></i>
+                <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (hh:mm)'}}</span>
+                <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
+                <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (hh:mm)'}}</span>
             </div>
             <div ng-if="infoPlace.marker.description" class="content modal-content description-field">
                 {{infoPlace.marker.description}}
@@ -35,12 +41,6 @@
             <div ng-if="infoPlace.marker.message_text" class="content modal-content text-field">
                 {{infoPlace.marker.message_text}}
             </div>
-            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="content modal-content">
-                <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (hh:mm)'}}</span>
-                <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
-                <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (hh:mm)'}}</span>
-            </div>
-            
             <div id="modalPlaceLink" ng-if="infoPlace.marker.link_url" class="content modal-url">
 
                 <a href="{{infoPlace.marker.link_url}}" target="_blank">
@@ -65,6 +65,12 @@
 
                 </span>
             </div>
+            
+            <div class="actions content">
+                <actions actions="infoPlace.actions" id="infoPlace.marker.id" close="closeModalPlace"></actions>
+            </div>
+            
+            
             <div ng-if="config.actions.can_foto || config.design.show_thumbs" ng-show="isPendingImages || (images.length > 0)" id="area-foto" class="content">
                 <div ng-show="config.actions.can_foto && isPendingImages" class="foto-box">
                     <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
@@ -86,7 +92,6 @@
                         </div>
                     </div>
                 </div>
-                {{images}}
                 <div ng-if="config.design.show_thumbs" class="foto-box">
                     <div class="row foto-mosaico" ng-repeat="image in images" ng-if="$index % 4 === 0">
                         <div class="col col-25" ng-if="$index < images.length">{{images}}

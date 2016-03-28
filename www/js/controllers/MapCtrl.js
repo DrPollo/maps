@@ -162,6 +162,9 @@ angular.module('firstlife.controllers')
                 }
                 if(consoleCheck) console.log("Check parametri: ", $stateParams, $location.search());
             }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
+            
+            // riattivo il listner
+            self.watchSearchEnabled = true;
         });
 
 
@@ -225,7 +228,8 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $location.search(); }, 
             function(e, old){
-                if(consoleCheck) console.log("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
+                //if(consoleCheck) 
+                    console.log("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
                     if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
@@ -240,7 +244,7 @@ angular.module('firstlife.controllers')
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
                 self.watchSearchEnabled = true;
-                
+                $log.debug("abilito il listner");
                 // controllo i parametri di posizione
                 function check4Position(e){
                     // se ho settati i parametri di posizione
@@ -747,6 +751,7 @@ angular.module('firstlife.controllers')
                 // cambiamento gia' gestito
                 self.watchSearchEnabled = false;
                 $location.search(key,params[key]);
+                self.watchSearchEnabled = true;
             }
             if(consoleCheck) console.log("nuovi parametri search: ", $location.search(), params);
         }
@@ -755,6 +760,7 @@ angular.module('firstlife.controllers')
             // cambiamento gia' gestito, listner 
             self.watchSearchEnabled = false;
             $location.search(key,null);
+            self.watchSearchEnabled = true;
         }
 
 

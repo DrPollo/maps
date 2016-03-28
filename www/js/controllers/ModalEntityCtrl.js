@@ -78,6 +78,8 @@ angular.module('firstlife.controllers')
                 if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
                 $scope.infoPlace = {};
                 $scope.infoPlace.marker = angular.copy(marker);
+                $scope.infoPlace.actions = angular.copy($scope.currentType.actions);
+
                 if(consoleCheck)console.log("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
                 $scope.infoPlace.modify = false;    
                 $scope.infoPlace.dataForm = {};
@@ -152,7 +154,7 @@ angular.module('firstlife.controllers')
                     function(err){console.log("changeModal, errore ",err);}
                 );
             }
-            
+
             function chiudoModal(){
                 var deferred = $q.defer();
                 if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
@@ -377,7 +379,7 @@ angular.module('firstlife.controllers')
             $scope.closeModalPlace();
             if(consoleCheck)console.log("ModalEntityCtrl, check creazione entita' subordinata di tipo ",entity_type," con relazione ",rel," con ",marker.id );
 
-            
+
             toPreEditor(params);
             //toEditor(params);
         }
@@ -505,10 +507,8 @@ angular.module('firstlife.controllers')
             for(key in childrenRelations){
                 var childRel = childrenRelations[key];
                 var c = MapService.searchFor(marker.id, childRel.field);
-                //if(consoleCheck) 
-                    $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
+                if(consoleCheck) $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
                 if(!$scope.isEmpty(c)){
-                    $log.debug("Trovata lista entita' ",childRel,c,key);
                     children[key] = angular.copy(childRel);
                     for(var j = 0; j<c.length;j++){
                         var thing = c[j];
@@ -516,12 +516,12 @@ angular.module('firstlife.controllers')
                             children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
                         if(!children[thing.entity_type].list)
                             children[thing.entity_type].list = [];
-                        
+
                         var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
                         if(index < 0)
                             children[thing.entity_type].list.push(thing);
                     }
-                    
+
                 }
             }
             if(consoleCheck)console.log("ModalEntityCtrl, loadSibillings, costruzione dei figli ", children);
@@ -645,10 +645,10 @@ angular.module('firstlife.controllers')
 
         function initTypeChecks (entity_type){
             var index = $scope.config.types.list.map(function(e){return e.key}).indexOf(entity_type);
-
+            // recupero il current type
             $scope.currentType = $scope.config.types.list[index];
 
-            if(consoleCheck)console.log("ModalEntityCtrl, initTypeChecks, entity_type, index e type: ", entity_type, index, $scope.currentType);
+            if(consoleCheck) $log.debug("ModalEntityCtrl, initTypeChecks, entity_type, index e type: ", entity_type, index, $scope.currentType);
 
         }
 
@@ -702,4 +702,34 @@ angular.module('firstlife.controllers')
 
         }
 
-    }]);
+    }]).directive('actions', function() {
+    
+    
+    
+    return {
+        restrict: 'E',
+        scope: {
+            actions: '=actions',
+            id: '=id',
+            close:'=close'
+        },
+        templateUrl: '/templates/map-ui-template/ActionsModal.html',
+        controller: ['$scope','$location',function($scope,$location){
+            $scope.actionEntity = function(action, param){
+                console.log("test direttiva!",$scope.id,action,param);
+                switch(action){
+                    case 'view':
+                        break;
+
+                    case 'join':
+                        break;
+                    default:
+
+                }
+                $scope.close();
+                $location.search( param,$scope.id);
+            }
+        
+        }]
+    };
+});
