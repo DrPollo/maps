@@ -1,0 +1,5 @@
+<div ng-repeat="(k, card) in cards">
+    {{card.label |translate}}
+    {{card.label2 |translate}}
+    <button class="icon ion-close-round" on-tap="closeCard(card.search_param,card.value)"></button>
+</div>
