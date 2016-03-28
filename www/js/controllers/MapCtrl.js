@@ -329,7 +329,7 @@ angular.module('firstlife.controllers')
             locate(args);
             // entro in edit mode
             changeMode('edit');
-            $scope.updateEntity = args.id;
+            $scope.updateEntity = args;
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -491,12 +491,25 @@ angular.module('firstlife.controllers')
         //action sheet per creazione place/evento
         $scope.showASEdit = function(){
             // se devo aggionare una entita'
-            if($scope.updateEntity){
-                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity,};
+            if($scope.updateEntity && $scope.updateEntity.id){
+                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity.id,};
+                $state.go('app.editor', params);
+                $scope.switchEditMode();
+            }if($scope.updateEntity){
+                // se ho gia' dei parametri per la insert
+                var params = {};
+                for(var k in $scope.updateEntity){
+                    params[k] = $scope.updateEntity[k];
+                }
+                // sovrascrivo lat e lng del parent
+                params.lat = $scope.map.center.lat;
+                params.lng = $scope.map.center.lng;
+                
                 $state.go('app.editor', params);
                 $scope.switchEditMode();
             }else{
                 // se non devo aggiornare nessuna entita'
+                // e non ho paramentri gia' stabiliti
                 clickToAdd();
             }
         }
@@ -1134,6 +1147,8 @@ angular.module('firstlife.controllers')
                 var parents = $scope.config.types.parent_relations[val.entity_type];
                 for(key in parents){
                     var parentRel = parents[key];
+                    if(parentRel.exclude)
+                        return true;
                     if(consoleCheck) console.log("MapCtrl, relationsFixer, check ",val.id," in ", parents[key].field);
                     if($scope.filtred.map(function(e){return e.id;}).indexOf(val[parentRel.field]) >= 0)
                         return false;

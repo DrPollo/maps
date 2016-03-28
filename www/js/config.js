@@ -94,11 +94,11 @@ angular.module('firstlife.config')
                     disable_comments:false,
                     properties:{},
                     relations:{
-                     'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
-                     'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL'},
-                     'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL'},
-                     'FL_ARTICLES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_POST_CHILD_LABEL'},
-                     'FL_COMMENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_COMMENT_CHILD_LABEL'}
+                     'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true},
+                     'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true},
+                     'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL',exclude:true},
+                     'FL_ARTICLES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_POST_CHILD_LABEL',exclude:true},
+                     'FL_COMMENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_COMMENT_CHILD_LABEL',exclude:true}
                  }
                 }
             ],
@@ -180,6 +180,7 @@ angular.module('firstlife.config')
         },
         'map':{
             //'tile_view' : 'http://130.192.157.163/osm_tiles/{z}/{x}/{y}.png',
+            //'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             'tile_view' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
             'tile_edit': 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',   
             //posizione

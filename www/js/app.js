@@ -316,7 +316,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Approfondimenti',
         REL_COMMENT_OF_LABEL:'Parla di',
         REL_COMMENT_OF_CHILD_LABEL:'Notizie',
-        REL_BY_GROUP_LABEL:"Inserito da"
+        REL_BY_GROUP_LABEL:"Inserito da",
+        REL_BY_GROUP_PLACE_CHILD_LABEL:"Luoghi",
+        REL_BY_GROUP_EVENT_CHILD_LABEL:"Eventi",
+        REL_BY_GROUP_POST_CHILD_LABEL:"Approfondimenti",
+        REL_BY_GROUP_COMMENT_CHILD_LABEL:"News"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -481,7 +485,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Posts',
         REL_COMMENT_OF_LABEL:'About of',
         REL_COMMENT_OF_CHILD_LABEL:'News',
-        REL_BY_GROUP_LABEL:"Posted by"
+        REL_BY_GROUP_LABEL:"Posted by",
+        REL_BY_GROUP_PLACE_CHILD_LABEL:"Places",
+        REL_BY_GROUP_EVENT_CHILD_LABEL:"Events",
+        REL_BY_GROUP_POST_CHILD_LABEL:"Posts",
+        REL_BY_GROUP_COMMENT_CHILD_LABEL:"News"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

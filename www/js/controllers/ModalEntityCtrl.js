@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthFactory', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthFactory, CommentsFactory) { 
+    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthFactory', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthFactory, CommentsFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -377,7 +377,9 @@ angular.module('firstlife.controllers')
             $scope.closeModalPlace();
             if(consoleCheck)console.log("ModalEntityCtrl, check creazione entita' subordinata di tipo ",entity_type," con relazione ",rel," con ",marker.id );
 
-            toEditor(params);
+            
+            toPreEditor(params);
+            //toEditor(params);
         }
 
         $scope.deleteComment = function(commentId){
@@ -496,17 +498,30 @@ angular.module('firstlife.controllers')
         function loadSibillings (marker){
             $scope.infoPlace.marker.relations = {};
 
-            if(consoleCheck)console.log("ModalEntityCtrl, loadSibillings per il marker ", marker);
+            if(consoleCheck) $log.debug("ModalEntityCtrl, loadSibillings per il marker ", marker);
             // caricamento dei child
             var childrenRelations = $scope.config.types.child_relations[marker.entity_type];
             var children = {};
             for(key in childrenRelations){
                 var childRel = childrenRelations[key];
                 var c = MapService.searchFor(marker.id, childRel.field);
-                if(consoleCheck)console.log("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
+                //if(consoleCheck) 
+                    $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
                 if(!$scope.isEmpty(c)){
+                    $log.debug("Trovata lista entita' ",childRel,c,key);
                     children[key] = angular.copy(childRel);
-                    children[key].list = c;
+                    for(var j = 0; j<c.length;j++){
+                        var thing = c[j];
+                        if(!children[thing.entity_type])
+                            children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
+                        if(!children[thing.entity_type].list)
+                            children[thing.entity_type].list = [];
+                        
+                        var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
+                        if(index < 0)
+                            children[thing.entity_type].list.push(thing);
+                    }
+                    
                 }
             }
             if(consoleCheck)console.log("ModalEntityCtrl, loadSibillings, costruzione dei figli ", children);
@@ -514,7 +529,7 @@ angular.module('firstlife.controllers')
 
             // caricamento dei parent
             var parentsRelations = $scope.config.types.parent_relations[marker.entity_type];
-            if(consoleCheck)console.log("ModalEntityCtrl, loadSibillings, construzione dei padri ",parentsRelations);
+            if(consoleCheck) $log.debug("ModalEntityCtrl, loadSibillings, construzione dei padri ",parentsRelations);
             var parents = {};
             // serve ad impedire la duplicazione della ricerca per entita' con lo stesso field
             var keysBanList = {};
