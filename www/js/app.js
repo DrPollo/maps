@@ -321,7 +321,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_EVENT_CHILD_LABEL:"Eventi",
         REL_BY_GROUP_POST_CHILD_LABEL:"Approfondimenti",
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
-        GROUP_FILTERLING:'Gruppo ',
+        GROUP_FILTERING:'Gruppo ',
         USER_FILTERING:'Contenuti di ',
     });
     $translateProvider.translations('en', {
@@ -492,7 +492,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_EVENT_CHILD_LABEL:"Events",
         REL_BY_GROUP_POST_CHILD_LABEL:"Posts",
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
-        GROUP_FILTERLING:'Group ',
+        GROUP_FILTERING:'Group ',
         USER_FILTERING:'Contents of ',
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);

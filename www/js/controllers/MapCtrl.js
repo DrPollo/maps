@@ -160,7 +160,6 @@ angular.module('firstlife.controllers')
                         if($stateParams)
                             check4customFilters($stateParams,{});
                 }
-                if(consoleCheck) console.log("Check parametri: ", $stateParams, $location.search());
             }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
             
             // riattivo il listner
@@ -229,7 +228,7 @@ angular.module('firstlife.controllers')
             function(){ return $location.search(); }, 
             function(e, old){
                 //if(consoleCheck) 
-                    console.log("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
+                    $log.debug("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
                     if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
@@ -1640,9 +1639,11 @@ angular.module('firstlife.controllers')
     
     return {
         restrict: 'E',
-        scope: {},
+        scope: {
+            params: '=params'
+        },
         templateUrl: '/templates/map-ui-template/SearchCards.html',
-        controller: ['$scope','$location', '$log', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,myConfig,MemoryFactory,MapService){
+        controller: ['$scope','$location', '$log', '$stateParams', '$rootScope', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$stateParams,$rootScope,myConfig,MemoryFactory,MapService){
             var config = myConfig;
             var filters = config.map.filters;
             var filterList = filters.map(function(e){return e.search_param});
@@ -1655,15 +1656,16 @@ angular.module('firstlife.controllers')
             
             // controllo al cambio dei parametri di search
             $scope.$watch(
-            function(){ return $location.search(); }, 
+            function(){ return $scope.params.length; }, 
             function(e, old){
-                $log.debug('check $location.search()', e);
-                if(!angular.equals(e,old)){
+                $log.debug('check $location.search()', $location.search());
+                //if(!angular.equals(e,old)){
                     // se cambiati controllo
-                    checkParams(e);
-                }else{$log.debug("direttiva, cambio search! non controllo");}
+                    checkParams($location.search());
+                //}else{$log.debug("direttiva, cambio search! non controllo");}
             });
             
+        
             
             $scope.closeCard = function(k,value){
                 // rimuovo il parametro
@@ -1679,8 +1681,9 @@ angular.module('firstlife.controllers')
                     var i = filterList.indexOf(k);
                     // se e' nella lista dei filtri search
                     if(i > -1){
-                        var values = params[k].split(',');
+                        var values = params[k].toString().split(',');
                         for(var j = 0; j < values.length; j++){
+                            
                             var key = k.toString().concat(values[j]);
                             // se la card non esiste
                             if(!$scope.cards[key]){
@@ -1703,6 +1706,7 @@ angular.module('firstlife.controllers')
             function createCard(search,value,filter,key){
                 var card = angular.copy(filter);
                 card.value = value;
+                $log.debug("createCard ",search,value,filter,key);
                 switch(search){
                     case 'users':
                         // cerco il nome utente
@@ -1719,7 +1723,6 @@ angular.module('firstlife.controllers')
                             function(response){
                                 if(response.entity_type == filter.entity_type){
                                     card.label2 = response.name;
-                                    $log.debug('groups, card ',card);
                                     $scope.cards[key] = card;
                                 }else{
                                     //rimuovo filtro
@@ -1746,14 +1749,17 @@ angular.module('firstlife.controllers')
                 
                 if(params[key]){
                     var values = params[key];
-                    var a = values.split(',');
+                    var a = values.toString().split(',');
                     for(var i = 0 ; i < a.length; i ++){
                         if(a[i] == value){
                             a.splice(i,1);
                         } 
                     }
                     var newValues = a.join(',');
-                    $location.search(key,newValues);
+                    if(newValues != '')
+                        $location.search(key,newValues);
+                    else
+                        $location.search(key,null);
                 }
             }
             

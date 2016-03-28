@@ -726,7 +726,7 @@ angular.module('firstlife.controllers')
 
                 }
                 $scope.close();
-                $location.search( param,$scope.id);
+                $location.search(param,$scope.id);
             }
         
         }]

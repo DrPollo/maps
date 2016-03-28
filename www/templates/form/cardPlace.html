@@ -66,7 +66,7 @@
                 </span>
             </div>
             
-            <div class="actions content">
+            <div class="actions content" ng-if="infoPlace.actions">
                 <actions actions="infoPlace.actions" id="infoPlace.marker.id" close="closeModalPlace"></actions>
             </div>
             
@@ -95,16 +95,16 @@
                 <div ng-if="config.design.show_thumbs" class="foto-box">
                     <div class="row foto-mosaico" ng-repeat="image in images" ng-if="$index % 4 === 0">
                         <div class="col col-25" ng-if="$index < images.length">{{images}}
-                            <img class="button" title="{{images[$index].title}}" ng-src="{{images[$index].url}}" width="100%" ng-click="loadGallery(infoPlace.marker.id, images[$index].position, infoPlace.marker.entity_type)" />
+                            <img class="button" title="{{images[$index].title}}" ng-src="{{images[$index].thumb }}" width="100%" ng-click="loadGallery(infoPlace.marker.id, images[$index].position, infoPlace.marker.entity_type)" />
                         </div>
                         <div class="col col-25" ng-if="$index + 1 < images.length">
-                            <img class="button" title="{{images[$index + 1].title}}" ng-src="{{images[$index + 1].url}}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, images[$index + 1].position, infoPlace.marker.entity_type)" />
+                            <img class="button" title="{{images[$index + 1].title}}" ng-src="{{images[$index + 1].thumb }}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, images[$index + 1].position, infoPlace.marker.entity_type)" />
                         </div>
                         <div class="col col-25" ng-if="$index + 2 < images.length">
-                            <img class="button" title="{{images[$index + 2].title}}" ng-src="{{images[$index + 2].url}}" width="100%" ng-click="loadGallery(infoPlace.marker.id, images[$index + 2].position, infoPlace.marker.entity_type)"  />
+                            <img class="button" title="{{images[$index + 2].title}}" ng-src="{{images[$index + 2].thumb }}" width="100%" ng-click="loadGallery(infoPlace.marker.id, images[$index + 2].position, infoPlace.marker.entity_type)"  />
                         </div>
                         <div class="col col-25" ng-if="$index + 3 < images.length">
-                            <img class="button" title="{{images[$index + 3].title}}" ng-src="{{images[$index + 3].url}}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, images[$index + 3].position, infoPlace.marker.entity_type)" />
+                            <img class="button" title="{{images[$index + 3].title}}" ng-src="{{images[$index + 3].thumb }}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, images[$index + 3].position, infoPlace.marker.entity_type)" />
                         </div>
                     </div>
                 </div>

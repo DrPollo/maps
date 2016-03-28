@@ -13123,6 +13123,15 @@ ion-side-menu#side-menu {
       top: 8px;
       left: 8px;
       position: absolute; }
+      .maps-view #mapHeader #omnibox search-cards button {
+        color: white;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 1em; }
+        .maps-view #mapHeader #omnibox search-cards button span {
+          overflow: hidden;
+          display: inline-block;
+          text-align: left;
+          width: calc(100% - 40px); }
       .maps-view #mapHeader #omnibox #floating-search-bar #barlogo {
         height: 40px;
         padding: 0px 0px 4px;
