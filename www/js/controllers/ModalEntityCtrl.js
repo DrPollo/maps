@@ -78,7 +78,6 @@ angular.module('firstlife.controllers')
                 if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
                 $scope.infoPlace = {};
                 $scope.infoPlace.marker = angular.copy(marker);
-                $scope.infoPlace.actions = angular.copy($scope.currentType.actions);
 
                 if(consoleCheck)console.log("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
                 $scope.infoPlace.modify = false;    
@@ -648,8 +647,7 @@ angular.module('firstlife.controllers')
             // recupero il current type
             $scope.currentType = $scope.config.types.list[index];
 
-            if(consoleCheck) $log.debug("ModalEntityCtrl, initTypeChecks, entity_type, index e type: ", entity_type, index, $scope.currentType);
-
+            $log.debug("ModalEntityCtrl, initTypeChecks, entity_type, index e type: ", entity_type, index, $scope.currentType);
         }
 
 
@@ -707,14 +705,20 @@ angular.module('firstlife.controllers')
     
     
     return {
-        restrict: 'E',
+        restrict: 'EG',
         scope: {
             actions: '=actions',
             id: '=id',
             close:'=close'
         },
         templateUrl: '/templates/map-ui-template/ActionsModal.html',
-        controller: ['$scope','$location',function($scope,$location){
+        controller: ['$scope','$location','$log',function($scope,$location,$log){
+            
+            // controllo azioni
+            
+                
+            $log.debug("actions, check actions",$scope.actions);
+            
             $scope.actionEntity = function(action, param){
                 switch(action){
                     case 'view':

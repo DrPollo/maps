@@ -12756,6 +12756,8 @@ ion-side-menu#side-menu {
       font-weight: 300; }
     ion-side-menu#side-menu ion-item.item .item-content, ion-side-menu#side-menu ion-item.item .item-content.activated {
       background: transparent; }
+  ion-side-menu#side-menu ion-item.item-button {
+    cursor: pointer; }
   ion-side-menu#side-menu ion-item.item-button:hover .menu-text, ion-side-menu#side-menu ion-item.item-button:hover i:before, ion-side-menu#side-menu ion-item.item-button:active .menu-text, ion-side-menu#side-menu ion-item.item-button:active i:before, ion-side-menu#side-menu ion-item.item-button:focus .menu-text, ion-side-menu#side-menu ion-item.item-button:focus i:before {
     color: #FC4A00; }
   ion-side-menu#side-menu ion-item.item-divider {
@@ -13010,10 +13012,11 @@ ion-side-menu#side-menu {
         bottom: 0;
         right: 0;
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
         padding: 0px;
-        border: 0px; }
+        border: 0px;
+        display: inline-flex; }
       .modal .foto-box .foto-mosaico div i.icon {
         position: absolute;
         top: 0;
@@ -13466,10 +13469,12 @@ ion-side-menu#side-menu {
   .gallery-view .slider-box {
     height: 100%;
     margin: 0px;
-    padding: 0px; }
+    padding: 0px;
+    background: #333; }
     .gallery-view .slider-box img {
-      min-width: 100%;
-      min-height: 100%; }
+      width: 100%;
+      height: auto;
+      background: white; }
   .gallery-view .slider-button {
     width: 50%;
     height: 100%;
@@ -13480,7 +13485,6 @@ ion-side-menu#side-menu {
       position: absolute;
       top: 48%;
       color: rgba(255, 255, 255, 0.8);
-      text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
       font-size: 2em;
       cursor: pointer; }
   .gallery-view .slider-button-left {
@@ -13495,8 +13499,7 @@ ion-side-menu#side-menu {
     position: absolute;
     z-index: 10;
     top: 0px;
-    right: 0px;
-    text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff; }
+    right: 0px; }
   .gallery-view .slider-close:before {
     color: rgba(255, 255, 255, 0.8); }
 

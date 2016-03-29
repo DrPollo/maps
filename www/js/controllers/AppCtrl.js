@@ -1,12 +1,14 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, myConfig, MemoryFactory ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, myConfig, MemoryFactory ) {
         
         
         $scope.config = myConfig;
         $scope.isLoggedIn = false;
         $rootScope.currentLang = $translate.use();
         
+        $scope.apiVersion = 'API version: ' + myConfig.api_version;
+        $scope.clientVersion = 'Client version: ' + myConfig.version;
         
         var consoleCheck = false;
         
@@ -77,6 +79,11 @@ angular.module('firstlife.controllers')
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
           };
+        
+        $scope.myMap = function(){
+            if($scope.user && $scope.user.id)
+                $location.search('users',$scope.user.id);
+        }
         
         /*
          * Funzioni private

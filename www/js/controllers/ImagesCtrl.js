@@ -36,10 +36,10 @@ angular.module('firstlife.controllers')
         console.log("ImagesCtrl, immagini abilitate? ", $scope.config.design.show_thumbs, $scope);
         if($scope.config.design.show_thumbs){
             $scope.$on('checkImagePlaceModal', function(event, args) {
-                console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
+                //console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
                 if (!event.defaultPrevented) {
                     event.defaultPrevented = true;
-                    //console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
+                    console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
                     $scope.loadImages(args.marker.id,args.marker.entity_type);
                 }
             });   
@@ -61,9 +61,9 @@ angular.module('firstlife.controllers')
                 .then(function (data){
                 console.log("loadGallery, getImages, risultato: ",data);
                 var images = data.images;
-                for(var i in images){
-                    images[i].url = '//'+images[i][param.size];
-                }
+//                for(var i in images){
+//                    images[i].url = '//'+images[i][param.size];
+//                }
                 angular.extend($scope.slider.images,images);
                 console.log("loadGallery, getImages, slider: ",$scope.slider.images);
                 openGallery(index);
@@ -265,7 +265,6 @@ angular.module('firstlife.controllers')
 
         // carico le immagini 
         $scope.loadImages = function(entityId, entity_type){
-            //console.log("carico le immagini di: ",placeId);
             var param = {cache : true};
             // se mobile chiedo i thumbs
             if($scope.isMobile){
@@ -307,18 +306,17 @@ angular.module('firstlife.controllers')
             } else{
                 size = medium;
             }
-            //aggiungo le immagini al marker
-            console.log("aggiorno le immagini", images);
             // pulisco l'array di immagini della modal
-            $scope.images = [];
-            for(i = 0 ; i < images.length; i++){
-                images[i].position = i;
-                var img = angular.copy(images[i]);
-                img.url = '//'+images[i][size];
-                $scope.images[i] = img;
+            if(!$scope.entity || entityId != $scope.entity){
+                $scope.entity = entityId;
+                $scope.images = [];
+            }
+            for(var i = 0 ; i < images.length; i++){
+                var index = $scope.images.map(function(e){return e.image_id}).indexOf(images[i].image_id);
+                if (index < 0)
+                    $scope.images.push(images[i]);
             }
             console.log("salvo le immagini: ", $scope.images);
-
         }
 
         $scope.addToImageCache = function(image){

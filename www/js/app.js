@@ -323,6 +323,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
         GROUP_FILTERING:'Gruppo ',
         USER_FILTERING:'Contenuti di ',
+        MY_MAP:'La mia mappa',
+        VIEW:'Mappa del gruppo',
+        GENERAL_MAP:'Mappa generale'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -494,6 +497,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
         GROUP_FILTERING:'Group ',
         USER_FILTERING:'Contents of ',
+        MY_MAP:'My map',
+        VIEW:'Group map',
+        GENERAL_MAP:'General map'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
