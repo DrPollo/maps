@@ -1,10 +1,9 @@
 angular.module('firstlife.controllers')
-
     .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
 
 
 
-        var consoleCheck = false;
+        var consoleCheck = true;
         
         var levels = {check:false};
         if (myConfig.map.area.levels){
@@ -1012,10 +1011,9 @@ angular.module('firstlife.controllers')
                 var indexCheck = 0;
                 if($scope.filterConditions[key].includeCondition){
                     var checkField = val[$scope.filterConditions[key].includeCondition.property];
-                    if(consoleCheck) console.log("check per includeCondition",$scope.filterConditions[key].includeCondition,checkField);
                     var k = Object.keys($scope.filterConditions[key].includeCondition.value)[0];
-                    indexCheck = checkField.map(function(e){return e[k]}).indexOf($scope.filterConditions[key].includeCondition.value[k]);
-                    if(consoleCheck) console.log("check per includeCondition",indexCheck);
+                    indexCheck = checkField.map(function(e){return e[k].id}).indexOf($scope.filterConditions[key].includeCondition.value[k]);
+                    if(consoleCheck) console.log("check per includeCondition ", (indexCheck > -1));
                 }
 
 
@@ -1045,13 +1043,9 @@ angular.module('firstlife.controllers')
                     if(consoleCheck) console.log("Condizione: ", $scope.filterConditions[key]);
                     for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
                         if(consoleCheck) console.log("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
-                        // se una condizione su valore non e' rispettata
-                        //if(!equal){
-                        //        if(consoleCheck) console.log(val[$scope.filterConditions[key].key],"!=",$scope.filterConditions[key].values[i]);
-                        //}else{
-                        //      if(consoleCheck) console.log(val[$scope.filterConditions[key].key],"==",$scope.filterConditions[key].values[i]);
-                        // }
-
+                        
+                        $log.debug("comparison ",$scope.filterConditions[key].key,val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal);
+                        
                         if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){ 
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
@@ -1266,7 +1260,6 @@ angular.module('firstlife.controllers')
 
             var categories = $scope.config.types.categories;
             // filtri categorie
-            if(consoleCheck) console.log("MapCtrl, init filtri: ",categories);
             // costruisco regola per le categorizzazione
             for(var i = 0; i< categories.length; i++){
                 var cats = categories[i];
@@ -1288,9 +1281,8 @@ angular.module('firstlife.controllers')
                     rule.values.push($scope.filters[filter_name].list[j].id);
                 }
                 $scope.filterConditions.push(rule);
-                if(consoleCheck) console.log("MapCtrl, init filtro categoria: ",$scope.filters[filter_name],rule);
             }
-            
+            $log.debug("MapCtrl, init filtro categoria: ",$scope.filters,$scope.filterConditions);
             
             
             

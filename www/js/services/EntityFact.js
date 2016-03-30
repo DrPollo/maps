@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('entityFactory', ['$http', '$q',  '$rootScope', 'myConfig', 'MemoryFactory', function($http, $q,  $rootScope, myConfig, MemoryFactory) {
+    .factory('entityFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory) {
         // Service logic
         //var url = 'http://firstlife-dev.di.unito.it/api/index.php/api/v2/places';
         var self = this;
@@ -455,10 +455,10 @@ angular.module('firstlife.factories')
             var category_list = [];
             // costruisco lista delle categorie dell'entita'
             for(var i = 0; i < entity.properties.categories.length; i++){
-                var cats = entity.properties.categories[i].categories;
+                var cats = angular.copy(entity.properties.categories[i].category_space.categories.map(function(e){return e.id}));
                 category_list = category_list.concat(cats);
             }
-
+            
             // se non e' categorizzabile lo salto
             if(!category)
                 return null;
