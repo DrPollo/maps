@@ -1,4 +1,5 @@
-<span class="button icon-left button-clear button-positive" ng-repeat="action in actions track by $index" on-tap="actionEntity(action.key,action.search);">
+<div>{{'ACTIONS '+label |translate}}</div>
+<div class="button icon-left button-clear button-positive" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">
     <i class="icon {{action.icon}}"></i>
     {{action.label |translate}}
-</span>
+</div>

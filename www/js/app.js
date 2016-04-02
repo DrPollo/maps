@@ -43,7 +43,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         var authenticate = toState.data.authenticate;
         console.log("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
 
-
+        
         // se ti trovi in uno stato che richiede autenticazione e non sei loggato
         if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn)  {
             // da cancellare self.cache.isStateCached = true;
@@ -324,8 +324,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_FILTERING:'Gruppo ',
         USER_FILTERING:'Contenuti di ',
         MY_MAP:'La mia mappa',
-        VIEW:'Mappa del gruppo',
-        GENERAL_MAP:'Mappa generale'
+        VIEW_GROUP:'Mappa del gruppo',
+        GENERAL_MAP:'Mappa generale',
+        JOIN_GROUP:'Entra nel gruppo',
+        LEAVE_GROUP:'Esci dal gruppo',
+        'ACTIONS GROUPS_NAME':'Azioni Gruppo',
+        ADD_CHILDREN:'Aggiungi a'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -498,8 +502,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_FILTERING:'Group ',
         USER_FILTERING:'Contents of ',
         MY_MAP:'My map',
-        VIEW:'Group map',
-        GENERAL_MAP:'General map'
+        VIEW_GROUP:'Group map',
+        GENERAL_MAP:'General map',
+        JOIN_GROUP:'Join the group',
+        LEAVE_GROUP:'Leave the grup',
+        'ACTIONS GROUPS_NAME':'Group actions',
+        ADD_CHILDREN:'Add to'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

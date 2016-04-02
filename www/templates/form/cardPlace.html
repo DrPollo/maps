@@ -67,7 +67,7 @@
             </div>
             
             <div class="actions content" ng-show="currentType.actions">
-                <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModalPlace"></actions>
+                <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModalPlace" label="currentType.name" reset="reset" ng-init="reset = false"></actions>
             </div>
             
             
@@ -147,6 +147,8 @@
                 
             </ion-item>
         </ion-list>
+        <relations relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" reset="reset"></relations>
+        
         <div ng-if="config.dev"><pre>{{infoPlace.marker | json}}</pre></div>
     </ion-content>
 
@@ -167,9 +169,6 @@
         </div> 
         <button ng-if="isLoggedIn && !currentType.disable_comments" class="button button-positive button-clear icon ion-android-textsms" on-tap="openCommentBox()">
             <span ng-if="!isMobile">{{'COMMENT'|translate}}</span>
-        </button>
-        <button ng-repeat="type in config.types.relations[infoPlace.marker.entity_type]" class="button button-positive button-clear icon {{type.icon}}" on-tap="addChildEntity(type.slug,type.rel.slug)" >
-            <span ng-if="!isMobile">{{type.name|translate}}</span>
         </button>
     </div>
     <h1 class="title"></h1>

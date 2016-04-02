@@ -94,15 +94,16 @@ angular.module('firstlife.config')
                     disable_comments:false,
                     properties:{},
                     relations:{
-                     'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true},
-                     'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true},
-                     'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL',exclude:true},
-                     'FL_ARTICLES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_POST_CHILD_LABEL',exclude:true},
-                     'FL_COMMENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_COMMENT_CHILD_LABEL',exclude:true}
+                     'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_ARTICLES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_POST_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_COMMENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_COMMENT_CHILD_LABEL',exclude:true,check:'membership'}
                  },
                  actions:[
-                     //{label:'JOIN',key:'join',icon:'ion-person-add'},
-                     {label:'VIEW',key:'view',icon:'ion-map',search:'groups'},
+                     {label:'JOIN_GROUP',key:'join',icon:'ion-android-person-add',search:false, check:'noMembership'},
+                     {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'membership'},
+                     {label:'VIEW_GROUP',key:'view',icon:'ion-map',search:'groups', check:false},
                      //{label:'SUBSCRIBE',key:'subscribe'},
                  ]
                 }
@@ -223,8 +224,8 @@ angular.module('firstlife.config')
                 ]
             },
             filters:[
-                {key:'group',property:'group_id',search_param:'groups',type:'strict',label:'GROUP_FILTERING',entity_type:'FL_GROUPS'},
-                {key:'user',property:'user',search_param:'users',type:'strict',label:'USER_FILTERING'}
+                {key:'group',property:'group_id',search_param:'groups',icon:'ion-flag',type:'strict',label:'GROUP_FILTERING',entity_type:'FL_GROUPS'},
+                {key:'user',property:'user',search_param:'users',icon:'ion-android-person',type:'strict',label:'USER_FILTERING'}
             ]
         },
         'behaviour':{

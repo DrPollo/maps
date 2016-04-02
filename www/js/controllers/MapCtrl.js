@@ -165,7 +165,8 @@ angular.module('firstlife.controllers')
             //self.watchSearchEnabled = true;
         });
 
-
+        
+        
         /*
          * Listners
          * 1) click su marker
@@ -226,7 +227,6 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $location.search(); }, 
             function(e, old){
-                $log.debug("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
                     if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
@@ -241,7 +241,6 @@ angular.module('firstlife.controllers')
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
                 self.watchSearchEnabled = true;
-                $log.debug("abilito il listner");
                 // controllo i parametri di posizione
                 function check4Position(e){
                     // se ho settati i parametri di posizione
@@ -285,12 +284,11 @@ angular.module('firstlife.controllers')
                             }else{
                                 $scope.filterConditions.push(rule);
                             }
-                            $log.debug("check4customFilters",filter,e[param],rule,config.types.list.map(function(e){return e.key;}));
+                           
                         }else{
                             // rimuovo filtro per la property
                             var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
                             if(index > -1 ){
-                                $log.debug("check4customFilters, rimuovo regola",index,$scope.filterConditions[index]);
                                 $scope.filterConditions.splice(index,1);
                             }   
                         }
@@ -1044,8 +1042,6 @@ angular.module('firstlife.controllers')
                     for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
                         if(consoleCheck) console.log("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
                         
-                        $log.debug("comparison ",$scope.filterConditions[key].key,val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal);
-                        
                         if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){ 
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
@@ -1282,10 +1278,6 @@ angular.module('firstlife.controllers')
                 }
                 $scope.filterConditions.push(rule);
             }
-            $log.debug("MapCtrl, init filtro categoria: ",$scope.filters,$scope.filterConditions);
-            
-            
-            
             // init filtro per livelli in area
             // es. level: 0, level:1, etc....
             if( $scope.config.map.area && levels.check){
@@ -1596,12 +1588,10 @@ angular.module('firstlife.controllers')
                     }else{
                         $scope.filterConditions.push(rule);
                     }
-                    $log.debug("check4customFilters",filter,e[param],rule,config.types.list.map(function(e){return e.key;}));
                 }else{
                     // rimuovo filtro per la property
                     var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
                     if(index > -1 ){
-                        $log.debug("check4customFilters, rimuovo regola",index,$scope.filterConditions[index]);
                         $scope.filterConditions.splice(index,1);
                     }   
                 }
@@ -1649,7 +1639,6 @@ angular.module('firstlife.controllers')
             $scope.$watch(
             function(){ return $scope.params.length; }, 
             function(e, old){
-                $log.debug('check $location.search()', $location.search());
                 //if(!angular.equals(e,old)){
                     // se cambiati controllo
                     checkParams($location.search());
@@ -1697,7 +1686,6 @@ angular.module('firstlife.controllers')
             function createCard(search,value,filter,key){
                 var card = angular.copy(filter);
                 card.value = value;
-                $log.debug("createCard ",search,value,filter,key);
                 switch(search){
                     case 'users':
                         // cerco il nome utente

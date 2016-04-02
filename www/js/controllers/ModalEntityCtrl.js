@@ -1,12 +1,12 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthFactory', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthFactory, CommentsFactory) { 
+    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
         $scope.now = new Date();
 
-        var consoleCheck = true;
+        var consoleCheck = false;
         var MODAL_RELOAD_TIME = $scope.config.behaviour.modal_relaod_time;
         // variabile dove inserisco il timer per il polling
         var timer = false;
@@ -21,6 +21,15 @@ angular.module('firstlife.controllers')
             },MODAL_RELOAD_TIME);
         };
 
+        
+        
+        // se lascio mapCtrl
+        $scope.$on('ModalEntityCtrl', function(){
+          $scope.infoPlace.modal.remove();
+        });
+        
+        
+        
         // visualizzazione web o mobile?
         $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
@@ -499,7 +508,6 @@ angular.module('firstlife.controllers')
         function loadSibillings (marker){
             $scope.infoPlace.marker.relations = {};
 
-            if(consoleCheck) $log.debug("ModalEntityCtrl, loadSibillings per il marker ", marker);
             // caricamento dei child
             var childrenRelations = $scope.config.types.child_relations[marker.entity_type];
             var children = {};
@@ -634,7 +642,7 @@ angular.module('firstlife.controllers')
             if(author == $scope.user.id)
                 source = 'self';
 
-            $scope.checkPerms = AuthFactory.checkPerms(source);
+            $scope.checkPerms = AuthService.checkPerms(source);
 
             if(consoleCheck)console.log("ModalEntityCtrl, initPerms, user ",$scope.user,$scope.user.id,$scope.perms);
 
@@ -647,7 +655,6 @@ angular.module('firstlife.controllers')
             // recupero il current type
             $scope.currentType = $scope.config.types.list[index];
 
-            $log.debug("ModalEntityCtrl, initTypeChecks, entity_type, index e type: ", entity_type, index, $scope.currentType);
         }
 
 
@@ -701,38 +708,210 @@ angular.module('firstlife.controllers')
         }
 
     }]).directive('actions', function() {
-    
-    
-    
+
     return {
         restrict: 'EG',
         scope: {
             actions: '=actions',
             id: '=id',
-            close:'=close'
+            close:'=close',
+            label:'=label',
+            reset:'=reset'
         },
         templateUrl: '/templates/map-ui-template/ActionsModal.html',
-        controller: ['$scope','$location','$log',function($scope,$location,$log){
-            
+        controller: ['$scope','$location','$log','$filter','$ionicLoading','AuthService','groupsFactory', function($scope,$location,$log,$filter,$ionicLoading,AuthService,groupsFactory){
+
             // controllo azioni
+            $scope.member = false;
+            $scope.owner = false;
+            AuthService.checkMembership($scope.id).then(
+                function(response){
+                    $log.log("the user is a group member!");
+                    // se esiste allora membro
+                    $scope.member = true;
+                    if(response.role == 'owner'){
+                        // se ha impostato il ruolo proprietario
+                        $scope.owner = true;
+                    }
+                    // init delle azioni
+                    initActions();
+                },
+                function(response){
+                    $log.log('the user is not a group member!');
+                    // giusto per essere sicuro...
+                    $scope.member = false;
+                    $scope.owner = false;
+                    // init delle azioni
+                    initActions();
+                }
+            );
             
-                
-            $log.debug("actions, check actions",$scope.actions);
+            
             
             $scope.actionEntity = function(action, param){
+                
+                $log.debug('actionEntity ',action,param);
+                
                 switch(action){
                     case 'view':
+                        //chiudo la modal
+                        $scope.close();
+                        //aggiorno i parametri search con il filtro
+                        $location.search(param,$scope.id);
                         break;
-
                     case 'join':
+                        //parte richiesta di join
+                        $ionicLoading.show();
+                        groupsFactory.joinGroup($scope.id).then(
+                            function(response){
+                                $log.debug(response);
+                                $scope.member = true;
+                                if(response.role == 'owner'){
+                                    // se ha impostato il ruolo proprietario
+                                    $scope.owner = true;
+                                }
+                                initActions();
+                                $ionicLoading.hide();
+                            },
+                            function(response){
+                                $log.error("actionEntity, join, errore",response);
+                                $ionicLoading.hide();
+                            }
+                        );
+                        
                         break;
+                    case 'leave':
+                        // conferma se uscire
+                        $ionicLoading.show();
+                        $log.debug('check InitActions pre leave');
+                        groupsFactory.leaveGroup($scope.id).then(
+                            function(response){
+                                // reset dei permessi
+                                $scope.member = false;
+                                $scope.owner = false;
+                                // reinizializzo i permessi
+                                $log.debug('check InitActions dopo leave');
+                                initActions();
+                                $ionicLoading.hide();
+                            },
+                            function(response){
+                                $log.error("actionEntity, leave, errore",response);
+                                $log.error(response);
+                                // notifica errore
+                                $ionicLoading.hide();
+                            }
+                        );
                     default:
 
                 }
-                $scope.close();
-                $location.search(param,$scope.id);
+
             }
-        
+
+            // calcolo i permessi per le azioni
+            function initActions(){
+                // lancio il reset
+                $scope.reset = true;
+                // copio le azioni per manipolarle
+                $scope.actionList = angular.copy($scope.actions);
+                for(var i in $scope.actionList){
+                    switch($scope.actionList[i].check){
+                        case 'membership':
+                            angular.extend($scope.actionList[i], {check:$scope.member});
+                            break;
+                        case 'ownership':
+                            angular.extend($scope.actionList[i], {check:$scope.owner});
+                            break;
+                        case 'noMembership':
+                            angular.extend($scope.actionList[i], {check:!$scope.member});
+                            break;
+                        default: //se nessun check e' richiesto > true
+                            angular.extend($scope.actionList[i], {check:true});
+                    }
+                }
+                $log.debug('check InitActions',$scope.actionList);
+            }
+            
+            function loading(){
+                $ionicLoading.show({
+                    template: 'REQUESTING...',
+                    animation: 'fade-in',
+                    noBackdrop : true,
+                    maxWidth: 50,
+                    showDelay: 0
+                });
+            }
+            function done(){
+                $ionicLoading.hide();
+            }
+
         }]
     };
+}).directive('relations', function() {
+
+    return {
+        restrict: 'EG',
+        scope: {
+            relations: '=relations',
+            callback: '=callback',
+            label: '=label',
+            id: '=id',
+            reset: '=reset'
+        },
+        templateUrl: '/templates/map-ui-template/AddChildren.html',
+        controller: ['$scope','$log','$filter','AuthService','groupsFactory', function($scope,$log,$filter,AuthService,groupsFactory){
+            
+            // controllo il flag di reset che viene passato nel setup della direttiva nella vista
+            $scope.$watch('reset',function(e,old){
+                if(e && !old){
+                    //init relations, qualcosa e' cambiato
+                    initRelations();
+                    // reset del flag
+                    $scope.reset = false;
+                }
+            
+            });
+            
+            // init relazioni
+            initRelations();
+            
+            
+            /*
+             * funzioni private
+             * initRelations: crea la lista di relazioni per la vista
+             * lazyCheck: controlla le relazioni che hanno il campo check impostato
+             */
+            
+            // fix dei check se necessario
+            function initRelations(){
+                $scope.relationsList = angular.copy($scope.relations);
+                $scope.count = 0;
+                for(var i in $scope.relationsList){
+                    if(!$scope.relationsList[i].rel.check){
+                        $scope.relationsList[i].check = true;
+                        $scope.count++;
+                    } else {
+                        // controllo e metto a false fino a risposta
+                        lazyCheck($scope.relationsList[i],$scope.relationsList[i].rel.check);
+                        $scope.relationsList[i].check = false;
+                    }
+                }
+            }
+            
+            function lazyCheck(relation,check){
+                switch(check){
+                    case 'membership':
+                        AuthService.checkMembership($scope.id).then(
+                            function(response){
+                                relation.check = true;
+                                $scope.count++;
+                                $log.debug('relation set true ',relation);
+                            },
+                            function(response){$log.log('no member!');}
+                        );
+                        break;
+                    default:
+                }
+            }
+        }]
+    }
 });

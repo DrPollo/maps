@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('SimpleEditorCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$filter', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthFactory', 'CommentsFactory', 'EntityService', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $filter, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthFactory, CommentsFactory, EntityService) { 
+    .controller('SimpleEditorCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$filter', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', 'EntityService', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $filter, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory, EntityService) { 
 
 
         var self = this;
