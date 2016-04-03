@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline','angular-toArrayFilter'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
@@ -128,6 +128,18 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             'menuContent': {
                 templateUrl: 'templates/form/userForm.html',
                 controller: 'UserCtrl as user'
+            }
+        },
+        data: {
+            authenticate: true
+        }
+    })
+    .state('app.manager', {
+        url: '/manager/?entity',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/manager.html',
+                controller: 'ManagerCtrl'
             }
         },
         data: {
@@ -329,7 +341,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         JOIN_GROUP:'Entra nel gruppo',
         LEAVE_GROUP:'Esci dal gruppo',
         'ACTIONS GROUPS_NAME':'Azioni Gruppo',
-        ADD_CHILDREN:'Aggiungi a'
+        ADD_CHILDREN:'Aggiungi a',
+        MANAGE_USERS:'Gestisci membri'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -507,7 +520,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         JOIN_GROUP:'Join the group',
         LEAVE_GROUP:'Leave the grup',
         'ACTIONS GROUPS_NAME':'Group actions',
-        ADD_CHILDREN:'Add to'
+        ADD_CHILDREN:'Add to',
+        MANAGE_USERS:'Manage members'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory) { 
+    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', '$filter', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log,$filter, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -408,20 +408,6 @@ angular.module('firstlife.controllers')
             );
         };
 
-        $scope.isEmpty = function (obj) {
-            if(obj && ( 
-                (Array.isArray(obj) && obj.length > 0) || 
-                (angular.isObject(obj) && !angular.equals({}, obj) ) || 
-                (angular.isString(obj) && obj != '') ||
-                (angular.isNumber(obj))
-            ) ) {
-
-                return false;
-            }
-            return true;
-
-        }
-
 
         $scope.openCommentBox = function(){
             console.log("openCommentBox ",$scope.infoPlace);
@@ -515,7 +501,7 @@ angular.module('firstlife.controllers')
                 var childRel = childrenRelations[key];
                 var c = MapService.searchFor(marker.id, childRel.field);
                 if(consoleCheck) $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
-                if(!$scope.isEmpty(c)){
+                if(!$filter('isEmpty')(c)){
                     children[key] = angular.copy(childRel);
                     for(var j = 0; j<c.length;j++){
                         var thing = c[j];
@@ -543,7 +529,7 @@ angular.module('firstlife.controllers')
             for(key in parentsRelations){
                 var parentRel = parentsRelations[key];
                 if(consoleCheck)console.log("check campo per un padre ",parentRel, parentRel.field,marker[parentRel.field]);
-                if(!$scope.isEmpty(marker[parentRel.field]) && !keysBanList[parentRel.field]){
+                if(!$filter('isEmpty')(marker[parentRel.field]) && !keysBanList[parentRel.field]){
                     // aggiungo il campo alla banList 
                     keysBanList[parentRel.field] = true;
                     var p = MapService.searchFor(marker[parentRel.field], 'id');
@@ -726,9 +712,10 @@ angular.module('firstlife.controllers')
             $scope.owner = false;
             AuthService.checkMembership($scope.id).then(
                 function(response){
-                    $log.log("the user is a group member!");
+                    $log.debug("the user is a group member!",response);
                     // se esiste allora membro
                     $scope.member = true;
+                    
                     if(response.role == 'owner'){
                         // se ha impostato il ruolo proprietario
                         $scope.owner = true;
@@ -790,7 +777,6 @@ angular.module('firstlife.controllers')
                                 $scope.member = false;
                                 $scope.owner = false;
                                 // reinizializzo i permessi
-                                $log.debug('check InitActions dopo leave');
                                 initActions();
                                 $ionicLoading.hide();
                             },
@@ -801,6 +787,19 @@ angular.module('firstlife.controllers')
                                 $ionicLoading.hide();
                             }
                         );
+                    case 'users':
+                        // apri lista utenti in loco (modal?)
+                        groupsFactory.getMembers($scope.id).then(
+                            function(response){
+                                $log.debug('manage users, utenti',response);
+                                $scope.users = response;
+                            },
+                            function(response){
+                                $log.error('manage users, error',response);
+                                // avverti dell'errore
+                            }
+                        );
+                        break;
                     default:
 
                 }
@@ -821,6 +820,9 @@ angular.module('firstlife.controllers')
                         case 'ownership':
                             angular.extend($scope.actionList[i], {check:$scope.owner});
                             break;
+                        case 'noOwnership':
+                            angular.extend($scope.actionList[i], {check:!$scope.owner});
+                            break;
                         case 'noMembership':
                             angular.extend($scope.actionList[i], {check:!$scope.member});
                             break;
@@ -828,7 +830,6 @@ angular.module('firstlife.controllers')
                             angular.extend($scope.actionList[i], {check:true});
                     }
                 }
-                $log.debug('check InitActions',$scope.actionList);
             }
             
             function loading(){

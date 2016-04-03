@@ -102,8 +102,9 @@ angular.module('firstlife.config')
                  },
                  actions:[
                      {label:'JOIN_GROUP',key:'join',icon:'ion-android-person-add',search:false, check:'noMembership'},
-                     {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'membership'},
+                     {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'noOwnership'},
                      {label:'VIEW_GROUP',key:'view',icon:'ion-map',search:'groups', check:false},
+                     {label:'MANAGE_USERS',key:'users',icon:'ion-ios-people',search:false, check:'membership'},
                      //{label:'SUBSCRIBE',key:'subscribe'},
                  ]
                 }

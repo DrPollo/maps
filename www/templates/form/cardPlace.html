@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div id="relazioni" class="list">
-                <div class="parent_relation" ng-if="!isEmpty(infoPlace.marker.relations.parents)" 
+                <div class="parent_relation" ng-if="!(angular.equals(infoPlace.marker.relations.parents,{}))" 
                      ng-repeat="(key,parentRel) in infoPlace.marker.relations.parents">
                     <div ng-show="parentRel.list.length > 0">
                         <div class="item item-divider">{{parentRel.label |translate}}</div>
