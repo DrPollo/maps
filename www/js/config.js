@@ -92,7 +92,10 @@ angular.module('firstlife.config')
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
                     disable_immages:false,
                     disable_comments:false,
-                    properties:{},
+                    properties:{
+                        "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
+                    
+                    },
                     relations:{
                      'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true,check:'membership'},
                      'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true,check:'membership'},
@@ -103,8 +106,7 @@ angular.module('firstlife.config')
                  actions:[
                      {label:'JOIN_GROUP',key:'join',icon:'ion-android-person-add',search:false, check:'noMembership'},
                      {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'noOwnership'},
-                     {label:'VIEW_GROUP',key:'view',icon:'ion-map',search:'groups', check:false},
-                     {label:'MANAGE_USERS',key:'users',icon:'ion-ios-people',search:false, check:'membership'},
+                     {label:'VIEW_GROUP',key:'view',icon:'ion-map',search:'groups', check:false}
                      //{label:'SUBSCRIBE',key:'subscribe'},
                  ]
                 }

@@ -1782,26 +1782,6 @@ angular.module('firstlife.controllers')
 
             };
 
-//            $scope.loadChildren = function(marker){
-//                // caricamento dei child
-//                var childrenRelations = config.types.child_relations[marker.entity_type];
-//                var check = false,
-//                    children = {};
-//                for(key in childrenRelations){
-//                    var childRel = childrenRelations[key];
-//                    var c = MapService.searchFor(marker.id, childRel.field);
-//                    $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
-//                    if(c.length > 0){
-//                        children[key] = angular.copy(childRel);
-//                        children[key].list = c;
-//                        check = true;
-//                    }
-//                }
-//                if(check){
-//                    $log.debug("Trovati figli per ",marker.id," figli ",children);
-//                    $scope.markerChildren[marker.id] = children;
-//                }
-//            }
 
         }]
     }

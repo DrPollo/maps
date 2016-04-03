@@ -421,25 +421,6 @@ angular.module('firstlife.controllers')
             $scope.closeModalPlace();
             $rootScope.$broadcast("simpleInsert",params);
 
-            //            da cancellare
-            //            $scope.infoPlace.commento = "";
-            //            if(consoleCheck)console.log("init commento: ",$scope.infoPlace.commento);
-            //            $ionicModal.fromTemplateUrl('templates/map-ui-template/CommentBox.html', {
-            //                scope: $scope,
-            //                animation: 'fade-in',//'slide-in-up',
-            //                backdropClickToClose : true,
-            //                hardwareBackButtonClose : true
-            //            }).then(function(modal) {
-            //                $scope.infoPlace.commentBox = modal;
-            //                $scope.infoPlace.commentBox.show();
-            //                
-            //                $scope.closeCommentBox = function(){$scope.infoPlace.commentBox.remove();};
-            //                $scope.saveComment = function(){
-            //                    if(consoleCheck)console.log("Salvo il commento: ",$scope.infoPlace.commento);
-            //                    addComment($scope.infoPlace.commento);
-            //                };
-            //            });  
-
         }
 
         function addComment(message){
@@ -448,7 +429,7 @@ angular.module('firstlife.controllers')
             CommentsFactory.add(id,message).then(
                 function(response){
                     if(consoleCheck)console.log("ModalEntityCtrl, addComment, response: ",response);
-                    //$scope.infoPlace.marker.comments.unshift({message:$scope.infoPlace.commento,display_name:$scope.displayName,timestamp:new Date(),user_id:$scope.user.id});
+                   
                     loadComments($scope.infoPlace.marker);
                     hideLoadingScreen();
                     $scope.closeCommentBox();
@@ -705,20 +686,48 @@ angular.module('firstlife.controllers')
             reset:'=reset'
         },
         templateUrl: '/templates/map-ui-template/ActionsModal.html',
-        controller: ['$scope','$location','$log','$filter','$ionicLoading','AuthService','groupsFactory', function($scope,$location,$log,$filter,$ionicLoading,AuthService,groupsFactory){
+        controller: ['$scope','$location','$log','$filter','$ionicLoading','AuthService','groupsFactory','MemoryFactory', function($scope,$location,$log,$filter,$ionicLoading,AuthService,groupsFactory,MemoryFactory){
 
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
-            AuthService.checkMembership($scope.id).then(
+//            AuthService.checkMembership($scope.id).then(
+//                function(response){
+//                    $log.debug("the user is a group member!",response);
+//                    // se esiste allora membro
+//                    $scope.member = true;
+//                    
+//                    if(response.role == 'owner'){
+//                        // se ha impostato il ruolo proprietario
+//                        $scope.owner = true;
+//                    }
+//                    // init delle azioni
+//                    initActions();
+//                },
+//                function(response){
+//                    $log.log('the user is not a group member!');
+//                    // giusto per essere sicuro...
+//                    $scope.member = false;
+//                    $scope.owner = false;
+//                    // init delle azioni
+//                    initActions();
+//                }
+//            );
+            
+            groupsFactory.getMembers($scope.id).then(
                 function(response){
                     $log.debug("the user is a group member!",response);
-                    // se esiste allora membro
-                    $scope.member = true;
                     
-                    if(response.role == 'owner'){
-                        // se ha impostato il ruolo proprietario
-                        $scope.owner = true;
+                    if(!$scope.user)
+                        $scope.user = MemoryFactory.getUser();
+                    var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+                    if(index > -1){
+                        // se esiste allora membro
+                        $scope.member = true;
+                        if(response[index].role == 'owner'){
+                            // se ha impostato il ruolo proprietario
+                            $scope.owner = true;
+                        }
                     }
                     // init delle azioni
                     initActions();
@@ -732,7 +741,6 @@ angular.module('firstlife.controllers')
                     initActions();
                 }
             );
-            
             
             
             $scope.actionEntity = function(action, param){
@@ -915,4 +923,75 @@ angular.module('firstlife.controllers')
             }
         }]
     }
+}).directive('membersCounter',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            id: '=id',
+            details: '=details'
+        },
+        templateUrl: '/templates/map-ui-template/membersCounter.html',
+        controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
+        
+            $scope.counter = 1;
+            groupsFactory.getMembers($scope.id).then(
+                function(response){
+                    if(Array.isArray(response)){
+                        $scope.counter = response.length;
+                    }
+                },
+                function(response){$log.error('groupsFactory, getMembers, error ',response);}
+            );
+        }]
+    }
+
+})
+.directive('membersList',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            id: '=id',
+            details: '=details'
+        },
+        templateUrl: '/templates/map-ui-template/membersList.html',
+        controller: ['$scope','$log','$filter','groupsFactory','MemoryFactory', function($scope,$log,$filter,groupsFactory,MemoryFactory){
+        
+            $scope.counter = [];
+            $scope.user = MemoryFactory.getUser();
+            $scope.role = false;
+            
+            initList();
+            
+            
+            function initList(){
+                groupsFactory.getMembers($scope.id).then(
+                    function(response){
+                        if(Array.isArray(response)){
+                            $log.debug('check members list',response);
+                            $scope.membersList = response;
+                            if($scope.user){
+                                var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+                                if(index > -1){
+                                    $scope.role = response[index].role?response[index].role:'member';
+                                }
+                            }
+                        }
+                    },
+                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                );
+            
+            }
+            
+            $scope.deleteMember = function(groupId,memberId){
+                groupsFactory.removeUser(groupId,memberId).then(
+                    function(response){
+                        // reinizializzo la lista
+                        initList();
+                    },
+                    function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
+                );
+            }
+        }]
+    }
+
 });

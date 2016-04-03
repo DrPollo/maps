@@ -1,0 +1,14 @@
+<ion-list ng-if="role" ng-show="membersList.length > 0" class="content">
+    <ion-item class="item-divider">{{'GROUP_MEMBERS'|translate}}</ion-item>
+    <ion-item ng-repeat="member in membersList track by $index" class="item-button-right">
+        <button ng-if="user.id != member.memberId && role == 'owner'" ng-click="deleteMember(member.groupId,member.memberId)" class="button button-clear">
+            <i class="icon ion-close-round"></i> 
+        </button>
+        <div>
+            <span ng-if="member.displayName" class="username">{{member.displayName}}</span>
+            <span ng-if="!member.displayName && member.name" class="username">{{member.name}}</span>
+            <span ng-if="!member.displayName && !member.name && member.first_name" class="username">{{member.first_name}} {{member.last_name}}</span>
+        </div>
+
+    </ion-item>
+</ion-list>
