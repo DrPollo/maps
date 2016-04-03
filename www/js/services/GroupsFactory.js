@@ -108,7 +108,10 @@ angular.module('firstlife.factories')
                     function(response) {
                         $log.debug(response);
                         deferred.resolve(response.data);
+                        if(!groupsUsers[entityId])
+                            groupsUsers[entityId] = {};
                         for(var i in response.data){
+                            
                             groupsUsers[entityId][response.data[i].memberId] = response.data[i];
                         }
                     },
