@@ -80,12 +80,12 @@ angular.module('firstlife.config')
                 },
                 // commenti
                 {name:'COMMENT_NAME',id:4,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
-                 simple_editor:'message_text',
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
-                     "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:""}
+                     "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},
+                     'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
                  },relations:{}
                 },
                 // gruppi

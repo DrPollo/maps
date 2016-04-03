@@ -343,7 +343,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         'ACTIONS GROUPS_NAME':'Azioni Gruppo',
         ADD_CHILDREN:'Aggiungi a',
         MANAGE_USERS:'Gestisci membri',
-        GROUP_MEMBERS:'Membri'
+        GROUP_MEMBERS:'Membri',
+        MESSAGE_PLACEHOLDER:'Testo'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -523,7 +524,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         'ACTIONS GROUPS_NAME':'Group actions',
         ADD_CHILDREN:'Add to',
         MANAGE_USERS:'Manage members',
-        GROUP_MEMBERS:'Members'
+        GROUP_MEMBERS:'Members',
+        MESSAGE_PLACEHOLDER:'Text'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
