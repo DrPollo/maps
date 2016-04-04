@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', '$filter', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log,$filter, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory) { 
+    .controller('ModalEntityCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$log', '$filter', 'myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'SimpleEntityFactory', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $log,$filter, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, SimpleEntityFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -394,7 +394,7 @@ angular.module('firstlife.controllers')
         $scope.deleteComment = function(commentId){
             showLoadingScreen();
             var index = $scope.infoPlace.marker.comments.map(function(e){return e.comment_id;}).indexOf(commentId);
-            CommentsFactory.delete(commentId).then(
+            SimpleEntityFactory.delete(commentId,'comment').then(
                 function(response){
                     $scope.infoPlace.marker.comments.splice(index,1);
                     hideLoadingScreen();
@@ -425,7 +425,7 @@ angular.module('firstlife.controllers')
         function addComment(message){
             var id = $scope.infoPlace.marker.id;
             showLoadingScreen();
-            CommentsFactory.add(id,message).then(
+            SimpleEntityFactory.add(id,message).then(
                 function(response){
                     if(consoleCheck)console.log("ModalEntityCtrl, addComment, response: ",response);
 
@@ -530,9 +530,9 @@ angular.module('firstlife.controllers')
             if(!$scope.infoPlace.marker.comments)
                 $scope.infoPlace.marker.comments = [];
             if(consoleCheck)console.log("ModalEntityCtrl, loadComments per il marker ", marker);
-            CommentsFactory.get(marker.id).then(
+            SimpleEntityFactory.get(marker.id,'comment').then(
                 function(response){
-                    if(consoleCheck)console.log("ModalEntityCtrl, loadComments, CommentsFactory.get, response: ",response);
+                    if(consoleCheck)console.log("ModalEntityCtrl, loadComments, SimpleEntityFactory.get, response: ",response);
                     for (var i in response){
                         var c = response[i];
                         var index  = $scope.infoPlace.marker.comments.map(function(e){return e.comment_id;}).indexOf(c.comment_id);
@@ -552,7 +552,7 @@ angular.module('firstlife.controllers')
                     //$scope.infoPlace.marker.comments = response;
                 },
                 function(response){
-                    if(consoleCheck)console.log("ModalEntityCtrl, loadComments, CommentsFactory.get, error: ",response);
+                    if(consoleCheck)console.log("ModalEntityCtrl, loadComments, SimpleEntityFactory.get, error: ",response);
                 }
             );
             if(consoleCheck)console.log("ModalEntityCtrl, loadComments, sibillings: ", $scope.infoPlace.marker.comments);

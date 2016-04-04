@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('SimpleEditorCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$filter', '$log','myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'CommentsFactory', 'EntityService', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $filter,$log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, CommentsFactory, EntityService) { 
+    .controller('SimpleEditorCtrl', ['$scope', '$rootScope', '$state', '$q', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$timeout', '$filter', '$log','myConfig', 'ImageService', 'entityFactory', 'MapService', 'MemoryFactory', 'AuthService', 'SimpleEntityFactory', 'EntityService', function($scope, $rootScope, $state, $q, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $timeout, $filter,$log, myConfig, ImageService, entityFactory, MapService, MemoryFactory, AuthService, SimpleEntityFactory, EntityService) { 
 
 
         var self = this;
@@ -19,6 +19,8 @@ angular.module('firstlife.controllers')
         self.now = new Date();
 
         self.currentUser = MemoryFactory.readUser();
+
+        self.types = self.config.types.simpleEntities;
 
         // switch tra create (true) e update mode (false)
         self.createMode = true;
@@ -51,7 +53,7 @@ angular.module('firstlife.controllers')
                 showLoadingScreen();
                 event.defaultPrevented = true;
                 if(args){
-                    
+
                 }
             }
         });
@@ -90,21 +92,15 @@ angular.module('firstlife.controllers')
          */
 
         function initEntity(params) {
+            self.type = types[params.type];
             self.simpleEntity = {
-                        type: params.type, 
-                        parent: params.entity
-                    };
-            // setup entity_type
-            switch(params.type){
-                case 'comment':
-                    // campo da editare
-                    self.contentKey = 'message';
-                    self.simpleEntity.label = 'COMMENT';
-                    self.simpleEntity.contentKey = 'message';
-                    self.simpleEntity.message = '';
-                    break;
-                default:
-
+                type: params.type, 
+                parent: params.entity,
+                label: self.type.label,
+                contentKey: self.type.contentKey
+            };
+            for(var k in self.type.fields){
+                self.simpleEntity[k] = self.type.fields[k].default;
             }
         }
 
@@ -120,57 +116,31 @@ angular.module('firstlife.controllers')
             }).then(function(modal) {
                 self.modal = modal;
                 self.modal.show();
-
             });  
-
         }
 
         function saveEntity(){
             $log.debug("SimpleEditorCtrl, save entity, self.simpleEntity: ",self.simpleEntity);
             showLoadingScreen();
-            // scegli la funzione per il salvataggio
-            switch(self.simpleEntity.type){
+            
+            SimpleEntityFactory.add(self.simpleEntity.parent,self.simpleEntity,self.type.key).then(
+                function successCallback(response){
+                    $log.debug("SimpleEditorCtrl, addComment, response: ",response);
+                    hideLoadingScreen();
+                    //backToMap({marker:{id:self.simpleEntity.parent}});
+                    self.abort();
 
-                case 'comment':
-                    var content = self.simpleEntity.message;
-                    // salvo
-                    CommentsFactory.add(self.simpleEntity.parent,content).then(
-                        function(response){successCallback(response)},
-                        function(response){errorCallback(response)}
-                    );
-                    break;
-                case 'description':
-                    var content = self.simpleEntity.message;
-                    // salvo
-                    CommentsFactory.add(self.simpleEntity.parent,content).then(
-                        function(response){successCallback(response)},
-                        function(response){errorCallback(response)}
-                    );
-                    break;
-                default:
-
-            }
-
-
-            // todo da far processare 
-            //var dataForServer = EntityService.processData(self.simpleEntity);
-
-            function successCallback(response){
-                $log.debug("SimpleEditorCtrl, addComment, response: ",response);
-                hideLoadingScreen();
-                //backToMap({marker:{id:self.simpleEntity.parent}});
-                self.abort();
-
-            };
-            function errorCallback(error){
-                $log.error("SimpleEditorCtrl, addComment, error: ",error);
-                hideLoadingScreen();
-                //backToMap({marker:{id:self.simpleEntity.parent}});
-                // todo gestisci errore
-                showAlert();
-            }
+                },
+                function errorCallback(error){
+                    $log.error("SimpleEditorCtrl, addComment, error: ",error);
+                    hideLoadingScreen();
+                    //backToMap({marker:{id:self.simpleEntity.parent}});
+                    // todo gestisci errore
+                    showAlert();
+                }
+            );            
         }
-        
+
 
         function showLoadingScreen(text){
             if(!text || text === 'undefined'){
@@ -205,10 +175,10 @@ angular.module('firstlife.controllers')
                 if($scope.config.dev)if(consoleCheck)console.log('Allert con contenuto: ',content);
             });
         };
-        
+
         // segnalo alla mappa la fine dell'editing
         function backToMap(params){
             $scope.$emit("endEditing",params);
         }
-        
+
     }]);

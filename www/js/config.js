@@ -19,7 +19,7 @@ angular.module('firstlife.config')
             default: {slug:'place',id:1,icon:'ion-location',
                       properties:{
                           'name':{ key: 'name', label: 'NAME', placeholder: 'NAME', required:true, default:"" },
-                          'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:"" },
+                          'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                           'link_url':{ key: 'link_url', label: 'URL_LABEL', placeholder: 'URL_PLACEHOLDER', default:""},
                           'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date()},
                           'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date()},
@@ -33,6 +33,27 @@ angular.module('firstlife.config')
                           "level":{key:"level", default:0, label:"LEVEL_LABEL",placeholder:"LEVEL_PLACEHOLDER"}
                       }
                      },
+            simpleEntities:{
+                description:{
+                    key:'description',
+                    url:'descriptions',
+                    label:'DESCRIPTION',
+                    fileds:{
+                        title:{key:'title', label:'NAME',default:'',required:true},
+                        description:{key:'description', label:'TEXT',default:'',required:true}
+                    },
+                    contentKey:'description'
+                },
+                comment:{
+                    key:'comment',
+                    url:'comments',
+                    label:'COMMENT',
+                    fileds:{
+                        message:{key:'message', label:'TEXT',default:'',required:true}
+                    },
+                    contentKey:'message'
+                }
+            },
             list:[
                 // place
                 {name:'PLACE_NAME',id:1,icon:'ion-location',slug:'place',url:'places',key:'FL_PLACES',index:3,
@@ -90,13 +111,13 @@ angular.module('firstlife.config')
                 },
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
-                    disable_immages:false,
-                    disable_comments:false,
-                    properties:{
-                        "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
-                    
-                    },
-                    relations:{
+                 disable_immages:false,
+                 disable_comments:false,
+                 properties:{
+                     "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
+
+                 },
+                 relations:{
                      'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true,check:'membership'},
                      'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true,check:'membership'},
                      'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL',exclude:true,check:'membership'},
@@ -866,8 +887,8 @@ angular.module('firstlife.config')
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
-        function($logProvider){
-            $logProvider.debugEnabled(false);
+    function($logProvider){
+        $logProvider.debugEnabled(false);
     }).config(
     function configDev(myConfig, $logProvider){
         if(myConfig.dev)console.log("setup modalità dev");
@@ -887,6 +908,6 @@ angular.module('firstlife.config')
         } 
         // abilito i log di debug
         $logProvider.debugEnabled(true);
-        
+
         if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
     });
