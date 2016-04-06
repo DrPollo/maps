@@ -38,20 +38,41 @@ angular.module('firstlife.config')
                     key:'description',
                     url:'descriptions',
                     label:'DESCRIPTION',
+                    title:'DESCRIPTIONS',
                     fileds:{
                         title:{key:'title', label:'NAME',default:'',required:true},
                         description:{key:'description', label:'TEXT',default:'',required:true}
                     },
-                    contentKey:'description'
+                    contentKey:'description',
+                    contentKeyType:'text',
+                    idKey:'description_id',
+                    icon:'ion-android-list'
                 },
                 comment:{
                     key:'comment',
                     url:'comments',
                     label:'COMMENT',
+                    title:'COMMENTS',
                     fileds:{
                         message:{key:'message', label:'TEXT',default:'',required:true}
                     },
-                    contentKey:'message'
+                    contentKey:'message',
+                    contentKeyType:'text',
+                    idKey:'comment_id',
+                    icon:'ion-chatbox-working'
+                },
+                image:{
+                    key:'image',
+                    url:'images',
+                    label:'IMAGE',
+                    title:'GALLERY',
+                    fileds:{
+                        image:{key:'image', label:'IMAGE',default:'',required:true}
+                    },
+                    contentKey:'thumb',
+                    contentKeyType:'image',
+                    idKey:'image_id',
+                    icon:'ion-image'
                 }
             },
             list:[

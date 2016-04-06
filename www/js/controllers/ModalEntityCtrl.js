@@ -59,15 +59,6 @@ angular.module('firstlife.controllers')
             }
         }); 
 
-        $scope.$on('modal.hidden', function(event) {
-            if(!event.isDefaultPrevented){
-                if(consoleCheck)console.log("modal hidden",event);
-                // cancello il polling
-                $timeout.cancel(timer);
-                event.defaultprevented = true; 
-                event.preventDefault();
-            }
-        });
 
         //modal info sul place
         $scope.showMCardPlace = function(marker){  
@@ -76,11 +67,13 @@ angular.module('firstlife.controllers')
             // recupero il tipo e lo metto dentro $scope.currentType
             initTypeChecks(marker.entity_type);
 
-            if(consoleCheck)console.log("marker da visualizzare",marker,$scope.infoPlace.modal);
+            $log.debug("marker da visualizzare",marker,$scope.infoPlace.modal);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
             if($scope.infoPlace.modal){
+                $log.debug("modal esiste!");
                 // la modal esiste
+                $scope.infoPlace.modal.show();
                 changeModal(marker.id);
             }else{
                 // la modal non esiste, la creo
@@ -88,7 +81,7 @@ angular.module('firstlife.controllers')
                 $scope.infoPlace = {};
                 $scope.infoPlace.marker = angular.copy(marker);
 
-                if(consoleCheck)console.log("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
+                $log.debug("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
                 $scope.infoPlace.modify = false;    
                 $scope.infoPlace.dataForm = {};
 
@@ -100,7 +93,7 @@ angular.module('firstlife.controllers')
                     backdropClickToClose : true,
                     hardwareBackButtonClose : true
                 }).then(function(modal) {
-                    if(consoleCheck)console.log("infoPlace, apro modal modal: ", modal);
+                    $log.debug("infoPlace, apro modal modal: ", modal);
                     $scope.infoPlace.modal = modal;
                     $scope.openModalPlace();
                     // parte l'update dopo 1 secondo
@@ -164,43 +157,39 @@ angular.module('firstlife.controllers')
             }
 
             function chiudoModal(){
-                var deferred = $q.defer();
-                if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
-                $timeout.cancel(timer);
+                //if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
+                //$timeout.cancel(timer);
                 // distruggo il menu popover
                 if($scope.popover){
                     $scope.popover.hide();
-                    $scope.popover.remove();
+                    //$scope.popover.remove();
                 }
-                if($scope.infoPlace.modal){
-                    // nascondo la modal
-                    $scope.infoPlace.modal.remove().then(function() {
-                        $scope.infoPlace.modal = null;
-                        deferred.resolve(true);
-                    });
-                    // rimuovo il campo modal
-                    //delete $scope.infoPlace.modal;
-                    // invio un segnale di chiusura modal
-                    delete $scope.infoPlace.modal;
-                    //$scope.$emit("closePlaceModal");
-                }
-                deferred.reject(false);
-                return deferred.promise;
+                //$scope.infoPlace.modal.hide();
+                
+                $scope.infoPlace.modal.remove();
+                $timeout.cancel(timer);
+                $scope.$emit("closePlaceModal");
+                delete $scope.infoPlace.modal;
+                //deregistro il listner per la hide
+                hide();
+                //$timeout.cancel(timer);
+                //$scope.$emit("closePlaceModal");
             }
 
             $scope.$on('$destroy', function() {
-
-                if($scope.infoPlace.modal)
-                    $scope.infoPlace.modal.remove();
-                if($scope.popover)
-                    $scope.popover.remove();
+                $log.debug('destroy modal');
+                //$scope.popover.remove();
+                //$scope.infoPlace.modal.remove();
+                
             });
-            $scope.$on('modal.hidden', function() {
-                // stop del polling
-                if(consoleCheck)console.log("cancello il polling ",$scope.infoPlace.timer);
-                $timeout.cancel(timer);
-                delete $scope.infoPlace.modal;
-                $scope.$emit("closePlaceModal");
+            var hide = $scope.$on('modal.hidden', function(e) {
+                //segnalo la chiusura della modal
+                if($scope.infoPlace.modal && !e.defaultPrevented){
+                    e.defaultPrevented = true;
+                    //deregistro il listner per la hide
+                    hide();
+                    chiudoModal();
+                }
             });
             $scope.infoPlace.changeMode = function(){
                 if($scope.infoPlace.modify)

@@ -1,107 +1,107 @@
 angular.module('firstlife.directives', [])
-.directive('validPin', ['$http', function($http) {
-	return {
-		require: 'ngModel',
-		link: function(scope, ele, attrs, c) {
-			scope.$watch(attrs.ngModel, function(pinValue) {
-				// $http({
-				// 	method: 'POST',
-				// 	url: '/api/check/' + attrs.validPin,
-				// 	data: {'pin': attrs.validPin}
-				// }).success(function(data, status, headers, cfg) {
-				// 	c.$setValidity('valid-pin', data.isValid);
-				// }).error(function(data, status, headers, cfg) {
-				// 	c.$setValidity('valid-pin', false);
-				// });
-				if(pinValue=="12345")
-				{
-					c.$setValidity('valid-pin', true);
-				}
-				else
-				{
-					c.$setValidity('valid-pin', false);
-				}
-			});
-		}
-	};
-}])
-.directive('showHide', ['$ionicGesture', function($ionicGesture) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			var anchor = angular.element('<a/>');
-			anchor.addClass("toggle-view-anchor");
-			anchor.text("SHOW");
-			element.parent().append(anchor);
+    .directive('validPin', ['$http', function($http) {
+        return {
+            require: 'ngModel',
+            link: function(scope, ele, attrs, c) {
+                scope.$watch(attrs.ngModel, function(pinValue) {
+                    // $http({
+                    // 	method: 'POST',
+                    // 	url: '/api/check/' + attrs.validPin,
+                    // 	data: {'pin': attrs.validPin}
+                    // }).success(function(data, status, headers, cfg) {
+                    // 	c.$setValidity('valid-pin', data.isValid);
+                    // }).error(function(data, status, headers, cfg) {
+                    // 	c.$setValidity('valid-pin', false);
+                    // });
+                    if(pinValue=="12345")
+                    {
+                        c.$setValidity('valid-pin', true);
+                    }
+                    else
+                    {
+                        c.$setValidity('valid-pin', false);
+                    }
+                });
+            }
+        };
+    }])
+    .directive('showHide', ['$ionicGesture', function($ionicGesture) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                var anchor = angular.element('<a/>');
+                anchor.addClass("toggle-view-anchor");
+                anchor.text("SHOW");
+                element.parent().append(anchor);
 
-			$ionicGesture.on('touch', function(event){
-				event.stopPropagation();
-				event.preventDefault();
+                $ionicGesture.on('touch', function(event){
+                    event.stopPropagation();
+                    event.preventDefault();
 
-				var toggle_view_anchor = this,
-						password_input = toggle_view_anchor.parentElement.querySelector('input[show-hide]'),
-						input_type = password_input.getAttribute('type');
+                    var toggle_view_anchor = this,
+                        password_input = toggle_view_anchor.parentElement.querySelector('input[show-hide]'),
+                        input_type = password_input.getAttribute('type');
 
-				if(input_type=="text")
-				{
-					password_input.setAttribute('type', 'password');
-					toggle_view_anchor.text = "SHOW";
-				}
-				if(input_type=="password")
-				{
-					password_input.setAttribute('type', 'text');
-					toggle_view_anchor.text = "HIDE";
-				}
-			}, anchor);
-		}
-	};
-}])
+                    if(input_type=="text")
+                    {
+                        password_input.setAttribute('type', 'password');
+                        toggle_view_anchor.text = "SHOW";
+                    }
+                    if(input_type=="password")
+                    {
+                        password_input.setAttribute('type', 'text');
+                        toggle_view_anchor.text = "HIDE";
+                    }
+                }, anchor);
+            }
+        };
+    }])
 
 
-.directive('biggerText', ['$ionicGesture', function($ionicGesture) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			$ionicGesture.on('touch', function(event){
-				event.stopPropagation();
-				event.preventDefault();
+    .directive('biggerText', ['$ionicGesture', function($ionicGesture) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                $ionicGesture.on('touch', function(event){
+                    event.stopPropagation();
+                    event.preventDefault();
 
-				var text_element = document.querySelector(attrs.biggerText),
-						root_element = document.querySelector(".menu-content"),
-						current_size_str = window.getComputedStyle(text_element, null).getPropertyValue('font-size'),
-						current_size = parseFloat(current_size_str),
-						new_size = Math.min((current_size+2), 24),
-						new_size_str = new_size + 'px';
+                    var text_element = document.querySelector(attrs.biggerText),
+                        root_element = document.querySelector(".menu-content"),
+                        current_size_str = window.getComputedStyle(text_element, null).getPropertyValue('font-size'),
+                        current_size = parseFloat(current_size_str),
+                        new_size = Math.min((current_size+2), 24),
+                        new_size_str = new_size + 'px';
 
-				root_element.classList.remove("post-size-"+current_size_str);
-				root_element.classList.add("post-size-"+new_size_str);
-			}, element);
-		}
-	};
-}])
+                    root_element.classList.remove("post-size-"+current_size_str);
+                    root_element.classList.add("post-size-"+new_size_str);
+                }, element);
+            }
+        };
+    }])
 
-.directive('smallerText', ['$ionicGesture', function($ionicGesture) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			$ionicGesture.on('touch', function(event){
-				event.stopPropagation();
-				event.preventDefault();
+    .directive('smallerText', ['$ionicGesture', function($ionicGesture) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                $ionicGesture.on('touch', function(event){
+                    event.stopPropagation();
+                    event.preventDefault();
 
-				var text_element = document.querySelector(attrs.smallerText),
-				root_element = document.querySelector(".menu-content"),
-				current_size_str = window.getComputedStyle(text_element, null).getPropertyValue('font-size'),
-				current_size = parseFloat(current_size_str),
-				new_size = Math.max((current_size-2), 12),
-				new_size_str = new_size + 'px';
+                    var text_element = document.querySelector(attrs.smallerText),
+                        root_element = document.querySelector(".menu-content"),
+                        current_size_str = window.getComputedStyle(text_element, null).getPropertyValue('font-size'),
+                        current_size = parseFloat(current_size_str),
+                        new_size = Math.max((current_size-2), 12),
+                        new_size_str = new_size + 'px';
 
-				root_element.classList.remove("post-size-"+current_size_str);
-				root_element.classList.add("post-size-"+new_size_str);
-			}, element);
-		}
-	};
-}])
-.directive('nxEqual', function() {
+                    root_element.classList.remove("post-size-"+current_size_str);
+                    root_element.classList.add("post-size-"+new_size_str);
+                }, element);
+            }
+        };
+    }])
+    .directive('nxEqual', function() {
     return {
         require: 'ngModel',
         link: function (scope, elem, attrs, model) {
@@ -120,7 +120,7 @@ angular.module('firstlife.directives', [])
         }
     };
 })
-.directive('nxEqualEx', function() {
+    .directive('nxEqualEx', function() {
     return {
         require: 'ngModel',
         link: function (scope, elem, attrs, model) {
@@ -147,50 +147,50 @@ angular.module('firstlife.directives', [])
         }
     };
 })
-.directive('standardTimeNoMeridian', function() {
-  return {
-    restrict: 'AE',
-    replace: true,
-    scope: {
-      etime: '=etime'
-    },
-    template: "<span>{{stime}}</span>",
-    link: function(scope, elem, attrs) {
-        scope.placeholder = attrs.placeholder;
-      scope.stime = epochParser(scope.etime, 'time');
+    .directive('standardTimeNoMeridian', function() {
+    return {
+        restrict: 'AE',
+        replace: true,
+        scope: {
+            etime: '=etime'
+        },
+        template: "<span>{{stime}}</span>",
+        link: function(scope, elem, attrs) {
+            scope.placeholder = attrs.placeholder;
+            scope.stime = epochParser(scope.etime, 'time');
 
-      function prependZero(param) {
-        if (String(param).length < 2) {
-          return "0" + String(param);
+            function prependZero(param) {
+                if (String(param).length < 2) {
+                    return "0" + String(param);
+                }
+                return param;
+            }
+
+            function epochParser(val, opType) {
+                if (val === null) {
+                    if(scope.placeholder){
+                        //console.log("placeholder? ",scope.placeholder);
+                        return scope.placeholder;
+                    }else
+                        return "<span>00:00</span>";
+                } else {
+                    if (opType === 'time') {
+                        var hours = parseInt(val / 3600);
+                        var minutes = (val / 60) % 60;
+
+                        return (prependZero(hours) + ":" + prependZero(minutes));
+                    }
+                }
+            }
+
+            scope.$watch('etime', function(newValue, oldValue) {
+                scope.stime = epochParser(scope.etime, 'time');
+            });
+
         }
-        return param;
-      }
-
-      function epochParser(val, opType) {
-        if (val === null) {
-            if(scope.placeholder){
-                //console.log("placeholder? ",scope.placeholder);
-                return scope.placeholder;
-            }else
-                return "<span>00:00</span>";
-        } else {
-          if (opType === 'time') {
-            var hours = parseInt(val / 3600);
-            var minutes = (val / 60) % 60;
-
-            return (prependZero(hours) + ":" + prependZero(minutes));
-          }
-        }
-      }
-
-      scope.$watch('etime', function(newValue, oldValue) {
-        scope.stime = epochParser(scope.etime, 'time');
-      });
-
-    }
-  };
+    };
 })
-.directive('ngRightClick', function($parse) {
+    .directive('ngRightClick', function($parse) {
     return function(scope, element, attrs) {
         var fn = $parse(attrs.ngRightClick);
         element.bind('contextmenu', function(event) {
@@ -201,7 +201,7 @@ angular.module('firstlife.directives', [])
         });
     };
 })
-.directive('searchCards', function() {
+    .directive('searchCards', function() {
 
     return {
         restrict: 'E',
@@ -350,7 +350,6 @@ angular.module('firstlife.directives', [])
                     $scope.wallArray = [];
                     bounds = response;
                     $scope.wallArray = $filter('filter')($scope.content, boundsFiltering);
-                    $log.debug('check wall ',bounds,$scope.content.map(function(e){return e.id}),$scope.wallArray.map(function(e){return e.id}));
                 },
                 function(response){
                     $log.debug("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
@@ -366,7 +365,6 @@ angular.module('firstlife.directives', [])
 
             // filtro bounding box della mappa, filtro preventivamente
             function boundsFiltering(val){
-                $log.debug("MapCtrl, boundsFiltering, val ",val," contains ",bounds.contains([val.lat,val.lng]));
                 return bounds.contains([val.lat,val.lng]);
             }
 
@@ -378,7 +376,6 @@ angular.module('firstlife.directives', [])
                 for(key in childrenRelations){
                     var childRel = childrenRelations[key];
                     var c = MapService.searchFor(marker.id, childRel.field);
-                    $log.debug("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
                     if(!$filter('isEmpty')(c)){
                         children[key] = angular.copy(childRel);
                         for(var j = 0; j<c.length;j++){
@@ -395,7 +392,6 @@ angular.module('firstlife.directives', [])
 
                     }
                 }
-                $log.debug("ModalEntityCtrl, loadSibillings, costruzione dei figli ", children);
                 $scope.markerChildren[marker.id] = children;
 
             };
@@ -420,33 +416,32 @@ angular.module('firstlife.directives', [])
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
-//            AuthService.checkMembership($scope.id).then(
-//                function(response){
-//                    $log.debug("the user is a group member!",response);
-//                    // se esiste allora membro
-//                    $scope.member = true;
-//                    
-//                    if(response.role == 'owner'){
-//                        // se ha impostato il ruolo proprietario
-//                        $scope.owner = true;
-//                    }
-//                    // init delle azioni
-//                    initActions();
-//                },
-//                function(response){
-//                    $log.log('the user is not a group member!');
-//                    // giusto per essere sicuro...
-//                    $scope.member = false;
-//                    $scope.owner = false;
-//                    // init delle azioni
-//                    initActions();
-//                }
-//            );
-            
+            //            AuthService.checkMembership($scope.id).then(
+            //                function(response){
+            //                    $log.debug("the user is a group member!",response);
+            //                    // se esiste allora membro
+            //                    $scope.member = true;
+            //                    
+            //                    if(response.role == 'owner'){
+            //                        // se ha impostato il ruolo proprietario
+            //                        $scope.owner = true;
+            //                    }
+            //                    // init delle azioni
+            //                    initActions();
+            //                },
+            //                function(response){
+            //                    $log.log('the user is not a group member!');
+            //                    // giusto per essere sicuro...
+            //                    $scope.member = false;
+            //                    $scope.owner = false;
+            //                    // init delle azioni
+            //                    initActions();
+            //                }
+            //            );
+
             groupsFactory.getMembers($scope.id).then(
                 function(response){
-                    $log.debug("the user is a group member!",response);
-                    
+
                     if(!$scope.user)
                         $scope.user = MemoryFactory.getUser();
                     var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
@@ -470,12 +465,12 @@ angular.module('firstlife.directives', [])
                     initActions();
                 }
             );
-            
-            
+
+
             $scope.actionEntity = function(action, param){
-                
+
                 $log.debug('actionEntity ',action,param);
-                
+
                 switch(action){
                     case 'view':
                         //chiudo la modal
@@ -502,12 +497,11 @@ angular.module('firstlife.directives', [])
                                 $ionicLoading.hide();
                             }
                         );
-                        
+
                         break;
                     case 'leave':
                         // conferma se uscire
                         $ionicLoading.show();
-                        $log.debug('check InitActions pre leave');
                         groupsFactory.leaveGroup($scope.id).then(
                             function(response){
                                 // reset dei permessi
@@ -568,7 +562,7 @@ angular.module('firstlife.directives', [])
                     }
                 }
             }
-            
+
             function loading(){
                 $ionicLoading.show({
                     template: 'REQUESTING...',
@@ -584,7 +578,7 @@ angular.module('firstlife.directives', [])
 
         }]
     };
-}).directive('relations', function() {
+}).directive('relationsActions', function() {
 
     return {
         restrict: 'EG',
@@ -597,7 +591,7 @@ angular.module('firstlife.directives', [])
         },
         templateUrl: '/templates/map-ui-template/AddChildren.html',
         controller: ['$scope','$log','$filter','AuthService','groupsFactory', function($scope,$log,$filter,AuthService,groupsFactory){
-            
+
             // controllo il flag di reset che viene passato nel setup della direttiva nella vista
             $scope.$watch('reset',function(e,old){
                 if(e && !old){
@@ -606,19 +600,19 @@ angular.module('firstlife.directives', [])
                     // reset del flag
                     $scope.reset = false;
                 }
-            
+
             });
-            
+
             // init relazioni
             initRelations();
-            
-            
+
+
             /*
              * funzioni private
              * initRelations: crea la lista di relazioni per la vista
              * lazyCheck: controlla le relazioni che hanno il campo check impostato
              */
-            
+
             // fix dei check se necessario
             function initRelations(){
                 $scope.relationsList = angular.copy($scope.relations);
@@ -634,7 +628,7 @@ angular.module('firstlife.directives', [])
                     }
                 }
             }
-            
+
             function lazyCheck(relation,check){
                 switch(check){
                     case 'membership':
@@ -642,7 +636,6 @@ angular.module('firstlife.directives', [])
                             function(response){
                                 relation.check = true;
                                 $scope.count++;
-                                $log.debug('relation set true ',relation);
                             },
                             function(response){$log.log('no member!');}
                         );
@@ -661,7 +654,7 @@ angular.module('firstlife.directives', [])
         },
         templateUrl: '/templates/map-ui-template/membersCounter.html',
         controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
-        
+
             $scope.counter = 1;
             groupsFactory.getMembers($scope.id).then(
                 function(response){
@@ -675,7 +668,7 @@ angular.module('firstlife.directives', [])
     }
 
 })
-.directive('membersList',function(){
+    .directive('membersList',function(){
     return {
         restrict: 'EG',
         scope: {
@@ -684,19 +677,18 @@ angular.module('firstlife.directives', [])
         },
         templateUrl: '/templates/map-ui-template/membersList.html',
         controller: ['$scope','$log','$filter','groupsFactory','MemoryFactory', function($scope,$log,$filter,groupsFactory,MemoryFactory){
-        
+
             $scope.counter = [];
             $scope.user = MemoryFactory.getUser();
             $scope.role = false;
-            
+
             initList();
-            
-            
+
+
             function initList(){
                 groupsFactory.getMembers($scope.id).then(
                     function(response){
                         if(Array.isArray(response)){
-                            $log.debug('check members list',response);
                             $scope.membersList = response;
                             if($scope.user){
                                 var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
@@ -708,9 +700,9 @@ angular.module('firstlife.directives', [])
                     },
                     function(response){$log.error('groupsFactory, getMembers, error ',response);}
                 );
-            
+
             }
-            
+
             $scope.deleteMember = function(groupId,memberId){
                 groupsFactory.removeUser(groupId,memberId).then(
                     function(response){
@@ -720,6 +712,261 @@ angular.module('firstlife.directives', [])
                     function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                 );
             }
+        }]
+    }
+
+})
+    .directive('entityRelations',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            marker: '=marker'
+        },
+        templateUrl: '/templates/map-ui-template/entityRelations.html',
+        controller: ['$scope','$log','$filter','myConfig','MapService', function($scope,$log,$filter,myConfig,MapService){
+
+            $scope.config = myConfig;
+
+            // controllo il flag di reset che viene passato nel setup della direttiva nella vista
+            //            $scope.$watch('marker',function(e,old){
+            //                if(e && !old){
+            //                    //init relations, qualcosa e' cambiato
+            //                    initRelations();
+            //                    // reset del flag
+            //                    $scope.reset = false;
+            //                }
+            //
+            //            });
+
+            loadSibillings();
+
+            function loadSibillings (){
+
+                $scope.relations = {};
+
+                // caricamento dei child
+                var childrenRelations = $scope.config.types.child_relations[$scope.marker.entity_type];
+                var children = {};
+                for(key in childrenRelations){
+                    var childRel = childrenRelations[key];
+                    var c = MapService.searchFor($scope.marker.id, childRel.field);
+                    if(!$filter('isEmpty')(c)){
+                        children[key] = angular.copy(childRel);
+                        for(var j = 0; j<c.length;j++){
+                            var thing = c[j];
+                            if(!children[thing.entity_type])
+                                children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
+                            if(!children[thing.entity_type].list)
+                                children[thing.entity_type].list = [];
+
+                            var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
+                            if(index < 0)
+                                children[thing.entity_type].list.push(thing);
+                        }
+
+                    }
+                }
+                $scope.relations.children = children;
+
+                // caricamento dei parent
+                var parentsRelations = $scope.config.types.parent_relations[$scope.marker.entity_type];
+                var parents = {};
+                // serve ad impedire la duplicazione della ricerca per entita' con lo stesso field
+                var keysBanList = {};
+                for(key in parentsRelations){
+                    var parentRel = parentsRelations[key];
+                    if(!$filter('isEmpty')($scope.marker[parentRel.field]) && !keysBanList[parentRel.field]){
+                        // aggiungo il campo alla banList 
+                        keysBanList[parentRel.field] = true;
+                        var p = MapService.searchFor(marker[parentRel.field], 'id');
+                        parents[key] = angular.copy(parentRel);
+                        parents[key].list = p;
+                    }
+                }
+                $scope.relations.parents = parents;
+            }
+        }]
+    }
+
+})
+    .directive('simpleEntityList',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            id: '=id',
+            owner: '=owner'
+        },
+        replace: true,
+        templateUrl: '/templates/map-ui-template/simpleEntityList.html',
+        controller: ['$scope','$log','$filter','$ionicModal','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
+
+
+            $scope.types = myConfig.types.simpleEntities;
+            $scope.groups = [];
+            $scope.user = MemoryFactory.getUser();
+
+
+
+            var MODAL_RELOAD_TIME = myConfig.behaviour.modal_relaod_time;
+            // variabile dove inserisco il timer per il polling
+            var timer = false;
+            // funzione di polling
+            var polling = function(){ 
+                $timeout.cancel(timer);
+                updateGroups();
+                timer = $timeout(function(){
+                    // aggiorno i dettagli
+                    polling();
+                },MODAL_RELOAD_TIME);
+            };
+            $scope.$on('$destroy', function() {
+                $timeout.cancel(timer);
+            });
+
+            initList();
+
+
+            function initList(){
+                for(var k in $scope.types){
+                    var type = $scope.types[k];
+                    var group = angular.copy(type);
+                    group.list = [];
+                    $scope.groups.push(group);
+                }
+                polling();
+            }
+
+            function updateGroups(){
+                for(var i = 0; i < $scope.groups.length; i++){
+                    updateGroupOfEntities(i);
+                }
+            }
+
+            function updateGroupOfEntities(index){
+                SimpleEntityFactory.get($scope.id,$scope.groups[index].key).then(
+                    function(response){
+                        if(Array.isArray(response)){
+                            upadateGroupList(response,index);
+                        }
+                    },
+                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                );
+                function upadateGroupList(list,i){
+                    var group = $scope.groups[i];
+                    for(var j = 0; j < list.length; j++){
+                        var id = list[j][group.idKey];
+                        var index = group.list.map(function(e){return e[group.idKey]}).indexOf(id);
+                        // se manca nella memoria locale aggiungo
+                        if(index < 0){group.list.push(list[j]);}
+                    }
+                    for(var q = 0; q < group.list.length; q++){
+                        var id = group.list[q][group.idKey];
+                        var index = list.map(function(e){return e[group.idKey]}).indexOf(id);
+                        // se non c'e' tra i risultati online cancello dalla memoria locale
+                        if(index < 0){group.list.slice(q,1);}
+                    }
+                }
+            }
+
+
+
+            // cancella entita' semplice
+            $scope.delete = function(id,type,i){
+                SimpleEntityFactory.delete(id,type).then(
+                    function(response){
+                        // cancello l'elemento dalla memoria locale
+                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
+                        if(index > -1){
+                            $scope.groups[i].list.splice(index,1);
+                        }
+                        $log.debug('check delete',$scope.groups[i].list);
+                    },
+                    function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
+                );
+            }
+
+
+
+
+            /*
+         * Gestione galleria foto
+         */
+            $scope.gallery = {};
+            $scope.slider = {};
+            $scope.slider.images = [];
+            $scope.slider.pointer = 0;
+            // apertura della gallery
+            $scope.openGallery = function(index,gallery){
+                $scope.slider.images = gallery;
+                console.log("ImagesCtrl, openGallery, params: ", index);
+                if(!isNaN(index)){
+                    $scope.slider.pointer = index;
+                }
+                $ionicModal.fromTemplateUrl('templates/modals/gallery.html', {
+                    scope: $scope,
+                    animation: 'fade-in'
+                }).then(function(modal){
+                    console.log("gallery ",modal);
+                    $scope.gallery = modal; 
+                    if(index > 0){
+                        //$scope.galery.goToSlide(index);
+                    }
+                    $scope.gallery.show();
+                }, function(err){
+                    $log.error("gallery error",err);
+                    console.log(err);
+                    deferred.reject(false);
+                });
+
+                $scope.gallery.close = function() {
+                    $scope.gallery.hide();
+                    $rootScope.galleryStatus = false;
+                };
+                // Cleanup the modal when we're done with it!
+                $scope.$on('$destroy', function() {
+                    $scope.gallery.remove();
+                });
+                // Execute action on hide modal
+                $scope.$on('gallery.hide', function() {
+                    // Execute action
+                });
+                // Execute action on remove modal
+                $scope.$on('gallery.removed', function() {
+                    // Execute action
+                });
+                $scope.$on('gallery.shown', function() {
+                    console.log('Gallery is shown!');
+                });
+
+
+
+                // Called each time the slide changes
+                $scope.gallery.slideChanged = function(index) {
+                    $scope.gallery.slideIndex = index;
+                };
+            };
+
+
+            $scope.slider.next = function(){
+                if($scope.slider.pointer < $scope.slider.images.length -1){
+                    $scope.slider.pointer++;
+                }else{
+                    $scope.slider.pointer = 0;
+                }
+            }
+            $scope.slider.prev = function(){
+                if($scope.slider.pointer > 0){
+                    $scope.slider.pointer--;
+                }else{
+                    $scope.slider.pointer =  $scope.slider.images.length -1;
+                }
+            }
+            $scope.slider.slideTo = function(index){
+                if(index > -1 && index < $scope.slider.images.length-1){
+                    $scope.slider.pointer = index;
+                }
+            }
+
         }]
     }
 

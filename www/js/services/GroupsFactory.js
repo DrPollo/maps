@@ -82,7 +82,6 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response) {
-                            $log.debug("check membership ", response);
                             deferred.resolve(response.data[0]);
                             // salvo nella cache se la risposta e' positiva
                             groupsUsers[entityId][user.id] = response.data[0];
@@ -106,7 +105,6 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        $log.debug(response);
                         deferred.resolve(response.data);
                         if(!groupsUsers[entityId])
                             groupsUsers[entityId] = {};

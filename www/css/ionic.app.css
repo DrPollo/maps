@@ -13030,6 +13030,8 @@ ion-side-menu#side-menu {
         text-align: center;
         vertical-align: middle;
         line-height: 30px; }
+      .modal .foto-box .foto-mosaico div .didascalia {
+        line-height: 1em; }
     .modal .foto-box .foto-mosaico div:before {
       content: "";
       display: block;

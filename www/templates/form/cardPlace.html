@@ -94,64 +94,16 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="config.design.show_thumbs" ng-show="images" class="foto-box">
-                    <div class="row foto-mosaico" ng-repeat="image in images" ng-if="$index % 4 === 0">
-                        <div class="col col-25" ng-if="$index < images.length">
-                            <img class="button" title="{{images[$index].title}}" ng-src="{{images[$index].thumb }}" width="100%" ng-click="loadGallery(infoPlace.marker.id, $index, infoPlace.marker.entity_type)" />
-                        </div>
-                        <div class="col col-25" ng-if="$index + 1 < images.length">
-                            <img class="button" title="{{images[$index + 1].title}}" ng-src="{{images[$index + 1].thumb }}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, ($index + 1), infoPlace.marker.entity_type)" />
-                        </div>
-                        <div class="col col-25" ng-if="$index + 2 < images.length">
-                            <img class="button" title="{{images[$index + 2].title}}" ng-src="{{images[$index + 2].thumb }}" width="100%" ng-click="loadGallery(infoPlace.marker.id, ($index + 2), infoPlace.marker.entity_type)"  />
-                        </div>
-                        <div class="col col-25" ng-if="$index + 3 < images.length">
-                            <img class="button" title="{{images[$index + 3].title}}" ng-src="{{images[$index + 3].thumb }}" width="100%"  ng-click="loadGallery(infoPlace.marker.id, ($index + 3), infoPlace.marker.entity_type)" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="relazioni" class="list">
-                <div class="parent_relation" ng-if="!(angular.equals(infoPlace.marker.relations.parents,{}))" 
-                     ng-repeat="(key,parentRel) in infoPlace.marker.relations.parents">
-                    <div ng-show="parentRel.list.length > 0">
-                        <div class="item item-divider">{{parentRel.label |translate}}</div>
-                        <div class="item item-icon-left" ng-repeat="parent in parentRel.list track by $index"  ng-click="showMCardPlace(parent)">
-                            <i ng-if="parent.category" class="icon {{parent.category.icon}}"  style="color:{{parent.category.color}}"></i>
-                            {{parent.name}}
-                        </div>
-                    </div>
-                </div>
-                <div class="child_relation" ng-if="!isEmpty(infoPlace.marker.relations.children)" 
-                     ng-repeat="(key,childRel) in infoPlace.marker.relations.children">
-                    <div ng-show="childRel.list.length > 0">
-                        <div class="item item-divider">{{childRel.childrenLabel |translate}}</div>
-                        <div class="item item-icon-left" ng-repeat="child in childRel.list track by $index"  ng-click="showMCardPlace(child)">
-                            <i ng-if="child.category" class="icon {{child.category.icon}}"  style="color:{{child.category.color}}"></i>
-                            {{child.name}}
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-        <ion-list ng-show="infoPlace.marker.comments.length > 0" class="content modal-content" id="box-commenti">
-            <ion-item class="item-divider">{{'COMMENTS'|translate}}</ion-item>
-            <ion-item ng-repeat="comment in infoPlace.marker.comments | orderBy:'-timestamp' track by $index" class="item-button-right">
-                <button ng-if="user.id == inforPlace.marker.user || user.id == comment.user_id" ng-click="deleteComment(comment.comment_id)" class="button button-clear">
-                    <i class="icon ion-close-round"></i> 
-                </button>
 
-                <div>
-                    <span ng-if="comment.display_name" class="username">{{comment.display_name}}</span>
-                    <span ng-if="comment.timestamp" class="message"> {{'WHEN'|translate}} {{comment.timestamp | date:'dd/MM/yyyy (hh:mm)'}}</span>
-                </div>
-                <pre>{{comment.message}}</pre>
-            </ion-item>
-        </ion-list>
-
+        <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
+        
+        <entity-relations marker="infoPlace.marker"></entity-relations>
+        
         <members-list id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
 
-        <relations relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" reset="reset"></relations>
+        <relations-actions relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" reset="reset"></relations-actions>
 
         <div ng-if="config.dev"><pre>{{infoPlace.marker | json}}</pre></div>
     </ion-content>
