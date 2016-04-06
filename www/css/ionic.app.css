@@ -36,6 +36,9 @@ $dark:                            #444 !default;
 .icon-light:before {
   font-weight: 400 !important; }
 
+*[on-tap], *[click], *[ng-click] {
+  cursor: pointer; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

@@ -661,7 +661,6 @@ angular.module('firstlife.directives', [])
                     }
                     $scope.relationsList[i].color = colors[$scope.relationsList[i].index];
                 }
-                $log.debug('check relations ',$scope.relationsList);
             }
 
             function lazyCheck(relation,check){
@@ -879,7 +878,7 @@ angular.module('firstlife.directives', [])
             owner: '=owner'
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
-        controller: ['$scope','$log','$filter','$ionicModal','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
+        controller: ['$scope','$log','$filter','$ionicModal','$ionicLoading','$ionicPopup','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicLoading,$ionicPopup,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
 
 
             $scope.types = myConfig.types.simpleEntities;
@@ -910,7 +909,6 @@ angular.module('firstlife.directives', [])
 
             $scope.$watch('id',function(e,old){
                 // cambia il marker
-                $log.debug('watch id',e,old);
                 if(e != old){
                     // stop polling
                     $timeout.cancel(timer);
@@ -938,6 +936,10 @@ angular.module('firstlife.directives', [])
             
             initList();
 
+            
+            
+            
+            
 
             function initList(){
                 $log.debug('check initList ',$scope);
@@ -967,7 +969,6 @@ angular.module('firstlife.directives', [])
                 );
                 function upadateGroupList(list,i){
                     var group = $scope.groups[i];
-                    $log.debug('check upadateGroupList ',list);
                     for(var j = 0; j < list.length; j++){
                         var id = list[j][group.idKey];
                         var index = group.list.map(function(e){return e[group.idKey]}).indexOf(id);
@@ -994,7 +995,6 @@ angular.module('firstlife.directives', [])
                         if(index > -1){
                             $scope.groups[i].list.splice(index,1);
                         }
-                        $log.debug('check delete',$scope.groups[i].list);
                     },
                     function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                 );
@@ -1003,16 +1003,18 @@ angular.module('firstlife.directives', [])
 
 
 
-            /*
+        /*
          * Gestione galleria foto
+         * openGallery: inizializza e apre la galleria
          */
             $scope.gallery = {};
             $scope.slider = {};
             $scope.slider.images = [];
             $scope.slider.pointer = 0;
-            // apertura della gallery
+            
             $scope.openGallery = function(index,gallery){
-                $log.debug("openGallery, params: ", index,gallery);
+                
+                
                 
                 $scope.slider.images = gallery;
                 if(!isNaN(index)){
@@ -1054,34 +1056,104 @@ angular.module('firstlife.directives', [])
                     console.log('Gallery is shown!');
                 });
 
-
-
                 // Called each time the slide changes
                 $scope.gallery.slideChanged = function(index) {
                     $scope.gallery.slideIndex = index;
                 };
+                
+                $scope.slider.next = function(){
+                    if($scope.slider.pointer < $scope.slider.images.length -1){
+                        $scope.slider.pointer++;
+                    }else{
+                        $scope.slider.pointer = 0;
+                    }
+                }
+                $scope.slider.prev = function(){
+                    if($scope.slider.pointer > 0){
+                        $scope.slider.pointer--;
+                    }else{
+                        $scope.slider.pointer =  $scope.slider.images.length -1;
+                    }
+                }
+                $scope.slider.slideTo = function(index){
+                    if(index > -1 && index < $scope.slider.images.length-1){
+                        $scope.slider.pointer = index;
+                    }
+                }
             };
 
 
-            $scope.slider.next = function(){
-                if($scope.slider.pointer < $scope.slider.images.length -1){
-                    $scope.slider.pointer++;
-                }else{
-                    $scope.slider.pointer = 0;
-                }
+            
+            
+        /*
+         * Add simpleEntity
+         * 0) add: evento pulsante add
+         * 1) initEntity: inizializzazione dell'entita'
+         * 2) openEditor: apertura della modal
+         * 3) saveEntity: salvataggio dell'entita'
+         * 6) alertError: popup di errore
+         */
+            
+        // aggiunge entita' semplice
+        $scope.add = function(key){
+            var type = angular.copy($scope.types[key]);
+            $log.debug('check add ',key,type);
+            initEntity(type);
+            $log.debug('check add ',$scope.simpleEntity);
+            openEditor();
+        }
+
+        function initEntity(type) {
+            $scope.simpleEntity = {
+                type: type.key, 
+                parent: $scope.id,
+                label: type.label,
+                contentKey: type.contentKey
+            };
+            for(var k in type.fields){
+                $scope.simpleEntity[k] = type.fields[k].default;
             }
-            $scope.slider.prev = function(){
-                if($scope.slider.pointer > 0){
-                    $scope.slider.pointer--;
-                }else{
-                    $scope.slider.pointer =  $scope.slider.images.length -1;
+        }
+
+
+        function openEditor(){
+            $ionicModal.fromTemplateUrl('templates/modals/simpleEditor.html', {
+                scope: $scope,
+                animation: 'fade-in',//'slide-in-up',
+                backdropClickToClose : true,
+                hardwareBackButtonClose : true,
+                focusFirstInput: true
+            }).then(function(modal) {
+                $log.debug('check modal ');
+                $scope.editor = modal;
+                $scope.editor.show();
+            },function(err){$log.debug('check modal ',err);});  
+        }
+
+        $scope.addEntity = function(){
+            $ionicLoading.show();
+            
+            SimpleEntityFactory.add($scope.simpleEntity.parent,$scope.simpleEntity,$scope.simpleEntity.type).then(
+                function successCallback(response){
+                    $ionicLoading.hide();
+                    $scope.editor.hide();
+                },
+                function errorCallback(error){
+                    $log.error("SimpleEditorCtrl, addComment, error: ",error);
+                    $ionicLoading.hide();
+                    //backToMap({marker:{id:self.simpleEntity.parent}});
+                    // todo gestisci errore
+                    alertError();
                 }
-            }
-            $scope.slider.slideTo = function(index){
-                if(index > -1 && index < $scope.slider.images.length-1){
-                    $scope.slider.pointer = index;
-                }
-            }
+            );            
+        }
+
+        function alertError(){
+            $ionicPopup.alert({
+                title: $filter('translate')('ERROR'),
+                template: $filter('translate')('UNKNOWN_ERROR')
+           });
+        }
 
         }]
     }

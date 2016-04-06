@@ -46,7 +46,8 @@ angular.module('firstlife.config')
                     contentKey:'description',
                     contentKeyType:'text',
                     idKey:'description_id',
-                    icon:'ion-android-list'
+                    icon:'ion-android-list',
+                    addLabel:'ADD_DESCRIPTION'
                 },
                 comment:{
                     key:'comment',
@@ -59,7 +60,9 @@ angular.module('firstlife.config')
                     contentKey:'message',
                     contentKeyType:'text',
                     idKey:'comment_id',
-                    icon:'ion-chatbox-working'
+                    icon:'ion-chatbox-working',
+                    addLabel:'ADD_COMMENT',
+                    exclude:['FL_PLACES']
                 },
                 image:{
                     key:'image',
@@ -72,7 +75,8 @@ angular.module('firstlife.config')
                     contentKey:'thumb',
                     contentKeyType:'image',
                     idKey:'image_id',
-                    icon:'ion-image'
+                    icon:'ion-image',
+                    addLabel:'ADD_IMAGE'
                 }
             },
             list:[

@@ -215,6 +215,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // commentBox
         PUBLISH:'Pubblica',
         COMMENT_ALLERT:'Il tuo commento verrà pubblicato sul Web e sarà visibile a tutti.',
+        ADD_ENTITY_ALLERT:'Il tuo contributo verrà pubblicato sul Web e sarà visibile a tutti.',
         COMMENT_TO:'Commento a', 
         // menu edit
         CANCEL: 'Cancella',
@@ -345,7 +346,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         MANAGE_USERS:'Gestisci membri',
         GROUP_MEMBERS:'Membri',
         MESSAGE_PLACEHOLDER:'Testo',
-        DESCRIPTIONS:'Descrizioni'
+        DESCRIPTIONS:'Descrizioni',
+        IMAGE:'Immagine',
+        ADD_DESCRIPTION:'Aggiungi descrizione',
+        ADD_COMMENT:'Aggiungi commento',
+        ADD_IMAGE:'Aggiungi immagine',
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -397,6 +402,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // commentBox
         PUBLISH:'Post',
         COMMENT_ALLERT:'Your comment will be published on the Web and will be visible to all.',
+        ADD_ENTITY_ALLERT:'Your contribution will be published on the Web and will be visible to all.',
         COMMENT_TO:'Comment of', 
         // menu edit
         CANCEL: 'Trash',
@@ -527,7 +533,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         MANAGE_USERS:'Manage members',
         GROUP_MEMBERS:'Members',
         MESSAGE_PLACEHOLDER:'Text',
-        DESCRIPTIONS:'Descriptions'
+        DESCRIPTIONS:'Descriptions',
+        IMAGE:'Image',
+        ADD_DESCRIPTION:'Add Description',
+        ADD_COMMENT:'Add Comment',
+        ADD_IMAGE:'Add Image',
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

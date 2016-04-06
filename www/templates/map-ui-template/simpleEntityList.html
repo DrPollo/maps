@@ -1,13 +1,18 @@
 <div class="button-bar content">
-    <button class="button button-positive icon-left" ng-repeat="group in groups track by $index" ng-if="group.list.length > 0" on-tap="setToggle($index)" ng-class="toggle == $index ? '' : 'button-outline' ">
+    <button class="button button-positive icon-left" ng-repeat="group in groups track by $index" on-tap="setToggle($index)" ng-class="toggle == $index ? '' : 'button-outline' ">
             <i class="{{group.icon}}"></i>
             {{group.title|translate}}
             <span ng-class="toggle == $index ? '' : 'badge badge-positive' ">{{group.list.length}}</span>
     </button>
 </div>
+<div class="content">
+    <button class="button button-outline button-positive button-small button-block ion-plus-round" on-tap="add(groups[toggle].key)">
+        {{groups[toggle].label|translate}}
+    </button>
+</div>
 <div ng-repeat="group in groups track by $index" ng-show="group.list.length > 0" ng-init="outerIndex=$index">
-
-    <div ng-repeat="item in group.list track by $index" class="card" ng-if="group.contentKeyType != 'image'" ng-show="toggle == outerIndex">
+    
+    <div ng-repeat="item in group.list | orderBy: '-timestamp' track by $index" class="card" ng-if="group.contentKeyType != 'image'" ng-show="toggle == outerIndex">
         <div class="item item-text-wrap">{{item[group.contentKey]}}</div>
         <div class="item item-button-right">
             <span class="message"><span class="username">{{item.display_name}}</span> {{'WHEN'|translate}} {{item.timestamp| date: 'dd/MM/yyyy'}}</span>
@@ -19,7 +24,7 @@
     </div>
 
     <div ng-if="group.contentKeyType == 'image'" class="foto-box content" ng-show="toggle == outerIndex">
-        <div class="row foto-mosaico" ng-repeat="image in group.list track by $index" ng-if="$index % 4 === 0">
+        <div class="row foto-mosaico" ng-repeat="image in group.list | orderBy: '-timestamp' track by $index" ng-if="$index % 4 === 0">
             <div class="col col-25" ng-if="$index < group.list.length">
                 <img class="button" title="{{group.list[$index].title}}" ng-src="{{group.list[$index].thumb }}" width="100%" on-tap="openGallery($index, group.list)" />
                 <i ng-if="user.id == image.user_id || image.user_id == owner" class="icon ion-close-round" on-tap="delete(image[group.idKey],group.key,outerIndex)"></i>

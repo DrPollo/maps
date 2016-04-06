@@ -46,6 +46,9 @@ $large: 600px;
 .icon-bold:before {font-weight: bold !important;}
 .icon-light:before {font-weight: 400 !important;}
 
+// se e' clickabile allora > pointer
+*[on-tap],*[click],*[ng-click] {cursor: pointer;}
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 // $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Load new fonts (have more icons)
