@@ -67,7 +67,8 @@
 
                 </span>
             </div>
-
+            
+             <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
 
             <div ng-if="config.actions.can_foto || config.design.show_thumbs" ng-show="isPendingImages || (images.length > 0)" id="area-foto" class="content">
                 <div ng-show="config.actions.can_foto && isPendingImages" class="foto-box">
@@ -92,8 +93,6 @@
                 </div>
             </div>
         </div>
-
-        <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
         
         <entity-relations marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
         

@@ -613,7 +613,7 @@ angular.module('firstlife.directives', [])
             reset: '=reset'
         },
         templateUrl: '/templates/map-ui-template/AddChildren.html',
-        controller: ['$scope','$log','$filter','AuthService','groupsFactory', function($scope,$log,$filter,AuthService,groupsFactory){
+        controller: ['$scope','$log','$filter','myConfig','AuthService','groupsFactory', function($scope,$log,$filter,myConfig,AuthService,groupsFactory){
 
             // controllo il flag di reset che viene passato nel setup della direttiva nella vista
             $scope.$watch('reset',function(e,old){
@@ -633,6 +633,7 @@ angular.module('firstlife.directives', [])
                 }
             });
             
+            var colors = myConfig.design.colors;
             // init relazioni
             initRelations();
 
@@ -646,6 +647,8 @@ angular.module('firstlife.directives', [])
             // fix dei check se necessario
             function initRelations(){
                 $scope.relationsList = angular.copy($scope.relations);
+                
+                
                 $scope.count = 0;
                 for(var i in $scope.relationsList){
                     if(!$scope.relationsList[i].rel.check){
@@ -656,7 +659,9 @@ angular.module('firstlife.directives', [])
                         lazyCheck($scope.relationsList[i],$scope.relationsList[i].rel.check);
                         $scope.relationsList[i].check = false;
                     }
+                    $scope.relationsList[i].color = colors[$scope.relationsList[i].index];
                 }
+                $log.debug('check relations ',$scope.relationsList);
             }
 
             function lazyCheck(relation,check){

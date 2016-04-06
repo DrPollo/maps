@@ -1,7 +1,7 @@
 <div class="card list" ng-show="actionList.length > 0">
     <div class="item item-divider">{{'ACTIONS '+label |translate}}</div>
     <div class="item item-icon-left item-icon-right" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">
-        <i class="icon {{action.icon}}"></i>
+        <i class="icon positive {{action.icon}}"></i>
         {{action.label |translate}}
         <i class="icon positive {{action.icon2}}"></i>
     </div>
