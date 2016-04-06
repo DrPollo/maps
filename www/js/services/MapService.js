@@ -526,6 +526,9 @@ angular.module('firstlife.services')
 
     }])
     .run(function(MapService){
-    //if(consoleCheck) console.log("run config MapService");
-    //MapService.initMap();
+        self.filters = {};
+        self.filters.time = {
+            from: self.config.map.time_from ,
+            to: self.config.map.time_to
+        };
 });

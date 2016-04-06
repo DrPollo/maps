@@ -219,6 +219,13 @@ angular.module('firstlife.directives', [])
                 $scope.cards = {};
                 checkParams($location.search());
             }
+            
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventSearchCards){
+                    e.preventSearchCards = true;
+                    delete $scope;
+                }
+            });
 
             // controllo al cambio dei parametri di search
             $scope.$watch(
@@ -344,6 +351,12 @@ angular.module('firstlife.directives', [])
             var bounds = {};
             $scope.markerChildren = {};
 
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyWall){
+                    e.preventDestroyWall = true;
+                    delete $scope;
+                }
+            });
 
             MapService.getMapBounds().then(
                 function(response){
@@ -416,6 +429,16 @@ angular.module('firstlife.directives', [])
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
+            
+            
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyActions){
+                    e.preventDestroyActions = true;
+                    delete $scope;
+                }
+            });
+            
+            
             //            AuthService.checkMembership($scope.id).then(
             //                function(response){
             //                    $log.debug("the user is a group member!",response);
@@ -603,6 +626,13 @@ angular.module('firstlife.directives', [])
 
             });
 
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyRelationsActions){
+                    e.preventDestroyRelationsActions = true;
+                    delete $scope;
+                }
+            });
+            
             // init relazioni
             initRelations();
 
@@ -656,6 +686,14 @@ angular.module('firstlife.directives', [])
         controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
 
             $scope.counter = 1;
+            
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyMembersCounter){
+                    e.preventDestroyMembersCounter = true;
+                    delete $scope;
+                }
+            });
+            
             groupsFactory.getMembers($scope.id).then(
                 function(response){
                     if(Array.isArray(response)){
@@ -682,6 +720,14 @@ angular.module('firstlife.directives', [])
             $scope.user = MemoryFactory.getUser();
             $scope.role = false;
 
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyMembersList){
+                    e.preventDestroyMembersList = true;
+                    delete $scope;
+                }
+            });
+            
+            
             initList();
 
 
@@ -728,6 +774,20 @@ angular.module('firstlife.directives', [])
 
             $scope.config = myConfig;
 
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyEntityRelations){
+                    e.preventDestroyEntityRelations = true;
+                    delete $scope;
+                }
+            });
+            
+            $scope.$watch('marker',function(e,old){
+                // cambia il marker
+                if(e.id != old.id){
+                    loadSibillings();
+                }
+            });
+            
             // controllo il flag di reset che viene passato nel setup della direttiva nella vista
             //            $scope.$watch('marker',function(e,old){
             //                if(e && !old){
@@ -797,7 +857,6 @@ angular.module('firstlife.directives', [])
             id: '=id',
             owner: '=owner'
         },
-        replace: true,
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
         controller: ['$scope','$log','$filter','$ionicModal','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
 
@@ -806,13 +865,12 @@ angular.module('firstlife.directives', [])
             $scope.groups = [];
             $scope.user = MemoryFactory.getUser();
 
-
-
             var MODAL_RELOAD_TIME = myConfig.behaviour.modal_relaod_time;
             // variabile dove inserisco il timer per il polling
             var timer = false;
             // funzione di polling
             var polling = function(){ 
+                $log.debug('check polling ',$scope);
                 $timeout.cancel(timer);
                 updateGroups();
                 timer = $timeout(function(){
@@ -820,13 +878,35 @@ angular.module('firstlife.directives', [])
                     polling();
                 },MODAL_RELOAD_TIME);
             };
+            
             $scope.$on('$destroy', function(e) {
                 if(!e.preventSimpleEntityList){
                     e.preventSimpleEntityList = true;
                     $timeout.cancel(timer);
+                    delete $scope;
                 }
             });
 
+            $scope.$watch('id',function(e,old){
+                // cambia il marker
+                $log.debug('watch id',e,old);
+                if(e != old){
+                    // stop polling
+                    $timeout.cancel(timer);
+                    // init delle simple entities
+                    initList();
+                }
+            });
+            
+            $scope.altro = $scope.owner;
+            $scope.$watch('owner',function(e,old){
+                // cambia il marker
+                $log.debug('watch owner',e,old);
+                if(e != old){
+                    $scope.altro = $scope.owner;
+                }
+            });
+            
             initList();
 
 
@@ -858,6 +938,7 @@ angular.module('firstlife.directives', [])
                 );
                 function upadateGroupList(list,i){
                     var group = $scope.groups[i];
+                    $log.debug('check upadateGroupList ',list);
                     for(var j = 0; j < list.length; j++){
                         var id = list[j][group.idKey];
                         var index = group.list.map(function(e){return e[group.idKey]}).indexOf(id);

@@ -100,7 +100,8 @@ angular.module('firstlife.controllers')
                     });
                     console.log("modal?!?");
                     $scope.$emit('openPlaceModal', {marker: marker.id});
-                    polling(marker.id);
+                    //polling(marker.id);
+                    updateInfoPlaceDetails($scope.infoPlace.marker.id);
                 });  
             }
             $scope.openModalPlace = function() {
@@ -437,10 +438,10 @@ angular.module('firstlife.controllers')
                 function(marker){
                     angular.extend($scope.infoPlace.marker,marker);
                     // carico figli e padre del marker, se ce ne sono
-                    loadSibillings(marker);
+//                    loadSibillings(marker);
                     // se non disabilitati
-                    if(!$scope.currentType.disable_comments)
-                        loadComments(marker);
+//                    if(!$scope.currentType.disable_comments)
+//                        loadComments(marker);
                     // mando il messaggio per il check delle immagini a ImagesCtrl
                     $scope.$broadcast("checkImagePlaceModal",{marker:marker});
                     $ionicLoading.hide();
