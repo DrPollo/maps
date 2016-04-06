@@ -1,6 +1,6 @@
 angular.module('firstlife.services')
 
-    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', function(myConfig, leafletData, entityFactory, $ionicLoading, $rootScope ,$q, $cordovaGeolocation) {
+    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$log','$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', function(myConfig, leafletData, entityFactory, $log,$ionicLoading, $rootScope ,$q, $cordovaGeolocation) {
 
         self.config = myConfig;
 
@@ -47,10 +47,9 @@ angular.module('firstlife.services')
             getMapBounds: function(){
                 var deferred = $q.defer();
                 leafletData.getMap("mymap").then(function(map) {
-                    if(consoleCheck) console.log("MapService, getMapBounds, response: ",map);
                     deferred.resolve(map.getBounds());
                 },function(response){
-                    if(consoleCheck) console.log("MapService, getMapBounds, errore: ",response);
+                    $log.error("MapService, getMapBounds, errore: ",response);
                     deferred.reject(response);
                 });
                 return deferred.promise;
@@ -74,7 +73,6 @@ angular.module('firstlife.services')
             setTimeFilters: function(time){
                 if(!self.filters)
                     self.filters = {};
-                if(consoleCheck) console.log("MapService, setTimeFilters, time: ",self.filters.time, time);
                 self.filters.time = time;
             },
             getTimeFilters: function(){
@@ -88,7 +86,6 @@ angular.module('firstlife.services')
             },
             getMap: function(){
                 // controllo se ho la mappa in cache
-                if(consoleCheck) console.log("MapService, getMap", self.map);
                 if(self.map){
                     return self.map;
                 }else{
@@ -109,7 +106,6 @@ angular.module('firstlife.services')
                         var center = map.getCenter();
                         // recupero zoom della mappa
                         var zoom = map.getZoom();
-                        if(consoleCheck) console.log("MapServices, getCenter, map ",map," center ",center);
                         // restituisco centro + zoom
                         deferred.resolve({lat:center.lat, lng:center.lng, zoom:zoom});
                     },
@@ -134,7 +130,6 @@ angular.module('firstlife.services')
                 return [];
             },
             get: function(id){
-                console.log("mapservice get!");
                 var deferred = $q.defer();
                 entityFactory.get(id, false).then(
                     function (marker){
@@ -149,18 +144,16 @@ angular.module('firstlife.services')
                 return  deferred.promise;
             },
             getDetails: function(id){
-                console.log("mapservice getDetails!");
                 var deferred = $q.defer();
                 //disabilito la cache
                 entityFactory.get(id, true).then(
                     function (marker){
                         //aggiorno i marker della mappa
-                        if(consoleCheck) console.log("MapService, getDetails, response: ",marker);
                         // non serve aggiornare updateMarker(marker);
                         deferred.resolve(marker);
                     },
                     function (err){
-                        if(consoleCheck) console.log("MapService, getDetails, error: ",err);
+                        $log.error("MapService, getDetails, error: ",err);
                         deferred.reject(err);
                     }
                 );
@@ -182,18 +175,16 @@ angular.module('firstlife.services')
             },
             removeMarker: function(entityId){
                 var deferred = $q.defer();
-                if(consoleCheck) console.log("remove marker id: ", entityId);
                 entityFactory.remove(entityId).then(
                     function(response){
                         var index = self.map.markers.map(function(e){return e.id}).indexOf(entityId);
                         if(index >= 0 ){
                             self.map.markers.splice(index,1);
                         }
-                        if(consoleCheck) console.log("MapService, deleteMarker, success: ", response);
                         deferred.resolve(response);
                     },
                     function(response){
-                        if(consoleCheck) console.log("MapService, deleteMarker, error: ", response);
+                        $log.error("MapService, deleteMarker, error: ", response);
                         deferred.reject(response);
                     }
                 );
@@ -201,7 +192,6 @@ angular.module('firstlife.services')
             },
             createMarker :function(entity){
                 var deferred = $q.defer();
-                if(consoleCheck) console.log("create marker: ", entity.id);
                 entityFactory.create(entity).then(
                     function(marker){
                         var index = self.map.markers.map(function(e){return e.id}).indexOf(entity.id);
@@ -211,11 +201,10 @@ angular.module('firstlife.services')
                         }else{
                             self.map.markers.push(marker);
                         }
-                        if(consoleCheck) console.log("MapService, createMarker, success: ", marker);
                         deferred.resolve(marker);
                     },
                     function(err){
-                        if(consoleCheck) console.log("MapService, createMarker, error: ", err);
+                        $log.error("MapService, createMarker, error: ", err);
                         deferred.reject(err);
                     }
                 );
@@ -224,7 +213,6 @@ angular.module('firstlife.services')
 
             updateMarker :function(entity){
                 var deferred = $q.defer();
-                if(consoleCheck) console.log("update marker: ", entity.id);
                 entityFactory.update(entity).then(
                     function(marker){
                         var index = self.map.markers.map(function(e){return e.id}).indexOf(entity.id);
@@ -234,11 +222,10 @@ angular.module('firstlife.services')
                         }else{
                             self.map.markers.push(marker);
                         }
-                        if(consoleCheck) console.log("MapService, updateMarker, success: ", marker);
                         deferred.resolve(marker);
                     },
                     function(err){
-                        if(consoleCheck) console.log("MapService, updateMarker, error: ", err);
+                        $log.error("MapService, updateMarker, error: ", err);
                         deferred.reject(err);
                     }
                 );
@@ -263,9 +250,7 @@ angular.module('firstlife.services')
         // centra mappa
 
         function setMapCenter(params){
-            if(consoleCheck) console.log("MapService, setMapCenter, params ",params);
             leafletData.getMap("mymap").then(function(map) {
-                if(consoleCheck) console.log("MapService, setMapCenter, response: ",map, " params ",params);
                 var center = new L.LatLng(params.lat, params.lng);
                 if(params.zoom){
                     map.setView(center, parseInt(params.zoom));
@@ -273,7 +258,7 @@ angular.module('firstlife.services')
                     map.setView(center, parseInt(config.map.zoom_level));
                 }
             },function(response){
-                if(consoleCheck) console.log("MapService, setMapCenter, errore: ",response);
+                $log.error("MapService, setMapCenter, errore: ",response);
             });
 
         }
@@ -364,7 +349,6 @@ angular.module('firstlife.services')
                 category_filter : config.actions.category_filter,
                 name: config.app_name
             };
-            if(consoleCheck) console.log("setInitOptions: ", self.map);
         }
 
         // imposta i layer della mappa
@@ -402,7 +386,6 @@ angular.module('firstlife.services')
 
         function setCategories() {
             var cats = self.config.types.categories;
-            if(consoleCheck) console.log("MapServices, categorie: ", cats);
             self.map.categories = cats;
             self.map.mainCategories = cats[0];
             self.map.css = self.config.design.css;
@@ -417,7 +400,6 @@ angular.module('firstlife.services')
             if(!reset)
                 reset = false;
 
-            if(consoleCheck) console.log("MapService, updateMarkersDistributed, filtro temporale? ", self.filters.time);
 
             leafletData.getMap("mymap").then(function(map) {
 
@@ -463,7 +445,6 @@ angular.module('firstlife.services')
                         // se la cache è disabilitata o reset = true
                         if(!self.config.behaviour.marker_cache || reset){
                             //azzero i marker della mappa
-                            if(consoleCheck) console.log("azzero i marker della mappa");
                             self.map.markers = [];
                         }
                         //if(consoleCheck) console.log("parametri query BBox: ", bboxTmp);
@@ -472,12 +453,11 @@ angular.module('firstlife.services')
                             function(markers) {
                                 if (markers) {
                                     updateMarkers(markers);
-                                    if(consoleCheck) console.log("MapServices, updateMarkersDistributed, markers ",markers);
                                 }
                                 deferred.resolve(markers);
                             },
                             function(error) {
-                                if(consoleCheck) console.log("Failed to get all markers, result is " , error);
+                                $log.error("Failed to get all markers, result is " , error);
                                 deferred.reject(error);
                             });
                         q++;
@@ -489,23 +469,19 @@ angular.module('firstlife.services')
         };
 
         function updateMarkers(markers){
-            if(consoleCheck) console.log("MapService, updateMarkers, markers: ",markers);
             if (markers) {
                 for (var key in markers) {
                     updateMarker(markers[key]);
                 }
             }
-            if(consoleCheck) console.log("MapService, updateMarkers, markers fine: ",self.map.markers);
         }
         function updateMarker(marker){
             var index = self.map.markers.map(function(e){return e.id;}).indexOf(marker.id);
-            if(consoleCheck) console.log("MapService, updateMarker, marker: ",marker," indice: ",index, " array: ",self.map.markers);
             if(marker &&  index < 0){
                 self.map.markers.push(marker);
             }else{
                 self.map.markers[index] = marker;
             }
-            if(consoleCheck) console.log("MapService, updateMarker, markers: ",self.map.markers);
         }
         function bakeThePie(cluster) {
             var markers = cluster.getAllChildMarkers();

@@ -21,7 +21,6 @@ angular.module('firstlife.controllers')
         // check autenticazione
         var user = MemoryFactory.readUser();
         if(user){
-            console.log("isLoggedIn? ", true);
             $scope.isLoggedIn = true;
         }
 
@@ -33,13 +32,11 @@ angular.module('firstlife.controllers')
         
         // listner per l'apertura della modal *click sul marker*
         // se le foto nelle modal sono abilitate
-        console.log("ImagesCtrl, immagini abilitate? ", $scope.config.design.show_thumbs, $scope);
         if($scope.config.design.show_thumbs){
             $scope.$on('checkImagePlaceModal', function(event, args) {
                 //console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
                 if (!event.defaultPrevented) {
                     event.defaultPrevented = true;
-                    console.log("Caricamento dettagli modal Carichiamo le immagini!", event, args);
                     $scope.loadImages(args.marker.id,args.marker.entity_type);
                 }
             });   
@@ -65,7 +62,6 @@ angular.module('firstlife.controllers')
 //                    images[i].url = '//'+images[i][param.size];
 //                }
                 angular.extend($scope.slider.images,images);
-                console.log("loadGallery, getImages, slider: ",$scope.slider.images);
                 openGallery(index);
             }, function(err){
                 console.log("loadGallery, getImages, errore: ",err);
@@ -98,7 +94,6 @@ angular.module('firstlife.controllers')
             });
 
             $scope.gallery.close = function() {
-                console.log("ImageCtrl, gallery.close, close!");
                 $scope.gallery.hide();
                 $rootScope.galleryStatus = false;
             };
@@ -287,12 +282,11 @@ angular.module('firstlife.controllers')
         $scope.getImages = function(entityId, param, entity_type){
             ImageService.getImages(entityId, param, entity_type)
                 .then(function (data){
-                console.log("getImages, risultato: ",data);
                 var images = data["images"],
                     placeId = data["id"];
                 addImages(entityId,images,entity_type)
             }, function(err){
-                console.log("getImages, errore: ",err);
+                $log.error("getImages, errore: ",err);
             });
         };
 
@@ -316,7 +310,6 @@ angular.module('firstlife.controllers')
                 if (index < 0)
                     $scope.images.push(images[i]);
             }
-            console.log("salvo le immagini: ", $scope.images);
         }
 
         $scope.addToImageCache = function(image){

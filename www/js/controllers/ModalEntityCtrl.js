@@ -21,41 +21,35 @@ angular.module('firstlife.controllers')
             },MODAL_RELOAD_TIME);
         };
 
-
-
-        // se lascio mapCtrl
-        $scope.$on('ModalEntityCtrl', function(){
-            $scope.infoPlace.modal.remove();
-        });
-
-
-
         // visualizzazione web o mobile?
         $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
+
+        // se lascio mapCtrl
+        $scope.$on('ModalEntityCtrl', function(e){
+            if(!e.ModalEntityCtrlPrevented){
+                e.ModalEntityCtrlPrevented = true;
+                $scope.closeModalPlace();
+            }
+        });
+
+        
+
         $scope.$on("markerClick", function(event,args){
 
-            if (!event.defaultPrevented) {
-                if(consoleCheck)console.log("marker click in placeCtrl", event, args);
-
-                event.defaultPrevented = true;
+            if (!event.markerClickPrevented) {
+                event.markerClickPrevented = true;
                 if(args.marker){
                     $scope.showMCardPlace(args.marker);
                 }
-                event.preventDefault();
             }
         }); 
 
         $scope.$on("markerClickClose", function(event,args){
 
-            if (!event.defaultPrevented) {
-                if(consoleCheck)console.log("marker click in ModalEntityCtrl", event, args);
-
-                if($scope.infoPlace.modal){
-                    // to do da integrare con il controllo delle immagini da salvare
-                    $scope.closeModalPlace();
-                }
-                event.preventDefault();
+            if (!event.markerClickClosePrevented) {
+                event.markerClickClose=true;
+                $scope.closeModalPlace();
             }
         }); 
 
@@ -67,17 +61,17 @@ angular.module('firstlife.controllers')
             // recupero il tipo e lo metto dentro $scope.currentType
             initTypeChecks(marker.entity_type);
 
-            $log.debug("marker da visualizzare",marker,$scope.infoPlace.modal);
+            $log.debug("marker da visualizzare",marker);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
             if($scope.infoPlace.modal){
-                $log.debug("modal esiste!");
+                $log.debug("modal esiste!",$scope.infoPlace.modal);
                 // la modal esiste
                 $scope.infoPlace.modal.show();
                 changeModal(marker.id);
+                
             }else{
                 // la modal non esiste, la creo
-                if(consoleCheck)console.log("showMCardPlace e la modal e' da creare! ",marker);
                 $scope.infoPlace = {};
                 $scope.infoPlace.marker = angular.copy(marker);
 
@@ -164,9 +158,9 @@ angular.module('firstlife.controllers')
                     $scope.popover.hide();
                     //$scope.popover.remove();
                 }
-                //$scope.infoPlace.modal.hide();
+                if($scope.infoPlace.modal)
+                    $scope.infoPlace.modal.remove();
                 
-                $scope.infoPlace.modal.remove();
                 $timeout.cancel(timer);
                 $scope.$emit("closePlaceModal");
                 delete $scope.infoPlace.modal;
@@ -176,16 +170,16 @@ angular.module('firstlife.controllers')
                 //$scope.$emit("closePlaceModal");
             }
 
-            $scope.$on('$destroy', function() {
-                $log.debug('destroy modal');
-                //$scope.popover.remove();
-                //$scope.infoPlace.modal.remove();
-                
+            $scope.$on('$destroy', function(e) {
+                if(!e.destroyModalPrevented){
+                    e.destroyModalPrevented = true;
+                    $log.debug('destroy modal');
+                }
             });
             var hide = $scope.$on('modal.hidden', function(e) {
                 //segnalo la chiusura della modal
-                if($scope.infoPlace.modal && !e.defaultPrevented){
-                    e.defaultPrevented = true;
+                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
+                    e.modalHiddenPrevented = true;
                     //deregistro il listner per la hide
                     hide();
                     chiudoModal();

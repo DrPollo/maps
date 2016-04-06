@@ -720,7 +720,8 @@ angular.module('firstlife.directives', [])
     return {
         restrict: 'EG',
         scope: {
-            marker: '=marker'
+            marker: '=marker',
+            click: '=click'
         },
         templateUrl: '/templates/map-ui-template/entityRelations.html',
         controller: ['$scope','$log','$filter','myConfig','MapService', function($scope,$log,$filter,myConfig,MapService){
@@ -778,7 +779,7 @@ angular.module('firstlife.directives', [])
                     if(!$filter('isEmpty')($scope.marker[parentRel.field]) && !keysBanList[parentRel.field]){
                         // aggiungo il campo alla banList 
                         keysBanList[parentRel.field] = true;
-                        var p = MapService.searchFor(marker[parentRel.field], 'id');
+                        var p = MapService.searchFor($scope.marker[parentRel.field], 'id');
                         parents[key] = angular.copy(parentRel);
                         parents[key].list = p;
                     }
@@ -819,14 +820,18 @@ angular.module('firstlife.directives', [])
                     polling();
                 },MODAL_RELOAD_TIME);
             };
-            $scope.$on('$destroy', function() {
-                $timeout.cancel(timer);
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventSimpleEntityList){
+                    e.preventSimpleEntityList = true;
+                    $timeout.cancel(timer);
+                }
             });
 
             initList();
 
 
             function initList(){
+                $log.debug('check initList ',$scope);
                 for(var k in $scope.types){
                     var type = $scope.types[k];
                     var group = angular.copy(type);
@@ -897,8 +902,9 @@ angular.module('firstlife.directives', [])
             $scope.slider.pointer = 0;
             // apertura della gallery
             $scope.openGallery = function(index,gallery){
+                $log.debug("openGallery, params: ", index,gallery);
+                
                 $scope.slider.images = gallery;
-                console.log("ImagesCtrl, openGallery, params: ", index);
                 if(!isNaN(index)){
                     $scope.slider.pointer = index;
                 }

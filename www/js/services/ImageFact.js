@@ -26,7 +26,6 @@ angular.module('firstlife.factories')
         for(i in self.config.types.list){
             sendUrl[self.config.types.list[i].key] = self.config.types.list[i].url;
         }
-        console.log("SenderFactory, preparo gli url: ",sendUrl);
         
         
         // utente di default -1 (guest)
@@ -35,7 +34,6 @@ angular.module('firstlife.factories')
         if(MemoryFactory.readUser()){
             // set user id
             var user = MemoryFactory.readUser();
-            console.log("ImageFactory, MemoryFactory.readUser() : ", user);
             var user_id  = user.id;
         }
         

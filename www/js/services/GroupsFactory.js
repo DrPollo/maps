@@ -114,7 +114,7 @@ angular.module('firstlife.factories')
                         }
                     },
                     function(response){
-                        $log.error("groupsFactory, get member, error ",response);
+                        //$log.error("groupsFactory, get member, error ",response);
                         deferred.reject(response);
                     });
                 return deferred.promise;

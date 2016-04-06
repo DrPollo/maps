@@ -12,12 +12,11 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        console.log("SimpleEntityFactory, get, response: ", response);
                         comments[entityId] = response;
                         deferred.resolve(response.data);
                     },
                     function(err){
-                        console.log("SimpleEntityFactory, get, error: ", err);
+                        $log.error("SimpleEntityFactory, get, error: ", err);
                         deferred.reject(err);
                     });
                 return deferred.promise;  
@@ -36,11 +35,10 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        console.log("SimpleEntityFactory, add, response: ", response);
                         deferred.resolve(response);
                     },
                     function(err){
-                        console.log("SimpleEntityFactory, add, error: ", err);
+                        $log.error("SimpleEntityFactory, add, error: ", err);
                         deferred.reject(err);
                     });
                 return deferred.promise;
@@ -59,11 +57,10 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        console.log("SimpleEntityFactory, add, response: ", response);
                         deferred.resolve(response);
                     },
                     function(err){
-                        console.log("SimpleEntityFactory, add, error: ", err);
+                        $log.error("SimpleEntityFactory, add, error: ", err);
                         deferred.reject(err);
                     });
                 return deferred.promise;
@@ -79,11 +76,10 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        console.log("SimpleEntityFactory, delete, response: ", response);
                         deferred.resolve(response);
                     },
                     function(err){
-                        console.log("SimpleEntityFactory, delete, error: ", err);
+                        $log.error("SimpleEntityFactory, delete, error: ", err);
                         deferred.reject(err);
                     });
                 return deferred.promise;
