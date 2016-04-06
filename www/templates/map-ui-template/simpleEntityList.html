@@ -13,7 +13,7 @@
             <span class="message"><span class="username">{{item.display_name}}</span> {{'WHEN'|translate}} {{item.timestamp| date: 'dd/MM/yyyy'}}</span>
 
             <button ng-if="user.id == item.user_id || item.user_id == owner" ng-click="delete(item[group.idKey],group.key,outerIndex)" class="button button-clear">
-                <i class="icon ion-close-round"></i> 
+                <i class="icon ion-android-cancel"></i> 
             </button>
         </div>
     </div>

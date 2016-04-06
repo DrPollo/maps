@@ -1,8 +1,8 @@
 <div ng-if="role" ng-show="membersList.length > 0" class="list card">
-    <div class="item item-divider">{{'GROUP_MEMBERS'|translate}}<span class="badge badge-positive">{{membersList.length}}</span></div>
+    <div class="item item-divider">{{'GROUP_MEMBERS'|translate}}</div>
     <div ng-repeat="member in membersList track by $index" class="item item-button-right">
         <button ng-if="user.id != member.memberId && role == 'owner'" ng-click="deleteMember(member.groupId,member.memberId)" class="button button-clear">
-            <i class="icon ion-close-round"></i> 
+            <i class="icon ion-android-cancel"></i> 
         </button>
         <div>
             <span ng-if="member.displayName" class="username">{{member.displayName}}</span>
