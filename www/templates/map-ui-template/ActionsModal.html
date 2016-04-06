@@ -1,5 +1,8 @@
-<div>{{'ACTIONS '+label |translate}}</div>
-<div class="button icon-left button-clear button-positive" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">
-    <i class="icon {{action.icon}}"></i>
-    {{action.label |translate}}
+<div class="card list" ng-show="actionList.length > 0">
+    <div class="item item-divider">{{'ACTIONS '+label |translate}}</div>
+    <div class="item icon-left" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">
+        <i class="icon {{action.icon}}"></i>
+        {{action.label |translate}}
+    </div>
 </div>
+

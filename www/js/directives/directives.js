@@ -685,7 +685,7 @@ angular.module('firstlife.directives', [])
         templateUrl: '/templates/map-ui-template/membersCounter.html',
         controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
 
-            $scope.counter = 1;
+            initCounter();
             
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersCounter){
@@ -694,14 +694,27 @@ angular.module('firstlife.directives', [])
                 }
             });
             
-            groupsFactory.getMembers($scope.id).then(
-                function(response){
-                    if(Array.isArray(response)){
-                        $scope.counter = response.length;
-                    }
-                },
-                function(response){$log.error('groupsFactory, getMembers, error ',response);}
-            );
+            $scope.$watch('id',function(e,old){
+                // cambia il marker
+                $log.debug('watch id',e,old);
+                if(e != old){
+                    // init delle simple entities
+                    initCounter();
+                }
+            });
+            
+            
+            function initCounter(){
+                $scope.counter = 1;
+                groupsFactory.getMembers($scope.id).then(
+                    function(response){
+                        if(Array.isArray(response)){
+                            $scope.counter = response.length;
+                        }
+                    },
+                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                );
+            }
         }]
     }
 
@@ -716,9 +729,9 @@ angular.module('firstlife.directives', [])
         templateUrl: '/templates/map-ui-template/membersList.html',
         controller: ['$scope','$log','$filter','groupsFactory','MemoryFactory', function($scope,$log,$filter,groupsFactory,MemoryFactory){
 
-            $scope.counter = [];
+            //$scope.counter = [];
             $scope.user = MemoryFactory.getUser();
-            $scope.role = false;
+            //$scope.role = false;
 
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersList){
@@ -728,10 +741,23 @@ angular.module('firstlife.directives', [])
             });
             
             
+            $scope.$watch('id',function(e,old){
+                // cambia il marker
+                $log.debug('watch id',e,old);
+                if(e != old){
+                    // init delle simple entities
+                    initList();
+                }
+            });
+            
             initList();
 
 
             function initList(){
+                $scope.role = false;
+                $scope.counter = [];
+                $scope.membersList = [];
+                
                 groupsFactory.getMembers($scope.id).then(
                     function(response){
                         if(Array.isArray(response)){
@@ -787,17 +813,7 @@ angular.module('firstlife.directives', [])
                     loadSibillings();
                 }
             });
-            
-            // controllo il flag di reset che viene passato nel setup della direttiva nella vista
-            //            $scope.$watch('marker',function(e,old){
-            //                if(e && !old){
-            //                    //init relations, qualcosa e' cambiato
-            //                    initRelations();
-            //                    // reset del flag
-            //                    $scope.reset = false;
-            //                }
-            //
-            //            });
+        
 
             loadSibillings();
 
@@ -897,6 +913,14 @@ angular.module('firstlife.directives', [])
                     initList();
                 }
             });
+            
+            $scope.$watch('toggle',function(e,old){
+                // cambia il marker
+                $log.debug('watch toggle',e,old);
+            });
+            
+            $scope.toggle = 0;
+            $scope.setToggle = function(i){$scope.toggle = i;}
             
             $scope.altro = $scope.owner;
             $scope.$watch('owner',function(e,old){

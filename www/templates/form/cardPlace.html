@@ -68,10 +68,6 @@
                 </span>
             </div>
 
-            <div class="actions content" ng-show="currentType.actions">
-                <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModalPlace" label="currentType.name" reset="reset" ng-init="reset = false"></actions>
-            </div>
-
 
             <div ng-if="config.actions.can_foto || config.design.show_thumbs" ng-show="isPendingImages || (images.length > 0)" id="area-foto" class="content">
                 <div ng-show="config.actions.can_foto && isPendingImages" class="foto-box">
@@ -100,6 +96,8 @@
         <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
         
         <entity-relations marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
+        
+        <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModalPlace" label="currentType.name" reset="reset" ng-init="reset = false"></actions>
         
         <members-list id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
 
