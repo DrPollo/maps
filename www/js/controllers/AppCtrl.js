@@ -1,12 +1,14 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, myConfig, MemoryFactory ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, myConfig, MemoryFactory ) {
         
         
         $scope.config = myConfig;
         $scope.isLoggedIn = false;
         $rootScope.currentLang = $translate.use();
         
+        $scope.apiVersion = 'API version: ' + myConfig.api_version;
+        $scope.clientVersion = 'Client version: ' + myConfig.version;
         
         var consoleCheck = false;
         
@@ -19,7 +21,7 @@ angular.module('firstlife.controllers')
                 if($scope.user.displayName && $scope.user.displayName != ''){
                     $scope.displayName = $scope.user.displayName;
                 }else if($scope.user.type == 1){
-                    $scope.displayName = $scope.user.name.concat(" ").concat($scope.user.lastname);
+                    $scope.displayName = $scope.user.first_name.concat(" ").concat($scope.user.last_name);
                 }else if($scope.user.type == 2){
                     $scope.displayName = $scope.user.name;
                 }else{
@@ -77,6 +79,11 @@ angular.module('firstlife.controllers')
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
           };
+        
+        $scope.myMap = function(){
+            if($scope.user && $scope.user.id)
+                $location.search('users',$scope.user.id);
+        }
         
         /*
          * Funzioni private

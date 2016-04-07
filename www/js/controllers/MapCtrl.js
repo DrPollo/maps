@@ -1,11 +1,10 @@
 angular.module('firstlife.controllers')
-
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log', 'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
-
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
 
 
-        var consoleCheck = true;
-        
+
+        var consoleCheck = false;
+
         var levels = {check:false};
         if (myConfig.map.area.levels){
             levels = {check:true};
@@ -17,20 +16,20 @@ angular.module('firstlife.controllers')
                 levels: levels.check ? levels.list : null,
                 data: $scope.config.map.area.data,
                 style: $scope.config.map.area.style,
-//                onEachFeature: function (feature, layer) {
-//                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
-//                    var marker = L.marker(feature.geometry.coordinates[0][0],{icon: L.icon({html:feature.properties.name}) });
-//                    //layers[feature.properties.id] = layer;
-//                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
-//                }
- 
+                //                onEachFeature: function (feature, layer) {
+                //                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
+                //                    var marker = L.marker(feature.geometry.coordinates[0][0],{icon: L.icon({html:feature.properties.name}) });
+                //                    //layers[feature.properties.id] = layer;
+                //                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
+                //                }
+
             };
             // parto al piano terra
             selectGeoJSONData('level',0);
         }
-        
-        
-        
+
+
+
         // configurazione dell'applicazione
         if(!$scope.config) $scope.config = myConfig;
         var config = myConfig;
@@ -63,7 +62,6 @@ angular.module('firstlife.controllers')
         // Leaflet Map: inizializzazioni
         if(!$scope.map || angular.equals($scope.map,{}) ){
             $scope.map = map;
-            if(consoleCheck) console.log("Init map ",$scope.map, map);
         }
         if(!$scope.categories) $scope.categories = $scope.config.types.categories;
         //definizione dei listner su mappa
@@ -99,7 +97,7 @@ angular.module('firstlife.controllers')
         $scope.$on("$stateChangeSuccess", function() {
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
-            
+
             if(consoleCheck) console.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
                 // check autenticazione
@@ -136,11 +134,15 @@ angular.module('firstlife.controllers')
 
                     case 'login':
                         // vengo dal login
-                        if(consoleCheck) console.log("MapCtrl, gestore cambio di stato, case:login ", $stateParams);
+                        //if(consoleCheck) 
                         locate($stateParams);
+
                         if($stateParams.entity)
                             clickMarker($stateParams.entity);
-                        
+
+                        if($stateParams)
+                            check4customFilters($stateParams,{});
+
                         break;
 
                     default: 
@@ -148,10 +150,19 @@ angular.module('firstlife.controllers')
                         if(consoleCheck) console.log("MapCtrl, gestione stato, default",$stateParams);
                         // posiziono la mappa se ci solo le coordinate, 
                         // altrimenti si lascia il centro della mappa 
+
+                        if($stateParams.entity)
+                            clickMarker($stateParams.entity);
+
+                        if($stateParams)
+                            check4customFilters($stateParams,{});
                 }
-                if(consoleCheck) console.log("Check parametri: ", $stateParams, $location.search());
             }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
+
+            // riattivo il listner
+            //self.watchSearchEnabled = true;
         });
+
 
 
         /*
@@ -169,55 +180,87 @@ angular.module('firstlife.controllers')
          */
         // click su marker > propago evento
         $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-            console.log("MARKER CLICK...controlla, args: ", args,event);
-            if(!$scope.editMode){
-                args.model.focus = false;
-                //event.target.focus = false;
-                clickMarker(args.model.id);
+            $log.log("MARKER CLICK...controlla, args: ", args,event);
+            if(!event.preventMapMarkerClick){
+                event.preventMapMarkerClick = true;
+                
+                
+                if(!$scope.editMode){
+                    args.model.focus = false;
+                    //event.target.focus = false;
+                    clickMarker(args.model.id);
+                }
             }
-            event.preventDefault();
         });   
 
         // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
         $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
-            if(consoleCheck) console.log("Event: moveend...", $scope.map);
-            // controllo se sono in edit mode
-            if(!$scope.editMode){
-                // se e' stato impostato un delay
-                if (MOVEEND_DELAY > 0) {
-                    if (moveendSetTimeout) {
-                        if(consoleCheck) console.log("clearTimeout");
-                        clearTimeout(moveendSetTimeout);
+            if(!event.preventMapMoveend){
+                event.preventMapMoveend = true;
+                if(consoleCheck) console.log("Event: moveend...", $scope.map);
+                // controllo se sono in edit mode
+                if(!$scope.editMode){
+                    // se e' stato impostato un delay
+                    if (MOVEEND_DELAY > 0) {
+                        if (moveendSetTimeout) {
+                            if(consoleCheck) console.log("clearTimeout");
+                            clearTimeout(moveendSetTimeout);
+                        }
+                        moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
+                    } 
+                    else {
+                        updateMarkersDistributed();
                     }
-                    moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
-                } 
-                else {
-                    updateMarkersDistributed();
                 }
             }
-            event.preventDefault();
         });
 
         //listner apertura e chiusura della modal del place
         $scope.$on('openPlaceModal', function(event, args){
-            // aggiorno il parametro place dalla search
-            // updateSearch({place:args.marker});
-            updatePlaceInSearch(args.marker);
-            event.preventDefault();
+            if(!event.preventOpenPlaceModal){
+                event.preventOpenPlaceModal = true;
+                // aggiorno il parametro place dalla search
+                // updateSearch({place:args.marker});
+                updatePlaceInSearch(args.marker);
+            }
         });
         $scope.$on('closePlaceModal', function(event, args){
-            // rimuovo il parametro place dalla search
-            deleteInSearch('entity');
-            event.preventDefault();
+            if(!event.preventClosePlaceModal){
+                event.preventClosePlaceModal = true;
+                // rimuovo il parametro place dalla search
+                deleteInSearch('entity');
+            }
         });
         //listner cambio dei parametri search
         $scope.$watch(
             function(){ return $location.search(); }, 
             function(e, old){
-                if(consoleCheck) console.log("cambio search! ",e, " vecchi parametri: ",old, " devo controllare? ", self.watchSearchEnabled);
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
                     if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
+
+                    // controllo i parametri di posizione
+                    check4Position(e);
+                    // controllo i parametri di entita'
+                    check4entity(e,old);
+                    // controllo i filtri custom
+                    check4customFilters(e,old);
+                }
+                // abilito il listner (serve per gestire il pulsante back del browser)
+                // il listner si auto-abilita dopo ogni cambio di parametri
+                self.watchSearchEnabled = true;
+                // controllo i parametri di posizione
+                function check4Position(e){
+                    // se ho settati i parametri di posizione
+                    if(e.lat && e.lng && e.zoom){
+                        if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
+                            locate(e);
+                        }
+                    }
+
+                }
+                // controllo il parametro entity
+                function check4entity(e,old){
                     if(e.entity){
                         //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
                         // placeModal da aprire
@@ -226,20 +269,40 @@ angular.module('firstlife.controllers')
                         //localizzo perche' il marker potrebbe non essere nello scope
                         locate(parseInt(e.entity));
                         //}
-                    }else{
+                    }else if(old.entity){
                         // chiudo la modal
                         $scope.$broadcast("markerClickClose");
-                        // se ho settati i parametri di posizione
-                        if(e.lat && e.lng && e.zoom){
-                            if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
-                                locate(e);
+
+                    }
+                };
+                // controllo se trovo nei parametri search dei parametri 
+                // dei filtri custom
+                function check4customFilters(e,old){
+                    var filters = config.map.filters;
+                    for(var i = 0 ; i < filters.length; i ++){
+                        var param = filters[i].search_param;
+                        var filter = filters[i];
+                        var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                        if(e[param]){//trovato un parametro
+                            // filtro per per la property
+                            var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+
+                            if(index > -1){
+                                $scope.filterConditions[index] = rule;
+                            }else{
+                                $scope.filterConditions.push(rule);
                             }
+
+                        }else{
+                            // rimuovo filtro per la property
+                            var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                            if(index > -1 ){
+                                $scope.filterConditions.splice(index,1);
+                            }   
                         }
                     }
+
                 }
-                // abilito il listner (serve per gestire il pulsante back del browser)
-                // il listner si auto-abilita dopo ogni cambio di parametri
-                self.watchSearchEnabled = true;
             },
             true);
 
@@ -255,14 +318,14 @@ angular.module('firstlife.controllers')
         // filtro sulle condizioni, se cambiano ricalcolo i marker filtrati
         $scope.$watch("filterConditions", function(newVal,oldVal) {
             if($scope.map && $scope.map.markers){
-                if(consoleCheck) console.log("cambio dei filtri, ecco i Markers che considero: ",$scope.map.markers,$scope.map.markers.length);
                 $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
-                if(consoleCheck) console.log("Cambio filtro, nuovi marker filtrati: ",$scope.filtred);
             }
         },true);
         $scope.$watch("filtred", function(newVal,oldVal) {
-            if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.filtred,$scope.filtred.length);
-            setMapMarkers();
+            if(!angular.equals(newVal,oldVal)){
+                setMapMarkers();
+            }
+            
         },true);
 
 
@@ -271,7 +334,7 @@ angular.module('firstlife.controllers')
             locate(args);
             // entro in edit mode
             changeMode('edit');
-            $scope.updateEntity = args.id;
+            $scope.updateEntity = args;
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -298,26 +361,25 @@ angular.module('firstlife.controllers')
             // click di un marker
             clickMarker(args.id);
             locate(args.id);
-            
+
             event.preventDefault();
         });
-        
+
         // richiesta di cambio di livello 
         $scope.$on("switchMapLevel",function(event,args){
             // click cambio il livello della mappa
             if(levels.check)
                 selectGeoJSONLevel(args.level);
-            
+
             event.preventDefault();
         });
-        
+
         /*
          * Funzioni pubbliche
          * 1) isString, filtro
          * 2) greaterThan, filtro
          * 3) differentThan, filtro
          * 4) switchEditMode: cambio tra modalita' visualizzazione e edit
-         * 5) goToWall: vai alla bacheca
          * 6) showModalFavPlace: mostra le aree d'interesse
          * 7) showMFilterCat: mostra i filtri categorie
          * 8) showASEdit: mostra la scelta di tipo di entita' al click del pin in edit mode
@@ -358,11 +420,6 @@ angular.module('firstlife.controllers')
         };
 
 
-        $scope.goToWall = function () {
-            $state.go("app.wall");
-        }
-
-
         $scope.showModalFavPlace = function() {
             $scope.filterFavPlace = {};
             if(consoleCheck) console.log("check area: ",$scope.area);
@@ -387,7 +444,7 @@ angular.module('firstlife.controllers')
             $scope.closeFilterFavPlace = function() {
                 $scope.filterFavPlace.modal.remove();
             };
-            
+
             $scope.$on('modal.hidden', function() {
                 delete $scope.filterFavPlace.modal;
             });
@@ -433,12 +490,25 @@ angular.module('firstlife.controllers')
         //action sheet per creazione place/evento
         $scope.showASEdit = function(){
             // se devo aggionare una entita'
-            if($scope.updateEntity){
-                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity,};
+            if($scope.updateEntity && $scope.updateEntity.id){
+                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity.id,};
+                $state.go('app.editor', params);
+                $scope.switchEditMode();
+            }if($scope.updateEntity){
+                // se ho gia' dei parametri per la insert
+                var params = {};
+                for(var k in $scope.updateEntity){
+                    params[k] = $scope.updateEntity[k];
+                }
+                // sovrascrivo lat e lng del parent
+                params.lat = $scope.map.center.lat;
+                params.lng = $scope.map.center.lng;
+
                 $state.go('app.editor', params);
                 $scope.switchEditMode();
             }else{
                 // se non devo aggiornare nessuna entita'
+                // e non ho paramentri gia' stabiliti
                 clickToAdd();
             }
         }
@@ -549,8 +619,8 @@ angular.module('firstlife.controllers')
         $scope.showWall = function(){
             if(consoleCheck) console.log("MapCtrl, showWall!");
             if(consoleCheck) console.log("check area: ",$scope.area);
-            $scope.markerChildren = {};
-            $ionicModal.fromTemplateUrl('templates/form/wall.html', {
+
+            $ionicModal.fromTemplateUrl('templates/modals/wall.html', {
                 scope: $scope,
                 animation: 'fade-in'
             }).then(function(modal) {
@@ -567,26 +637,7 @@ angular.module('firstlife.controllers')
             $scope.$on('$destroy', function() {
                 $scope.wall.remove();
             });
-            $scope.loadChildren = function(marker){
-                // caricamento dei child
-                var childrenRelations = $scope.config.types.child_relations[marker.entity_type];
-                var check = false,
-                    children = {};
-                for(key in childrenRelations){
-                    var childRel = childrenRelations[key];
-                    var c = MapService.searchFor(marker.id, childRel.field);
-                    if(consoleCheck) console.log("Cerco per il campo ",childRel.field," il marker con valore ", marker.id, " risultato ",c);
-                    if(c.length > 0){
-                        children[key] = angular.copy(childRel);
-                        children[key].list = c;
-                        check = true;
-                    }
-                }
-                if(check){
-                    if(consoleCheck) console.log("Trovati figli per ",marker.id," figli ",children);
-                    $scope.markerChildren[marker.id] = children;
-                }
-            }
+
             $scope.clickWallItem = function(marker){
                 $scope.closeWall();
                 clickMarker(marker.id);
@@ -594,7 +645,7 @@ angular.module('firstlife.controllers')
             }
         }
 
-        
+
 
 
 
@@ -629,7 +680,7 @@ angular.module('firstlife.controllers')
                     // centro la mappa sul marker
                     // fatto nel listner $scope.locate(parseInt(marker.id));
                     $scope.$broadcast("markerClick", {marker:marker});
-                    
+
                     // se i livelli sono abilitati e se marker ha un livello
                     if(levels.check && marker.level || marker.level===0){
                         // cambio il livello sulla mappa
@@ -676,6 +727,7 @@ angular.module('firstlife.controllers')
                 // cambiamento gia' gestito
                 self.watchSearchEnabled = false;
                 $location.search(key,params[key]);
+                //self.watchSearchEnabled = true;
             }
             if(consoleCheck) console.log("nuovi parametri search: ", $location.search(), params);
         }
@@ -684,6 +736,7 @@ angular.module('firstlife.controllers')
             // cambiamento gia' gestito, listner 
             self.watchSearchEnabled = false;
             $location.search(key,null);
+            self.watchSearchEnabled = true;
         }
 
 
@@ -723,12 +776,12 @@ angular.module('firstlife.controllers')
                 }*/
                 if(consoleCheck) console.log("centro su coordinate: ",coord);
                 var params = {
-                        lat:parseFloat(coord.lat),
-                        lng:parseFloat(coord.lng),
-                        zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
-                    };
-                    
-                
+                    lat:parseFloat(coord.lat),
+                    lng:parseFloat(coord.lng),
+                    zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
+                };
+
+
                 if(consoleCheck) console.log("centro su coordinate: ",params);
                 setMapCenter(params);
             } else if(coord === 'user'){
@@ -793,8 +846,6 @@ angular.module('firstlife.controllers')
         };
 
         function setMapCenter(params){
-            console.log("MapService, setMapCenter, params ",params);
-            
             leafletData.getMap("mymap").then(function(map) {
                 if(consoleCheck) console.log("MapService, setMapCenter, response: ",map, " params ",params);
                 if(params.bound){
@@ -831,7 +882,7 @@ angular.module('firstlife.controllers')
 
         // action sheet di ritorno dall'editor
         function backFromEditor(entityId){
-            if(consoleCheck) console.log("MapCtrl, backFromEditor, entityId: ", entityId);
+            $log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
             if(entityId == -1){
                 content.title = $filter('translate')('ERROR');
@@ -955,7 +1006,8 @@ angular.module('firstlife.controllers')
                            (Array.isArray(valore) && valore.length == 0 ) || 
                            (angular.isObject(valore) && angular.equals(valore,{})) ){
                             // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
-                            if(consoleCheck) console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
+                            //if(consoleCheck) 
+                            console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
                         }else{return false;}
                     }
                     // se ha delle alternative
@@ -968,9 +1020,7 @@ angular.module('firstlife.controllers')
                     if(consoleCheck) console.log("Condizione: ", $scope.filterConditions[key]);
                     for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
                         if(consoleCheck) console.log("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
-                        
-                        $log.debug("comparison ",$scope.filterConditions[key].key,val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal);
-                        
+
                         if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){ 
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
@@ -1012,27 +1062,18 @@ angular.module('firstlife.controllers')
          */
         function setMapMarkers(){
 
-            var bounds = {};
-            MapService.getMapBounds().then(
-                function(response){
-                    bounds = response;
-                    if(consoleCheck) console.log("cambio dei Markers, markers da filtrare: ",$scope.filtred);
-                    //$scope.markersFilteredArray = $filter('filter')($scope.filtred, boundsFiltering);
-                    $scope.markersFilteredArray = angular.copy($scope.filtred);
-                    $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixer);
+            if(consoleCheck) console.log("cambio dei Markers, markers da filtrare: ",$scope.filtred);
 
+            //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
+            $scope.markersFilteredArray = angular.copy($scope.filtred);
+            $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixer);
 
-                    if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
-                    //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
-                    
-                   
-                    updateMarkers($scope.markersFilteredArray);
-                    removeMarkers($scope.markersFilteredArray);
-                    
-                    $scope.$broadcast('timeline.refresh',{list:$scope.markersFiltered});
-                },
-                function(response){console.log("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
-            );
+            updateMarkers($scope.markersFilteredArray);
+            removeMarkers($scope.markersFilteredArray);
+
+            if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
+
+            $scope.$broadcast('timeline.refresh',{list:$scope.markersFiltered});
             // applico le modifiche a markersFiltered
             // aggiungo i marker alla lista 
             function updateMarkers(filtred){
@@ -1070,16 +1111,13 @@ angular.module('firstlife.controllers')
                 var parents = $scope.config.types.parent_relations[val.entity_type];
                 for(key in parents){
                     var parentRel = parents[key];
+                    if(parentRel.exclude)
+                        return true;
                     if(consoleCheck) console.log("MapCtrl, relationsFixer, check ",val.id," in ", parents[key].field);
                     if($scope.filtred.map(function(e){return e.id;}).indexOf(val[parentRel.field]) >= 0)
                         return false;
                 }
                 return true;
-            }
-            // filtro bounding box della mappa, filtro preventivamente
-            function boundsFiltering(val){
-                if(consoleCheck) console.log("MapCtrl, boundsFiltering, val ",val," contains ",bounds.contains([val.lat,val.lng]));
-                return bounds.contains([val.lat,val.lng]);
             }
 
         }
@@ -1119,7 +1157,7 @@ angular.module('firstlife.controllers')
             updatePositionInSearch();
 
         }
-        
+
         function resetMarkersDistributed(){
 
             MapService.resetMarkersDistributed().then(
@@ -1175,9 +1213,9 @@ angular.module('firstlife.controllers')
             if(consoleCheck) console.log("MapCtrl, init filtro entity_type: ",$scope.filters);
 
 
-            
-            
-            
+
+
+
             // init category
             // bug da sistemare, infilo la categoria in catIndex in entityFactory, da tenere allineati!!!!
 
@@ -1205,10 +1243,6 @@ angular.module('firstlife.controllers')
                 }
                 $scope.filterConditions.push(rule);
             }
-            $log.debug("MapCtrl, init filtro categoria: ",$scope.filters,$scope.filterConditions);
-            
-            
-            
             // init filtro per livelli in area
             // es. level: 0, level:1, etc....
             if( $scope.config.map.area && levels.check){
@@ -1233,9 +1267,9 @@ angular.module('firstlife.controllers')
                 $scope.filterConditions.push(rule);
                 if(consoleCheck) console.log("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
             }
-            
-            
-            
+
+
+
 
         }
 
@@ -1285,7 +1319,6 @@ angular.module('firstlife.controllers')
                     MapService.getCenter().then(
                         function(center){
                             var entityDetails = {lat: center.lat, lng:center.lng, id:null, entity_type:button.type};
-
                             // switch evento in base al tipo di editor richiesto editor:
                             // true > normale, false > simple
                             if(!button.simple_editor){
@@ -1442,14 +1475,14 @@ angular.module('firstlife.controllers')
                 );
             }
         }
-        
-        
-        
+
+
+
         // filtro i geoJSON per property (in properties) = value
         // es. level = 1
         function selectGeoJSONData(prop,value){
             $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON(prop,value));
-            
+
         }
         function nextGeoJSONLevel(value){
             if($scope.geojson && $scope.geojson.data && $scope.geojson.levels){
@@ -1457,37 +1490,36 @@ angular.module('firstlife.controllers')
                 var newIndex = (index + 1) %$scope.geojson.levels.length;
                 var newVal = $scope.geojson.levels[newIndex].key
                 selectGeoJSONLevel(newVal);
-            }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to do!");}
+            }
         }
         function selectGeoJSONLevel(value){
-            console.log("MapCtrl, selectGeoJSONLevel ",value);
             if($scope.geojson && $scope.geojson.data){
                 $scope.$apply(function(){
                     $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
-                    
+
                     $scope.$broadcast('timeline.groups.setgroup',{group:value});
                 });
                 $scope.$apply(function(){markerDisabler('level',value);});
-                
-            }else{console.log("MapCtrl, selectGeoJSONLevel: nothing to filter ");}
+
+            }
         }
         function filterGeoJSON(prop,value){
             return function (feature){
                 if((!feature.properties[prop] && feature.properties[prop] !== 0) || feature.properties[prop] == value){
-                        return true;
+                    return true;
                 }
                 return false;
             }
         }
-        
+
         function markerDisabler(prop,value){
             var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
             //console.log("develop ",value,$scope.favCat);
             for(var k in $scope.markersFiltered){
-                
+
                 if($scope.markersFiltered[k][prop] !== value){
                     var icon = angular.copy($scope.markersFiltered[k].icons[$scope.favCat]? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icon);
-                    
+
                     var disabledHtml = '<div class="pin-marker" style="background-color:'+ disabledColor +'"></div>'+
                         '<div class="icon-box"><i class="icon ' + icon.icon + '"></i></div>';
                     icon.html = disabledHtml;
@@ -1499,8 +1531,38 @@ angular.module('firstlife.controllers')
                 }
             }
         }
-        
-        
+
+
+
+        // toggle dei parametri search custom
+
+        function check4customFilters(e,old){
+            var filters = config.map.filters;
+            for(var i = 0 ; i < filters.length; i ++){
+                var param = filters[i].search_param;
+                var filter = filters[i];
+                var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                if(e[param]){//trovato un parametro
+                    // filtro per per la property
+                    var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+
+                    if(index > -1){
+                        $scope.filterConditions[index] = rule;
+                    }else{
+                        $scope.filterConditions.push(rule);
+                    }
+                }else{
+                    // rimuovo filtro per la property
+                    var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                    if(index > -1 ){
+                        $scope.filterConditions.splice(index,1);
+                    }   
+                }
+            }
+
+        }
+
+
     }]).run(function(MapService,myConfig,$timeout,$rootScope){
 
     self.map = MapService.initMap();
@@ -1517,4 +1579,4 @@ angular.module('firstlife.controllers')
         },RELOAD_TIME);
     };
     polling();
-});;
+});

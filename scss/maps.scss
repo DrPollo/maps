@@ -46,6 +46,23 @@
             top:8px;
             left: 8px;
             position: absolute;
+            search-cards{
+                button{
+                    color: white;
+                    background: rgba(0,0,0,0.75);
+                    font-size: 1em;
+                    //max-width: 314px;
+                    span{
+                        overflow: hidden;
+                        display: inline-block;
+                        text-align: left;
+                        width: calc(100% - 40px);
+                    }
+                    i{
+                        //color: white;
+                    }
+                }
+            }
             #floating-search-bar{
                 #barlogo{
                     height: 40px;

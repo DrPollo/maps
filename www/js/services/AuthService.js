@@ -1,9 +1,8 @@
-angular.module('firstlife.factories')
-    .factory('AuthFactory', ['myConfig', 'MemoryFactory', function(myConfig, MemoryFactory) {
+angular.module('firstlife.services')
+    .factory('AuthService', ['myConfig','MemoryFactory','groupsFactory', function(myConfig, MemoryFactory,groupsFactory) {
 
         var dev = false;
         //C: (P&(~Q))
-        
         return {
             checkPerms: function(source){
                 
@@ -11,15 +10,17 @@ angular.module('firstlife.factories')
                 for(a in actions){
                     checkPerms[a] = checkAction(a,source,perms,actions);
                 }
-                if(dev) console.log("AuthFactory, perms ",source,perms,actions,checkPerms);
+                if(dev) console.log("AuthService, perms ",source,perms,actions,checkPerms);
                 return checkPerms;
             },
-            
             checkPerm: function(action,source){
-                if(dev) console.log("AuthFactory, perm ",action,source,perms,actions);
+                if(dev) console.log("AuthService, perm ",action,source,perms,actions);
                 
                 return checkAction(action,source,perms,actions);
             },
+            checkMembership: function(entityId){
+                return groupsFactory.checkMembership(entityId);
+            }
         };
 
         
@@ -37,7 +38,7 @@ angular.module('firstlife.factories')
                         index = 2;
                 }
                 var mask = perms[index];
-                //console.log("authFactory, checkPerms, action e source ",action,source,mask);
+                //console.log("AuthService, checkPerms, action e source ",action,source,mask);
                 //console.log("Result (P&(notQ)) ",self.actions[action],(mask), (self.actions[action]&(mask)));
                 
                 return (actions[action]&(~mask));
@@ -54,5 +55,5 @@ angular.module('firstlife.factories')
     self.perms[1]    = dec2bin(~(myConfig.behaviour.umask.toString()[1])).slice(-3);
     self.perms[2]    = dec2bin(~(myConfig.behaviour.umask.toString()[2])).slice(-3);
     self.actions = {r:'100',u:'010',d:'001'};
-    //console.log("authFactory, checkPerms, run ",myConfig.behaviour.umask, self.perms, self.actions);
+    //console.log("AuthService, checkPerms, run ",myConfig.behaviour.umask, self.perms, self.actions);
 });

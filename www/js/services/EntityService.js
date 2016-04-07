@@ -87,6 +87,10 @@ angular.module('firstlife.services')
                     if(self.config.dev) defaults.text_message = devContent;
                     defaults.name = defaultName;
                     break;
+                case 'comment' :
+                    defaults.message = defaultName;
+                    if(self.config.dev) defaults.message = devContent;
+                    break;
                 default:
                     defaults.type = 1;
                     if(self.config.dev) defaults.description = devContent;

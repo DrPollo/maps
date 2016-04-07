@@ -1,0 +1,40 @@
+<!-- mobile -->
+<div class="content">
+    <button class="button button-outline button-positive button-small button-block ion-images" 
+            ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false"
+            on-tap="loadCamera()">
+        <span>{{'CAMERA'|translate}}</span>
+    </button>
+    <button class="button button-outline button-positive button-small button-block ion-images" 
+            ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false"
+            on-tap="imagePicker()">
+        <span>{{'GALLERY'|translate}}</span>
+    </button>
+    <button class="button button-outline button-positive button-small button-block ion-images" 
+            ng-if="true || config.actions.can_foto && !currentType.disable_immages" id="fileUpload">
+        <span>{{'GALLERY'|translate}}</span>
+        <input id="input-fileUpload" type="file" ng-model="file" name="file" base-sixty-four-input accept="image/*" onload="onLoad" >
+    </button>
+</div>
+<div ng-show="imageCache.length > 0" id="area-foto" class="content">
+    <div class="foto-box">
+        <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
+            <div class="col col-25" ng-if="$index < imageCache.length">
+                <img data-ng-src="{{imageCache[$index]}}" width="100%" /> 
+                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
+            </div>
+            <div class="col col-25" ng-if="$index + 1 < imageCache.length">
+                <img data-ng-src="{{imageCache[$index + 1]}}" width="100%" /> 
+                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
+            </div>
+            <div class="col col-25" ng-if="$index + 2 < imageCache.length">
+                <img data-ng-src="{{imageCache[$index + 2]}}" width="100%" /> 
+                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
+            </div>
+            <div class="col col-25" ng-if="$index + 3 < imageCache.length">
+                <img data-ng-src="{{imageCache[$index + 3]}}" width="100%" /> 
+                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
+            </div>
+        </div>
+    </div>
+</div>

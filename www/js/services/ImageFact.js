@@ -26,7 +26,6 @@ angular.module('firstlife.factories')
         for(i in self.config.types.list){
             sendUrl[self.config.types.list[i].key] = self.config.types.list[i].url;
         }
-        console.log("SenderFactory, preparo gli url: ",sendUrl);
         
         
         // utente di default -1 (guest)
@@ -35,7 +34,6 @@ angular.module('firstlife.factories')
         if(MemoryFactory.readUser()){
             // set user id
             var user = MemoryFactory.readUser();
-            console.log("ImageFactory, MemoryFactory.readUser() : ", user);
             var user_id  = user.id;
         }
         
@@ -49,11 +47,11 @@ angular.module('firstlife.factories')
         return {
             images:function(images, id, entity_type){
                 var data = {};
-                data.user = user_id;
+                data.user_id = user_id;
                 for (var i = 0; i < images.length; i++){
                     var img = 'data:';
                     img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);
-                    data.image = img;
+                    data.filedata = img;
                     var json =  JSON.stringify(data);
                     var req = {
                         method: 'PUT',

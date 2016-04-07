@@ -16,6 +16,7 @@
                 <span ng-if="!isMobile" class="separatore"></span>
                 <button ng-if="!isMobile && config.actions.favourite_place" class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
             </div>
+            <search-cards params="filterConditions"></search-cards>
             <div id="cronologia-box" ng-show="focus">
                 <button class="button button-clear button-dark" id="results-box" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
                     <i class="icon ion-android-time"></i>
@@ -37,6 +38,7 @@
         </div>
     </div>
 
+    
 
     <ion-content scroll="false" class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>

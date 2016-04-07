@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline','angular-toArrayFilter'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
@@ -43,7 +43,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         var authenticate = toState.data.authenticate;
         console.log("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
 
-
+        
         // se ti trovi in uno stato che richiede autenticazione e non sei loggato
         if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn)  {
             // da cancellare self.cache.isStateCached = true;
@@ -57,43 +57,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             console.log("Continuo a ", toState.name);
 
         }
-
-
-        // se l'utente e' loggato ed esce dallo stato login
-        // e non ho gia' creato il listner
-        /*if(!self.logoutHandler && fromState.name == "login" && $rootScope.isLoggedIn) {
-            // iscrivo un listner per prevenire il logout
-            self.logoutHandler = true;
-            self.onRouteChangeOff = $rootScope.$on('$locationChangeStart', function (event, next, current){
-                if($rootScope.isLoggedIn && $location.path() == "/login"){
-                    // console.log("cambio di location ", next, current);
-                    // prevengo il logout involontario con un popup
-                    // creazione del popup
-                    var confirmPopup = $ionicPopup.confirm({
-                        title: 'Logout',
-                        template: 'Stai per effettuare il logout. Vuoi continuare?'
-                    });
-
-                    confirmPopup.then(function(res) {
-                        if(res) {
-                            console.log("sono sicuro, vado a ", next);
-                            onRouteChangeOff(); //disiscrivo il listner
-                            self.logoutHandler = false;
-                            //$location.path($location.url(next));
-                            //instrado verso lo stato login specificando l'azione di logout
-                            $state.go("login",{action:'logout'})
-                        } else {
-                            console.log("resto nello stato ", current);
-                        }
-                    });
-                    //prevent navigation by default since we'll handle it
-                    //once the user selects a dialog option
-                    event.preventDefault();
-                }
-            }); 
-
-        }
-        */
 
     }); 
 
@@ -115,7 +78,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     .config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
-    //console.log(self.config);
+    
     $stateProvider
 
         .state('login', {
@@ -134,7 +97,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         controller: 'AppCtrl as app'
     })
         .state('app.maps', {
-        url: "/maps?zoom&lat&lng&entity",
+        url: "/maps?zoom&lat&lng&entity&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false, 
         views: {
             'menuContent': {
@@ -165,6 +128,18 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             'menuContent': {
                 templateUrl: 'templates/form/userForm.html',
                 controller: 'UserCtrl as user'
+            }
+        },
+        data: {
+            authenticate: true
+        }
+    })
+    .state('app.manager', {
+        url: '/manager/?entity',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/manager.html',
+                controller: 'ManagerCtrl'
             }
         },
         data: {
@@ -240,9 +215,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // commentBox
         PUBLISH:'Pubblica',
         COMMENT_ALLERT:'Il tuo commento verrà pubblicato sul Web e sarà visibile a tutti.',
+        ADD_ENTITY_ALLERT:'Il tuo contributo verrà pubblicato sul Web e sarà visibile a tutti.',
         COMMENT_TO:'Commento a', 
         // menu edit
         CANCEL: 'Cancella',
+        SUCCESS_CANCEL:"Cancellazione eseguita correttamente!",
+        ERROR_CANCEL:"Cancellazione fallita: per favore, riprova in seguito!",
         // walktrhough
         SIGNUP: 'Registrazione',
         EMAIL: 'Email',
@@ -300,6 +278,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PLACE_NAME:'Luogo',
         EVENT_NAME:'Evento',
         POST_NAME:'Post',
+        GROUPS_NAME:'Gruppo',
         CREATION_TEXT:'Cosa vuoi creare?',
         URL_LABEL:'Collegamento esterno',
         URL_PLACEHOLDER:'URL esterno, es. http://www...',
@@ -352,6 +331,28 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Approfondimenti',
         REL_COMMENT_OF_LABEL:'Parla di',
         REL_COMMENT_OF_CHILD_LABEL:'Notizie',
+        REL_BY_GROUP_LABEL:"Inserito da",
+        REL_BY_GROUP_PLACE_CHILD_LABEL:"Luoghi",
+        REL_BY_GROUP_EVENT_CHILD_LABEL:"Eventi",
+        REL_BY_GROUP_POST_CHILD_LABEL:"Approfondimenti",
+        REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
+        GROUP_FILTERING:'Gruppo ',
+        USER_FILTERING:'Contenuti di ',
+        MY_MAP:'La mia mappa',
+        VIEW_GROUP:'Mappa del gruppo',
+        GENERAL_MAP:'Mappa generale',
+        JOIN_GROUP:'Entra nel gruppo',
+        LEAVE_GROUP:'Esci dal gruppo',
+        'ACTIONS GROUPS_NAME':'Azioni Gruppo',
+        ADD_CHILDREN:'Aggiungi a',
+        MANAGE_USERS:'Gestisci membri',
+        GROUP_MEMBERS:'Membri',
+        MESSAGE_PLACEHOLDER:'Testo',
+        DESCRIPTIONS:'Descrizioni',
+        IMAGE:'Immagine',
+        ADD_DESCRIPTION:'Aggiungi descrizione',
+        ADD_COMMENT:'Aggiungi commento',
+        ADD_IMAGE:'Aggiungi immagine',
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -403,9 +404,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         // commentBox
         PUBLISH:'Post',
         COMMENT_ALLERT:'Your comment will be published on the Web and will be visible to all.',
+        ADD_ENTITY_ALLERT:'Your contribution will be published on the Web and will be visible to all.',
         COMMENT_TO:'Comment of', 
         // menu edit
         CANCEL: 'Trash',
+        SUCCESS_CANCEL:"Success: the content is no more!",
+        ERROR_CANCEL:"Sorry, an error as occured, please try again later.",
         // walktrhough
         SIGNUP: 'Signup',
         EMAIL: 'Email',
@@ -463,6 +467,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PLACE_NAME:'Place',
         EVENT_NAME:'Event',
         POST_NAME:'Post',
+        GROUPS_NAME:'Group',
         CREATION_TEXT:'What do you wish to create?',
         URL_LABEL:'External URL',
         URL_PLACEHOLDER:'URL link, ex. http://www...',
@@ -515,7 +520,28 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_ARTICLE_OF_CHILD_LABEL:'Posts',
         REL_COMMENT_OF_LABEL:'About of',
         REL_COMMENT_OF_CHILD_LABEL:'News',
-
+        REL_BY_GROUP_LABEL:"Posted by",
+        REL_BY_GROUP_PLACE_CHILD_LABEL:"Places",
+        REL_BY_GROUP_EVENT_CHILD_LABEL:"Events",
+        REL_BY_GROUP_POST_CHILD_LABEL:"Posts",
+        REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
+        GROUP_FILTERING:'Group ',
+        USER_FILTERING:'Contents of ',
+        MY_MAP:'My map',
+        VIEW_GROUP:'Group map',
+        GENERAL_MAP:'General map',
+        JOIN_GROUP:'Join the group',
+        LEAVE_GROUP:'Leave the grup',
+        'ACTIONS GROUPS_NAME':'Group actions',
+        ADD_CHILDREN:'Add to',
+        MANAGE_USERS:'Manage members',
+        GROUP_MEMBERS:'Members',
+        MESSAGE_PLACEHOLDER:'Text',
+        DESCRIPTIONS:'Descriptions',
+        IMAGE:'Image',
+        ADD_DESCRIPTION:'Add Description',
+        ADD_COMMENT:'Add Comment',
+        ADD_IMAGE:'Add Image',
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
@@ -528,6 +554,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             //$log.debug("headers ",response.headers);
             if(response.data && response.data.data){
                 response.data = response.data.data;
+            }
+            // bug
+            if(response.data.group_id){
+                response.data.id = response.data.group_id;
             }
             return response;
         }

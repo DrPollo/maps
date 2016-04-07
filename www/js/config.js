@@ -6,9 +6,9 @@ angular.module('firstlife.config')
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
-    'api_version' : 'v4/fl',
+    'api_version' : 'v4',
     'ssl': false,
-    'version': '0.4',
+    'version': '0.4.2',
 
     // nome progetto e dominio ! attenzione il dominio va aggiunto negli url domains/<domain_id>/
     'defaults':{
@@ -19,7 +19,6 @@ angular.module('firstlife.config')
             default: {slug:'place',id:1,icon:'ion-location',
                       properties:{
                           'name':{ key: 'name', label: 'NAME', placeholder: 'NAME', required:true, default:"" },
-                          'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:"" },
                           'link_url':{ key: 'link_url', label: 'URL_LABEL', placeholder: 'URL_PLACEHOLDER', default:""},
                           'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date()},
                           'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date()},
@@ -33,12 +32,59 @@ angular.module('firstlife.config')
                           "level":{key:"level", default:0, label:"LEVEL_LABEL",placeholder:"LEVEL_PLACEHOLDER"}
                       }
                      },
+            simpleEntities:{
+                description:{
+                    key:'description',
+                    url:'descriptions',
+                    label:'DESCRIPTION',
+                    title:'DESCRIPTIONS',
+                    fileds:{
+                        title:{key:'title', label:'NAME',default:'',required:true},
+                        description:{key:'description', label:'TEXT',default:'',required:true}
+                    },
+                    contentKey:'description',
+                    contentKeyType:'text',
+                    idKey:'description_id',
+                    icon:'ion-android-list',
+                    addLabel:'ADD_DESCRIPTION'
+                },
+                comment:{
+                    key:'comment',
+                    url:'comments',
+                    label:'COMMENT',
+                    title:'COMMENTS',
+                    fileds:{
+                        message:{key:'message', label:'TEXT',default:'',required:true}
+                    },
+                    contentKey:'message',
+                    contentKeyType:'text',
+                    idKey:'comment_id',
+                    icon:'ion-chatbox-working',
+                    addLabel:'ADD_COMMENT',
+                    exclude:['FL_PLACES']
+                },
+                image:{
+                    key:'image',
+                    url:'images',
+                    label:'IMAGE',
+                    title:'GALLERY',
+                    fileds:{
+                        image:{key:'image', label:'IMAGE',default:'',required:true}
+                    },
+                    contentKey:'filedata',
+                    contentKeyType:'image',
+                    idKey:'image_id',
+                    icon:'ion-images',
+                    addLabel:'ADD_IMAGE'
+                }
+            },
             list:[
                 // place
                 {name:'PLACE_NAME',id:1,icon:'ion-location',slug:'place',url:'places',key:'FL_PLACES',index:3,
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
                  },
                  relations:{
@@ -53,6 +99,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:false,
                  properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'location':{ key: 'location', label: "LOCATION_LABEL", placeholder:"LOCATION_PLACEHOLDER", default:null},
                      'duration':{ key: 'duration', label: "DURATION_LABEL", placeholder:"DURATION_PLACEHOLDER", default:null},
                      'door_time':{ key: 'door_time', label: "DOORTIME_LABEL", placeholder:"DOORTIME_PLACEHOLDER", default:null},
@@ -79,24 +126,40 @@ angular.module('firstlife.config')
                  }
                 },
                 // commenti
-                {name:'COMMENT_NAME',id:3,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
-                 simple_editor:'message_text',
+                {name:'COMMENT_NAME',id:4,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
-                     "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:""}
+                     "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},
+                     'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
                  },relations:{}
+                },
+                // gruppi
+                {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
+                 disable_immages:false,
+                 disable_comments:false,
+                 properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
+
+                 },
+                 relations:{
+                     'FL_GROUPS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_PLACES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_PLACE_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_EVENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_EVENT_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_ARTICLES':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_POST_CHILD_LABEL',exclude:true,check:'membership'},
+                     'FL_COMMENTS':{slug:'group_id',field:'group_id',label:'REL_BY_GROUP_LABEL',childrenLabel:'REL_BY_GROUP_COMMENT_CHILD_LABEL',exclude:true,check:'membership'}
+                 },
+                 actions:[
+                     {label:'JOIN_GROUP',key:'join',icon:'ion-android-person-add',search:false, check:'noMembership'},
+                     {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'noOwnership'},
+                     {label:'VIEW_GROUP',key:'view',icon:'ion-map',icon2:'ion-android-arrow-dropright-circle',search:'groups', check:false}
+                     //{label:'SUBSCRIBE',key:'subscribe'},
+                 ]
                 }
             ],
-            'categories': [
-                {"category_space":1,"name":"Categorie","slug":"categorie","description":"Tipologie di attivit\u00e0","is_editable":true,"is_mandatory":true,"is_visible":true,"multiple_categories_allowed":false,"categories":[{"id":-1,"name":"Cultura e arte","description":"Cultura e arte","category_index":1,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":2,"icon_name":"ion-university"},{"id":-6,"name":"Attivit\u00e0 per il sociale","description":"Attivit\u00e0 per il sociale","category_index":3,"icon_name":"ion-android-people"},{"id":-3,"name":"Sport","description":"Sport","category_index":4,"icon_name":"ion-ios-football"},{"id":-4,"name":"Alimentazione e ristorazione","description":"Alimentazione e ristorazione","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-5,"name":"Tempo libero","description":"Tempo libero","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-500,"name":"Uffici pubblici","description":"Uffici pubblici","category_index":7,"icon_name":"ion-social-buffer"},{"id":-7,"name":"Servizi professionali","description":"Servizi professionali","category_index":8,"icon_name":"ion-briefcase"},{"id":-501,"name":"Artigianato e industria","description":"Artigianato e industria","category_index":9,"icon_name":"ion-settings"},{"id":-9,"name":"Commercio","description":"Commercio","category_index":10,"icon_name":"ion-bag"},{"id":-10,"name":"Trasporti e mobilit\u00e0","description":"Trasporti e mobilit\u00e0","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_PLACES"]},
-                {"category_space":12,"is_visible":false,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},
-                {"category_space":13,"is_visible":true,"name":"Tipologia di spazio","slug":"tipologia-di spazio","description":"Tipologia di spazio","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-90,"name":"Spazi aperti e aree verdi","description":"Spazi aperti e aree verdi","category_index":1,"icon_name":"ion-leaf"},{"id":-91,"name":"Spazi istituzionali","description":"Spazi istituzionali","category_index":2,"icon_name":"ion-ios-flag"},{"id":-92,"name":"Residenze e vicinato","description":"Residenze e vicinato","category_index":3,"icon_name":"ion-ios-home"},{"id":-93,"name":"Spazi produttivi","description":"Spazi produttivi","category_index":4,"icon_name":"ion-gear-a"},{"id":-94,"name":"Monumenti e luoghi storici","description":"Monumenti e luoghi storici","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},
-                {"category_space":14,"is_visible":true,"name":"Costo","slug":"costo","description":"Costo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-100,"name":"Gratuito","description":"Gratuito","category_index":1,"icon_name":"ion-happy-outline"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},
-                {"category_space":15,"is_visible":true,"name":"Accesso","slug":"accesso","description":"Accesso","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-110,"name":"Accesso libero","description":"Accesso libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-111,"name":"Su invito o prenotazione","description":"Su invito o prenotazione","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-112,"name":"Riservato al gruppo","description":"Riservato al gruppo","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},
-                {"category_space":16,"is_visible":true,"name":"Partecipazione","slug":"partecipazione","description":"Partecipazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-120,"name":"Per tutti","description":"Per tutti","category_index":1,"icon_name":"ion-load-b"},{"id":-121,"name":"Per bambini e ragazzi","description":"Per bambini e ragazzi","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-122,"name":"Per giovani","description":"Per giovani","category_index":3,"icon_name":"ion-android-bar"},{"id":-123,"name":"Per famiglie","description":"Per famiglie","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},
-                {"category_space":17,"is_visible":true,"name":"Contributi","slug":"contributi","description":"Contributi","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-130,"name":"Storie","description":"Storie","category_index":1,"icon_name":"ion-chatboxes"},{"id":-131,"name":"Racconti","description":"Racconti","category_index":2,"icon_name":"ion-edit"},{"id":-132,"name":"Report","description":"Report","category_index":3,"icon_name":"ion-android-clipboard"},{"id":-133,"name":"Notizie","description":"Notizie","category_index":4,"icon_name":"ion-chatbox-working"}],"entities":["FL_ARTICLES"]}]
+            'categories': [{"category_space":1,"name":"Categorie","slug":"categorie","description":"Tipologie di attività","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-1,"name":"Cultura e arte","description":"Cultura e arte","category_index":1,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":2,"icon_name":"ion-university"},{"id":-6,"name":"Attività per il sociale","description":"Attività per il sociale","category_index":3,"icon_name":"ion-android-people"},{"id":-3,"name":"Sport","description":"Sport","category_index":4,"icon_name":"ion-ios-football"},{"id":-4,"name":"Alimentazione e ristorazione","description":"Alimentazione e ristorazione","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-5,"name":"Tempo libero","description":"Tempo libero","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-500,"name":"Uffici pubblici","description":"Uffici pubblici","category_index":7,"icon_name":"ion-social-buffer"},{"id":-7,"name":"Servizi professionali","description":"Servizi professionali","category_index":8,"icon_name":"ion-briefcase"},{"id":-501,"name":"Artigianato e industria","description":"Artigianato e industria","category_index":9,"icon_name":"ion-settings"},{"id":-9,"name":"Commercio","description":"Commercio","category_index":10,"icon_name":"ion-bag"},{"id":-10,"name":"Trasporti e mobilità","description":"Trasporti e mobilità","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_PLACES","FL_GROUPS"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":13,"name":"Tipologia di spazio","slug":"tipologia-di spazio","description":"Tipologia di spazio","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-90,"name":"Spazi aperti e aree verdi","description":"Spazi aperti e aree verdi","category_index":1,"icon_name":"ion-leaf"},{"id":-91,"name":"Spazi istituzionali","description":"Spazi istituzionali","category_index":2,"icon_name":"ion-ios-flag"},{"id":-92,"name":"Residenze e vicinato","description":"Residenze e vicinato","category_index":3,"icon_name":"ion-ios-home"},{"id":-93,"name":"Spazi produttivi","description":"Spazi produttivi","category_index":4,"icon_name":"ion-gear-a"},{"id":-94,"name":"Monumenti e luoghi storici","description":"Monumenti e luoghi storici","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":14,"name":"Costo","slug":"costo","description":"Costo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-100,"name":"Gratuito","description":"Gratuito","category_index":1,"icon_name":"ion-happy-outline"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":15,"name":"Accesso","slug":"accesso","description":"Accesso","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-110,"name":"Accesso libero","description":"Accesso libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-111,"name":"Su invito o prenotazione","description":"Su invito o prenotazione","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-112,"name":"Riservato al gruppo","description":"Riservato al gruppo","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":16,"name":"Partecipazione","slug":"partecipazione","description":"Partecipazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-120,"name":"Per tutti","description":"Per tutti","category_index":1,"icon_name":"ion-load-b"},{"id":-121,"name":"Per bambini e ragazzi","description":"Per bambini e ragazzi","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-122,"name":"Per giovani","description":"Per giovani","category_index":3,"icon_name":"ion-android-bar"},{"id":-123,"name":"Per famiglie","description":"Per famiglie","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},{"category_space":17,"name":"Contributi","slug":"contributi","description":"Contributi","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-130,"name":"Storie","description":"Storie","category_index":1,"icon_name":"ion-chatboxes"},{"id":-131,"name":"Racconti","description":"Racconti","category_index":2,"icon_name":"ion-edit"},{"id":-132,"name":"Report","description":"Report","category_index":3,"icon_name":"ion-android-clipboard"},{"id":-133,"name":"Notizie","description":"Notizie","category_index":4,"icon_name":"ion-chatbox-working"}],"entities":["FL_ARTICLES"]},{"category_space":25,"name":"Gruppi","slug":"gruppi","description":"Tipo di gruppo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-230,"name":"Discussione","description":"Discussione","category_index":1,"icon_name":"ion-android-chat"},{"id":-231,"name":"Coordinamento","description":"Coordinamento","category_index":2,"icon_name":"ion-ios-people"},{"id":-62,"name":"Progetto","description":"Progetto","category_index":3,"icon_name":"ion-wand"}],"entities":["FL_GROUPS"]}]
         },
         'design':{
             'logo' : {url: 'img/logo-fl.png', title: 'FirstLife', alt:'FirstLife', label:{text: 'FirstLife', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
@@ -174,6 +237,7 @@ angular.module('firstlife.config')
         },
         'map':{
             //'tile_view' : 'http://130.192.157.163/osm_tiles/{z}/{x}/{y}.png',
+            //'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             'tile_view' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
             'tile_edit': 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',   
             //posizione
@@ -209,7 +273,11 @@ angular.module('firstlife.config')
                 levels:[
                     {"level":0,name:'Livello strada',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1}
                 ]
-            }
+            },
+            filters:[
+                {key:'group',property:'group_id',search_param:'groups',icon:'ion-flag',type:'strict',label:'GROUP_FILTERING',entity_type:'FL_GROUPS'},
+                {key:'user',property:'user',search_param:'users',icon:'ion-android-person',type:'strict',label:'USER_FILTERING'}
+            ]
         },
         'behaviour':{
             // richiesto il login per la mappa
@@ -349,9 +417,7 @@ angular.module('firstlife.config')
                 'tile_edit' : 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
             },
             'types':{
-                'categories':[
-                    {"category_space":6,"name":"Categorie Teen-CarTo","slug":"categorie-teen-carto","description":"Teen-CarTo categorie","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-20,"name":"Luoghi di ritrovo","description":"Luoghi di ritrovo","category_index":1,"icon_name":"ion-chatbubbles"},{"id":-21,"name":"Locali serali e notturni","description":"Locali serali e notturni","category_index":2,"icon_name":"ion-ios-cloudy-night"},{"id":-22,"name":"Cibo","description":"Cibo","category_index":3,"icon_name":"ion-fork"},{"id":-23,"name":"Arte, cultura, intrattenimento","description":"Arte, cultura, intrattenimento","category_index":4,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":5,"icon_name":"ion-university"},{"id":-25,"name":"Hobby e sport","description":"Hobby e sport","category_index":6,"icon_name":"ion-ios-football"},{"id":-26,"name":"Lavoro","description":"Lavoro","category_index":7,"icon_name":"ion-briefcase"},{"id":-27,"name":"Negozi","description":"Negozi","category_index":8,"icon_name":"ion-android-cart"},{"id":-28,"name":"Servizi","description":"Servizi","category_index":9,"icon_name":"ion-medkit"},{"id":-29,"name":"Io immagino","description":"Io immagino","category_index":10,"icon_name":"ion-android-cloud-outline"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":7,"name":"Valutazione","slug":"valutazione","description":"Teen-CarTo Valutazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-30,"name":"Risorsa","description":"Luoghi di ritrovo","category_index":1,"icon_name":"ion-ios-lightbulb"},{"id":-31,"name":"Criticit\u00e0","description":"Criticit\u00e0","category_index":2,"icon_name":"ion-android-warning"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":8,"name":"Trasformazione","slug":"trasformazione","description":"Teen-CarTo Trasformazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-40,"name":"Trasformazione positiva","description":"Trasformazione positiva","category_index":1,"icon_name":"ion-arrow-graph-up-right"},{"id":-41,"name":"Trasformazione negativa","description":"Trasformazione negativa","category_index":2,"icon_name":"ion-arrow-graph-down-right"},{"id":-42,"name":"Trasformazione assente","description":"Trasformazione assente","category_index":3,"icon_name":"ion-ios-pulse-strong"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immegine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]}
-                ]
+                'categories':[{"category_space":6,"name":"Categorie Teen-CarTo","slug":"categorie-teen-carto","description":"Teen-CarTo categorie","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-20,"name":"Luoghi di ritrovo","description":"Luoghi di ritrovo","category_index":1,"icon_name":"ion-chatbubbles"},{"id":-21,"name":"Locali serali e notturni","description":"Locali serali e notturni","category_index":2,"icon_name":"ion-ios-cloudy-night"},{"id":-22,"name":"Cibo","description":"Cibo","category_index":3,"icon_name":"ion-fork"},{"id":-23,"name":"Arte, cultura, intrattenimento","description":"Arte, cultura, intrattenimento","category_index":4,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":5,"icon_name":"ion-university"},{"id":-25,"name":"Hobby e sport","description":"Hobby e sport","category_index":6,"icon_name":"ion-ios-football"},{"id":-26,"name":"Lavoro","description":"Lavoro","category_index":7,"icon_name":"ion-briefcase"},{"id":-27,"name":"Negozi","description":"Negozi","category_index":8,"icon_name":"ion-android-cart"},{"id":-28,"name":"Servizi","description":"Servizi","category_index":9,"icon_name":"ion-medkit"},{"id":-29,"name":"Io immagino","description":"Io immagino","category_index":10,"icon_name":"ion-android-cloud-outline"}],"entities":["FL_EVENTS","FL_PLACES","FL_GROUPS","FL_ARTICLES"]},{"category_space":7,"name":"Valutazione","slug":"valutazione","description":"Teen-CarTo Valutazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-30,"name":"Risorsa","description":"Luoghi di ritrovo","category_index":1,"icon_name":"ion-ios-lightbulb"},{"id":-31,"name":"Criticità","description":"Criticità","category_index":2,"icon_name":"ion-android-warning"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":8,"name":"Trasformazione","slug":"trasformazione","description":"Teen-CarTo Trasformazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-40,"name":"Trasformazione positiva","description":"Trasformazione positiva","category_index":1,"icon_name":"ion-arrow-graph-up-right"},{"id":-41,"name":"Trasformazione negativa","description":"Trasformazione negativa","category_index":2,"icon_name":"ion-arrow-graph-down-right"},{"id":-42,"name":"Trasformazione assente","description":"Trasformazione assente","category_index":3,"icon_name":"ion-ios-pulse-strong"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]}]
             },
             'actions':{
                 'geolocation' : true,
@@ -582,6 +648,10 @@ angular.module('firstlife.config')
                 'is_login_required' : false,
                 'umask':744,
                 'viewer':false
+            },
+            types:{
+                categories:[{"category_space":18,"name":"Destinazione","slug":"destinazione","description":"Destinazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-140,"name":"Palestra","description":"Palestra","category_index":1,"icon_name":"ion-home"},{"id":-141,"name":"Campo sportivo","description":"Campo sportivo","category_index":2,"icon_name":"ion-android-walk"},{"id":-142,"name":"Campo di regata","description":"Campo di regata","category_index":3,"icon_name":"ion-android-boat"},{"id":-143,"name":"Percorso","description":"Percorso","category_index":4,"icon_name":"ion-flag"},{"id":-144,"name":"Stadio","description":"Stadio","category_index":5,"icon_name":"ion-ios-football"},{"id":-145,"name":"Piscina","description":"Piscina","category_index":6,"icon_name":"ion-waterdrop"},{"id":-146,"name":"Palazzetto dello sport","description":"Palazzetto dello sport","category_index":7,"icon_name":"ion-star"},{"id":-147,"name":"Autodromo","description":"Autodromo","category_index":8,"icon_name":"ion-model-s"},{"id":-148,"name":"Velodromo","description":"Velodromo","category_index":9,"icon_name":"ion-android-bicycle"},{"id":-149,"name":"Poligono di Tiro","description":"Poligono di Tiro","category_index":10,"icon_name":"ion-asterisk"},{"id":-150,"name":"Stadio del Ghiaccio","description":"Stadio del Ghiaccio","category_index":11,"icon_name":"ion-ios-snowy"},{"id":-151,"name":"Stazione Sciistica","description":"Stazione Sciistica","category_index":12,"icon_name":"ion-ios-snowy"},{"id":-152,"name":"Skatepark","description":"Skatepark","category_index":13,"icon_name":"ion-android-walk"},{"id":-153,"name":"Spot","description":"Spot","category_index":14,"icon_name":"ion-arrow-shrink"},{"id":-154,"name":"Impianto sportivo scolastico","description":"Impianto sportivo scolastico","category_index":15,"icon_name":"ion-university"},{"id":-155,"name":"Bocciofila","description":"Bocciofila","category_index":16,"icon_name":"ion-ios-tennisball"},{"id":-156,"name":"Bocciodromo","description":"Bocciodromo","category_index":17,"icon_name":"ion-ios-tennisball"},{"id":-157,"name":"Parete arrampicata","description":"Parete arrampicata","category_index":18,"icon_name":"ion-android-walk"},{"id":-158,"name":"Centro sportivo","description":"Centro sportivo","category_index":19,"icon_name":"ion-star"}],"entities":["FL_PLACES"]},{"category_space":19,"name":"Servizi di supporto","slug":"servizi-di supporto","description":"Servizi di supporto","is_editable":true,"is_mandatory":false,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-160,"name":"Attrezzato","description":"Attrezzato","category_index":1,"icon_name":"ion-android-contract"},{"id":-161,"name":"Non attrezzato","description":"Non attrezzato","category_index":2,"icon_name":"ion-android-expand"}],"entities":["FL_PLACES"]},{"category_space":20,"name":"Ambiente","slug":"ambiente","description":"Ambiente","is_editable":true,"is_mandatory":false,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-170,"name":"Outdoor","description":"Outdoor","category_index":1,"icon_name":"ion-log-out"},{"id":-171,"name":"Indoor","description":"Indoor","category_index":2,"icon_name":"ion-log-in"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":21,"name":"Versatilità","slug":"versatilità","description":"Versatilità","is_editable":true,"is_mandatory":false,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-180,"name":"Polifunzionale","description":"Polifunzionale (ospita altri tipi di manifestazioni)","category_index":1,"icon_name":"ion-star"},{"id":-181,"name":"Polivalente","description":"Polivalente (Ospita diversi sport)","category_index":2,"icon_name":"ion-asterisk"},{"id":-182,"name":"Specialistico","description":"Specialistico","category_index":3,"icon_name":"ion-heart"}],"entities":["FL_PLACES"]},{"category_space":22,"name":"Modalità di accesso","slug":"modalità-di accesso","description":"Modalità di accesso","is_editable":true,"is_mandatory":false,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-190,"name":"Libero","description":"Libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-social-euro"},{"id":-192,"name":"Con iscrizione","description":"Con iscrizione","category_index":3,"icon_name":"ion-android-drafts"},{"id":-193,"name":"Riservato","description":"Riservato","category_index":4,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS","FL_PLACES"]},{"category_space":23,"name":"Categorias","slug":"categorias","description":"Categorias","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-200,"name":"Atletica e fitness","description":"Atletica e fitness","category_index":1,"icon_name":"ion-podium"},{"id":-201,"name":"Sport invernali","description":"Sport invernali","category_index":2,"icon_name":"ion-ios-snowy"},{"id":-202,"name":"Sport dell’aria","description":"Sport dell’aria","category_index":3,"icon_name":"ion-paper-airplane"},{"id":-203,"name":"Sport Acquatico","description":"Sport Acquatico","category_index":4,"icon_name":"ion-waterdrop"},{"id":-204,"name":"Sport da combattimento","description":"Sport da combattimento","category_index":5,"icon_name":"ion-man"},{"id":-205,"name":"Sport di squadra","description":"Sport di squadra","category_index":6,"icon_name":"ion-ios-basketball"},{"id":-206,"name":"Sport della racchetta","description":"Sport della racchetta","category_index":7,"icon_name":"ion-ios-football-outline"},{"id":-207,"name":"Sport tradizionale","description":"Sport tradizionale","category_index":8,"icon_name":"ion-ios-football"},{"id":-208,"name":"Sport di strada","description":"Sport di strada","category_index":9,"icon_name":"ion-cube"},{"id":-209,"name":"Sport equestre","description":"Sport equestre","category_index":10,"icon_name":"ion-ios-nutrition"},{"id":-210,"name":"Pratica emergente","description":"Pratica emergente","category_index":11,"icon_name":"ion-ios-bell"},{"id":-211,"name":"Sport acrobatico","description":"Sport acrobatico","category_index":12,"icon_name":"ion-android-walk"},{"id":-212,"name":"Boardsport","description":"Boardsport","category_index":13,"icon_name":"ion-tshirt-outline"},{"id":-213,"name":"Sport su ruota","description":"Sport su ruota","category_index":14,"icon_name":"ion-android-bicycle"},{"id":-214,"name":"Sport cinofili","description":"Sport cinofili","category_index":15,"icon_name":"ion-ios-paw"}],"entities":["FL_EVENTS"]},{"category_space":24,"name":"Tipo di evento","slug":"tipo-di evento","description":"Tipo di evento","is_editable":true,"is_mandatory":false,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-220,"name":"Agonistico","description":"Agonistico","category_index":1,"icon_name":"ion-ribbon-a"},{"id":-221,"name":"Amatoriale","description":"Amatoriale","category_index":2,"icon_name":"ion-android-contacts"},{"id":-222,"name":"Manifestazione","description":"Manifestazione","category_index":3,"icon_name":"ion-speakerphone"},{"id":-223,"name":"Conferenza/ Congresso","description":"Conferenza/ Congresso","category_index":4,"icon_name":"ion-mic-b"}],"entities":["FL_EVENTS"]}]
+
             }
         }
 
@@ -642,7 +712,7 @@ angular.module('firstlife.config')
             ssl = "http://";
 
         var url = "";
-        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/domains/").concat(myConfig.domain_id).concat("/");
+        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/domains/").concat(myConfig.domain_id).concat("/");
 
         myConfig.domain_signature = url;
         myConfig.backend_places = url.concat('places');
@@ -842,8 +912,8 @@ angular.module('firstlife.config')
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
-        function($logProvider){
-            $logProvider.debugEnabled(false);
+    function($logProvider){
+        $logProvider.debugEnabled(false);
     }).config(
     function configDev(myConfig, $logProvider){
         if(myConfig.dev)console.log("setup modalità dev");
@@ -863,6 +933,6 @@ angular.module('firstlife.config')
         } 
         // abilito i log di debug
         $logProvider.debugEnabled(true);
-        
+
         if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
     });

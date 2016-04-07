@@ -1,13 +1,13 @@
 
 angular.module('firstlife.filters', [])
 
-.filter('rawHtml', ['$sce', function($sce){
-  return function(val) {
-    return $sce.trustAsHtml(val);
-  };
-}])
+    .filter('rawHtml', ['$sce', function($sce){
+        return function(val) {
+            return $sce.trustAsHtml(val);
+        };
+    }])
 
-.filter('truncate', function (){
+    .filter('truncate', function (){
     return function (text, length, end){
         if (text !== undefined){
             if (isNaN(length)){
@@ -27,9 +27,24 @@ angular.module('firstlife.filters', [])
     };
 })
 
-.filter('split', function() {
+    .filter('split', function() {
     return function(input, splitChar, splitIndex) {
-        // do some bounds checking here to ensure it has that index
         return input.split(splitChar)[splitIndex];
+    }
+})
+
+
+    .filter('isEmpty', function() {
+    return function(obj) {
+        if(obj && ( 
+            (Array.isArray(obj) && obj.length > 0) || 
+            (angular.isObject(obj) && !angular.equals({}, obj) ) || 
+            (angular.isString(obj) && obj != '') ||
+            (angular.isNumber(obj))
+        ) ) {
+
+            return false;
+        }
+        return true;
     }
 });

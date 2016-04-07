@@ -1,0 +1,24 @@
+<div id="relazioni">
+    <div class="parent_relation" ng-if="!(angular.equals(relations.parents,{}))" 
+         ng-repeat="(key,parentRel) in relations.parents">
+        <div ng-show="parentRel.list.length > 0" class="card list">
+            <div class="item item-divider">{{parentRel.label |translate}}</div>
+            <div class="item item-icon-left item-icon-right" ng-repeat="parent in parentRel.list track by $index"  on-tap="click(parent)">
+                <i ng-if="parent.category" class="icon {{parent.category.icon}}"  style="color:{{parent.category.color}}"></i>
+                {{parent.name}}
+                <i class="icon positive ion-android-arrow-dropleft-circle"></i>
+            </div>
+        </div>
+    </div>
+    <div class="child_relation" ng-if="!isEmpty(relations.children)" 
+         ng-repeat="(key,childRel) in relations.children">
+        <div ng-show="childRel.list.length > 0" class="card list">
+            <div class="item item-divider">{{childRel.childrenLabel |translate}}</div>
+            <div class="item item-icon-left item-icon-right" ng-repeat="child in childRel.list track by $index"  on-tap="click(child)">
+                <i ng-if="child.category" class="icon {{child.category.icon}}"  style="color:{{child.category.color}}"></i>
+                {{child.name}}
+                <i class="icon positive ion-android-arrow-dropright-circle"></i>
+            </div>
+        </div>
+    </div>
+</div>

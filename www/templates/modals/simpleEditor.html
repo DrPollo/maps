@@ -1,0 +1,46 @@
+<ion-modal-view id="simpleEditorBox">
+    <ion-header-bar class="modal-header">
+        <h1 class="title title-modal">
+            <i class="icon {{simpleEditor.type_info.icon}}"></i>
+            {{simpleEntity.label |translate}}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="content modal-content">
+            <div class="message">
+                <span class="username">{{user.displayName}}</span>
+                <span>{{'ADD_ENTITY_ALLERT'|translate}}</span>
+            </div>
+            <form name="boxEntity" novalidate>
+                <label ng-if="simpleEntity.type != 'image' && simpleEntity.title" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                    <span class="input-label">{{'TITLE'|translate}}</span>
+                    <intput  type="text" name="title" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEntity[simpleEntity.title]" ng-minlength="10" maxlength="500" ng-required="type['title'].required">
+                </label>
+
+                <div class="form-errors" ng-messages="boxEntity.title.$error">  
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 10 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
+                </div>
+
+                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                    <span class="input-label">{{type[simpleEntity.contentKey].label|translate}}</span>
+                    <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="10" maxlength="500" required></textarea>
+                </label>
+
+
+                <picture-loader ng-if="simpleEntity.type == 'image'" id="user.id" images="simpleEntity[simpleEntity.contentKey]"></picture-loader>
+
+            </form>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons">
+            <button class="button button-stable button-clear icon ion-close-round" on-tap="editor.hide()" >{{'ABORT'|translate}}</button>
+        </div>
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.$invalid">{{'PUBLISH'|translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

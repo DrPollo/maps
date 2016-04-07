@@ -36,6 +36,9 @@ $dark:                            #444 !default;
 .icon-light:before {
   font-weight: 400 !important; }
 
+*[on-tap], *[click], *[ng-click] {
+  cursor: pointer; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -12756,6 +12759,8 @@ ion-side-menu#side-menu {
       font-weight: 300; }
     ion-side-menu#side-menu ion-item.item .item-content, ion-side-menu#side-menu ion-item.item .item-content.activated {
       background: transparent; }
+  ion-side-menu#side-menu ion-item.item-button {
+    cursor: pointer; }
   ion-side-menu#side-menu ion-item.item-button:hover .menu-text, ion-side-menu#side-menu ion-item.item-button:hover i:before, ion-side-menu#side-menu ion-item.item-button:active .menu-text, ion-side-menu#side-menu ion-item.item-button:active i:before, ion-side-menu#side-menu ion-item.item-button:focus .menu-text, ion-side-menu#side-menu ion-item.item-button:focus i:before {
     color: #FC4A00; }
   ion-side-menu#side-menu ion-item.item-divider {
@@ -12960,8 +12965,7 @@ ion-side-menu#side-menu {
     margin: 0px;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0.1;
-    border-bottom: 1px solid rgba(221, 221, 221, 0.5); }
+    letter-spacing: 0.1; }
     .modal .content form {
       padding: 20px 0; }
       .modal .content form textarea {
@@ -13011,10 +13015,11 @@ ion-side-menu#side-menu {
         bottom: 0;
         right: 0;
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
         padding: 0px;
-        border: 0px; }
+        border: 0px;
+        display: inline-flex; }
       .modal .foto-box .foto-mosaico div i.icon {
         position: absolute;
         top: 0;
@@ -13028,6 +13033,8 @@ ion-side-menu#side-menu {
         text-align: center;
         vertical-align: middle;
         line-height: 30px; }
+      .modal .foto-box .foto-mosaico div .didascalia {
+        line-height: 1em; }
     .modal .foto-box .foto-mosaico div:before {
       content: "";
       display: block;
@@ -13124,6 +13131,15 @@ ion-side-menu#side-menu {
       top: 8px;
       left: 8px;
       position: absolute; }
+      .maps-view #mapHeader #omnibox search-cards button {
+        color: white;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 1em; }
+        .maps-view #mapHeader #omnibox search-cards button span {
+          overflow: hidden;
+          display: inline-block;
+          text-align: left;
+          width: calc(100% - 40px); }
       .maps-view #mapHeader #omnibox #floating-search-bar #barlogo {
         height: 40px;
         padding: 0px 0px 4px;
@@ -13458,10 +13474,12 @@ ion-side-menu#side-menu {
   .gallery-view .slider-box {
     height: 100%;
     margin: 0px;
-    padding: 0px; }
+    padding: 0px;
+    background: #333; }
     .gallery-view .slider-box img {
-      min-width: 100%;
-      min-height: 100%; }
+      width: 100%;
+      height: auto;
+      background: white; }
   .gallery-view .slider-button {
     width: 50%;
     height: 100%;
@@ -13472,7 +13490,6 @@ ion-side-menu#side-menu {
       position: absolute;
       top: 48%;
       color: rgba(255, 255, 255, 0.8);
-      text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff;
       font-size: 2em;
       cursor: pointer; }
   .gallery-view .slider-button-left {
@@ -13487,8 +13504,7 @@ ion-side-menu#side-menu {
     position: absolute;
     z-index: 10;
     top: 0px;
-    right: 0px;
-    text-shadow: 1px 4px 6px #fff, 0px 0px 0px #333, 1px 4px 6px #fff; }
+    right: 0px; }
   .gallery-view .slider-close:before {
     color: rgba(255, 255, 255, 0.8); }
 

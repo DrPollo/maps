@@ -19,6 +19,9 @@ ion-side-menu#side-menu
         }
         .item-content, .item-content.activated{background: transparent;}
 	}
+    ion-item.item-button{
+        cursor: pointer;
+    }
     ion-item.item-button:hover, ion-item.item-button:active, ion-item.item-button:focus{
        .menu-text, i:before{ 
            color: $positive;
