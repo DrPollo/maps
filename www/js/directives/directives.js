@@ -1042,11 +1042,8 @@ angular.module('firstlife.directives', [])
             initList();
 
 
-
-
-
-
             function initList(){
+                $scope.groups = [];
                 for(var k in $scope.types){
                     var type = $scope.types[k];
                     var group = angular.copy(type);
