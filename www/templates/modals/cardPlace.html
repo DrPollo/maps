@@ -1,4 +1,4 @@
-<ion-modal-view ng-controller="ImagesCtrl">
+<ion-modal-view>
     <ion-header-bar class="modal-header" >
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
@@ -33,9 +33,6 @@
                 <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (hh:mm)'}}</span>
                 <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
                 <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (hh:mm)'}}</span>
-            </div>
-            <div ng-if="infoPlace.marker.description" class="content modal-content description-field">
-                {{infoPlace.marker.description}}
             </div>
             <div ng-if="infoPlace.marker.text" class="content modal-content text-field">
                 {{infoPlace.marker.text}}
@@ -74,7 +71,7 @@
         
         <entity-relations marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
         
-        <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModalPlace" label="currentType.name" reset="reset" ng-init="reset = false"></actions>
+        <actions actions="currentType.actions" id="infoPlace.marker.id" close="closeModal" label="currentType.name" reset="reset" ng-init="reset = false"></actions>
         
         <members-list id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
 
@@ -85,28 +82,12 @@
 
     <ion-footer-bar class="bar-light">
         <div ng-if="isLoggedIn" class="buttons right-buttons">
-            <!-- mobile -->
-            <button ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false" class="button button-positive button-clear icon ion-camera" on-tap="loadCamera()">
-                <span ng-if="!isMobile">{{'CAMERA'|translate}}</span>
-            </button>
-
-            <button ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false" class="button button-positive button-clear icon ion-images" on-tap="imagePicker()">
-                <span ng-if="!isMobile">{{'GALLERY'|translate}}</span>
-            </button>
-            <!-- desktop --> 
-            <div ng-if="config.actions.can_foto && !currentType.disable_immages" id="fileUpload" class="button button-positive button-clear icon ion-camera">
-                <span  ng-if="!isMobile">{{'PICTURE'|translate}}</span>          
-                <input id="input-fileUpload" type="file" ng-model="file" name="file" base-sixty-four-input accept="image/*" onload="onLoad" >
-            </div> 
-            <button ng-if="isLoggedIn && !currentType.disable_comments" class="button button-positive button-clear icon ion-android-textsms" on-tap="openCommentBox()">
-                <span ng-if="!isMobile">{{'COMMENT'|translate}}</span>
-            </button>
+            <!-- share -->
+            <!-- follow -->
         </div>
         <h1 class="title"></h1>
         <div class="buttons left-buttons">
-            <button class="button button-stable button-clear icon ion-close-round" on-tap="closeModalPlace()" ></button>
+            <button class="button button-stable button-clear icon ion-close-round" on-tap="closeModal()" ></button>
         </div>
     </ion-footer-bar>
-
 </ion-modal-view>
-

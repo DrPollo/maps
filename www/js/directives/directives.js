@@ -242,7 +242,6 @@ angular.module('firstlife.directives', [])
                     //if(!angular.equals(e,old)){
                     // se cambiati controllo
                     checkParams($location.search());
-                    //}else{$log.debug("direttiva, cambio search! non controllo");}
                 });
 
 
@@ -292,7 +291,6 @@ angular.module('firstlife.directives', [])
                         var user = MemoryFactory.getUser();
                         if(value == user.id && user.displayName){
                             card.label2 = user.displayName;
-                            $log.debug('users, card ',card);
                             $scope.cards[key] = card;
                         }else{ $log.error("utente sconosciuto o mancanza di displayName",value,user); }
                         break;
@@ -373,7 +371,7 @@ angular.module('firstlife.directives', [])
                     $scope.wallArray = $filter('filter')($scope.content, boundsFiltering);
                 },
                 function(response){
-                    $log.debug("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
+                    $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
             );
 
             // click cambio di parametro search e chiudo modal
@@ -446,30 +444,6 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-
-            //            AuthService.checkMembership($scope.id).then(
-            //                function(response){
-            //                    $log.debug("the user is a group member!",response);
-            //                    // se esiste allora membro
-            //                    $scope.member = true;
-            //                    
-            //                    if(response.role == 'owner'){
-            //                        // se ha impostato il ruolo proprietario
-            //                        $scope.owner = true;
-            //                    }
-            //                    // init delle azioni
-            //                    initActions();
-            //                },
-            //                function(response){
-            //                    $log.log('the user is not a group member!');
-            //                    // giusto per essere sicuro...
-            //                    $scope.member = false;
-            //                    $scope.owner = false;
-            //                    // init delle azioni
-            //                    initActions();
-            //                }
-            //            );
-
             groupsFactory.getMembers($scope.id).then(
                 function(response){
 
@@ -500,8 +474,6 @@ angular.module('firstlife.directives', [])
 
             $scope.actionEntity = function(action, param){
 
-                $log.debug('actionEntity ',action,param);
-
                 switch(action){
                     case 'view':
                         //chiudo la modal
@@ -514,7 +486,6 @@ angular.module('firstlife.directives', [])
                         $ionicLoading.show();
                         groupsFactory.joinGroup($scope.id).then(
                             function(response){
-                                $log.debug(response);
                                 $scope.member = true;
                                 if(response.role == 'owner'){
                                     // se ha impostato il ruolo proprietario
@@ -553,7 +524,6 @@ angular.module('firstlife.directives', [])
                         // apri lista utenti in loco (modal?)
                         groupsFactory.getMembers($scope.id).then(
                             function(response){
-                                $log.debug('manage users, utenti',response);
                                 $scope.users = response;
                             },
                             function(response){
@@ -708,7 +678,6 @@ angular.module('firstlife.directives', [])
 
             $scope.$watch('id',function(e,old){
                 // cambia il marker
-                $log.debug('watch id',e,old);
                 if(e != old){
                     // init delle simple entities
                     initCounter();
@@ -755,7 +724,6 @@ angular.module('firstlife.directives', [])
 
             $scope.$watch('id',function(e,old){
                 // cambia il marker
-                $log.debug('watch id',e,old);
                 if(e != old){
                     // init delle simple entities
                     initList();
@@ -888,6 +856,14 @@ angular.module('firstlife.directives', [])
         controller:['$scope','$log','$filter','$ionicLoading',function($scope,$log,$filter,$ionicloading){
 
             
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventPictureLoader){
+                    e.preventPictureLoader = true;
+                    delete $scope;
+                }
+            });
+            
+            
             initLoader();
             
             if(!$scope.imageCache)
@@ -904,7 +880,6 @@ angular.module('firstlife.directives', [])
 
             //action to upload photos
             $scope.loadCamera = function(){
-                $log.debug('Getting camera');
                 Cameras.getPicture({
                     destinationType : Camera.DestinationType.DATA_URL,
                     sourceType : Camera.PictureSourceType.CAMERA,
@@ -956,8 +931,6 @@ angular.module('firstlife.directives', [])
                     data = data.concat(image.filetype).concat(';base64,').concat(image.base64);
                     $scope.imageCache.push(data);
                 }
-
-                $log.debug("cache", $scope.imageCache);
             }
 
             // send photo to api
@@ -1028,7 +1001,7 @@ angular.module('firstlife.directives', [])
             var timer = false;
             // funzione di polling
             var polling = function(){ 
-                $log.debug('check polling ',$scope);
+                $log.log('simple entity polling ',$scope);
                 $timeout.cancel(timer);
                 updateGroups();
                 timer = $timeout(function(){
@@ -1055,18 +1028,12 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-            $scope.$watch('toggle',function(e,old){
-                // cambia il marker
-                $log.debug('watch toggle',e,old);
-            });
-
             $scope.toggle = 0;
             $scope.setToggle = function(i){$scope.toggle = i;}
 
             $scope.altro = $scope.owner;
             $scope.$watch('owner',function(e,old){
                 // cambia il marker
-                $log.debug('watch owner',e,old);
                 if(e != old){
                     $scope.altro = $scope.owner;
                 }
@@ -1080,7 +1047,6 @@ angular.module('firstlife.directives', [])
 
 
             function initList(){
-                $log.debug('check initList ',$scope);
                 for(var k in $scope.types){
                     var type = $scope.types[k];
                     var group = angular.copy(type);
@@ -1235,9 +1201,7 @@ angular.module('firstlife.directives', [])
             // aggiunge entita' semplice
             $scope.add = function(key){
                 var type = angular.copy($scope.types[key]);
-                $log.debug('check add ',key,type);
                 initEntity(type);
-                $log.debug('check add ',$scope.simpleEntity);
                 openEditor();
             }
 
@@ -1262,10 +1226,9 @@ angular.module('firstlife.directives', [])
                     hardwareBackButtonClose : true,
                     focusFirstInput: true
                 }).then(function(modal) {
-                    $log.debug('check modal ');
                     $scope.editor = modal;
                     $scope.editor.show();
-                },function(err){$log.debug('check modal ',err);});  
+                },function(err){$log.error('open modal ',err);});  
             }
 
             $scope.addEntity = function(){

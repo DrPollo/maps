@@ -219,6 +219,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         COMMENT_TO:'Commento a', 
         // menu edit
         CANCEL: 'Cancella',
+        SUCCESS_CANCEL:"Cancellazione eseguita correttamente!",
+        ERROR_CANCEL:"Cancellazione fallita: per favore, riprova in seguito!",
         // walktrhough
         SIGNUP: 'Registrazione',
         EMAIL: 'Email',
@@ -406,6 +408,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         COMMENT_TO:'Comment of', 
         // menu edit
         CANCEL: 'Trash',
+        SUCCESS_CANCEL:"Success: the content is no more!",
+        ERROR_CANCEL:"Sorry, an error as occured, please try again later.",
         // walktrhough
         SIGNUP: 'Signup',
         EMAIL: 'Email',

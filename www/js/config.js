@@ -19,7 +19,6 @@ angular.module('firstlife.config')
             default: {slug:'place',id:1,icon:'ion-location',
                       properties:{
                           'name':{ key: 'name', label: 'NAME', placeholder: 'NAME', required:true, default:"" },
-                          'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                           'link_url':{ key: 'link_url', label: 'URL_LABEL', placeholder: 'URL_PLACEHOLDER', default:""},
                           'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date()},
                           'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date()},
@@ -75,7 +74,7 @@ angular.module('firstlife.config')
                     contentKey:'filedata',
                     contentKeyType:'image',
                     idKey:'image_id',
-                    icon:'ion-image',
+                    icon:'ion-images',
                     addLabel:'ADD_IMAGE'
                 }
             },
@@ -85,6 +84,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:true,
                  properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
                  },
                  relations:{
@@ -99,6 +99,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:false,
                  properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'location':{ key: 'location', label: "LOCATION_LABEL", placeholder:"LOCATION_PLACEHOLDER", default:null},
                      'duration':{ key: 'duration', label: "DURATION_LABEL", placeholder:"DURATION_PLACEHOLDER", default:null},
                      'door_time':{ key: 'door_time', label: "DOORTIME_LABEL", placeholder:"DOORTIME_PLACEHOLDER", default:null},
@@ -139,6 +140,7 @@ angular.module('firstlife.config')
                  disable_immages:false,
                  disable_comments:false,
                  properties:{
+                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
 
                  },
