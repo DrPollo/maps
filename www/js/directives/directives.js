@@ -25,6 +25,14 @@ angular.module('firstlife.directives', [])
             }
         };
     }])
+    .directive('isMobile', [ function() {
+        return {
+            link: function(scope, ele, attrs, c) {
+                return (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+            }
+        }
+    }
+                           ])
     .directive('showHide', ['$ionicGesture', function($ionicGesture) {
         return {
             restrict: 'A',
@@ -219,7 +227,7 @@ angular.module('firstlife.directives', [])
                 $scope.cards = {};
                 checkParams($location.search());
             }
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventSearchCards){
                     e.preventSearchCards = true;
@@ -429,16 +437,16 @@ angular.module('firstlife.directives', [])
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
-            
-            
+
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyActions){
                     e.preventDestroyActions = true;
                     delete $scope;
                 }
             });
-            
-            
+
+
             //            AuthService.checkMembership($scope.id).then(
             //                function(response){
             //                    $log.debug("the user is a group member!",response);
@@ -632,7 +640,7 @@ angular.module('firstlife.directives', [])
                     delete $scope;
                 }
             });
-            
+
             var colors = myConfig.design.colors;
             // init relazioni
             initRelations();
@@ -647,8 +655,8 @@ angular.module('firstlife.directives', [])
             // fix dei check se necessario
             function initRelations(){
                 $scope.relationsList = angular.copy($scope.relations);
-                
-                
+
+
                 $scope.count = 0;
                 for(var i in $scope.relationsList){
                     if(!$scope.relationsList[i].rel.check){
@@ -690,14 +698,14 @@ angular.module('firstlife.directives', [])
         controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
 
             initCounter();
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersCounter){
                     e.preventDestroyMembersCounter = true;
                     delete $scope;
                 }
             });
-            
+
             $scope.$watch('id',function(e,old){
                 // cambia il marker
                 $log.debug('watch id',e,old);
@@ -706,8 +714,8 @@ angular.module('firstlife.directives', [])
                     initCounter();
                 }
             });
-            
-            
+
+
             function initCounter(){
                 $scope.counter = 1;
                 groupsFactory.getMembers($scope.id).then(
@@ -743,8 +751,8 @@ angular.module('firstlife.directives', [])
                     delete $scope;
                 }
             });
-            
-            
+
+
             $scope.$watch('id',function(e,old){
                 // cambia il marker
                 $log.debug('watch id',e,old);
@@ -753,7 +761,7 @@ angular.module('firstlife.directives', [])
                     initList();
                 }
             });
-            
+
             initList();
 
 
@@ -761,7 +769,7 @@ angular.module('firstlife.directives', [])
                 $scope.role = false;
                 $scope.counter = [];
                 $scope.membersList = [];
-                
+
                 groupsFactory.getMembers($scope.id).then(
                     function(response){
                         if(Array.isArray(response)){
@@ -810,14 +818,14 @@ angular.module('firstlife.directives', [])
                     delete $scope;
                 }
             });
-            
+
             $scope.$watch('marker',function(e,old){
                 // cambia il marker
                 if(e.id != old.id){
                     loadSibillings();
                 }
             });
-        
+
 
             loadSibillings();
 
@@ -869,6 +877,136 @@ angular.module('firstlife.directives', [])
         }]
     }
 
+}).directive('pictureLoader',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            id:'=id',
+            imageCache:'=images'
+        },
+        templateUrl: '/templates/form/pictureLoader.html',
+        controller:['$scope','$log','$filter','$ionicLoading',function($scope,$log,$filter,$ionicloading){
+
+            
+            initLoader();
+            
+            if(!$scope.imageCache)
+                $scope.imageCache = [];
+            
+            function initLoader(){
+                
+                $scope.file = '';
+            }
+            
+            $scope.removeImage = function(index) {
+                $scope.imageCache.splice(index, 1);
+            };
+
+            //action to upload photos
+            $scope.loadCamera = function(){
+                $log.debug('Getting camera');
+                Cameras.getPicture({
+                    destinationType : Camera.DestinationType.DATA_URL,
+                    sourceType : Camera.PictureSourceType.CAMERA,
+                    quality: 70,
+                    targetWidth: 800,
+                    targetHeight: 800,
+                    saveToPhotoAlbum: false
+                }).then(function(imageURI) {
+                    //  alert(imageURI);
+                    addToImageCache(imageURI);
+                }, function(err) {
+                    console.log(err);
+                });    
+            };
+
+            //action to choose images
+            $scope.imagePicker = function(){
+
+                var options = {
+                    quality: 70,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    targetWidth: 800,
+                    targetHeight: 800
+                };
+
+                $cordovaCamera.getPicture(options).then(function(imageUri) {
+                    //  alert('img' + imageUri);
+                    addToImageCache(imageUri);
+
+                }, function(err) {
+                    console.log('error'+ err);
+                });
+
+            };
+
+            
+            
+
+
+            $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
+                addToImageCache(fileObj);
+            }
+
+            function addToImageCache(image){
+                // aggiungo le immagini alla cache, senza duplicati
+                if($scope.imageCache.indexOf(image) < 0){
+                    var data = 'data:';
+                    data = data.concat(image.filetype).concat(';base64,').concat(image.base64);
+                    $scope.imageCache.push(data);
+                }
+
+                $log.debug("cache", $scope.imageCache);
+            }
+
+            // send photo to api
+            $scope.sendPhoto = function(entity_id,entity_type) {
+                if(Array($scope.imageCache).length > 0){
+                    Sender.images($scope.imageCache, entity_id,entity_type).then(
+                        function(data){
+                            // reset immagini
+                            $scope.resetImageCache();
+                            //console.log('Immagini caricate!',data);
+                            // ho salvato le immagini, le ricarico dal server
+                            $scope.refreshImages(entity_id,entity_type);
+                        },
+                        function(err){
+                            // reset immagini
+                            $scope.resetImageCache();
+                            // todo errore di caricamento
+                            var title = $filter('translate')('ERROR');
+                            var template = $filter('translate')('UNKNOWN_ERROR');
+                            switch(err.status){
+                                case '413':
+                                    // immagine troppo grande
+                                    // errore di rete
+                                    template = $filter('translate')('SIZE_ERROR');
+                                    break;
+                                default:
+                                    // errore di rete
+
+                            }
+                            var alertPopup = $ionicPopup.alert({
+                                title: title,
+                                template: template
+                            });
+                            $log.error('sendPhoto, errore',err);
+                        });
+                }
+
+            };
+
+            // send photo to api
+            $scope.resetImageCache = function(markerId) {
+                //console.log("reset immagini");
+                $scope.imageCache = [];
+                $scope.isPendingImages = false;
+
+            };
+
+        }]
+    }
 })
     .directive('simpleEntityList',function(){
     return {
@@ -880,7 +1018,7 @@ angular.module('firstlife.directives', [])
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
         controller: ['$scope','$log','$filter','$ionicModal','$ionicLoading','$ionicPopup','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicLoading,$ionicPopup,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
 
-
+            $scope.config = myConfig;
             $scope.types = myConfig.types.simpleEntities;
             $scope.groups = [];
             $scope.user = MemoryFactory.getUser();
@@ -898,7 +1036,7 @@ angular.module('firstlife.directives', [])
                     polling();
                 },MODAL_RELOAD_TIME);
             };
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventSimpleEntityList){
                     e.preventSimpleEntityList = true;
@@ -916,15 +1054,15 @@ angular.module('firstlife.directives', [])
                     initList();
                 }
             });
-            
+
             $scope.$watch('toggle',function(e,old){
                 // cambia il marker
                 $log.debug('watch toggle',e,old);
             });
-            
+
             $scope.toggle = 0;
             $scope.setToggle = function(i){$scope.toggle = i;}
-            
+
             $scope.altro = $scope.owner;
             $scope.$watch('owner',function(e,old){
                 // cambia il marker
@@ -933,13 +1071,13 @@ angular.module('firstlife.directives', [])
                     $scope.altro = $scope.owner;
                 }
             });
-            
+
             initList();
 
-            
-            
-            
-            
+
+
+
+
 
             function initList(){
                 $log.debug('check initList ',$scope);
@@ -1003,7 +1141,7 @@ angular.module('firstlife.directives', [])
 
 
 
-        /*
+            /*
          * Gestione galleria foto
          * openGallery: inizializza e apre la galleria
          */
@@ -1011,11 +1149,11 @@ angular.module('firstlife.directives', [])
             $scope.slider = {};
             $scope.slider.images = [];
             $scope.slider.pointer = 0;
-            
+
             $scope.openGallery = function(index,gallery){
-                
-                
-                
+
+
+
                 $scope.slider.images = gallery;
                 if(!isNaN(index)){
                     $scope.slider.pointer = index;
@@ -1060,7 +1198,7 @@ angular.module('firstlife.directives', [])
                 $scope.gallery.slideChanged = function(index) {
                     $scope.gallery.slideIndex = index;
                 };
-                
+
                 $scope.slider.next = function(){
                     if($scope.slider.pointer < $scope.slider.images.length -1){
                         $scope.slider.pointer++;
@@ -1083,9 +1221,9 @@ angular.module('firstlife.directives', [])
             };
 
 
-            
-            
-        /*
+
+
+            /*
          * Add simpleEntity
          * 0) add: evento pulsante add
          * 1) initEntity: inizializzazione dell'entita'
@@ -1093,67 +1231,82 @@ angular.module('firstlife.directives', [])
          * 3) saveEntity: salvataggio dell'entita'
          * 6) alertError: popup di errore
          */
-            
-        // aggiunge entita' semplice
-        $scope.add = function(key){
-            var type = angular.copy($scope.types[key]);
-            $log.debug('check add ',key,type);
-            initEntity(type);
-            $log.debug('check add ',$scope.simpleEntity);
-            openEditor();
-        }
 
-        function initEntity(type) {
-            $scope.simpleEntity = {
-                type: type.key, 
-                parent: $scope.id,
-                label: type.label,
-                contentKey: type.contentKey
-            };
-            for(var k in type.fields){
-                $scope.simpleEntity[k] = type.fields[k].default;
+            // aggiunge entita' semplice
+            $scope.add = function(key){
+                var type = angular.copy($scope.types[key]);
+                $log.debug('check add ',key,type);
+                initEntity(type);
+                $log.debug('check add ',$scope.simpleEntity);
+                openEditor();
             }
-        }
 
-
-        function openEditor(){
-            $ionicModal.fromTemplateUrl('templates/modals/simpleEditor.html', {
-                scope: $scope,
-                animation: 'fade-in',//'slide-in-up',
-                backdropClickToClose : true,
-                hardwareBackButtonClose : true,
-                focusFirstInput: true
-            }).then(function(modal) {
-                $log.debug('check modal ');
-                $scope.editor = modal;
-                $scope.editor.show();
-            },function(err){$log.debug('check modal ',err);});  
-        }
-
-        $scope.addEntity = function(){
-            $ionicLoading.show();
-            
-            SimpleEntityFactory.add($scope.simpleEntity.parent,$scope.simpleEntity,$scope.simpleEntity.type).then(
-                function successCallback(response){
-                    $ionicLoading.hide();
-                    $scope.editor.hide();
-                },
-                function errorCallback(error){
-                    $log.error("SimpleEditorCtrl, addComment, error: ",error);
-                    $ionicLoading.hide();
-                    //backToMap({marker:{id:self.simpleEntity.parent}});
-                    // todo gestisci errore
-                    alertError();
+            function initEntity(type) {
+                $scope.simpleEntity = {
+                    type: type.key, 
+                    parent: $scope.id,
+                    label: type.label,
+                    contentKey: type.contentKey
+                };
+                for(var k in type.fields){
+                    $scope.simpleEntity[k] = type.fields[k].default;
                 }
-            );            
-        }
+            }
 
-        function alertError(){
-            $ionicPopup.alert({
-                title: $filter('translate')('ERROR'),
-                template: $filter('translate')('UNKNOWN_ERROR')
-           });
-        }
+
+            function openEditor(){
+                $ionicModal.fromTemplateUrl('templates/modals/simpleEditor.html', {
+                    scope: $scope,
+                    animation: 'fade-in',//'slide-in-up',
+                    backdropClickToClose : true,
+                    hardwareBackButtonClose : true,
+                    focusFirstInput: true
+                }).then(function(modal) {
+                    $log.debug('check modal ');
+                    $scope.editor = modal;
+                    $scope.editor.show();
+                },function(err){$log.debug('check modal ',err);});  
+            }
+
+            $scope.addEntity = function(){
+                $ionicLoading.show();
+                if(!Array.isArray($scope.simpleEntity[$scope.simpleEntity.contentKey])){
+                    sendEntity($scope.simpleEntity);
+                }else{
+                    // mando un'immagine alla volta
+                    for(i in $scope.simpleEntity[$scope.simpleEntity.contentKey]){
+                        var val = $scope.simpleEntity[$scope.simpleEntity.contentKey][i];
+                        var entity = angular.copy($scope.simpleEntity);
+                        entity[entity.contentKey] = val;
+                        sendEntity(entity);
+                    }
+                    $ionicLoading.hide();
+                }
+
+                function sendEntity(entity){
+                    SimpleEntityFactory.add(entity.parent,entity,entity.type).then(
+                        function successCallback(response){
+                            $ionicLoading.hide();
+                            $scope.editor.hide();
+                        },
+                        function errorCallback(error){
+                            $log.error("SimpleEditorCtrl, addComment, error: ",error);
+                            $ionicLoading.hide();
+                            //backToMap({marker:{id:self.simpleEntity.parent}});
+                            // todo gestisci errore
+                            alertError();
+                        }
+                    ); 
+                
+                }           
+            }
+
+            function alertError(){
+                $ionicPopup.alert({
+                    title: $filter('translate')('ERROR'),
+                    template: $filter('translate')('UNKNOWN_ERROR')
+                });
+            }
 
         }]
     }

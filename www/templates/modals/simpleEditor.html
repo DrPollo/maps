@@ -12,52 +12,26 @@
                 <span>{{'ADD_ENTITY_ALLERT'|translate}}</span>
             </div>
             <form name="boxEntity" novalidate>
-                <label ng-if="simpleEntity.title" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                <label ng-if="simpleEntity.type != 'image' && simpleEntity.title" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
                     <span class="input-label">{{'TITLE'|translate}}</span>
                     <intput  type="text" name="title" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEntity[simpleEntity.title]" ng-minlength="10" maxlength="500" ng-required="type['title'].required">
                 </label>
-                
+
                 <div class="form-errors" ng-messages="boxEntity.title.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 10 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
-                
-                <label ng-if="group.contentKeyType != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+
+                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
                     <span class="input-label">{{type[simpleEntity.contentKey].label|translate}}</span>
                     <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="10" maxlength="500" required></textarea>
                 </label>
-                <div ng-if="group.contentKeyType == 'image'">
-                    <div ng-if="config.actions.can_foto || config.design.show_thumbs" ng-show="isPendingImages || (images.length > 0)" id="area-foto" class="content">
-                        <div ng-show="isPendingImages" class="foto-box">
-                            <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
-                                <div class="col col-25" ng-if="$index < imageCache.length">
-                                    <img data-ng-src="data:image/png;base64,{{imageCache[$index].base64}}" width="100%" /> 
-                                    <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                                </div>
-                                <div class="col col-25" ng-if="$index + 1 < imageCache.length">
-                                    <img data-ng-src="data:image/png;base64,{{imageCache[$index + 1].base64}}" width="100%" /> 
-                                    <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                                </div>
-                                <div class="col col-25" ng-if="$index + 2 < imageCache.length">
-                                    <img data-ng-src="data:image/png;base64,{{imageCache[$index + 2].base64}}" width="100%" /> 
-                                    <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                                </div>
-                                <div class="col col-25" ng-if="$index + 3 < imageCache.length">
-                                    <img data-ng-src="data:image/png;base64,{{imageCache[$index + 3].base64}}" width="100%" /> 
-                                    <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-errors" ng-messages="boxEntity.content.$error">  
-                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 10 {{'CHARACTERS'|translate}}</div>
-                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
-                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                </div> 
+
+
+                <picture-loader ng-if="simpleEntity.type == 'image'" id="user.id" images="simpleEntity[simpleEntity.contentKey]"></picture-loader>
+
             </form>
-            
         </div>
     </ion-content>
     <ion-footer-bar class="bar-light">

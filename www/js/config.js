@@ -72,7 +72,7 @@ angular.module('firstlife.config')
                     fileds:{
                         image:{key:'image', label:'IMAGE',default:'',required:true}
                     },
-                    contentKey:'thumb',
+                    contentKey:'filedata',
                     contentKeyType:'image',
                     idKey:'image_id',
                     icon:'ion-image',

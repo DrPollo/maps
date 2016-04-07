@@ -70,28 +70,6 @@
             
              <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
 
-            <div ng-if="config.actions.can_foto || config.design.show_thumbs" ng-show="isPendingImages || (images.length > 0)" id="area-foto" class="content">
-                <div ng-show="config.actions.can_foto && isPendingImages" class="foto-box">
-                    <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
-                        <div class="col col-25" ng-if="$index < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index].base64}}" width="100%" /> 
-                            <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                        </div>
-                        <div class="col col-25" ng-if="$index + 1 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 1].base64}}" width="100%" /> 
-                            <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                        </div>
-                        <div class="col col-25" ng-if="$index + 2 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 2].base64}}" width="100%" /> 
-                            <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                        </div>
-                        <div class="col col-25" ng-if="$index + 3 < imageCache.length">
-                            <img data-ng-src="data:image/png;base64,{{imageCache[$index + 3].base64}}" width="100%" /> 
-                            <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <entity-relations marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
@@ -126,9 +104,6 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons left-buttons">
-            <button ng-show="isPendingImages" ng-click="sendPhoto(infoPlace.marker.id, infoPlace.marker.entity_type)" class="button button-positive button-clear icon ion-upload">
-                <span  ng-if="!isMobile">{{'SAVE'|translate}}</span>
-            </button>
             <button class="button button-stable button-clear icon ion-close-round" on-tap="closeModalPlace()" ></button>
         </div>
     </ion-footer-bar>

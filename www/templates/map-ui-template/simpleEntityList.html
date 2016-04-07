@@ -1,7 +1,7 @@
 <div class="button-bar content">
     <button class="button button-positive icon-left" ng-repeat="group in groups track by $index" on-tap="setToggle($index)" ng-class="toggle == $index ? '' : 'button-outline' ">
             <i class="{{group.icon}}"></i>
-            {{group.title|translate}}
+            <span ng-if="!isMobile">{{group.title|translate}}</span>
             <span ng-class="toggle == $index ? '' : 'badge badge-positive' ">{{group.list.length}}</span>
     </button>
 </div>
