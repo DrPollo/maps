@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="content">
-        <button class="button button-outline button-positive button-small button-block ion-plus-round" on-tap="add(groups[toggle].key)">
+        <button class="button button-outline button-positive button-small button-block ion-plus-round" on-tap="add(groups[toggle].key)" ng-if="groups[toggle].enable">
             {{groups[toggle].label|translate}}
         </button>
     </div>

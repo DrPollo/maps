@@ -986,6 +986,7 @@ angular.module('firstlife.directives', [])
         restrict: 'EG',
         scope: {
             id: '=id',
+            entityType:'=entityType',
             owner: '=owner'
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
@@ -1046,9 +1047,19 @@ angular.module('firstlife.directives', [])
                 $scope.groups = [];
                 for(var k in $scope.types){
                     var type = $scope.types[k];
-                    var group = angular.copy(type);
-                    group.list = [];
-                    $scope.groups.push(group);
+                    
+                    // se ci sono delle esclusioni da considerare e 
+                    // se non devo escludere il simple type
+                    if(!type.exclude || type.exclude.indexOf($scope.entityType) < 0){
+                        var group = angular.copy(type);
+                        group.list = [];
+                        // se non devo escludere il tipo dalla add
+                        if(!type.excludeAdd || type.excludeAdd.indexOf($scope.entityType) < 0){
+                            // altra logica se necessario va qui
+                            group.enable = true;
+                        }
+                        $scope.groups.push(group);
+                    }
                 }
                 polling();
             }

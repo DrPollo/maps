@@ -1,17 +1,17 @@
 <!-- mobile -->
 <div class="content">
     <button class="button button-outline button-positive button-small button-block ion-images" 
-            ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false"
+            ng-if="config.actions.can_foto && isMobile  && false"
             on-tap="loadCamera()">
         <span>{{'CAMERA'|translate}}</span>
     </button>
     <button class="button button-outline button-positive button-small button-block ion-images" 
-            ng-if="config.actions.can_foto && isMobile && !currentType.disable_immages && false"
+            ng-if="config.actions.can_foto && isMobile && false"
             on-tap="imagePicker()">
         <span>{{'GALLERY'|translate}}</span>
     </button>
     <button class="button button-outline button-positive button-small button-block ion-images" 
-            ng-if="true || config.actions.can_foto && !currentType.disable_immages" id="fileUpload">
+            ng-if="true || config.actions.can_foto" id="fileUpload">
         <span>{{'GALLERY'|translate}}</span>
         <input id="input-fileUpload" type="file" ng-model="file" name="file" base-sixty-four-input accept="image/*" onload="onLoad" >
     </button>

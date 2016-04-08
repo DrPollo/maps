@@ -46,7 +46,9 @@ angular.module('firstlife.config')
                     contentKeyType:'text',
                     idKey:'description_id',
                     icon:'ion-android-list',
-                    addLabel:'ADD_DESCRIPTION'
+                    addLabel:'ADD_DESCRIPTION',
+                    exclude:['FL_COMMENTS','FL_ARTICLES'],
+                    excludeAdd:['FL_COMMENTS','FL_ARTICLES']
                 },
                 comment:{
                     key:'comment',
@@ -61,7 +63,8 @@ angular.module('firstlife.config')
                     idKey:'comment_id',
                     icon:'ion-chatbox-working',
                     addLabel:'ADD_COMMENT',
-                    exclude:['FL_PLACES']
+                    exclude:['FL_COMMENTS','FL_PLACES'],
+                    excludeAdd:['FL_COMMENTS','FL_PLACES']
                 },
                 image:{
                     key:'image',
@@ -81,8 +84,6 @@ angular.module('firstlife.config')
             list:[
                 // place
                 {name:'PLACE_NAME',id:1,icon:'ion-location',slug:'place',url:'places',key:'FL_PLACES',index:3,
-                 disable_immages:false,
-                 disable_comments:true,
                  properties:{
                      'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
@@ -96,8 +97,6 @@ angular.module('firstlife.config')
                 },
                 // eventi
                 {name:'EVENT_NAME',id:2,icon:'ion-calendar',slug:'event',url:'events',key:'FL_EVENTS',index:5,
-                 disable_immages:false,
-                 disable_comments:false,
                  properties:{
                      'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'location':{ key: 'location', label: "LOCATION_LABEL", placeholder:"LOCATION_PLACEHOLDER", default:null},
@@ -115,8 +114,6 @@ angular.module('firstlife.config')
                 },
                 // articoli
                 {name:'POST_NAME',id:3,icon:'ion-clipboard',slug:'article',url:'articles',key:'FL_ARTICLES',index:7,
-                 disable_immages:true,
-                 disable_comments:true,
                  properties:{
                      'article_of':{ key: 'article_of', label: "ARTICLE_OF_LABEL", placeholder:"ARTICLE_OF_PLACEHOLDER", default:null},
                      'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""}
@@ -127,8 +124,6 @@ angular.module('firstlife.config')
                 },
                 // commenti
                 {name:'COMMENT_NAME',id:4,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
-                 disable_immages:false,
-                 disable_comments:true,
                  properties:{
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
                      "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},
@@ -137,8 +132,6 @@ angular.module('firstlife.config')
                 },
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
-                 disable_immages:false,
-                 disable_comments:false,
                  properties:{
                      'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}

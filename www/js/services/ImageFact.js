@@ -16,7 +16,7 @@ angular.module('firstlife.factories')
             }
         };
     }])
-    .factory('SenderFactory', ['$http', '$rootScope', 'myConfig', 'MemoryFactory', function($http , $rootScope, myConfig, MemoryFactory) {
+    .factory('SenderFactory', ['$http', '$rootScope','$log', 'myConfig', 'MemoryFactory', function($http , $rootScope,$log, myConfig, MemoryFactory) {
         var sendUrl = {};// myConfig.backend_images;
         var urlThings = myConfig.backend_things;
         var format = myConfig.format;
@@ -61,10 +61,9 @@ angular.module('firstlife.factories')
                         data: json
                     }
 
-                    return $http(req).success(function(data){ 
+                    return $http(req).then(function(data){ 
                         return data +'saved'; 
-                    })
-                        .error(function(){ 
+                    },function(){ 
                         return 'error';
                     });
                     

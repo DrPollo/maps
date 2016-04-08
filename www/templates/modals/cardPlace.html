@@ -12,11 +12,6 @@
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
                     <span ng-if="!isMobile">{{icon.name |translate}}</span>
                 </span>
-
-                <span class="modal-subheader-item" ng-if="!currentType.disable_comments" ng-show="infoPlace.marker.comments">
-                    <i class="icon ion-chatbox-working"></i>{{infoPlace.marker.comments.length}}
-                    <span ng-if="!isMobile">{{'COMMENTS'|translate}}</span>
-                </span>
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
 
             </div>
@@ -65,7 +60,7 @@
                 </span>
             </div>
             
-             <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user"></simple-entity-list>
+             <simple-entity-list id="infoPlace.marker.id" owner="infoPlace.marker.user" entity-type="infoPlace.marker.type_info.key"></simple-entity-list>
 
         </div>
         
