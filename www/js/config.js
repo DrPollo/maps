@@ -38,7 +38,7 @@ angular.module('firstlife.config')
                     url:'descriptions',
                     label:'DESCRIPTION',
                     title:'DESCRIPTIONS',
-                    fileds:{
+                    fields:{
                         title:{key:'title', label:'NAME',default:'',required:true},
                         description:{key:'description', label:'TEXT',default:'',required:true}
                     },
@@ -55,7 +55,7 @@ angular.module('firstlife.config')
                     url:'comments',
                     label:'COMMENT',
                     title:'COMMENTS',
-                    fileds:{
+                    fields:{
                         message:{key:'message', label:'TEXT',default:'',required:true}
                     },
                     contentKey:'message',
@@ -71,7 +71,7 @@ angular.module('firstlife.config')
                     url:'images',
                     label:'IMAGE',
                     title:'GALLERY',
-                    fileds:{
+                    fields:{
                         image:{key:'image', label:'IMAGE',default:'',required:true}
                     },
                     contentKey:'filedata',
@@ -85,7 +85,7 @@ angular.module('firstlife.config')
                 // place
                 {name:'PLACE_NAME',id:1,icon:'ion-location',slug:'place',url:'places',key:'FL_PLACES',index:3,
                  properties:{
-                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
                  },
                  relations:{
@@ -98,7 +98,7 @@ angular.module('firstlife.config')
                 // eventi
                 {name:'EVENT_NAME',id:2,icon:'ion-calendar',slug:'event',url:'events',key:'FL_EVENTS',index:5,
                  properties:{
-                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'location':{ key: 'location', label: "LOCATION_LABEL", placeholder:"LOCATION_PLACEHOLDER", default:null},
                      'duration':{ key: 'duration', label: "DURATION_LABEL", placeholder:"DURATION_PLACEHOLDER", default:null},
                      'door_time':{ key: 'door_time', label: "DOORTIME_LABEL", placeholder:"DOORTIME_PLACEHOLDER", default:null},
@@ -133,7 +133,7 @@ angular.module('firstlife.config')
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
                  properties:{
-                     'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
 
                  },

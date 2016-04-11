@@ -25,11 +25,11 @@
                 
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
                     <span class="input-label">{{type[simpleEditor.simpleEntity.contentKey].label|translate}}</span>
-                    <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEditor.simpleEntity[simpleEditor.simpleEntity.contentKey]" ng-minlength="10" maxlength="500" required></textarea>
+                    <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEditor.simpleEntity[simpleEditor.simpleEntity.contentKey]" ng-minlength="50" maxlength="500" required></textarea>
                 </label>
                 
                 <div class="form-errors" ng-messages="boxEntity.content.$error">  
-                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 10 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div> 

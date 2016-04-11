@@ -1220,9 +1220,12 @@ angular.module('firstlife.directives', [])
                     label: type.label,
                     contentKey: type.contentKey
                 };
+                $log.debug('chck init entity, fields ',type.fields);
+
                 for(var k in type.fields){
                     $scope.simpleEntity[k] = type.fields[k].default;
                 }
+                $log.debug('chck init entity ',$scope.simpleEntity);
             }
 
 
@@ -1292,19 +1295,16 @@ angular.module('firstlife.directives', [])
 
             scope.$on('$destroy',function(){delete scope;});
             
-            var data = [{"category_space":1,"name":"Categorie","slug":"categorie","description":"Tipologie di attività","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-1,"name":"Cultura e arte","description":"Cultura e arte","category_index":1,"icon_name":"ion-paintbrush"},{"id":-2,"name":"Istruzione e formazione","description":"Istruzione e formazione","category_index":2,"icon_name":"ion-university"},{"id":-6,"name":"Attività per il sociale","description":"Attività per il sociale","category_index":3,"icon_name":"ion-android-people"},{"id":-3,"name":"Sport","description":"Sport","category_index":4,"icon_name":"ion-ios-football"},{"id":-4,"name":"Alimentazione e ristorazione","description":"Alimentazione e ristorazione","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-5,"name":"Tempo libero","description":"Tempo libero","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-500,"name":"Uffici pubblici","description":"Uffici pubblici","category_index":7,"icon_name":"ion-social-buffer"},{"id":-7,"name":"Servizi professionali","description":"Servizi professionali","category_index":8,"icon_name":"ion-briefcase"},{"id":-501,"name":"Artigianato e industria","description":"Artigianato e industria","category_index":9,"icon_name":"ion-settings"},{"id":-9,"name":"Commercio","description":"Commercio","category_index":10,"icon_name":"ion-bag"},{"id":-10,"name":"Trasporti e mobilità","description":"Trasporti e mobilità","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_GROUPS","FL_PLACES"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":13,"name":"Tipologia di spazio","slug":"tipologia-di spazio","description":"Tipologia di spazio","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-90,"name":"Spazi aperti e aree verdi","description":"Spazi aperti e aree verdi","category_index":1,"icon_name":"ion-leaf"},{"id":-91,"name":"Spazi istituzionali","description":"Spazi istituzionali","category_index":2,"icon_name":"ion-ios-flag"},{"id":-92,"name":"Residenze e vicinato","description":"Residenze e vicinato","category_index":3,"icon_name":"ion-ios-home"},{"id":-93,"name":"Spazi produttivi","description":"Spazi produttivi","category_index":4,"icon_name":"ion-gear-a"},{"id":-94,"name":"Monumenti e luoghi storici","description":"Monumenti e luoghi storici","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":14,"name":"Costo","slug":"costo","description":"Costo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-100,"name":"Gratuito","description":"Gratuito","category_index":1,"icon_name":"ion-happy-outline"},{"id":-101,"name":"A pagamento","description":"A pagamento","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":15,"name":"Accesso","slug":"accesso","description":"Accesso","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-110,"name":"Accesso libero","description":"Accesso libero","category_index":1,"icon_name":"ion-radio-waves"},{"id":-111,"name":"Su invito o prenotazione","description":"Su invito o prenotazione","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-112,"name":"Riservato al gruppo","description":"Riservato al gruppo","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":16,"name":"Partecipazione","slug":"partecipazione","description":"Partecipazione","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-120,"name":"Per tutti","description":"Per tutti","category_index":1,"icon_name":"ion-load-b"},{"id":-121,"name":"Per bambini e ragazzi","description":"Per bambini e ragazzi","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-122,"name":"Per giovani","description":"Per giovani","category_index":3,"icon_name":"ion-android-bar"},{"id":-123,"name":"Per famiglie","description":"Per famiglie","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},{"category_space":17,"name":"Contributi","slug":"contributi","description":"Contributi","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-130,"name":"Storie","description":"Storie","category_index":1,"icon_name":"ion-chatboxes"},{"id":-131,"name":"Racconti","description":"Racconti","category_index":2,"icon_name":"ion-edit"},{"id":-132,"name":"Report","description":"Report","category_index":3,"icon_name":"ion-android-clipboard"},{"id":-133,"name":"Notizie","description":"Notizie","category_index":4,"icon_name":"ion-chatbox-working"}],"entities":["FL_ARTICLES"]},{"category_space":25,"name":"Gruppi","slug":"gruppi","description":"Tipo di gruppo","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-230,"name":"Discussione","description":"Discussione","category_index":1,"icon_name":"ion-android-chat"},{"id":-231,"name":"Coordinamento","description":"Coordinamento","category_index":2,"icon_name":"ion-ios-people"},{"id":-62,"name":"Progetto","description":"Progetto","category_index":3,"icon_name":"ion-wand"}],"entities":["FL_GROUPS"]}];
-
-
-
             scope.colors = myConfig.design.colors;
             // fatta a mano
-            scope.cats = angular.copy(data);
+            scope.cats = angular.copy(myConfig.types.categories);
+            
             var ids = [];
             var firstLevel = [];
-            for (var i = 0 ; i < data.length; i++) {
+            for (var i = 0 ; i < scope.cats.length; i++) {
                 //if(data[i].is_visible){
-                    firstLevel.push(data[i].categories.length);
-                    ids.push(data[i].category_space);
+                    firstLevel.push(scope.cats[i].categories.length);
+                    ids.push(scope.cats[i].category_space);
 
                 //}
             }
@@ -1371,110 +1371,6 @@ angular.module('firstlife.directives', [])
                 return r;
             }
             
-
-                             // webtreemap https://github.com/martine/webtreemap            
-                             //            var tree = {"name":'Aree tematiche',"children": [],data:{"$area":0}};
-                             //            for (var i = 0 ; i < data.length; i++) {
-                             //                if(data[i].is_visible){
-                             //                    tree.data['$area']++;
-                             //                    var cs = {
-                             //                        name: data[i].name,
-                             //                        data:{
-                             //                            //id: 'id_'+i,// data[i].category_space,
-                             //                            //color: Highcharts.getOptions().colors[i],
-                             //                            "$area": data[i].categories.length,
-                             //                        },
-                             //                        children:[]
-                             //                    };
-                             //                    
-                             //                    //console.log('push parent',cs);
-                             //                    var categories = data[i].categories;
-                             //                    for(var j = 0; j < categories.length; j++){
-                             //                        tree.data['$area']++;
-                             //                        var c = {
-                             //                            data:{
-                             //                                //id: cs.id+'_'+j,//categories[j].id,
-                             //                                //parent: cs.id,//cs.id,
-                             //                                "$area": j
-                             //                            },
-                             //                            name: categories[j].name
-                             //                        };
-                             //                        //console.log('push child',c);
-                             //                        cs.children.push(c);
-                             //                    }
-                             //                    tree.children.push(cs);
-                             //                }
-                             //            }
-                             //            console.log(tree);
-                             //            appendTreemap(element[0], tree, {sort: true});
-                             //            
-
-
-                             // highcharts
-                             //            var colors = myConfig.design.colors;
-                             //            $log.debug(colors);
-                             //            var points = [];
-                             //            for (var i = 0 ; i < data.length; i++) {
-                             //                if(data[i].is_visible){
-                             //                    var cs = {
-                             //                        id: 'id_'+i,// data[i].category_space,
-                             //                        name: data[i].name,
-                             //                        color: colors[i],
-                             //                        value: data[i].categories.length
-                             //                    };
-                             //                    points.push(cs);
-                             //                    //console.log('push parent',cs);
-                             //                    var categories = data[i].categories;
-                             //                    for(var j = 0; j < categories.length; j++){
-                             //                        var c = {
-                             //                            id: cs.id+'_'+j,//categories[j].id,
-                             //                            parent: cs.id,//cs.id,
-                             //                            name: categories[j].name,
-                             //                            value: 1
-                             //                        };
-                             //                        //console.log('push child',c);
-                             //                        points.push(c);
-                             //                    }
-                             //                }
-                             //            } 
-                             //            $log.debug(points);
-                             //            Highcharts.chart(element[0],{
-                             //                series: [{
-                             //                    type: 'treemap',
-                             //                    layoutAlgorithm: 'squarified',
-                             //                    allowDrillToNode: true,
-                             //                    animationLimit: 100,
-                             //                    animation:false,
-                             //                    dataLabels: {
-                             //                        enabled: false
-                             //                    },
-                             //                    levelIsConstant: false,
-                             //                    levels: [{
-                             //                        level: 1,
-                             //                        dataLabels: {
-                             //                            enabled: true
-                             //                        },
-                             //                        borderWidth: 1
-                             //                    },{
-                             //                        level: 2,
-                             //                        borderWidth: 1
-                             //                    }],
-                             //                    data: points
-                             //                }],
-                             //                subtitle: {
-                             //                    text: ''
-                             //                },
-                             //                title: {
-                             //                    text: ''
-                             //                },
-                             //                chart:{
-                             //                    //width: '100%',
-                             //                    //height: '100%',
-                             //                },
-                             //                credits: {
-                             //                    enabled: false
-                             //                },
-                             //            });
         }
     };
 }]);

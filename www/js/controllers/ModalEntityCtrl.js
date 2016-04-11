@@ -207,7 +207,22 @@ angular.module('firstlife.controllers')
             $scope.$emit("startEditing",params);
         }
 
-        
+        /*
+         * Add child marker/place
+         */
+        $scope.addChildEntity = function(entity_type,rel){
+            if(!entity_type)
+                type = parent_type;
+
+            var marker = $scope.infoPlace.marker,
+                params = {lat:marker.lat, lng:marker.lng, entity_type:entity_type};
+            // questa notazione perche' rel e' una variabile
+            params[rel]=marker.id;
+
+            //fai uscire la wizardPlace con placeholder dati vecchi
+            $scope.closeModal();
+            $scope.$emit("startEditing",params);
+        }
         
         
         /*
