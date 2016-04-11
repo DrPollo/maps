@@ -121,6 +121,8 @@ angular.module('firstlife.controllers')
                         typeIndex = _this.types.list.map(function(e){return e.slug;}).indexOf($stateParams.entity_type);
                         type = _this.types.list[typeIndex].key;
                         if(dev) console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
+                        _this.wizard.title = _this.labels.create;
+                        _this.wizard.entityLabel = _this.types.list[typeIndex].name;
                     }
 
                     //imposto i permessi
@@ -135,21 +137,6 @@ angular.module('firstlife.controllers')
                     if($stateParams.lng && $stateParams.lng){
                         _this.wizard.dataForm.coordinates = [parseFloat($stateParams.lng),parseFloat($stateParams.lat)];
                     }
-
-                    //gestione categorie multiple, preparo il modello con un indice per ogni category space
-//                    _this.wizard.dataForm.categories = [];
-//                    if(dev) console.log("EditorCtrl, init form, init categories, cat: ",_this.categories);
-//                    for( var j = 0; j < _this.categories.length; j++){
-//                        var cat = _this.categories[j];
-//                        if(dev) console.log("EditorCtrl, init form, init category, cat: ",cat,type);
-//                        if( cat.entities.indexOf(type) > -1 && cat.is_editable ){
-//                            _this.wizard.dataForm.categories.push({categories:[],category_space:cat.category_space}); 
-//                        }
-//                        //}else{
-//                        //    _this.wizard.dataForm.categories[j] = {};
-//                        //}
-//                    }
-//                    if(dev) console.log("EditorCtrl, end init form, init categories: ",_this.categories, _this.wizard.dataForm.categories);
 
                     // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
                     // controllo che non sia settato una rel tra quelle definite per il tipo
@@ -168,27 +155,6 @@ angular.module('firstlife.controllers')
                     }
                     // fine gesione relazioni
 
-
-                    // regole speciali per la gestione di alcuni campi
-//                    if(type)
-//                        _this.wizard.dataForm.entity_type = type;
-//                    if($stateParams.lng && $stateParams.lng)
-//                        _this.wizard.dataForm.coordinates= [parseFloat($stateParams.lng),parseFloat($stateParams.lat)];
-//                    _this.wizard.dataForm.tags = [];
-//                    //_this.wizard.dataForm.categories = [];
-//                    if(name)
-//                        _this.wizard.dataForm.name = name;
-//                    if(description)
-//                        _this.wizard.dataForm.description = description;
-//                    if(_this.checkList.text)
-//                        _this.wizard.dataForm.text = text;
-//                    if(_this.currentUser.id)
-//                        _this.wizard.dataForm.user = parseInt(_this.currentUser.id);
-//                    //regole per gli eventi
-//                    if(_this.currentUser.id && _this.checkList.organizer)
-//                        _this.wizard.dataForm.organizer = parseInt(_this.currentUser.id);
-                    
-                    
                     
                     //fine regole eventi
 
@@ -339,6 +305,11 @@ angular.module('firstlife.controllers')
             }
         };
 
+        _this.wizard.save = function(){
+            if(dev) console.log("form valido ",_this.wizard.dataForm);
+            processData();
+        }
+        
         // preparo i dati del form per le chiamate al server
         function processData() {
             if(dev) console.log("process data:", _this.wizard.dataForm);
@@ -363,14 +334,14 @@ angular.module('firstlife.controllers')
             for(var el in _this.wizard.dataForm.tags){
                 dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;   
             }
-
-            //accettaz. date
-            if(!_this.valid_from){ // null se non sono state impostate
-                dataForServer.valid_from = null;
-            } 
-            if(!_this.valid_to){
-                dataForServer.valid_to = null;
-            }
+//
+//            //accettaz. date
+//            if(!_this.valid_from){ // null se non sono state impostate
+//                dataForServer.valid_from = null;
+//            } 
+//            if(!_this.valid_to){
+//                dataForServer.valid_to = null;
+//            }
 
             // fix editor
             // tolgo il titolo
@@ -459,18 +430,18 @@ angular.module('firstlife.controllers')
             if(dev) console.log("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
             _this.wizard.dataForm = angular.copy(mark);
-            _this.wizard.dataForm.title = _this.labels.edit;
-            _this.wizard.dataForm.entityLabel = _this.types.list[typeIndex].name;
+            _this.wizard.title = _this.labels.edit;
+            _this.wizard.entityLabel = _this.types.list[typeIndex].name;
             // gestione logica di alcuni campi particolari
             if(mark.coordinates){
                 _this.wizard.dataForm.coordinates = [mark.lng,mark.lat];
             }
-            if(mark.valid_from){
-                _this.wizard.dataForm.valid_from = new Date(mark.valid_from);
-            }else{_this.wizard.dataForm.valid_from =null; }
-            if(mark.valid_to){
-                _this.wizard.dataForm.valid_to = new Date(mark.valid_to);
-            }else{_this.wizard.dataForm.valid_to =null; }
+//            if(mark.valid_from){
+//                _this.wizard.dataForm.valid_from = new Date(mark.valid_from);
+//            }else{_this.wizard.dataForm.valid_from =null; }
+//            if(mark.valid_to){
+//                _this.wizard.dataForm.valid_to = new Date(mark.valid_to);
+//            }else{_this.wizard.dataForm.valid_to =null; }
             if(_this.currentUser.id)
                 _this.wizard.dataForm.user = parseInt(_this.currentUser.id);
             if(mark.id_wp)

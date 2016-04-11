@@ -1223,8 +1223,8 @@ angular.module('firstlife.directives', [])
 
             // aggiunge entita' semplice
             $scope.add = function(key){
-                var type = angular.copy($scope.types[key]);
-                initEntity(type);
+                $scope.type = angular.copy($scope.types[key]);
+                initEntity($scope.type);
                 openEditor();
             }
 

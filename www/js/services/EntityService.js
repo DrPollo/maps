@@ -63,17 +63,22 @@ angular.module('firstlife.services')
             defaults.coordinates = [self.config.map.map_default_lng,self.config.map.map_default_lat];
             defaults.user = user ? parseInt(user.id) : -1;
             defaults.entity_type = typeKey;
-
+            $log.debug('check entity_type', typeKey);
             // regole specifiche per tipi
-            switch(entity_type){
+            switch(typeKey){
                 case 'FL_EVENTS' :
-                    defaults.valid_from = now.setHours(0,0,0,0).toISOString();
-                    defaults.valid_to = now.setHours(23,59,59,999).toISOString();
+//                    var morning = new Date(now.setHours(0,0,0,0));
+//                    var night = new Date(now.setHours(23,59,59,999));
+//                    defaults.valid_from = morning.toISOString();
+//                    defaults.valid_to = night.toISOString();
                     if(self.config.dev) defaults.description = devContent;
                     break;
                 case 'FL_ARTICLES' :
                     defaults.valid_from = now.toISOString();
-                    defaults.description = defaultDescription;
+                    if(self.config.dev) defaults.text = devContent;
+                    break;
+                case 'FL_GROUPS' :
+                    defaults.valid_from = now.toISOString();
                     if(self.config.dev) defaults.text = devContent;
                     break;
                 case 'FL_IMAGES' :
@@ -83,8 +88,7 @@ angular.module('firstlife.services')
                 case 'FL_COMMENTS' :
                     defaults.valid_from = now.toISOString();
                     defaults.valid_to = now.toISOString();
-                    defaults.description = defaultDescription;
-                    if(self.config.dev) defaults.text_message = devContent;
+                    if(self.config.dev) defaults.message = devContent;
                     defaults.name = defaultName;
                     break;
                 case 'comment' :
@@ -120,7 +124,7 @@ angular.module('firstlife.services')
             //dev rules
             if(self.config.dev) defaults.name = defaultName;
             
-            if(dev)$log.debug("EntityService, getDefaults ",defaults,defaultDescription);
+            $log.debug("EntityService, getDefaults ",defaults,defaultDescription);
             return defaults;
         }
 

@@ -18,10 +18,10 @@ angular.module('firstlife.config')
         'types' : {
             default: {slug:'place',id:1,icon:'ion-location',
                       properties:{
-                          'name':{ key: 'name', label: 'NAME', placeholder: 'NAME', required:true, default:"" },
+                          'name':{ key: 'name', label: 'TITLE', placeholder: 'TITLE', required:true, default:"" },
+                          'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:null,is_editable:false},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,is_editable:false},
                           'link_url':{ key: 'link_url', label: 'URL_LABEL', placeholder: 'URL_PLACEHOLDER', default:""},
-                          'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date()},
-                          'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date()},
                           'tags':{ key: 'tags', label:"TAGS_LABEL", placeholder:"TAGS_PLACEHOLDER", default:[] },
                           'categories':{ key: 'categories', label:"CATEGORIES", default:[]},
                           'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
@@ -63,8 +63,8 @@ angular.module('firstlife.config')
                     idKey:'comment_id',
                     icon:'ion-chatbox-working',
                     addLabel:'ADD_COMMENT',
-                    exclude:['FL_COMMENTS','FL_PLACES'],
-                    excludeAdd:['FL_COMMENTS','FL_PLACES']
+                    exclude:['FL_PLACES'],
+                    excludeAdd:['FL_PLACES']
                 },
                 image:{
                     key:'image',
@@ -86,7 +86,9 @@ angular.module('firstlife.config')
                 {name:'PLACE_NAME',id:1,icon:'ion-location',slug:'place',url:'places',key:'FL_PLACES',index:3,
                  properties:{
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
-                     'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null}
+                     'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:null,advanced:true,is_editable:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,advanced:true,is_editable:true},
                  },
                  relations:{
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
@@ -99,13 +101,16 @@ angular.module('firstlife.config')
                 {name:'EVENT_NAME',id:2,icon:'ion-calendar',slug:'event',url:'events',key:'FL_EVENTS',index:5,
                  properties:{
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true},
+                          
                      'location':{ key: 'location', label: "LOCATION_LABEL", placeholder:"LOCATION_PLACEHOLDER", default:null},
                      'duration':{ key: 'duration', label: "DURATION_LABEL", placeholder:"DURATION_PLACEHOLDER", default:null},
                      'door_time':{ key: 'door_time', label: "DOORTIME_LABEL", placeholder:"DOORTIME_PLACEHOLDER", default:null},
                      'parent_id':{ key: 'parent_id', label: "PARENT_EVENT_LABEL", placeholder:"PARENT_EVENT_PLACEHOLDER", default:null},
-                     'attendees':{ key: 'attendees', label: "ATTENDEES_LABEL", placeholder:"ATTENDEES_PLACEHOLDER", default:[]},
-                     'performer':{ key: 'performer', label: "PERFORMER_LABEL", placeholder:"PERFORMER_PLACEHOLDER", default:-1},
-                     'organizer':{ key: 'organizer', label: "ORGANIZER_LABEL", placeholder:"ORGANIZER_PLACEHOLDER", default:-1},
+                     'attendees':{ key: 'attendees', label: "ATTENDEES_LABEL", placeholder:"ATTENDEES_PLACEHOLDER", default:[],advanced:true},
+                     'performer':{ key: 'performer', label: "PERFORMER_LABEL", placeholder:"PERFORMER_PLACEHOLDER", default:-1,advanced:true},
+                     'organizer':{ key: 'organizer', label: "ORGANIZER_LABEL", placeholder:"ORGANIZER_PLACEHOLDER", default:-1,advanced:true},
                  },
                  relations:{
                      'FL_EVENTS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
@@ -116,7 +121,8 @@ angular.module('firstlife.config')
                 {name:'POST_NAME',id:3,icon:'ion-clipboard',slug:'article',url:'articles',key:'FL_ARTICLES',index:7,
                  properties:{
                      'article_of':{ key: 'article_of', label: "ARTICLE_OF_LABEL", placeholder:"ARTICLE_OF_PLACEHOLDER", default:null},
-                     'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""}
+                     'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false}
                  },
                  relations:{
                      'FL_ARTICLES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'}
@@ -128,12 +134,15 @@ angular.module('firstlife.config')
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
                      "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},
                      'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
                  },relations:{}
                 },
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
                  properties:{
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
                      "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
 
                  },
