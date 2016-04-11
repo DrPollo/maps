@@ -103,6 +103,26 @@ angular.module('firstlife.controllers')
             });
         
         
+        //action sheet init-info sul place
+        $scope.showASDeletedPlace = function(placeId){
+            var title="";
+            if(placeId===-1)
+                title = $filter('translate')('ERROR_CANCEL');
+            else
+                title = $filter('translate')('SUCCESS_CANCEL');
+
+            var hideSheet = $ionicActionSheet.show({
+                titleText: title,
+                cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                cancel: function() {
+                    $log.debug("Deleted place cancelled: "+placeId);
+                }
+            });
+            if(consoleCheck)console.log("actionSheet", hideSheet);
+            // to do serve per il routing, chiudo l'action sheet con il pulsante back
+        };
+
+        
         // menu popover della modals
         $scope.showPopoverMenu = function (){
 
@@ -141,28 +161,20 @@ angular.module('firstlife.controllers')
         $scope.remove = function(marker){
             if(consoleCheck)console.log("ModalPlaceController, showASRemove, id: ",marker.id);
             var hideSheet = $ionicActionSheet.show({
-                titleText: 'Vuoi davvero cancellare questo luogo?',
-                buttons: [
-                    { text: '<i class="icon ion-close-circled"></i>' },
-                    { text: '<i class="icon ion-checkmark-circled"></i>' },
-                ],
-                cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                titleText: $filter('translate')('DELETE_ASK'),
+                buttons: [],
+                cancelText: '<i class="icon ion-arrow-down-b"></i> '+$filter('translate')('ABORT'),
                 cancel: function() {
-                    if(consoleCheck)console.log('CANCELLED');
+                    $log.log('CANCELLED');
                 },
-                buttonClicked: function(index) {
-                    if(consoleCheck)console.log('BUTTON CLICKED', index);
-                    if(index===1){
-                        showLoadingScreen("Cancellazione in corso...");
+                destructiveText: '<i class="icon ion-android-delete"></i> '+$filter('translate')('CANCEL'), 
+                destructiveButtonClicked : function(){
+                    showLoadingScreen();
                         //$scope.showMWizardPlace();
-                        MapService.removeMarker(marker.id)
-                            .then(
+                        MapService.removeMarker(marker.id).then(
                             // success function 
                             function(resp) {
                                 hideLoadingScreen();
-                                if(consoleCheck)console.log("Marker da eliminare...", $scope.map.markers[marker.id]);
-
-                                if(consoleCheck)console.log("Marker eliminato!", $scope.map.markers[marker.id]);
                                 $scope.closeModal();
                                 $scope.showASDeletedPlace(marker.id);
                                 $scope.$emit("deleteMarker",{id:marker.id});
@@ -170,11 +182,10 @@ angular.module('firstlife.controllers')
                             // error function 
                             function(error) {
                                 hideLoadingScreen();
-                                if(consoleCheck)console.log("Failed to get required marker, result is " + error); 
+                                $log.error("Failed to get required marker, result is " + error); 
                                 $scope.closeModal();
                                 $scope.remove(-1);
                             });
-                    }
                     hideSheet();
                 }
             });

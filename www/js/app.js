@@ -354,7 +354,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADD_DESCRIPTION:'Aggiungi descrizione',
         ADD_COMMENT:'Aggiungi commento',
         ADD_IMAGE:'Aggiungi immagine',
-        TITLE:'Titolo'
+        TITLE:'Titolo',
+        DELETE_ASK : 'Vuoi davvero cancellare questo luogo?',
+        DELETE:'Elimina',
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -545,7 +547,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADD_DESCRIPTION:'Add Description',
         ADD_COMMENT:'Add Comment',
         ADD_IMAGE:'Add Image',
-        TITLE:'Title'
+        TITLE:'Title',
+        DELETE_ASK: 'Do you really wish to delete the content?',
+        DELETE:'Delete',
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
