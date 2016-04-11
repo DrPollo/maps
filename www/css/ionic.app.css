@@ -14794,6 +14794,19 @@ transform:rotate(attr(data-value,deg,0);
 .ease-in-out-animation.ng-hide-add, .ease-in-out-animation.ng-hide-remove {
   transition: all ease-in-out 0.5s; }
 
+.ease-animation {
+  transition: all ease 0.5s; }
+
+.linear-animation {
+  transition: all linear 0.5s; }
+
+.full-size {
+  z-index: 100 !important;
+  height: 100% !important;
+  width: 100% !important;
+  top: 0px !important;
+  left: 0px !important; }
+
 .vertical-show {
   max-height: 500px; }
 

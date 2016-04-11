@@ -37,6 +37,7 @@
     "angular-translate": "~2.9.0",
     "leaflet": "^0.7.7",
     "ionic": "^1.2.4",
-    "angular-toArrayFilter": "^1.0.1"
+    "angular-toArrayFilter": "^1.0.1",
+    "highcharts": "^4.2.3"
   }
 }
