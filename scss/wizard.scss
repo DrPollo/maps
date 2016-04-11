@@ -1,4 +1,5 @@
 #wizardEntity.content{
+    input,textarea {width: 100% !important;}
     .nav-bar-title{
         h1{
             color: white;
@@ -42,7 +43,10 @@
     }
     .autocompletetags {
         overflow: visible;
+        position: relative;
+        z-index: 9;
         tags-input{ 
+            min-width: 50%;
             .tags{
                 box-shadow:none;
                 border:0px solid;

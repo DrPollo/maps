@@ -13384,6 +13384,9 @@ ion-side-menu#side-menu {
   to {
     transform: rotate(-45deg) scale(1.2); } }
 
+#wizardEntity.content input, #wizardEntity.content textarea {
+  width: 100% !important; }
+
 #wizardEntity.content .nav-bar-title h1 {
   color: white;
   text-align: left;
@@ -13417,22 +13420,26 @@ ion-side-menu#side-menu {
   z-index: 99; }
 
 #wizardEntity.content .autocompletetags {
-  overflow: visible; }
-  #wizardEntity.content .autocompletetags tags-input .tags {
-    box-shadow: none;
-    border: 0px solid; }
-    #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list {
-      background-color: #FC4A00; }
-      #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
-        background: white;
-        color: #FC4A00;
-        border-color: #FC4A00; }
-        #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
-          color: #FC4A00; }
-    #wizardEntity.content .autocompletetags tags-input .tags input.input {
-      padding-left: 0px; }
-  #wizardEntity.content .autocompletetags tags-input .tags.focused {
-    box-shadow: none; }
+  overflow: visible;
+  position: relative;
+  z-index: 9; }
+  #wizardEntity.content .autocompletetags tags-input {
+    min-width: 50%; }
+    #wizardEntity.content .autocompletetags tags-input .tags {
+      box-shadow: none;
+      border: 0px solid; }
+      #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list {
+        background-color: #FC4A00; }
+        #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
+          background: white;
+          color: #FC4A00;
+          border-color: #FC4A00; }
+          #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
+            color: #FC4A00; }
+      #wizardEntity.content .autocompletetags tags-input .tags input.input {
+        padding-left: 0px; }
+    #wizardEntity.content .autocompletetags tags-input .tags.focused {
+      box-shadow: none; }
 
 #wizardEntity.content .thumbnail {
   padding: 8px 16px;
