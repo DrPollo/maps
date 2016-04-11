@@ -5,7 +5,7 @@
          ng-style="back && (back == space.category_space) ? {height: '100%',width: '100%',top: '0px',left:'0px','z-index': '1'}:{height: space.rect[3],width: space.rect[2],top: space.rect[1],left:space.rect[0],'z-index': '0'}">
             <button style="position:absolute;color:white;" class="button button-light button-block button-clear icon icon-right ion-close-circled" ng-if="back && (back == space.category_space)" on-tap="close()">{{space.name}}</button>
             <div style="position:absolute;color:white;" class="button button-light button-block button-clear" ng-if="!back">{{space.name}}</div>
-            <div >
+            <div ng-show="back && (back == space.category_space)">
                 <button class="button button-outline button-light linear-animation" ng-repeat="cat in space.categories track by $index" 
                      style="color:white;background-color:{{colors[cat.category_index]}};position:absolute;left:{{cat.rect[0]}};top:{{cat.rect[1]}};width:{{cat.rect[2]}};height:{{cat.rect[3]}};"
                         on-tap="catToggle(cat)">

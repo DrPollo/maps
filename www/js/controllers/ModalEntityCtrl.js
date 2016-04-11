@@ -217,7 +217,7 @@ angular.module('firstlife.controllers')
             var marker = $scope.infoPlace.marker,
                 params = {lat:marker.lat, lng:marker.lng, entity_type:entity_type};
             // questa notazione perche' rel e' una variabile
-            params[rel]=marker.id;
+            params[rel] = marker.id;
 
             //fai uscire la wizardPlace con placeholder dati vecchi
             $scope.closeModal();

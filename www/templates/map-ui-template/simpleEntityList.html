@@ -14,6 +14,7 @@
     <div ng-repeat="group in groups track by $index" ng-show="group.list.length > 0" ng-init="outerIndex=$index">
 
         <div ng-repeat="item in group.list | orderBy: '-timestamp' track by $index" class="card" ng-if="group.contentKeyType != 'image'" ng-show="toggle == outerIndex">
+            <div class="item item-divider" ng-if="item.hasOwnProperty('title')">{{item['title']}}</div>
             <div class="item item-text-wrap">{{item[group.contentKey]}}</div>
             <div class="item item-button-right">
                 <span class="message"><span class="username">{{item.display_name}}</span> {{'WHEN'|translate}} {{item.timestamp| date: 'dd/MM/yyyy'}}</span>

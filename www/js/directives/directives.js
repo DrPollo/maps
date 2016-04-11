@@ -1220,12 +1220,12 @@ angular.module('firstlife.directives', [])
                     label: type.label,
                     contentKey: type.contentKey
                 };
-                $log.debug('chck init entity, fields ',type.fields);
+                $log.debug('check init entity, fields ',type.fields);
 
                 for(var k in type.fields){
                     $scope.simpleEntity[k] = type.fields[k].default;
                 }
-                $log.debug('chck init entity ',$scope.simpleEntity);
+                $log.debug('check init entity ',$scope.simpleEntity);
             }
 
 
