@@ -13,9 +13,10 @@
             <ion-item ng-init="loadChildren(marker)" on-tap="click(marker)">
                 <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
                 </i>
-                {{marker.name}}
-                <div class="sublist" ng-show="markerChildren[marker.id]">
-                    <div class="sublist-block" ng-repeat="(key, rel) in markerChildren[marker.id]">
+                {{marker.name}} 
+                {{markerChildren[marker.id].list}}
+                <div class="sublist">
+                    <div class="sublist-block" ng-repeat="(key, rel) in markerChildren[marker.id]" ng-if="rel.list.length > 0">
                         <div class="sublist-title">
                             {{rel.childrenLabel |translate}}
                         </div>
