@@ -418,7 +418,7 @@ angular.module('firstlife.directives', [])
 
         }]
     }
-}).directive('actions', function() {
+}).directive('groupActions', function() {
 
     return {
         restrict: 'EG',
@@ -429,7 +429,7 @@ angular.module('firstlife.directives', [])
             label:'=label',
             reset:'=reset'
         },
-        templateUrl: '/templates/map-ui-template/ActionsModal.html',
+        templateUrl: '/templates/map-ui-template/groupActionsModal.html',
         controller: ['$scope','$location','$log','$filter','$ionicLoading','AuthService','groupsFactory','MemoryFactory', function($scope,$location,$log,$filter,$ionicLoading,AuthService,groupsFactory,MemoryFactory){
 
             // controllo azioni
@@ -443,33 +443,48 @@ angular.module('firstlife.directives', [])
                     delete $scope;
                 }
             });
-
-            groupsFactory.getMembers($scope.id).then(
-                function(response){
-
-                    if(!$scope.user)
-                        $scope.user = MemoryFactory.getUser();
-                    var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
-                    if(index > -1){
-                        // se esiste allora membro
-                        $scope.member = true;
-                        if(response[index].role == 'owner'){
-                            // se ha impostato il ruolo proprietario
-                            $scope.owner = true;
-                        }
-                    }
-                    // init delle azioni
-                    initActions();
-                },
-                function(response){
-                    $log.log('the user is not a group member!');
-                    // giusto per essere sicuro...
-                    $scope.member = false;
-                    $scope.owner = false;
-                    // init delle azioni
-                    initActions();
+            
+            $scope.$watch('id',function(e,old){
+                // cambia il marker
+                if(e != old){
+                    // init delle simple entities
+                    initGroupActions();
                 }
-            );
+            });
+
+            
+            initGroupActions();
+            function initGroupActions(){
+                groupsFactory.getMembers($scope.id).then(
+                    function(response){
+
+                        if(!$scope.user)
+                            $scope.user = MemoryFactory.getUser();
+                        var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+                        if(index > -1){
+                            // se esiste allora membro
+                            $scope.member = true;
+                            if(response[index].role == 'owner'){
+                                // se ha impostato il ruolo proprietario
+                                $scope.owner = true;
+                            }
+                        }
+                        // init delle azioni
+                        initActions();
+                    },
+                    function(response){
+                        $log.log('the user is not a group member!');
+                        // giusto per essere sicuro...
+                        $scope.member = false;
+                        $scope.owner = false;
+                        // init delle azioni
+                        initActions();
+                    }
+                );
+            
+            }
+            
+            
 
 
             $scope.actionEntity = function(action, param){

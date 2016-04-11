@@ -55,7 +55,6 @@ angular.module('firstlife.controllers')
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
             if($scope.infoPlace.modal){
-                $log.debug("modal esiste!",$scope.infoPlace.modal);
                 // la modal esiste
                 $scope.infoPlace.modal.show();
                 changeModal(marker.id);
@@ -64,8 +63,6 @@ angular.module('firstlife.controllers')
                 // la modal non esiste, la creo
                 $scope.infoPlace = {};
                 $scope.infoPlace.marker = angular.copy(marker);
-
-                $log.debug("infoPlace, prima di creare la modal: ", $scope.infoPlace.marker);
                 $scope.infoPlace.modify = false;    
                 $scope.infoPlace.dataForm = {};
 
