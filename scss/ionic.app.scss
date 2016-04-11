@@ -24,6 +24,7 @@ $energized:                       rgb(255, 179, 16) !default;
 $assertive:                       rgb(174, 10, 10) !default;
 $royal:                           rgb(45, 69, 104) !default;
 $dark:                            #333 !default;
+$lightDark:                       #444 !default;
 $mediumDark:                      #666 !default;
 
 $error:                           #ef473a !default;
@@ -35,6 +36,17 @@ $neutral:                         #11c1f3 !default;
 $small : 150px;
 $medium: 300px;
 $large: 600px;
+
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
+  color: $lightDark !important;
+}
+input::-moz-placeholder,textarea::-moz-placeholder {
+  color: $lightDark !important;
+}
+input::-ms-input-placeholder,textarea::-ms-input-placeholder { /* IE10+ */
+  color: $lightDark !important;
+}
+
 
 .medium-dark{color:#666;}
 

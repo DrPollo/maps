@@ -12,7 +12,7 @@
                 <span>{{'ADD_ENTITY_ALLERT'|translate}}</span>
             </div>
             <form name="boxEntity" novalidate>
-                <label ng-if="simpleEntity.type != 'image' && simpleEntity.hasOwnProperty('title')" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.title.$invalid, 'no-error' : !boxEntity.title.$invalid}">
+                <label ng-if="simpleEntity.type != 'image' && simpleEntity.hasOwnProperty('title')" class="item item-input item-stacked-label" ng-class="{ 'has-error' : boxEntity.title.$invalid, 'no-error' : !boxEntity.title.$invalid}">
                     <span class="input-label">{{'TITLE'|translate}}</span>
                     <input type="text" name="title" ng-model="simpleEntity.title" placeholder="{{'TITLE'|translate}}" ng-minlength="5" ng-maxlength="100" ng-required="type['title'].required">
                 </label>
@@ -21,8 +21,8 @@
                     <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 100 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
-                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
-                    <span class="input-label">{{type[simpleEntity.contentKey].label|translate}}</span>
+                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-stacked-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                    <span class="input-label">{{type[simpleEntity.contentKey].label |translate}}</span>
                     <textarea name="content" placeholder="{{'CONTENT'|translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="50" maxlength="500" required></textarea>
                 </label>
                 <div class="form-errors" ng-messages="boxEntity.content.$error">  
