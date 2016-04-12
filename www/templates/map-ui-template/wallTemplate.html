@@ -17,7 +17,7 @@
             <span>{{'NOTHING_TO_SEE'|translate}}</span>
         </div>
         <div ng-if="wallArray.length > 0" class="item" ng-repeat="marker in wallArray | orderBy:['-last_update','name'] |filter:searchName as filtered track by $index" >
-            <ion-item ng-init="loadChildren(marker)" on-tap="click(marker)" ng-init="counter = $index">
+            <div ng-init="loadChildren(marker)" on-tap="click(marker)">
                 <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
                 </i>
                 {{marker.name}} 
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </ion-item>
+            </div>
         </div>
     </div>
 </ion-content>

@@ -12975,7 +12975,8 @@ ion-side-menu#side-menu {
     margin: 0px;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0.1; }
+    letter-spacing: 0.1;
+    color: #333; }
     .modal .content form {
       padding: 20px 0; }
       .modal .content form textarea {

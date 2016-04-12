@@ -1,31 +1,23 @@
-<div id="cronologia-box" class="card list" ng-if="bufferSearch.toArray().length > 0">
-    <div class="item item-divider">
-        {{'SEARCH_CRONOLOGY'|translate}}
-    </div>
-    <div class="item" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index">
-        <button class="item button button-clear button-dark icon-left ion-android-time"  ng-click="cacheRestore($index)">
-            {{b.query}}
-        </button>
+<div id="cronologia-box" ng-if="bufferSearch.toArray().length > 0" class="content">
+    {{'SEARCH_CRONOLOGY'|translate}}
+    <div class="icon-left ion-android-time" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
+        {{b.query}}
     </div>
 </div>
 <div class="card list" ng-if="results.length > 0">
     <div class="item item-divider">
         {{'SEARCH_ENTITIES_RESULTS'|translate}}
     </div>
-    <div class="item" id="results-box" ng-repeat="r in results track by $index">
-        <button class="button button-clear button-dark icon-left" ng-click="click(r)">
-            <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
-            <span>{{r.name}}</span>
-        </button>
+    <div class="item icon-left" id="results-box" ng-repeat="r in results track by $index" ng-click="click(r)">
+        <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
+        <span>{{r.name}}</span>
     </div>
 </div>
 <div class="card list" ng-if="locations.length > 0">
     <div class="item item-divider">
         {{'SEARCH_LOCATIONS'|translate}}
     </div>
-    <div class="item" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" >
-        <button class="item button button-clear button-dark icon-left {{l.icon}}" ng-click="locate(l.position)">
+    <div class="item icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
             {{l.name}}
-        </button>
     </div>
 </div>
