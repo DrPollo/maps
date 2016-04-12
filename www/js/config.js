@@ -264,7 +264,7 @@ angular.module('firstlife.config')
             'attribution' : false,
             // livelli di zoom
             'max_zoom' : 22,
-            'min_zoom' : 12,
+            'min_zoom' : 6,
             'cluster_limit': 18,
             //finestra temporale
             'time_from': new Date(),

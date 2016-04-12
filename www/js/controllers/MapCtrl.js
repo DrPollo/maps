@@ -94,17 +94,38 @@ angular.module('firstlife.controllers')
 
         $scope.geojson = {
             data:{},
-            style:{
-                fillColor: "green",
-                weight: 2,
-                opacity: 1,
-                color: 'green',
-                dashArray: '1',
-                fillOpacity: 0.05
-            }
+            style: style
         };
 
-
+        function style(feature){
+            var entry = feature.properties;
+            var max = $scope.markersFilteredArray.length;
+            var style = {
+                fillColor: "white",
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '1',
+                fillOpacity: 0.05
+            };
+            $log.debug('check ',entry.entities.length, max);
+            if(entry.entities.length > 0){
+                style.fillColor = 'rgb(136, 186, 92)';
+                style.color = 'rgb(136, 186, 92)';
+                style.fillOpacity = entry.entities.length/20;
+            }
+            if(entry.entities.length > 20){
+                style.fillColor = 'rgb(255,179,16)';
+                style.color = 'rgb(255,179,16)';
+                style.fillOpacity = entry.entities.length/60;
+            }
+            if(entry.entities.length > 40){
+                style.fillColor = 'rgb(221,91,42)';
+                style.color = 'rgb(221,91,42)';
+                style.fillOpacity = entry.entities.length/(3*max);
+            }
+            return style;
+        }
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
