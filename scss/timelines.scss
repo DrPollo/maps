@@ -96,24 +96,24 @@
             left: 100% !important;
             overflow: visible;
             #selectedGroup{
-                background: #6C93B3;
-                color: white;
+                //background: #6C93B3;
+                //color: white;
             }
             .timeline-groups-text:hover,.timeline-groups-text:active,.timeline-groups-text:focus{
-                background-color: #efefef;
+                //background-color: #efefef;
                 //box-shadow: 1px 1px 3px #666;
                 transition: all ease 0.3s;
             }
             .timeline-groups-text {
-                right: 70px;
+                right: 8px;
                 font-size: 1em;
                 color: #333;
                 cursor: pointer;
                 display: inline-block;
-                background-color: #fcfcfc;
-                padding: 6px 6px;
-                margin-top: -15px;
-                box-shadow: 1px 1px 3px #aaa;
+                //background-color: #fcfcfc;
+                //padding: 6px 6px;
+                //margin-top: -15px;
+                //box-shadow: 1px 1px 3px #aaa;
             }
         }
     }

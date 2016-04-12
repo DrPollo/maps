@@ -29,7 +29,7 @@
             button {
                 color: white;
                 text-align: left;
-                background: $lightDark;
+                background: $alternative;
                 display: block;
                 min-width: 100%;
                 overflow: hidden;
@@ -74,7 +74,7 @@
             button {
                 min-height: 48px;
                 height: 48px;
-                width: 46px;
+                width: 50px;
             }
             button:before{
                 font-size: 1.2em;
@@ -296,7 +296,7 @@
 
     #map-action-menu{
         position: absolute; 
-        bottom: 80px; 
+        bottom: 180px; 
         right:8px;
         display:inline-block;
         z-index: 2000;

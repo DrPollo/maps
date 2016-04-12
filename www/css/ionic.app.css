@@ -13131,7 +13131,7 @@ ion-side-menu#side-menu {
       .maps-view #mapHeader search-cards button {
         color: white;
         text-align: left;
-        background: #444;
+        background: #6C93B3;
         display: block;
         min-width: 100%;
         overflow: hidden; }
@@ -13165,7 +13165,7 @@ ion-side-menu#side-menu {
       .maps-view #mapHeader #omnibox button {
         min-height: 48px;
         height: 48px;
-        width: 46px; }
+        width: 50px; }
       .maps-view #mapHeader #omnibox button:before {
         font-size: 1.2em; }
       .maps-view #mapHeader #omnibox * {
@@ -13334,7 +13334,7 @@ ion-side-menu#side-menu {
       animation-delay: 1.1s; }
   .maps-view #map-action-menu {
     position: absolute;
-    bottom: 80px;
+    bottom: 180px;
     right: 8px;
     display: inline-block;
     z-index: 2000; }
@@ -14757,22 +14757,14 @@ transform:rotate(attr(data-value,deg,0);
       width: 0px !important;
       left: 100% !important;
       overflow: visible; }
-      #timelines #timeline .timeline-groups-axis #selectedGroup {
-        background: #6C93B3;
-        color: white; }
       #timelines #timeline .timeline-groups-axis .timeline-groups-text:hover, #timelines #timeline .timeline-groups-axis .timeline-groups-text:active, #timelines #timeline .timeline-groups-axis .timeline-groups-text:focus {
-        background-color: #efefef;
         transition: all ease 0.3s; }
       #timelines #timeline .timeline-groups-axis .timeline-groups-text {
-        right: 70px;
+        right: 8px;
         font-size: 1em;
         color: #333;
         cursor: pointer;
-        display: inline-block;
-        background-color: #fcfcfc;
-        padding: 6px 6px;
-        margin-top: -15px;
-        box-shadow: 1px 1px 3px #aaa; }
+        display: inline-block; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }

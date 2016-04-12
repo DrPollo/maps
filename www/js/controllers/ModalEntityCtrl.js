@@ -227,16 +227,18 @@ angular.module('firstlife.controllers')
 
         //Update marker in local/server
         $scope.updateEntity = function(marker){
-            //fai uscire la wizardPlace con placeholder dati vecchi
-            $scope.closeModal();
             var params = {lat:marker.lat, lng:marker.lng, id:marker.id};
             $scope.$emit("startEditing",params);
+            
+            //fai uscire la wizardPlace con placeholder dati vecchi
+            $scope.closeModal();
         }
 
         /*
          * Add child marker/place
          */
         $scope.addChildEntity = function(entity_type,rel){
+            $log.debug('add child ',entity_type,rel);
             if(!entity_type)
                 type = parent_type;
 
@@ -244,10 +246,10 @@ angular.module('firstlife.controllers')
                 params = {lat:marker.lat, lng:marker.lng, entity_type:entity_type};
             // questa notazione perche' rel e' una variabile
             params[rel] = marker.id;
-
+            $scope.$emit("startEditing",params);
+            
             //fai uscire la wizardPlace con placeholder dati vecchi
             $scope.closeModal();
-            $scope.$emit("startEditing",params);
         }
         
         
