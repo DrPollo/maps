@@ -30,11 +30,12 @@
                 color: white;
                 text-align: left;
                 background: $lightDark;
-                display: inline-block;
+                display: block;
                 min-width: 100%;
                 overflow: hidden;
-                *{
+                span {
                     display: inline-block;
+                    padding-right: 10px;
                 }
             }
         }

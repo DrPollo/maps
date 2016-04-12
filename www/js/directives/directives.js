@@ -597,13 +597,13 @@ angular.module('firstlife.directives', [])
 
 
             $scope.actionEntity = function(action, param){
-
+                
                 switch(action){
                     case 'view':
-                        //chiudo la modal
-                        $scope.close();
                         //aggiorno i parametri search con il filtro
                         $location.search(param,$scope.id);
+                        //chiudo la modal
+                        $scope.close();
                         break;
                     case 'join':
                         //parte richiesta di join

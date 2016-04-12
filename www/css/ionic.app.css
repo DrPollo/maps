@@ -13131,11 +13131,12 @@ ion-side-menu#side-menu {
         color: white;
         text-align: left;
         background: #444;
-        display: inline-block;
+        display: block;
         min-width: 100%;
         overflow: hidden; }
-        .maps-view #mapHeader search-cards button * {
-          display: inline-block; }
+        .maps-view #mapHeader search-cards button span {
+          display: inline-block;
+          padding-right: 10px; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
       vertical-align: top; }
