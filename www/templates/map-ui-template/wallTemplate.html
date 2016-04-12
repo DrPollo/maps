@@ -1,22 +1,28 @@
 <ion-header-bar class="modal-header" >
     <div class="bar bar-header">
-        <form id="ricerca" name="ricerca" class="item-input-wrapper" ng-init="searchName = ''">
+        <form id="ricerca" name="ricerca" class="item-input-wrapper">
             <i class="icon ion-android-search"></i>
-            <input type="search" placeholder="{{'SEARCH'| translate}}" ng-model="searchName">
-            <i ng-show="searchName.length > 0" ng-click="searchName = '' " class="icon ion-close"></i>
+            <input type="search" placeholder="{{'SEARCH'| translate}}" ng-model="query">
+            <i ng-show="query.length > 0" ng-click="query = '' " class="icon ion-close"></i>
         </form>
     </div>
 </ion-header-bar>
 <ion-content class="modal-content">
-    <search-results query="searchName" click="click" close="close"></search-results>
-    <div class="card list">
+    <div id="cronologia-box" ng-if="bufferSearch.toArray().length > 0" class="list list-inset">
+        <div class="item item-divider">{{'SEARCH_CRONOLOGY'|translate}}</div>
+        <div class="icon-left ion-android-time item" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
+            {{b.query}}
+        </div>
+    </div>
+    <search-results query="query" click="click" close="close"></search-results>
+    <div class="list list-inset">
         <div class="item item-divider">
             {{'CURRENTLY_ON_MAP'|translate}}
         </div>
         <div class="item" ng-if="filtered.length == 0">
             <span>{{'NOTHING_TO_SEE'|translate}}</span>
         </div>
-        <div ng-if="wallArray.length > 0" class="item" ng-repeat="marker in wallArray | orderBy:['-last_update','name'] |filter:searchName as filtered track by $index" >
+        <div ng-if="wallArray.length > 0" class="item" ng-repeat="marker in wallArray | orderBy:['-last_update','name'] |filter:query as filtered track by $index" >
             <div ng-init="loadChildren(marker)" on-tap="click(marker)">
                 <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
                 </i>

@@ -1,10 +1,4 @@
-<div id="cronologia-box" ng-if="bufferSearch.toArray().length > 0" class="content">
-    {{'SEARCH_CRONOLOGY'|translate}}
-    <div class="icon-left ion-android-time" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
-        {{b.query}}
-    </div>
-</div>
-<div class="card list" ng-if="results.length > 0">
+<div class="list-inset list" ng-if="results.length > 0">
     <div class="item item-divider">
         {{'SEARCH_ENTITIES_RESULTS'|translate}}
     </div>
@@ -13,7 +7,7 @@
         <span>{{r.name}}</span>
     </div>
 </div>
-<div class="card list" ng-if="locations.length > 0">
+<div class="list-inset list" ng-if="locations.length > 0">
     <div class="item item-divider">
         {{'SEARCH_LOCATIONS'|translate}}
     </div>

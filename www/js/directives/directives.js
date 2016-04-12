@@ -352,7 +352,7 @@ angular.module('firstlife.directives', [])
             close:'='
         },
         templateUrl: '/templates/map-ui-template/searchResults.html',
-        controller: ['$scope','$log','$location','myConfig','SearchService','CBuffer', function($scope,$log,$location,myConfig,SearchService,CBuffer){
+        controller: ['$scope','$log','$location','myConfig','SearchService', function($scope,$log,$location,myConfig,SearchService){
             var limit = myConfig.behaviour.query_limit;
             var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
             var result_limit = myConfig.behaviour.search_results_limit;
@@ -362,31 +362,23 @@ angular.module('firstlife.directives', [])
 
             //cleanup
             $scope.$on('$destroy',function(){delete scope;});
-
             
             // al cambio della query
-            $scope.$watch('query', 
-                          function(e, old){
-                $log.debug("SearchCtrl, old: ",old, " new: ",e);
+            $scope.$watch('query', function(e, old){
                 if(e && old != e && e.length > limit){
                     if (SEARCH_DELAY > 0) {
                         if (searchendSetTimeout) {
-                            $log.debug("clearTimeout");
                             clearTimeout(searchendSetTimeout);
                         }
                         searchendSetTimeout = setTimeout(
                             function(){
-                                $log.debug("cerco ",$scope.query);
+                                $log.log("cerco ",$scope.query);
                                 checkQuery(e);
                             }, SEARCH_DELAY);
                     } 
                     else {
                         checkQuery(e);
                     } 
-                }else if( e == '' ){
-                    // reset
-                    $scope.locations = [];
-                    $scope.results = [];
                 }
             });
 
@@ -419,10 +411,7 @@ angular.module('firstlife.directives', [])
 //                );
                 SearchService.geocoding(e).then(
                     function(response){
-                        $log.debug("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
                         $scope.locations = response.length >= result_limit ? response.slice(result_limit) : response;
-                        if($scope.query != '' && $scope.locations.length > 0)
-                            pushCache(e);
                     },
                     function(response){ 
                         $log.error("SearchCtrl, watch query, SearchService.geocoding, error: ",response);
@@ -430,24 +419,14 @@ angular.module('firstlife.directives', [])
                 );
             }
 
-            // aggiunge una ricerca nei buffer di ricerca
-            function pushCache(e){
-                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
-                //var entry = angular.copy($scope.form);
-                var entry = {query:e};
-                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
-                    $scope.bufferSearch.push(entry);
-            }
+            
 
             // inizializzazione del form di ricerca
             function initForm(){
                 $scope.locations = [];
                 $scope.results = [];
-                $scope.bufferSearch = new CBuffer(result_limit);
-                $scope.bufferSearch.overflow = function(data) {
-                    //console.log("Buffer overflow: ",data);
-                };
             }
+            
 
         }]
     }
@@ -462,18 +441,20 @@ angular.module('firstlife.directives', [])
             click: '=click'
         },
         templateUrl: '/templates/map-ui-template/wallTemplate.html',
-        controller: ['$scope','$location', '$log', '$filter', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService){
+        controller: ['$scope','$location', '$log', '$filter', 'myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
             var config = myConfig;
             var bounds = {};
             $scope.markerChildren = {};
 
+            $scope.query = '';
+            
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyWall){
                     e.preventDestroyWall = true;
                     delete $scope;
                 }
             });
-
+            
             MapService.getMapBounds().then(
                 function(response){
                     $scope.wallArray = [];
@@ -524,6 +505,36 @@ angular.module('firstlife.directives', [])
                 $scope.markerChildren[marker.id] = children;
             };
 
+            
+            
+//            $scope.$watch('query',function(e,old){
+//                if(e !== old){
+//                    $log.debug('change searchName',e,old);
+//                }
+//            });
+//            
+//            function initBuffer(){
+//                $scope.bufferSearch = new CBuffer(result_limit);
+//                $scope.bufferSearch.overflow = function(data) {
+//            }
+//            
+//            // aggiunge una ricerca nei buffer di ricerca
+//            function pushCache(e){
+//                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
+//                //var entry = angular.copy($scope.form);
+//                var entry = {query:e};
+//                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
+//                    $scope.bufferSearch.push(entry);
+//            }
+//            
+//            $scope.cacheRestore = function (index){
+//                var query = $scope.bufferSearch.get(index).query;
+//                //console.log("Buffer: ",$scope.bufferSearch);
+//                initForm();
+//                $scope.$apply(function(){$scope.query = query;});
+//                //$scope.query = query;
+//            }
+            
 
         }]
     }
@@ -592,9 +603,6 @@ angular.module('firstlife.directives', [])
                 );
 
             }
-
-
-
 
             $scope.actionEntity = function(action, param){
                 
