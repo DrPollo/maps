@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     'project': 1,
-    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
+    'api_base_domain' : 'firstlife-www.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
     'api_version' : 'v4',

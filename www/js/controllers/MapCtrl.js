@@ -101,14 +101,13 @@ angular.module('firstlife.controllers')
             var entry = feature.properties;
             var max = $scope.markersFilteredArray.length;
             var style = {
-                fillColor: "white",
+                fillColor: "#6C93B3",
                 weight: 2,
-                opacity: 1,
-                color: 'white',
+                opacity: 0.5,
+                color: '#6C93B3',
                 dashArray: '1',
                 fillOpacity: 0.05
             };
-            $log.debug('check ',entry.entities.length, max);
             if(entry.entities.length > 0){
                 style.fillColor = 'rgb(136, 186, 92)';
                 style.color = 'rgb(136, 186, 92)';

@@ -14,7 +14,7 @@ angular.module('firstlife.factories')
                var req = {
                         method: 'GET',
                         url: url,
-                        headers: { 'Content-Type': 'application/json'},
+                        headers: { "Content-Type":"application/json"},
                         data: {}
                     }
               $http(req).then(
