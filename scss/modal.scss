@@ -232,3 +232,12 @@
         }
     }
 }
+.button-bar-striped{
+    background: #f5f5f5;
+    .button {
+        padding-bottom:4px;
+    }
+    .button.selected {
+        border-bottom:4px solid;
+    }
+}

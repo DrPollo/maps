@@ -13097,6 +13097,13 @@ ion-side-menu#side-menu {
     -o-border-radius: 2px;
     -moz-border-radius: 2px; }
 
+.button-bar-striped {
+  background: #f5f5f5; }
+  .button-bar-striped .button {
+    padding-bottom: 4px; }
+  .button-bar-striped .button.selected {
+    border-bottom: 4px solid; }
+
 .popover-backdrop.active {
   z-index: 11; }
   .popover-backdrop.active .popover-wrapper .popover .list .item {
