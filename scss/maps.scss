@@ -19,10 +19,25 @@
 .maps-view{
     #mapHeader{
         position: fixed;
-        //top: 20px;
-        //left: 20px;
+        top: 8px;
+        left: 8px;
         display: inline-block;
         z-index: 12;
+        search-cards{
+            //position: absolute;
+            display: block;
+            button {
+                color: white;
+                text-align: left;
+                background: $lightDark;
+                display: inline-block;
+                min-width: 100%;
+                overflow: hidden;
+                *{
+                    display: inline-block;
+                }
+            }
+        }
         #sideMenuToggler, #floating-logo, #floating-search-bar, #omnibox{
             display: inline-block;
             vertical-align: top;
@@ -44,9 +59,6 @@
         #omnibox{
             //min-width: 350px;
             box-shadow: 1px 1px 3px #666;
-            top:8px;
-            left: 8px;
-            position: absolute;
             background: #fff;
             display: inline-flex;
             #barlogo{

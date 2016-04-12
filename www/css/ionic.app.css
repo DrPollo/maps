@@ -13121,8 +13121,21 @@ ion-side-menu#side-menu {
   background-color: #EBEBEB !important; }
   .maps-view #mapHeader {
     position: fixed;
+    top: 8px;
+    left: 8px;
     display: inline-block;
     z-index: 12; }
+    .maps-view #mapHeader search-cards {
+      display: block; }
+      .maps-view #mapHeader search-cards button {
+        color: white;
+        text-align: left;
+        background: #444;
+        display: inline-block;
+        min-width: 100%;
+        overflow: hidden; }
+        .maps-view #mapHeader search-cards button * {
+          display: inline-block; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
       vertical-align: top; }
@@ -13138,9 +13151,6 @@ ion-side-menu#side-menu {
       box-shadow: 1px 1px 3px #666; }
     .maps-view #mapHeader #omnibox {
       box-shadow: 1px 1px 3px #666;
-      top: 8px;
-      left: 8px;
-      position: absolute;
       background: #fff;
       display: inline-flex; }
       .maps-view #mapHeader #omnibox #barlogo {

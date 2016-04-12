@@ -1,10 +1,9 @@
 <button ng-repeat="(k, card) in cards" 
-        class="button-block button-clear icon-right button" 
+        class="button button-block button-clear icon-right ion-android-close" 
         on-tap="closeCard(card.search_param,card.value)">
     
     <span class="icon-left">
         <i class="icon" ng-class="card.icon"></i>
         {{card.label2 |translate}}
     </span>
-    <i class="icon ion-android-close button-clear"></i>
 </button>

@@ -1,6 +1,5 @@
 <ion-view class="maps-view">
     <div id="mapHeader">
-        <!--<button ng-if="config.actions.show_menu" id="sideMenuToggler" class="button button-clear button-dark icon ion-navicon" ng-click="toggleSideLeft()"></button>-->
         <div id="omnibox">
             <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
             <span class="separatore"></span>
@@ -12,6 +11,7 @@
             <span class="separatore"></span>
             <button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
         </div>
+        <search-cards params="filterConditions"></search-cards>
     </div>
 
 

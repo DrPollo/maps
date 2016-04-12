@@ -7,6 +7,8 @@ angular.module('firstlife.controllers')
         $scope.now = new Date();
 
         var consoleCheck = false;
+        var hide = null;
+        
         
         // visualizzazione web o mobile?
         $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
@@ -51,6 +53,23 @@ angular.module('firstlife.controllers')
             // recupero il tipo e lo metto dentro $scope.currentType
             initTypeChecks(marker.entity_type);
 
+            $log.debug('check hide!',hide,marker);
+            if(!hide){
+                $log.debug('init hide');
+                hide = $scope.$on('modal.hidden', function(e) {
+                    //segnalo la chiusura della modal
+                    if($scope.infoPlace.modal && !e.modalHiddenPrevented){
+                        e.modalHiddenPrevented = true;
+                        
+                        //deregistro il listner per la hide
+                        $log.debug('check hide listner!',hide);
+                        hide();
+                        hide = null;
+                        chiudoModal();
+                    }
+                });
+            }
+            
             $log.log("marker da visualizzare",marker);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
@@ -58,7 +77,6 @@ angular.module('firstlife.controllers')
                 // la modal esiste
                 $scope.infoPlace.modal.show();
                 changeModal(marker.id);
-                
             }else{
                 // la modal non esiste, la creo
                 $scope.infoPlace = {};
@@ -92,16 +110,16 @@ angular.module('firstlife.controllers')
             };
         };
 
-        var hide = $scope.$on('modal.hidden', function(e) {
-                //segnalo la chiusura della modal
-                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
-                    e.modalHiddenPrevented = true;
-                    //deregistro il listner per la hide
-                    hide();
-                    chiudoModal();
-                }
-            });
-        
+//        var hide = $scope.$on('modal.hidden', function(e) {
+//                //segnalo la chiusura della modal
+//                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
+//                    e.modalHiddenPrevented = true;
+//                    //deregistro il listner per la hide
+//                    hide();
+//                    chiudoModal();
+//                }
+//            });
+//        
         
         //action sheet init-info sul place
         $scope.showASDeletedPlace = function(placeId){
@@ -276,6 +294,7 @@ angular.module('firstlife.controllers')
                 $scope.infoPlace.modal.remove();
 
             $scope.$emit("closePlaceModal");
+            $log.debug('check closePlaceModal');
             delete $scope.infoPlace.modal;
             //deregistro il listner per la hide
             hide();
