@@ -240,9 +240,9 @@ angular.module('firstlife.config')
             }
         },
         'map':{
-            //'tile_view' : 'http://130.192.157.163/osm_tiles/{z}/{x}/{y}.png',
+            'tile_view' : 'http://api.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             //'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
-            'tile_view' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+            //'tile_view' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
             'tile_edit': 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',   
             //posizione
             'map_default_lat' : 45.070312,
@@ -263,7 +263,7 @@ angular.module('firstlife.config')
             // attribuzione della mappa
             'attribution' : false,
             // livelli di zoom
-            'max_zoom' : 18,
+            'max_zoom' : 22,
             'min_zoom' : 12,
             'cluster_limit': 18,
             //finestra temporale

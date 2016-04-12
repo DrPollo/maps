@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers) {
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory) {
 
 
 
@@ -89,6 +89,20 @@ angular.module('firstlife.controllers')
         if(!$scope.markersFiltered)
             initFilters();
 
+
+        // init layer geoJSON
+
+        $scope.geojson = {
+            data:{},
+            style:{
+                fillColor: "green",
+                weight: 2,
+                opacity: 1,
+                color: 'green',
+                dashArray: '1',
+                fillOpacity: 0.05
+            }
+        };
 
 
 
@@ -183,8 +197,8 @@ angular.module('firstlife.controllers')
             $log.log("MARKER CLICK...controlla, args: ", args,event);
             if(!event.preventMapMarkerClick){
                 event.preventMapMarkerClick = true;
-                
-                
+
+
                 if(!$scope.editMode){
                     args.model.focus = false;
                     //event.target.focus = false;
@@ -198,6 +212,8 @@ angular.module('firstlife.controllers')
             if(!event.preventMapMoveend){
                 event.preventMapMoveend = true;
                 if(consoleCheck) console.log("Event: moveend...", $scope.map);
+                // recupero i dati del layer
+                getData();
                 // controllo se sono in edit mode
                 if(!$scope.editMode){
                     // se e' stato impostato un delay
@@ -325,7 +341,7 @@ angular.module('firstlife.controllers')
             if(!angular.equals(newVal,oldVal)){
                 setMapMarkers();
             }
-            
+
         },true);
 
 
@@ -1560,6 +1576,37 @@ angular.module('firstlife.controllers')
                 }
             }
 
+        }
+
+
+
+
+        // recupero il layer geoJson
+        function getData(){
+
+            leafletData.getMap("mymap").then(
+                function(map) {
+                    $log.debug('check map',map);
+                    var bounds = map.getBounds();
+                    var zoom = map.getZoom();
+                    var sw = {lat:bounds._southWest.lat,lng:bounds._southWest.lng};
+                    var ne = {lat:bounds._northEast.lat,lng:bounds._northEast.lng};
+                    $log.debug('check map parameters',zoom,bounds);
+
+                    indexingFactory.get(zoom,sw,ne).then(
+                        function(response){
+                            $log.debug("indexFactory.get, response",response);
+                            $scope.geojson.data = response;
+
+                        },
+                        function(response){
+                            $log.error(response);
+                        }
+                    );
+                },
+                function(response){
+                    $log.error("MapService, getMapBounds, errore: ",response);
+                });
         }
 
 
