@@ -87,8 +87,8 @@ angular.module('firstlife.config')
                  properties:{
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'parent_id':{ key: 'parent_id', label: "PARENT_PLACE_LABEL", placeholder:"PARENT_PLACE_PLACEHOLDER", default:null},
-                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:null,advanced:true,is_editable:false},
-                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,advanced:true,is_editable:false},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:null,advanced:true,is_editable:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,advanced:true,is_editable:true},
                  },
                  relations:{
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
@@ -122,7 +122,8 @@ angular.module('firstlife.config')
                  properties:{
                      'article_of':{ key: 'article_of', label: "ARTICLE_OF_LABEL", placeholder:"ARTICLE_OF_PLACEHOLDER", default:null},
                      'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""},
-                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false}
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,advanced:true,is_editable:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,required:true,advanced:true},
                  },
                  relations:{
                      'FL_ARTICLES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'}
@@ -134,15 +135,16 @@ angular.module('firstlife.config')
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
                      "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},
                      'group_id':{ key: 'group_id', label:"GROUP",placeholder:"GROUP", default:null},
-                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
-                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true,advanced:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false,advanced:true},
                  },relations:{}
                 },
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
                  properties:{
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
-                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
+                     'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true,advanced:true},
+                     'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false,is_editable:true,advanced:true},
                      "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
 
                  },

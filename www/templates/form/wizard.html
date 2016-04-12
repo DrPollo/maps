@@ -7,10 +7,12 @@
             <span>{{editor.wizard.title |translate}} {{editor.wizard.entityLabel |translate}}</span>
         </ion-nav-title>
         <ion-nav-buttons side="right">
-            <button class="button button-clear no-animation button-positive"
-                    ng-click="editor.close()" ng-if="!editor.slideIndex">
-                <i class="icon ion-close-round"></i>
-            </button>
+            <label class="toggle" ng-init="editor.advanced = false">
+               <input type="checkbox" ng-model="editor.advanced">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+            </label>
         </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -55,9 +57,9 @@
                     </div>
                 </label>
             </div>
-            <div class="card">
-                <div ng-if="editor.checkList.valid_from && editor.checkList.valid_to && editor.checkList.valid_from.is_editable" id="date-form" class="row responsive-sm">
-                    <label ng-if="editor.checkList.valid_from" class="item item-input col">
+            <div class="card ease-animation" ng-if="!editor.checkList.valid_from.advanced || editor.advanced == editor.checkList.valid_from.advanced">
+                <div id="date-form" class="row responsive-sm">
+                    <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
                         <div class="input-label">
                             {{editor.checkList.valid_from.label|translate}}
                         </div>
@@ -86,8 +88,8 @@
                         </ionic-timepicker>
                     </label>
                 </div>
-                <div ng-if="editor.checkList.valid_from && editor.checkList.valid_to && editor.checkList.valid_to.is_editable" id="date-form" class="row responsive-sm">
-                    <label ng-if="editor.checkList.valid_to" class="item item-input col">
+                <div id="date-form" class="row responsive-sm">
+                    <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
                         <div class="input-label">
                             {{editor.checkList.valid_to.label|translate}} 
                         </div>
@@ -166,9 +168,11 @@
     </ion-content>
 
     <ion-footer-bar class="bar-light">
-        <div class="buttons" ng-click="editor.wizard.handlePrevious()" ng-show="!editor.wizard.isFirstStep()">
-            <button class="button button-positive button-clear icon-left ion-chevron-left" >{{'BACK'|translate}}</button>
-        </div>
+        <button class="button button-clear no-animation button-positive"
+                ng-click="editor.close()" ng-if="!editor.slideIndex">
+            <i class="icon ion-close-round"></i>
+            {{'ABORT'|translate}}
+        </button>
         <h1 class="title"></h1>
         <div class="buttons">
             <button ng-disabled="editor.form.wizardform.$invalid" class="button button-positive button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>

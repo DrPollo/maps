@@ -66,6 +66,10 @@ angular.module('firstlife.services')
             $log.debug('check entity_type', typeKey);
             // regole specifiche per tipi
             switch(typeKey){
+                case 'FL_PLACES' :
+                    defaults.valid_from = null;
+                    defaults.valid_to = null;
+                    break;
                 case 'FL_EVENTS' :
 //                    var morning = new Date(now.setHours(0,0,0,0));
 //                    var night = new Date(now.setHours(23,59,59,999));
@@ -74,20 +78,20 @@ angular.module('firstlife.services')
                     if(self.config.dev) defaults.description = devContent;
                     break;
                 case 'FL_ARTICLES' :
-                    defaults.valid_from = now.toISOString();
+                    defaults.valid_from = now;
                     if(self.config.dev) defaults.text = devContent;
                     break;
                 case 'FL_GROUPS' :
-                    defaults.valid_from = now.toISOString();
+                    defaults.valid_from = now;
                     if(self.config.dev) defaults.text = devContent;
                     break;
                 case 'FL_IMAGES' :
-                    defaults.valid_from = now.toISOString();
-                    defaults.valid_to = now.toISOString();
+                    defaults.valid_from = now;
+                    defaults.valid_to = now;
                     break;
                 case 'FL_COMMENTS' :
-                    defaults.valid_from = now.toISOString();
-                    defaults.valid_to = now.toISOString();
+                    defaults.valid_from = now;
+                    defaults.valid_to = now;
                     if(self.config.dev) defaults.message = devContent;
                     defaults.name = defaultName;
                     break;
@@ -179,6 +183,8 @@ angular.module('firstlife.services')
                     dataForServer = checkEventTime(data,dataForServer);
                     break;
                 case 'FL_COMMENTS':
+                    // forzo tempo puntuale
+                    dataForServer.valid_to = dataForServer.valid_from;
                     // bug collisione con message del popup
                     dataForServer.message = dataForServer.message_text;
                     break;
@@ -196,6 +202,13 @@ angular.module('firstlife.services')
                     }
 
             }
+            
+            // conversione formato data
+            if(dataForServer.valid_to)
+                dataForServer.valid_to = dataForServer.valid_to.toISOString();
+            if(dataForServer.valid_from)
+                dataForServer.valid_from = dataForServer.valid_from.toISOString();
+            
             if(dev) $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
 
