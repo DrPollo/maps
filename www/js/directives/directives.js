@@ -209,140 +209,116 @@ angular.module('firstlife.directives', [])
         });
     };
 })
-    .directive('searchCards', function() {
-
+    .directive('searchResults', function(){
     return {
-        restrict: 'E',
+        restrict: 'EG',
         scope: {
-            params: '=params'
+            query:'=',
+            click:'=',
+            close:'='
         },
-        templateUrl: '/templates/map-ui-template/SearchCards.html',
-        controller: ['$scope','$location', '$log', '$stateParams', '$rootScope', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$stateParams,$rootScope,myConfig,MemoryFactory,MapService){
-            var config = myConfig;
-            var filters = config.map.filters;
-            var filterList = filters.map(function(e){return e.search_param});
+        templateUrl: '/templates/map-ui-template/searchResults.html',
+        controller: ['$scope','$log','$location','myConfig','SearchService','CBuffer', function($scope,$log,$location,myConfig,SearchService,CBuffer){
+            var limit = myConfig.behaviour.query_limit;
+            var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
+            var result_limit = myConfig.behaviour.search_results_limit;
+            
+            var searchendSetTimeout;
+            initForm();
 
-            // inizializzazione
-            if(!$scope.cards){
-                $scope.cards = {};
-                checkParams($location.search());
-            }
+            //cleanup
+            $scope.$on('$destroy',function(){delete scope;});
 
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventSearchCards){
-                    e.preventSearchCards = true;
-                    delete $scope;
+            
+            // al cambio della query
+            $scope.$watch('query', 
+                          function(e, old){
+                $log.debug("SearchCtrl, old: ",old, " new: ",e);
+                if(e && old != e && e.length > limit){
+                    if (SEARCH_DELAY > 0) {
+                        if (searchendSetTimeout) {
+                            $log.debug("clearTimeout");
+                            clearTimeout(searchendSetTimeout);
+                        }
+                        searchendSetTimeout = setTimeout(
+                            function(){
+                                $log.debug("cerco ",$scope.query);
+                                checkQuery(e);
+                            }, SEARCH_DELAY);
+                    } 
+                    else {
+                        checkQuery(e);
+                    } 
+                }else if( e == '' ){
+                    // reset
+                    $scope.locations = [];
+                    $scope.results = [];
                 }
             });
 
-            // controllo al cambio dei parametri di search
-            $scope.$watch(
-                function(){ return $scope.params.length; }, 
-                function(e, old){
-                    //if(!angular.equals(e,old)){
-                    // se cambiati controllo
-                    checkParams($location.search());
-                });
-
-
-
-            $scope.closeCard = function(k,value){
-                // rimuovo il parametro
-                removeFilter(k,value);
-                // dovrebbe rimuovere anche la card al prossimo controllo
-                var key = k.toString().concat(value);
-                delete $scope.cards[key];
-            };
-
-            function checkParams(params){
-                // aggiungo le schede dei parametri che mi mancano
-                for(var k in params){
-                    var i = filterList.indexOf(k);
-                    // se e' nella lista dei filtri search
-                    if(i > -1){
-                        var values = params[k].toString().split(',');
-                        for(var j = 0; j < values.length; j++){
-
-                            var key = k.toString().concat(values[j]);
-                            // se la card non esiste
-                            if(!$scope.cards[key]){
-                                createCard(k,values[j],filters[i],key);
-                            }
-                        } 
-
-
-                    }
-                }
-                // rimuovo le schede se i parametri sono stati rimossi
-                for(var k in $scope.cards){
-                    var key = $scope.cards[k].search_param;
-                    if(!params[key]){
-                        delete $scope.cards[k];
-                    }
-                }
+            $scope.locate = function(r){
+                $log.debug('check location street',r);
+                $location.search('lat',r.lat);
+                $location.search('lng',r.lng);
+                $scope.close();
             }
 
-            function createCard(search,value,filter,key){
-                var card = angular.copy(filter);
-                card.value = value;
-                switch(search){
-                    case 'users':
-                        // cerco il nome utente
-                        var user = MemoryFactory.getUser();
-                        if(value == user.id && user.displayName){
-                            card.label2 = user.displayName;
-                            $scope.cards[key] = card;
-                        }else{ $log.error("utente sconosciuto o mancanza di displayName",value,user); }
-                        break;
-                    case 'groups':
-                        // cerco il nome del gruppo
-                        MapService.get(value).then(
-                            function(response){
-                                if(response.entity_type == filter.entity_type){
-                                    card.label2 = response.name;
-                                    $scope.cards[key] = card;
-                                }else{
-                                    //rimuovo filtro
-                                    removeFilter(search,value);
-                                }
-                            },
-                            function(response){
-                                $log.error("non trovo il gruppo ",value,", errore ",response);
-                                //rimuovo filtro
-                                removeFilter(search,value);
-                            }
-                        );
-                        break;
-                    default:
-                        $log.error("Non so gestire il parametro search: ",key,value,filter);
-                }
+            /*
+             * Funzioni private
+             * 1) checkQuery: fa partire le richieste ai service di ricerca
+             * 2) pushCache: aggiunge nel buffer circolare il contenuto del form di ricerca
+             * 3) initForm: inizializza la struttura dati del form di ricerca
+             */
+
+            // richieste per i service di ricerca
+            function checkQuery(e){
+                // togliamo la ricerca interna per ora
+//                SearchService.query(e).then(
+//                    function(response){
+//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
+//                        $scope.results = response.length >= result_limit ? response.slice(0,result_limit) : response;
+//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
+//                        if($scope.query != '' && $scope.results.length > 0)
+//                            pushCache(e);
+//                    },
+//                    function(response){ console.log("SearchCtrl, watch query, SearchService.query, error: ",response);}
+//                );
+                SearchService.geocoding(e).then(
+                    function(response){
+                        $log.debug("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
+                        $scope.locations = response.length >= result_limit ? response.slice(result_limit) : response;
+                        if($scope.query != '' && $scope.locations.length > 0)
+                            pushCache(e);
+                    },
+                    function(response){ 
+                        $log.error("SearchCtrl, watch query, SearchService.geocoding, error: ",response);
+                    }
+                );
             }
 
-            function removeFilter(key,value){
-                if(!value){
-                    $location.search(key,null);
-                }
-                var params = $location.search();
+            // aggiunge una ricerca nei buffer di ricerca
+            function pushCache(e){
+                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
+                //var entry = angular.copy($scope.form);
+                var entry = {query:e};
+                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
+                    $scope.bufferSearch.push(entry);
+            }
 
-                if(params[key]){
-                    var values = params[key];
-                    var a = values.toString().split(',');
-                    for(var i = 0 ; i < a.length; i ++){
-                        if(a[i] == value){
-                            a.splice(i,1);
-                        } 
-                    }
-                    var newValues = a.join(',');
-                    if(newValues != '')
-                        $location.search(key,newValues);
-                    else
-                        $location.search(key,null);
-                }
+            // inizializzazione del form di ricerca
+            function initForm(){
+                $scope.locations = [];
+                $scope.results = [];
+                $scope.bufferSearch = new CBuffer(result_limit);
+                $scope.bufferSearch.overflow = function(data) {
+                    //console.log("Buffer overflow: ",data);
+                };
             }
 
         }]
-    };
-}).directive('wall', function() {
+    }
+})
+    .directive('wall', function() {
 
     return {
         restrict: 'EG',
@@ -352,7 +328,7 @@ angular.module('firstlife.directives', [])
             click: '=click'
         },
         templateUrl: '/templates/map-ui-template/wallTemplate.html',
-        controller: ['$scope','$location', '$log', '$stateParams', '$rootScope','$filter', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$stateParams,$rootScope,$filter,myConfig,MemoryFactory,MapService){
+        controller: ['$scope','$location', '$log', '$filter', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService){
             var config = myConfig;
             var bounds = {};
             $scope.markerChildren = {};
@@ -412,7 +388,6 @@ angular.module('firstlife.directives', [])
                     }
                 }
                 $scope.markerChildren[marker.id] = children;
-
             };
 
 
@@ -443,7 +418,7 @@ angular.module('firstlife.directives', [])
                     delete $scope;
                 }
             });
-            
+
             $scope.$watch('id',function(e,old){
                 // cambia il marker
                 if(e != old){
@@ -452,7 +427,7 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-            
+
             initGroupActions();
             function initGroupActions(){
                 groupsFactory.getMembers($scope.id).then(
@@ -481,10 +456,10 @@ angular.module('firstlife.directives', [])
                         initActions();
                     }
                 );
-            
+
             }
-            
-            
+
+
 
 
             $scope.actionEntity = function(action, param){
@@ -1309,27 +1284,27 @@ angular.module('firstlife.directives', [])
         link: function (scope, element) {
 
             scope.$on('$destroy',function(){delete scope;});
-            
+
             scope.colors = myConfig.design.colors;
             // fatta a mano
             scope.cats = angular.copy(myConfig.types.categories);
-            
+
             var ids = [];
             var firstLevel = [];
             for (var i = 0 ; i < scope.cats.length; i++) {
                 //if(data[i].is_visible){
-                    firstLevel.push(scope.cats[i].categories.length);
-                    ids.push(scope.cats[i].category_space);
+                firstLevel.push(scope.cats[i].categories.length);
+                ids.push(scope.cats[i].category_space);
 
                 //}
             }
             scope.$watch(function() {
-                    return element[0].clientWidth;
-                }, function(value,old){
-                    $log.debug(element[0].getBoundingClientRect());
-                    initTree(element[0].getBoundingClientRect());
-                });
-            
+                return element[0].clientWidth;
+            }, function(value,old){
+                $log.debug(element[0].getBoundingClientRect());
+                initTree(element[0].getBoundingClientRect());
+            });
+
             function initTree(rect){
                 scope.size = rect;
                 var boxes = Treemap.generate(firstLevel,rect.width,rect.height);
@@ -1341,20 +1316,20 @@ angular.module('firstlife.directives', [])
                 }
                 for (var i = 0 ; i < scope.cats.length; i++) {
                     //if(scope.cats[i].is_visible){
-                        var cats = scope.cats[i].categories;
-                        var buff = [];
-                        for(var j = 0; j < cats.length; j++){
-                            buff[j] = 1;
-                        }
-                        var boxes2 = Treemap.generate(buff,rect.width,rect.height);
-                        for(var k = 0; k < boxes2.length; k++){
-                            scope.cats[i].categories[k].rect = toPer(boxes2[k]);
-                        }
+                    var cats = scope.cats[i].categories;
+                    var buff = [];
+                    for(var j = 0; j < cats.length; j++){
+                        buff[j] = 1;
+                    }
+                    var boxes2 = Treemap.generate(buff,rect.width,rect.height);
+                    for(var k = 0; k < boxes2.length; k++){
+                        scope.cats[i].categories[k].rect = toPer(boxes2[k]);
+                    }
                     //}
                 }
                 $log.debug(scope.cats);
             }
-            
+
             scope.back = false;
             scope.toggle = function(space){
                 if(scope.back == space.category_space){
@@ -1374,7 +1349,7 @@ angular.module('firstlife.directives', [])
             function toPer(rect){
                 //$log.debug(rect,scope.size);
                 // x,y,width,height
-                
+
                 var x = (rect[0]/scope.size.width)*100;
                 var y = (rect[1]/scope.size.height)*100;
                 var width = ((rect[2]-rect[0])/scope.size.width)*100;
@@ -1385,7 +1360,7 @@ angular.module('firstlife.directives', [])
                          height.toString().concat('%')];
                 return r;
             }
-            
+
         }
     };
 }]);

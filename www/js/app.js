@@ -357,6 +357,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TITLE:'Titolo',
         DELETE_ASK : 'Vuoi davvero cancellare questo luogo?',
         DELETE:'Elimina',
+        SEARCH_CRONOLOGY:'Cronologia ricerche',
+        SEARCH_ENTITIES_RESULTS:'Risultato entità',
+        SEARCH_LOCATIONS:'Stradario',
+        CURRENTLY_ON_MAP:'Sulla mappa',
+        NOTHING_TO_SEE:'Nulla da vedere...'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -550,6 +555,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TITLE:'Title',
         DELETE_ASK: 'Do you really wish to delete the content?',
         DELETE:'Delete',
+        SEARCH_CRONOLOGY:'Search history',
+        SEARCH_ENTITIES_RESULTS:'Entity results',
+        SEARCH_LOCATIONS:'Steet guide',
+        CURRENTLY_ON_MAP:'Currently on map',
+        NOTHING_TO_SEE:'Nothing to see...'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

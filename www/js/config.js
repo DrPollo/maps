@@ -302,7 +302,10 @@ angular.module('firstlife.config')
             'split_factor' : 1,
             // maschera permessi utente 
             'umask':744,
-            'viewer':false
+            'viewer':false,
+            // limite minimo di caratteri per la ricerca
+            'query_limit':3,
+            'search_results_limit': 5
         }
     },
 

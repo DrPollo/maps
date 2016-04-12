@@ -1,44 +1,20 @@
 <ion-view class="maps-view">
-    <div id="mapHeader" ng-controller="SearchCtrl">
+    <div id="mapHeader">
         <!--<button ng-if="config.actions.show_menu" id="sideMenuToggler" class="button button-clear button-dark icon ion-navicon" ng-click="toggleSideLeft()"></button>-->
         <div id="omnibox">
-            <div id="floating-search-bar">
-
-                <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()">
-                </button>
-                <span class="separatore"></span>
-                <form name="ricerca" class="item-input-wrapper">
-                    <input type="search" placeholder="{{'SEARCH_IN'|translate}} {{config.app_name}}" ng-model="form.query" ng-focus="focus=true;" />
-                    <!--<button class="button button-dark button-clear icon-button ion-android-search"></button>-->
-                </form>
-                <span class="separatore"></span>
-                <button class="button button-dark button-clear button-icon" ng-class="form.query != ''? 'ion-close-round' : 'ion-android-locate'" ng-click="form.query != ''? clearSearch() : locate('user')"></button>
-                <span ng-if="!isMobile" class="separatore"></span>
-                <button ng-if="!isMobile && config.actions.favourite_place" class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
-            </div>
-            <search-cards params="filterConditions"></search-cards>
-            <div id="cronologia-box" ng-show="focus">
-                <button class="button button-clear button-dark" id="results-box" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
-                    <i class="icon ion-android-time"></i>
-                    <span>{{b.query}}</span>
-                </button>
-            </div>
-            <div id="results-box" ng-show="focus">
-                <button class="button button-clear button-dark" id="results-box" ng-repeat="r in form.results track by $index" ng-click="entryClick(r.id)">
-                    <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
-                    <span>{{r.name}}</span>
-                </button>
-            </div>
-            <div id="results-box" ng-show="focus">
-                <button class="button button-clear button-dark" id="results-box" ng-repeat="l in form.locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
-                    <i class="icon {{l.icon}}"></i>
-                    <span>{{l.name}}</span>
-                </button>
-            </div>
+            <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
+            <span class="separatore"></span>
+            <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showWall()"></button>
+            <span class="separatore"></span>
+            <button class="button button-dark button-clear button-icon ion-android-checkmark-circle" ng-click="showMFilterCat()"></button>
+            <span class="separatore"></span>
+            <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
+            <span class="separatore"></span>
+            <button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
         </div>
     </div>
 
-    
+
 
     <ion-content scroll="false" class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
@@ -60,24 +36,6 @@
         <!-- action buttons -->
         <div id="map-action-menu">
             <div class="flex-container flex-container-style fixed-height">
-                <div class="flex-item" ng-if="isMobile && config.actions.favourite_place">
-                    <span contenteditable=""></span>
-                    <button class="button button-float" ng-click="showModalFavPlace()">
-                        <i class="icon ion-android-compass"></i>
-                    </button>
-                </div>
-                <div class="flex-item" ng-if="config.actions.wall_tab">
-                    <span contenteditable=""></span>
-                    <button class="button button-float" ng-click="showWall()">
-                        <i class="icon ion-android-list"></i>
-                    </button>
-                </div>
-                <div class="flex-item" ng-if="config.actions.category_filter">
-                    <span contenteditable=""></span>
-                    <button class="button button-float" ng-click="showMFilterCat()">
-                        <i class="icon ion-android-checkmark-circle"></i>
-                    </button>
-                </div>
                 <div class="flex-item"  ng-if="config.actions.edit_mode && isLoggedIn" >
                     <span contenteditable=""></span>
                     <button class="button button-float" ng-click="switchEditMode()">

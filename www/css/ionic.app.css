@@ -13137,39 +13137,26 @@ ion-side-menu#side-menu {
       border-radius: 0px;
       box-shadow: 1px 1px 3px #666; }
     .maps-view #mapHeader #omnibox {
-      min-width: 350px;
+      box-shadow: 1px 1px 3px #666;
       top: 8px;
       left: 8px;
-      position: absolute; }
-      .maps-view #mapHeader #omnibox search-cards button {
-        color: white;
-        background: rgba(0, 0, 0, 0.75);
-        font-size: 1em; }
-        .maps-view #mapHeader #omnibox search-cards button span {
-          overflow: hidden;
-          display: inline-block;
-          text-align: left;
-          width: calc(100% - 40px); }
-      .maps-view #mapHeader #omnibox #floating-search-bar #barlogo {
+      position: absolute;
+      background: #fff;
+      display: inline-flex; }
+      .maps-view #mapHeader #omnibox #barlogo {
         height: 40px;
         padding: 0px 0px 4px;
         margin-left: 4px; }
-      .maps-view #mapHeader #omnibox #floating-search-bar form {
-        background: transparent; }
-        .maps-view #mapHeader #omnibox #floating-search-bar form input {
-          height: 48px;
-          padding: 0px 0px 0px 16px; }
-      .maps-view #mapHeader #omnibox #floating-search-bar .separatore {
-        height: 30px;
-        border-left: 1px solid #ccc;
-        display: none; }
-      .maps-view #mapHeader #omnibox #floating-search-bar button {
+      .maps-view #mapHeader #omnibox .separatore {
+        height: 48px;
+        border-left: 1px solid #ccc; }
+      .maps-view #mapHeader #omnibox button {
         min-height: 48px;
         height: 48px;
         width: 46px; }
-      .maps-view #mapHeader #omnibox #floating-search-bar button:before {
+      .maps-view #mapHeader #omnibox button:before {
         font-size: 1.2em; }
-      .maps-view #mapHeader #omnibox #floating-search-bar * {
+      .maps-view #mapHeader #omnibox * {
         display: inline-block;
         margin: 0px;
         padding: 0px;
@@ -13177,27 +13164,6 @@ ion-side-menu#side-menu {
         vertical-align: middle; }
       .maps-view #mapHeader #omnibox #floating-logo img {
         max-height: 35px; }
-      .maps-view #mapHeader #omnibox #cronologia-box {
-        margin-bottom: 10px; }
-      .maps-view #mapHeader #omnibox #results-box, .maps-view #mapHeader #omnibox #cronologia-box {
-        display: block;
-        background: white;
-        margin-bottom: 10px; }
-        .maps-view #mapHeader #omnibox #results-box *, .maps-view #mapHeader #omnibox #cronologia-box * {
-          box-shadow: none;
-          background: transparent; }
-        .maps-view #mapHeader #omnibox #results-box button, .maps-view #mapHeader #omnibox #cronologia-box button {
-          display: block;
-          border-bottom: 1px solid #f8f8f8;
-          width: 100%;
-          text-align: left;
-          overflow: hidden; }
-          .maps-view #mapHeader #omnibox #results-box button i, .maps-view #mapHeader #omnibox #cronologia-box button i {
-            padding-left: 10px;
-            padding-right: 10px; }
-          .maps-view #mapHeader #omnibox #results-box button span, .maps-view #mapHeader #omnibox #cronologia-box button span {
-            margin-left: 10px;
-            font-size: 0.8em; }
   .maps-view .center-map-action {
     position: absolute;
     top: 35px;
