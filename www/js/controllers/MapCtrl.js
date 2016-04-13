@@ -1646,6 +1646,8 @@ angular.module('firstlife.controllers')
                                 $log.error(response);
                             }
                         );
+                    }else{
+                        $scope.geojson.data.features = [];
                     }
                 },
                 function(response){
