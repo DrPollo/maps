@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     'project': 1,
-    'api_base_domain' : 'firstlife-www.di.unito.it:3095/',
+    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
     'api_version' : 'v4',
@@ -272,7 +272,7 @@ angular.module('firstlife.config')
             'marker_size': [20,20],
             'marker_ancor': [10,10],
             'bbox_details':'full',
-
+            'geometry_layer': false,
             area:{
                 levels:[
                     {"level":0,name:'Livello strada',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1}

@@ -11,6 +11,8 @@ angular.module('firstlife.controllers')
             levels.list = $scope.config.map.area.levels;
         }
 
+        
+        
         if(!$scope.geojson && $scope.config.map.area && $scope.config.map.area.data){
             $scope.geojson = {
                 levels: levels.check ? levels.list : null,
@@ -34,6 +36,10 @@ angular.module('firstlife.controllers')
         if(!$scope.config) $scope.config = myConfig;
         var config = myConfig;
 
+        
+        // check geometrie
+        var checkGeometries = config.map.geometry_layer;
+        
         // visualizzazione web o mobile?
         if(!$scope.isMobile) $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
         // funzione di locate usata anche nelle modal
@@ -93,7 +99,10 @@ angular.module('firstlife.controllers')
         // init layer geoJSON
 
         $scope.geojson = {
-            data:{},
+            data:{
+                "type": "FeatureCollection",
+                "features": []
+              },
             style: style
         };
 
@@ -1603,7 +1612,11 @@ angular.module('firstlife.controllers')
 
         // recupero il layer geoJson
         function getData(){
-
+            $log.debug('update geometries ',checkGeometries);
+            // se ho le geometrie disabilitate
+            if(!checkGeometries)
+                return;
+            
             leafletData.getMap("mymap").then(
                 function(map) {
                     $log.debug('check map',map);
