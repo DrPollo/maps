@@ -1612,11 +1612,21 @@ angular.module('firstlife.controllers')
 
         // recupero il layer geoJson
         function getData(){
+//            interni 22 - 20 
+//            building 19 - 18
+//            city block 17 - 16
+//            quartieri 15 - 15
+//            borghi 14 - 13
+//            circoscrizioni 12 - 11
+//            citta 10 - 8
+//            provincia 7 - 6
+            
             $log.debug('update geometries ',checkGeometries);
             // se ho le geometrie disabilitate
             if(!checkGeometries)
                 return;
             
+            var max = config.map.min_zoom_geometry_layer;
             leafletData.getMap("mymap").then(
                 function(map) {
                     $log.debug('check map',map);
@@ -1624,18 +1634,19 @@ angular.module('firstlife.controllers')
                     var zoom = map.getZoom();
                     var sw = {lat:bounds._southWest.lat,lng:bounds._southWest.lng};
                     var ne = {lat:bounds._northEast.lat,lng:bounds._northEast.lng};
-                    $log.debug('check map parameters',zoom,bounds);
+                    $log.debug('check map parameters',max,zoom,bounds);
+                    if(max <= zoom){
+                        indexingFactory.get(zoom,sw,ne).then(
+                            function(response){
+                                $log.debug("indexFactory.get, response",response);
+                                $scope.geojson.data = response;
 
-                    indexingFactory.get(zoom,sw,ne).then(
-                        function(response){
-                            $log.debug("indexFactory.get, response",response);
-                            $scope.geojson.data = response;
-
-                        },
-                        function(response){
-                            $log.error(response);
-                        }
-                    );
+                            },
+                            function(response){
+                                $log.error(response);
+                            }
+                        );
+                    }
                 },
                 function(response){
                     $log.error("MapService, getMapBounds, errore: ",response);

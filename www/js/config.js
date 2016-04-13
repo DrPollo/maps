@@ -272,7 +272,8 @@ angular.module('firstlife.config')
             'marker_size': [20,20],
             'marker_ancor': [10,10],
             'bbox_details':'full',
-            'geometry_layer': false,
+            'geometry_layer': true,
+            'min_zoom_geometry_layer':20,
             area:{
                 levels:[
                     {"level":0,name:'Livello strada',id:1,icon:'ion-social-buffer-outline',slug:'ground-level',key:0,index:1}
