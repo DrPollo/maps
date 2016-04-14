@@ -375,11 +375,19 @@ angular.module('firstlife.controllers')
 
 
         $scope.$on("startEditing",function(event,args){
-            // centro la mappa sul luogo dei parametri
-            locate(args);
-            // entro in edit mode
-            changeMode('edit');
             $scope.updateEntity = args;
+            $log.debug('check start editing ',args);
+            // se il luogo non e' bounded ad una posizione
+            if(!args.skip){
+                // centro la mappa sul luogo dei parametri
+                locate(args);
+                // entro in edit mode
+                changeMode('edit');
+            }else{
+                // se devo saltare il riposizionamento
+                $scope.showASEdit();
+            }
+            
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -538,7 +546,9 @@ angular.module('firstlife.controllers')
             if($scope.updateEntity && $scope.updateEntity.id){
                 var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity.id,};
                 $state.go('app.editor', params);
-                $scope.switchEditMode();
+                //$scope.switchEditMode();
+                // back to view
+                changeMode('view');
             }if($scope.updateEntity){
                 // se ho gia' dei parametri per la insert
                 var params = {};
@@ -550,7 +560,9 @@ angular.module('firstlife.controllers')
                 params.lng = $scope.map.center.lng;
 
                 $state.go('app.editor', params);
-                $scope.switchEditMode();
+                //$scope.switchEditMode();
+                // back to view
+                changeMode('view');
             }else{
                 // se non devo aggiornare nessuna entita'
                 // e non ho paramentri gia' stabiliti

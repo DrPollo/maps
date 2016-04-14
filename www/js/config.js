@@ -92,9 +92,9 @@ angular.module('firstlife.config')
                  },
                  relations:{
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
-                     'FL_EVENTS':{slug:'location',field:'location',label:'REL_LOCATION_LABEL',childrenLabel:'REL_LOCATION_CHILD_LABEL'},
-                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL'},
-                     'FL_COMMENTS':{slug:'comment_of',field:'comment_of',label:'REL_COMMENT_OF_LABEL',childrenLabel:'REL_COMMENT_OF_CHILD_LABEL'}
+                     'FL_EVENTS':{slug:'location',field:'location',label:'REL_LOCATION_LABEL',childrenLabel:'REL_LOCATION_CHILD_LABEL',bounded:true},
+                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL',bounded:true},
+                     'FL_COMMENTS':{slug:'comment_of',field:'comment_of',label:'REL_COMMENT_OF_LABEL',childrenLabel:'REL_COMMENT_OF_CHILD_LABEL',bounded:true}
                  }
                 },
                 // eventi

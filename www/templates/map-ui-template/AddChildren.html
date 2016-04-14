@@ -1,6 +1,6 @@
 <div class="card list" ng-if="count > 0">
     <div class="item item-divider">{{'ADD_CHILDREN' |translate}} {{label |translate}}</div>
-    <div ng-repeat="type in relationsList track by $index" class="item item-icon-left item-icon-right" on-tap="callback(type.slug,type.rel.slug)" ng-if="type.check">
+    <div ng-repeat="type in relationsList track by $index" class="item item-icon-left item-icon-right" on-tap="callback(type,type.rel.slug)" ng-if="type.check">
         <i class="icon {{type.icon}}" style="color: {{type.color}}"></i>
         <span ng-if="!isMobile">{{type.name|translate}}</span>
         <i class="icon positive ion-android-add-circle"></i>

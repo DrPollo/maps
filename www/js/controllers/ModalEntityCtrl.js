@@ -237,13 +237,26 @@ angular.module('firstlife.controllers')
         /*
          * Add child marker/place
          */
-        $scope.addChildEntity = function(entity_type,rel){
+        $scope.addChildEntity = function(childType,rel){
+            var entity_type = childType.slug;
+            var entity_key = childType.key;
+            var relations = $scope.currentType.relations;
+            $log.debug('check add children ',entity_key,entity_type,rel,relations);
+            
+            //logica add child entity
+            var skip = false;
+            // se l'entita' e' bounded vuol dire che deve avere la posizione del padre
+            if(relations[entity_key].bounded){
+                // faccio saltare il riposizionamento
+                skip = true;
+            }
+            
             $log.debug('add child ',entity_type,rel);
             if(!entity_type)
                 type = parent_type;
 
             var marker = $scope.infoPlace.marker,
-                params = {lat:marker.lat, lng:marker.lng, entity_type:entity_type};
+                params = {lat:marker.lat, lng:marker.lng, entity_type:entity_type,skip:skip};
             // questa notazione perche' rel e' una variabile
             params[rel] = marker.id;
             $scope.$emit("startEditing",params);
