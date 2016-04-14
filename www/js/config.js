@@ -114,7 +114,7 @@ angular.module('firstlife.config')
                  },
                  relations:{
                      'FL_EVENTS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
-                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL'}
+                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL',bounded:true}
                  }
                 },
                 // articoli
@@ -126,7 +126,7 @@ angular.module('firstlife.config')
                      'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:null,required:true,advanced:true},
                  },
                  relations:{
-                     'FL_ARTICLES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'}
+                     'FL_ARTICLES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL',bounded:true}
                  }
                 },
                 // commenti
