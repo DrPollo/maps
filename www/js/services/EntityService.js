@@ -83,6 +83,7 @@ angular.module('firstlife.services')
                     break;
                 case 'FL_GROUPS' :
                     defaults.valid_from = now;
+                    defaults.valid_to = null;
                     if(self.config.dev) defaults.text = devContent;
                     break;
                 case 'FL_IMAGES' :
@@ -191,6 +192,8 @@ angular.module('firstlife.services')
                 case 'FL_IMAGES':
                     break;
                 case 'FL_ARTICLES':
+                    break;
+                case 'FL_GROUPS':
                     break;
                 default: // FL_PLACES
                     // gestione type
