@@ -1,17 +1,19 @@
 <ion-view class="login-view">
     <ion-content scroll="true" style='background-image: url(" {{defaults.design.default_background}} ");'>
         <div class="row top-content">
-            <div id="logo" ng-if="(defaults.design.logo.url != '')" class="col col-center col-logo" style='background-image: url(" {{defaults.design.logo.url}} ");' title="{{defaults.design.logo.title}}">
-            </div>
-            <div id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col col-center col-logo h1" style="{{defaults.design.logo.label.style}}">
+            <div class="col col-center">
+                <img ng-if="(defaults.design.logo.url != '')" src='{{defaults.design.logo.url}}' title="{{defaults.design.logo.title}}" alt="{{defaults.design.logo.title}}"/>
+            
+            <div id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1" style="{{defaults.design.logo.label.style}}">
                 {{defaults.design.logo.label.text}}
+            </div>
             </div>
         </div>
 
 
         <div class="row bottom-content">
 
-            <div class="col col-center">
+            <div class="col">
                 <!-- inizio login -->
                 <div ng-if="(action == 'login')" class="form-container">
                     <form  name="login_form" class="login-form" novalidate>
@@ -138,7 +140,7 @@
 
 
         <div class="row footer-content">
-            <div class="col col-center" id="partners">
+            <div class="col" id="partners">
                 <span ng-repeat="logo in defaults.design.logo_partners"><img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/><label>{{logo.label}}</label></span>
             </div>
         </div>

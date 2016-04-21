@@ -12829,18 +12829,14 @@ ion-side-menu#side-menu {
   .signup-view label span, .signup-view label i, .login-view label span, .login-view label i {
     color: #fff !important; }
   .signup-view .top-content, .login-view .top-content {
-    height: 45%;
+    min-height: 35%;
     text-align: center; }
     .signup-view .top-content .col-logo, .login-view .top-content .col-logo {
       height: 100%;
       max-height: 243px;
       background-size: auto 100%; }
-    .signup-view .top-content #logo, .login-view .top-content #logo {
-      background-color: transparent;
-      background-repeat: no-repeat;
-      background-position: center center; }
   .signup-view .bottom-content, .login-view .bottom-content {
-    height: 45%; }
+    min-height: 55%; }
     .signup-view .bottom-content .form-container, .login-view .bottom-content .form-container {
       max-width: 600px;
       margin: 0 auto;

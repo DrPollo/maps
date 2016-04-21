@@ -63,18 +63,13 @@
 
     .top-content
     {
-        height:45%;
+        min-height:35%;
         text-align: center;
         .col-logo{
             height: 100%;
             //background-size: auto 100% !important;
             max-height: 243px;
             background-size: auto 100%;
-        }
-        #logo{
-            background-color: transparent;
-            background-repeat: no-repeat;
-            background-position: center center;
         }
         #text-logo{
 
@@ -84,7 +79,7 @@
 
     .bottom-content
     {
-        height:45%;
+        min-height:55%;
         .form-container{
             max-width: 600px;
             margin: 0 auto;
