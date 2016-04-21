@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('TimelineCtrl', ['$scope', '$rootScope', '$window', '$location', '$filter', 'myConfig', 'MapService', function($scope, $rootScope, $window, $location, $filter, myConfig, MapService) {
+    .controller('TimelineCtrl', ['$scope', '$rootScope', '$window', '$location', '$filter','$log', 'myConfig', 'MapService', function($scope, $rootScope, $window, $location, $filter,$log, myConfig, MapService) {
 
         $scope.config = myConfig;
 
@@ -204,7 +204,7 @@ angular.module('firstlife.controllers')
 
         $scope.timelineData = [];
         function updateTimeline(list){
-            if(consoleCheck) console.log("updateTimeline init ",list);
+            $log.debug("updateTimeline init ",list);
             var bounds = {};
             MapService.getMapBounds().then(
                 function(response){
@@ -228,7 +228,7 @@ angular.module('firstlife.controllers')
                     //                            delete timelineData[k];
                     //                        }
                     //                    }
-                    if(consoleCheck) console.log("updateTimeline risultato",$scope.timelineData);
+                    $log.debug("updateTimeline risultato",$scope.timelineData);
                 },
                 function(err){console.log("TimelineCtrl, updateTimeline, MapService.getMapBounds, error", err);}
             );

@@ -1123,14 +1123,26 @@ angular.module('firstlife.controllers')
 
             //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
             $scope.markersFilteredArray = angular.copy($scope.filtred);
-            $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixer);
-
+            
+            //aggiorno la lista dei marker mettendo e togliendo
             updateMarkers($scope.markersFilteredArray);
             removeMarkers($scope.markersFilteredArray);
 
-            if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
+            
+            
+            $log.debug('check cosa va sulla timeline ',Object.keys($scope.markersFiltered).length);
+            
+            //mando il segnale di aggiornamento degli eventi sulla timeline
+            $scope.$broadcast('timeline.refresh',{list:angular.copy($scope.markersFiltered)});
+            
+            // correggo la lista tenendo conto delle relazioni tra entita'
+            relationsFixer();
+            //$scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixerFilter);
 
-            $scope.$broadcast('timeline.refresh',{list:$scope.markersFiltered});
+
+            $log.debug("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
+
+            
             // applico le modifiche a markersFiltered
             // aggiungo i marker alla lista 
             function updateMarkers(filtred){
@@ -1148,7 +1160,7 @@ angular.module('firstlife.controllers')
                     }
                 }
             }
-            //
+            // rimuovo i marker presenti localmente ma non presenti nel risultato
             function removeMarkers(filtred){
                 for(key in $scope.markersFiltered){
                     var marker = $scope.markersFiltered[key];
@@ -1160,10 +1172,34 @@ angular.module('firstlife.controllers')
                     }
                 }
             }
+            
+            function relationsFixer(){
+                for(var key in $scope.markersFiltered){
+                    var marker = $scope.markersFiltered[key];
+                    // recupero le relazioni per l'entity type
+                    var parentsRels = $scope.config.types.parent_relations[marker.entity_type];
+                    // per ogni relazione di tipo parent controllo che non sia settata e non ci sia un padre
+                    for(var q in parentsRels){
+                        var parentRel = parentsRels[q];
+                        // se non devo escludere la relazione
+                        // se il marker ha un valore nel campo della relazione padre
+                        // se il padre e' nella lista dei marker
+                        //if(!parentRel.exclude) $log.debug('check condizioni in relationsFixer ',parentRel.field, marker[parentRel.field], $scope.markersFiltered[marker[parentRel.field]] );
+                        if(!parentRel.exclude && marker[parentRel.field] && $scope.markersFiltered[marker[parentRel.field]] ){
+                            $log.debug('cancello in relationsFixer ',key,$scope.markersFiltered[key]);
+                            // rimuovo il marker dalla lista
+                            delete $scope.markersFiltered[key];
+                        }
+                    }
+                }
+                $log.debug('check relationsFixer ',Object.keys($scope.markersFiltered).length);
+            }
+            
+            
             // filtro per il fix delle relazioni
             // se il padre non si vede il figlio viene visualizzato
             // generalizzato sulle relazioni di tipo parent
-            function relationsFixer(val){
+            function relationsFixerFilter(val){
                 if(consoleCheck) console.log("MapCtrl, relationsFixer, val ",val);
                 var parents = $scope.config.types.parent_relations[val.entity_type];
                 for(key in parents){
