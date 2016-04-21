@@ -29,13 +29,15 @@
             button {
                 color: white;
                 text-align: left;
-                background: $alternative;
+                background: $dark;
                 display: block;
                 min-width: 100%;
                 overflow: hidden;
                 span {
                     display: inline-block;
                     padding-right: 10px;
+                    font-weight: 300;
+                    font-size: 1em;
                 }
             }
         }

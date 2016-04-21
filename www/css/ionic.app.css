@@ -13143,13 +13143,15 @@ ion-side-menu#side-menu {
       .maps-view #mapHeader search-cards button {
         color: white;
         text-align: left;
-        background: #6C93B3;
+        background: #333;
         display: block;
         min-width: 100%;
         overflow: hidden; }
         .maps-view #mapHeader search-cards button span {
           display: inline-block;
-          padding-right: 10px; }
+          padding-right: 10px;
+          font-weight: 300;
+          font-size: 1em; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
       vertical-align: top; }
