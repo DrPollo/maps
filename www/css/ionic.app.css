@@ -49,6 +49,10 @@ input::-ms-input-placeholder, textarea::-ms-input-placeholder {
 *[on-tap], *[click], *[ng-click] {
   cursor: pointer; }
 
+.modal {
+  max-width: 680px;
+  margin: 0px auto !important; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

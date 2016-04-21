@@ -748,7 +748,7 @@ angular.module('firstlife.directives', [])
                     titleText: $filter('translate')(text),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        if(consoleCheck) console.log('CANCELLED');
+                        $log.log('CANCELLED');
                     }
                 });
             }
@@ -1317,7 +1317,7 @@ angular.module('firstlife.directives', [])
                     titleText: $filter('translate')(text),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        if(consoleCheck) console.log('CANCELLED');
+                        $log.log('CANCELLED');
                     }
                 });
             }
