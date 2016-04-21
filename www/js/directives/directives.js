@@ -356,13 +356,13 @@ angular.module('firstlife.directives', [])
             var limit = myConfig.behaviour.query_limit;
             var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
             var result_limit = myConfig.behaviour.search_results_limit;
-            
+
             var searchendSetTimeout;
             initForm();
 
             //cleanup
             $scope.$on('$destroy',function(){delete scope;});
-            
+
             // al cambio della query
             $scope.$watch('query', function(e, old){
                 if(e && old != e && e.length > limit){
@@ -399,16 +399,16 @@ angular.module('firstlife.directives', [])
             // richieste per i service di ricerca
             function checkQuery(e){
                 // togliamo la ricerca interna per ora
-//                SearchService.query(e).then(
-//                    function(response){
-//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
-//                        $scope.results = response.length >= result_limit ? response.slice(0,result_limit) : response;
-//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
-//                        if($scope.query != '' && $scope.results.length > 0)
-//                            pushCache(e);
-//                    },
-//                    function(response){ console.log("SearchCtrl, watch query, SearchService.query, error: ",response);}
-//                );
+                //                SearchService.query(e).then(
+                //                    function(response){
+                //                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
+                //                        $scope.results = response.length >= result_limit ? response.slice(0,result_limit) : response;
+                //                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
+                //                        if($scope.query != '' && $scope.results.length > 0)
+                //                            pushCache(e);
+                //                    },
+                //                    function(response){ console.log("SearchCtrl, watch query, SearchService.query, error: ",response);}
+                //                );
                 SearchService.geocoding(e).then(
                     function(response){
                         $scope.locations = response.length >= result_limit ? response.slice(result_limit) : response;
@@ -419,14 +419,14 @@ angular.module('firstlife.directives', [])
                 );
             }
 
-            
+
 
             // inizializzazione del form di ricerca
             function initForm(){
                 $scope.locations = [];
                 $scope.results = [];
             }
-            
+
 
         }]
     }
@@ -447,14 +447,14 @@ angular.module('firstlife.directives', [])
             $scope.markerChildren = {};
 
             $scope.query = '';
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyWall){
                     e.preventDestroyWall = true;
                     delete $scope;
                 }
             });
-            
+
             MapService.getMapBounds().then(
                 function(response){
                     $scope.wallArray = [];
@@ -505,36 +505,36 @@ angular.module('firstlife.directives', [])
                 $scope.markerChildren[marker.id] = children;
             };
 
-            
-            
-//            $scope.$watch('query',function(e,old){
-//                if(e !== old){
-//                    $log.debug('change searchName',e,old);
-//                }
-//            });
-//            
-//            function initBuffer(){
-//                $scope.bufferSearch = new CBuffer(result_limit);
-//                $scope.bufferSearch.overflow = function(data) {
-//            }
-//            
-//            // aggiunge una ricerca nei buffer di ricerca
-//            function pushCache(e){
-//                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
-//                //var entry = angular.copy($scope.form);
-//                var entry = {query:e};
-//                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
-//                    $scope.bufferSearch.push(entry);
-//            }
-//            
-//            $scope.cacheRestore = function (index){
-//                var query = $scope.bufferSearch.get(index).query;
-//                //console.log("Buffer: ",$scope.bufferSearch);
-//                initForm();
-//                $scope.$apply(function(){$scope.query = query;});
-//                //$scope.query = query;
-//            }
-            
+
+
+            //            $scope.$watch('query',function(e,old){
+            //                if(e !== old){
+            //                    $log.debug('change searchName',e,old);
+            //                }
+            //            });
+            //            
+            //            function initBuffer(){
+            //                $scope.bufferSearch = new CBuffer(result_limit);
+            //                $scope.bufferSearch.overflow = function(data) {
+            //            }
+            //            
+            //            // aggiunge una ricerca nei buffer di ricerca
+            //            function pushCache(e){
+            //                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
+            //                //var entry = angular.copy($scope.form);
+            //                var entry = {query:e};
+            //                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
+            //                    $scope.bufferSearch.push(entry);
+            //            }
+            //            
+            //            $scope.cacheRestore = function (index){
+            //                var query = $scope.bufferSearch.get(index).query;
+            //                //console.log("Buffer: ",$scope.bufferSearch);
+            //                initForm();
+            //                $scope.$apply(function(){$scope.query = query;});
+            //                //$scope.query = query;
+            //            }
+
 
         }]
     }
@@ -605,7 +605,7 @@ angular.module('firstlife.directives', [])
             }
 
             $scope.actionEntity = function(action, param){
-                
+
                 switch(action){
                     case 'view':
                         //aggiorno i parametri search con il filtro
@@ -1232,16 +1232,34 @@ angular.module('firstlife.directives', [])
 
             // cancella entita' semplice
             $scope.delete = function(id,type,i){
-                SimpleEntityFactory.delete(id,type).then(
-                    function(response){
-                        // cancello l'elemento dalla memoria locale
-                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
-                        if(index > -1){
-                            $scope.groups[i].list.splice(index,1);
-                        }
-                    },
-                    function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
-                );
+                // aggiungi check con alert
+                
+                $scope.showConfirm = function() {
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: $filter('translate')('DELETE'),
+                        template: $filter('translate')('DELETE_ASK')
+                    });
+
+                    confirmPopup.then(
+                        function(res) {
+                            if(res) {
+                                SimpleEntityFactory.delete(id,type).then(
+                                    function(response){
+                                        // cancello l'elemento dalla memoria locale
+                                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
+                                        if(index > -1){
+                                            $scope.groups[i].list.splice(index,1);
+                                        }
+                                    },
+                                    function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
+                                );
+                            } else {
+                                $log.log('cancellazione annullata');
+                            }
+                        });
+                };
+
+                $scope.showConfirm();
             }
 
 

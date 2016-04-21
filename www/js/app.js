@@ -355,7 +355,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADD_COMMENT:'Aggiungi commento',
         ADD_IMAGE:'Aggiungi immagine',
         TITLE:'Titolo',
-        DELETE_ASK : 'Vuoi davvero cancellare questo luogo?',
+        DELETE_ASK : 'Vuoi davvero cancellare questa entità?',
         DELETE:'Elimina',
         SEARCH_CRONOLOGY:'Cronologia ricerche',
         SEARCH_ENTITIES_RESULTS:'Risultato entità',
