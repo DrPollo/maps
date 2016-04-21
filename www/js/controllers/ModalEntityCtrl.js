@@ -8,8 +8,8 @@ angular.module('firstlife.controllers')
 
         var consoleCheck = false;
         var hide = null;
-        
-        
+
+
         // visualizzazione web o mobile?
         $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
@@ -38,7 +38,7 @@ angular.module('firstlife.controllers')
             }
         }); 
 
-         $scope.$on('$destroy', function(e) {
+        $scope.$on('$destroy', function(e) {
             if(!e.destroyModalDestroyPrevented){
                 e.destroyModalDestroyPrevented = true;
                 $log.debug('destroy modal');
@@ -60,7 +60,7 @@ angular.module('firstlife.controllers')
                     //segnalo la chiusura della modal
                     if($scope.infoPlace.modal && !e.modalHiddenPrevented){
                         e.modalHiddenPrevented = true;
-                        
+
                         //deregistro il listner per la hide
                         $log.debug('check hide listner!',hide);
                         hide();
@@ -69,7 +69,7 @@ angular.module('firstlife.controllers')
                     }
                 });
             }
-            
+
             $log.log("marker da visualizzare",marker);
             // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
@@ -110,17 +110,17 @@ angular.module('firstlife.controllers')
             };
         };
 
-//        var hide = $scope.$on('modal.hidden', function(e) {
-//                //segnalo la chiusura della modal
-//                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
-//                    e.modalHiddenPrevented = true;
-//                    //deregistro il listner per la hide
-//                    hide();
-//                    chiudoModal();
-//                }
-//            });
-//        
-        
+        //        var hide = $scope.$on('modal.hidden', function(e) {
+        //                //segnalo la chiusura della modal
+        //                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
+        //                    e.modalHiddenPrevented = true;
+        //                    //deregistro il listner per la hide
+        //                    hide();
+        //                    chiudoModal();
+        //                }
+        //            });
+        //        
+
         //action sheet init-info sul place
         $scope.showASDeletedPlace = function(placeId){
             var title="";
@@ -140,7 +140,7 @@ angular.module('firstlife.controllers')
             // to do serve per il routing, chiudo l'action sheet con il pulsante back
         };
 
-        
+
         // menu popover della modals
         $scope.showPopoverMenu = function (){
 
@@ -178,35 +178,38 @@ angular.module('firstlife.controllers')
         //action sheet per creazione place/evento
         $scope.remove = function(marker){
             if(consoleCheck)console.log("ModalPlaceController, showASRemove, id: ",marker.id);
-            var hideSheet = $ionicActionSheet.show({
-                titleText: $filter('translate')('DELETE_ASK'),
-                buttons: [],
-                cancelText: '<i class="icon ion-arrow-down-b"></i> '+$filter('translate')('ABORT'),
-                cancel: function() {
-                    $log.log('CANCELLED');
-                },
-                destructiveText: '<i class="icon ion-android-delete"></i> '+$filter('translate')('CANCEL'), 
-                destructiveButtonClicked : function(){
-                    showLoadingScreen();
-                        //$scope.showMWizardPlace();
-                        MapService.removeMarker(marker.id).then(
-                            // success function 
-                            function(resp) {
-                                hideLoadingScreen();
-                                $scope.closeModal();
-                                $scope.showASDeletedPlace(marker.id);
-                                $scope.$emit("deleteMarker",{id:marker.id});
-                            },
-                            // error function 
-                            function(error) {
-                                hideLoadingScreen();
-                                $log.error("Failed to get required marker, result is " + error); 
-                                $scope.closeModal();
-                                $scope.remove(-1);
-                            });
-                    hideSheet();
-                }
-            });
+
+            $scope.showConfirm = function() {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: $filter('translate')('DELETE'),
+                    template: $filter('translate')('DELETE_ASK')
+                });
+
+                confirmPopup.then(
+                    function(res) {
+                        if(res) {
+                            MapService.removeMarker(marker.id).then(
+                                // success function 
+                                function(response) {
+                                    $scope.showASDeletedPlace(marker.id);
+                                    $scope.$emit("deleteMarker",{id:marker.id});
+                                    $scope.closeModal();
+                                },
+                                // error function 
+                                function(error) {
+                                    $scope.showASDeletedPlace(-1);
+                                    $log.error("Failed to get required marker, result is " + error); 
+                                    //$scope.closeModal();
+                                    
+                                });
+                        } else {
+                            $log.log('cancellazione annullata');
+                        }
+                    });
+            };
+
+            $scope.showConfirm();
+
         };
 
         //action sheet init-info sul place
@@ -229,7 +232,7 @@ angular.module('firstlife.controllers')
         $scope.updateEntity = function(marker){
             var params = {lat:marker.lat, lng:marker.lng, id:marker.id};
             $scope.$emit("startEditing",params);
-            
+
             //fai uscire la wizardPlace con placeholder dati vecchi
             $scope.closeModal();
         }
@@ -242,7 +245,7 @@ angular.module('firstlife.controllers')
             var entity_key = childType.key;
             var relations = $scope.currentType.relations;
             $log.debug('check add children ',entity_key,entity_type,rel,relations);
-            
+
             //logica add child entity
             var skip = false;
             // se l'entita' e' bounded vuol dire che deve avere la posizione del padre
@@ -250,7 +253,7 @@ angular.module('firstlife.controllers')
                 // faccio saltare il riposizionamento
                 skip = true;
             }
-            
+
             $log.debug('add child ',entity_type,rel);
             if(!entity_type)
                 type = parent_type;
@@ -260,12 +263,12 @@ angular.module('firstlife.controllers')
             // questa notazione perche' rel e' una variabile
             params[rel] = marker.id;
             $scope.$emit("startEditing",params);
-            
+
             //fai uscire la wizardPlace con placeholder dati vecchi
             $scope.closeModal();
         }
-        
-        
+
+
         /*
          * funzioni private
          */
@@ -314,8 +317,8 @@ angular.module('firstlife.controllers')
             //deregistro il listner per la hide
             hide();
         }
-        
-        
+
+
         function showLoadingScreen(text){
             if(!text || text === 'undefined'){
                 text = 'Operazione in corso...';
@@ -354,7 +357,7 @@ angular.module('firstlife.controllers')
             // se l'utente non e' definito
             if(!$scope.user)
                 return false;
-            
+
             var source = 'others';
             if(author == $scope.user.id)
                 source = 'self';
@@ -369,5 +372,6 @@ angular.module('firstlife.controllers')
             // recupero il current type
             $scope.currentType = $scope.config.types.list[index];
         }
+
 
     }]);

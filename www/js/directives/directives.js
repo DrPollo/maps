@@ -550,7 +550,7 @@ angular.module('firstlife.directives', [])
             reset:'=reset'
         },
         templateUrl: '/templates/map-ui-template/groupActionsModal.html',
-        controller: ['$scope','$location','$log','$filter','$ionicLoading','AuthService','groupsFactory','MemoryFactory', function($scope,$location,$log,$filter,$ionicLoading,AuthService,groupsFactory,MemoryFactory){
+        controller: ['$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','AuthService','groupsFactory','MemoryFactory', function($scope,$location,$log,$filter,$ionicLoading,$ionicPopup,$ionicActionSheet,AuthService,groupsFactory,MemoryFactory){
 
             // controllo azioni
             $scope.member = false;
@@ -615,43 +615,74 @@ angular.module('firstlife.directives', [])
                         break;
                     case 'join':
                         //parte richiesta di join
-                        $ionicLoading.show();
-                        groupsFactory.joinGroup($scope.id).then(
-                            function(response){
-                                $scope.member = true;
-                                if(response.role == 'owner'){
-                                    // se ha impostato il ruolo proprietario
-                                    $scope.owner = true;
-                                }
-                                initActions();
-                                $ionicLoading.hide();
-                            },
-                            function(response){
-                                $log.error("actionEntity, join, errore",response);
-                                $ionicLoading.hide();
-                            }
-                        );
+                        $scope.showConfirm = function() {
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: $filter('translate')('GROUP_LEAVE'),
+                                template: $filter('translate')('GROUP_LEAVE_ASK')
+                            });
 
+                            confirmPopup.then(
+                                function(res) {
+                                    if(res) {
+                                        groupsFactory.joinGroup($scope.id).then(
+                                            function(response){
+                                                $scope.member = true;
+                                                if(response.role == 'owner'){
+                                                    // se ha impostato il ruolo proprietario
+                                                    $scope.owner = true;
+                                                }
+                                                initActions();
+                                                actionReport(true);
+                                            },
+                                            function(response){
+                                                $log.error("actionEntity, join, errore",response);
+                                                actionReport(false);
+                                            }
+                                        );
+                                    } else {
+                                        $log.log('cancellazione annullata');
+                                    }
+                                });
+                        };
+
+                        $scope.showConfirm();
+                    
                         break;
                     case 'leave':
                         // conferma se uscire
-                        $ionicLoading.show();
-                        groupsFactory.leaveGroup($scope.id).then(
-                            function(response){
-                                // reset dei permessi
-                                $scope.member = false;
-                                $scope.owner = false;
-                                // reinizializzo i permessi
-                                initActions();
-                                $ionicLoading.hide();
-                            },
-                            function(response){
-                                $log.error("actionEntity, leave, errore",response);
-                                $log.error(response);
-                                // notifica errore
-                                $ionicLoading.hide();
-                            }
-                        );
+                        $scope.showConfirm = function() {
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: $filter('translate')('GROUP_LEAVE'),
+                                template: $filter('translate')('GROUP_LEAVE_ASK')
+                            });
+
+                            confirmPopup.then(
+                                function(res) {
+                                    if(res) {
+                                        groupsFactory.leaveGroup($scope.id).then(
+                                            function(response){
+                                                // reset dei permessi
+                                                $scope.member = false;
+                                                $scope.owner = false;
+                                                // reinizializzo i permessi
+                                                initActions();
+                                                actionReport(true);
+                                            },
+                                            function(response){
+                                                $log.error("actionEntity, leave, errore",response);
+                                                $log.error(response);
+                                                // notifica errore
+                                                actionReport(false);
+                                            }
+                                        );
+                                    } else {
+                                        $log.log('cancellazione annullata');
+                                    }
+                                });
+                        };
+
+                        $scope.showConfirm();
+                        break;
                     case 'users':
                         // apri lista utenti in loco (modal?)
                         groupsFactory.getMembers($scope.id).then(
@@ -707,6 +738,19 @@ angular.module('firstlife.directives', [])
             }
             function done(){
                 $ionicLoading.hide();
+            }
+            function actionReport(success){
+                var text = 'SUCCESS';
+                if(!success){
+                    text = 'ERRROR';
+                }
+                var hideSheet = $ionicActionSheet.show({
+                    titleText: $filter('translate')(text),
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                        if(consoleCheck) console.log('CANCELLED');
+                    }
+                });
             }
 
         }]
@@ -1122,7 +1166,7 @@ angular.module('firstlife.directives', [])
             owner: '=owner'
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
-        controller: ['$scope','$log','$filter','$ionicModal','$ionicLoading','$ionicPopup','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicLoading,$ionicPopup,$timeout,SimpleEntityFactory,myConfig,MemoryFactory){
+        controller: ['$scope','$log','$filter','$ionicModal','$ionicLoading','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicLoading,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory){
 
             $scope.config = myConfig;
             $scope.types = myConfig.types.simpleEntities;
@@ -1250,10 +1294,12 @@ angular.module('firstlife.directives', [])
                                         if(index > -1){
                                             $scope.groups[i].list.splice(index,1);
                                         }
+                                        actionReport(true);
                                     },
                                     function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                                 );
                             } else {
+                                actionReport(false);
                                 $log.log('cancellazione annullata');
                             }
                         });
@@ -1262,7 +1308,19 @@ angular.module('firstlife.directives', [])
                 $scope.showConfirm();
             }
 
-
+            function actionReport(success){
+                var text = 'SUCCESS';
+                if(!success){
+                    text = 'ERRROR';
+                }
+                var hideSheet = $ionicActionSheet.show({
+                    titleText: $filter('translate')(text),
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                        if(consoleCheck) console.log('CANCELLED');
+                    }
+                });
+            }
 
 
             /*
@@ -1353,7 +1411,6 @@ angular.module('firstlife.directives', [])
              * 1) initEntity: inizializzazione dell'entita'
              * 2) openEditor: apertura della modal
              * 3) saveEntity: salvataggio dell'entita'
-             * 6) alertError: popup di errore
              */
 
             // aggiunge entita' semplice
@@ -1393,7 +1450,6 @@ angular.module('firstlife.directives', [])
             }
 
             $scope.addEntity = function(){
-                $ionicLoading.show();
                 if(!Array.isArray($scope.simpleEntity[$scope.simpleEntity.contentKey])){
                     sendEntity($scope.simpleEntity);
                 }else{
@@ -1410,25 +1466,18 @@ angular.module('firstlife.directives', [])
                 function sendEntity(entity){
                     SimpleEntityFactory.add(entity.parent,entity,entity.type).then(
                         function successCallback(response){
-                            $ionicLoading.hide();
                             $scope.editor.hide();
+                            actionReport(true);
                         },
                         function errorCallback(error){
                             $log.error("SimpleEditorCtrl, addComment, error: ",error);
-                            $ionicLoading.hide();
-                            alertError();
+                            actionReport(false);
                         }
                     ); 
 
                 }           
             }
 
-            function alertError(){
-                $ionicPopup.alert({
-                    title: $filter('translate')('ERROR'),
-                    template: $filter('translate')('UNKNOWN_ERROR')
-                });
-            }
 
         }]
     }
