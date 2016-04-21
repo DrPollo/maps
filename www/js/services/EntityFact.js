@@ -403,7 +403,7 @@ angular.module('firstlife.factories')
                     icons[c.category_space.id] = {
                         type: 'div',    
                         className: 'css-pin-marker',
-                        //name: cat.name,
+                        name: cat.name,
                         iconSize:  iSize,
                         iconAnchor:   iAncor,
                         color: cat.color,
