@@ -1,7 +1,7 @@
 
 "use strict";
 var app = angular.module("ionic-datepicker", ["ionic", "ionic-datepicker.templates"]);
-app.service("DatepickerService", function() {}), app.directive("ionicDatepicker", ["$ionicPopup", "DatepickerService", function(e) {
+app.service("DatepickerService", function() {}), app.directive("ionicDatepicker", ["$ionicPopup","$filter", "DatepickerService", function(e) {
     return {
         restrict: "AE",
         replace: !0,
@@ -16,7 +16,8 @@ app.service("DatepickerService", function() {}), app.directive("ionicDatepicker"
             disableAfterEnabled: "=?disableafterenabled",
             disableBefore: "=?disablebefore",
             disableBeforeEnabled: "=?disablebeforeenabled",
-            translator: "=translator"
+            translator: "=translator",
+            mondayfirst: "=mondayfirst"
         },
         link: function(t, a) {
             t.datePickerTitle = t.title || "Select Date";
@@ -68,7 +69,7 @@ app.service("DatepickerService", function() {}), app.directive("ionicDatepicker"
             else t.disabledDates = [];
             t.previousDayEpoch = +new Date - 864e5, t.nextDayEpoch = +new Date;
             var o = angular.copy(t.ipDate);
-            o.setHours(0), o.setMinutes(0), o.setSeconds(0), o.setMilliseconds(0), t.selctedDateString = o.toString(), t.weekNames = ["D", "L", "M", "M", "G", "V", "S"], t.today = {};
+            o.setHours(0), o.setMinutes(0), o.setSeconds(0), o.setMilliseconds(0), t.selctedDateString = o.toString(), t.weekNames = t.mondayfirst ? ["L", "M", "M", "G", "V", "S", "D"]:["D", "L", "M", "M", "G", "V", "S"], t.today = {};
             var s = function(e) {
                 var t = new Date(e.getFullYear(), e.getMonth(), e.getDate());
                 return {
@@ -100,7 +101,8 @@ app.service("DatepickerService", function() {}), app.directive("ionicDatepicker"
                         epochUTC: l.getTime() + 60 * l.getTimezoneOffset() * 1e3
                     })
                 }
-                var a = t.dayList[0].day;
+                var a = t.mondayfirst ? (t.dayList[0].day -1) % t.weekNames.length : t.dayList[0].day;
+                console.log('check daylist',t.dayList[0].day);
                 t.currentMonthFirstDayEpoch = t.dayList[0].epochLocal, t.currentMonthLastDayEpoch = t.dayList[t.dayList.length - 1].epochLocal;
                 for (var r = 0; a > r; r++) t.dayList.unshift({});
                 t.rows = [], t.cols = [], t.currentMonth = o.getMonth(), t.currentYear = e.getFullYear(), t.currentMonthSelected = t.currentMonth, t.currentYearSelected = t.currentYear, t.numColumns = 7, t.rows.length = 6, t.cols.length = t.numColumns

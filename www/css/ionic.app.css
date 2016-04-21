@@ -12819,6 +12819,15 @@ ion-side-menu#side-menu {
 
 .signup-view, .login-view {
   background-color: white !important; }
+  .signup-view input::-webkit-input-placeholder, .signup-view textarea::-webkit-input-placeholder, .login-view input::-webkit-input-placeholder, .login-view textarea::-webkit-input-placeholder {
+    color: #fff !important; }
+  .signup-view input::-moz-placeholder, .signup-view textarea::-moz-placeholder, .login-view input::-moz-placeholder, .login-view textarea::-moz-placeholder {
+    color: #fff !important; }
+  .signup-view input::-ms-input-placeholder, .signup-view textarea::-ms-input-placeholder, .login-view input::-ms-input-placeholder, .login-view textarea::-ms-input-placeholder {
+    /* IE10+ */
+    color: #fff !important; }
+  .signup-view label span, .signup-view label i, .login-view label span, .login-view label i {
+    color: #fff !important; }
   .signup-view .top-content, .login-view .top-content {
     height: 45%;
     text-align: center; }

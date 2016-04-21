@@ -14,11 +14,11 @@
             <form name="boxEntity" novalidate>
                 <label ng-if="simpleEntity.type != 'image' && simpleEntity.hasOwnProperty('title')" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.title.$invalid, 'no-error' : !boxEntity.title.$invalid}">
                     <span class="input-label">{{'TITLE'|translate}}</span>
-                    <input type="text" name="title" ng-model="simpleEntity.title" placeholder="{{'TITLE'|translate}}" ng-minlength="5" ng-maxlength="100" ng-required="type['title'].required">
+                    <input type="text" name="title" ng-model="simpleEntity.title" placeholder="{{'TITLE'|translate}}" ng-minlength="5" ng-maxlength="50" ng-required="type['title'].required">
                 </label>
                 <div class="form-errors" ng-messages="boxEntity.title.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 5 {{'CHARACTERS'|translate}}</div>
-                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 100 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
                 <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">

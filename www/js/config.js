@@ -2,6 +2,7 @@ angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
     'dev': true,
+    // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi
     'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
@@ -444,9 +445,11 @@ angular.module('firstlife.config')
             "domain_name": "miramap",
             "domain_id":5,
             "design":{
-                "logo" : {url: "", title: "", alt:"", label:{text: "Miramap", style: "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+                "logo" : {url: "http://www.firstlife.org/wp-content/uploads/2016/04/Logo-Miramap-completo.svg", title: "Miramap", alt:"miramap", label:{text: "Miramap", style: "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
                 "logo_partners" : [],
-                "colors" : ["rgba(221,91,42, 1)","rgba(246,213,59, 1)", "rgba(61,131,97, 1)", "rgba(255,179,16, 1)", "rgba(243,164,106, 1)","rgba(174,10,10, 1)","rgba(130,50,86, 1)","rgba(45,69,104, 1)","rgba(63,127,145, 1)","rgba(136,186,92, 1)"]
+                "colors" : ["rgba(221,91,42, 1)","rgba(246,213,59, 1)", "rgba(61,131,97, 1)", "rgba(255,179,16, 1)", "rgba(243,164,106, 1)","rgba(174,10,10, 1)","rgba(130,50,86, 1)","rgba(45,69,104, 1)","rgba(63,127,145, 1)","rgba(136,186,92, 1)"],
+                'logo_bar' : 'http://www.firstlife.org/wp-content/uploads/2016/04/MIraMap-1.svg',
+                'logo_menu' : 'http://www.firstlife.org/wp-content/uploads/2016/04/MiraMapFavicon-1.svg',
             },
             "actions":{
                 "geolocation" : true,
