@@ -119,7 +119,7 @@ angular.module('firstlife.config')
                  }
                 },
                 // articoli
-                {name:'POST_NAME',id:3,icon:'ion-clipboard',slug:'article',url:'articles',key:'FL_ARTICLES',index:7,
+                {name:'POST_NAME',id:4,icon:'ion-clipboard',slug:'article',url:'articles',key:'FL_ARTICLES',index:7,
                  properties:{
                      'article_of':{ key: 'article_of', label: "ARTICLE_OF_LABEL", placeholder:"ARTICLE_OF_PLACEHOLDER", default:null},
                      'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""},
@@ -131,7 +131,7 @@ angular.module('firstlife.config')
                  }
                 },
                 // commenti
-                {name:'COMMENT_NAME',id:4,icon:'ion-mic-c',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
+                {name:'COMMENT_NAME',id:3,icon:'ion-quote',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
                  properties:{
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
                      "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},

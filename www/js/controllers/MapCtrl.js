@@ -1384,14 +1384,16 @@ angular.module('firstlife.controllers')
 
         function clickToAdd(){
             var buttons = [];
-            for(k in $scope.config.types.list){
+            // da ordinare array
+            var types = $filter('orderBy')($scope.config.types.list,'id');
+            for(k in types){
                 var text = '';
-                var entityTranslated = $filter('translate')($scope.config.types.list[k].name);
-                text = text.concat('<i class="icon ').concat($scope.config.types.list[k].icon).concat('"></i>');
+                var entityTranslated = $filter('translate')(types[k].name);
+                text = text.concat('<i class="icon ').concat(types[k].icon).concat('"></i>');
                 text = text.concat(" ").concat(entityTranslated);
                 if(consoleCheck) console.log("test ",entityTranslated);
                 if(consoleCheck) console.log("MapCtrl, creazione dell'action sheet, aggiungo bottone: ",text);
-                buttons.push({text:text , type:$scope.config.types.list[k].slug, simple_editor:$scope.config.types.list[k].simple_editor});
+                buttons.push({text:text , type:types[k].slug, simple_editor:types[k].simple_editor});
             }
             var textTranslated = $filter('translate')('CREATION_TEXT');
             if(consoleCheck) console.log("test ",textTranslated);
