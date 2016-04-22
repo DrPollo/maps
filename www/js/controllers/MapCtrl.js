@@ -1588,12 +1588,12 @@ angular.module('firstlife.controllers')
             }
         }
         function selectGeoJSONLevel(value){
-            if($scope.geojson && $scope.geojson.data){
-                $scope.$apply(function(){
+            if($scope.geojson && $scope.geojson.data && $scope.config.map.area && $scope.config.map.area.data){
+                //$scope.$apply(function(){
                     $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
 
                     $scope.$broadcast('timeline.groups.setgroup',{group:value});
-                });
+                //});
                 $scope.$apply(function(){markerDisabler('level',value);});
 
             }

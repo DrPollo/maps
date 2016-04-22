@@ -11,29 +11,29 @@
                 <span class="username">{{user.displayName}}</span>
                 <span>{{'ADD_ENTITY_ALLERT'|translate}}</span>
             </div>
-            <form name="boxEntity" novalidate>
-                <label ng-if="simpleEntity.type != 'image' && simpleEntity.hasOwnProperty('title')" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.title.$invalid, 'no-error' : !boxEntity.title.$invalid}">
+            <form name="boxEntity.form" novalidate>
+                <label ng-if="simpleEntity.type != 'image' && simpleEntity.hasOwnProperty('title')" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.form.title.$invalid, 'no-error' : !boxEntity.form.title.$invalid}">
                     <span class="input-label">{{'TITLE'|translate}}</span>
-                    <input type="text" name="title" ng-model="simpleEntity.title" placeholder="{{'TITLE'|translate}}" ng-minlength="5" ng-maxlength="50" ng-required="type['title'].required">
+                    <input type="text" name="title" ng-model="simpleEntity.title" placeholder="{{'TITLE'|translate}}" ng-minlength="5" ng-maxlength="50" ng-required="type.fields['title'].required">
                 </label>
-                <div class="form-errors" ng-messages="boxEntity.title.$error">  
+                <div class="form-errors" ng-messages="boxEntity.form.title.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 5 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
-                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.description.$invalid, 'no-error' : !boxEntity.content.$invalid}">
+                <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.form.content.$invalid, 'no-error' : !boxEntity.form.content.$invalid}">
                     <span class="input-label">{{type.label |translate}}</span>
                     <textarea name="content" placeholder="{{type.label |translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="50" maxlength="500" required></textarea>
                 </label>
-                <div class="form-errors" ng-messages="boxEntity.content.$error">  
+                <div class="form-errors" ng-messages="boxEntity.form.content.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
 
                 <picture-loader ng-if="simpleEntity.type == 'image'" id="user.id" images="simpleEntity[simpleEntity.contentKey]"></picture-loader>
-
             </form>
+            
         </div>
     </ion-content>
     <ion-footer-bar class="bar-light">
@@ -42,7 +42,7 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.$invalid">{{'PUBLISH'|translate}}</button>
+            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.form.$invalid">{{'PUBLISH'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-modal-view>

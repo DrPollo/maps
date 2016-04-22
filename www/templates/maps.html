@@ -45,14 +45,14 @@
             </div>
         </div>
         <div ng-controller="TimelineCtrl" id="timelines" ng-if="config.actions.time_filter">
-            <div id="time-box" ng-show="timelineVisible" class="fade-in linear-animation">
+            <div id="time-box" class="fade-in linear-animation">
                 <button ng-if="!isMobile" class="button button-icon ion-arrow-left-b" ng-click="timeline.move(-0.5)"></button>
                 <button class="button button-icon ion-android-contract" ng-click="timeline.zoom(-1)"></button>
                 <button class="button button-icon ion-refresh" ng-click="timeline.setVisibleChartRangeNow()"></button>
                 <button class="button button-icon ion-android-expand" ng-click="timeline.zoom(1)"></button>
                 <button ng-if="!isMobile" class="button button-icon ion-arrow-right-b" ng-click="timeline.move(0.5)"></button>
             </div>
-            <div id="time-bar" ng-click="toggleTimeline()">
+            <div id="time-bar">
                 <i class="icon ion-android-time"></i>
                 <span ng-if="time.from.getDate() != time.to.getDate()">
                     <span ng-if="!isMobile">{{'FROM_AT'|translate}}</span> {{timeline.start | date:'HH:mm' }} 
@@ -67,9 +67,8 @@
                     <span>{{' '}}</span>
                     <span ng-if="!isMobile">{{'TO_AT'|translate}} {{timeline.end | date:'HH:mm' }}</span>
                 </span>
-                <i class="icon" ng-class="timelineVisible ? 'ion-arrow-down-b':'ion-arrow-up-b'"></i>
             </div>
-            <div ng-show="timelineVisible" class="vertical-show ease-in-animation">
+            <div class="vertical-show ease-in-animation">
                 <div id="timeline"
                      timeline="timelineData"
                      timeline-options="options"

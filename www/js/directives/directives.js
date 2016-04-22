@@ -617,8 +617,8 @@ angular.module('firstlife.directives', [])
                         //parte richiesta di join
                         $scope.showConfirm = function() {
                             var confirmPopup = $ionicPopup.confirm({
-                                title: $filter('translate')('GROUP_LEAVE'),
-                                template: $filter('translate')('GROUP_LEAVE_ASK')
+                                title: $filter('translate')('GROUP_JOIN'),
+                                template: $filter('translate')('GROUP_JOIN_ASK')
                             });
 
                             confirmPopup.then(
@@ -838,7 +838,8 @@ angular.module('firstlife.directives', [])
         restrict: 'EG',
         scope: {
             id: '=id',
-            details: '=details'
+            details: '=details',
+            reset:'=reset'
         },
         templateUrl: '/templates/map-ui-template/membersCounter.html',
         controller: ['$scope','$log','$filter','groupsFactory', function($scope,$log,$filter,groupsFactory){
@@ -855,6 +856,13 @@ angular.module('firstlife.directives', [])
             $scope.$watch('id',function(e,old){
                 // cambia il marker
                 if(e != old){
+                    // init delle simple entities
+                    initCounter();
+                }
+            });
+            $scope.$watch('reset',function(e,old){
+                // cambia il marker
+                if(e && e != old){
                     // init delle simple entities
                     initCounter();
                 }
@@ -1299,7 +1307,6 @@ angular.module('firstlife.directives', [])
                                     function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                                 );
                             } else {
-                                actionReport(false);
                                 $log.log('cancellazione annullata');
                             }
                         });
@@ -1421,6 +1428,7 @@ angular.module('firstlife.directives', [])
             }
 
             function initEntity(type) {
+                $scope.boxEntity = {};
                 $scope.simpleEntity = {
                     type: type.key, 
                     parent: $scope.id,

@@ -70,8 +70,8 @@
                                           callback="editor.datePickerFrom" title="Inizio" 
                                           ng-required="checkList.valid_from.required">
                             <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_from">
+                                <span ng-show="!editor.wizard.dataForm.valid_from || !editor.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
+                                <span ng-show="editor.wizard.dataForm.valid_from && editor.valid_from">
                                     {{ editor.wizard.dataForm.valid_from | date:'dd/MM/yyyy' }}
                                 </span>
                             </button>
@@ -101,8 +101,8 @@
                                           callback="editor.datePickerTo" title="Fine"
                                           ng-required="editor.checkList.valid_to.required">
                             <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_to">
+                                <span ng-show="!editor.wizard.dataForm.valid_to || !editor.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
+                                <span ng-show="editor.wizard.dataForm.valid_to && editor.valid_to">
                                     {{ editor.wizard.dataForm.valid_to | date:'dd/MM/yyyy' }}
                                 </span> 
                             </button>

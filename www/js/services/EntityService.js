@@ -151,7 +151,22 @@ angular.module('firstlife.services')
                 tmpCats.push({category_space:c.category_space.id, categories:cats});
             }
             tmp.categories = tmpCats;
-            if(dev) $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
+            
+            //fix tempo
+            if(!tmp.valid_from){
+                tmp.valid_from = null;
+            }else if(tmp.valid_from){
+                $log.debug('converto data ',tmp.valid_from);
+                tmp.valid_from = new Date(tmp.valid_from);
+            }
+                
+            if(!tmp.valid_to){
+                tmp.valid_to = null;
+            }else if(tmp.valid_to){
+                $log.debug('converto data ',tmp.valid_to);
+                tmp.valid_to = new Date(tmp.valid_to);
+            }
+            $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
             return tmp;    
         }
 
@@ -207,10 +222,15 @@ angular.module('firstlife.services')
             }
             
             // conversione formato data
+            // bug va in errore il toISOString
             if(dataForServer.valid_to)
                 dataForServer.valid_to = dataForServer.valid_to.toISOString();
+            else
+                dataForServer.valid_to = null;
             if(dataForServer.valid_from)
                 dataForServer.valid_from = dataForServer.valid_from.toISOString();
+            else
+                dataForServer.valid_from = null;
             
             if(dev) $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
@@ -231,7 +251,7 @@ angular.module('firstlife.services')
             // todo geometrie diverse
 
             // fix ?
-
+            $log.debug('check data for server',dataForServer);
             return dataForServer;
         }
 

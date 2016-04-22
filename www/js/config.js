@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 sandbox
-    'project': 8,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
@@ -313,15 +313,13 @@ angular.module('firstlife.config')
     },
 
     'domains':{
-        8: {
+        8:{},
+        9: {
             'app_name' : 'Sandbox',
             'domain_name' : 'sandbox',
-            'domain_id' : 8,
+            'domain_id' : 9,
             'design':{
                 'logo' : {url: '', title: '', alt:'', label:{text: 'Sandbox', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
-            },
-            'map':{
-                //'tile_view' : 'http://api.mapbox.com/v4/mapbox.comic/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             }
         },
         2: {

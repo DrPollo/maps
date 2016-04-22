@@ -65,9 +65,10 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder { /* IE10+ */
 // modal a larghezza massima ridotta
 
 @media (min-width: 680px) .modal {
-    top: 10%;
-    bottom: 10%;
-    .modal{max-width: 680px;margin: 0px auto !important;}
+    top: 10% !important;
+    bottom: 10% !important;
+    max-width: 680px;
+    margin: 0px auto !important;
 }
 // The path for our ionicons font files, relative to the built CSS in www/css
 // $ionicons-font-path: "../lib/ionic/fonts" !default;
