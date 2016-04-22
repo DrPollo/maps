@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': false,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 1,
+    'project': 4,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
@@ -432,7 +432,7 @@ angular.module('firstlife.config')
                 'logo_partners' : [],
             },
             'map':{
-                //'tile_view' : 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
                 'tile_edit' : 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
             },
             'types':{
