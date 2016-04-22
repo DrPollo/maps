@@ -383,7 +383,6 @@ angular.module('firstlife.directives', [])
             });
 
             $scope.locate = function(r){
-                $log.debug('check location street',r);
                 $location.search('lat',r.lat);
                 $location.search('lng',r.lng);
                 $scope.close();
@@ -921,7 +920,6 @@ angular.module('firstlife.directives', [])
                 $scope.role = false;
                 $scope.counter = [];
                 $scope.membersList = [];
-
                 groupsFactory.getMembers($scope.id).then(
                     function(response){
                         if(Array.isArray(response)){
@@ -1435,12 +1433,10 @@ angular.module('firstlife.directives', [])
                     label: type.label,
                     contentKey: type.contentKey
                 };
-                $log.debug('check init entity, fields ',type.fields);
 
                 for(var k in type.fields){
                     $scope.simpleEntity[k] = type.fields[k].default;
                 }
-                $log.debug('check init entity ',$scope.simpleEntity);
             }
 
 
@@ -1518,7 +1514,6 @@ angular.module('firstlife.directives', [])
             scope.$watch(function() {
                 return element[0].clientWidth;
             }, function(value,old){
-                $log.debug(element[0].getBoundingClientRect());
                 initTree(element[0].getBoundingClientRect());
             });
 

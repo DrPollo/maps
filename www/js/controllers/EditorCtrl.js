@@ -98,11 +98,9 @@ angular.module('firstlife.controllers')
                 // scelgo se fare update di un marker esistente o crearne uno nuovo
                 // update place: init dataForm con dati del place...
                 if($stateParams.id!= null && $stateParams.id!= ""){
-                    $log.debug("EditorCtrl, update, id: ",$stateParams.id);
                     //get place(id)
                     entityFactory.get($stateParams.id, true)
                         .then( function(mark) {
-                        $log.debug("EditorCtrl, cambio di stato, edit marker, entityFactory.get, response: ",mark);
 
                         //todo gestisco la nuova posizione
                         mark.coordinates = [$stateParams.lng,$stateParams.lat];
@@ -116,7 +114,6 @@ angular.module('firstlife.controllers')
                             _this.valid_from = true
                         if(_this.wizard.dataForm.valid_to)
                             _this.valid_to = true
-                        $log.debug('last check ',_this.wizard.dataForm);
                     },function(error) {
                         if(dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error); 
                     });
@@ -337,7 +334,6 @@ angular.module('firstlife.controllers')
              */
             
             //normalizzazz. tags
-            $log.debug("_this.wizard.dataForm.tags ",_this.wizard.dataForm.tags);
             for(var el in _this.wizard.dataForm.tags){
                 dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;   
             }
@@ -423,7 +419,6 @@ angular.module('firstlife.controllers')
         function setToEdit(data){
             
             var mark = EntityService.preprocessMarker(data);
-            $log.debug('check edit ',mark);
             // se il type e' settato
             if(mark.entity_type){
                 typeIndex = _this.types.list.map(function(e){return e.key;}).indexOf(mark.entity_type);
@@ -471,7 +466,6 @@ angular.module('firstlife.controllers')
                 initDuration();
             }
             if(dev) console.log("EditorCtrl, checkList: ", _this.checkList);
-            $log.debug('semilast check ',_this.wizard.dataForm);
         }
 
 
