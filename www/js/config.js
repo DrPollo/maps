@@ -2,8 +2,8 @@ angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
     'dev': true,
-    // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi
-    'project': 1,
+    // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 sandbox
+    'project': 8,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     'format':'',
     //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
@@ -241,7 +241,8 @@ angular.module('firstlife.config')
             }
         },
         'map':{
-            'tile_view' : 'http://api.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
+            'tile_view' : 'http://api.mapbox.com/v4/drp0ll0.0ba9e7bf/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
+            //'tile_view' : 'http://api.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             //'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
             //'tile_view' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
             'tile_edit': 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',   
@@ -312,6 +313,17 @@ angular.module('firstlife.config')
     },
 
     'domains':{
+        8: {
+            'app_name' : 'Sandbox',
+            'domain_name' : 'sandbox',
+            'domain_id' : 8,
+            'design':{
+                'logo' : {url: '', title: '', alt:'', label:{text: 'Sandbox', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
+            },
+            'map':{
+                //'tile_view' : 'http://api.mapbox.com/v4/mapbox.comic/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
+            }
+        },
         2: {
             'app_name' : 'SeeS@w',
             'domain_name' : 'seesaw',
