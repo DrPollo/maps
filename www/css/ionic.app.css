@@ -56,6 +56,12 @@ input::-ms-input-placeholder, textarea::-ms-input-placeholder {
     max-width: 680px;
     margin: 0px auto !important; } }
 
+.modal-backdrop .modal-backdrop-bg {
+  background-color: transparent !important; }
+
+.modal {
+  box-shadow: 1px 1px 3px #666; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
