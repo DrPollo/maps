@@ -1,12 +1,14 @@
 angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
-    'dev': false,
+    'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
     'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
+    //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
+    //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
+    //'api_base_domain' : 'api.firstlife.di.unito.it/',
     'format':'',
-    //'api_base_domain' : 'vps129509.ovh.net/torinfony/api/',
     'api_version' : 'v4',
     'ssl': false,
     'version': '0.4.3',
@@ -860,7 +862,7 @@ angular.module('firstlife.config')
         relations.map = map;
         if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: ", relations);
         myConfig.types.relations = relations;
-
+        
 
         // figli possibili
         var children = {};

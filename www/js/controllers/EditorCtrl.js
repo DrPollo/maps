@@ -114,6 +114,7 @@ angular.module('firstlife.controllers')
                             _this.valid_from = true
                         if(_this.wizard.dataForm.valid_to)
                             _this.valid_to = true
+                        
                     },function(error) {
                         if(dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error); 
                     });
@@ -136,6 +137,13 @@ angular.module('firstlife.controllers')
                     // recupero i default per l'init dell'entita'
                     angular.extend(_this.wizard.dataForm,EntityService.getDefaults($stateParams.entity_type));
                     if(dev) console.log("EditCtrl, init form: ",_this.wizard.dataForm);
+                    
+                    //bug datapicker che non modifica la data a cacchio
+                    // se la data e' settata allora metto a true il check
+                    if(_this.wizard.dataForm.valid_from)
+                        _this.valid_from = true
+                    if(_this.wizard.dataForm.valid_to)
+                        _this.valid_to = true
                     
                     // sistemo le coordinate
                     if($stateParams.lng && $stateParams.lng){

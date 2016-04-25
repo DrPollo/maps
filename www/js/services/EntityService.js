@@ -84,7 +84,6 @@ angular.module('firstlife.services')
                 case 'FL_GROUPS' :
                     defaults.valid_from = now;
                     defaults.valid_to = null;
-                    if(self.config.dev) defaults.text = devContent;
                     break;
                 case 'FL_IMAGES' :
                     defaults.valid_from = now;
@@ -93,7 +92,7 @@ angular.module('firstlife.services')
                 case 'FL_COMMENTS' :
                     defaults.valid_from = now;
                     defaults.valid_to = now;
-                    if(self.config.dev) defaults.message = devContent;
+                    if(self.config.dev) defaults.message_text = devContent;
                     if(self.config.dev) defaults.name = defaultName;
                     break;
                 case 'comment' :

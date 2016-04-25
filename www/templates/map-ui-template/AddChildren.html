@@ -2,7 +2,7 @@
     <div class="item item-divider">{{'ADD_CHILDREN' |translate}} {{label |translate}}</div>
     <div ng-repeat="type in relationsList | orderBy:'id' track by $index" class="item item-icon-left item-icon-right" on-tap="callback(type,type.rel.slug)" ng-if="type.check">
         <i class="icon {{type.icon}}" style="color: {{type.color}}"></i>
-        <span ng-if="!isMobile">{{type.name|translate}}</span>
+        <span>{{type.name|translate}}</span>
         <i class="icon positive ion-android-add-circle"></i>
     </div>
 </div>

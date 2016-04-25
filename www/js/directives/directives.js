@@ -800,8 +800,6 @@ angular.module('firstlife.directives', [])
             // fix dei check se necessario
             function initRelations(){
                 $scope.relationsList = angular.copy($scope.relations);
-
-
                 $scope.count = 0;
                 for(var i in $scope.relationsList){
                     if(!$scope.relationsList[i].rel.check){
@@ -814,6 +812,7 @@ angular.module('firstlife.directives', [])
                     }
                     $scope.relationsList[i].color = colors[$scope.relationsList[i].index];
                 }
+                //$log.debug('check relations',$scope.relations,$scope.relationsList);
             }
 
             function lazyCheck(relation,check){
