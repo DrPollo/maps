@@ -141,7 +141,7 @@ angular.module('firstlife.controllers')
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
 
-            if(consoleCheck) console.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
+            $log.debug("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
                 // check autenticazione
                 var user = MemoryFactory.readUser();

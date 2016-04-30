@@ -47,7 +47,7 @@ angular.module('firstlife.services')
             var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.displayName).concat(" - ").concat(day);
             
             // lorem ipsum di dev per i campi testuali principali
-            var devContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus pretium libero id consequat. Proin bibendum vehicula ultrices.";
+            var devContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius dolor non mauris cursus consectetur. Cras eget interdum ipsum, non accumsan ligula. In ultricies fermentum velit in finibus. Fusce euismod posuere nisi id tempor. Aliquam erat volutpat. Ut pulvinar a mauris nec maximus. In volutpat justo ac est convallis, vitae pellentesque orci ultricies.";
             var defaultName = $filter('translate')(type.name).concat(" ").concat($filter("translate")("OF")).concat(" ").concat(day);
 
 
@@ -79,7 +79,7 @@ angular.module('firstlife.services')
                     break;
                 case 'FL_ARTICLES' :
                     defaults.valid_from = now;
-                    if(self.config.dev) defaults.text = devContent;
+                    if(self.config.dev) defaults.text = devContent.concat(' Mauris id venenatis arcu. Curabitur a blandit orci. Mauris eu erat turpis. Donec eget aliquam nunc. Proin nec risus quis ipsum tempus varius sed eu lorem. Ut lacus elit, semper in lobortis eget, dictum id tellus. Donec dictum auctor diam, eu sollicitudin nibh viverra sed. Etiam ut tellus eu nunc auctor porttitor. Donec metus sapien, commodo eget magna vel, maximus tristique odio. Proin aliquet in leo sit amet elementum. Vivamus dolor lacus, fermentum eu facilisis ac, gravida id augue.');
                     break;
                 case 'FL_GROUPS' :
                     defaults.valid_from = now;

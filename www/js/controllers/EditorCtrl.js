@@ -367,22 +367,23 @@ angular.module('firstlife.controllers')
                 //dataForServer.id=$stateParams.id;
                 entityFactory.update(dataForServer, $stateParams.id)
                     .then(function(newplace){
-                    if(dev) console.log("update completed: ", newplace);
-                    //$state.mode = "update";
-
-                    // vado alla mappa e mostro la modal del place
-                    $state.go("app.maps",{entity: newplace.id});
-
                     //chiudo la schermata di loading
                     hideLoadingScreen();
+                    if(dev) console.log("update completed: ", newplace);
+                    //$state.mode = "update";
+                    // vado alla mappa e mostro la modal del place
+                    $state.go("app.maps",{entity: newplace.id});
+                    
                     return newplace.id;
                 },function(error){
+                    //chiudo la schermata di loading
+                    hideLoadingScreen();
+                    
                     if(dev) console.log("update failed: ", error);
 
                     //$window.history.back();
                     $state.go("app.maps",{lat:$stateParams.lat,lng:$stateParams.lng,zoom:$stateParams.zoom,entity:-1});
-                    //chiudo la schermata di loading
-                    hideLoadingScreen();
+                    
                     return -1;
                 });
 
@@ -391,20 +392,24 @@ angular.module('firstlife.controllers')
             else{
                 MapService.createMarker(dataForServer)
                     .then(function(newplace){
-                    if(dev) console.log("creation completed: ", newplace);
+                    //chiudo la schermata di loading
+                    hideLoadingScreen();
+                    
+                    $log.debug("creation completed: ", newplace);
                     //$state.mode = "create";
 
                     // vado alla mappa e mostro la modal del place
                     $state.go("app.maps",{entity: newplace.id});
 
-                    //chiudo la schermata di loading
-                    hideLoadingScreen();
+                    
                     return newplace.id;
                 },function(error){
-                    if(dev) console.log("creation failed: ", error);
-                    $state.go("app.maps",{entity:-1});
                     //chiudo la schermata di loading
                     hideLoadingScreen();
+                    
+                    if(dev) console.log("creation failed or moderation: ", error);
+                    $state.go("app.maps",{entity:-2});
+                   
                     // da testare 
                     return -1;
                 });

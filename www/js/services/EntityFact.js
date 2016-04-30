@@ -118,7 +118,7 @@ angular.module('firstlife.factories')
                         },
                         function(err){
                             $log.error("entityFactory, update, get del risultato ",err);
-                            deferred.resolve(response.data);
+                            deferred.reject(response.data);
                         }
                     );
                 },function(response) {
@@ -147,7 +147,7 @@ angular.module('firstlife.factories')
                         },
                         function(err){
                             $log.error("entityFactory, create, get del risultato ",err);
-                            deferred.resolve(response.data);
+                            deferred.reject(response.data);
                         }
                     );
                 }).error(function(response) {

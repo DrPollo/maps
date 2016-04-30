@@ -23,11 +23,11 @@
                 </div>
                 <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.form.content.$invalid, 'no-error' : !boxEntity.form.content.$invalid}">
                     <span class="input-label">{{type.label |translate}}</span>
-                    <textarea name="content" placeholder="{{type.label |translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="50" maxlength="500" required></textarea>
+                    <textarea name="content" placeholder="{{type.label |translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="150" maxlength="1000" required></textarea>
                 </label>
                 <div class="form-errors" ng-messages="boxEntity.form.content.$error">  
-                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
-                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 1000 {{'CHARACTERS'|translate}}</div>
                     <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                 </div>
 
