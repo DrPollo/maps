@@ -51,7 +51,7 @@
                 <span class="tags">
                     <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.category.color}};color:white;">
                         <!-- bug da sistemare causato dal modulo tag, stampo l'oggetto -->
-                        <i class="ion-pricetag"/>
+                        <i class="ion-pricetag"></i>
                         {{isString(tag) ? tag : tag.tag}}
                         <span></span>
                     </span>

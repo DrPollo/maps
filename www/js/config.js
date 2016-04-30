@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 8,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
@@ -489,7 +489,9 @@ angular.module('firstlife.config')
             "types":{
                 "list":[
                     {"name":"Segnalazione","id":1,icon:"ion-clipboard","slug":"ticket","url":"tickets","key":"FL_TICKETS","index":8,
-                     "properties":{},
+                     "properties":{
+                         'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                     },
                      "relations":{}
                     }
                 ],

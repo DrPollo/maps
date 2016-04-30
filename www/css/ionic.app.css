@@ -13546,6 +13546,14 @@ ion-side-menu#side-menu {
           color: #999;
           font-style: italic;
           margin-bottom: 8px; }
+    #wall .modal-content .list .item .tag-list {
+      display: flex; }
+      #wall .modal-content .list .item .tag-list .tag {
+        color: white;
+        padding: 4px 6px;
+        border-radius: 20px;
+        font-size: 1em;
+        margin-right: 4px; }
 
 .pie-cluster {
   border-radius: 40px;

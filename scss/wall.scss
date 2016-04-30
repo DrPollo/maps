@@ -21,6 +21,16 @@
                         
                     }
                 }
+                .tag-list{
+                    display:flex;
+                    .tag {
+                        color: white;
+                        padding: 4px 6px;
+                        border-radius: 20px;
+                        font-size: 1em;
+                        margin-right: 4px;
+                    }
+                }
             }
         }
     }
