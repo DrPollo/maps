@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 1,
+    'project': 5,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
@@ -181,7 +181,12 @@ angular.module('firstlife.config')
             'show_thumbs' : true,
             'can_permalink': false,
             'default_language' : 'it',
-            "disabled_color":20
+            "disabled_color":20,
+            'side_menu':[
+                {name:'Blog',url:'http://firstlife.org',icon:'ion-social-rss',lang:'it'},
+                {name:'Tutorials',url:'http://www.firstlife.org/category/guida-alluso_tutorial/',icon:'ion-help-circled',lang:'it'},
+                {name:'Fanpage',url:'https://www.facebook.com/firstlife.org/',icon:'ion-social-facebook',lang:'it'},
+            ]
         },
         'actions':{
             // il login è consentito
@@ -322,6 +327,7 @@ angular.module('firstlife.config')
             'design':{
                 'logo' : {url: 'http://www.firstlife.org/wp-content/uploads/2016/04/WeGovNow_logo_as_outline.svg', title: 'WeGovNow!', alt:'WeGovNow!', label:{text: 'WeGovNow!', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
                 'default_language' : 'en',
+                'side_menu':[]
             },
             'types' : {
                 'categories':[{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":29,"name":"Categories","slug":"categories","description":"Categories","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-510,"name":"Culture and Arts","description":"Culture and Arts","category_index":1,"icon_name":"ion-paintbrush"},{"id":-511,"name":"Education and Training","description":"Education and Training","category_index":2,"icon_name":"ion-university"},{"id":-512,"name":"Social Activities","description":"Social Activities","category_index":3,"icon_name":"ion-android-people"},{"id":-513,"name":"Sports","description":"Sports","category_index":4,"icon_name":"ion-ios-football"},{"id":-514,"name":"Food and Provisions","description":"Food and Provisions","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-515,"name":"Free Time","description":"Free Time","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-516,"name":"Public Offices","description":"Public Offices","category_index":7,"icon_name":"ion-social-buffer"},{"id":-517,"name":"Professional Services","description":"Professional Services","category_index":8,"icon_name":"ion-briefcase"},{"id":-518,"name":"Industry and Craft","description":"Industry and Craft","category_index":9,"icon_name":"ion-settings"},{"id":-519,"name":"Service and Trade","description":"Service and Trade","category_index":10,"icon_name":"ion-bag"},{"id":-520,"name":"Transport and Mobility","description":"Transport and Mobility","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_GROUPS","FL_PLACES"]},{"category_space":30,"name":"Typology of Spaces","slug":"typology-of spaces","description":"Typology of Spaces","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-530,"name":"Green and Open Spaces","description":"Green and Open Spaces","category_index":1,"icon_name":"ion-leaf"},{"id":-531,"name":"nstitutional Spaces","description":"nstitutional Spaces","category_index":2,"icon_name":"ion-ios-flag"},{"id":-532,"name":"Residences and Neighborhoods","description":"Residences and Neighborhoods","category_index":3,"icon_name":"ion-ios-home"},{"id":-533,"name":"Productive Spaces","description":"Productive Spaces","category_index":4,"icon_name":"ion-gear-a"},{"id":-534,"name":"Monuments and Historic Sites","description":"Monuments and Historic Sites","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":31,"name":"Cost","slug":"cost","description":"Cost","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-540,"name":"Free (Services)","description":"Free (Services)","category_index":1,"icon_name":"ion-happy-outline"},{"id":-541,"name":"Payment (Services)","description":"Payment (Services)","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":32,"name":"Access","slug":"access","description":"Access","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-550,"name":"Free Access","description":"Free Access","category_index":1,"icon_name":"ion-radio-waves"},{"id":-551,"name":"By Invitation/On Reservation","description":"By Invitation/On Reservation","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-552,"name":"Reserved for Groups","description":"Reserved for Groups","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":33,"name":"Participation","slug":"participation","description":"Participation","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-560,"name":"For All","description":"For All","category_index":1,"icon_name":"ion-load-b"},{"id":-561,"name":"For Kids and Teens","description":"For Kids and Teens","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-562,"name":"For Young Adults","description":"For Young Adults","category_index":3,"icon_name":"ion-android-bar"},{"id":-563,"name":"For Families","description":"For Families","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},{"category_space":34,"name":"Contributions","slug":"contributions","description":"Contributions","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-570,"name":"Histories","description":"Histories","category_index":1,"icon_name":"ion-chatboxes"},{"id":-571,"name":"Stories","description":"Stories","category_index":2,"icon_name":"ion-edit"},{"id":-572,"name":"Reports","description":"Reports","category_index":3,"icon_name":"ion-android-clipboard"}],"entities":["FL_ARTICLES"]},{"category_space":35,"name":"Groups","slug":"groups","description":"Groups","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"categories":[{"id":-580,"name":"Newsgroups","description":"Newsgroups","category_index":1,"icon_name":"ion-android-chat"},{"id":-581,"name":"Coordination Groups","description":"Coordination Groups","category_index":2,"icon_name":"ion-ios-people"},{"id":-582,"name":"Design Groups","description":"Design Groups","category_index":3,"icon_name":"ion-wand"}],"entities":["FL_GROUPS"]}]
@@ -343,7 +349,8 @@ angular.module('firstlife.config')
                 'logo' : {url: '', title: '', alt:'', label:{text: 'SeeS@w', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
                 'default_background' : 'http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/torino_ospedale_molinette.jpg', 
                 'logo_partners' : [{url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/ue.gif", title:"", alt:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", label:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/04/stellone.jpg", title:"", alt:"", label:"", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/regpie.gif", title:"Regione Piemonte", alt:"Regione Piemonte", label:"", width:"", height:50}],
-                'can_permalink': true
+                'can_permalink': true,
+                'side_menu':[]
             },
             'actions':{
                 'geolocation' : false,
@@ -421,6 +428,7 @@ angular.module('firstlife.config')
                 'default_background' : 'http://www.librare.org/wp-content/uploads/2015/10/wall.jpg',
                 'logo_partners' : [{url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/ue.gif", title:"", alt:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", label:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/04/stellone.jpg", title:"", alt:"", label:"", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/regpie.gif", title:"Regione Piemonte", alt:"Regione Piemonte", label:"", width:"", height:50}],
                 'colors' : ['rgba(232,78,27, 1)', 'rgba(226,234,181, 1)', 'rgba(118,183,211, 1)','rgba(250,183,56, 1)','rgba(62, 211, 135, 1)','rgba(234, 186, 237, 1)','rgba(61,131,97, 1)','rgba(226,107,15, 1)','rgba(50,118,177, 1)','rgba(136,186,92, 1)'],
+                'side_menu':[]
             },
             'types':{
                 'categories':[{"category_space":4,"name":"Categorie Librare","slug":"categorie-librare","description":"Librare categorie","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-411,"name":"Book crossing","description":"Book crossing","category_index":1,"icon_name":"ion-ios-shuffle-strong"},{"id":-412,"name":"Biblioteche","description":"Biblioteche","category_index":2,"icon_name":"ion-ios-book"},{"id":-413,"name":"Book caff\u00e8","description":"Book caff\u00e8","category_index":3,"icon_name":"ion-coffee"},{"id":-414,"name":"Librerie private","description":"Librerie private","category_index":4,"icon_name":"ion-android-contact"},{"id":-415,"name":"Biblioteche scolastiche","description":"Biblioteche scolastiche","category_index":5,"icon_name":"ion-android-contacts"},{"id":-416,"name":"Scuole","description":"Scuole","category_index":6,"icon_name":"ion-university"}],"entities":["FL_PLACES"]},{"category_space":5,"name":"Azioni","slug":"azioni","description":"Librare azioni","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-11,"name":"Registrazione","description":"Registrazione","category_index":1,"icon_name":"ion-compose"},{"id":-12,"name":"Prestito","description":"Prestito","category_index":2,"icon_name":"ion-ios-book"},{"id":-13,"name":"Riconsegna","description":"Riconsegna","category_index":3,"icon_name":"ion-ios-book-outline"},{"id":-14,"name":"Commento","description":"Commento","category_index":4,"icon_name":"ion-chatbox-working"},{"id":-15,"name":"Voto","description":"Voto","category_index":5,"icon_name":"ion-android-star-half"},{"id":-16,"name":"Checkin","description":"Checkin","category_index":6,"icon_name":"ion-arrow-shrink"},{"id":-17,"name":"Checkout","description":"Checkout","category_index":7,"icon_name":"ion-arrow-expand"}],"entities":["FL_EVENTS"]},{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immegine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]}]
@@ -443,6 +451,7 @@ angular.module('firstlife.config')
             'design':{
                 'logo' : {url: '', title: '', alt:'', label:{text: 'Teen-CarTo', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
                 'logo_partners' : [],
+                'side_menu':[]
             },
             'map':{
                 'tile_view' : 'http://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ',
@@ -464,15 +473,23 @@ angular.module('firstlife.config')
             }
         },
         5:{
-            "app_name" : "Miramap",
+            "app_name" : "MiraMap",
             "domain_name": "miramap",
             "domain_id":5,
             "design":{
-                "logo" : {url: "http://www.firstlife.org/wp-content/uploads/2016/04/Logo-Miramap-completo.svg", title: "Miramap", alt:"miramap", label:{text: "Miramap", style: "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+                "logo" : {
+                    url: "http://www.firstlife.org/wp-content/uploads/2016/04/logo-miramap.png", 
+                    //url: "http://www.firstlife.org/wp-content/uploads/2016/04/Logo-Miramap-completo.svg", 
+                    title: "Miramap", alt:"miramap", label:{text: "Miramap", style: "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
                 "logo_partners" : [],
                 "colors" : ["rgba(221,91,42, 1)","rgba(246,213,59, 1)", "rgba(61,131,97, 1)", "rgba(255,179,16, 1)", "rgba(243,164,106, 1)","rgba(174,10,10, 1)","rgba(130,50,86, 1)","rgba(45,69,104, 1)","rgba(63,127,145, 1)","rgba(136,186,92, 1)"],
-                'logo_bar' : 'http://www.firstlife.org/wp-content/uploads/2016/04/MIraMap-1.svg',
+                'logo_bar' : 'http://www.firstlife.org/wp-content/uploads/2016/04/logo-miramap-testo.png',//'http://www.firstlife.org/wp-content/uploads/2016/04/MIraMap-1.svg',
                 'logo_menu' : 'http://www.firstlife.org/wp-content/uploads/2016/04/MiraMapFavicon-1.svg',
+                'side_menu':[
+                    {name:'Torna a MiraMap',url:'http://www.miramap.it/',icon:'ion-android-home',lang:'it'},
+                    {name:'Scopri il progetto',url:'http://www.miramap.it/#seconda-sezione',lang:'it'},
+                    {name:'News',url:'http://www.miramap.it/category/appuntamenti/',icon:'ion-social-rss',lang:'it'},
+                ]
             },
             "actions":{
                 "geolocation" : true,
@@ -491,6 +508,8 @@ angular.module('firstlife.config')
                     {"name":"Segnalazione","id":1,icon:"ion-clipboard","slug":"ticket","url":"tickets","key":"FL_TICKETS","index":8,
                      "properties":{
                          'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
+                         'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false},
+                         //'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true},
                      },
                      "relations":{}
                     }
@@ -672,6 +691,7 @@ angular.module('firstlife.config')
                 'logo' : {url: '', title: '', alt:'', label:{text: 'Sportografi', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
                 'logo_partners' : [],
                 'colors' : ['rgba(221,91,42, 1)','rgba(246,213,59, 1)', 'rgba(61,131,97, 1)', 'rgba(255,179,16, 1)', 'rgba(243,164,106, 1)','rgba(174,10,10, 1)','rgba(130,50,86, 1)','rgba(45,69,104, 1)','rgba(63,127,145, 1)','rgba(136,186,92, 1)'],
+                'side_menu':[]
             },
             'actions':{
                 'geolocation' : true,

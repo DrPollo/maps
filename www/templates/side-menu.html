@@ -17,6 +17,11 @@
                     <h2 class="greeting">{{'WELCOME'|translate}} {{displayName}}</h2>
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
+                <ion-item class="item-divider" ng-if="menu.length > 0">{{'MENU'|translate}}</ion-item>
+                <ion-item ng-repeat="entry in config.design.side_menu |filter:{lang:currentLang} as menu track by $index" class="item-icon-left item-button" nav-clear menu-close ng-href="{{entry.url}}" target="_blank">
+                    <i class="icon" ng-class="entry.icon ? entry.icon : 'ion-android-bookmark'"></i>
+                    <h3 class="menu-text">{{entry.name}}</h3>
+                </ion-item>
                 <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <ion-item ng-if="config.actions.profile_tab" ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close ng-href="#/app/user/">
                     <i class="icon ion-android-person"></i>
