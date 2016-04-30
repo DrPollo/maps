@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 5,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
@@ -479,11 +479,10 @@ angular.module('firstlife.config')
             "design":{
                 "logo" : {
                     url: "http://www.firstlife.org/wp-content/uploads/2016/04/logo-miramap.png", 
-                    //url: "http://www.firstlife.org/wp-content/uploads/2016/04/Logo-Miramap-completo.svg", 
                     title: "Miramap", alt:"miramap", label:{text: "Miramap", style: "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
                 "logo_partners" : [],
                 "colors" : ["rgba(221,91,42, 1)","rgba(246,213,59, 1)", "rgba(61,131,97, 1)", "rgba(255,179,16, 1)", "rgba(243,164,106, 1)","rgba(174,10,10, 1)","rgba(130,50,86, 1)","rgba(45,69,104, 1)","rgba(63,127,145, 1)","rgba(136,186,92, 1)"],
-                'logo_bar' : 'http://www.firstlife.org/wp-content/uploads/2016/04/logo-miramap-testo.png',//'http://www.firstlife.org/wp-content/uploads/2016/04/MIraMap-1.svg',
+                'logo_bar' : 'http://www.firstlife.org/wp-content/uploads/2016/04/logo-miramap-testo.png',
                 'logo_menu' : 'http://www.firstlife.org/wp-content/uploads/2016/04/MiraMapFavicon-1.svg',
                 'side_menu':[
                     {name:'Torna a MiraMap',url:'http://www.miramap.it/',icon:'ion-android-home',lang:'it'},
@@ -525,12 +524,12 @@ angular.module('firstlife.config')
                 "map_default_lng" : 7.624039,
                 "area": {
                     style: {
-                        fillColor: "#d4f9cf",
+                        fillColor: "#ffdac9",
                         weight: 3,
                         opacity: 1,
-                        color: "green",
-                        dashArray: "10",
-                        fillOpacity: 0.1,
+                        color: "#FC4A00",
+                        dashArray: "1",
+                        fillOpacity: 0.2,
                         clickable: false,
                     },
                     data: {

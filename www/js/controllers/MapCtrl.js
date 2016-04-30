@@ -5,33 +5,13 @@ angular.module('firstlife.controllers')
 
         var consoleCheck = false;
 
+        
         var levels = {check:false};
         if (myConfig.map.area.levels){
             levels = {check:true};
             levels.list = $scope.config.map.area.levels;
         }
-
         
-        
-        if(!$scope.geojson && $scope.config.map.area && $scope.config.map.area.data){
-            $scope.geojson = {
-                levels: levels.check ? levels.list : null,
-                data: $scope.config.map.area.data,
-                style: $scope.config.map.area.style,
-                //                onEachFeature: function (feature, layer) {
-                //                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
-                //                    var marker = L.marker(feature.geometry.coordinates[0][0],{icon: L.icon({html:feature.properties.name}) });
-                //                    //layers[feature.properties.id] = layer;
-                //                    console.log("icon per geojson ",feature,layer,marker, feature.geometry.coordinates[0][0]);
-                //                }
-
-            };
-            // parto al piano terra
-            selectGeoJSONData('level',0);
-        }
-
-
-
         // configurazione dell'applicazione
         if(!$scope.config) $scope.config = myConfig;
         var config = myConfig;
@@ -134,6 +114,21 @@ angular.module('firstlife.controllers')
             }
             return style;
         }
+        
+        
+
+        // se ci sono dei valori di default dell'area
+        if($scope.config.map.area && $scope.config.map.area.data){
+            // copio i dati
+            $scope.geojson.data = angular.copy($scope.config.map.area.data);
+            // se definito sovrascrivo lo stile
+            if($scope.config.map.area.style)
+                $scope.geojson.style = angular.copy($scope.config.map.area.style);
+            
+            $scope.geojson.levels = levels.check ? levels.list : null;
+        }
+
+        $log.debug('check geojson ',$scope.geojson);
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
@@ -242,7 +237,7 @@ angular.module('firstlife.controllers')
                 event.preventMapMoveend = true;
                 if(consoleCheck) console.log("Event: moveend...", $scope.map);
                 // recupero i dati del layer
-                getData();
+                if(!$scope.config.map.area.data) getData();
                 // controllo se sono in edit mode
                 if(!$scope.editMode){
                     // se e' stato impostato un delay
