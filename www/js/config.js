@@ -522,6 +522,7 @@ angular.module('firstlife.config')
             "map":{ //45.021557, 7.624039
                 "map_default_lat" : 45.021557,
                 "map_default_lng" : 7.624039,
+                'zoom_level' : 14,
                 "area": {
                     style: {
                         fillColor: "#ffdac9",
