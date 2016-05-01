@@ -128,7 +128,7 @@ angular.module('firstlife.controllers')
             $scope.geojson.levels = levels.check ? levels.list : null;
         }
 
-        $log.debug('check geojson ',$scope.geojson);
+        //$log.debug('check geojson ',$scope.geojson);
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
@@ -136,7 +136,7 @@ angular.module('firstlife.controllers')
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
 
-            $log.debug("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
+            $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
                 // check autenticazione
                 var user = MemoryFactory.readUser();
@@ -1139,7 +1139,6 @@ angular.module('firstlife.controllers')
             // applico le modifiche a markersFiltered
             // aggiungo i marker alla lista 
             function updateMarkers(filtred){
-                $log.debug('check icona pre updateMarkers ',$scope.markersFiltered);
                 for(var i = 0; i < filtred.length; i++){
                     var marker = filtred[i];
                     // aggiorno l'icona con quella preferita
@@ -1153,7 +1152,6 @@ angular.module('firstlife.controllers')
                         if(consoleCheck) console.log("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
                     }
                 }
-                $log.debug('check icona in updateMarkers ',$scope.markersFiltered);
             }
             // rimuovo i marker presenti localmente ma non presenti nel risultato
             function removeMarkers(filtred){
@@ -1181,13 +1179,11 @@ angular.module('firstlife.controllers')
                         // se il padre e' nella lista dei marker
                         //if(!parentRel.exclude) $log.debug('check condizioni in relationsFixer ',parentRel.field, marker[parentRel.field], $scope.markersFiltered[marker[parentRel.field]] );
                         if(!parentRel.exclude && marker[parentRel.field] && $scope.markersFiltered[marker[parentRel.field]] ){
-                            $log.log('cancello in relationsFixer ',key,$scope.markersFiltered[key]);
                             // rimuovo il marker dalla lista
                             delete $scope.markersFiltered[key];
                         }
                     }
                 }
-                // $log.debug('check relationsFixer ',Object.keys($scope.markersFiltered).length);
             }
             
             
@@ -1666,7 +1662,7 @@ angular.module('firstlife.controllers')
 //            citta 10 - 8
 //            provincia 7 - 6
             
-            $log.debug('update geometries ',checkGeometries);
+            //$log.debug('update geometries ',checkGeometries);
             // se ho le geometrie disabilitate
             if(!checkGeometries)
                 return;
@@ -1674,16 +1670,16 @@ angular.module('firstlife.controllers')
             var max = config.map.min_zoom_geometry_layer;
             leafletData.getMap("mymap").then(
                 function(map) {
-                    $log.debug('check map',map);
+                    //$log.debug('check map',map);
                     var bounds = map.getBounds();
                     var zoom = map.getZoom();
                     var sw = {lat:bounds._southWest.lat,lng:bounds._southWest.lng};
                     var ne = {lat:bounds._northEast.lat,lng:bounds._northEast.lng};
-                    $log.debug('check map parameters',max,zoom,bounds);
+                    //$log.debug('check map parameters',max,zoom,bounds);
                     if(max <= zoom){
                         indexingFactory.get(zoom,sw,ne).then(
                             function(response){
-                                $log.debug("indexFactory.get, response",response);
+                                //$log.debug("indexFactory.get, response",response);
                                 $scope.geojson.data = response;
 
                             },

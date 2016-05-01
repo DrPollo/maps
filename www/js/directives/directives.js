@@ -435,7 +435,7 @@ angular.module('firstlife.directives', [])
     return {
         restrict: 'EG',
         scope: {
-            content: '=content',
+            wall: '=content',
             close: '=close',
             click: '=click'
         },
@@ -454,11 +454,16 @@ angular.module('firstlife.directives', [])
                 }
             });
 
+
             MapService.getMapBounds().then(
                 function(response){
                     $scope.wallArray = [];
+                    var keys = Object.keys($scope.wall);
+                    for(var k = 0; k < keys.length; k++){
+                        $scope.wallArray.push($scope.wall[keys[k]]);
+                    }
                     bounds = response;
-                    $scope.wallArray = $filter('filter')($scope.content, boundsFiltering);
+                    $scope.wallArray = $filter('filter')($scope.wallArray, boundsFiltering);
                 },
                 function(response){
                     $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
@@ -645,7 +650,7 @@ angular.module('firstlife.directives', [])
                         };
 
                         $scope.showConfirm();
-                    
+
                         break;
                     case 'leave':
                         // conferma se uscire
@@ -1282,7 +1287,7 @@ angular.module('firstlife.directives', [])
             // cancella entita' semplice
             $scope.delete = function(id,type,i){
                 // aggiungi check con alert
-                
+
                 $scope.showConfirm = function() {
                     var confirmPopup = $ionicPopup.confirm({
                         title: $filter('translate')('DELETE'),
