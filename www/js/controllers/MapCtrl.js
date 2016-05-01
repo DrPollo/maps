@@ -1114,8 +1114,6 @@ angular.module('firstlife.controllers')
          */
         function setMapMarkers(){
 
-            if(consoleCheck) console.log("cambio dei Markers, markers da filtrare: ",$scope.filtred);
-
             //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
             $scope.markersFilteredArray = angular.copy($scope.filtred);
             
@@ -1141,6 +1139,7 @@ angular.module('firstlife.controllers')
             // applico le modifiche a markersFiltered
             // aggiungo i marker alla lista 
             function updateMarkers(filtred){
+                $log.debug('check icona pre updateMarkers ',$scope.markersFiltered);
                 for(var i = 0; i < filtred.length; i++){
                     var marker = filtred[i];
                     // aggiorno l'icona con quella preferita
@@ -1154,6 +1153,7 @@ angular.module('firstlife.controllers')
                         if(consoleCheck) console.log("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
                     }
                 }
+                $log.debug('check icona in updateMarkers ',$scope.markersFiltered);
             }
             // rimuovo i marker presenti localmente ma non presenti nel risultato
             function removeMarkers(filtred){
@@ -1313,9 +1313,9 @@ angular.module('firstlife.controllers')
             for(var i = 0; i< categories.length; i++){
                 var cats = categories[i];
                 // imposto la prima come category_space di default
-                if($scope.favCat == 0 && cats.is_visible){
-                    $scope.favCat = cats.category_space;
-                }
+//                if($scope.favCat == 0 && cats.is_visible){
+//                    $scope.favCat = cats.category_space;
+//                }
 
                 // todo aggiungi slug
                 var filter_name = cats.name;//'catIndex',

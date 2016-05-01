@@ -27,6 +27,11 @@
                 <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
                 </i>
                 {{marker.name}} 
+                <div class="sublist">
+                    <div class="sublist-block message">
+                        {{'LAST_UPDATE_MESSAGE'|translate}} {{marker.last_update | date:'dd/MM/yyyy (hh:mm)'}}
+                    </div>
+                </div>
                 <div class="tag-list" ng-if="marker.tags.length > 0">
                     <span ng-repeat="tag in marker.tags |filter:'!null' track by $index" class="tag" style="color:{{marker.icons[0].color}};">
                         <i class="ion-pricetag"></i>
