@@ -49,7 +49,7 @@
             </div>
             <div class="tag-list content" ng-if="infoPlace.marker.tags.length > 0" >
                 <span class="tags">
-                    <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.category.color}};color:white;">
+                    <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.icons[0].color}};color:white;">
                         <!-- bug da sistemare causato dal modulo tag, stampo l'oggetto -->
                         <i class="ion-pricetag"></i>
                         {{isString(tag) ? tag : tag.tag}}
