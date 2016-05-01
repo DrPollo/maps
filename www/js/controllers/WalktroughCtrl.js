@@ -169,7 +169,7 @@ angular.module('firstlife.controllers')
                     function(data) {
                         hideLoadingScreen();
                         if(consoleCheck) console.log("SignupCtrl, doSignUp, error: ", data);
-                        if(data.status === 401){
+                        if(data.status === 422 || data.status === 401){
                             var title = $filter('translate')('ERROR');
                             var template = $filter('translate')('USED_EMAIL');
                             var alertPopup = $ionicPopup.alert({
