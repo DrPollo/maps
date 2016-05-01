@@ -13547,13 +13547,12 @@ ion-side-menu#side-menu {
           font-style: italic;
           margin-bottom: 8px; }
     #wall .modal-content .list .item .tag-list {
-      display: flex; }
+      padding: 1em 0px 0px 2em; }
       #wall .modal-content .list .item .tag-list .tag {
-        color: white;
         padding: 4px 6px;
-        border-radius: 20px;
         font-size: 1em;
-        margin-right: 4px; }
+        margin: 0px 4px 3px 0px;
+        display: inline-flex; }
 
 .pie-cluster {
   border-radius: 40px;

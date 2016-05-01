@@ -23,12 +23,12 @@
             <span>{{'NOTHING_TO_SEE'|translate}}</span>
         </div>
         <div ng-if="wallArray.length > 0" class="item" ng-repeat="marker in wallArray | orderBy:['-last_update','name'] |filter:query as filtered track by $index" >
-            <div ng-init="loadChildren(marker)" on-tap="click(marker)">
+            <div ng-init="loadChildren(marker)" on-tap="click(marker)" class="item-text-wrap">
                 <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
                 </i>
                 {{marker.name}} 
-                <div class="sublist tag-list" ng-if="marker.tags.length > 0">
-                    <span ng-repeat="tag in marker.tags |filter:'!null' track by $index" class="tag" style="background-color:{{marker.icons[0].color}};">
+                <div class="tag-list" ng-if="marker.tags.length > 0">
+                    <span ng-repeat="tag in marker.tags |filter:'!null' track by $index" class="tag" style="color:{{marker.icons[0].color}};">
                         <i class="ion-pricetag"></i>
                         {{tag}}
                     </span>
