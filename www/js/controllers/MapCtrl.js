@@ -1309,9 +1309,9 @@ angular.module('firstlife.controllers')
             for(var i = 0; i< categories.length; i++){
                 var cats = categories[i];
                 // imposto la prima come category_space di default
-//                if($scope.favCat == 0 && cats.is_visible){
-//                    $scope.favCat = cats.category_space;
-//                }
+                if($scope.favCat == 0 && cats.is_visible){
+                    $scope.favCat = cats.category_space;
+                }
 
                 // todo aggiungi slug
                 var filter_name = cats.name;//'catIndex',
