@@ -507,7 +507,7 @@ angular.module('firstlife.controllers')
         $scope.showMFilterCat = function() {
             $scope.filterCat = {};
 
-            $ionicModal.fromTemplateUrl('templates/form/filterCat.html', {
+            $ionicModal.fromTemplateUrl('templates/modals/filterCat.html', {
                 scope: $scope,
                 animation: 'fade-in'
             }).then(function(modal) {
@@ -646,6 +646,7 @@ angular.module('firstlife.controllers')
 
         // cambio il category space utilizzato per le icone
         $scope.changeFavCat = function (id){
+            $log.debug("check change favCat ",id);
             $ionicLoading.show({
                 animation: 'fade-in',
                 showBackdrop: false,
@@ -1308,28 +1309,30 @@ angular.module('firstlife.controllers')
             // costruisco regola per le categorizzazione
             for(var i = 0; i< categories.length; i++){
                 var cats = categories[i];
-                // imposto la prima come category_space di default
-                if($scope.favCat == 0 && cats.is_visible){
-                    $scope.favCat = cats.category_space;
-                }
+                if(cats.is_visible){
+                    // imposto la prima come category_space di default
+                    if($scope.favCat == 0 && cats.is_visible){
+                        $scope.favCat = cats.category_space;
+                    }
 
-                // todo aggiungi slug
-                var filter_name = cats.name;//'catIndex',
-                var check = 'id';
-                var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities,includeCondition:{value:{category_space:cats.category_space},property:'categories'}};
-                // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-                $scope.filters[filter_name] = {list: cats.categories, toggle:1, iconSwitcher:true, label:filter_name,check:check,name:filter_name,category_space:cats.category_space,visible:cats.is_visible};
-                // bug init i = 1
-                for(j = 0; j < $scope.filters[filter_name].list.length; j++){
-                    $scope.filters[filter_name].list[j].visible = true;
-                    $scope.filters[filter_name].list[j].key = $scope.filters[filter_name].list[j].id;
-                    rule.values.push($scope.filters[filter_name].list[j].id);
+                    // todo aggiungi slug
+                    var filter_name = cats.name;//'catIndex',
+                    var check = 'id';
+                    var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities,includeCondition:{value:{category_space:cats.category_space},property:'categories'}};
+                    // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
+                    $scope.filters[filter_name] = {list: cats.categories, toggle:1, iconSwitcher:true, label:filter_name,check:check,name:filter_name,category_space:cats.category_space,visible:cats.is_visible};
+                    // bug init i = 1
+                    for(j = 0; j < $scope.filters[filter_name].list.length; j++){
+                        $scope.filters[filter_name].list[j].visible = true;
+                        $scope.filters[filter_name].list[j].key = $scope.filters[filter_name].list[j].id;
+                        rule.values.push($scope.filters[filter_name].list[j].id);
+                    }
+                    $scope.filterConditions.push(rule);
                 }
-                $scope.filterConditions.push(rule);
             }
             // init filtro per livelli in area
             // es. level: 0, level:1, etc....
-            if( $scope.config.map.area && levels.check){
+            if( $scope.config.map.area && levels.check && levels.list.length > 1){
                 // filtri livello
                 var checkL = 'level',
                     filter_nameL = 'Levels';

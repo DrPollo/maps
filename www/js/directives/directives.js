@@ -1490,30 +1490,31 @@ angular.module('firstlife.directives', [])
         }]
     }
 
-}).directive('categoryFilters',['$log','myConfig', function ($log,myConfig) {
+}).directive('categoryFilters',['$log','$filter','myConfig', function ($log,$filter,myConfig) {
     return {
         restrict: 'E',
         templateUrl: '/templates/map-ui-template/treeMap.html',
-        //template: '<svg height="{{size.height}}" width="{{size.width}}" style="overflow: hidden; position: relative;"><rect ng-repeat="box in boxes track by $index" stroke="#fefefe" fill="#006628" x="{{box[0]}}" y="{{box[1]}}" width="{{box[2]-box[0]}}" height="{{box[3]-box[1]}}" r="0" rx="0" ry="0" ></rect><svg>',
         scope: {
-            markers:"=array"
+            markers:"=array",
+            toggleCat:"=toggle",
+            filters:"=",
+            changeFavCat:"=",
+            favCat:"="
         },
         link: function (scope, element) {
 
+            var backHeight = 47; //pixels
             scope.$on('$destroy',function(){delete scope;});
 
             scope.colors = myConfig.design.colors;
-            // fatta a mano
-            scope.cats = angular.copy(myConfig.types.categories);
-
-            var ids = [];
+            
+            scope.cats = [];
             var firstLevel = [];
-            for (var i = 0 ; i < scope.cats.length; i++) {
-                //if(data[i].is_visible){
-                firstLevel.push(scope.cats[i].categories.length);
-                ids.push(scope.cats[i].category_space);
-
-                //}
+            for (var i in scope.filters) {
+                if(i != 'entity_type'){
+                    firstLevel.push(scope.filters[i].list.length);
+                    scope.cats.push(scope.filters[i]);  
+                }
             }
             scope.$watch(function() {
                 return element[0].clientWidth;
@@ -1531,17 +1532,15 @@ angular.module('firstlife.directives', [])
                     scope.cats[i].toggle = false;
                 }
                 for (var i = 0 ; i < scope.cats.length; i++) {
-                    //if(scope.cats[i].is_visible){
-                    var cats = scope.cats[i].categories;
+                    var cats = scope.cats[i].list;
                     var buff = [];
                     for(var j = 0; j < cats.length; j++){
                         buff[j] = 1;
                     }
-                    var boxes2 = Treemap.generate(buff,rect.width,rect.height);
+                    var boxes2 = Treemap.generate(buff,rect.width,rect.height-backHeight);
                     for(var k = 0; k < boxes2.length; k++){
-                        scope.cats[i].categories[k].rect = toPer(boxes2[k]);
+                        scope.cats[i].list[k].rect = toPer(boxes2[k]);
                     }
-                    //}
                 }
                 $log.debug(scope.cats);
             }
@@ -1556,8 +1555,8 @@ angular.module('firstlife.directives', [])
                 }
             }
             scope.close = function(){
-                $log.debug('close!');
                 scope.back = false;
+                return false;
             }
             scope.catToggle = function(cat){
                 $log.debug('cat toggle!',cat);
@@ -1589,7 +1588,7 @@ angular.module('firstlife.directives', [])
         },
         link: function (scope, element) {
             scope.$on('$destroy',function(){delete scope;});
-            $log.debug("check entityFilter ",scope.filter.list,scope.toggle);
+            //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
         }
     }
 }]);
