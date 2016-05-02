@@ -1,17 +1,21 @@
-<div class="card list" ng-if="results.length > 0">
+<div ng-if="results.length > 0">
     <div class="item item-divider">
         {{'SEARCH_ENTITIES_RESULTS'|translate}}
     </div>
-    <div class="item icon-left" id="results-box" ng-repeat="r in results track by $index" ng-click="click(r)">
-        <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
-        <span>{{r.name}}</span>
+    <div class="card list" >
+        <div class="item icon-left" id="results-box" ng-repeat="r in results track by $index" ng-click="click(r)">
+            <i class="icon {{r.icon}}" style="color:{{r.color}};"></i>
+            <span>{{r.name}}</span>
+        </div>
     </div>
 </div>
-<div class="card list" ng-if="locations.length > 0">
+<div ng-if="locations.length > 0">
     <div class="item item-divider">
         {{'SEARCH_LOCATIONS'|translate}}
     </div>
-    <div class="item icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
-            {{l.name}}
+    <div class="card list">
+        <div class="item icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
+                {{l.name}}
+        </div>
     </div>
 </div>
