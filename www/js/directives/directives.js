@@ -1503,7 +1503,7 @@ angular.module('firstlife.directives', [])
         },
         link: function (scope, element) {
 
-            var backHeight = 47; //pixels
+            var backHeight = 50; //pixels
             scope.$on('$destroy',function(){delete scope;});
 
             scope.colors = myConfig.design.colors;
@@ -1542,7 +1542,6 @@ angular.module('firstlife.directives', [])
                         scope.cats[i].list[k].rect = toPer(boxes2[k]);
                     }
                 }
-                $log.debug(scope.cats);
             }
 
             scope.back = false;

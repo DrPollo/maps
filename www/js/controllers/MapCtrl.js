@@ -646,7 +646,7 @@ angular.module('firstlife.controllers')
 
         // cambio il category space utilizzato per le icone
         $scope.changeFavCat = function (id){
-            $log.debug("check change favCat ",id);
+            //$log.debug("check change favCat ",id);
             $ionicLoading.show({
                 animation: 'fade-in',
                 showBackdrop: false,
