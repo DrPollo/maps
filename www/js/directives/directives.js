@@ -1579,4 +1579,17 @@ angular.module('firstlife.directives', [])
 
         }
     };
+}]).directive('entityFilter',['$log','myConfig', function ($log,myConfig) {
+    return {
+        restrict: 'EG',
+        templateUrl: '/templates/map-ui-template/entityTypeFilter.html',
+        scope: {
+            toggle:"=",
+            filter:"="
+        },
+        link: function (scope, element) {
+            scope.$on('$destroy',function(){delete scope;});
+            $log.debug("check entityFilter ",scope.filter.list,scope.toggle);
+        }
+    }
 }]);

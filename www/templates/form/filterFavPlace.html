@@ -10,7 +10,6 @@
     </ion-header-bar>
     <ion-content> 
         <ion-list>
-            
             <ion-item class="item-icon-right" ng-repeat="item in buildings | orderBy: 'id' | filter:searchName " on-tap="closeFilterFavPlace();locate(item);" ng-if="item.visible">
                 {{item.name}}
             </ion-item>

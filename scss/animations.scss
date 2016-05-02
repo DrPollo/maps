@@ -17,6 +17,15 @@
 .ease-animation {
     transition: all ease 0.5s;
 }
+.ease-in-animation {
+    transition: all ease-in 0.5s;
+}
+.ease-out-animation {
+    transition: all ease-out 0.5s;
+}
+.ease-in-out-animation {
+    transition: all ease-in-out 0.5s;
+}
 .linear-animation {
     transition: all linear 0.5s;
 }

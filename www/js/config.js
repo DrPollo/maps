@@ -4,7 +4,7 @@ angular.module('firstlife.config')
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
     'project': 1,
-    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
+    'api_base_domain' : 'firstlife-test.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.firstlife.di.unito.it/',

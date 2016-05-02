@@ -573,7 +573,7 @@ angular.module('firstlife.controllers')
         $scope.toggleFilter = function(cat, key){
             // cerco l'indice della regola per le categorie
             var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(cat);
-            if(consoleCheck) console.log("Indice regola filtro: ",index);
+            $log.debug("Indice regola filtro: ",index,cat,key);
             // se non c'e' lo creo
             if(index < 0){ 
                 // default tutti i valori

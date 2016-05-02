@@ -58,12 +58,26 @@
             border-radius: 0px;
             box-shadow: 1px 1px 3px #666;
         }
-
+        #typeFilter{
+            position: relative;
+            z-index: 0;
+            top:-6px;
+            button{
+                min-height: 36px;
+                box-shadow: 0px 1px 1px #666;
+                border-radius: 0 0 10px 10px;
+                -o-border-radius: 0 0 10px 10px;
+                -moz-border-radius: 0 0 10px 10px;
+                -webkit-border-radius: 0 0 10px 10px;
+            }
+        }
         #omnibox{
             //min-width: 350px;
             box-shadow: 1px 1px 3px #666;
             background: #fff;
             display: inline-flex;
+            position: relative;
+            z-index: 1;
             #barlogo{
                 height: 40px;
                 padding: 0px 0px 4px;
@@ -76,7 +90,7 @@
             button {
                 min-height: 48px;
                 height: 48px;
-                width: 50px;
+                width: 51px;
             }
             button:before{
                 font-size: 1.2em;
