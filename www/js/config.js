@@ -11,7 +11,7 @@ angular.module('firstlife.config')
     'format':'',
     'api_version' : 'v4',
     'ssl': false,
-    'version': '0.4.3',
+    'version': '0.4.4',
 
     // nome progetto e dominio ! attenzione il dominio va aggiunto negli url domains/<domain_id>/
     'defaults':{
