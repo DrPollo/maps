@@ -1,31 +1,27 @@
-<div style="height:{{size.height}}px;width:{{size.width}}px;overflow: hidden; position: relative;">
-        <div class="ease-animation" ng-repeat="space in cats track by $index" 
-         style="border:1px solid #fefefe;border-color:#fff;position:absolute;left:{{space.rect[0]}};top:{{space.rect[1]}};width:{{space.rect[2]}};height:{{space.rect[3]}};background-color:{{colors[$index]}};" 
+<div id="treemapfilter" style="height:{{size.height}}px;width:{{size.width}}px;">
+        <div class="ease-animation root" ng-repeat="space in cats track by $index" 
+         style="left:{{space.rect[0]}};top:{{space.rect[1]}};width:{{space.rect[2]}};height:{{space.rect[3]}};background-color:{{colors[$index]}};" 
          ng-style="back && (back == space.category_space) ? {height: '100%',width: '100%',top: '0px',left:'0px','z-index': '1'}:{height: space.rect[3],width: space.rect[2],top: space.rect[1],left:space.rect[0],'z-index': '0'}">
-            <button style="color:white;font-size:2em;" 
-                    class="button button-light button-block button-clear" 
+            <button class="backtoroot button button-light button-block button-clear" 
                     ng-if="back && (back == space.category_space)" 
                     on-tap="close()">
-                <i class="icon ion-close-circled"></i>
+                <i class="icon ion-android-arrow-dropleft-circle"></i>
                 {{space.name}}
             </button>
-            <div style="border-bottom:3px solid #f8f8f8; width:100%;"
-                 ng-if="back && (back == space.category_space)"></div>
-            <i ng-if="!back" on-tap="changeFavCat(space.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != space.category_space, 'ion-android-star': favCat == space.category_space }" style="position:absolute;z-index:1;color:#fff;padding:10px;font-size:2em;"></i>
-            <div on-tap="toggle(space)" style="position:absolute;color:white;width:100%;min-height:100%;height:auto;font-size:2em;display: table;" class="button button-light button-block button-clear" ng-if="!back">
-                <div style="display:table-cell;vertical-align:middle;">
+            <i class="legend" ng-if="!back" on-tap="changeFavCat(space.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != space.category_space, 'ion-android-star': favCat == space.category_space }"></i>
+            <div class="rootlabel" on-tap="toggle(space)" class="button button-light button-block button-clear" ng-if="!back">
+                <div class="label">
                     {{space.name}}
                 </div>
             </div>
-            <div ng-show="back && (back == space.category_space)" style="height: 100%;position:relative;">
-                <div ng-repeat="cat in space.list track by $index" 
-                     style="position:absolute;left:{{cat.rect[0]}};top:{{cat.rect[1]}};width:{{cat.rect[2]}};height:{{cat.rect[3]}};border-color:#f8f8f8;font-size:2em;"
+            <div class="child" ng-show="back && (back == space.category_space)">
+                <div class="childblock" ng-repeat="cat in space.list track by $index" 
+                     ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],color: cat.visible ? 'white' : cat.color,background:cat.visible?cat.color:'#fff'}"
                      on-tap="toggleCat(space.name,cat[space.check])">
-                    <i class="icon medium-dark" 
-                       ng-class="{ 'ion-close-circled': cat.visible, 'ion-checkmark-circled': !cat.visible}" 
-                       style="position:absolute;z-index:1;color:{{ cat.visible ? 'white' : cat.color }};padding:10px;"></i>
-                    <button class="button linear-animation" 
-                        style="width:100%;min-height:100%;height:auto;border-radius:0px;font-size:1em;color:{{ cat.visible ? 'white' : cat.color }}; background:{{cat.visible?cat.color:'#fff'}}">
+                    <i class="checker icon medium-dark" 
+                       ng-class="{ 'ion-close-circled': !cat.visible, 'ion-checkmark-circled': cat.visible}" 
+                       style="color:{{ cat.visible ? 'white' : cat.color }};"></i>
+                    <button class="label button linear-animation" style="color:{{ cat.visible ? 'white' : cat.color }};">
                         <i class="icon {{cat.icon_name}}"></i>
                         {{cat.name}}
                     </button>
@@ -33,5 +29,3 @@
         </div>
     </div>
 <div>
-    
-    <!--  ng-show="back && (back == space.category_space)" style="height:{{size.height-67}}px;top:67px;width:{{size.width}}px;overflow: hidden; position: relative;"-->

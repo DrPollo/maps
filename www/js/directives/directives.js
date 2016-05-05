@@ -1503,7 +1503,7 @@ angular.module('firstlife.directives', [])
         },
         link: function (scope, element) {
 
-            var backHeight = 50; //pixels
+            var backHeight = 47; //pixels
             scope.$on('$destroy',function(){delete scope;});
 
             scope.colors = myConfig.design.colors;
