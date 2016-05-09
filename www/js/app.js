@@ -577,7 +577,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     var myInterceptor = {
         response: function(response) {
             response.headers = response.headers();
-            //$log.debug("headers ",response.headers);
+            response.status = response.status;
+            $log.debug("http response ",response);
             if(response.data && response.data.data){
                 response.data = response.data.data;
             }

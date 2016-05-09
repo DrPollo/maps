@@ -140,20 +140,22 @@ angular.module('firstlife.factories')
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
-                $http(req).success(function(response) {
-                    getMarker(response.id, true).then(
-                        function(marker){
-                            deferred.resolve(marker);
-                        },
-                        function(err){
-                            $log.error("entityFactory, create, get del risultato ",err);
-                            deferred.reject(response.data);
-                        }
-                    );
-                }).error(function(response) {
-                    deferred.reject(response);
-                    $log.error("Created entity on the server: error! ", response);
-                });
+                $http(req).then(
+                    function(response) {
+                        //$log.debug("entityFactory, create, get del risultato ",response);
+                        getMarker(response.id, true).then(
+                            function(marker){
+                                deferred.resolve(marker);
+                            },
+                            function(err){
+                                $log.error("entityFactory, create error ",err);
+                                deferred.reject(response.data);
+                            }
+                        );
+                    },function(response) {
+                        deferred.reject(response);
+                        $log.error("Created entity on the server: error! ", response);
+                    });
                 return deferred.promise;
             },
             remove: function(entityId){
@@ -363,7 +365,7 @@ angular.module('firstlife.factories')
             // gestione categorie multiple
             var mainCat = entity.properties.categories[0];
 
-            
+
             var catIndex = self.categories.map(function(e){return e.category_space;}).indexOf(mainCat.category_space.id);
             var categories = self.categories[catIndex].categories;
             var colors = myConfig.design.colors;
@@ -426,12 +428,12 @@ angular.module('firstlife.factories')
                 var cats = angular.copy(entity.properties.categories[i].category_space.categories.map(function(e){return e.id}));
                 category_list = category_list.concat(cats);
             }
-            
+
             // se non e' categorizzabile lo salto
             if(!category)
                 return null;
 
-            
+
             var htmlIcon = '';
             htmlIcon = htmlIcon.concat('<i class="dotEventIcon icon ').concat(icons[0].icon).concat(' color').concat(icons[0].index).concat('"></i>');
             var checkRange = (!angular.equals(entity.properties.valid_to, entity.properties.valid_from) || !entity.properties.valid_from || !entity.properties.valid_to);

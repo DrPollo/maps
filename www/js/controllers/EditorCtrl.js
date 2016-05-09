@@ -395,7 +395,7 @@ angular.module('firstlife.controllers')
                     //chiudo la schermata di loading
                     hideLoadingScreen();
                     
-                    $log.debug("creation completed: ", newplace);
+                    //$log.debug("creation completed: ", newplace);
                     //$state.mode = "create";
 
                     // vado alla mappa e mostro la modal del place
@@ -406,9 +406,14 @@ angular.module('firstlife.controllers')
                 },function(error){
                     //chiudo la schermata di loading
                     hideLoadingScreen();
-                    
-                    if(dev) console.log("creation failed or moderation: ", error);
-                    $state.go("app.maps",{entity:-2});
+                    $log.error('creation error ',error);
+                    // moderazione
+                    var status = -2;
+                    if(error.status == 500){
+                        // errore di rete o bug
+                        status = -1;
+                    }
+                    $state.go("app.maps",{entity:status});
                    
                     // da testare 
                     return -1;
