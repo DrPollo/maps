@@ -737,7 +737,7 @@ angular.module('firstlife.controllers')
                     // se i livelli sono abilitati e se marker ha un livello
                     if(levels.check && marker.level || marker.level===0){
                         // cambio il livello sulla mappa
-                        selectGeoJSONLevel(marker.level);
+                        // selectGeoJSONLevel(marker.level);
                     }
                     //locate(marker.id);
                 },

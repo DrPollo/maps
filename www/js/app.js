@@ -385,7 +385,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CHECK_EMAIL: "Check the email box for the password recovery link.",
         SUCCESS: 'Success',
         SAVE_SUCCESS:'Stored!',
-        SUCCESS_MODARATION:"Invio avvenuto con successo: il contenuto verr&agrave; valutato per l'approvazione, verr&agrave; inviata una notifica con il risultato della valutazione.",
+        SUCCESS_MODARATION:"The content is now pending waiting for approval.",
         REGISTRATION_SUCCESS: 'Welcome! Please check your email for the verification link before log in.',
         USED_EMAIL:'Email already used. Please check the email for the activation code for new accounts or use the recovery password link to change your password and recover your account.',
         LOGGIN_IN:'Loggin in...',
