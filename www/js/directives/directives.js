@@ -440,13 +440,15 @@ angular.module('firstlife.directives', [])
             click: '=click'
         },
         templateUrl: '/templates/map-ui-template/wallTemplate.html',
-        controller: ['$scope','$location', '$log', '$filter', 'myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
+        controller: ['$scope','$location', '$log', '$filter','myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
             var config = myConfig;
             var bounds = {};
+            var bunch = 1500;
+            var MODAL_RELOAD_TIME = 2;//myConfig.behaviour.modal_relaod_time;
             $scope.markerChildren = {};
-
             $scope.query = '';
-
+            $scope.limit = bunch;
+            
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyWall){
                     e.preventDestroyWall = true;
@@ -454,16 +456,23 @@ angular.module('firstlife.directives', [])
                 }
             });
 
+        
 
+            $log.debug('inizio check wall');
             MapService.getMapBounds().then(
                 function(response){
-                    $scope.wallArray = [];
+                    var tmpArray = [];
                     var keys = Object.keys($scope.wall);
                     for(var k = 0; k < keys.length; k++){
-                        $scope.wallArray.push($scope.wall[keys[k]]);
+                        tmpArray.push($scope.wall[keys[k]]);
+                        //$scope.loadChildren($scope.wall[keys[k]])
                     }
+                    $log.debug('fine check wall');
                     bounds = response;
-                    $scope.wallArray = $filter('filter')($scope.wallArray, boundsFiltering);
+                    //orderBy:['-last_update','name']
+                    tmpArray = $filter('filter')(tmpArray, boundsFiltering);
+                    $scope.wallArray = $filter('orderBy')(tmpArray, '-last_update','name');
+                    //polling();
                 },
                 function(response){
                     $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
@@ -481,9 +490,9 @@ angular.module('firstlife.directives', [])
             function boundsFiltering(val){
                 return bounds.contains([val.lat,val.lng]);
             }
+            
 
             $scope.loadChildren = function(marker){
-
                 // caricamento dei child
                 var childrenRelations = config.types.child_relations[marker.entity_type];
                 var children = {};
@@ -498,17 +507,21 @@ angular.module('firstlife.directives', [])
                                 children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
                             if(!children[thing.entity_type].list)
                                 children[thing.entity_type].list = [];
-
                             var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
                             if(index < 0)
                                 children[thing.entity_type].list.push(thing);
                         }
-
                     }
                 }
                 $scope.markerChildren[marker.id] = children;
             };
 
+
+            $scope.increaseLimit = function () {
+                if ($scope.limit < $scope.items.length) {
+                    $scope.limit += 15;
+                }
+            };
 
 
             //            $scope.$watch('query',function(e,old){
@@ -1507,7 +1520,7 @@ angular.module('firstlife.directives', [])
             scope.$on('$destroy',function(){delete scope;});
 
             scope.colors = myConfig.design.colors;
-            
+
             scope.cats = [];
             var firstLevel = [];
             for (var i in scope.filters) {
@@ -1590,4 +1603,19 @@ angular.module('firstlife.directives', [])
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
         }
     }
-}]);
+}]).directive('bufferedScroll', function ($parse) {
+    return function ($scope, element, attrs) {
+      var handler = $parse(attrs.bufferedScroll);
+        console.log('check infinite scroll ',$scope,element,attrs);
+      element.scroll(function (evt) {
+        var scrollTop    = element[0].scrollTop,
+            scrollHeight = element[0].scrollHeight,
+            offsetHeight = element[0].offsetHeight;
+        if (scrollTop === (scrollHeight - offsetHeight)) {
+          $scope.$apply(function () {
+            handler($scope);
+          });
+        }
+      });
+    };
+  });

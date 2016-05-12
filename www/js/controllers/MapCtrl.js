@@ -746,8 +746,6 @@ angular.module('firstlife.controllers')
                     if(consoleCheck) console.log("markerClick, get, errore: ",err);
                 }
             );
-            //            }
-
         }
 
         function updatePositionInSearch(){
@@ -1543,7 +1541,7 @@ angular.module('firstlife.controllers')
                 /*self.map.center.lat = marker.lat;
                     self.map.center.lng = marker.lng,
                         self.map.center.zoom = $rootScope.info_position.zoom;*/
-                var params = {lat:marker.lat,lng:marker.lng,zoom:parseInt(config.map.zoom_create)};
+                var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
                 setMapCenter(params);
                 if(consoleCheck) console.log("nuova posizione", self.map.center);
             }else{
@@ -1557,7 +1555,7 @@ angular.module('firstlife.controllers')
                             self.map.center.lng = marker.lng,
                                 self.map.center.zoom = $rootScope.info_position.zoom*/
                         if(consoleCheck) console.log("nuova posizione", $scope.map.center);
-                        var params = {lat:marker.lat,lng:marker.lng,zoom:parseInt(config.map.zoom_create)};
+                        var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
                         setMapCenter(params);
                     },
                     function(err){if(consoleCheck) console.log("Location error: ",err);}

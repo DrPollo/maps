@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 5,
+    'project': 4,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
