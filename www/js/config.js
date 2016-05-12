@@ -3,7 +3,7 @@ angular.module('firstlife.config')
     // modalita' dev o produzione
     'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 4,
+    'project': 1,
     'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
@@ -33,7 +33,11 @@ angular.module('firstlife.config')
                           'wp_id':{ key: 'id_wp', required:true, default:1},
                           'id':{ key: 'id', default:null},
                           "level":{key:"level", default:0, label:"LEVEL_LABEL",placeholder:"LEVEL_PLACEHOLDER"}
-                      }
+                      },
+                      actions:[
+                         {label:'SUBSCRIBE',key:'subscribe',icon:'ion-android-bookmark',icon2:'ion-android-add-circle',search:false, check:'noSubscriber'},
+                         {label:'UNSUBSCRIBE',key:'unsubscribe',icon:'ion-android-bookmark',icon2:'ion-android-remove-circle',search:false, check:'subscriber'},
+                        ]
                      },
             simpleEntities:{
                 description:{
@@ -148,7 +152,7 @@ angular.module('firstlife.config')
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true,advanced:true},
                      'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false,is_editable:true,advanced:true},
-                     "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-ios-people'}
+                     "members":{key:'members', label: "GROUP_MEMBERS", placeholder: "", default:1,icon:'ion-android-people'}
 
                  },
                  relations:{
@@ -162,7 +166,6 @@ angular.module('firstlife.config')
                      {label:'JOIN_GROUP',key:'join',icon:'ion-android-person-add',search:false, check:'noMembership'},
                      {label:'LEAVE_GROUP',key:'leave',icon:'ion-android-exit',search:false, check:'noOwnership'},
                      {label:'VIEW_GROUP',key:'view',icon:'ion-map',icon2:'ion-android-arrow-dropright-circle',search:'groups', check:false}
-                     //{label:'SUBSCRIBE',key:'subscribe'},
                  ]
                 }
             ],
@@ -850,16 +853,22 @@ angular.module('firstlife.config')
         // prendo il form di default
         if(myConfig.dev)console.log("setup dei tipi 1",myConfig);
         var types = myConfig.types;
-        var perms = {};//angular.copy(myConfig.types.default.properties);
+        var perms = {};
         var checkList = {};
         if(myConfig.dev)console.log("setup dei tipi 2",myConfig);
         for(k in types.list){
             // faccio il merge dei default con le proprieta' del tipo specifico
             var perm = angular.extend({},types.default.properties, types.list[k].properties);
+            
+            if(!Array.isArray(types.list[k].actions))
+                types.list[k].actions = [];
+            if(Array.isArray(types.default.actions))
+                types.list[k].actions = types.list[k].actions.concat(angular.copy(types.default.actions));
+            
             // ciclo per costruire una maschera con le key, da usare nel wizard con ng-if
             if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi, proprieta' per il tipo: ", k, perm);
             perms[types.list[k].key] ={};
-            for(i in perm){
+            for(var i in perm){
                 // controllo che non ci sia un campo escluso (definito exclude:true)
                 if(myConfig.dev)console.log("EditorCtrl, init delle maschere di permessi, parametro di esclusione: ", perms[i]);
                 if(!perm[i].exclude){
@@ -868,6 +877,12 @@ angular.module('firstlife.config')
                 }
             }
             types.list[k].perms = angular.copy(perms[types.list[k].key]);
+            var acts = {};
+            for(var j = 0; j < types.list[k].actions.length; j++){
+                var a = angular.copy(types.list[k].actions[j]);
+                acts[a.key] = a;
+            }
+            types.list[k].acts = acts;
         }
         myConfig.types.perms = perms;
         if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);

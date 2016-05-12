@@ -555,24 +555,26 @@ angular.module('firstlife.directives', [])
 
         }]
     }
-}).directive('groupActions', function() {
+}).directive('entityActions', function() {
 
     return {
         restrict: 'EG',
         scope: {
             actions: '=actions',
-            id: '=id',
+            marker: '=marker',
             close:'=close',
             label:'=label',
             reset:'=reset'
         },
-        templateUrl: '/templates/map-ui-template/groupActionsModal.html',
-        controller: ['$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','AuthService','groupsFactory','MemoryFactory', function($scope,$location,$log,$filter,$ionicLoading,$ionicPopup,$ionicActionSheet,AuthService,groupsFactory,MemoryFactory){
+        templateUrl: '/templates/map-ui-template/actionsModal.html',
+        controller: ['$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', function($scope,$location,$log,$filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory){
 
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
-
+            $scope.subscriber = false;
+            if(!$scope.user)
+                $scope.user = MemoryFactory.getUser();
 
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyActions){
@@ -581,22 +583,52 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-            $scope.$watch('id',function(e,old){
+            $scope.$watch('marker',function(e,old){
                 // cambia il marker
-                if(e != old){
+                if(e.id != old.id){
                     // init delle simple entities
-                    initGroupActions();
+                    init();
                 }
             });
 
-
-            initGroupActions();
-            function initGroupActions(){
-                groupsFactory.getMembers($scope.id).then(
+            init();
+            
+            
+            function init(){
+                var promises = [];
+                if($scope.marker.entity_type == "FL_GROUPS"){
+                    promises.push(initGroup());
+                }
+                promises.push(initSubscriptions());
+                //quando sono tutti i valori inizializzati
+                $q.all(promises).then(
                     function(response){
-
-                        if(!$scope.user)
-                            $scope.user = MemoryFactory.getUser();
+                        // init delle azioni
+                        initActions();
+                    });
+                
+            }
+            
+            // recupero i subscribers
+            function initSubscriptions(){
+                return notificationFactory.subscribers($scope.marker.id).then(
+                    function(response){
+                        $log.debug('check subscribers ',response);
+                        var subscribers = response;
+                        var index = subscribers.indexOf($scope.user.id);
+                        $scope.subscriber = index < 0 ? false : true;
+                    },
+                    function(response){
+                         $log.error('check subscribers ',response);
+                    }
+                );
+                
+            }
+            
+            // recupero i membri se e' un gruppo
+            function initGroup(){
+                return groupsFactory.getMembers($scope.marker.id).then(
+                    function(response){
                         var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
                         if(index > -1){
                             // se esiste allora membro
@@ -605,28 +637,83 @@ angular.module('firstlife.directives', [])
                                 // se ha impostato il ruolo proprietario
                                 $scope.owner = true;
                             }
+                        }else{
+                            $scope.member = false;
+                            $scope.owner = false;
                         }
-                        // init delle azioni
-                        initActions();
                     },
                     function(response){
                         $log.log('the user is not a group member!');
                         // giusto per essere sicuro...
                         $scope.member = false;
                         $scope.owner = false;
-                        // init delle azioni
-                        initActions();
                     }
                 );
-
             }
 
             $scope.actionEntity = function(action, param){
-
+                $log.debug('check action ',action,param);
                 switch(action){
+                    case 'unsubscribe':
+                        //parte richiesta di unsubscribe
+                        $scope.showConfirm = function() {
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: $filter('translate')('ENTITY_UNSUBSCRIBE'),
+                                template: $filter('translate')('ENTITY_UNSUBSCRIBE_ASK')
+                            });
+                            confirmPopup.then(
+                                function(res) {
+                                    if(res) {
+                                        notificationFactory.unsubscribe($scope.marker.id).then(
+                                            function(response){
+                                                $scope.subscriber = false;
+                                                initActions();
+                                                actionReport(true);
+                                            },
+                                            function(response){
+                                                $log.error("notificationFactory, unsubscribe, errore",response);
+                                                actionReport(false);
+                                            }
+                                        );
+                                    } else {
+                                        $log.log('unsubscribe annullata');
+                                    }
+                                });
+                        };
+                        $scope.showConfirm();
+                        break;
+                    case 'subscribe':
+                        //parte richiesta di subscribe
+                        $scope.showConfirm = function() {
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: $filter('translate')('ENTITY_SUBSCRIBE'),
+                                template: $filter('translate')('ENTITY_SUBSCRIBE_ASK')
+                            });
+
+                            confirmPopup.then(
+                                function(res) {
+                                    if(res) {
+                                        notificationFactory.subscribe($scope.marker.id).then(
+                                            function(response){
+                                                $scope.subscriber = true;
+                                                initActions();
+                                                actionReport(true);
+                                            },
+                                            function(response){
+                                                $log.error("notificationFactory, subscribe, errore",response);
+                                                actionReport(false);
+                                            }
+                                        );
+                                    } else {
+                                        $log.log('subscribe annullata');
+                                    }
+                                });
+                        };
+                        $scope.showConfirm();
+                        break;
                     case 'view':
                         //aggiorno i parametri search con il filtro
-                        $location.search(param,$scope.id);
+                        $location.search(param,$scope.marker.id);
                         //chiudo la modal
                         $scope.close();
                         break;
@@ -641,7 +728,7 @@ angular.module('firstlife.directives', [])
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        groupsFactory.joinGroup($scope.id).then(
+                                        groupsFactory.joinGroup($scope.marker.id).then(
                                             function(response){
                                                 $scope.member = true;
                                                 if(response.role == 'owner'){
@@ -657,7 +744,7 @@ angular.module('firstlife.directives', [])
                                             }
                                         );
                                     } else {
-                                        $log.log('cancellazione annullata');
+                                        $log.log('join annullata');
                                     }
                                 });
                         };
@@ -676,7 +763,7 @@ angular.module('firstlife.directives', [])
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        groupsFactory.leaveGroup($scope.id).then(
+                                        groupsFactory.leaveGroup($scope.marker.id).then(
                                             function(response){
                                                 // reset dei permessi
                                                 $scope.member = false;
@@ -702,7 +789,7 @@ angular.module('firstlife.directives', [])
                         break;
                     case 'users':
                         // apri lista utenti in loco (modal?)
-                        groupsFactory.getMembers($scope.id).then(
+                        groupsFactory.getMembers($scope.marker.id).then(
                             function(response){
                                 $scope.users = response;
                             },
@@ -733,15 +820,22 @@ angular.module('firstlife.directives', [])
                             angular.extend($scope.actionList[i], {check:$scope.owner});
                             break;
                         case 'noOwnership':
-                            angular.extend($scope.actionList[i], {check:!$scope.owner});
+                            angular.extend($scope.actionList[i], {check:(!$scope.owner && $scope.member)});
                             break;
                         case 'noMembership':
-                            angular.extend($scope.actionList[i], {check:!$scope.member});
+                            angular.extend($scope.actionList[i], {check:(!$scope.member && !$scope.owner)});
+                            break;
+                        case 'subscriber':
+                            angular.extend($scope.actionList[i], {check:$scope.subscriber});
+                            break;
+                        case 'noSubscriber':
+                            angular.extend($scope.actionList[i], {check:!$scope.subscriber});
                             break;
                         default: //se nessun check e' richiesto > true
                             angular.extend($scope.actionList[i], {check:true});
                     }
                 }
+                $log.debug('check actionList ',$scope.actionList);
             }
 
             function loading(){
@@ -1603,19 +1697,55 @@ angular.module('firstlife.directives', [])
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
         }
     }
-}]).directive('bufferedScroll', function ($parse) {
-    return function ($scope, element, attrs) {
-      var handler = $parse(attrs.bufferedScroll);
-        console.log('check infinite scroll ',$scope,element,attrs);
-      element.scroll(function (evt) {
-        var scrollTop    = element[0].scrollTop,
-            scrollHeight = element[0].scrollHeight,
-            offsetHeight = element[0].offsetHeight;
-        if (scrollTop === (scrollHeight - offsetHeight)) {
-          $scope.$apply(function () {
-            handler($scope);
-          });
-        }
-      });
-    };
-  });
+}]).directive('subscribersCounter',function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            id: '=id',
+            details: '=',
+            reset:'=reset'
+        },
+        templateUrl: '/templates/map-ui-template/subscribersCounter.html',
+        controller: ['$scope','$log','$filter','notificationFactory', function($scope,$log,$filter,notificationFactory){
+
+            initCounter();
+
+            
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyNotificationCounter){
+                    e.preventDestroyNotificationCounter = true;
+                    delete $scope;
+                }
+            });
+
+            $scope.$watch('id',function(e,old){
+                // cambia il marker
+                if(e != old){
+                    // init delle simple entities
+                    initCounter();
+                }
+            });
+            $scope.$watch('reset',function(e,old){
+                // cambia il marker
+                if(e && e != old){
+                    // init delle simple entities
+                    initCounter();
+                }
+            });
+
+
+            function initCounter(){
+                $scope.counter = 1;
+                notificationFactory.subscribers($scope.id).then(
+                    function(response){
+                        if(Array.isArray(response)){
+                            $scope.counter = response.length;
+                        }
+                    },
+                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                );
+            }
+        }]
+    }
+
+});

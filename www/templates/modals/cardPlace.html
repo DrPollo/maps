@@ -13,6 +13,7 @@
                     <span ng-if="!isMobile">{{icon.name |translate}}</span>
                 </span>
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members" reset="reset"></members-counter>
+                <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe" reset="reset"></subscribers-counter>
             </div>
             <div class="modal-subheader">
                 <span class="message">
@@ -65,7 +66,7 @@
         
         <entity-relations marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
         
-        <group-actions ng-if="infoPlace.marker.type_info.properties.members" actions="currentType.actions" id="infoPlace.marker.id" close="closeModal" label="currentType.name" reset="reset" ng-init="reset = false"></group-actions>
+        <entity-actions actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" reset="reset" ng-init="reset=false"></entity-actions>
         
         <members-list id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
         <relations-actions relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" reset="reset"></relations-actions>
