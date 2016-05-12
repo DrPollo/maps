@@ -45,7 +45,6 @@ angular.module('firstlife.factories')
         }
 
 
-        // Public API here
         return {
             markerCreate: function(feature){
                 return markerCreate(feature);
