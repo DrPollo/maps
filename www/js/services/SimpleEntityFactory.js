@@ -43,14 +43,14 @@ angular.module('firstlife.factories')
                     });
                 return deferred.promise;
             },
-            update: function(commentId,data,type){
+            update: function(entityId,data,type){
                 var deferred = $q.defer();
                 var token = MemoryFactory.getToken(),
                     user = MemoryFactory.readUser();
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
-                    url: base_url.concat('/').concat(types[type].url).concat("/").concat(entityId).concat("/update").concat(format),
+                    url: base_url.concat(types[type].url).concat("/").concat(entityId).concat("/update").concat(format),
                     method: 'PUT',
                     headers:{"Content-Type":"application/json", Authorization:token},
                     data:data

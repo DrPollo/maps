@@ -1283,7 +1283,7 @@ angular.module('firstlife.directives', [])
             owner: '=owner'
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
-        controller: ['$scope','$log','$filter','$ionicModal','$ionicLoading','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicLoading,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory){
+        controller: ['$scope','$log','$filter','$ionicModal','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory){
 
             $scope.config = myConfig;
             $scope.types = myConfig.types.simpleEntities;
@@ -1413,7 +1413,7 @@ angular.module('firstlife.directives', [])
                                         }
                                         actionReport(true);
                                     },
-                                    function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
+                                    function(response){$log.error('memers list, SimpleEntityFactory.delete, errore ',response);}
                                 );
                             } else {
                                 $log.log('cancellazione annullata');
@@ -1422,6 +1422,49 @@ angular.module('firstlife.directives', [])
                 };
 
                 $scope.showConfirm();
+            }
+
+
+
+            // aggiunge entita' semplice
+            $scope.edit = function(id,type,i){
+                var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
+                $log.debug('entity update ',id,type,i,index,$scope.groups[i].list[index]);
+                if(index > -1){
+                    $scope.publish = false;
+                    $scope.type = angular.copy($scope.types[type]);
+                    $scope.boxEntity = {};
+                    $scope.simpleEntity = angular.copy($scope.groups[i].list[index]);
+                    $scope.simpleEntity.type = $scope.type.key;
+                    $scope.simpleEntity.label = $scope.type.label;
+                    $scope.simpleEntity.contentKey = $scope.type.contentKey;
+                    $scope.simpleEntity.parent = $scope.id;
+                    $log.debug('entity update ',$scope.simpleEntity);
+                    openEditor();
+                }
+            }
+            $scope.update = function(){
+                var data = {};
+                for(var k in $scope.type.fields){
+                    data[k] = $scope.simpleEntity[k];
+                }
+                //data[$scope.type.idKey] = $scope.simpleEntity[$scope.type.idKey];
+                //data.type = $scope.simpleEntity.type;
+                
+                SimpleEntityFactory.update($scope.simpleEntity[$scope.type.idKey],data,$scope.simpleEntity.type).then(
+                    function(response){
+                        // cancello l'elemento dalla memoria locale
+                        $log.debug('check update ',$scope.groups);
+                        var i = $scope.groups.map(function(e){return e.key}).indexOf($scope.simpleEntity.type);
+                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf($scope.simpleEntity[$scope.type.idKey]);
+                        if(index > -1){
+                            $scope.groups[i].list.splice(index,1);
+                        }
+                        $scope.editor.hide();
+                        actionReport(true);
+                    },
+                    function(response){$log.error('memers list, SimpleEntityFactory.update, errore ',response);}
+                );
             }
 
             function actionReport(success){
@@ -1522,11 +1565,12 @@ angular.module('firstlife.directives', [])
              * 0) add: evento pulsante add
              * 1) initEntity: inizializzazione dell'entita'
              * 2) openEditor: apertura della modal
-             * 3) saveEntity: salvataggio dell'entita'
+             * 3) addEntity: salvataggio dell'entita'
              */
 
             // aggiunge entita' semplice
             $scope.add = function(key){
+                $scope.publish = true;
                 $scope.type = angular.copy($scope.types[key]);
                 initEntity($scope.type);
                 openEditor();
@@ -1571,7 +1615,6 @@ angular.module('firstlife.directives', [])
                         entity[entity.contentKey] = val;
                         sendEntity(entity);
                     }
-                    $ionicLoading.hide();
                 }
 
                 function sendEntity(entity){
@@ -1821,20 +1864,20 @@ angular.module('firstlife.directives', [])
                 since = new Date();
             }
 
-            
+
             $scope.login = function(){
                 $state.go('login', {action:'login'});
             };
 
-            
+
             $scope.show = function(){
                 $log.debug('show notifications ',$scope.news);
                 //apro modal
                 openModal();
             }
-            
-            
-            
+
+
+
             function openModal(){
                 $ionicModal.fromTemplateUrl('templates/modals/notifications.html', {
                     scope: $scope,
@@ -1867,8 +1910,8 @@ angular.module('firstlife.directives', [])
                 });
 
             };
-            
-            
+
+
         }]
     }
 

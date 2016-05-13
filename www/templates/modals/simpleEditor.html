@@ -33,7 +33,7 @@
 
                 <picture-loader ng-if="simpleEntity.type == 'image'" id="user.id" images="simpleEntity[simpleEntity.contentKey]"></picture-loader>
             </form>
-            
+            <div ng-if="simpleEntity.type != 'image'">{{simpleEntity | json}}</div>
         </div>
     </ion-content>
     <ion-footer-bar class="bar-light">
@@ -42,7 +42,8 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.form.$invalid">{{'PUBLISH'|translate}}</button>
+            <button ng-if="publish" class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.form.$invalid">{{'PUBLISH'|translate}}</button>
+            <button ng-if="!publish" class="button button-stable button-clear icon ion-checkmark-round" on-tap="update()" ng-disabled="boxEntity.form.$invalid">{{'UPDATE'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-modal-view>

@@ -13122,6 +13122,18 @@ ion-side-menu#side-menu {
   .button-bar-striped .button.selected {
     border-bottom: 4px solid; }
 
+#simpleEntityList .textCard .item-footer .button-box {
+  position: absolute;
+  top: 8px;
+  right: 16px; }
+  #simpleEntityList .textCard .item-footer .button-box button {
+    display: inline-block;
+    align-items: center;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 18px;
+    line-height: 32px; }
+
 .popover-backdrop.active {
   z-index: 11; }
   .popover-backdrop.active .popover-wrapper .popover .list .item {
