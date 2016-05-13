@@ -6,11 +6,101 @@ angular.module('firstlife.factories')
 
 
         var urlThings= myConfig.backend_things;
+        var urlNotifications= myConfig.backend_notifications;
         var format = config.format;
         
         var subscriptions = {};
         
         return {
+            //http://localhost:3095/api/Notifications/unread?user=34&since=2013-01-01 00:00:00&domain=1
+            get:function(){
+                var deferred = $q.defer();
+                var user = MemoryFactory.getUser();
+                // cache
+                if(!user){
+                    deferred.reject('not logged in');
+                }else{
+                    var urlId = urlNotifications.concat('/').concat("/unread").concat(format).concat('?user=').concat(user.id);
+                    var req = {
+                        url: urlId,
+                        method: 'GET',
+                        headers:{"Content-Type":"application/json"},
+                        data:true
+                    };
+                    $http(req).then(
+                        function(response){
+                            $log.debug('notificationFactory, get, response ',response);
+                            deferred.resolve(response.data);
+                        },
+                        function(response){
+                            $log.error('notificationFactory, get, response ',response);
+                            deferred.reject(response);
+                        }
+                    );
+                    }
+                return deferred.promise;
+            },
+            //http://localhost:3095/api/Notifications/consume
+            read:function(notificationId){
+                var deferred = $q.defer();
+                var user = MemoryFactory.getUser();
+                var token = MemoryFactory.getToken();
+                
+                // se non sono loggato rispondo errore
+                if(!user || !token){
+                    deferred.reject('not logged in');
+                }else{
+                    var urlId = urlNotifications.concat('/consume').concat(format);
+                    var req = {
+                        url: urlId,
+                        method: 'PUT',
+                        headers:{"Content-Type":"application/json", Authorization:token},
+                        data:{user_id:user.id,id:notificationId}
+                    };
+                    $http(req).then(
+                        function(response){
+                            $log.debug('EntityFactory, read, response ',response);
+                            deferred.resolve(response.data);
+                        },
+                        function(response){
+                            $log.error('EntityFactory, read, response ',response);
+                            deferred.reject(response);
+                        }
+                    );
+                }
+                return deferred.promise;
+            },
+            //http://localhost:3095/api/Notifications/consume_until
+            consume:function(){
+                var deferred = $q.defer();
+                var user = MemoryFactory.getUser();
+                var token = MemoryFactory.getToken();
+                
+                // se non sono loggato rispondo errore
+                if(!user || !token){
+                    deferred.reject('not logged in');
+                }else{
+                    var urlId = urlNotifications.concat('/consume_until').concat(format);
+                    var now = new Date();
+                    var req = {
+                        url: urlId,
+                        method: 'PUT',
+                        headers:{"Content-Type":"application/json", Authorization:token},
+                        data:{user_id:user.id,until:now.toISOString()}
+                    };
+                    $http(req).then(
+                        function(response){
+                            $log.debug('EntityFactory, consume, response ',response);
+                            deferred.resolve(response.data);
+                        },
+                        function(response){
+                            $log.error('EntityFactory, consume, response ',response);
+                            deferred.reject(response);
+                        }
+                    );
+                }
+                return deferred.promise;
+            },
             subscribers:function(markerId){
                 var deferred = $q.defer();
                 // cache

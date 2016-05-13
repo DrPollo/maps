@@ -782,6 +782,7 @@ angular.module('firstlife.config')
         myConfig.backend_places = url.concat('places');
         myConfig.backend_events = url.concat('events');
         myConfig.backend_things = url.concat('things');
+        myConfig.backend_notifications = url.concat('notifications');
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');
         myConfig.backend_users = url.concat('user');
