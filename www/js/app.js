@@ -198,7 +198,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         EXPLORE: 'Esplora',
         MAP:'Mappa',
         HELP: 'Supporto',
-        HELP_MESSAGE: 'Segnalazioni',
+        HELP_MESSAGE: 'Helpdesk',
         // modal filtri
         FILTERS: 'Filtri',
         // user form
@@ -376,6 +376,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         NOTHING_TO_SEE:'Nulla da vedere...',
         SUBSCRIBE:'Segui',
         UNSUBSCRIBE:'Non seguire',
+        NOTIFICATION_TITLE:'Notifiche'
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -410,7 +411,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         EXPLORE: 'Explore',
         MAP:'Map',
         HELP: 'Helpdesk',
-        HELP_MESSAGE: 'Tickets',
+        HELP_MESSAGE: 'Helpdesk',
         // modal filtri
         FILTERS: 'Filters',
         // user form
@@ -588,6 +589,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         NOTHING_TO_SEE:'Nothing to see...',
         SUBSCRIBE:'Follow',
         UNSUBSCRIBE:'Unfollow',
+        NOTIFICATION_TITLE:'Notifications'
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

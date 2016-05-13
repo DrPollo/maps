@@ -13,14 +13,19 @@ angular.module('firstlife.factories')
         
         return {
             //http://localhost:3095/api/Notifications/unread?user=34&since=2013-01-01 00:00:00&domain=1
-            get:function(){
+            get:function(since){
                 var deferred = $q.defer();
                 var user = MemoryFactory.getUser();
                 // cache
                 if(!user){
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlNotifications.concat('/').concat("/unread").concat(format).concat('?user=').concat(user.id);
+                    //var urlId = urlNotifications.concat("/unread").concat(format).concat('?user=').concat(user.id);
+                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/unread';
+                    urlId = urlId.concat('?user=').concat(user.id).concat('&domain=').concat(myConfig.project);
+                    // se e' impostato un tempo per la since
+                    if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
+                        
                     var req = {
                         url: urlId,
                         method: 'GET',
@@ -30,7 +35,7 @@ angular.module('firstlife.factories')
                     $http(req).then(
                         function(response){
                             $log.debug('notificationFactory, get, response ',response);
-                            deferred.resolve(response.data);
+                            deferred.resolve(response.data.notifications);
                         },
                         function(response){
                             $log.error('notificationFactory, get, response ',response);

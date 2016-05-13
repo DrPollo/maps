@@ -186,8 +186,8 @@ angular.module('firstlife.config')
             'default_language' : 'it',
             "disabled_color":20,
             'side_menu':[
-                {name:'Blog',url:'http://firstlife.org',icon:'ion-social-rss',lang:'it'},
-                {name:'Tutorials',url:'http://www.firstlife.org/category/guida-alluso_tutorial/',icon:'ion-help-circled',lang:'it'},
+                {name:'Sito web FirstLife',url:'http://firstlife.org',icon:'ion-social-rss',lang:'it'},
+                {name:"Guida all'uso",url:'http://www.firstlife.org/category/guida-alluso_tutorial/',icon:'ion-information',lang:'it'},
                 {name:'Fanpage',url:'https://www.facebook.com/firstlife.org/',icon:'ion-social-facebook',lang:'it'},
             ]
         },
@@ -298,7 +298,7 @@ angular.module('firstlife.config')
         },
         'behaviour':{
             // richiesto il login per la mappa
-            'is_login_required' : true,
+            'is_login_required' : false,
             // tempo per il ricaricamento della bb (idle)
             'bbox_timeout': 5000,
             // tempo di attesa dopo il movimento e prima della chiamata alla bbox

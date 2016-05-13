@@ -1,0 +1,5 @@
+<button ng-if="!user" class="button button-dark button-clear button-icon ion-log-in" on-tap="login()"></button>
+<button ng-if="user" class="button button-dark button-clear button-icon ion-ios-bell" 
+        on-tap="show()">
+     <span class="badge badge-positive linear-animation" ng-show="notifications.length > 0">!</span>
+</button>

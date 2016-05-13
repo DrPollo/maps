@@ -448,7 +448,7 @@ angular.module('firstlife.directives', [])
             $scope.markerChildren = {};
             $scope.query = '';
             $scope.limit = bunch;
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyWall){
                     e.preventDestroyWall = true;
@@ -456,7 +456,7 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-        
+
 
             $log.debug('inizio check wall');
             MapService.getMapBounds().then(
@@ -490,7 +490,7 @@ angular.module('firstlife.directives', [])
             function boundsFiltering(val){
                 return bounds.contains([val.lat,val.lng]);
             }
-            
+
 
             $scope.loadChildren = function(marker){
                 // caricamento dei child
@@ -592,8 +592,8 @@ angular.module('firstlife.directives', [])
             });
 
             init();
-            
-            
+
+
             function init(){
                 var promises = [];
                 if($scope.marker.entity_type == "FL_GROUPS"){
@@ -606,9 +606,9 @@ angular.module('firstlife.directives', [])
                         // init delle azioni
                         initActions();
                     });
-                
+
             }
-            
+
             // recupero i subscribers
             function initSubscriptions(){
                 return notificationFactory.subscribers($scope.marker.id).then(
@@ -619,12 +619,12 @@ angular.module('firstlife.directives', [])
                         $scope.subscriber = index < 0 ? false : true;
                     },
                     function(response){
-                         $log.error('check subscribers ',response);
+                        $log.error('check subscribers ',response);
                     }
                 );
-                
+
             }
-            
+
             // recupero i membri se e' un gruppo
             function initGroup(){
                 return groupsFactory.getMembers($scope.marker.id).then(
@@ -1450,8 +1450,6 @@ angular.module('firstlife.directives', [])
 
             $scope.openGallery = function(index,gallery){
 
-
-
                 $scope.slider.images = gallery;
                 if(!isNaN(index)){
                     $scope.slider.pointer = index;
@@ -1460,7 +1458,7 @@ angular.module('firstlife.directives', [])
                     scope: $scope,
                     animation: 'fade-in'
                 }).then(function(modal){
-                    console.log("gallery ",modal);
+                    console.log("gallery modal",modal);
                     $scope.gallery = modal; 
                     if(index > 0){
                         //$scope.galery.goToSlide(index);
@@ -1468,8 +1466,6 @@ angular.module('firstlife.directives', [])
                     $scope.gallery.show();
                 }, function(err){
                     $log.error("gallery error",err);
-                    console.log(err);
-                    deferred.reject(false);
                 });
 
                 $scope.gallery.close = function() {
@@ -1710,7 +1706,7 @@ angular.module('firstlife.directives', [])
 
             initCounter();
 
-            
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyNotificationCounter){
                     e.preventDestroyNotificationCounter = true;
@@ -1745,6 +1741,134 @@ angular.module('firstlife.directives', [])
                     function(response){$log.error('groupsFactory, getMembers, error ',response);}
                 );
             }
+        }]
+    }
+
+}).directive('userHandler',function(){
+    return {
+        restrict: 'E',
+        scope: {
+            check:'='
+        },
+        templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal, notificationFactory,MemoryFactory,myConfig){
+
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyUserHandler){
+                    e.preventDestroyUserHandler = true;
+                    $timeout.cancel(timer);
+                    delete $scope;
+                }
+            });
+
+            $scope.$watch('check',function(e,old){
+                if(e!=old){
+                    init();
+                }
+            })
+
+            // recupero l'utente
+
+            // tempo di polling
+            var MODAL_RELOAD_TIME = myConfig.behaviour.bbox_reload_time;
+            // variabile dove inserisco il timer per il polling
+            var timer = false;
+            // ultimo check
+            var since = false;
+            // funzione di polling
+            var polling = function(){ 
+                $log.log('check notifications!');
+                $timeout.cancel(timer);
+
+                // check notifiche
+                checkNotifications();
+
+                timer = $timeout(function(){
+                    // aggiorno i dettagli
+                    polling();
+                },MODAL_RELOAD_TIME);
+            };
+
+
+            init();
+
+            function init(){
+                $scope.user = MemoryFactory.getUser();
+                $log.debug('check user notification',$scope.user);
+                if($scope.user){
+                    initNotifications();
+                }else{
+                    $timeout.cancel(timer);
+                }
+            }
+
+            function initNotifications(){
+                $scope.highlights = 0;
+                $scope.news =[]; //['Mario asda qualcosa','Luigi lolla altro'];
+                polling();
+            }
+
+            function checkNotifications(){
+                notificationFactory.get(since).then(
+                    function(response){
+                        $log.debug('check get notfications ',response);
+                        // aggiungo le notifiche in testa
+                        $scope.news = response.concat(angular.copy($scope.news));
+                    },
+                    function(response){$log.error('check get notfications ',response);}
+                );
+                // aggiorno la since
+                since = new Date();
+            }
+
+            
+            $scope.login = function(){
+                $state.go('login', {action:'login'});
+            };
+
+            
+            $scope.show = function(){
+                $log.debug('show notifications ',$scope.news);
+                //apro modal
+                openModal();
+            }
+            
+            
+            
+            function openModal(){
+                $ionicModal.fromTemplateUrl('templates/modals/notifications.html', {
+                    scope: $scope,
+                    animation: 'fade-in'
+                }).then(function(modal){
+                    $scope.modal = modal; 
+                    $scope.modal.show();
+                }, function(err){
+                    $log.error("notification modal error",err);
+                });
+
+                $scope.close = function() {
+                    $log.debug('hide close');
+                    $scope.modal.hide();
+                };
+                // Cleanup the modal when we're done with it!
+                $scope.$on('$destroy', function(e) {
+                    $scope.modal.remove();
+                });
+                // Execute action on hide modal
+                $scope.$on('modal.hide', function(e) {
+                    // Execute action
+                });
+                // Execute action on remove modal
+                $scope.$on('modal.removed', function() {
+                    // Execute action
+                });
+                $scope.$on('modal.shown', function() {
+                    //$log.log('Notification modal is shown!');
+                });
+
+            };
+            
+            
         }]
     }
 

@@ -9,7 +9,8 @@
             <span class="separatore"></span>
             <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
             <span class="separatore"></span>
-            <button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>
+            <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
+            <user-handler check="isLoggedIn"></user-handler>
         </div>
         <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
         <search-cards params="filterConditions"></search-cards>
