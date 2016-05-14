@@ -137,7 +137,7 @@ angular.module('firstlife.config')
                  }
                 },
                 // commenti
-                {name:'COMMENT_NAME',id:3,icon:'ion-quote',slug:'comment',url:'comments',key:'FL_COMMENTS',index:9,
+                {name:'COMMENT_NAME',id:3,icon:'ion-quote',slug:'news',url:'news',key:'FL_COMMENTS',index:9,
                  properties:{
                      "comment_of":{ key: 'comment_of', label: "COMMENT_OF_LABEL", placeholder:"COMMENT_OF_PLACEHOLDER", default:null},
                      "message_text":{key:'message_text', label: "MESSAGE_LABEL", placeholder: "MESSAGE_PLACEHOLDER", default:"",required:true},

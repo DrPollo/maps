@@ -141,8 +141,8 @@ angular.module('firstlife.factories')
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
                 $http(req).then(
                     function(response) {
-                        //$log.debug("entityFactory, create, get del risultato ",response);
-                        getMarker(response.id, true).then(
+                        $log.debug("entityFactory, create, get del risultato ",response);
+                        getMarker(response.data.id, true).then(
                             function(marker){
                                 deferred.resolve(marker);
                             },
