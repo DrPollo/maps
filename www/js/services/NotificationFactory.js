@@ -93,7 +93,7 @@ angular.module('firstlife.factories')
                         url: urlId,
                         method: 'PUT',
                         headers:{"Content-Type":"application/json", Authorization:token},
-                        data:{user:user.id,until:now.toISOString(),domain:myConfig.project}
+                        data:{user_id:user.id,until:now.toISOString(),domain:myConfig.project}
                     };
                     $http(req).then(
                         function(response){

@@ -384,9 +384,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         THING_UPDATED:"ha aggiornato",
         ARTICLE_ADDED:"ha aggiunto approfondimento a",
         ARTICLE_REMOVED:"ha rimosso approfondimento da",
-        DESCRIPTIONS_UPDATED:"ha aggiunto descrizione a ",
-        COMMENTS_UPDATED:"ha aggiunto commento a",
-        IMAGES_UPDATED:"ha aggiunto immagine a",
+        DESCRIPTIONS_ADDED:"ha aggiunto descrizione a",
+        DESCRIPTIONS_UPDATED:"ha modificato descrizione di",
+        DESCRIPTIONS_DELETED:"ha cancellato descrizione da",
+        COMMENTS_ADDED:"ha aggiunto commento a",
+        COMMENTS_UPDATED:"ha modificato commento di",
+        COMMENTS_DELETED:"ha cancellato commento da",
+        IMAGES_ADDED:"ha aggiunto immagine a",
+        IMAGES_UPDATED:"ha modificato immagine di",
+        IMAGES_DELETED:"ha cancellato immagine da",
         LAST_CHECK:"Aggiornato alle"
     });
     $translateProvider.translations('en', {
@@ -608,9 +614,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         THING_UPDATED:'updated',
         ARTICLE_ADDED:'insight added to',
         ARTICLE_REMOVED:'insight removed from',
-        DESCRIPTIONS_UPDATED:'added description to',
-        COMMENTS_UPDATED:'added comment to',
-        IMAGES_UPDATED:'added image to',
+        DESCRIPTIONS_ADDED:"added description to",
+        DESCRIPTIONS_UPDATED:'updated description to',
+        DESCRIPTIONS_DELETED:'deleted description from',
+        COMMENTS_ADDED:"added comment to",
+        COMMENTS_UPDATED:'updated comment to',
+        COMMENTS_DELETED:"deleted comment fom",
+        IMAGES_ADDED:"added image to",
+        IMAGES_UPDATED:'updatad image to',
+        IMAGES_DELETED:"deleted image from",
         LAST_CHECK:"Updated at"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
