@@ -55,7 +55,8 @@ angular.module('firstlife.factories')
                 if(!user || !token){
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlNotifications.concat('/consume').concat(format);
+                    //var urlId = urlNotifications.concat('/consume').concat(format);
+                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/consume';
                     var req = {
                         url: urlId,
                         method: 'PUT',
@@ -85,7 +86,8 @@ angular.module('firstlife.factories')
                 if(!user || !token){
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlNotifications.concat('/consume_until').concat(format);
+                    //var urlId = urlNotifications.concat('/consume_until').concat(format);
+                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/consume_until';
                     var now = new Date();
                     var req = {
                         url: urlId,

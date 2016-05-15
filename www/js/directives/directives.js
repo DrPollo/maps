@@ -1429,7 +1429,6 @@ angular.module('firstlife.directives', [])
             // aggiunge entita' semplice
             $scope.edit = function(id,type,i){
                 var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
-                $log.debug('entity update ',id,type,i,index,$scope.groups[i].list[index]);
                 if(index > -1){
                     $scope.publish = false;
                     $scope.type = angular.copy($scope.types[type]);
@@ -1439,7 +1438,6 @@ angular.module('firstlife.directives', [])
                     $scope.simpleEntity.label = $scope.type.label;
                     $scope.simpleEntity.contentKey = $scope.type.contentKey;
                     $scope.simpleEntity.parent = $scope.id;
-                    $log.debug('entity update ',$scope.simpleEntity);
                     openEditor();
                 }
             }
@@ -1454,7 +1452,6 @@ angular.module('firstlife.directives', [])
                 SimpleEntityFactory.update($scope.simpleEntity[$scope.type.idKey],data,$scope.simpleEntity.type).then(
                     function(response){
                         // cancello l'elemento dalla memoria locale
-                        $log.debug('check update ',$scope.groups);
                         var i = $scope.groups.map(function(e){return e.key}).indexOf($scope.simpleEntity.type);
                         var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf($scope.simpleEntity[$scope.type.idKey]);
                         if(index > -1){
@@ -1794,7 +1791,7 @@ angular.module('firstlife.directives', [])
             check:'='
         },
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
-        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal, notificationFactory,MemoryFactory,myConfig){
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, notificationFactory,MemoryFactory,myConfig){
 
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){
@@ -1818,6 +1815,8 @@ angular.module('firstlife.directives', [])
             var timer = false;
             // ultimo check
             var since = false;
+            // check novita'
+            var now = new Date();
             // funzione di polling
             var polling = function(){ 
                 $log.log('check notifications!');
@@ -1837,6 +1836,7 @@ angular.module('firstlife.directives', [])
 
             function init(){
                 $scope.user = MemoryFactory.getUser();
+                $scope.highlight = false;
                 $log.debug('check user notification',$scope.user);
                 if($scope.user){
                     initNotifications();
@@ -1847,7 +1847,7 @@ angular.module('firstlife.directives', [])
 
             function initNotifications(){
                 $scope.highlights = 0;
-                $scope.news =[]; //['Mario asda qualcosa','Luigi lolla altro'];
+                $scope.news =[];
                 polling();
             }
 
@@ -1855,8 +1855,23 @@ angular.module('firstlife.directives', [])
                 notificationFactory.get(since).then(
                     function(response){
                         $log.debug('check get notfications ',response);
-                        // aggiungo le notifiche in testa
-                        $scope.news = response.concat(angular.copy($scope.news));
+                        // se c'e' qualcosa da leggere segnalo
+                        if(response.length > 0)
+                            $scope.highlight = true;
+                        // segno da leggere!
+                        for(var i = 0; i < response.length; i++){
+                            // se la notifica e' stata generata dopo il caricamento della pagina
+                            if(now <= new Date(response[i].timestamp)){
+                                // highlight della notizia
+                                response[i].new = true;
+                            }
+                            // indice della notizia per controllo duplicati
+                            var j = $scope.news.map(function(e){return e.id;}).indexOf(response[i].id);
+                            // se non gia' presente aggiungo
+                            if(j < 0){
+                                $scope.news.push(response[i]);
+                            }
+                        }
                     },
                     function(response){$log.error('check get notfications ',response);}
                 );
@@ -1874,38 +1889,63 @@ angular.module('firstlife.directives', [])
                 $log.debug('show notifications ',$scope.news);
                 //apro modal
                 openModal();
+                $scope.highlight = false;
             }
 
+            $scope.go = function(notification){
+                $log.debug('check notification ',notification);
+                // notifica letta
+                notification.new = false;
+                // chiudo la modal
+                $scope.close();
+                // cambio paramentro search
+                $location.search('entity',notification.object);
+            }
 
+            $scope.consume = function(notification){
+                var i = $scope.news.map(function(e){return e.id}).indexOf(notification.id);
+                if(i > -1)
+                    $scope.news.splice(i,1);
+                
+                // consume della notifica
+                notificationFactory.read(notification.id).then(
+                    function(response){
+                    },
+                    function(response){
+                        $log.error('impossibile cancellare la notifica',response);
+                    }
+                );
+            }
 
             function openModal(){
                 $ionicModal.fromTemplateUrl('templates/modals/notifications.html', {
                     scope: $scope,
                     animation: 'fade-in'
                 }).then(function(modal){
-                    $scope.modal = modal; 
-                    $scope.modal.show();
+                    $scope.notifications = modal; 
+                    $scope.notifications.show();
                 }, function(err){
                     $log.error("notification modal error",err);
                 });
 
                 $scope.close = function() {
                     $log.debug('hide close');
-                    $scope.modal.hide();
+                    $scope.notifications.hide();
                 };
                 // Cleanup the modal when we're done with it!
-                $scope.$on('$destroy', function(e) {
-                    $scope.modal.remove();
+                $scope.$on('$destroy', function() {
+                    $scope.notifications.remove();
                 });
                 // Execute action on hide modal
-                $scope.$on('modal.hide', function(e) {
+                $scope.$on('notifications.hidden', function() {
                     // Execute action
+                    $log.debug('chiuse le notifiche');
                 });
                 // Execute action on remove modal
-                $scope.$on('modal.removed', function() {
+                $scope.$on('notifications.removed', function() {
                     // Execute action
                 });
-                $scope.$on('modal.shown', function() {
+                $scope.$on('notifications.shown', function() {
                     //$log.log('Notification modal is shown!');
                 });
 

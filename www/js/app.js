@@ -376,7 +376,17 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         NOTHING_TO_SEE:'Nulla da vedere...',
         SUBSCRIBE:'Segui',
         UNSUBSCRIBE:'Non seguire',
-        NOTIFICATION_TITLE:'Notifiche'
+        NOTIFICATION_TITLE:'Notifiche',
+        CHILD_ADDED:"aggiunto contenuto a",
+        CHILD_REMOVED:"rimosso contenuto da",
+        GROUP_ELEMENT_ADDED:"aggiunto al gruppo",
+        GROUP_ELEMENT_REMOVED:"rimosso dal gruppo",
+        THING_UPDATED:"ha aggiornato",
+        ARTICLE_ADDED:"ha aggiunto approfondimento a",
+        ARTICLE_REMOVED:"ha rimosso approfondimento da",
+        DESCRIPTIONS_UPDATED:"ha aggiunto descrizione a ",
+        COMMENTS_UPDATED:"ha aggiunto commento a",
+        IMAGES_UPDATED:"ha aggiunto immagine a",
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -589,7 +599,17 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         NOTHING_TO_SEE:'Nothing to see...',
         SUBSCRIBE:'Follow',
         UNSUBSCRIBE:'Unfollow',
-        NOTIFICATION_TITLE:'Notifications'
+        NOTIFICATION_TITLE:'Notifications',
+        CHILD_ADDED:'added to',
+        CHILD_REMOVED:'removed from',
+        GROUP_ELEMENT_ADDED:'added to group',
+        GROUP_ELEMENT_REMOVED:'remouved from group',
+        THING_UPDATED:'updated',
+        ARTICLE_ADDED:'insight added to',
+        ARTICLE_REMOVED:'insight removed from',
+        DESCRIPTIONS_UPDATED:'added description to',
+        COMMENTS_UPDATED:'added comment to',
+        IMAGES_UPDATED:'added image to',
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

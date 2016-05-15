@@ -13226,6 +13226,8 @@ ion-side-menu#side-menu {
           min-width: 14px;
           height: 14px;
           font-size: 0.8em; }
+      .maps-view #mapHeader #omnibox button:hover, .maps-view #mapHeader #omnibox button:focus {
+        color: #FC4A00; }
       .maps-view #mapHeader #omnibox button:before {
         font-size: 1.2em; }
       .maps-view #mapHeader #omnibox * {
@@ -13398,11 +13400,33 @@ ion-side-menu#side-menu {
     right: 8px;
     display: inline-block;
     z-index: 2000; }
-    .maps-view #map-action-menu #bottom-bar-toggler #time-box .button {
+    .maps-view #map-action-menu #bottom-bar-toggler #time-box item.button {
       border: 1px solid #b2b2b2;
       background: #fff;
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
       min-width: 46px; }
+
+#notifications .notification {
+  line-height: 32px;
+  padding: 8px 16px; }
+  #notifications .notification .username {
+    font-weight: 700; }
+  #notifications .notification .action {
+    font-style: italic; }
+  #notifications .notification .link {
+    text-decoration: underline; }
+  #notifications .notification button {
+    position: absolute;
+    right: 8px;
+    top: 0px;
+    width: 52px;
+    height: 52px;
+    color: #999; }
+  #notifications .notification button:hover, #notifications .notification button:focus {
+    color: #333; }
+
+#notifications .notification.highlight {
+  font-weight: 700; }
 
 @-webkit-keyframes glow {
   from {

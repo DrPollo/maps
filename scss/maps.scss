@@ -101,6 +101,9 @@
                     font-size: 0.8em;
                 }
             }
+            button:hover,button:focus {
+                color: $positive;
+            }
             button:before{
                 font-size: 1.2em;
             }
@@ -329,7 +332,7 @@
 
             #time-box{
 
-                .button{
+                item.button{
                     border: 1px solid #b2b2b2;
                     background: #fff;
                     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
@@ -342,6 +345,37 @@
     #bottom-bar{}
 }
 
+
+#notifications {
+    .notification{
+        line-height: 32px;
+        padding: 8px 16px;
+        .username {
+            font-weight: 700;
+        }
+        .action {
+            font-style: italic;
+            //color: $mediumDark;
+        }
+        .link {
+            text-decoration: underline;
+        }
+        button{
+            position: absolute;
+            right: 8px;
+            top:0px;
+            width: 52px;
+            height: 52px;
+            color: $lighterDark;
+        }
+        button:hover, button:focus{
+            color: $dark;
+        }
+    }
+    .notification.highlight{
+        font-weight: 700;
+    }
+}
 
 @-webkit-keyframes glow {
     from { -webkit-transform: rotate(-45deg) scale(1); }
