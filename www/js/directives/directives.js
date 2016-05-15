@@ -1817,6 +1817,8 @@ angular.module('firstlife.directives', [])
             var since = false;
             // check novita'
             var now = new Date();
+            // last check
+            $scope.last = new Date();
             // funzione di polling
             var polling = function(){ 
                 $log.log('check notifications!');
@@ -1854,6 +1856,7 @@ angular.module('firstlife.directives', [])
             function checkNotifications(){
                 notificationFactory.get(since).then(
                     function(response){
+                        $scope.last = new Date();
                         $log.debug('check get notfications ',response);
                         // se c'e' qualcosa da leggere segnalo
                         if(response.length > 0)
@@ -1900,6 +1903,19 @@ angular.module('firstlife.directives', [])
                 $scope.close();
                 // cambio paramentro search
                 $location.search('entity',notification.object);
+            }
+            
+            $scope.clear = function(){
+                // consume delle notifiche
+                $scope.news = [];
+                notificationFactory.consume($scope.last).then(
+                    function(response){
+                    },
+                    function(response){
+                        $log.error('impossibile cancellare le notifiche',response);
+                    }
+                );
+                
             }
 
             $scope.consume = function(notification){

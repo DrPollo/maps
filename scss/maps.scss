@@ -347,6 +347,19 @@
 
 
 #notifications {
+    button{
+        color: $lighterDark;
+    }
+    button:hover, button:focus{
+        color: $dark;
+    }
+    .clear {
+        button{
+            position: absolute;
+            right: 16px;
+            top: 0px;
+        }
+    }
     .notification{
         line-height: 32px;
         padding: 8px 16px;
@@ -366,10 +379,6 @@
             top:0px;
             width: 52px;
             height: 52px;
-            color: $lighterDark;
-        }
-        button:hover, button:focus{
-            color: $dark;
         }
     }
     .notification.highlight{

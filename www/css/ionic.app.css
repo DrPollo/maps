@@ -13406,6 +13406,17 @@ ion-side-menu#side-menu {
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
       min-width: 46px; }
 
+#notifications button {
+  color: #999; }
+
+#notifications button:hover, #notifications button:focus {
+  color: #333; }
+
+#notifications .clear button {
+  position: absolute;
+  right: 16px;
+  top: 0px; }
+
 #notifications .notification {
   line-height: 32px;
   padding: 8px 16px; }
@@ -13420,10 +13431,7 @@ ion-side-menu#side-menu {
     right: 8px;
     top: 0px;
     width: 52px;
-    height: 52px;
-    color: #999; }
-  #notifications .notification button:hover, #notifications .notification button:focus {
-    color: #333; }
+    height: 52px; }
 
 #notifications .notification.highlight {
   font-weight: 700; }

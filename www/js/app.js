@@ -387,6 +387,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DESCRIPTIONS_UPDATED:"ha aggiunto descrizione a ",
         COMMENTS_UPDATED:"ha aggiunto commento a",
         IMAGES_UPDATED:"ha aggiunto immagine a",
+        LAST_CHECK:"Aggiornato alle"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -610,6 +611,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DESCRIPTIONS_UPDATED:'added description to',
         COMMENTS_UPDATED:'added comment to',
         IMAGES_UPDATED:'added image to',
+        LAST_CHECK:"Updated at"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
