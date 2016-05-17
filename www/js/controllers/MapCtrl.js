@@ -352,6 +352,7 @@ angular.module('firstlife.controllers')
                 function check4embed(e,old){
                     // se il parametro e' settato
                     if(e.embed){
+                        $log.debug('modalita embed',e);
                         switch(e.embed){
                             // visualizzatore vuoto per mappa embed
                             case 'viewer':
