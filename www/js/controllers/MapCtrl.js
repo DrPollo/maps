@@ -136,6 +136,8 @@ angular.module('firstlife.controllers')
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
 
+            check4embed($location.search());
+            
             $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
                 // check autenticazione
@@ -289,7 +291,7 @@ angular.module('firstlife.controllers')
                     // controllo i filtri custom
                     check4customFilters(e,old);
                     // controlla il parametro embed per il visualizzatore
-                    check4embed(e,old);
+                    check4embed(e);
                 }
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
@@ -348,24 +350,7 @@ angular.module('firstlife.controllers')
                     }
 
                 }
-                // controllo parametro embed per setup del viewer
-                function check4embed(e,old){
-                    // se il parametro e' settato
-                    if(e.embed){
-                        $log.debug('modalita embed',e);
-                        switch(e.embed){
-                            // visualizzatore vuoto per mappa embed
-                            case 'viewer':
-                                // togli pulsantiera e timeline
-                                $scope.viewer = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }else{
-                        $scope.viewer = false;
-                    }
-                }
+                
             },
             true);
 
@@ -1721,6 +1706,26 @@ angular.module('firstlife.controllers')
         }
 
 
+        // controllo parametro embed per setup del viewer
+        function check4embed(e){
+            // se il parametro e' settato
+            if(e.embed){
+                $log.debug('modalita embed',e);
+                switch(e.embed){
+                    // visualizzatore vuoto per mappa embed
+                    case 'viewer':
+                        // togli pulsantiera e timeline
+                        $scope.viewer = true;
+                        break;
+                    default:
+                        break;
+                }
+            }else{
+                $scope.viewer = false;
+            }
+        }
+        
+        
     }]).run(function(MapService,myConfig,$timeout,$rootScope){
 
     self.map = MapService.initMap();
