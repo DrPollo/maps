@@ -1,5 +1,5 @@
 <ion-view class="maps-view">
-    <div id="mapHeader">
+    <div id="mapHeader" ng-if="!viewer">
         <div id="omnibox">
             <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
             <span class="separatore"></span>
@@ -34,7 +34,7 @@
 
     <!-- barra filtri -->
 
-    <div id="bottom-bar">
+    <div id="bottom-bar" ng-if="!viewer">
         <!-- action buttons -->
         <div id="map-action-menu">
             <div class="flex-container flex-container-style fixed-height">

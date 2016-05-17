@@ -197,6 +197,9 @@ angular.module('firstlife.controllers')
                 }
             }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
 
+            
+            
+            
             // riattivo il listner
             //self.watchSearchEnabled = true;
         });
@@ -285,6 +288,8 @@ angular.module('firstlife.controllers')
                     check4entity(e,old);
                     // controllo i filtri custom
                     check4customFilters(e,old);
+                    // controlla il parametro embed per il visualizzatore
+                    check4embed(e,old);
                 }
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
@@ -342,6 +347,23 @@ angular.module('firstlife.controllers')
                         }
                     }
 
+                }
+                // controllo parametro embed per setup del viewer
+                function check4embed(e,old){
+                    // se il parametro e' settato
+                    if(e.embed){
+                        switch(e.embed){
+                            // visualizzatore vuoto per mappa embed
+                            case 'viewer':
+                                // togli pulsantiera e timeline
+                                $scope.viewer = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }else{
+                        $scope.viewer = false;
+                    }
                 }
             },
             true);

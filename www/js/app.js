@@ -97,7 +97,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         controller: 'AppCtrl as app'
     })
         .state('app.maps', {
-        url: "/maps?zoom&lat&lng&entity&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+        url: "/maps?zoom&lat&lng&entity&embed"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false, 
         views: {
             'menuContent': {
