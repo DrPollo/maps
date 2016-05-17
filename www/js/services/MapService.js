@@ -408,6 +408,13 @@ angular.module('firstlife.services')
                 // tempo impostato sul tempo correntes
                 var hash=new Date().getTime();
 
+                if(!self.filters.time){
+                    self.filters.time = {
+                        from: self.config.map.time_from ,
+                        to: self.config.map.time_to
+                    };
+                }
+                
                 var from = self.filters.time.from,
                     to = self.filters.time.to;
 
