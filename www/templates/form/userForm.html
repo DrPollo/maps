@@ -16,7 +16,7 @@
         <form name="user_form" class="user-form" novalidate>
             <ion-list>
                 <label class="item item-divider">{{'PROFILE'|translate}}</label>
-                <label ng-if="user.type == 1" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.first_name.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
+                <label ng-if="user.type == 1" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.firstName.$invalid, 'no-error' : !user_form.firstName.$invalid }" required>
                     <span class="input-label">{{'NAME'|translate}}</span>
                     <input type="text" placeholder="{{'NAME'|translate}}" name="firstName" ng-model="user.first_name" ng-readonly="!editable" required>
                 </label>

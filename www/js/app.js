@@ -347,7 +347,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         'ACTIONS PLACE_NAME':'Azioni Luogo',
         'ACTIONS EVENT_NAME':'Azioni Evento',
         'ACTIONS COMMENT_NAME':'Azioni News',
-        'ACTIONS ARTICLE_NAME':'Azioni Approfondimento',
+        'ACTIONS POST_NAME':'Azioni Approfondimento',
         ADD_CHILDREN:'Aggiungi a',
         MANAGE_USERS:'Gestisci membri',
         GROUP_MEMBERS:'Membri',
@@ -393,7 +393,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         IMAGES_ADDED:"ha aggiunto immagine a",
         IMAGES_UPDATED:"ha modificato immagine di",
         IMAGES_DELETED:"ha cancellato immagine da",
-        LAST_CHECK:"Aggiornato alle"
+        LAST_CHECK:"Aggiornato alle",
+        GROUP_OF_LABEL:"Gruppo di",
+        GROUP_OF_PLACEHOLDER:"Gruppo di",
+        REL_GROUP_OF_LABEL:"Ospitato in",
+        REL_GROUP_OF_CHILD_LABEL:"Ospita"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -577,7 +581,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         'ACTIONS PLACE_NAME':'Place actions',
         'ACTIONS EVENT_NAME':'Event actions',
         'ACTIONS COMMENT_NAME':'News actions',
-        'ACTIONS ARTICLE_NAME':'Insight actions',
+        'ACTIONS POST_NAME':'Insight actions',
         ADD_CHILDREN:'Add to',
         MANAGE_USERS:'Manage members',
         GROUP_MEMBERS:'Members',
@@ -623,7 +627,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         IMAGES_ADDED:"added image to",
         IMAGES_UPDATED:'updatad image to',
         IMAGES_DELETED:"deleted image from",
-        LAST_CHECK:"Updated at"
+        LAST_CHECK:"Updated at",
+        GROUP_OF_LABEL:"Group of",
+        GROUP_OF_PLACEHOLDER:"Group of",
+        REL_GROUP_OF_LABEL:"Hosted in",
+        REL_GROUP_OF_CHILD_LABEL:"Hosting",
+        
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
