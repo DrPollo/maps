@@ -101,7 +101,8 @@ angular.module('firstlife.config')
                      'FL_PLACES':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
                      'FL_EVENTS':{slug:'location',field:'location',label:'REL_LOCATION_LABEL',childrenLabel:'REL_LOCATION_CHILD_LABEL',bounded:true},
                      'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL',bounded:true},
-                     'FL_COMMENTS':{slug:'comment_of',field:'comment_of',label:'REL_COMMENT_OF_LABEL',childrenLabel:'REL_COMMENT_OF_CHILD_LABEL',bounded:true}
+                     'FL_COMMENTS':{slug:'comment_of',field:'comment_of',label:'REL_COMMENT_OF_LABEL',childrenLabel:'REL_COMMENT_OF_CHILD_LABEL',bounded:true},
+                     'FL_GROUPS':{slug:'group_of',field:'group_of',label:'REL_GROUP_OF_LABEL',childrenLabel:'REL_GROUP_OF_CHILD_LABEL',bounded:true}
                  }
                 },
                 // eventi
@@ -121,12 +122,14 @@ angular.module('firstlife.config')
                  },
                  relations:{
                      'FL_EVENTS':{slug:'parent_id',field:'parent_id',label:'REL_PARENT_ID_LABEL',childrenLabel:'REL_PARENT_ID_CHILD_LABEL'},
-                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL',bounded:true}
+                     'FL_ARTICLES':{slug:'article_of',field:'article_of',label:'REL_ARTICLE_OF_LABEL',childrenLabel:'REL_ARTICLE_OF_CHILD_LABEL',bounded:true},
+                     'FL_GROUPS':{slug:'group_of',field:'group_of',label:'REL_GROUP_OF_LABEL',childrenLabel:'REL_GROUP_OF_CHILD_LABEL',bounded:true}
                  }
                 },
                 // articoli
                 {name:'POST_NAME',id:4,icon:'ion-clipboard',slug:'article',url:'articles',key:'FL_ARTICLES',index:7,
                  properties:{
+                     'parent_id':{ key: 'parent_id', label: "PARENT_POST_LABEL", placeholder:"PARENT_POST_PLACEHOLDER", default:null},
                      'article_of':{ key: 'article_of', label: "ARTICLE_OF_LABEL", placeholder:"ARTICLE_OF_PLACEHOLDER", default:null},
                      'text':{key:'text',label:'TEXT_LABEL',placeholder:"TEXT_PLACEHOLDER",required:true, default:""},
                      'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,advanced:true,is_editable:true},
@@ -149,6 +152,8 @@ angular.module('firstlife.config')
                 // gruppi
                 {name:'GROUPS_NAME',id:5,icon:'ion-flag',slug:'group',url:'groups',key:'FL_GROUPS',index:11,
                  properties:{
+                     'parent_id':{ key: 'parent_id', label: "PARENT_GROUP_LABEL", placeholder:"PARENT_GROUP_PLACEHOLDER", default:null},
+                     "group_of":{ key: 'group_of', label: "GROUP_OF_LABEL", placeholder:"GROUP_OF_PLACEHOLDER", default:null},
                      //'description':{ key: 'description', label: 'DESCRIPTION', placeholder: 'DESCRIPTION', required:true, default:""},
                      'valid_from':{ key: 'valid_from', label: "STARTDATE_LABEL",placeholder:"STARTDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:true,advanced:true},
                      'valid_to':{ key: 'valid_to', label: "ENDDATE_LABEL",placeholder:"ENDDATE_PLACEHOLDER", default:new Date(),required:true,is_editable:false,is_editable:true,advanced:true},
