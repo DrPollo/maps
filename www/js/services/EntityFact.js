@@ -480,6 +480,7 @@ angular.module('firstlife.factories')
                 parent_id: entity.properties.parent_id ? entity.properties.parent_id : null,
                 parent: {},
                 "group_id":entity.properties.group_id ? entity.properties.group_id : null,
+                "group_of":entity.properties.group_of ? entity.properties.group_of : null,
                 location: entity.properties.location ? entity.properties.location : null,
                 "article_of": entity.properties['article_of'] ? entity.properties['article_of'] : null,
                 "comment_of": entity.properties['comment_of'] ? entity.properties['comment_of'] : null,
