@@ -3,7 +3,7 @@ angular.module('firstlife.factories')
         
         var self = this;
         self.config = myConfig;
-
+        var baseUrl = myConfig.base_domain;
 
         var urlThings= myConfig.backend_things;
         var urlNotifications= myConfig.backend_notifications;
@@ -18,10 +18,11 @@ angular.module('firstlife.factories')
                 var user = MemoryFactory.getUser();
                 // cache
                 if(!user){
+                    $log.error('user error');
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat("/unread").concat(format).concat('?user=').concat(user.id);
-                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/unread';
+                    var urlId = baseUrl.concat('api/notifications/unread');
                     urlId = urlId.concat('?user=').concat(user.id).concat('&domain=').concat(myConfig.project);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
@@ -56,7 +57,7 @@ angular.module('firstlife.factories')
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat('/consume').concat(format);
-                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/consume';
+                    var urlId = baseUrl.concat('api/notifications/consume');
                     var req = {
                         url: urlId,
                         method: 'PUT',
@@ -87,7 +88,7 @@ angular.module('firstlife.factories')
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat('/consume_until').concat(format);
-                    var urlId = 'http://firstlife-dev.di.unito.it:3095/api/notifications/consume_until';
+                    var urlId = baseUrl.concat('api/notifications/consume_until');
                     var now = new Date();
                     var req = {
                         url: urlId,
