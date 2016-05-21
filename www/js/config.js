@@ -4,7 +4,7 @@ angular.module('firstlife.config')
     'dev': false,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
     'project': 9,
-    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
+    'api_base_domain' : 'firstlife-www.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.firstlife.di.unito.it/',
@@ -785,7 +785,7 @@ angular.module('firstlife.config')
 
         var url = "";
         url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/domains/").concat(myConfig.domain_id).concat("/");
-
+        myConfig.base_domain = ssl.concat(myConfig.api_base_domain);
         myConfig.domain_signature = url;
         myConfig.backend_places = url.concat('places');
         myConfig.backend_events = url.concat('events');
