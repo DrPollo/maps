@@ -10,12 +10,23 @@ var templateCache = require('gulp-angular-templatecache');
 var gulpNgConfig = require('gulp-ng-config');
 var override = require('json-override');
 var fs = require('fs');
+var fse = require('fs-extra')
 
 var paths = {
     sass: ['./scss/**/*.scss'],
     templatecache: ['./www/templates/ng-templates/**/*.html']
 };
 
+gulp.task('deploy',['mergeconfig','setupenv','buildconfig','move']);
+
+gulp.task('move',function(){
+    var dir = 'dist'
+    if(gutil.env.domain)
+        dir = '../'+gutil.env.domain;
+    
+    fse.copySync('www', dir, {mkdirp: true,clobber:true}, function(err) {console.log('move clent ',err ? err : 'ok!');}); 
+    console.log("move file ok!");
+});
 
 gulp.task('configsetup',['mergeconfig','setupenv','buildconfig']);
 
