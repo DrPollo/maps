@@ -29,11 +29,11 @@ gulp.task('setupenv',function(){
         console.log('env test');
         config.myConfig.api_base_domain = "api.test.firstlife.di.unito.it/";
         config.myConfig.dev = false;
-    }else if(gutil.env.test){
+    }else if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
     }
-    console.log('setup env host ',config.myConfig.api_base_domain);
+    console.log('setup env host: ',config.myConfig.api_base_domain);
     fs.writeFile('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('setup env: ',e ? e : 'ok!');}); 
 });
 
