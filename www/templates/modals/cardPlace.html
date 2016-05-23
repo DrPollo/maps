@@ -17,7 +17,7 @@
             </div>
             <div class="modal-subheader">
                 <span class="message">
-                    {{'LAST_UPDATE_MESSAGE'|translate}} {{infoPlace.marker.last_update | date:'dd/MM/yyyy (hh:mm)'}} 
+                    {{'LAST_UPDATE_MESSAGE'|translate}} {{infoPlace.marker.last_update | date:'dd/MM/yyyy (HH:mm)'}} 
                     <span ng-if="infoPlace.marker.display_name">
                         {{'BY_USER'|translate}} <span class="username">{{infoPlace.marker.display_name}}</span> 
                     </span> 
@@ -25,9 +25,9 @@
             </div>
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="content">
                 <i class="icon ion-android-time"></i>
-                <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (hh:mm)'}}</span>
+                <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (HH:mm)'}}</span>
                 <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
-                <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (hh:mm)'}}</span>
+                <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (HH:mm)'}}</span>
             </div>
             <div ng-if="infoPlace.marker.text" class="content modal-content text-field">
                 {{infoPlace.marker.text}}

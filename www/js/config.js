@@ -1,10 +1,10 @@
 angular.module('firstlife.config')
     .constant('myConfig', {
     // modalita' dev o produzione
-    'dev': false,
+    'dev': true,
     // 1 firstlife, 2 seesaw, 3 librare, 4 teencarto, 5 miramap, 6 cscw, 7 sportografi, 8 wegovnow, 9 sandbox
-    'project': 9,
-    'api_base_domain' : 'firstlife-www.di.unito.it:3095/',
+    'project': 1,
+    'api_base_domain' : 'firstlife-dev.di.unito.it:3095/',
     //'api_base_domain' : 'api.dev.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.test.firstlife.di.unito.it/',
     //'api_base_domain' : 'api.firstlife.di.unito.it/',
@@ -753,25 +753,6 @@ angular.module('firstlife.config')
             if(myConfig.dev)console.log("sovrascrivo le configurazioni: ", myConfig);
 
         }
-        /* da cancellare deprecato, fix tipi
-        if(myConfig.types.exclude){
-            if(myConfig.dev)console.log("Fix permessi dei tipi ",myConfig.types.exclude);
-
-            var exclude = myConfig.types.exclude;
-            var list = [];
-            for(var i = 0; i < myConfig.types.list.length; i++){
-                if(myConfig.dev)console.log("Fix permessi dei tipi, controllo ",exclude[i]);
-                if(!exclude[i]){
-                    if(myConfig.dev)console.log(myConfig.types);
-                    var index = exclude.indexOf(myConfig.types.list[i].key);
-                    if(index < 0){
-                        list.push (myConfig.types.list[i]);
-                    }
-                }
-            }
-            myConfig.types.list = list;
-            if(myConfig.dev)console.log("Check fix permessi dei tipi ",myConfig.types);
-        } */
     })
 // configurazione degli url alle api
     .config(
@@ -997,9 +978,6 @@ angular.module('firstlife.config')
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
-    function($logProvider){
-        $logProvider.debugEnabled(false);
-    }).config(
     function configDev(myConfig, $logProvider){
         if(myConfig.dev)console.log("setup modalità dev");
 
@@ -1012,12 +990,10 @@ angular.module('firstlife.config')
                 if(myConfig.actions[key] === false){
                     myConfig.actions[key] = true;
                 }
-
             }
-
         } 
-        // abilito i log di debug
-        $logProvider.debugEnabled(true);
+        // abilito/disabilito i log di debug
+        $logProvider.debugEnabled(myConfig.dev);
 
         if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
     });

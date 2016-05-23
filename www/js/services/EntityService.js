@@ -258,69 +258,62 @@ angular.module('firstlife.services')
 
         function checkEventTime(data, dataForServer){
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
-            if(dev) $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
+            $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
             
             
             // se per qualche ragione le date sono invertite faccio il fix
-            if(dataForServer.valid_from && dataForServer.valid_to && dataForServer.valid_from.getTime() > dataForServer.valid_to.getTime()){
-                dataForServer.valid_to = angular.copy(dataForServer.valid_from);
+            if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+                data.valid_to = angular.copy(data.valid_from);
             }
             
-            if(dataForServer.valid_from){
-                dataForServer.valid_to.setHours(0,0,0,0);
+            
+//            var moment_from = moment(data.valid_from);
+//            var moment_to = moment(data.valid_to);
+//            $log.debug('check with moment init',moment_from,moment_to);
+//            moment_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+//            //moment_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
+//            $log.debug('check with moment set ',moment_from,moment_to);
+//            moment_from.add(data.door_time,'seconds');
+//            moment_to.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+//            moment_to.add(data.close_time,'seconds');
+//            $log.debug('check with moment set ',moment_from,moment_to,data.door_time,data.close_time);
+//            
+            
+            if(data.valid_from){
+                dataForServer.valid_from = moment(data.valid_from);
                 if(data.door_time){
-                    var tmp = data.valid_from.getTime();
-                    if(dev) $log.debug("Set data ",dataForServer.valid_from," con orario ",data.door_time);
-                    dataForServer.valid_from.setTime(tmp + data.door_time * 1000);
+                    dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+                    dataForServer.valid_from.add(data.door_time,'seconds');
                 }
-                if(dev) $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
+                $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
             }
-            if(dataForServer.valid_to){
-                dataForServer.valid_to.setHours(23,59,59,999);
+            if(data.valid_to){
+                dataForServer.valid_to = moment(data.valid_to);
                 if(data.close_time){
-                    if(dev) $log.debug("Set data ",dataForServer.valid_to," con orario ",data.close_time);
-                    var tmp = data.valid_to.getTime();
-                    dataForServer.valid_to.setTime(tmp + data.close_time * 1000);
+                    dataForServer.valid_to.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+                    dataForServer.valid_to.add(data.close_time,'seconds');
+                }else{
+                    dataForServer.valid_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
                 }
-                if(dev) $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
+                $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
             }
 
             // calcolo da durata come differenza tra le due date
             if(dataForServer.valid_from && dataForServer.valid_to){
                 // differenza tra giorni
-                duration = (dataForServer.valid_to.getTime() - dataForServer.valid_from.getTime());
-                if(dev) $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
+                duration = (data.valid_to.getTime() - data.valid_from.getTime());
+                $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
                 dataForServer.duration = duration;
             }
-//            else if(data.close_time && data.door_time){
-//                if(dev) $log.debug("EditorCtrl, calcolo durata da close_time - door_time:",data.close_time, data.door_time,(data.close_time - data.door_time));
-//                dataForServer.duration = data.close_time - data.door_time;
-//            }
-
-            //fix campo durata
-//            if(!data.duration){
-//                dataForServer.duration = parseInt(dataForServer.duration/1000);
-//                var h = parseInt(dataForServer.duration/3600);
-//                var m = parseInt(dataForServer.duration % 60);
-//                if(m < 10)
-//                    m = '0'+m;
-//                if(h < 10 )
-//                    h = '0'+h;
-//                dataForServer.duration = h+':'+m;
-//            }
             // fix campo door_time
             if(dataForServer.door_time){
                 //var h = parseInt((data.door_time/3600)%24);
                 var m = parseInt(data.door_time % 60);
-//                if(m < 10)
-//                    m = '0'+m;
-//                if(h < 10 )
-//                    h = '0'+h;
                 dataForServer.door_time = m;
             }
 
-
+            $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",dataForServer.valid_from,dataForServer.valid_to,dataForServer.door_time,dataForServer.close_time,dataForServer.duration);
             // fix orario delle date, l'orario impostato e' errato e va troncato
             return dataForServer;
         }
