@@ -1,0 +1,79 @@
+,
+2: {
+    'app_name' : 'SeeS@w',
+    'domain_name' : 'seesaw',
+    'domain_id' : 2,
+    'design':{
+        'logo' : {url: '', title: '', alt:'', label:{text: 'SeeS@w', style: 'color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;'}},
+        'default_background' : 'http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/torino_ospedale_molinette.jpg', 
+        'logo_partners' : [{url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/ue.gif", title:"", alt:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", label:"Fondo Europeo di Sviluppo Regionale P.O.R.   2007 – 2013", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/04/stellone.jpg", title:"", alt:"", label:"", width:"", height:50}, {url:"http://legal-informatics.di.unito.it/seesaw/wp-content/uploads/2015/08/regpie.gif", title:"Regione Piemonte", alt:"Regione Piemonte", label:"", width:"", height:50}],
+        'can_permalink': true,
+        'side_menu':[]
+    },
+    'actions':{
+        'geolocation' : false,
+        'favourite_place' : true,
+        'search' : false,
+    },
+    'types':{
+        'categories':[
+            {"category_space":3,"name":"Seesatw","slug":"seesatw","description":"Seesatw","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-403,"name":"Messaggi","description":"Messaggi","category_index":1,"icon_name":"ion-chatboxes"},{"id":-404,"name":"Allarme","description":"Allarme","category_index":2,"icon_name":"ion-alert-circled"},{"id":-405,"name":"Pericolo","description":"Pericolo","category_index":3,"icon_name":"ion-android-alert"},{"id":-406,"name":"Strumentazione","description":"Strumentazione","category_index":4,"icon_name":"ion-ios-gear"},{"id":-407,"name":"Reagentario","description":"Reagentario","category_index":5,"icon_name":"ion-erlenmeyer-flask"},{"id":-408,"name":"Sensore","description":"Sensore","category_index":6,"icon_name":"ion-thermometer"},{"id":-409,"name":"Processo","description":"Processo","category_index":7,"icon_name":"ion-network"}],"entities":["FL_EVENTS","FL_PLACES"]},
+            {"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immegine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]}
+        ]
+    },
+    'map':{
+        'tile_edit' : 'https://api.tiles.mapbox.com/v4/alessiacalafiore.1a8075f6/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxlc3NpYWNhbGFmaW9yZSIsImEiOiJkNTljMmIwMzQ4MTNmNWVkYmNiMDM0NjFiOTAwNGNiOCJ9.sAiwGQm8n0AuWIX4zF8vJw',
+        'tile_view' : 'https://api.tiles.mapbox.com/v4/aelissa.8deb4fc2/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWVsaXNzYSIsImEiOiJBVFRfbzE0In0.SGRt75lX71q7CqP6kGLXDA',
+        'max_zoom' : 22,
+        'min_zoom' : 16,
+        'map_default_lat' : 45.035291,
+        'map_default_lng' : 7.673349,
+    },
+    'behaviour':{
+        'viewer':true
+    },
+    'navigator':{
+        'default_area' : {
+            id: 0,
+            visible: true,
+            name: 'Luoghi di SeeS@w',
+        },
+        'places': [
+            {
+                id: 0,
+                visible: true,
+                name: 'Biochimica Clinica',
+                northEast: L.latLng(45.041750288867185,  7.675358355045319),
+                southWest: L.latLng(45.040616932697574, 7.674084305763245),
+                bound: [[45.041750288867185,  7.675358355045319],[45.040616932697574, 7.674084305763245]]
+            },
+            {
+                id: 1,
+                visible: true,
+                name: 'Anatomia Patologica Generale',
+                northEast: L.latLng(45.03862687172659,7.675613164901733),
+                southWest: L.latLng(45.0363600131934, 7.6730650663375854),
+                bound: [[45.03862687172659,7.675613164901733],[45.0363600131934, 7.673065066337585]]
+            },
+            {
+                id: 2,
+                visible: true,
+                name: 'Tossicologia ed Epidemiologia Industriale',
+                northEast: L.latLng(45.034191629695, 7.675277888774872),
+                southWest: L.latLng(45.033058123802356, 7.674003839492798),
+                bound: [[45.034191629695, 7.675277888774872],[45.033058123802356, 7.674003839492798]]
+            },
+            {
+                id: 3,
+                visible: true,
+                name: 'Serre - Dipartimento di Scienze Agrarie, Forestali e Alimentari',
+                northEast: L.latLng(45.0656918305, 7.5909865659),
+                southWest: L.latLng(45.0663971424, 7.591991664),
+                bound: [[45.0656918305, 7.5909865659],[45.0663971424, 7.591991664]]
+            }
+        ],
+        'search':{
+            'geocoding':'http://nominatim.openstreetmap.org/search'
+        }
+    }
+}

@@ -7,16 +7,45 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var templateCache = require('gulp-angular-templatecache');
+var gulpNgConfig = require('gulp-ng-config');
+var override = require('json-override');
+var fs = require('fs');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
   templatecache: ['./www/templates/ng-templates/**/*.html']
 };
 
+
+gulp.task('configsetup',['mergeconfig','buildconfig']);
+
+gulp.task('mergeconfig', function(){
+    var defaults = JSON.parse(fs.readFileSync('./domains/defaults.json','utf-8'));
+    var domain = null;
+    var config = null;
+    if(gutil.env.domain){
+         domain = gutil.env.domain;
+    }
+    if(!domain){
+        config = defaults
+    }else{
+        var extras = JSON.parse(fs.readFileSync('./domains/'+domain+'.json','utf-8'));
+        config = override(defaults,extras,true);
+    }
+    fs.writeFile('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('merge result ',e);});
+})
+
+gulp.task('buildconfig', function () {
+  gulp.src('./domains/config.json')
+  .pipe(gulpNgConfig('firstlife.config'))
+  .pipe(gulp.dest('./www/js'))
+});
+
+
 gulp.task('default', ['sass', 'templatecache']);
 
 gulp.task('templatecache', function (done) {
-  gulp.src('./www/templates/ng-templates/**/*.html')
+  gulp.src('./www/templates/**/*.html')
     .pipe(templateCache({standalone:true}))
     .pipe(gulp.dest('./www/js'))
     .on('end', done);

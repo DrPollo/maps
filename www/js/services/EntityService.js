@@ -267,19 +267,6 @@ angular.module('firstlife.services')
                 data.valid_to = angular.copy(data.valid_from);
             }
             
-            
-//            var moment_from = moment(data.valid_from);
-//            var moment_to = moment(data.valid_to);
-//            $log.debug('check with moment init',moment_from,moment_to);
-//            moment_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
-//            //moment_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
-//            $log.debug('check with moment set ',moment_from,moment_to);
-//            moment_from.add(data.door_time,'seconds');
-//            moment_to.set({'hour':0,'minute':0,'second':0,'millisecond':0});
-//            moment_to.add(data.close_time,'seconds');
-//            $log.debug('check with moment set ',moment_from,moment_to,data.door_time,data.close_time);
-//            
-            
             if(data.valid_from){
                 dataForServer.valid_from = moment(data.valid_from);
                 if(data.door_time){
