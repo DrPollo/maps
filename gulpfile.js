@@ -20,7 +20,7 @@ var paths = {
 gulp.task('deploy',['mergeconfig','setupenv','buildconfig','move']);
 
 gulp.task('move',function(){
-    var dir = 'dist'
+    var dir = '../html'
     if(gutil.env.domain)
         dir = '../'+gutil.env.domain;
     
