@@ -21,7 +21,9 @@
      "map":{
          "map_default_lat":51.49006812995448,
          "map_default_lng":-0.10123729705810547,
-         "zoom_level" : 14
+         "zoom_level" : 14,
+         "shouthWest_bounds" : [-0.3514683,51.3849401],
+         "northEast_bounds" : [0.148271,51.6723432]
      }
  }
 }

@@ -5,7 +5,9 @@ angular.module('firstlife.services')
         var format = myConfig.format;
         var searchUrl = self.config.backend_search,
             geoUrl = self.config.navigator.search.geocoding;
-        var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
+        //var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
+        var bound = String(self.config.map.shouthWest_bounds).replace("[","").replace("]","");
+        bound = bound.concat(",").concat(String(self.config.map.northEast_bounds)).replace("[","").replace("]","");
         
         //var center = MapService.getCenterFromMap();
         
