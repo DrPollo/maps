@@ -370,7 +370,7 @@ angular.module('firstlife.services')
                               //zoomToBoundsOnClick: false,
                               spiderfyDistanceMultiplier: 2,
                               //maxClusterRadius: 80,
-                              //disableClusteringAtZoom: self.config.map.cluster_limit,
+                              disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
                               chunkedLoading: true,
                               //chunkDelay:500,
                               //chunkInterval:200,

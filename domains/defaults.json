@@ -38,7 +38,7 @@
                     "url":"descriptions",
                     "label":"DESCRIPTION",
                     "title":"DESCRIPTIONS",
-                    "fileds":{
+                    "fields":{
                         "title":{"key":"title", "label":"NAME","default":"","required":true},
                         "description":{"key":"description", "label":"TEXT","default":"","required":true}
                     },
@@ -55,7 +55,7 @@
                     "url":"comments",
                     "label":"COMMENT",
                     "title":"COMMENTS",
-                    "fileds":{
+                    "fields":{
                         "message":{"key":"message", "label":"TEXT","default":"","required":true}
                     },
                     "contentKey":"message",
@@ -71,7 +71,7 @@
                     "url":"images",
                     "label":"IMAGE",
                     "title":"GALLERY",
-                    "fileds":{
+                    "fields":{
                         "image":{"key":"image", "label":"IMAGE","default":"","required":true}
                     },
                     "contentKey":"filedata",

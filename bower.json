@@ -6,7 +6,7 @@
     "ui-router-extras": "~0.1.0"
   },
   "resolutions": {
-    "angular": "1.5.3",
+    "angular": "1.5.5",
     "angular-ui-router": "^0.2.8",
     "angular-animate": "1.4.3",
     "angular-sanitize": "1.4.3",
@@ -27,7 +27,7 @@
     "angular-underscore": "~0.5.0",
     "font-awesome": "~4.4.0",
     "ionic-wizard": "~1.0.5",
-    "Ionicons": "ionicons#~2.0.1",
+    "ionicons": "ionicons#~2.0.1",
     "leaflet.markercluster": "~0.4.0",
     "ng-tags-input": "~3.0.0",
     "underscore": "~1.8.3",
