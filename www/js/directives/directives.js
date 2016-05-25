@@ -615,7 +615,8 @@ angular.module('firstlife.directives', [])
                     function(response){
                         $log.debug('check subscribers ',response);
                         var subscribers = response;
-                        var index = subscribers.indexOf($scope.user.id);
+                        if($scope.user)
+                            var index = subscribers.indexOf($scope.user.id);
                         $scope.subscriber = index < 0 ? false : true;
                     },
                     function(response){
@@ -1280,7 +1281,8 @@ angular.module('firstlife.directives', [])
         scope: {
             id: '=id',
             entityType:'=entityType',
-            owner: '=owner'
+            owner: '=owner',
+            logged:'=',
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
         controller: ['$scope','$log','$filter','$ionicModal','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory){
@@ -1569,6 +1571,7 @@ angular.module('firstlife.directives', [])
             $scope.add = function(key){
                 $scope.publish = true;
                 $scope.type = angular.copy($scope.types[key]);
+                $log.debug('check type init simple entity ',$scope.type);
                 initEntity($scope.type);
                 openEditor();
             }
@@ -1585,6 +1588,7 @@ angular.module('firstlife.directives', [])
                 for(var k in type.fields){
                     $scope.simpleEntity[k] = type.fields[k].default;
                 }
+                $log.debug('check simple entity init ',$scope.simpleEntity,type.fields)
             }
 
 
