@@ -11,6 +11,7 @@ var gulpNgConfig = require('gulp-ng-config');
 var override = require('json-override');
 var fs = require('fs');
 var fse = require('fs-extra');
+var run = require('sync-exec');
 
 var paths = {
     sass: ['./scss/**/*.scss'],
@@ -28,7 +29,19 @@ gulp.task('move',function(){
     console.log("move file ok!");
 });
 
-gulp.task('config',['mergeconfig','setupenv','buildconfig']);
+gulp.task('config',['rebuild','mergeconfig','setupenv','buildconfig']);
+
+gulp.task('rebuild',function(){
+    try{
+        run('npm build .');
+    }catch(err){
+         throw new gutil.PluginError({
+                plugin: 'mergeconfig',
+                message: 'npm build error'
+            });
+    }
+    console.log('rebuild npm packages!');
+});
 
 gulp.task('setupenv',function(){
     var config = JSON.parse(fs.readFileSync('./domains/config.json','utf-8'));
