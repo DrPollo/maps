@@ -15,6 +15,7 @@
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members" reset="reset"></members-counter>
                 <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe" reset="reset"></subscribers-counter>
             </div>
+<!--
             <div class="modal-subheader">
                 <span class="message">
                     {{'LAST_UPDATE_MESSAGE'|translate}} {{infoPlace.marker.last_update | date:'dd/MM/yyyy (HH:mm)'}} 
@@ -23,6 +24,7 @@
                     </span> 
                 </span> 
             </div>
+-->
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="content">
                 <i class="icon ion-android-time"></i>
                 <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (HH:mm)'}}</span>
