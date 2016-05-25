@@ -17,7 +17,7 @@ var paths = {
     templatecache: ['./www/templates/ng-templates/**/*.html']
 };
 
-gulp.task('deploy',['mergeconfig','setupenv','buildconfig','move']);
+gulp.task('deploy',['config','move']);
 
 gulp.task('move',function(){
     var dir = '../html'
@@ -28,7 +28,7 @@ gulp.task('move',function(){
     console.log("move file ok!");
 });
 
-gulp.task('configsetup',['mergeconfig','setupenv','buildconfig']);
+gulp.task('config',['mergeconfig','setupenv','buildconfig']);
 
 gulp.task('setupenv',function(){
     var config = JSON.parse(fs.readFileSync('./domains/config.json','utf-8'));
@@ -49,7 +49,16 @@ gulp.task('setupenv',function(){
 });
 
 gulp.task('mergeconfig', function(){
-    var defaults = JSON.parse(fs.readFileSync('./domains/defaults.json','utf-8'));
+    var defaults = null;
+    try{
+        defaults = JSON.parse(fs.readFileSync('./domains/defaults.json','utf-8'));
+    }catch(err){
+        console.log('defaults.json parse error ',err);
+        throw new gutil.PluginError({
+                plugin: 'mergeconfig',
+                message: 'defaults.json JSON.parse error'
+            });
+    }
     var domain = null;
     var config = null;
     if(gutil.env.domain){
@@ -58,8 +67,19 @@ gulp.task('mergeconfig', function(){
     if(!domain){
         config = defaults;
     }else{
-        var extras = JSON.parse(fs.readFileSync('./domains/'+domain+'.json','utf-8'));
-        config = override(defaults,extras,true);
+        var extras = null;
+        try{
+            extras = JSON.parse(fs.readFileSync('./domains/'+domain+'.json','utf-8'));
+        }catch(err){
+            console.log(domain,'.json parse error ',err);
+            throw new gutil.PluginError({
+                plugin: 'mergeconfig',
+                message: domain+".json JSON.parse error"
+            });
+        }
+        if(extras)
+            config = override(defaults,extras,true);
+            
     }
     fs.writeFileSync('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('merge result: ',e ? e : 'ok!');});
 });
