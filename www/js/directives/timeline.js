@@ -74,11 +74,11 @@ angular.module('firstlife.timeline',[])
             $scope.scaleUp = function(){
                 // se non ho raggiunto la massima
                 // salgo di una unita'
-                if($scope.indexDefaultUnit < units.length-1)
+                if($scope.indexDefaultUnit < units.length-1){
                     $scope.indexDefaultUnit++;
-
-                // ricalcolo il buffer
-                initBuffer();
+                    // ricalcolo il buffer
+                    initBuffer();
+                }
             }
 
 
@@ -397,13 +397,17 @@ angular.module('firstlife.timeline',[])
                             // se non inizializzato creo una proprieta' con array
                             if(!$scope.timewindow[index].markers){
                                 $scope.timewindow[index].markers = {};
+                                $scope.timewindow[index].total = 0;
                             }
                             //$log.debug('add feature prop ',features[i].type);
                             var type = features[i].type;
-                            if(!$scope.timewindow[index].markers[type])
+                            if(!$scope.timewindow[index].markers[type]){
                                 $scope.timewindow[index].markers[type] = {counter:0,color:features[i].color};
+                            }
                             // aggiungo il marker alla timeline
                             $scope.timewindow[index].markers[type].counter++;
+                            // calcolo il totale dei marker
+                            $scope.timewindow[index].total++;
                             //$log.debug('trovato marker che entra nella timeline ',$scope.timewindow[index].markers[type]);
                         }
                     }

@@ -505,7 +505,7 @@ angular.module('firstlife.factories')
                     "group": groupLabel ? groupLabel : null,
                     "editable":false,
                     "type": entity_type,
-                    color : category.color,
+                    color : icons[0].color,
                 } : null
             };
 
