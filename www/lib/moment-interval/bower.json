@@ -1,0 +1,26 @@
+{
+  "name": "moment-interval",
+  "main": "./src/moment-interval.js",
+  "homepage": "https://github.com/digitalbazaar/moment-interval",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/digitalbazaar/moment-interval.git"
+  },
+  "description": "Time intervals for Moment.js",
+  "authors": [
+    "Luis Farzati <lfarzati@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "moment": "~2.9"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Gruntfile.js",
+    "package.json"
+  ]
+}

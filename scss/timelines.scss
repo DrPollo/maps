@@ -1,18 +1,16 @@
 // scss delle timelines della mappa
-#timelines{
-    width: 100%;
+timeline{
     position: absolute;
-    bottom: 8px;
-    //text-align: right;
-    //z-index: 1000;
-    #time-box{
-        display: inline-block;
+    z-index:1000;
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+    #buttons{
         position: absolute;
-        left:8px;
-        top: -14px;
-        z-index: 1000;
+        top:-26px;
+        left: 8px;
         button{
-            background-color: #fff;
+            background-color: #fafafa;
             border-radius: 0;
             border-width: 0px;
             box-shadow: 1px 1px 3px #666;
@@ -24,97 +22,160 @@
             -o-border-radius: 100px 100px 100px 100px;
             -webkit-border-radius: 100px 100px 100px 100px;
             -moz-border-radius: 100px 100px 100px 100px;
-            .box-data-bottone{
-                display: inline-block;
-            }
         }
     }
-    #time-bar{
-        margin: 8px 0px -8px;
-        padding: 4px 6px 8px;
-        text-align: right;
-        width: 100%;
+    #context{
+        position: absolute;
+        top:-30px;
+        left: 0px;
         background: #fafafa;
+        padding: 8px;
         box-shadow: 1px 1px 3px #666;
+        width: 100%;
+        text-align: right;
     }
     #timeline{
-        position: relative;
-        background-color: #fff;
-        box-shadow: 0px 0px 6px #ddd;
-        margin: 0px 0px -8px;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        background: #fafafa;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: table;
+        table-layout: auto;
+        position: absolute;
         box-shadow: 1px 1px 3px #666;
-        overflow: visible !important;
-        .vis-timeline{
-            border: 0px solid;
-        }
-        .timeline-event-dot-container {
-            //top: -200px !important;
-            //position: absolute;
-            
-        }
-        .timeline-event-range {
-            //top: -100px !important;
-            //position: absolute;
-            //border:1px solid white;
-            //box-shadow: inset 0px 0px 2px white;
-            .timeline-event-content{
-                margin:0px;
-                background:#fafafa;
-            }
-        }
-        div{
-            overflow: visible !important;
-        }
-        .dotEventIcon{
-            //color:white;
-            width: 20px;
-            height: 20px;
+        .repeated-item {
+            border-right: 1px solid #ddd;
+            box-sizing: border-box;
+            display: table-cell;
+            height: 40px;
+            padding-top:16px;
             text-align: center;
-            display: inline-block;
-            font-size: 1.3em;
-            //box-shadow: 1px 0px 2px #c9c9c9;
-        }
-        div.timeline-event{
-            background-color: #fafafa;
-            border-color: #6C93B3;
-            box-shadow: 1px 0px 2px #c9c9c9;
-            z-index: 999;
-            -o-border-radius: 20px;
-            -moz-border-radius: 20px;
-            -webkit-border-radius: 20px;
-            border-radius: 20px;
-        }
-        div.timeline-event-cluster {
-            background: #6C93B3;
-            color: white;
-        }
-        .timeline-frame{
-            width: 100% !important;
-        }
-        .timeline-groups-axis{
-            width: 0px !important;
-            left: 100% !important;
-            overflow: visible;
-            #selectedGroup{
-                //background: #6C93B3;
-                //color: white;
-            }
-            .timeline-groups-text:hover,.timeline-groups-text:active,.timeline-groups-text:focus{
-                //background-color: #efefef;
-                //box-shadow: 1px 1px 3px #666;
-                transition: all ease 0.3s;
-            }
-            .timeline-groups-text {
-                right: 8px;
-                font-size: 1em;
-                color: #333;
-                cursor: pointer;
-                display: inline-block;
-                //background-color: #fcfcfc;
-                //padding: 6px 6px;
-                //margin-top: -15px;
-                //box-shadow: 1px 1px 3px #aaa;
-            }
+            width: 60px; 
+            cursor: pointer;
         }
     }
 }
+
+
+
+//#timelines{
+//    width: 100%;
+//    position: absolute;
+//    bottom: 8px;
+//    //text-align: right;
+//    //z-index: 1000;
+//    #time-box{
+//        display: inline-block;
+//        position: absolute;
+//        left:8px;
+//        top: -14px;
+//        z-index: 1000;
+//        button{
+//            background-color: #fff;
+//            border-radius: 0;
+//            border-width: 0px;
+//            box-shadow: 1px 1px 3px #666;
+//            min-width: 40px;
+//            max-width: 40px;
+//            max-height: 40px;
+//            min-height: 40px;
+//            border-radius: 100px 100px 100px 100px;
+//            -o-border-radius: 100px 100px 100px 100px;
+//            -webkit-border-radius: 100px 100px 100px 100px;
+//            -moz-border-radius: 100px 100px 100px 100px;
+//            .box-data-bottone{
+//                display: inline-block;
+//            }
+//        }
+//    }
+//    #time-bar{
+//        margin: 8px 0px -8px;
+//        padding: 4px 6px 8px;
+//        text-align: right;
+//        width: 100%;
+//        background: #fafafa;
+//        box-shadow: 1px 1px 3px #666;
+//    }
+//    #timeline{
+//        position: relative;
+//        background-color: #fff;
+//        box-shadow: 0px 0px 6px #ddd;
+//        margin: 0px 0px -8px;
+//        box-shadow: 1px 1px 3px #666;
+//        overflow: visible !important;
+//        .vis-timeline{
+//            border: 0px solid;
+//        }
+//        .timeline-event-dot-container {
+//            //top: -200px !important;
+//            //position: absolute;
+//            
+//        }
+//        .timeline-event-range {
+//            //top: -100px !important;
+//            //position: absolute;
+//            //border:1px solid white;
+//            //box-shadow: inset 0px 0px 2px white;
+//            .timeline-event-content{
+//                margin:0px;
+//                background:#fafafa;
+//            }
+//        }
+//        div{
+//            overflow: visible !important;
+//        }
+//        .dotEventIcon{
+//            //color:white;
+//            width: 20px;
+//            height: 20px;
+//            text-align: center;
+//            display: inline-block;
+//            font-size: 1.3em;
+//            //box-shadow: 1px 0px 2px #c9c9c9;
+//        }
+//        div.timeline-event{
+//            background-color: #fafafa;
+//            border-color: #6C93B3;
+//            box-shadow: 1px 0px 2px #c9c9c9;
+//            z-index: 999;
+//            -o-border-radius: 20px;
+//            -moz-border-radius: 20px;
+//            -webkit-border-radius: 20px;
+//            border-radius: 20px;
+//        }
+//        div.timeline-event-cluster {
+//            background: #6C93B3;
+//            color: white;
+//        }
+//        .timeline-frame{
+//            width: 100% !important;
+//        }
+//        .timeline-groups-axis{
+//            width: 0px !important;
+//            left: 100% !important;
+//            overflow: visible;
+//            #selectedGroup{
+//                //background: #6C93B3;
+//                //color: white;
+//            }
+//            .timeline-groups-text:hover,.timeline-groups-text:active,.timeline-groups-text:focus{
+//                //background-color: #efefef;
+//                //box-shadow: 1px 1px 3px #666;
+//                transition: all ease 0.3s;
+//            }
+//            .timeline-groups-text {
+//                right: 8px;
+//                font-size: 1em;
+//                color: #333;
+//                cursor: pointer;
+//                display: inline-block;
+//                //background-color: #fcfcfc;
+//                //padding: 6px 6px;
+//                //margin-top: -15px;
+//                //box-shadow: 1px 1px 3px #aaa;
+//            }
+//        }
+//    }
+//}

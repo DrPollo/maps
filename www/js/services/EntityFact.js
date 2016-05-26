@@ -499,12 +499,13 @@ angular.module('firstlife.factories')
                     icon: icons[mainCat.category_space] ? icons[mainCat.category_space] : icons[0],
                     lat: parseFloat(entity.geometry.coordinates[1]),
                     lng: parseFloat(entity.geometry.coordinates[0]),
-                    'start': new Date(entity.properties.valid_from),
-                    'end': new Date(entity.properties.valid_to),  // end is optional
+                    start: new Date(entity.properties.valid_from),
+                    end: new Date(entity.properties.valid_to),  // end is optional
                     'content':  htmlIcon,
                     "group": groupLabel ? groupLabel : null,
                     "editable":false,
-                    "type": "box"
+                    "type": entity_type,
+                    color : category.color,
                 } : null
             };
 

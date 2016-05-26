@@ -14786,18 +14786,18 @@ transform:rotate(attr(data-start,deg,0);
 transform:rotate(attr(data-value,deg,0);
 }
 */
-#timelines {
-  width: 100%;
+timeline {
   position: absolute;
-  bottom: 8px; }
-  #timelines #time-box {
-    display: inline-block;
+  z-index: 1000;
+  bottom: 0px;
+  height: 40px;
+  width: 100%; }
+  timeline #buttons {
     position: absolute;
-    left: 8px;
-    top: -14px;
-    z-index: 1000; }
-    #timelines #time-box button {
-      background-color: #fff;
+    top: -26px;
+    left: 8px; }
+    timeline #buttons button {
+      background-color: #fafafa;
       border-radius: 0;
       border-width: 0px;
       box-shadow: 1px 1px 3px #666;
@@ -14809,61 +14809,35 @@ transform:rotate(attr(data-value,deg,0);
       -o-border-radius: 100px 100px 100px 100px;
       -webkit-border-radius: 100px 100px 100px 100px;
       -moz-border-radius: 100px 100px 100px 100px; }
-      #timelines #time-box button .box-data-bottone {
-        display: inline-block; }
-  #timelines #time-bar {
-    margin: 8px 0px -8px;
-    padding: 4px 6px 8px;
-    text-align: right;
+  timeline #context {
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    background: #fafafa;
+    padding: 8px;
+    box-shadow: 1px 1px 3px #666;
+    width: 100%;
+    text-align: right; }
+  timeline #timeline {
+    margin: 0px;
+    padding: 0px;
     width: 100%;
     background: #fafafa;
+    overflow-x: scroll;
+    white-space: nowrap;
+    display: table;
+    table-layout: auto;
+    position: absolute;
     box-shadow: 1px 1px 3px #666; }
-  #timelines #timeline {
-    position: relative;
-    background-color: #fff;
-    box-shadow: 0px 0px 6px #ddd;
-    margin: 0px 0px -8px;
-    box-shadow: 1px 1px 3px #666;
-    overflow: visible !important; }
-    #timelines #timeline .vis-timeline {
-      border: 0px solid; }
-    #timelines #timeline .timeline-event-range .timeline-event-content {
-      margin: 0px;
-      background: #fafafa; }
-    #timelines #timeline div {
-      overflow: visible !important; }
-    #timelines #timeline .dotEventIcon {
-      width: 20px;
-      height: 20px;
+    timeline #timeline .repeated-item {
+      border-right: 1px solid #ddd;
+      box-sizing: border-box;
+      display: table-cell;
+      height: 40px;
+      padding-top: 16px;
       text-align: center;
-      display: inline-block;
-      font-size: 1.3em; }
-    #timelines #timeline div.timeline-event {
-      background-color: #fafafa;
-      border-color: #6C93B3;
-      box-shadow: 1px 0px 2px #c9c9c9;
-      z-index: 999;
-      -o-border-radius: 20px;
-      -moz-border-radius: 20px;
-      -webkit-border-radius: 20px;
-      border-radius: 20px; }
-    #timelines #timeline div.timeline-event-cluster {
-      background: #6C93B3;
-      color: white; }
-    #timelines #timeline .timeline-frame {
-      width: 100% !important; }
-    #timelines #timeline .timeline-groups-axis {
-      width: 0px !important;
-      left: 100% !important;
-      overflow: visible; }
-      #timelines #timeline .timeline-groups-axis .timeline-groups-text:hover, #timelines #timeline .timeline-groups-axis .timeline-groups-text:active, #timelines #timeline .timeline-groups-axis .timeline-groups-text:focus {
-        transition: all ease 0.3s; }
-      #timelines #timeline .timeline-groups-axis .timeline-groups-text {
-        right: 8px;
-        font-size: 1em;
-        color: #333;
-        cursor: pointer;
-        display: inline-block; }
+      width: 60px;
+      cursor: pointer; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }

@@ -407,7 +407,7 @@ angular.module('firstlife.controllers')
             event.preventDefault();
         });
 
-        $scope.$on("timeUpdate",function(event,args){
+        $rootScope.$on("timeUpdate",function(event,args){
             // reset dei markers
             resetMarkersDistributed();
             event.preventDefault();
