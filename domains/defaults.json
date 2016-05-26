@@ -89,11 +89,11 @@
                      "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true}
                  },
                  "relations":{
-                     "FL_PLACES":{"slug":"parent_id","filed":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                     "FL_EVENTS":{"slug":"location","filed":"location","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
-                     "FL_ARTICLES":{"slug":"article_of","filed":"article_of","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
-                     "FL_COMMENTS":{"slug":"comment_of","filed":"comment_of","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
-                     "FL_GROUPS":{"slug":"group_of","filed":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
+                     "FL_PLACES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                     "FL_EVENTS":{"slug":"location","field":"location","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
+                     "FL_ARTICLES":{"slug":"article_of","field":"article_of","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
+                     "FL_COMMENTS":{"slug":"comment_of","field":"comment_of","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
+                     "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                  }
                 },
                 {"name":"EVENT_NAME","id":2,"icon":"ion-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":5,
@@ -109,9 +109,9 @@
                      "organizer":{ "key": "organizer", "label": "ORGANIZER_LABEL", "placeholder":"ORGANIZER_PLACEHOLDER", "default":-1,"advanced":true}
                  },
                  "relations":{
-                     "FL_EVENTS":{"slug":"parent_id","filed":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                     "FL_ARTICLES":{"slug":"article_of","filed":"article_of","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
-                     "FL_GROUPS":{"slug":"group_of","filed":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
+                     "FL_EVENTS":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                     "FL_ARTICLES":{"slug":"article_of","field":"article_of","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
+                     "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                  }
                 },
                 {"name":"POST_NAME","id":4,"icon":"ion-clipboard","slug":"article","url":"articles","key":"FL_ARTICLES","index":7,
@@ -123,7 +123,7 @@
                      "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
                  },
                  "relations":{
-                     "FL_ARTICLES":{"slug":"parent_id","filed":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","bounded":true}
+                     "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","bounded":true}
                  }
                 },
                 {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_COMMENTS","index":9,
@@ -145,11 +145,11 @@
 
                  },
                  "relations":{
-                     "FL_GROUPS":{"slug":"parent_id","filed":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","exclude":true,"check":"membership"},
-                     "FL_PLACES":{"slug":"group_id","filed":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_PLACE_CHILD_LABEL","exclude":true,"check":"membership"},
-                     "FL_EVENTS":{"slug":"group_id","filed":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_EVENT_CHILD_LABEL","exclude":true,"check":"membership"},
-                     "FL_ARTICLES":{"slug":"group_id","filed":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_POST_CHILD_LABEL","exclude":true,"check":"membership"},
-                     "FL_COMMENTS":{"slug":"group_id","filed":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_COMMENT_CHILD_LABEL","exclude":true,"check":"membership"}
+                     "FL_GROUPS":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","exclude":true,"check":"membership"},
+                     "FL_PLACES":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_PLACE_CHILD_LABEL","exclude":true,"check":"membership"},
+                     "FL_EVENTS":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_EVENT_CHILD_LABEL","exclude":true,"check":"membership"},
+                     "FL_ARTICLES":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_POST_CHILD_LABEL","exclude":true,"check":"membership"},
+                     "FL_COMMENTS":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_COMMENT_CHILD_LABEL","exclude":true,"check":"membership"}
                  },
                  "actions":[
                      {"label":"JOIN_GROUP","key":"join","icon":"ion-android-person-add","search":false, "check":"noMembership"},

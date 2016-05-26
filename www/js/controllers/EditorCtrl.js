@@ -125,18 +125,18 @@ angular.module('firstlife.controllers')
                     if($stateParams.entity_type){
                         typeIndex = _this.types.list.map(function(e){return e.slug;}).indexOf($stateParams.entity_type);
                         type = _this.types.list[typeIndex].key;
-                        if(dev) console.log('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
+                        //$log.debug('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
                         _this.wizard.title = _this.labels.create;
                         _this.wizard.entityLabel = _this.types.list[typeIndex].name;
                     }
 
                     //imposto i permessi
                     _this.checkList = _this.config.types.perms[type];
-                    if(dev) console.log("EditorCtrl, checkList: ", _this.checkList);
+                    //$log.debug("EditorCtrl, checkList: ", _this.checkList);
                     
                     // recupero i default per l'init dell'entita'
                     angular.extend(_this.wizard.dataForm,EntityService.getDefaults($stateParams.entity_type));
-                    if(dev) console.log("EditCtrl, init form: ",_this.wizard.dataForm);
+                    //$log.debug("EditCtrl, init form: ",_this.wizard.dataForm);
                     
                     //bug datapicker che non modifica la data a cacchio
                     // se la data e' settata allora metto a true il check
@@ -153,16 +153,16 @@ angular.module('firstlife.controllers')
                     // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
                     // controllo che non sia settato una rel tra quelle definite per il tipo
                     var rels = _this.config.types.relations;
-                    if(dev) console.log("relazioni da controllare ",rels.map, rels.list.length," in $stateParams ",$stateParams);
+                    //$log.debug("EditorCtrl, relazioni da controllare ",_this.config.types.relations,rels.map, rels.list.length," in $stateParams ",$stateParams);
                     for( var i = 0 ; i < rels.list.length ; i++ ){
-                        if(dev) console.log("controllo regola ",i+1,rels[i]);
+                        //$log.debug("controllo regola ",i+1,rels[i]);
                         var key = rels.list[i],
                             field = rels.map[key];
                         // aggiungo il campo se trovo il parametro nella search
-                        if(dev) console.log("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
-                        if($stateParams[key] && $stateParams[key] !=='undefined'){
+                        //$log.debug("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
+                        if($stateParams[key]){
                             _this.wizard.dataForm[field] = parseInt($stateParams[key]);
-                            if(dev) console.log("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
+                            //$log.debug("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
                         }
                     }
                     // fine gesione relazioni
@@ -180,7 +180,7 @@ angular.module('firstlife.controllers')
                     }
                     
                     // fine regole gestione campi speciali
-                    if(dev) console.log("EditCtrl, init del form: ",_this.wizard.dataForm);
+                    $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
 
 
                 }

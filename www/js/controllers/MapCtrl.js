@@ -1178,6 +1178,7 @@ angular.module('firstlife.controllers')
                     var marker = $scope.markersFiltered[key];
                     // recupero le relazioni per l'entity type
                     var parentsRels = $scope.config.types.parent_relations[marker.entity_type];
+                    //$log.debug("MapCtrl, relationsFixer, parentsRels ",parentsRels);
                     // per ogni relazione di tipo parent controllo che non sia settata e non ci sia un padre
                     for(var q in parentsRels){
                         var parentRel = parentsRels[q];
@@ -1185,6 +1186,7 @@ angular.module('firstlife.controllers')
                         // se il marker ha un valore nel campo della relazione padre
                         // se il padre e' nella lista dei marker
                         //if(!parentRel.exclude) $log.debug('check condizioni in relationsFixer ',parentRel.field, marker[parentRel.field], $scope.markersFiltered[marker[parentRel.field]] );
+                        //$log.debug("MapCtrl, relationsFixer, parentsRel.field ",parentRel.field);
                         if(!parentRel.exclude && marker[parentRel.field] && $scope.markersFiltered[marker[parentRel.field]] ){
                             // rimuovo il marker dalla lista
                             delete $scope.markersFiltered[key];
@@ -1198,13 +1200,13 @@ angular.module('firstlife.controllers')
             // se il padre non si vede il figlio viene visualizzato
             // generalizzato sulle relazioni di tipo parent
             function relationsFixerFilter(val){
-                if(consoleCheck) console.log("MapCtrl, relationsFixer, val ",val);
+                //$log.debug("MapCtrl, relationsFixerFilter, val ",val);
                 var parents = $scope.config.types.parent_relations[val.entity_type];
                 for(key in parents){
                     var parentRel = parents[key];
                     if(parentRel.exclude)
                         return true;
-                    if(consoleCheck) console.log("MapCtrl, relationsFixer, check ",val.id," in ", parents[key].field);
+                    //$log.debug("MapCtrl, relationsFixerFilter, check ",val.id," in ", parents[key].field);
                     if($scope.filtred.map(function(e){return e.id;}).indexOf(val[parentRel.field]) >= 0)
                         return false;
                 }
