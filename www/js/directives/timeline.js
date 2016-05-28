@@ -7,7 +7,7 @@ angular.module('firstlife.timeline',[])
             data:'='
         },
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log','myConfig','MapService',function($scope,$rootScope,$log,myConfig,MapService){
+        controller: ['$scope','$rootScope','$log','myConfig','MapService','PlatformService',function($scope,$rootScope,$log,myConfig,MapService,PlatformService){
             
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -23,8 +23,9 @@ angular.module('firstlife.timeline',[])
                 }
             });
             
-            var types = {"FL_PLACES":3,"FL_EVENTS":5,"FL_ARTICLES":7,"FL_COMMENTS":9,"FL_GROUPS":11,};
-
+            // mobile o no?
+            $scope.isMobile = PlatformService.isMobile();
+            
             //setup lingua di moment js
             moment.locale('it');
             moment().isoWeek(1);
@@ -40,8 +41,12 @@ angular.module('firstlife.timeline',[])
             // 4: mese dell'anno
             $scope.defaultUnit = 1;
             $scope.indexDefaultUnit = $scope.defaultUnit; //mi segno l'indice
-            var units = ["hour", "day", "date","year"]; //unità di misura delle timeline
-            var defaultUnit = units[$scope.indexDefaultUnit]; //unità di misura usata in partenza
+            $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
+                         {key:"day",label:"DAY_BUTTON"},
+                         {key:"date",label:"DATE_BUTTON"},
+                         {key:"year",label:"YEAR_BUTTON"}]; //unità di misura delle timeline
+            
+            var defaultUnit = $scope.units[$scope.indexDefaultUnit].key; //unità di misura usata in partenza
 
             // momento attuale
             $scope.moment = moment();
@@ -74,13 +79,12 @@ angular.module('firstlife.timeline',[])
             $scope.scaleUp = function(){
                 // se non ho raggiunto la massima
                 // salgo di una unita'
-                if($scope.indexDefaultUnit < units.length-1){
+                if($scope.indexDefaultUnit < $scope.units.length-1){
                     $scope.indexDefaultUnit++;
                     // ricalcolo il buffer
                     initBuffer();
                 }
             }
-
 
             // scendo di scala di unita' 
             $scope.scaleDown = function(slot){
@@ -107,6 +111,21 @@ angular.module('firstlife.timeline',[])
                 initBuffer();
             }
 
+            
+            // sali alla scala
+            $scope.scaleUpTo = function(index){
+                // imposto l'indice
+                if(index < 0 || index >= $scope.units.length || index < $scope.indexDefaultUnit)
+                    return false;
+                if(index == $scope.indexDefaultUnit)
+                    return true;
+                
+                if(index > $scope.indexDefaultUnit){
+                    $scope.indexDefaultUnit = index;
+                    // ricalcolo il buffer
+                    initBuffer();
+                }
+            }
 
             // inizializzo la timeline
             function initBuffer(){
@@ -151,13 +170,13 @@ angular.module('firstlife.timeline',[])
             function getNowUnits(now){
                 let initStart = {hour:0,minute:0,second:0,millisecond:0};
                 let initEnd = {hour:23,minute:59,second:59,millisecond:999};
+                let phases = ['Notte','Mattina','Pomeriggio','Sera'];
                 // considero l'unita' correte (es. settimana, mese, anno)
-                switch(units[$scope.indexDefaultUnit]){
+                switch($scope.units[$scope.indexDefaultUnit].key){
                         // fasi della giornata
                     case 'hour':
                         // 0: notte, 1: mattina, 2: pomeriggio, 3: sera
                         // intervalli di 6 ore
-                        let phases = ['Notte','Mattina','Pomeriggio','Sera'];
                         let duration = parseInt(24/phases.length);
                         let n = angular.copy(now);
                         n.set(initStart);
@@ -179,6 +198,7 @@ angular.module('firstlife.timeline',[])
                         // 0: lunedi, 1: martedi, 2: mercoledi
                         // 3: giovedi, 4: venerdi, 5: sabato,6: domenica,
                         var labels = moment.weekdays();
+                        //var format = $scope.isMobile ? '' : '';//moment.weekdays();
                         var days = [];
                         for(var i = 0; i < 7; i++){
                             // genero l'intervallo giornaliero
@@ -189,7 +209,7 @@ angular.module('firstlife.timeline',[])
                             days.push(obj);
                             $log.debug('check interval weekdays ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval weekdays ',days);
+                        $log.error('check interval weekdays ',days);
                         return days;
                         break;
                         // settimane del mese
@@ -288,7 +308,7 @@ angular.module('firstlife.timeline',[])
             function getNowInUnits(now){
                 var r = now;
                 // considero l'unita' corrente (es. settimana, mese, anno)
-                switch(units[$scope.indexDefaultUnit]){
+                switch($scope.units[$scope.indexDefaultUnit].key){
                     case 'hour':
                         // restituiscce fase del giorno corrente
                         r = parseInt(r.hour()/6);
@@ -328,7 +348,7 @@ angular.module('firstlife.timeline',[])
             function getNowContext(now){
                 var label = "";
                 // considero l'unita' corrente (es. settimana, mese, anno)
-                switch(units[$scope.indexDefaultUnit]){
+                switch($scope.units[$scope.indexDefaultUnit].key){
                     case 'hour':
                         // appende il giorno corrente della settimana e il numero
                         label = label.concat(now.format('dddd')).concat(" ").concat(now.format('D'));
@@ -357,7 +377,7 @@ angular.module('firstlife.timeline',[])
             // calcolo la unit da aggiungere o sottrarre con uno shift di timeline
             function getUnitToShift(){
                 // valuto la label della unit corrente
-                switch(units[$scope.indexDefaultUnit]){
+                switch($scope.units[$scope.indexDefaultUnit].key){
                     case 'hour':
                         // appende il giorno corrente della settimana e il numero
                         return 'day';
