@@ -141,7 +141,9 @@ angular.module('firstlife.config')
                 if(list.indexOf(rel[key].slug) < 0 ){
                     list.push(rel[key].slug);
                 }
+                
                 map[rel[key].slug] = rel[key].field;
+                console.log('debug rel ',map[rel[key].slug],rel[key].field,rel[key]);
             }
             if(myConfig.dev)console.log("aggiungo t: ",t," alle relazioni di: ",types[i].key);
             relations[types[i].key] = r;
