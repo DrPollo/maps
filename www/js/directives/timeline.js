@@ -26,6 +26,11 @@ angular.module('firstlife.timeline',[])
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
             
+            // show: visibile o no completamente la 
+            $scope.show = true;
+            $scope.toggle = function(){
+                $scope.show = !$scope.show;
+            }
             //setup lingua di moment js
             moment.locale('it');
             moment().isoWeek(1);
@@ -102,9 +107,17 @@ angular.module('firstlife.timeline',[])
 
 
             // reset della timeline a now e con la unit time di default
-            $scope.resetNow = function(){
+            $scope.reset = function(){
                 // reimposto la default unit
                 $scope.indexDefaultUnit = $scope.defaultUnit;
+                // ricalcolo il momento attuale
+                $scope.moment = moment();
+                // ricalcolo il buffer
+                initBuffer();
+            }
+
+            // reset della timeline a now
+            $scope.resetNow = function(){
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
                 // ricalcolo il buffer
@@ -198,6 +211,7 @@ angular.module('firstlife.timeline',[])
                         // 0: lunedi, 1: martedi, 2: mercoledi
                         // 3: giovedi, 4: venerdi, 5: sabato,6: domenica,
                         var labels = moment.weekdays();
+                        var format = $scope.isMobile ? 'ddd' : 'dddd';
                         //var format = $scope.isMobile ? '' : '';//moment.weekdays();
                         var days = [];
                         for(var i = 0; i < 7; i++){
@@ -205,11 +219,12 @@ angular.module('firstlife.timeline',[])
                             let start = angular.copy(now).weekday(i).set(initStart);
                             let end = angular.copy(now).weekday(i).set(initEnd);
                             let interval = moment.interval(start,end);
-                            let obj = {label:labels[(i+1)%7],interval:interval};
+                            let obj = {label:start.format(format),//labels[(i+1)%7],
+                                       interval:interval};
                             days.push(obj);
                             $log.debug('check interval weekdays ',interval.start(),interval.end());
                         }
-                        $log.error('check interval weekdays ',days);
+                        $log.debug('check interval weekdays ',days);
                         return days;
                         break;
                         // settimane del mese
@@ -267,13 +282,14 @@ angular.module('firstlife.timeline',[])
                         // 5: giugno, 6: luglio, 7: agosto, 8: settembre, 9: ottobre
                         // 10: novembre, 11: dicembre
                         let months = [];
+                        var format = $scope.isMobile ? 'M' : 'MMM';
                         let month = angular.copy(now);
                         for(let i = 0 ; i < 12; i ++){
                             month.month(i);
                             let start = angular.copy(month).date(1).set(initStart);
                             let end = angular.copy(month).date(month.daysInMonth()).set(initEnd);
                             let interval = moment.interval(start,end);
-                            months.push({label:localeData._monthsShort[i],interval:interval});
+                            months.push({label:start.format(format),interval:interval});
                             //$log.debug('check interval year ',interval.start(),interval.end());
                         }
                         $log.debug('check interval year ',months);
@@ -409,7 +425,7 @@ angular.module('firstlife.timeline',[])
                 for(let i = 0; i < features.length; i++){
                     let feature = features[i];
                     //$log.error('feature da controllare? ',feature);
-                    if(feature.start && feature.end){
+                    if(feature.start){// todo considera end e calcola intersect con l'intervallo
                         var start = moment(angular.copy(feature.start));
                         var index = getNowInUnits(start);
                         //$log.error('feature da considerare? ',index > -1,' data ',start.format('DD/MM/YYYY'));
