@@ -1,38 +1,44 @@
 <button class="button button-icon icon-right linear-animation" id="context" 
-        ng-click="toggle()" ng-class="show ? 'ion-ios-arrow-thin-down' : 'ion-ios-arrow-thin-up'">
+        ng-click="toggle()" >
     <span>
         <i class="icon ion-android-time"></i>
         {{context}}
     </span>
 </button>
 <div class="linear-animation" ng-show="show">
-    <div id="timeline" class="row" ng-swipe-left="rewind()" ng-swipe-right="forward()">
+    <ion-scroll id="timeline" class="row"
+                zooming="true"
+                direction="x"  scrollbar-x="false"
+                ng-swipe-right="forward()" 
+                ng-swipe-left="rewind()" 
+                on-scroll="scrolling()">
         <div ng-repeat="slot in timewindow track by $index"
              class="repeated-item col-md-4"
              style="position:relative;"
              ng-class="now == $index ? 'current' : ''"
              ng-click="scaleDown(slot)">
+            <div class="label">{{slot.label}}</div>
             <div class="entities" ng-init="c = counter(slot)">
                 <span ng-repeat="(k, val) in slot.markers" 
                       ng-style="{'background':val.color,'width':(val.counter/slot.total)*100+'%'}">
                 </span>
             </div>
-            <div class="label">{{slot.label}}</div>
+<!--            <div class="label">{{slot.label}}</div>-->
         </div>
-    </div>
+    </ion-scroll>
     <div id="buttons" ng-if="!isMobile">
-        <button class="button button-outline" ng-click="resetNow()">
+        <button class="button button-outline button-light" ng-click="resetNow()">
             {{'TODAY'|translate}}
         </button>
         <span class="group">
-            <button class="button button-outline button-icon ion-arrow-left-b" ng-click="rewind()"></button>
-            <button class="button button-outline button-icon ion-arrow-right-b" ng-click="forward()"></button>
+            <button class="button button-light button-outline button-icon ion-arrow-left-b" ng-click="rewind()"></button>
+            <button class="button button-light button-outline button-icon ion-arrow-right-b" ng-click="forward()"></button>
         </span>
         <span class="group">
             <button class="button button-outline" 
                     ng-repeat="unit in units track by $index" 
                     ng-disabled="$index <= indexDefaultUnit"
-                    ng-class="indexDefaultUnit == $index ? 'button-positive' : ''"
+                    ng-class="indexDefaultUnit == $index ? 'button-positive' : 'button-light'"
                     ng-click="scaleUpTo($index)">
                 {{unit.label| translate}}
             </button>

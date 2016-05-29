@@ -7,7 +7,7 @@ angular.module('firstlife.timeline',[])
             data:'='
         },
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log','myConfig','MapService','PlatformService',function($scope,$rootScope,$log,myConfig,MapService,PlatformService){
+        controller: ['$scope','$rootScope','$log','$ionicScrollDelegate','myConfig','MapService','PlatformService',function($scope,$rootScope,$log,$ionicScrollDelegate,myConfig,MapService,PlatformService){
             
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -22,6 +22,10 @@ angular.module('firstlife.timeline',[])
                     scanData(e);
                 }
             });
+            
+            $scope.scrolling = function(){
+                //$log.error('scrolling ',$ionicScrollDelegate.getScrollPosition())
+            }
             
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
