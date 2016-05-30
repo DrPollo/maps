@@ -7,7 +7,7 @@
         "format":"",
         "api_version" : "v4",
         "ssl": false,
-        "version": "0.4.5.2",
+        "version": "0.4.6",
         "app_name" : "FirstLife",
         "domain_name" : "firstlife",
         "domain_id" : 1,
