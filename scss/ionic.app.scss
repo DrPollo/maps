@@ -49,6 +49,7 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder { /* IE10+ */
   color: $lightDark !important;
 }
 
+.text-field{white-space: pre-line;}
 
 .medium-dark{color:#666;}
 
@@ -78,6 +79,8 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder { /* IE10+ */
 .modal-backdrop .modal-backdrop-bg{background-color: transparent !important;}
 // aggiungo ombreggiatura alla modal
 .modal {box-shadow: 1px 1px 3px #666;}
+
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 // $ionicons-font-path: "../lib/ionic/fonts" !default;

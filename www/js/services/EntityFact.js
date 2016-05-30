@@ -494,17 +494,19 @@ angular.module('firstlife.factories')
                 link_url : entity.properties.link_url,
                 display_name: entity.properties.display_name,
                 last_update: entity.properties.last_update,
-                eTimeline : (entity.properties.valid_to || entity.properties.valid_to) ? {
+                eTimeline : (entity.properties.valid_from || entity.properties.valid_to) ? {
                     id:parseInt(entity.properties.id),
                     icon: icons[mainCat.category_space] ? icons[mainCat.category_space] : icons[0],
                     lat: parseFloat(entity.geometry.coordinates[1]),
                     lng: parseFloat(entity.geometry.coordinates[0]),
-                    'start': new Date(entity.properties.valid_from),
-                    'end': new Date(entity.properties.valid_to),  // end is optional
+                    start: moment(entity.properties.valid_from),
+                    end: moment(entity.properties.valid_to),  // end is optional
+                    interval: moment.interval(moment(entity.properties.valid_from),moment(entity.properties.valid_to)),
                     'content':  htmlIcon,
                     "group": groupLabel ? groupLabel : null,
                     "editable":false,
-                    "type": "box"
+                    "type": entity_type,
+                    color : icons[0].color,
                 } : null
             };
 

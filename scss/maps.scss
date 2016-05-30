@@ -17,30 +17,31 @@
     }
 }
 .maps-view{
+    search-cards{
+        //position: absolute;
+        display: block;
+        button {
+            color: white;
+            text-align: left;
+            background: $dark;
+            display: block;
+            min-width: 100%;
+            overflow: hidden;
+            span {
+                display: inline-block;
+                padding-right: 10px;
+                font-weight: 300;
+                font-size: 1em;
+            }
+        }
+    }
     #mapHeader{
         position: fixed;
         top: 8px;
         left: 8px;
         display: inline-block;
         z-index: 12;
-        search-cards{
-            //position: absolute;
-            display: block;
-            button {
-                color: white;
-                text-align: left;
-                background: $dark;
-                display: block;
-                min-width: 100%;
-                overflow: hidden;
-                span {
-                    display: inline-block;
-                    padding-right: 10px;
-                    font-weight: 300;
-                    font-size: 1em;
-                }
-            }
-        }
+        
         #sideMenuToggler, #floating-logo, #floating-search-bar, #omnibox{
             display: inline-block;
             vertical-align: top;

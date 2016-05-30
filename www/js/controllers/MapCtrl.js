@@ -407,7 +407,7 @@ angular.module('firstlife.controllers')
             event.preventDefault();
         });
 
-        $scope.$on("timeUpdate",function(event,args){
+        $rootScope.$on("timeUpdate",function(event,args){
             // reset dei markers
             resetMarkersDistributed();
             event.preventDefault();
@@ -705,8 +705,6 @@ angular.module('firstlife.controllers')
                 locate(marker.id);
             }
         }
-
-
 
 
 
@@ -1133,7 +1131,7 @@ angular.module('firstlife.controllers')
             //$log.debug('check cosa va sulla timeline ',Object.keys($scope.markersFiltered).length);
             
             //mando il segnale di aggiornamento degli eventi sulla timeline
-            $scope.$broadcast('timeline.refresh',{list:angular.copy($scope.markersFiltered)});
+            $rootScope.$emit('timeline.refresh',{list:angular.copy($scope.markersFiltered)});
             
             // correggo la lista tenendo conto delle relazioni tra entita'
             relationsFixer();
@@ -1238,7 +1236,7 @@ angular.module('firstlife.controllers')
                 function(markers){
                     if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
                     angular.extend($scope.map.markers ,markers);
-                    if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
+                    //$log.debug("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
                     setMapMarkers();
                 },
@@ -1257,7 +1255,7 @@ angular.module('firstlife.controllers')
                 function(markers){
                     if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
                     $scope.map.markers = angular.copy( markers);
-                    if(consoleCheck) console.log("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
+                    //$log.debug("resetMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
                     setMapMarkers();
                 },

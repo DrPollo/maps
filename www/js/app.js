@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline','angular-toArrayFilter'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
@@ -247,7 +247,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TIMEFILTER_TOOLTIP:'Filtra per data',
         LOCATE_TOOLTIP: 'Trova la mia posizione',
         MENU:'Menu',
-        TODAY:'Oggi, ',
+        TODAY:'Oggi',
         // wizard
         MANDATORY_FIELD:'Campo richiesto',
         BACK:'Indietro',
@@ -400,7 +400,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_OF_LABEL:"Gruppo di",
         GROUP_OF_PLACEHOLDER:"Gruppo di",
         REL_GROUP_OF_LABEL:"Ospitato in",
-        REL_GROUP_OF_CHILD_LABEL:"Ospita"
+        REL_GROUP_OF_CHILD_LABEL:"Ospita",
+        HOUR_BUTTON:"Giorno",
+        DAY_BUTTON:"Settimana",
+        DATE_BUTTON:"Mese",
+        YEAR_BUTTON:"Anno"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -484,7 +488,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TIMEFILTER_TOOLTIP:'Filtra per data',
         LOCATE_TOOLTIP: 'Trova la mia posizione',
         MENU:'Menu',
-        TODAY:'Today, ',
+        TODAY:'Today',
         // wizard
         MANDATORY_FIELD:'Required field',
         BACK:'Back',
@@ -638,7 +642,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_OF_PLACEHOLDER:"Group of",
         REL_GROUP_OF_LABEL:"Hosted in",
         REL_GROUP_OF_CHILD_LABEL:"Hosting",
-        
+        HOUR_BUTTON:"Day",
+        DAY_BUTTON:"Week",
+        DATE_BUTTON:"Month",
+        YEAR_BUTTON:"Year"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
