@@ -83,6 +83,7 @@
             },
             "list":[
                 {"name":"PLACE_NAME","id":1,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":3,
+                 "show_author":false,
                  "properties":{
                      "parent_id":{ "key": "parent_id", "label": "PARENT_PLACE_LABEL", "placeholder":"PARENT_PLACE_PLACEHOLDER", "default":null},
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true},
@@ -97,6 +98,7 @@
                  }
                 },
                 {"name":"EVENT_NAME","id":2,"icon":"ion-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":5,
+                 "show_author":false,
                  "properties":{
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
                      "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
@@ -115,6 +117,7 @@
                  }
                 },
                 {"name":"POST_NAME","id":4,"icon":"ion-clipboard","slug":"article","url":"articles","key":"FL_ARTICLES","index":7,
+                 "show_author":true,
                  "properties":{
                      "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
                      "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
@@ -127,6 +130,7 @@
                  }
                 },
                 {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_COMMENTS","index":9,
+                 "show_author":true,
                  "properties":{
                      "comment_of":{ "key": "comment_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
                      "message_text":{"key":"message_text", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
@@ -136,6 +140,7 @@
                  },"relations":{}
                 },
                 {"name":"GROUPS_NAME","id":5,"icon":"ion-flag","slug":"group","url":"groups","key":"FL_GROUPS","index":11,
+                 "show_author":false,
                  "properties":{
                      "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
                      "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},

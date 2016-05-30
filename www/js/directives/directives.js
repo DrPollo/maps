@@ -1118,6 +1118,7 @@ angular.module('firstlife.directives', [])
                     }
                 }
                 $scope.relations.children = children;
+                $log.error('children ',children);
 
                 // caricamento dei parent
                 var parentsRelations = $scope.config.types.parent_relations[$scope.marker.entity_type];
@@ -1135,6 +1136,7 @@ angular.module('firstlife.directives', [])
                     }
                 }
                 $scope.relations.parents = parents;
+                $log.error('parents ',parents);
             }
         }]
     }
