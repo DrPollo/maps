@@ -13244,26 +13244,26 @@ ion-side-menu#side-menu {
 
 .maps-view {
   background-color: #EBEBEB !important; }
+  .maps-view search-cards {
+    display: block; }
+    .maps-view search-cards button {
+      color: white;
+      text-align: left;
+      background: #333;
+      display: block;
+      min-width: 100%;
+      overflow: hidden; }
+      .maps-view search-cards button span {
+        display: inline-block;
+        padding-right: 10px;
+        font-weight: 300;
+        font-size: 1em; }
   .maps-view #mapHeader {
     position: fixed;
     top: 8px;
     left: 8px;
     display: inline-block;
     z-index: 12; }
-    .maps-view #mapHeader search-cards {
-      display: block; }
-      .maps-view #mapHeader search-cards button {
-        color: white;
-        text-align: left;
-        background: #333;
-        display: block;
-        min-width: 100%;
-        overflow: hidden; }
-        .maps-view #mapHeader search-cards button span {
-          display: inline-block;
-          padding-right: 10px;
-          font-weight: 300;
-          font-size: 1em; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
       vertical-align: top; }
@@ -14879,6 +14879,26 @@ timeline {
   bottom: 0px;
   height: auto;
   width: 100%; }
+  timeline .context {
+    position: absolute;
+    top: -60px;
+    right: 8px;
+    background: #333;
+    color: white;
+    padding: 0px 12px;
+    text-align: left;
+    overflow: hidden; }
+    timeline .context span {
+      display: inline-block;
+      padding-right: 10px;
+      font-weight: 300;
+      font-size: 1em; }
+    timeline .context span::first-letter {
+      text-transform: capitalize; }
+    timeline .context i:before {
+      font-size: 24px;
+      line-height: 41px;
+      padding: 0px 0px 1px; }
   timeline #buttons {
     position: relative;
     z-index: 2;
@@ -14901,20 +14921,6 @@ timeline {
       margin: 0px 16px; }
     timeline #buttons .right {
       float: right; }
-  timeline #context {
-    position: absolute;
-    top: -60px;
-    right: 8px;
-    background: #333;
-    color: white;
-    padding: 0px 12px;
-    text-align: left; }
-    timeline #context span {
-      font-weight: 300; }
-    timeline #context i:before {
-      font-size: 24px;
-      line-height: 41px;
-      padding: 0px 0px 1px; }
   timeline #timeline {
     margin: 0px;
     padding: 0px 0px;

@@ -5,6 +5,33 @@ timeline{
     bottom: 0px;
     height: auto;
     width: 100%;
+    .context{
+        position: absolute;
+        top:-60px;
+        right: 8px;
+        background: $dark;
+        color: white;
+        padding: 0px 12px;
+        text-align: left;
+        overflow: hidden;
+        span{
+            display: inline-block;
+            padding-right: 10px;
+            font-weight: 300;
+            font-size: 1em;
+        }
+        span::first-letter{
+            text-transform: capitalize;
+        }
+        i{
+            //margin-left: 20px;
+        }
+        i:before{
+            font-size: 24px;
+            line-height: 41px;
+            padding: 0px 0px 1px;
+        }
+    }
     #buttons{
         position: relative;
         z-index: 2;
@@ -23,31 +50,13 @@ timeline{
             color:$lightDark;
             .icon:before{
                 line-height:25px;
-                }
+            }
         }
         .group{
             margin:0px 16px; 
         }
         .right {
             float: right;
-        }
-    }
-    #context{
-        position: absolute;
-        top:-60px;
-        right: 8px;
-        background: $dark;
-        color: white;
-        padding: 0px 12px;
-        text-align: left;
-        span{
-            font-weight: 300;
-        }
-        
-        i:before{
-            font-size: 24px;
-            line-height: 41px;
-            padding: 0px 0px 1px;
         }
     }
     #timeline{
@@ -126,7 +135,7 @@ timeline{
                 }
             }
             .label{
-                
+
             }
         }
         .current{
@@ -141,7 +150,7 @@ timeline{
                 background: white;
                 color:$positive;
             }
-            
+
         }
     }
 }

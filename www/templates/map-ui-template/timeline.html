@@ -1,11 +1,13 @@
-<button class="button button-icon icon-right linear-animation" id="context" 
+<button class="button button-icon icon-right linear-animation context" 
         ng-click="toggle()" >
     <span>
-        <i class="icon ion-android-time"></i>
         {{context}}
     </span>
+    <i class="icon"
+       ng-class="show ? 'ion-android-close' : 'ion-android-calendar'">
+    </i>
 </button>
-<div class="linear-animation" ng-show="show">
+<div class="vertical-show ease-in-animation" ng-show="show">
     <ion-scroll id="timeline" class="row"
                 zooming="true"
                 direction="x"  scrollbar-x="false"

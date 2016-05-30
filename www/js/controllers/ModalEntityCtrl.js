@@ -371,7 +371,6 @@ angular.module('firstlife.controllers')
             var index = $scope.config.types.list.map(function(e){return e.key}).indexOf(entity_type);
             // recupero il current type
             $scope.currentType = $scope.config.types.list[index];
-            $log.error('currentType ',$scope.currentType);
         }
 
 

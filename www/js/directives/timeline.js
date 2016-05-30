@@ -3,35 +3,46 @@ angular.module('firstlife.timeline',[])
 
     return {
         restrict: 'EG',
-        scope: {
-            data:'='
-        },
+        scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
         controller: ['$scope','$rootScope','$log','$ionicScrollDelegate','myConfig','MapService','PlatformService',function($scope,$rootScope,$log,$ionicScrollDelegate,myConfig,MapService,PlatformService){
-            
+
             $scope.$on('destroy',function(){
                 $scope.stopClock();
                 delete $scope;
             });
-            
+
             // listner cambio dei dati
-            $scope.$watch('data',function(e,old){
-                if(!angular.equals(e,old)){
-                    //$log.error('cambio dati della mappa ',$scope.data);
-                    // ricalcolo i dati sulla timeline
-                    scanData(e);
+//            $scope.$watch('data',function(e,old){
+//                if(!angular.equals(e,old)){
+//                    $log.error('cambio dati della mappa ',$scope.data);
+//                    // ricalcolo i dati sulla timeline
+//                    scanData(e);
+//                }
+//            });
+
+            $scope.data = {};
+            //listner cambio dei markers
+            $rootScope.$on('timeline.refresh', function(event, args) {
+                if(!event.preventTimelineRefresh){
+                    event.preventTimelineRefresh = true;
+                    if(!angular.equals($scope.data,args.list)){
+                        $scope.data = angular.copy(args.list);
+                        $log.info("timeline, timeline.refresh !");
+                        scanData(args.list);
+                    }
                 }
             });
-            
+
             $scope.scrolling = function(){
                 //$log.error('scrolling ',$ionicScrollDelegate.getScrollPosition())
             }
-            
+
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
-            
+
             // show: visibile o no completamente la 
-            $scope.show = true;
+            $scope.show = $scope.isMobile ? false : true;
             $scope.toggle = function(){
                 $scope.show = !$scope.show;
             }
@@ -51,10 +62,10 @@ angular.module('firstlife.timeline',[])
             $scope.defaultUnit = 1;
             $scope.indexDefaultUnit = $scope.defaultUnit; //mi segno l'indice
             $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
-                         {key:"day",label:"DAY_BUTTON"},
-                         {key:"date",label:"DATE_BUTTON"},
-                         {key:"year",label:"YEAR_BUTTON"}]; //unità di misura delle timeline
-            
+                            {key:"day",label:"DAY_BUTTON"},
+                            {key:"date",label:"DATE_BUTTON"},
+                            {key:"year",label:"YEAR_BUTTON"}]; //unità di misura delle timeline
+
             var defaultUnit = $scope.units[$scope.indexDefaultUnit].key; //unità di misura usata in partenza
 
             // momento attuale
@@ -128,7 +139,7 @@ angular.module('firstlife.timeline',[])
                 initBuffer();
             }
 
-            
+
             // sali alla scala
             $scope.scaleUpTo = function(index){
                 // imposto l'indice
@@ -136,7 +147,7 @@ angular.module('firstlife.timeline',[])
                     return false;
                 if(index == $scope.indexDefaultUnit)
                     return true;
-                
+
                 if(index > $scope.indexDefaultUnit){
                     $scope.indexDefaultUnit = index;
                     // ricalcolo il buffer
@@ -417,43 +428,21 @@ angular.module('firstlife.timeline',[])
                 }
                 return null;
             }
-            
-            
+
+
             // scansione dei dati dalla mappa
             function scanData(features){
-                if(!features||!Array.isArray(features)||features.length < 1)
+                if(!features)
                     return false;
+
+                var timeWindow = getCurrentInterval();
                 
-                //$log.error('start scanData ',features,features.length,' entities');
                 // per ogni feature controllo se cadono nella timeline
-                for(let i = 0; i < features.length; i++){
-                    let feature = features[i];
-                    //$log.error('feature da controllare? ',feature);
-                    if(feature.start){// todo considera end e calcola intersect con l'intervallo
-                        var start = moment(angular.copy(feature.start));
-                        var index = getNowInUnits(start);
-                        //$log.error('feature da considerare? ',index > -1,' data ',start.format('DD/MM/YYYY'));
-                        if(index > -1){
-                            // se non inizializzato creo una proprieta' con array
-                            if(!$scope.timewindow[index].markers){
-                                $scope.timewindow[index].markers = {};
-                                $scope.timewindow[index].total = 0;
-                            }
-                            //$log.debug('add feature prop ',features[i].type);
-                            var type = features[i].type;
-                            if(!$scope.timewindow[index].markers[type]){
-                                $scope.timewindow[index].markers[type] = {counter:0,color:features[i].color};
-                            }
-                            // aggiungo il marker alla timeline
-                            $scope.timewindow[index].markers[type].counter++;
-                            // calcolo il totale dei marker
-                            $scope.timewindow[index].total++;
-                            //$log.debug('trovato marker che entra nella timeline ',$scope.timewindow[index].markers[type]);
-                        }
-                    }
+                for(let i = 0; i < $scope.timewindow.length; i++){
+                    calcSlot(features, $scope.timewindow[i]);
                 }
             }
-            
+
             // calcola l'intervallo definito dalla timeline
             function getFullInterval(){
                 var time = {};
@@ -462,11 +451,53 @@ angular.module('firstlife.timeline',[])
                 return time;
             }
             
+            // calcola l'intervallo definito dalla timeline
+            function getCurrentInterval(){
+                return moment.interval($scope.timewindow[0].interval.start(),$scope.timewindow[$scope.timewindow.length -1 ].interval.end());
+            }
             
+            
+            // calcola gli slot da occupare per un intervallo
+            function calcSlot(features, unit){
+                unit.markers = {};
+                unit.total = 0;
+                for(let i in features){
+                    if(features[i].eTimeline){
+                        var feature = features[i].eTimeline;
+                        if(intersect(feature.interval,unit.interval)){
+                            var type = feature.type;
+                            if(!unit.markers[type]){
+                                unit.markers[type] = {counter:0,color:feature.color};
+                            }
+                            // aggiungo il marker alla timeline
+                            unit.markers[type].counter++;
+                            // calcolo il totale dei marker
+                            unit.total++;
+                        }
+                    }
+                }
+            }
+            
+            // calcola intersezione tra intervalli
+            function intersect(i,j){
+                // l'inizio e' contenuto nell'intervallo
+                if(i.start() && i.start() >= j.start() && i.start() <= j.end())
+                    return true;
+                // la fine e' contenuta nell'intervallo
+                if(i.end() && i.end() >= j.start() && i.end() <= j.end())
+                    return true;
+                // contiene l'intervallo
+                if(i.start() && i.end() && i.start() <= j.start() && i.end() >= j.end())
+                    return true;
+                    
+                return false;
+            }
+
+
             /*
              * gestione eventi per la mappa
              */
-            
+
             // salvo il nuovo intervallo e avviso la mappa
             function applyTimeFilters(){
                 var time = getFullInterval();
@@ -475,8 +506,8 @@ angular.module('firstlife.timeline',[])
                 //MapService.resetMarkersDistributed();
                 //$log.error('timeUpdate! ',time);
             }
-            
-            
+
+
         }]
     };
 });
