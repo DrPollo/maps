@@ -196,25 +196,25 @@ angular.module('firstlife.timeline',[])
 
             // recupera l'array dei possibili valori dell'unita' temporale
             function getNowUnits(now){
-                let initStart = {hour:0,minute:0,second:0,millisecond:0};
-                let initEnd = {hour:23,minute:59,second:59,millisecond:999};
-                let phases = ['Notte','Mattina','Pomeriggio','Sera'];
+                var initStart = {hour:0,minute:0,second:0,millisecond:0};
+                var initEnd = {hour:23,minute:59,second:59,millisecond:999};
+                var phases = ['Notte','Mattina','Pomeriggio','Sera'];
                 // considero l'unita' correte (es. settimana, mese, anno)
                 switch($scope.units[$scope.indexDefaultUnit].key){
                         // fasi della giornata
                     case 'hour':
                         // 0: notte, 1: mattina, 2: pomeriggio, 3: sera
                         // intervalli di 6 ore
-                        let duration = parseInt(24/phases.length);
-                        let n = angular.copy(now);
+                        var duration = parseInt(24/phases.length);
+                        var n = angular.copy(now);
                         n.set(initStart);
-                        let array = [];
+                        var array = [];
                         for (var i = 0; i < phases.length; i++){
-                            let start = angular.copy(n)
+                            var start = angular.copy(n)
                             start.add(i*duration,'hour');
-                            let end = angular.copy(n)
+                            var end = angular.copy(n)
                             end.add((i+1)*duration,'hour').subtract(1,'millisecond');
-                            let interval = moment.interval(start,end);
+                            var interval = moment.interval(start,end);
                             array.push({label:phases[i],interval:interval});
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
@@ -231,10 +231,10 @@ angular.module('firstlife.timeline',[])
                         var days = [];
                         for(var i = 0; i < 7; i++){
                             // genero l'intervallo giornaliero
-                            let start = angular.copy(now).weekday(i).set(initStart);
-                            let end = angular.copy(now).weekday(i).set(initEnd);
-                            let interval = moment.interval(start,end);
-                            let obj = {label:start.format(format),//labels[(i+1)%7],
+                            var start = angular.copy(now).weekday(i).set(initStart);
+                            var end = angular.copy(now).weekday(i).set(initEnd);
+                            var interval = moment.interval(start,end);
+                            var obj = {label:start.format(format),//labels[(i+1)%7],
                                        interval:interval};
                             days.push(obj);
                             $log.debug('check interval weekdays ',interval.start(),interval.end());
@@ -247,20 +247,20 @@ angular.module('firstlife.timeline',[])
                         var weeks = [];
                         // calcolo quante settimane ci sono nel mese corrente
                         // creo un array con i giorni del mese
-                        let current = angular.copy(now);
-                        let daysInMonth = current.daysInMonth()+current.day();
-                        let week = 1;
+                        var current = angular.copy(now);
+                        var daysInMonth = current.daysInMonth()+current.day();
+                        var week = 1;
                         //$log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
-                        for(let j = 1; j <= daysInMonth+6; j += 7){
+                        for(var j = 1; j <= daysInMonth+6; j += 7){
                             // prendo un giorno ogni sette, in modo da caricare nelle settimane
                             current.date(j);
                             $log.debug(j,' current ',current.format('DD/MM/YYYY'));
                             // calcolo l'intervallo della settimana (puo' uscire dal mese)
-                            let start = angular.copy(current).weekday(0);
-                            let end = angular.copy(current).weekday(6);
-                            let interval = angular.copy(moment.interval(start,end));
+                            var start = angular.copy(current).weekday(0);
+                            var end = angular.copy(current).weekday(6);
+                            var interval = angular.copy(moment.interval(start,end));
                             // creo l'etichetta per la settimana
-                            let label = "";
+                            var label = "";
                             // controllo se lunedi e' nel mese corrente
                             //$log.debug(j,' start ',start.format('DD/MM/YYYY'),' check ',now.month() <= start.month());
                             if(now.month() == start.month()){
@@ -268,7 +268,7 @@ angular.module('firstlife.timeline',[])
                             }else if(start.month() < now.month() || start.year() < now.year()){
                                 // caso: ultima settimana del mese precedente
                                 // ultimo lunedi del mese precedente - 1 /7 ti da il numero di settimane 
-                                let prevMonth = angular.copy(now).endOf('month').subtract(1,'month').day('Monday').date()-1;
+                                var prevMonth = angular.copy(now).endOf('month').subtract(1,'month').day('Monday').date()-1;
                                 label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
                             }else{break;}
                             weeks.push({label:label,interval:interval}); 
@@ -282,9 +282,9 @@ angular.module('firstlife.timeline',[])
                         var days = [];
                         // creo un array con i giorni del mese
                         for(var j = 1; j <= now.daysInMonth(); j++){
-                            let start = angular.copy(now).date(j).set(initStart);
-                            let end = angular.copy(now).date(j).set(initEnd);
-                            let interval = moment.interval(start,end);
+                            var start = angular.copy(now).date(j).set(initStart);
+                            var end = angular.copy(now).date(j).set(initEnd);
+                            var interval = moment.interval(start,end);
                             days.push({label:j,interval:interval}); 
                             //$log.debug('check interval month ',interval.start(),interval.end());
                         }
@@ -296,14 +296,14 @@ angular.module('firstlife.timeline',[])
                         // 0: gennaio, 1: febbraio, 2: marzo, 3: aprile, 4: maggio
                         // 5: giugno, 6: luglio, 7: agosto, 8: settembre, 9: ottobre
                         // 10: novembre, 11: dicembre
-                        let months = [];
+                        var months = [];
                         var format = $scope.isMobile ? 'M' : 'MMM';
-                        let month = angular.copy(now);
-                        for(let i = 0 ; i < 12; i ++){
+                        var month = angular.copy(now);
+                        for(var i = 0 ; i < 12; i ++){
                             month.month(i);
-                            let start = angular.copy(month).date(1).set(initStart);
-                            let end = angular.copy(month).date(month.daysInMonth()).set(initEnd);
-                            let interval = moment.interval(start,end);
+                            var start = angular.copy(month).date(1).set(initStart);
+                            var end = angular.copy(month).date(month.daysInMonth()).set(initEnd);
+                            var interval = moment.interval(start,end);
                             months.push({label:start.format(format),interval:interval});
                             //$log.debug('check interval year ',interval.start(),interval.end());
                         }
@@ -438,7 +438,7 @@ angular.module('firstlife.timeline',[])
                 var timeWindow = getCurrentInterval();
                 
                 // per ogni feature controllo se cadono nella timeline
-                for(let i = 0; i < $scope.timewindow.length; i++){
+                for(var i = 0; i < $scope.timewindow.length; i++){
                     calcSlot(features, $scope.timewindow[i]);
                 }
             }
@@ -461,7 +461,7 @@ angular.module('firstlife.timeline',[])
             function calcSlot(features, unit){
                 unit.markers = {};
                 unit.total = 0;
-                for(let i in features){
+                for(var i in features){
                     if(features[i].eTimeline){
                         var feature = features[i].eTimeline;
                         if(intersect(feature.interval,unit.interval)){
