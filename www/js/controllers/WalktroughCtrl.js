@@ -159,9 +159,42 @@ angular.module('firstlife.controllers')
                                 break;
                                 // status 401 password missing o username wrong
                             case 401:
-                                var alertPopup = $ionicPopup.alert({
+                                var alertPopup = $ionicPopup.show({
                                     title: $filter('translate')('LOGIN_ERROR'),
-                                    template: $filter('translate')('WRONG_CREDENTIALS')
+                                    template: $filter('translate')('WRONG_CREDENTIALS'),
+                                    scope: $scope,
+                                    buttons:[{
+                                        text: $filter('translate')('GOT_IT'),
+                                        type: 'button-default',
+                                        onTap: function(e) {
+                                            // e.preventDefault() will stop the popup from closing when tapped.
+                                            e.preventDefault();
+                                            alertPopup.close();
+                                            return false;
+                                        }
+                                    }, {
+                                        text: $filter('translate')('RECOVER'),
+                                        type: 'button-positive',
+                                        onTap: function(e) {
+                                            e.preventDefault();
+                                            UserService.retrievePassword($scope.user.email).then(
+                                                function(response){
+                                                    var alertPopup = $ionicPopup.alert({
+                                                        title: $filter('translate')('SUCCESS'),
+                                                        template: $filter('translate')('RECOVER_LINK_SENT')
+                                                    }); 
+                                                },
+                                                function(response){
+                                                    var alertPopup = $ionicPopup.alert({
+                                                        title: $filter('translate')('ERORR'),
+                                                        template: $filter('translate')('UNKOWN_ERROR')
+                                                    });
+                                                }
+                                            );
+                                            alertPopup.close();
+                                            return true;
+                                        }
+                                    }]
                                 });
                                 break;
                                 // status 400 bad requests

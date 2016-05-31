@@ -407,12 +407,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         YEAR_BUTTON:"Anno",
         EMAIL_NOT_VERIFIED:"Mail ancora non verificata. Inviare nuovamente il link di attivazione?",
         EMAIL_NOT_FOUND:"Email non trovata",
-        WRONG_CREDENTIALS:"Credenziali errate",
+        WRONG_CREDENTIALS:"Credenziali errate. Effettuare il recupero password?",
         UNKOWN_ERROR:"Errore sconosciuto :( Provare più tardi.",
         LOGIN_ERROR:'Login fallito',
         GOT_IT:'Esci',
         SEND_MAIL_AGAIN:'Invia',
-        VERIFICATION_SENT:'Mail di attivazione inviata!'
+        VERIFICATION_SENT:'Mail di attivazione inviata!',
+        RECOVER_LINK_SENT:"Inviata mail con le istruzioni per il recupero password.",
+        RECOVER:"Recupera"
     });
     $translateProvider.translations('en', {
         NOT_VALID_URL: 'Not valid url',
@@ -656,12 +658,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         YEAR_BUTTON:"Year",
         EMAIL_NOT_VERIFIED:"The email has to be verified. Send the activation email again?",
         EMAIL_NOT_FOUND:"Email not found",
-        WRONG_CREDENTIALS:"Wrong email or password",
+        WRONG_CREDENTIALS:"Wrong email or password. Do you wish to recover your password?",
         UNKOWN_ERROR:"An unkown error occured :( Please try again later.",
         LOGIN_ERROR:'Login failed',
         GOT_IT:'Exit',
         SEND_MAIL_AGAIN:'Send',
-        VERIFICATION_SENT:'Activation link sent!'
+        VERIFICATION_SENT:'Activation link sent!',
+        RECOVER_LINK_SENT:"Password recover link sent!",
+        RECOVER:"Recover"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
