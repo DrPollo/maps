@@ -175,10 +175,28 @@ angular.module('firstlife.services')
             };
             $http(req)
             .then(function(response, status, headers, config) {
-                //console.log("UserService, update, response: ",response);
                 deferred.resolve(true);
             },function(response) {
                 console.log("UserService, retrievePassword, error: ",response);
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        },
+        sendVerification: function(email){
+            var deferred = $q.defer();
+            
+            var urlId = url.concat('/reverify/').concat(email);
+            var req = {
+                url: urlId,
+                method: 'GET',
+                headers:{"Content-Type":"application/json"}
+            };
+            $http(req)
+            .then(function(response, status, headers, config) {
+                deferred.resolve(true);
+            },function(response) {
+                console.log("UserService, sendVerification, error: ",response);
                 deferred.reject(response);
             });
 

@@ -1,12 +1,12 @@
 angular.module('firstlife.controllers')
 
-    .controller('WalktroughCtrl',  ['$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig, MemoryFactory) {
+    .controller('WalktroughCtrl',  ['$log','$scope', '$state', '$rootScope', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig', 'MemoryFactory', function($log,$scope, $state, $rootScope, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig, MemoryFactory) {
 
         $scope.user = {};
         $scope.defaults = myConfig;
 
         var consoleCheck = false;
-        
+
         // azione di default
         $scope.action = 'login';
 
@@ -18,46 +18,46 @@ angular.module('firstlife.controllers')
                 //if(!$scope.defaults.actions.alow_login && !$scope.defaults.is_login_required){
                 //    goToMap();
                 //}else{
-                    // entro in login con azione "logout"
-                    switch(action){
-                        case "logout":
-                            if(consoleCheck) console.log("Richiesta di logout...");
-                            // effettuo logout
-                            UserService.logout();
-                            // elimino ?action=logout
-                            $location.search('action','login');
-                            $scope.action = "login";
-                            break;
-                        case "signup":
-                            if(consoleCheck) console.log("Richiesta di registrazione...");
-                            //todo registrazione chiusa
-                            $scope.action = "signup";
-                            break;
-                        case "password-retrieve":
-                            if(consoleCheck) console.log("Richiesta di recupero password...");
-                            $scope.action = "password-retrieve";
-                            break;
-                        case "redirect":
-                            if(consoleCheck) console.log("redirect a login, parametri: ", $stateParams);
-                            break;
-                        default:
-                            if(consoleCheck) console.log("Richiesta di login...");
-                            $scope.action = "login";
-                    }
-                    // controllo se l'utente e' in memoria
-                    if(!$rootScope.isLoggedIn){
-                        //if(consoleCheck) console.log("check se l'utente e' loggato");
-                        MemoryFactory.getUser();
-                    }
-                    //se l'utente e' gia' loggato lo reindirizzo alla mappa
-                    if($rootScope.isLoggedIn || (!config.behaviour.is_login_required && action == null)){
-                        if(consoleCheck) console.log("parametri di login: ", $stateParams);
+                // entro in login con azione "logout"
+                switch(action){
+                    case "logout":
+                        if(consoleCheck) console.log("Richiesta di logout...");
+                        // effettuo logout
+                        UserService.logout();
+                        // elimino ?action=logout
+                        $location.search('action','login');
+                        $scope.action = "login";
+                        break;
+                    case "signup":
+                        if(consoleCheck) console.log("Richiesta di registrazione...");
+                        //todo registrazione chiusa
+                        $scope.action = "signup";
+                        break;
+                    case "password-retrieve":
+                        if(consoleCheck) console.log("Richiesta di recupero password...");
+                        $scope.action = "password-retrieve";
+                        break;
+                    case "redirect":
+                        if(consoleCheck) console.log("redirect a login, parametri: ", $stateParams);
+                        break;
+                    default:
+                        if(consoleCheck) console.log("Richiesta di login...");
+                        $scope.action = "login";
+                }
+                // controllo se l'utente e' in memoria
+                if(!$rootScope.isLoggedIn){
+                    //if(consoleCheck) console.log("check se l'utente e' loggato");
+                    MemoryFactory.getUser();
+                }
+                //se l'utente e' gia' loggato lo reindirizzo alla mappa
+                if($rootScope.isLoggedIn || (!config.behaviour.is_login_required && action == null)){
+                    if(consoleCheck) console.log("parametri di login: ", $stateParams);
 
-                        goToMap();
-                    }
-                    else{ //login
-                        if(consoleCheck) console.log("User undefined!");
-                    }
+                    goToMap();
+                }
+                else{ //login
+                    if(consoleCheck) console.log("User undefined!");
+                }
                 //}
             }
         });
@@ -93,55 +93,94 @@ angular.module('firstlife.controllers')
         $scope.doLogIn = function(){
             var alertPopup = null;
             showLoadingScreen();
-            UserService.login($scope.user.email, $scope.user.password)
-                .then(
+            UserService.login($scope.user.email, $scope.user.password).then(
                 function(data) {
-                    if(consoleCheck) console.log("Login data...", data);
+                    $log.error("Login data...", data);
                     hideLoadingScreen();
-                    if(data === 0){
-                        alertPopup = $ionicPopup.alert({
-                            title: 'Mail non trovata!',
-                            template: 'Assicurati di inserirla correttamente! '
-                        });
-                    }
-                    else if (data === -1){
-                        alertPopup = $ionicPopup.alert({
-                            title: 'Password errata!',
-                            template: 'Assicurati di inserirla correttamente! '
-                        });
-                    }
-                    else { 
-                        if(consoleCheck) console.log("utente loggato: ", data);
-                        $rootScope.currentUser = data;
-                        $rootScope.isLoggedIn = true;
-                        $scope.isLoggedIn = true;
-                        goToMap();
-                    }
-
+                    if(consoleCheck) console.log("utente loggato: ", data);
+                    $rootScope.currentUser = data;
+                    $rootScope.isLoggedIn = true;
+                    $scope.isLoggedIn = true;
+                    goToMap();
                 },
                 function(data) {
+                    $log.error("Login data error...", data);
                     hideLoadingScreen();
                     if(consoleCheck) console.log("Login fallito, codice: ",data);
                     var message = 'Per favore, controlla le tue credenziali!';
                     if(data.status){
                         switch(data.status){
-                            case 401:
-                                    if(data.error == 'account not active')
-                                        message = "Account non attivo, controlla l'email con le istruzioni per l'attivazione!";
-                                    else if(data.error == 'wrong password')
-                                        message = "Password errata, ritentare o effettuare la procedura di recupero password (password dimenticata?)";
-                                    else
-                                        message = 'Per favore, controlla le tue credenziali!';
+                                // status 403 email not verified
+                            case 403:
+                                var alertPopup = $ionicPopup.show({
+                                    title: $filter('translate')('LOGIN_ERROR'),
+                                    template: $filter('translate')('EMAIL_NOT_VERIFIED'),
+                                    scope: $scope,
+                                    buttons:[{
+                                        text: $filter('translate')('GOT_IT'),
+                                        type: 'button-default',
+                                        onTap: function(e) {
+                                            // e.preventDefault() will stop the popup from closing when tapped.
+                                            e.preventDefault();
+                                            alertPopup.close();
+                                            return false;
+                                        }
+                                    }, {
+                                        text: $filter('translate')('SEND_MAIL_AGAIN'),
+                                        type: 'button-positive',
+                                        onTap: function(e) {
+                                            e.preventDefault();
+                                            UserService.sendVerification($scope.user.email).then(
+                                                function(response){
+                                                    var alertPopup = $ionicPopup.alert({
+                                                        title: $filter('translate')('SUCCESS'),
+                                                        template: $filter('translate')('VERIFICATION_SENT')
+                                                    }); 
+                                                },
+                                                function(response){
+                                                    var alertPopup = $ionicPopup.alert({
+                                                        title: $filter('translate')('ERORR'),
+                                                        template: $filter('translate')('UNKOWN_ERROR')
+                                                    });
+                                                }
+                                            );
+                                            alertPopup.close();
+                                            return true;
+                                        }
+                                    }]
+                                });
                                 break;
+                                // status 404 Organization or User not found or email worng
+                            case 404:
+                                var alertPopup = $ionicPopup.alert({
+                                    title: $filter('translate')('LOGIN_ERROR'),
+                                    template: $filter('translate')('EMAIL_NOT_FOUND')
+                                });
+                                break;
+                                // status 401 password missing o username wrong
+                            case 401:
+                                var alertPopup = $ionicPopup.alert({
+                                    title: $filter('translate')('LOGIN_ERROR'),
+                                    template: $filter('translate')('WRONG_CREDENTIALS')
+                                });
+                                break;
+                                // status 400 bad requests
+                            case 400:
+                                var alertPopup = $ionicPopup.alert({
+                                    title: $filter('translate')('LOGIN_ERROR'),
+                                    template: $filter('translate')('BAD_REQUEST')
+                                });
+                                break;
+                                // status 500 internal server error
                             default:
-                                message = 'Per favore, controlla le tue credenziali!';
+                                var alertPopup = $ionicPopup.alert({
+                                    title: $filter('translate')('LOGIN_ERROR'),
+                                    template: $filter('translate')('UNKOWN_ERROR')
+                                });
 
                         }
                     }
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Login fallito!',
-                        template: message
-                    });
+                    
                 });
 
         };
@@ -164,7 +203,7 @@ angular.module('firstlife.controllers')
                         });
                         if(consoleCheck) console.log("Register data...", data);
                         $scope.backToLogin();
-                        
+
                     },
                     function(data) {
                         hideLoadingScreen();
@@ -200,7 +239,7 @@ angular.module('firstlife.controllers')
 
         // invio richiesta recupero password
         $scope.retrievePassword = function (){
-            
+
             showLoadingScreen($filter('translate')('SENDING_REQUEST'));
             UserService.retrievePassword($scope.user.email).then(
                 function(response){
@@ -217,20 +256,20 @@ angular.module('firstlife.controllers')
                 function(response){
                     hideLoadingScreen();
                     //if(consoleCheck) 
-                        console.log("LoginCtrl, retrievePassword, error: ",response);
-                    
+                    console.log("LoginCtrl, retrievePassword, error: ",response);
+
                     var title = $filter('translate')('ERROR');
                     var template = $filter('translate')('UNKNOWN_ERROR');
-                    
+
                     switch(response.status){
                         case 404:
                             template = $filter('translate')('EMAIL_NOT_FOUND');
                             break;
-                            
+
                         default:
-                    
+
                     }
-                    
+
                     var alertPopup = $ionicPopup.alert({
                         title: title,
                         template: template
@@ -239,8 +278,8 @@ angular.module('firstlife.controllers')
             );
 
         }
-        
-        
+
+
         $scope.externalLinks = {
             'terms':$filter('translate')('TERMS_LINK'),
             'license':$filter('translate')('LICENSE_LINK')
@@ -249,8 +288,8 @@ angular.module('firstlife.controllers')
             console.log('openExternalLink',url);
             $window.open($scope.externalLinks[url]);
         }
-        
-        
+
+
         /*
          * Fine azioni form
          */
