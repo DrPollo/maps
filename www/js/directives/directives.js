@@ -213,15 +213,15 @@ angular.module('firstlife.directives', [])
 
     return {
         restrict: 'E',
-        scope: {
-            params: '=params'
-        },
+        scope: {},
         templateUrl: '/templates/map-ui-template/SearchCards.html',
-        controller: ['$scope','$location', '$log', '$stateParams', '$rootScope', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$stateParams,$rootScope,myConfig,MemoryFactory,MapService){
+        controller: ['$scope','$location', '$log', '$rootScope', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$rootScope,myConfig,MemoryFactory,MapService){
             var config = myConfig;
             var filters = config.map.filters;
             var filterList = filters.map(function(e){return e.search_param});
 
+            var listners = {};
+            
             // inizializzazione
             if(!$scope.cards){
                 $scope.cards = {};
@@ -235,15 +235,16 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-            // controllo al cambio dei parametri di search
-            $scope.$watch(
-                function(){ return $scope.params.length; }, 
-                function(e, old){
-                    //if(!angular.equals(e,old)){
+            // todo listner su rootscope
+            $scope.$watch(function(){return $location.search()}, function(e, old){
+                $log.error('check search ',e)
+                if(e && !old){
+                    // reset controllo per le search card
+                    $scope.checksearch = false;
                     // se cambiati controllo
                     checkParams($location.search());
-                });
-
+                }
+            });
 
 
             $scope.closeCard = function(k,value){
@@ -251,7 +252,10 @@ angular.module('firstlife.directives', [])
                 removeFilter(k,value);
                 // dovrebbe rimuovere anche la card al prossimo controllo
                 var key = k.toString().concat(value);
-                delete $scope.cards[key];
+                if($scope.cards[key])
+                    delete $scope.cards[key];
+                if($scope.cards[k])
+                    delete $scope.cards[k];
             };
 
             function checkParams(params){
@@ -269,8 +273,6 @@ angular.module('firstlife.directives', [])
                                 createCard(k,values[j],filters[i],key);
                             }
                         } 
-
-
                     }
                 }
                 // rimuovo le schede se i parametri sono stati rimossi
@@ -286,6 +288,11 @@ angular.module('firstlife.directives', [])
                 var card = angular.copy(filter);
                 card.value = value;
                 switch(search){
+                    case 'q':
+                        $log.error('card? ',$scope.cards[key],' key? ',key)
+                        card.label2 = value;
+                        $scope.cards['q'] = card;
+                        break;
                     case 'users':
                         // cerco il nome utente
                         var user = MemoryFactory.getUser();
@@ -431,13 +438,13 @@ angular.module('firstlife.directives', [])
     }
 })
     .directive('wall', function() {
-
     return {
         restrict: 'EG',
         scope: {
-            wall: '=content',
-            close: '=close',
-            click: '=click'
+            wall: '=',
+            close: '=',
+            click: '=',
+            query: '='
         },
         templateUrl: '/templates/map-ui-template/wallTemplate.html',
         controller: ['$scope','$location', '$log', '$filter','myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
@@ -446,7 +453,7 @@ angular.module('firstlife.directives', [])
             var bunch = 1500;
             var MODAL_RELOAD_TIME = 2;//myConfig.behaviour.modal_relaod_time;
             $scope.markerChildren = {};
-            $scope.query = '';
+            //$scope.query = '';
             $scope.limit = bunch;
 
             $scope.$on('$destroy', function(e) {
@@ -456,28 +463,44 @@ angular.module('firstlife.directives', [])
                 }
             });
 
-
+            $scope.$watch('wall',function(e,old){
+                $log.error('cambio dati ',e);
+                if(!angular.equals(e,old)){
+                    $log.error('cambio dati ',e);
+                    init();
+                }
+            });
+            
+            
+            
 
             $log.debug('inizio check wall');
-            MapService.getMapBounds().then(
-                function(response){
-                    var tmpArray = [];
-                    var keys = Object.keys($scope.wall);
-                    for(var k = 0; k < keys.length; k++){
-                        tmpArray.push($scope.wall[keys[k]]);
-                        //$scope.loadChildren($scope.wall[keys[k]])
-                    }
-                    $log.debug('fine check wall');
-                    bounds = response;
-                    //orderBy:['-last_update','name']
-                    tmpArray = $filter('filter')(tmpArray, boundsFiltering);
-                    $scope.wallArray = $filter('orderBy')(tmpArray, '-last_update','name');
-                    //polling();
-                },
-                function(response){
-                    $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
-            );
-
+            init();
+            
+            function init(){
+                if(!$scope.wall)
+                    return false;
+                
+                MapService.getMapBounds().then(
+                    function(response){
+                        var tmpArray = [];
+                        var keys = Object.keys($scope.wall);
+                        for(var k = 0; k < keys.length; k++){
+                            tmpArray.push($scope.wall[keys[k]]);
+                            //$scope.loadChildren($scope.wall[keys[k]])
+                        }
+                        $log.debug('fine check wall');
+                        bounds = response;
+                        //orderBy:['-last_update','name']
+                        tmpArray = $filter('filter')(tmpArray, boundsFiltering);
+                        $scope.wallArray = $filter('orderBy')(tmpArray, '-last_update','name');
+                        //polling();
+                    },
+                    function(response){
+                        $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
+                );
+            }
+            
             // click cambio di parametro search e chiudo modal
             $scope.clickWallItem = function(entityId){
                 // cambio paramentro search

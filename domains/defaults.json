@@ -272,7 +272,8 @@
             },
             "filters":[
                 {"key":"group","property":"group_id","search_param":"groups","icon":"ion-flag","type":"strict","label":"GROUP_FILTERING","entity_type":"FL_GROUPS"},
-                {"key":"user","property":"user","search_param":"users","icon":"ion-android-person","type":"strict","label":"USER_FILTERING"}
+                {"key":"user","property":"user","search_param":"users","icon":"ion-android-person","type":"strict","label":"USER_FILTERING"},
+                {"key":"q","property":"","search_param":"q","icon":"ion-ios-search-strong","type":"","label":"SEARCH_FILTERING","skip":true}
             ]
         },
         "behaviour":{

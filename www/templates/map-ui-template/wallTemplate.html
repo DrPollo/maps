@@ -21,7 +21,7 @@
     <div class="item item-divider">
         {{'CURRENTLY_ON_MAP'|translate}}
     </div>
-    <div class="item" collection-repeat="marker in wallArray | filter:query | orderBy: ['-last_update','name'] track by $index" >
+    <div class="item" collection-repeat="marker in wallArray | orderBy: ['-last_update','name'] track by $index" >
         <div on-tap="click(marker)" class="item-text-wrap item">
             <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
             </i>

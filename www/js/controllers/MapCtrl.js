@@ -137,6 +137,7 @@ angular.module('firstlife.controllers')
             self.watchSearchEnabled = false;
 
             check4embed($location.search());
+            check4search($location.search());
             
             $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
@@ -148,9 +149,7 @@ angular.module('firstlife.controllers')
                 } else {$scope.isLoggedIn = false;}
 
                 // recupero la mappa se non inizializzata
-                //                if(!$scope.map){
                 $scope.map = MapService.getMap();
-                //                }
 
                 if(consoleCheck) console.log("MapCtrl, map all'ingresso di stato ",$scope.map);
 
@@ -292,64 +291,12 @@ angular.module('firstlife.controllers')
                     check4customFilters(e,old);
                     // controlla il parametro embed per il visualizzatore
                     check4embed(e);
+                    // controllo il parametro di ricerca q
+                    check4search(e,old);
                 }
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
                 self.watchSearchEnabled = true;
-                // controllo i parametri di posizione
-                function check4Position(e){
-                    // se ho settati i parametri di posizione
-                    if(e.lat && e.lng && e.zoom){
-                        if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
-                            locate(e);
-                        }
-                    }
-
-                }
-                // controllo il parametro entity
-                function check4entity(e,old){
-                    if(e.entity){
-                        //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
-                        // placeModal da aprire
-                        if(consoleCheck) console.log("trovato parametro entity, devo aprire una modal: ",e.entity);
-                        clickMarker(e.entity);
-                        //localizzo perche' il marker potrebbe non essere nello scope
-                        locate(parseInt(e.entity));
-                        //}
-                    }else if(old.entity){
-                        // chiudo la modal
-                        $scope.$broadcast("markerClickClose");
-
-                    }
-                };
-                // controllo se trovo nei parametri search dei parametri 
-                // dei filtri custom
-                function check4customFilters(e,old){
-                    var filters = config.map.filters;
-                    for(var i = 0 ; i < filters.length; i ++){
-                        var param = filters[i].search_param;
-                        var filter = filters[i];
-                        var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
-                        if(e[param]){//trovato un parametro
-                            // filtro per per la property
-                            var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
-
-                            if(index > -1){
-                                $scope.filterConditions[index] = rule;
-                            }else{
-                                $scope.filterConditions.push(rule);
-                            }
-
-                        }else{
-                            // rimuovo filtro per la property
-                            var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
-                            if(index > -1 ){
-                                $scope.filterConditions.splice(index,1);
-                            }   
-                        }
-                    }
-
-                }
                 
             },
             true);
@@ -372,6 +319,14 @@ angular.module('firstlife.controllers')
         $scope.$watch("filtred", function(newVal,oldVal) {
             if(!angular.equals(newVal,oldVal)){
                 setMapMarkers();
+            }
+
+        },true);
+
+        $scope.$watch("query", function(newVal,oldVal) {
+            $log.error('change query ',newVal);
+            if(!angular.equals(newVal,oldVal)){
+                check4search(newVal,oldVal);
             }
 
         },true);
@@ -1118,9 +1073,13 @@ angular.module('firstlife.controllers')
          * 2) fix relazioni parents e children
          */
         function setMapMarkers(){
-
+            
             //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
             $scope.markersFilteredArray = angular.copy($scope.filtred);
+            
+            // se il parametro q e' impostato nella search
+            if($scope.query)
+                $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray,$scope.query);
             
             //aggiorno la lista dei marker mettendo e togliendo
             updateMarkers($scope.markersFilteredArray);
@@ -1637,21 +1596,23 @@ angular.module('firstlife.controllers')
                 var param = filters[i].search_param;
                 var filter = filters[i];
                 var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
-                if(e[param]){//trovato un parametro
-                    // filtro per per la property
-                    var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+                if(!filter.skip){
+                    if(e[param]){//trovato un parametro
+                        // filtro per per la property
+                        var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
 
-                    if(index > -1){
-                        $scope.filterConditions[index] = rule;
+                        if(index > -1){
+                            $scope.filterConditions[index] = rule;
+                        }else{
+                            $scope.filterConditions.push(rule);
+                        }
                     }else{
-                        $scope.filterConditions.push(rule);
+                        // rimuovo filtro per la property
+                        var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
+                        if(index > -1 ){
+                            $scope.filterConditions.splice(index,1);
+                        }   
                     }
-                }else{
-                    // rimuovo filtro per la property
-                    var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
-                    if(index > -1 ){
-                        $scope.filterConditions.splice(index,1);
-                    }   
                 }
             }
 
@@ -1710,7 +1671,7 @@ angular.module('firstlife.controllers')
         function check4embed(e){
             // se il parametro e' settato
             if(e.embed){
-                $log.debug('modalita embed',e);
+                $log.debug('modalita embed',e.embed);
                 switch(e.embed){
                     // visualizzatore vuoto per mappa embed
                     case 'viewer':
@@ -1725,6 +1686,55 @@ angular.module('firstlife.controllers')
             }
         }
         
+        // controllo i parametri di posizione
+        function check4Position(e){
+            // se ho settati i parametri di posizione
+            if(e.lat && e.lng && e.zoom){
+                if($scope.map.center.lat != e.lat || e.lng != $scope.map.center.lng || e.zoom != $scope.map.center.zoom){
+                    locate(e);
+                }
+            }
+
+        }
+        // controllo il parametro entity
+        function check4entity(e,old){
+            if(e.entity){
+                //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
+                // placeModal da aprire
+                if(consoleCheck) console.log("trovato parametro entity, devo aprire una modal: ",e.entity);
+                clickMarker(e.entity);
+                //localizzo perche' il marker potrebbe non essere nello scope
+                locate(parseInt(e.entity));
+                //}
+            }else if(old.entity){
+                // chiudo la modal
+                $scope.$broadcast("markerClickClose");
+
+            }
+        };
+        
+        $scope.query = null;
+        // controllo il parametro q di ricerca di stringhe
+        function check4search(e,old){
+            if(!e)
+                return false;
+            var q = e.q;
+            var o = old && old.q ? old.q : null;
+            if(q && o && q == o)
+                return false;
+            // se il parametro e' settato
+            if(q && q != ''){
+                $log.debug('modalita filtro per testo q = ',q);
+                $scope.query = q;
+                setMapMarkers();
+            }else if(q == ''){
+                $location.search('q',null);
+            }
+            if(o && o != '' && !q){
+                $scope.query = null;
+                setMapMarkers();
+            }
+        }
         
     }]).run(function(MapService,myConfig,$timeout,$rootScope){
 
