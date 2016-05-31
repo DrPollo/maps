@@ -324,11 +324,10 @@ angular.module('firstlife.controllers')
         },true);
 
         $scope.$watch("query", function(newVal,oldVal) {
-            $log.error('change query ',newVal);
+            $log.debug('change query ',newVal);
             if(!angular.equals(newVal,oldVal)){
                 check4search(newVal,oldVal);
             }
-
         },true);
 
 

@@ -95,7 +95,6 @@ angular.module('firstlife.controllers')
             showLoadingScreen();
             UserService.login($scope.user.email, $scope.user.password).then(
                 function(data) {
-                    $log.error("Login data...", data);
                     hideLoadingScreen();
                     if(consoleCheck) console.log("utente loggato: ", data);
                     $rootScope.currentUser = data;

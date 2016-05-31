@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
@@ -166,6 +166,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        ENTRIES:'risultati',
         NOT_VALID_URL: 'URL non valido',
         EXIT_MESSAGE: "Uscire dall'applicazione?",
         EXIT_FROM:"Esci da",
@@ -418,6 +419,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         RECOVER:"Recupera"
     });
     $translateProvider.translations('en', {
+        ENTRIES:'entries',
         NOT_VALID_URL: 'Not valid url',
         EXIT_MESSAGE: "Do you really want to log out?",
         EXIT_FROM: "Leaving",

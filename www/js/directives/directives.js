@@ -437,148 +437,149 @@ angular.module('firstlife.directives', [])
         }]
     }
 })
-    .directive('wall', function() {
-    return {
-        restrict: 'EG',
-        scope: {
-            wall: '=',
-            close: '=',
-            click: '=',
-            query: '='
-        },
-        templateUrl: '/templates/map-ui-template/wallTemplate.html',
-        controller: ['$scope','$location', '$log', '$filter','myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
-            var config = myConfig;
-            var bounds = {};
-            var bunch = 1500;
-            var MODAL_RELOAD_TIME = 2;//myConfig.behaviour.modal_relaod_time;
-            $scope.markerChildren = {};
-            //$scope.query = '';
-            $scope.limit = bunch;
-
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventDestroyWall){
-                    e.preventDestroyWall = true;
-                    delete $scope;
-                }
-            });
-
-            $scope.$watch('wall',function(e,old){
-                $log.error('cambio dati ',e);
-                if(!angular.equals(e,old)){
-                    $log.error('cambio dati ',e);
-                    init();
-                }
-            });
-            
-            
-            
-
-            $log.debug('inizio check wall');
-            init();
-            
-            function init(){
-                if(!$scope.wall)
-                    return false;
-                
-                MapService.getMapBounds().then(
-                    function(response){
-                        var tmpArray = [];
-                        var keys = Object.keys($scope.wall);
-                        for(var k = 0; k < keys.length; k++){
-                            tmpArray.push($scope.wall[keys[k]]);
-                            //$scope.loadChildren($scope.wall[keys[k]])
-                        }
-                        $log.debug('fine check wall');
-                        bounds = response;
-                        //orderBy:['-last_update','name']
-                        tmpArray = $filter('filter')(tmpArray, boundsFiltering);
-                        $scope.wallArray = $filter('orderBy')(tmpArray, '-last_update','name');
-                        //polling();
-                    },
-                    function(response){
-                        $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
-                );
-            }
-            
-            // click cambio di parametro search e chiudo modal
-            $scope.clickWallItem = function(entityId){
-                // cambio paramentro search
-                $location.search('entity',entityId);
-                //chiudo la modal
-                $scope.close();
-            };
-
-            // filtro bounding box della mappa, filtro preventivamente
-            function boundsFiltering(val){
-                return bounds.contains([val.lat,val.lng]);
-            }
-
-
-            $scope.loadChildren = function(marker){
-                // caricamento dei child
-                var childrenRelations = config.types.child_relations[marker.entity_type];
-                var children = {};
-                for(key in childrenRelations){
-                    var childRel = childrenRelations[key];
-                    var c = MapService.searchFor(marker.id, childRel.field);
-                    if(!$filter('isEmpty')(c)){
-                        children[key] = angular.copy(childRel);
-                        for(var j = 0; j<c.length;j++){
-                            var thing = c[j];
-                            if(!children[thing.entity_type])
-                                children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
-                            if(!children[thing.entity_type].list)
-                                children[thing.entity_type].list = [];
-                            var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
-                            if(index < 0)
-                                children[thing.entity_type].list.push(thing);
-                        }
-                    }
-                }
-                $scope.markerChildren[marker.id] = children;
-            };
-
-
-            $scope.increaseLimit = function () {
-                if ($scope.limit < $scope.items.length) {
-                    $scope.limit += 15;
-                }
-            };
-
-
-            //            $scope.$watch('query',function(e,old){
-            //                if(e !== old){
-            //                    $log.debug('change searchName',e,old);
-            //                }
-            //            });
-            //            
-            //            function initBuffer(){
-            //                $scope.bufferSearch = new CBuffer(result_limit);
-            //                $scope.bufferSearch.overflow = function(data) {
-            //            }
-            //            
-            //            // aggiunge una ricerca nei buffer di ricerca
-            //            function pushCache(e){
-            //                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
-            //                //var entry = angular.copy($scope.form);
-            //                var entry = {query:e};
-            //                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
-            //                    $scope.bufferSearch.push(entry);
-            //            }
-            //            
-            //            $scope.cacheRestore = function (index){
-            //                var query = $scope.bufferSearch.get(index).query;
-            //                //console.log("Buffer: ",$scope.bufferSearch);
-            //                initForm();
-            //                $scope.$apply(function(){$scope.query = query;});
-            //                //$scope.query = query;
-            //            }
-
-
-        }]
-    }
-}).directive('entityActions', function() {
+//    .directive('wall', function() {
+//    return {
+//        restrict: 'EG',
+//        scope: {
+//            wall: '=',
+//            close: '=',
+//            click: '=',
+//            query: '='
+//        },
+//        templateUrl: '/templates/map-ui-template/wallTemplate.html',
+//        controller: ['$scope','$location', '$log', '$filter','myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$location,$log,$filter,myConfig,MemoryFactory,MapService,CBuffer){
+//            var config = myConfig;
+//            var bounds = {};
+//            var bunch = 1500;
+//            var MODAL_RELOAD_TIME = 2;//myConfig.behaviour.modal_relaod_time;
+//            $scope.markerChildren = {};
+//            //$scope.query = '';
+//            $scope.limit = bunch;
+//
+//            $scope.$on('$destroy', function(e) {
+//                if(!e.preventDestroyWall){
+//                    e.preventDestroyWall = true;
+//                    delete $scope;
+//                }
+//            });
+//
+//            $scope.$watch('wall',function(e,old){
+//                $log.error('cambio dati ',e);
+//                if(!angular.equals(e,old)){
+//                    $log.error('cambio dati ',e);
+//                    init();
+//                }
+//            });
+//            
+//            
+//            
+//
+//            $log.debug('inizio check wall');
+//            init();
+//            
+//            function init(){
+//                if(!$scope.wall)
+//                    return false;
+//                
+//                MapService.getMapBounds().then(
+//                    function(response){
+//                        var tmpArray = [];
+//                        var keys = Object.keys($scope.wall);
+//                        for(var k = 0; k < keys.length; k++){
+//                            tmpArray.push($scope.wall[keys[k]]);
+//                            //$scope.loadChildren($scope.wall[keys[k]])
+//                        }
+//                        $log.debug('fine check wall');
+//                        bounds = response;
+//                        //orderBy:['-last_update','name']
+//                        tmpArray = $filter('filter')(tmpArray, boundsFiltering);
+//                        $scope.wallArray = $filter('orderBy')(tmpArray, '-last_update','name');
+//                        //polling();
+//                    },
+//                    function(response){
+//                        $log.error("MapCtrl, setMapMarkers, MapService.getMapBounds, errore ",response);}
+//                );
+//            }
+//            
+//            // click cambio di parametro search e chiudo modal
+//            $scope.clickWallItem = function(entityId){
+//                // cambio paramentro search
+//                $location.search('entity',entityId);
+//                //chiudo la modal
+//                $scope.close();
+//            };
+//
+//            // filtro bounding box della mappa, filtro preventivamente
+//            function boundsFiltering(val){
+//                return bounds.contains([val.lat,val.lng]);
+//            }
+//
+//
+//            $scope.loadChildren = function(marker){
+//                // caricamento dei child
+//                var childrenRelations = config.types.child_relations[marker.entity_type];
+//                var children = {};
+//                for(key in childrenRelations){
+//                    var childRel = childrenRelations[key];
+//                    var c = MapService.searchFor(marker.id, childRel.field);
+//                    if(!$filter('isEmpty')(c)){
+//                        children[key] = angular.copy(childRel);
+//                        for(var j = 0; j<c.length;j++){
+//                            var thing = c[j];
+//                            if(!children[thing.entity_type])
+//                                children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
+//                            if(!children[thing.entity_type].list)
+//                                children[thing.entity_type].list = [];
+//                            var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
+//                            if(index < 0)
+//                                children[thing.entity_type].list.push(thing);
+//                        }
+//                    }
+//                }
+//                $scope.markerChildren[marker.id] = children;
+//            };
+//
+//
+//            $scope.increaseLimit = function () {
+//                if ($scope.limit < $scope.items.length) {
+//                    $scope.limit += 15;
+//                }
+//            };
+//
+//
+//            //            $scope.$watch('query',function(e,old){
+//            //                if(e !== old){
+//            //                    $log.debug('change searchName',e,old);
+//            //                }
+//            //            });
+//            //            
+//            //            function initBuffer(){
+//            //                $scope.bufferSearch = new CBuffer(result_limit);
+//            //                $scope.bufferSearch.overflow = function(data) {
+//            //            }
+//            //            
+//            //            // aggiunge una ricerca nei buffer di ricerca
+//            //            function pushCache(e){
+//            //                $log.debug('check push ',entry,$scope.bufferSearch,$scope.bufferSearch.toArray())
+//            //                //var entry = angular.copy($scope.form);
+//            //                var entry = {query:e};
+//            //                if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
+//            //                    $scope.bufferSearch.push(entry);
+//            //            }
+//            //            
+//            //            $scope.cacheRestore = function (index){
+//            //                var query = $scope.bufferSearch.get(index).query;
+//            //                //console.log("Buffer: ",$scope.bufferSearch);
+//            //                initForm();
+//            //                $scope.$apply(function(){$scope.query = query;});
+//            //                //$scope.query = query;
+//            //            }
+//
+//
+//        }]
+//    }
+//})
+    .directive('entityActions', function() {
 
     return {
         restrict: 'EG',
