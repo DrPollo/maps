@@ -26,7 +26,6 @@ angular.module('firstlife.entitylist',[])
             });
 
             $rootScope.$on('timeline.refresh',function(e,args){
-                $log.error('cambio dati ',args.list);
                 init();
             });
             
@@ -113,6 +112,92 @@ angular.module('firstlife.entitylist',[])
                     $scope.limit += 15;
                 }
             };
+
+
+        }]
+    }
+}).directive('searchResults', function(){
+    return {
+        restrict: 'EG',
+        scope: {
+            query:'=',
+            click:'=',
+            close:'='
+        },
+        templateUrl: '/templates/map-ui-template/searchResults.html',
+        controller: ['$scope','$log','$location','myConfig','SearchService', function($scope,$log,$location,myConfig,SearchService){
+            var limit = myConfig.behaviour.query_limit;
+            var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
+            var result_limit = myConfig.behaviour.search_results_limit;
+
+            var searchendSetTimeout;
+            initForm();
+
+            //cleanup
+            $scope.$on('$destroy',function(){delete scope;});
+
+            // al cambio della query
+            $scope.$watch('query', function(e, old){
+                if(e && old != e && e.length > limit){
+                    if (SEARCH_DELAY > 0) {
+                        if (searchendSetTimeout) {
+                            clearTimeout(searchendSetTimeout);
+                        }
+                        searchendSetTimeout = setTimeout(
+                            function(){
+                                $log.log("cerco ",$scope.query);
+                                checkQuery(e);
+                            }, SEARCH_DELAY);
+                    } 
+                    else {
+                        checkQuery(e);
+                    } 
+                }
+            });
+
+            $scope.locate = function(r){
+                $location.search('lat',r.lat);
+                $location.search('lng',r.lng);
+                $scope.close();
+            }
+
+            /*
+             * Funzioni private
+             * 1) checkQuery: fa partire le richieste ai service di ricerca
+             * 2) pushCache: aggiunge nel buffer circolare il contenuto del form di ricerca
+             * 3) initForm: inizializza la struttura dati del form di ricerca
+             */
+
+            // richieste per i service di ricerca
+            function checkQuery(e){
+                // togliamo la ricerca interna per ora
+                //                SearchService.query(e).then(
+                //                    function(response){
+                //                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
+                //                        $scope.results = response.length >= result_limit ? response.slice(0,result_limit) : response;
+                //                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
+                //                        if($scope.query != '' && $scope.results.length > 0)
+                //                            pushCache(e);
+                //                    },
+                //                    function(response){ console.log("SearchCtrl, watch query, SearchService.query, error: ",response);}
+                //                );
+                SearchService.geocoding(e).then(
+                    function(response){
+                        $scope.locations = response.length >= result_limit ? response.slice(result_limit) : response;
+                    },
+                    function(response){ 
+                        $log.error("SearchCtrl, watch query, SearchService.geocoding, error: ",response);
+                    }
+                );
+            }
+
+
+
+            // inizializzazione del form di ricerca
+            function initForm(){
+                $scope.locations = [];
+                $scope.results = [];
+            }
 
 
         }]
