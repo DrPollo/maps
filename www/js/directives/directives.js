@@ -285,7 +285,6 @@ angular.module('firstlife.directives', [])
                 card.value = value;
                 switch(search){
                     case 'q':
-                        $log.error('card? ',$scope.cards[key],' key? ',key)
                         card.label2 = value;
                         $scope.cards['q'] = card;
                         break;

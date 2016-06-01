@@ -5,21 +5,12 @@ angular.module('firstlife.timeline',[])
         restrict: 'EG',
         scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log','$ionicScrollDelegate','myConfig','MapService','PlatformService',function($scope,$rootScope,$log,$ionicScrollDelegate,myConfig,MapService,PlatformService){
+        controller: ['$scope','$rootScope','$log', '$filter','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,myConfig,MapService,PlatformService, leafletData){
 
             $scope.$on('destroy',function(){
                 $scope.stopClock();
                 delete $scope;
             });
-
-            // listner cambio dei dati
-//            $scope.$watch('data',function(e,old){
-//                if(!angular.equals(e,old)){
-//                    $log.error('cambio dati della mappa ',$scope.data);
-//                    // ricalcolo i dati sulla timeline
-//                    scanData(e);
-//                }
-//            });
 
             $scope.data = {};
             //listner cambio dei markers
@@ -34,9 +25,6 @@ angular.module('firstlife.timeline',[])
                 }
             });
 
-            $scope.scrolling = function(){
-                //$log.error('scrolling ',$ionicScrollDelegate.getScrollPosition())
-            }
 
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
@@ -431,16 +419,30 @@ angular.module('firstlife.timeline',[])
 
 
             // scansione dei dati dalla mappa
-            function scanData(features){
-                if(!features)
+            function scanData(data){
+                if(!data)
                     return false;
 
                 var timeWindow = getCurrentInterval();
                 
+                //todo check boundingbox
+                MapService.getMapBounds().then(
+                    function(bounds){
+                        dataInSlots(data,bounds);
+                    },
+                    function(response){});
+                 
+            }
+            // associa le features agli slot della timeline
+            function dataInSlots(data,bounds){
                 // per ogni feature controllo se cadono nella timeline
                 for(var i = 0; i < $scope.timewindow.length; i++){
-                    calcSlot(features, $scope.timewindow[i]);
+                    calcSlot(data, $scope.timewindow[i],bounds);
                 }
+            }
+            // filtro bounding box della mappa, filtro preventivamente
+            function boundsFiltering(val,bounds){
+                return bounds.contains([val.lat,val.lng]);
             }
 
             // calcola l'intervallo definito dalla timeline
@@ -458,11 +460,11 @@ angular.module('firstlife.timeline',[])
             
             
             // calcola gli slot da occupare per un intervallo
-            function calcSlot(features, unit){
+            function calcSlot(features, unit, bounds){
                 unit.markers = {};
                 unit.total = 0;
                 for(var i in features){
-                    if(features[i].eTimeline){
+                    if(features[i].eTimeline && boundsFiltering(features[i],bounds)){
                         var feature = features[i].eTimeline;
                         if(intersect(feature.interval,unit.interval)){
                             var type = feature.type;
