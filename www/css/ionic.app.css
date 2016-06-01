@@ -14906,9 +14906,10 @@ timeline {
     width: 100%;
     height: 34px;
     background-color: #f3f3f3;
-    padding: 4px 16px; }
+    padding: 4px 16px;
+    overflow: hidden; }
     timeline #buttons button {
-      margin: 0px 4px;
+      margin: 0px 4px 0px 0px;
       height: 25px;
       min-height: 25px;
       max-height: 25px;
@@ -14918,9 +14919,12 @@ timeline {
       timeline #buttons button .icon:before {
         line-height: 25px; }
     timeline #buttons .group {
-      margin: 0px 16px; }
+      margin: 0px 16px 0px 0px; }
     timeline #buttons .right {
-      float: right; }
+      float: right;
+      margin: 0px 0px 0px 16px; }
+      timeline #buttons .right button {
+        margin: 0px 0px 0px 4px; }
   timeline #timeline {
     margin: 0px;
     padding: 0px 0px;

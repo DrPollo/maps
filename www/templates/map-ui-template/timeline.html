@@ -28,11 +28,11 @@
 <!--            <div class="label">{{slot.label}}</div>-->
         </div>
     </ion-scroll>
-    <div id="buttons" ng-if="!isMobile">
-        <button class="button button-outline button-light" ng-click="resetNow()">
-            {{'TODAY'|translate}}
-        </button>
-        <span class="group">
+    <div id="buttons">
+        <span class="group right" ng-if="!isMobile">
+            <button class="button button-outline button-light" ng-click="resetNow()">
+                {{'TODAY'|translate}}
+            </button>
             <button class="button button-light button-outline button-icon ion-arrow-left-b" ng-click="rewind()"></button>
             <button class="button button-light button-outline button-icon ion-arrow-right-b" ng-click="forward()"></button>
         </span>
@@ -44,9 +44,6 @@
                     ng-click="scaleUpTo($index)">
                 {{unit.label| translate}}
             </button>
-        </span>
-        <span class="group right">
-                {{context}}
         </span>
     </div>
 </div>
