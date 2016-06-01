@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','destegabry.timeline','angular-toArrayFilter'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
 
@@ -166,6 +166,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        ENTRIES:'risultati',
         NOT_VALID_URL: 'URL non valido',
         EXIT_MESSAGE: "Uscire dall'applicazione?",
         EXIT_FROM:"Esci da",
@@ -175,7 +176,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CONTENT: 'Contenuto',
         CREATED_BY:'pubblicato da',
         OF:'del',
-        LOADING_MESSAGE:'Caricamente in corso...',
+        LOADING_MESSAGE:'Caricamento in corso...',
         SAVING_MESSAGE:'Salvataggio in corso...',
         UNKNOWN_ERROR: 'Errore sconosciuto. Controllare la connessione di rete e riprovare.',
         SIZE_ERROR:'La dimensione del file supera il limite consentito.',
@@ -247,7 +248,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TIMEFILTER_TOOLTIP:'Filtra per data',
         LOCATE_TOOLTIP: 'Trova la mia posizione',
         MENU:'Menu',
-        TODAY:'Oggi, ',
+        TODAY:'Oggi',
         // wizard
         MANDATORY_FIELD:'Campo richiesto',
         BACK:'Indietro',
@@ -271,6 +272,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PERMALINK:'Permalink',
         CAMERA:'Camera',
         GALLERY:'Galleria',
+        GALLERY_BUTTON:'Scegli dalla Galleria',
+        FILE:'Carica file',
         PICTURE:'Foto',
         WHEN:'il',
         // myConfig entity properties
@@ -338,6 +341,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
         GROUP_FILTERING:'Gruppo ',
         USER_FILTERING:'Contenuti di ',
+        SEARCH_FILTERING:'Ricerca:',
         MY_MAP:'La mia mappa',
         VIEW_GROUP:'Mappa del gruppo',
         GENERAL_MAP:'Mappa generale',
@@ -400,9 +404,26 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_OF_LABEL:"Gruppo di",
         GROUP_OF_PLACEHOLDER:"Gruppo di",
         REL_GROUP_OF_LABEL:"Ospitato in",
-        REL_GROUP_OF_CHILD_LABEL:"Ospita"
+        REL_GROUP_OF_CHILD_LABEL:"Ospita",
+        HOUR_BUTTON:"Giorno",
+        DAY_BUTTON:"Settimana",
+        DATE_BUTTON:"Mese",
+        YEAR_BUTTON:"Anno",
+        EMAIL_NOT_VERIFIED:"Mail ancora non verificata. Inviare nuovamente il link di attivazione?",
+        EMAIL_NOT_FOUND:"Email non trovata",
+        WRONG_CREDENTIALS:"Credenziali errate. Effettuare il recupero password?",
+        UNKOWN_ERROR:"Errore sconosciuto :( Provare più tardi.",
+        LOGIN_ERROR:'Login fallito',
+        GOT_IT:'Esci',
+        SEND_MAIL_AGAIN:'Invia',
+        VERIFICATION_SENT:'Mail di attivazione inviata!',
+        RECOVER_LINK_SENT:"Inviata mail con le istruzioni per il recupero password.",
+        RECOVER:"Recupera",
+        PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 5 MB.",
+        IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif"
     });
     $translateProvider.translations('en', {
+        ENTRIES:'entries',
         NOT_VALID_URL: 'Not valid url',
         EXIT_MESSAGE: "Do you really want to log out?",
         EXIT_FROM: "Leaving",
@@ -484,7 +505,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TIMEFILTER_TOOLTIP:'Filtra per data',
         LOCATE_TOOLTIP: 'Trova la mia posizione',
         MENU:'Menu',
-        TODAY:'Today, ',
+        TODAY:'Today',
         // wizard
         MANDATORY_FIELD:'Required field',
         BACK:'Back',
@@ -508,6 +529,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PERMALINK:'Permalink',
         CAMERA:'Camera',
         GALLERY:'Gallery',
+        GALLERY_BUTTON:'Pick from Gallery',
+        FILE:'Load file',
         PICTURE:'Picture',
         WHEN:'',
         // myConfig
@@ -575,6 +598,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
         GROUP_FILTERING:'Group ',
         USER_FILTERING:'Contents of ',
+        SEARCH_FILTERING:'Search:',
         MY_MAP:'My map',
         VIEW_GROUP:'Group map',
         GENERAL_MAP:'General map',
@@ -638,7 +662,22 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_OF_PLACEHOLDER:"Group of",
         REL_GROUP_OF_LABEL:"Hosted in",
         REL_GROUP_OF_CHILD_LABEL:"Hosting",
-        
+        HOUR_BUTTON:"Day",
+        DAY_BUTTON:"Week",
+        DATE_BUTTON:"Month",
+        YEAR_BUTTON:"Year",
+        EMAIL_NOT_VERIFIED:"The email has to be verified. Send the activation email again?",
+        EMAIL_NOT_FOUND:"Email not found",
+        WRONG_CREDENTIALS:"Wrong email or password. Do you wish to recover your password?",
+        UNKOWN_ERROR:"An unkown error occured :( Please try again later.",
+        LOGIN_ERROR:'Login failed',
+        GOT_IT:'Exit',
+        SEND_MAIL_AGAIN:'Send',
+        VERIFICATION_SENT:'Activation link sent!',
+        RECOVER_LINK_SENT:"Password recover link sent!",
+        RECOVER:"Recover",
+        PICTURE_DISCLAIMER:"Picture size must not be greater than 5 MB.",
+        IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

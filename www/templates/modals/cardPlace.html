@@ -15,11 +15,20 @@
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members" reset="reset"></members-counter>
                 <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe" reset="reset"></subscribers-counter>
             </div>
-            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="content">
-                <i class="icon ion-android-time"></i>
-                <span ng-if="infoPlace.marker.valid_from">{{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (HH:mm)'}}</span>
-                <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
-                <span ng-if="infoPlace.marker.valid_to">{{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (HH:mm)'}}</span>
+            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to || currentType.show_author" class="modal-subheader">
+                <span ng-if="currentType.show_author" class="username modal-subheader-item">
+                    {{infoPlace.marker.display_name}}
+                </span>
+                <span class="valid-time modal-subheader-item">
+                    <i class="icon ion-android-time"></i>
+                    <span ng-if="infoPlace.marker.valid_from">
+                        {{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (HH:mm)'}}
+                    </span>
+                    <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
+                    <span ng-if="infoPlace.marker.valid_to">
+                        {{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (HH:mm)'}}
+                    </span>
+                </span>
             </div>
             <div ng-if="infoPlace.marker.text" class="content modal-content text-field">
                 {{infoPlace.marker.text}}
