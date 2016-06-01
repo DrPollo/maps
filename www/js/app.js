@@ -176,7 +176,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CONTENT: 'Contenuto',
         CREATED_BY:'pubblicato da',
         OF:'del',
-        LOADING_MESSAGE:'Caricamente in corso...',
+        LOADING_MESSAGE:'Caricamento in corso...',
         SAVING_MESSAGE:'Salvataggio in corso...',
         UNKNOWN_ERROR: 'Errore sconosciuto. Controllare la connessione di rete e riprovare.',
         SIZE_ERROR:'La dimensione del file supera il limite consentito.',
@@ -272,6 +272,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PERMALINK:'Permalink',
         CAMERA:'Camera',
         GALLERY:'Galleria',
+        GALLERY_BUTTON:'Scegli dalla Galleria',
+        FILE:'Carica file',
         PICTURE:'Foto',
         WHEN:'il',
         // myConfig entity properties
@@ -416,7 +418,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         SEND_MAIL_AGAIN:'Invia',
         VERIFICATION_SENT:'Mail di attivazione inviata!',
         RECOVER_LINK_SENT:"Inviata mail con le istruzioni per il recupero password.",
-        RECOVER:"Recupera"
+        RECOVER:"Recupera",
+        PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 5 MB.",
+        IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif"
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
@@ -525,6 +529,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PERMALINK:'Permalink',
         CAMERA:'Camera',
         GALLERY:'Gallery',
+        GALLERY_BUTTON:'Pick from Gallery',
+        FILE:'Load file',
         PICTURE:'Picture',
         WHEN:'',
         // myConfig
@@ -669,7 +675,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         SEND_MAIL_AGAIN:'Send',
         VERIFICATION_SENT:'Activation link sent!',
         RECOVER_LINK_SENT:"Password recover link sent!",
-        RECOVER:"Recover"
+        RECOVER:"Recover",
+        PICTURE_DISCLAIMER:"Picture size must not be greater than 5 MB.",
+        IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif"
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

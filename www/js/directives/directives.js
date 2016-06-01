@@ -645,7 +645,7 @@ angular.module('firstlife.directives', [])
             function actionReport(success){
                 var text = 'SUCCESS';
                 if(!success){
-                    text = 'ERRROR';
+                    text = 'ERROR';
                 }
                 var hideSheet = $ionicActionSheet.show({
                     titleText: $filter('translate')(text),
@@ -1002,11 +1002,15 @@ angular.module('firstlife.directives', [])
             };
 
 
-
-
-
+            // init form
+            $scope.loader = {};
+            var limit = 5000000;
             $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
-                addToImageCache(fileObj);
+                $log.error('check onLoad, da scartare? ',e,reader,file,fileObj);
+                // se non supera la dimensione massima di 5Mb
+                if(fileObj.filesize <= limit){
+                    addToImageCache(fileObj);
+                }
             }
 
             function addToImageCache(image){
@@ -1260,7 +1264,7 @@ angular.module('firstlife.directives', [])
             function actionReport(success){
                 var text = 'SUCCESS';
                 if(!success){
-                    text = 'ERRROR';
+                    text = 'ERROR';
                 }
                 var hideSheet = $ionicActionSheet.show({
                     titleText: $filter('translate')(text),
