@@ -40,8 +40,9 @@ timeline{
         height: 34px;
         background-color: #f3f3f3;
         padding: 4px 16px;
+        overflow: hidden;
         button{
-            margin: 0px 4px;
+            margin: 0px 4px 0px 0px;
             height: 25px;
             min-height: 25px;
             max-height: 25px;
@@ -53,10 +54,14 @@ timeline{
             }
         }
         .group{
-            margin:0px 16px; 
+            margin:0px 16px 0px 0px; 
         }
         .right {
             float: right;
+            margin:0px 0px 0px 16px; 
+            button{
+                margin: 0px 0px 0px 4px;
+            }
         }
     }
     #timeline{
