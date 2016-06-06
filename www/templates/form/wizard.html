@@ -145,7 +145,6 @@
                                    ></auto-complete>
                 </tags-input>
             </label>
-
             <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>
                 <div class="card list">
                     <div class="item item-divider" ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">

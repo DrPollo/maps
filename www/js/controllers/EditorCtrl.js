@@ -247,7 +247,7 @@ angular.module('firstlife.controllers')
 
         $scope.isCatRelevant = function (item) { 
             var check = ((item.entities.indexOf(_this.wizard.dataForm.entity_type) > -1) && item.is_editable);    
-            if(dev) console.log("filtro ",item, check);
+            //$log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
             return check; 
         };
 
