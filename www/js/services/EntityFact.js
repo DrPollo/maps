@@ -191,7 +191,7 @@ angular.module('firstlife.factories')
                     self.bboxHistory = [];
 
                 //query senza since
-                bboxParamsString += "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=600";
+                bboxParamsString += "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=6000";
                 if(bbox.from)
                     bboxParamsString += "&from="+bbox.from;
                 if(bbox.to)

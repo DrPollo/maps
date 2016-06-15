@@ -139,9 +139,10 @@ angular.module('firstlife.factories')
     }]).run(function($base64,myConfig){
         var dev = false;
         var sign = "firstlife-",
-            url_base = myConfig.domain_signature;
+            url_base = myConfig.domain_signature,
+            version = myConfig.version;
         for (key in keys){
-            keys[key] = sign.concat($base64.encode(keys[key].concat("-").concat(url_base)));
+            keys[key] = sign.concat($base64.encode(keys[key].concat("-").concat(url_base).concat("-").concat(version)));
         }
 
 });

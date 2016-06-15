@@ -22,10 +22,11 @@
                         <button ng-if="user.id == item.user_id" 
                             ng-click="edit(item[group.idKey],group.key,outerIndex)" 
                             class="button button-clear">
-                        <i class="icon ion-edit"></i> 
+                            <i class="icon ion-edit" style="color:#333;"></i> 
                         </button>
-                        <button ng-if="user.id == item.user_id || user.id == owner" ng-click="delete(item[group.idKey],group.key,outerIndex)" class="button button-clear">
-                            <i class="icon ion-trash-b"></i> 
+                        <button ng-if="user.id == item.user_id || user.id == owner" ng-click="delete(item[group.idKey],group.key,outerIndex)"
+                                class="button button-clear">
+                            <i class="icon ion-trash-b" style="color:#333;"></i>
                         </button>
                     </div>
                 </div>

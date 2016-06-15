@@ -420,7 +420,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         RECOVER_LINK_SENT:"Inviata mail con le istruzioni per il recupero password.",
         RECOVER:"Recupera",
         PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 5 MB.",
-        IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif"
+        IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif",
+        ADVANCED_TIME:"Gestione avanzata del tempo",
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
@@ -677,7 +678,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         RECOVER_LINK_SENT:"Password recover link sent!",
         RECOVER:"Recover",
         PICTURE_DISCLAIMER:"Picture size must not be greater than 5 MB.",
-        IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif"
+        IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif",
+        ADVANCED_TIME:"Advanced time setup",
     });
     console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');

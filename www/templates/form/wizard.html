@@ -7,12 +7,6 @@
             <span>{{editor.wizard.title |translate}} {{editor.wizard.entityLabel |translate}}</span>
         </ion-nav-title>
         <ion-nav-buttons side="right">
-            <label class="toggle" ng-init="editor.advanced = false">
-               <input type="checkbox" ng-model="editor.advanced">
-               <div class="track">
-                 <div class="handle"></div>
-               </div>
-            </label>
         </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -66,73 +60,82 @@
                     </div>
                 </label>
             </div>
-            <div class="card ease-animation" 
-                 ng-if="!editor.checkList.valid_from.advanced || editor.advanced == editor.checkList.valid_from.advanced">
-                <div id="date-form" class="row responsive-sm"
-                     ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
-                    <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.valid_from.label|translate}}
+            <div class="card ease-animation">
+                <label class="item" ng-if="editor.checkList.valid_from.advanced">
+                    <span style="vertical-align:middle;">{{'ADVANCED_TIME'|translate}}</span>
+                    <div class="toggle right" style="float:right;vertical-align:middle;" ng-init="editor.advanced = false">
+                        <input type="checkbox" ng-model="editor.advanced">
+                        <div class="track right">
+                            <div class="handle"></div>
                         </div>
-                        <ionic-datepicker title="editor.checkList.valid_from.label"
-                                          translator="editor.translator"
-                                          disableafter="editor.wizard.dataForm.valid_to" disableafterenabled="editor.valid_to"
-                                          idate="editor.wizard.dataForm.valid_from" mondayfirst="true" 
-                                          callback="editor.datePickerFrom" title="Inizio" 
-                                          ng-required="checkList.valid_from.required">
-                            <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_from || !editor.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_from && editor.valid_from">
-                                    {{ editor.wizard.dataForm.valid_from | date:'dd/MM/yyyy' }}
-                                </span>
-                            </button>
-                        </ionic-datepicker>
-                    </label>
-                    <label ng-if="editor.checkList.door_time" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.door_time.label|translate}} 
-                        </div>
-                        <ionic-timepicker input-obj="editor.checkList.door_time.template" ng-required="editor.checkList.door_time.required">
-                            <button class="button button-block button-positive button-outline overflowShow">
-                                <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
-                            </button>
-                        </ionic-timepicker>
-                    </label>
-                </div>
-                <div id="date-form" class="row responsive-sm"
-                     ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
-                    <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.valid_to.label|translate}} 
-                        </div>
-                        <ionic-datepicker title="editor.checkList.close_time.label"
-                                          translator="editor.translator"
-                                          disablebefore="editor.wizard.dataForm.valid_from" disablebeforeenabled="editor.valid_from"
-                                          idate="editor.wizard.dataForm.valid_to" 
-                                          mondayfirst="true" 
-                                          callback="editor.datePickerTo" title="Fine"
-                                          ng-required="editor.checkList.valid_to.required">
-                            <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_to || !editor.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_to && editor.valid_to">
-                                    {{ editor.wizard.dataForm.valid_to | date:'dd/MM/yyyy' }}
-                                </span> 
-                            </button>
-                        </ionic-datepicker>
-                    </label>
-                    <label ng-if="editor.checkList.close_time" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.close_time.label|translate}}  
-                        </div>
-                        <ionic-timepicker input-obj="editor.checkList.close_time.template" ng-required="editor.checkList.close_time.required">
-                            <button class="button button-block button-positive button-outline overflowShow">
-                                <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
-                            </button>
-                        </ionic-timepicker>
-                    </label>
+                    </div>
+                </label>
+                <div ng-if="!editor.checkList.valid_from.advanced || editor.advanced == editor.checkList.valid_from.advanced">
+                    <div id="date-form" class="row responsive-sm"
+                         ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
+                        <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
+                            <div class="input-label">
+                                {{editor.checkList.valid_from.label|translate}}
+                            </div>
+                            <ionic-datepicker title="editor.checkList.valid_from.label"
+                                              translator="editor.translator"
+                                              disableafter="editor.wizard.dataForm.valid_to" disableafterenabled="editor.valid_to"
+                                              idate="editor.wizard.dataForm.valid_from" mondayfirst="true" 
+                                              callback="editor.datePickerFrom" title="Inizio" 
+                                              ng-required="checkList.valid_from.required">
+                                <button class="button button-block button-positive button-outline ng-binding">
+                                    <span ng-show="!editor.wizard.dataForm.valid_from || !editor.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
+                                    <span ng-show="editor.wizard.dataForm.valid_from && editor.valid_from">
+                                        {{ editor.wizard.dataForm.valid_from | date:'dd/MM/yyyy' }}
+                                    </span>
+                                </button>
+                            </ionic-datepicker>
+                        </label>
+                        <label ng-if="editor.checkList.door_time" class="item item-input col">
+                            <div class="input-label">
+                                {{editor.checkList.door_time.label|translate}} 
+                            </div>
+                            <ionic-timepicker input-obj="editor.checkList.door_time.template" ng-required="editor.checkList.door_time.required">
+                                <button class="button button-block button-positive button-outline overflowShow">
+                                    <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
+                                </button>
+                            </ionic-timepicker>
+                        </label>
+                    </div>
+                    <div id="date-form" class="row responsive-sm"
+                         ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
+                        <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
+                            <div class="input-label">
+                                {{editor.checkList.valid_to.label|translate}} 
+                            </div>
+                            <ionic-datepicker title="editor.checkList.close_time.label"
+                                              translator="editor.translator"
+                                              disablebefore="editor.wizard.dataForm.valid_from" disablebeforeenabled="editor.valid_from"
+                                              idate="editor.wizard.dataForm.valid_to" 
+                                              mondayfirst="true" 
+                                              callback="editor.datePickerTo" title="Fine"
+                                              ng-required="editor.checkList.valid_to.required">
+                                <button class="button button-block button-positive button-outline ng-binding">
+                                    <span ng-show="!editor.wizard.dataForm.valid_to || !editor.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
+                                    <span ng-show="editor.wizard.dataForm.valid_to && editor.valid_to">
+                                        {{ editor.wizard.dataForm.valid_to | date:'dd/MM/yyyy' }}
+                                    </span> 
+                                </button>
+                            </ionic-datepicker>
+                        </label>
+                        <label ng-if="editor.checkList.close_time" class="item item-input col">
+                            <div class="input-label">
+                                {{editor.checkList.close_time.label|translate}}  
+                            </div>
+                            <ionic-timepicker input-obj="editor.checkList.close_time.template" ng-required="editor.checkList.close_time.required">
+                                <button class="button button-block button-positive button-outline overflowShow">
+                                    <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
+                                </button>
+                            </ionic-timepicker>
+                        </label>
+                    </div>
                 </div>
             </div>
-
             <label ng-if="editor.checkList.tags" class="item item-input autocompletetags">
                 <span class="input-label">{{editor.checkList.tags.label|translate}}</span>
                 <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="true">
