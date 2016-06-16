@@ -1006,7 +1006,6 @@ angular.module('firstlife.directives', [])
             $scope.loader = {};
             var limit = 5000000;
             $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
-                $log.error('check onLoad, da scartare? ',e,reader,file,fileObj);
                 // se non supera la dimensione massima di 5Mb
                 if(fileObj.filesize <= limit){
                     addToImageCache(fileObj);
@@ -1267,7 +1266,7 @@ angular.module('firstlife.directives', [])
                     text = 'ERROR';
                 }
                 var hideSheet = $ionicActionSheet.show({
-                    titleText: 'asd <i class="icon ion-sad-outline"></i>'+$filter('translate')(text),
+                    titleText: $filter('translate')(text),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
                         $log.log('CANCELLED');
