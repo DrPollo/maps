@@ -1267,7 +1267,7 @@ angular.module('firstlife.directives', [])
                     text = 'ERROR';
                 }
                 var hideSheet = $ionicActionSheet.show({
-                    titleText: 'asd <i class="icon ion-sad-outline"></i>'+$filter('translate')(text),
+                    titleText: $filter('translate')(text),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
                         $log.log('CANCELLED');
