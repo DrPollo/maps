@@ -23,7 +23,7 @@
                 </div>
                 <label ng-if="simpleEntity.type != 'image'" class="item item-input item-floating-label" ng-class="{ 'has-error' : boxEntity.form.content.$invalid, 'no-error' : !boxEntity.form.content.$invalid}">
                     <span class="input-label">{{type.label |translate}}</span>
-                    <textarea name="content" placeholder="{{type.label |translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="150" maxlength="1000" required></textarea>
+                    <textarea name="content" placeholder="{{type.label |translate}}" rows="6" ng-model="simpleEntity[simpleEntity.contentKey]" ng-minlength="150" maxlength="1000" ng-required="simpleEntity.type != 'image'"></textarea>
                 </label>
                 <div class="form-errors" ng-messages="boxEntity.form.content.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
@@ -41,7 +41,8 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button ng-if="publish" class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" ng-disabled="boxEntity.form.$invalid">{{'PUBLISH'|translate}}</button>
+<!--            ng-disabled="boxEntity.form.$invalid" -->
+            <button ng-if="publish" class="button button-stable button-clear icon ion-checkmark-round" on-tap="addEntity()" >{{'PUBLISH'|translate}}</button>
             <button ng-if="!publish" class="button button-stable button-clear icon ion-checkmark-round" on-tap="update()" ng-disabled="boxEntity.form.$invalid">{{'UPDATE'|translate}}</button>
         </div>
     </ion-footer-bar>
