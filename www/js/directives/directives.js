@@ -1191,7 +1191,7 @@ angular.module('firstlife.directives', [])
             // cancella entita' semplice
             $scope.delete = function(id,type,i){
                 // aggiungi check con alert
-
+                
                 $scope.showConfirm = function() {
                     var confirmPopup = $ionicPopup.confirm({
                         title: $filter('translate')('DELETE'),
@@ -1205,6 +1205,7 @@ angular.module('firstlife.directives', [])
                                     function(response){
                                         // cancello l'elemento dalla memoria locale
                                         var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
+                                        console.debug('check delete',id,type,i,$scope.groups[i].list,index);
                                         if(index > -1){
                                             $scope.groups[i].list.splice(index,1);
                                         }
