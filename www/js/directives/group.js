@@ -255,7 +255,8 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
 //            }
             // recupero i membri se e' un gruppo
             function initGroup(){
-                return groupsFactory.getMembersRx($scope.marker.id).subscribe(
+                var deferred = $q.defer();
+                groupsFactory.getMembersRx($scope.marker.id).subscribe(
                     function(response){
                         $scope.users = response;
                         var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
@@ -270,15 +271,18 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                             $scope.member = false;
                             $scope.owner = false;
                         }
+                        deferred.resolve();
                     },
                     function(response){
                         $log.log('the user is not a group member!');
                         // giusto per essere sicuro...
                         $scope.member = false;
                         $scope.owner = false;
+                        deferred.reject();
                     },
-                    function(){}
+                    function(){deferred.resolve();}
                 );
+                return deferred.promise;
             }
 
             $scope.actionEntity = function(action, param){
