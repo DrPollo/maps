@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'MapService', 'MemoryFactory', 'AuthService', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, MapService, MemoryFactory, AuthService) { 
+    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'MapService', 'MemoryFactory', 'AuthService', 'groupsFactory', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, MapService, MemoryFactory, AuthService, groupsFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -52,7 +52,7 @@ angular.module('firstlife.controllers')
             initPerms(marker.user);
             // recupero il tipo e lo metto dentro $scope.currentType
             initTypeChecks(marker.entity_type);
-
+            
             $log.debug('check hide!',hide,marker);
             if(!hide){
                 $log.debug('init hide');

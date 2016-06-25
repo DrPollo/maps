@@ -1,4 +1,4 @@
-angular.module('firstlife.directives', []).directive('userHandler',function(){
+angular.module('firstlife.directives').directive('userHandler',function(){
     return {
         restrict: 'E',
         scope: {
@@ -7,10 +7,14 @@ angular.module('firstlife.directives', []).directive('userHandler',function(){
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
         controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, notificationFactory,MemoryFactory,myConfig){
 
+            console.error('userHandler!')
+            
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){
                     e.preventDestroyUserHandler = true;
                     $timeout.cancel(timer);
+                    if($scope.notifications)
+                        $scope.notifications.unsubscribe();
                     delete $scope;
                 }
             });
@@ -28,7 +32,7 @@ angular.module('firstlife.directives', []).directive('userHandler',function(){
             // variabile dove inserisco il timer per il polling
             var timer = false;
             // ultimo check
-            var since = false;
+            var since = null;
             // check novita'
             var now = new Date();
             // last check
@@ -49,7 +53,7 @@ angular.module('firstlife.directives', []).directive('userHandler',function(){
 
 
             init();
-
+            
             function init(){
                 $scope.user = MemoryFactory.getUser();
                 $scope.highlight = false;
@@ -60,6 +64,7 @@ angular.module('firstlife.directives', []).directive('userHandler',function(){
                     $timeout.cancel(timer);
                 }
             }
+            
 
             function initNotifications(){
                 $scope.highlights = 0;

@@ -1,5 +1,4 @@
-angular.module('firstlife.directives', []).directive('searchCards', function() {
-
+angular.module('firstlife.directives').directive('searchCards', function() {
     return {
         restrict: 'E',
         scope: {},

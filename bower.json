@@ -40,6 +40,7 @@
     "angular-toArrayFilter": "^1.0.1",
     "highcharts": "^4.2.3",
     "moment-interval": "^0.2.2",
-    "angular-animate": "1.5.3"
+    "angular-animate": "1.5.3",
+    "rx-angular": "angular-rx#^1.1.3"
   }
 }

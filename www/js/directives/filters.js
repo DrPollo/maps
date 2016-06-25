@@ -1,4 +1,5 @@
-angular.module('firstlife.directives', []).directive('categoryFilters',['$log','$filter','myConfig', function ($log,$filter,myConfig) {
+angular.module('firstlife.directives')
+    .directive('categoryFilters',['$log','$filter','myConfig', function ($log,$filter,myConfig) {
     return {
         restrict: 'E',
         templateUrl: '/templates/map-ui-template/treeMap.html',

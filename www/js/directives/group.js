@@ -1,4 +1,4 @@
-angular.module('firstlife.directives', []).directive('membersCounter',function(){
+angular.module('firstlife.directives').directive('membersCounter',function(){
     return {
         restrict: 'EG',
         scope: {
@@ -14,6 +14,8 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersCounter){
                     e.preventDestroyMembersCounter = true;
+                    if($scope.members)
+                        $scope.members.unsubscribe();
                     delete $scope;
                 }
             });
@@ -34,15 +36,32 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
             });
 
 
+//            function initCounter(){
+//                $scope.counter = 1;
+//                groupsFactory.getMembers($scope.id).then(
+//                    function(response){
+//                        if(Array.isArray(response)){
+//                            $scope.counter = response.length;
+//                        }
+//                    },
+//                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+//                );
+//            }
+//            
             function initCounter(){
                 $scope.counter = 1;
-                groupsFactory.getMembers($scope.id).then(
-                    function(response){
-                        if(Array.isArray(response)){
-                            $scope.counter = response.length;
-                        }
+                $scope.members = groupsFactory.getMembersRx($scope.id);
+                $scope.members.subscribe(
+                    function(result){
+//                        console.debug('counter ',result);
+                        $scope.counter = result.length;
                     },
-                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                    function (error){
+                        $log.error('groupsFactory, getMembers, error ',error);
+                    },
+                    function (){
+                        $log.debug('groupsFactory, getMembers, complete ');
+                    }
                 );
             }
         }]
@@ -66,6 +85,9 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersList){
                     e.preventDestroyMembersList = true;
+                    if($scope.members)
+                        $scope.members.unsubscribe();
+                    
                     delete $scope;
                 }
             });
@@ -82,25 +104,45 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
             initList();
 
 
+//            function initList(){
+//                $scope.role = false;
+//                $scope.counter = [];
+//                $scope.membersList = [];
+//                groupsFactory.getMembers($scope.id).then(
+//                    function(response){
+//                        if(Array.isArray(response)){
+//                            $scope.membersList = response;
+//                            if($scope.user){
+//                                var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+//                                if(index > -1){
+//                                    $scope.role = response[index].role?response[index].role:'member';
+//                                }
+//                            }
+//                        }
+//                    },
+//                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+//                );
+//
+//            }
+            
             function initList(){
                 $scope.role = false;
                 $scope.counter = [];
                 $scope.membersList = [];
-                groupsFactory.getMembers($scope.id).then(
-                    function(response){
-                        if(Array.isArray(response)){
-                            $scope.membersList = response;
-                            if($scope.user){
-                                var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
-                                if(index > -1){
-                                    $scope.role = response[index].role?response[index].role:'member';
-                                }
+                $scope.members = groupsFactory.getMembersRx($scope.id);
+                $scope.members.subscribe(
+                    function(results){
+                        $scope.membersList = results;
+                        if($scope.user){
+                            var index = results.map(function(e){return e.memberId}).indexOf($scope.user.id);
+                            if(index > -1){
+                                $scope.role = results[index].role?results[index].role:'member';
                             }
                         }
                     },
-                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
+                    function(error){$log.error('groupsFactory, getMembers, error ',error);},
+                    function(){}
                 );
-
             }
 
             $scope.deleteMember = function(groupId,memberId){
@@ -187,9 +229,35 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
             }
 
             // recupero i membri se e' un gruppo
+//            function initGroup(){
+//                return groupsFactory.getMembers($scope.marker.id).then(
+//                    function(response){
+//                        var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+//                        if(index > -1){
+//                            // se esiste allora membro
+//                            $scope.member = true;
+//                            if(response[index].role == 'owner'){
+//                                // se ha impostato il ruolo proprietario
+//                                $scope.owner = true;
+//                            }
+//                        }else{
+//                            $scope.member = false;
+//                            $scope.owner = false;
+//                        }
+//                    },
+//                    function(response){
+//                        $log.log('the user is not a group member!');
+//                        // giusto per essere sicuro...
+//                        $scope.member = false;
+//                        $scope.owner = false;
+//                    }
+//                );
+//            }
+            // recupero i membri se e' un gruppo
             function initGroup(){
-                return groupsFactory.getMembers($scope.marker.id).then(
+                return groupsFactory.getMembersRx($scope.marker.id).subscribe(
                     function(response){
+                        $scope.users = response;
                         var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
                         if(index > -1){
                             // se esiste allora membro
@@ -208,7 +276,8 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
                         // giusto per essere sicuro...
                         $scope.member = false;
                         $scope.owner = false;
-                    }
+                    },
+                    function(){}
                 );
             }
 
@@ -350,15 +419,15 @@ angular.module('firstlife.directives', []).directive('membersCounter',function()
                         break;
                     case 'users':
                         // apri lista utenti in loco (modal?)
-                        groupsFactory.getMembers($scope.marker.id).then(
-                            function(response){
-                                $scope.users = response;
-                            },
-                            function(response){
-                                $log.error('manage users, error',response);
-                                // avverti dell'errore
-                            }
-                        );
+//                        groupsFactory.getMembers($scope.marker.id).then(
+//                            function(response){
+//                                $scope.users = response;
+//                            },
+//                            function(response){
+//                                $log.error('manage users, error',response);
+//                                // avverti dell'errore
+//                            }
+//                        );
                         break;
                     default:
 

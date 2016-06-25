@@ -1,4 +1,4 @@
-angular.module('firstlife.directives', []).directive('simpleEntityList',function(){
+angular.module('firstlife.directives').directive('simpleEntityList',function(){
     return {
         restrict: 'EG',
         scope: {

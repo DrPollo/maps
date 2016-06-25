@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory) {
+    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', 'rx', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory, rx) {
         
         var self = this;
         self.config = myConfig;

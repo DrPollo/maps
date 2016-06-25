@@ -12,7 +12,7 @@
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
                     <span ng-if="!isMobile">{{icon.name |translate}}</span>
                 </span>
-                <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members" reset="reset"></members-counter>
+                <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members" reset="reset" ></members-counter>
                 <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe" reset="reset"></subscribers-counter>
             </div>
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to || currentType.show_author" class="modal-subheader">
