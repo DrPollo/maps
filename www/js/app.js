@@ -705,4 +705,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     return myInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push('myInterceptor');
+}]).config(['$compileProvider','myConfig', function ($compileProvider,myConfig) {
+  if(!myConfig.debug) $compileProvider.debugInfoEnabled(false);
 }]);

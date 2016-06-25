@@ -246,9 +246,7 @@ angular.module('firstlife.services')
             return map;
         };
 
-
         // centra mappa
-
         function setMapCenter(params){
             leafletData.getMap("mymap").then(function(map) {
                 var center = new L.LatLng(params.lat, params.lng);
@@ -261,8 +259,7 @@ angular.module('firstlife.services')
                 $log.error("MapService, setMapCenter, errore: ",response);
             });
 
-        }
-
+        };
 
         // gestore cambio modalita' della mappa. es. esplora, aggiungi, etc...
         function changeMode(mode){
@@ -289,7 +286,6 @@ angular.module('firstlife.services')
             }
             return true;
         };
-
 
         // cambio tile server (indice fornito dal myConfig caricato nella mappa)
         function changeBaseLayer (key) {

@@ -191,7 +191,7 @@ angular.module('firstlife.factories')
                     self.bboxHistory = [];
 
                 //query senza since
-                bboxParamsString += "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=6000";
+                bboxParamsString = bboxParamsString.concat( "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=6000").concat('&fields=valid_from,valid_to,parent_id,location,comment_of,article_of,group_of,categories,geometry');
                 if(bbox.from)
                     bboxParamsString += "&from="+bbox.from;
                 if(bbox.to)
@@ -527,9 +527,9 @@ angular.module('firstlife.factories')
                 data:''
             };
             var details = false;
-            if(self.config.map.bbox_details){
-                details = true;
-            }
+//            if(self.config.map.bbox_details){
+//                details = true;
+//            }
 
             $http(req).then(
                 function(response) {

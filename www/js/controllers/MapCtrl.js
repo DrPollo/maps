@@ -226,7 +226,6 @@ angular.module('firstlife.controllers')
             if(!event.preventMapMarkerClick){
                 event.preventMapMarkerClick = true;
 
-
                 if(!$scope.editMode){
                     args.model.focus = false;
                     //event.target.focus = false;
@@ -687,7 +686,7 @@ angular.module('firstlife.controllers')
             // dopo che ho recuperato le informazioni del marker
             //todo loader
             //showLoadingScreen();
-            MapService.get(markerId).then(
+            MapService.getDetails(markerId).then(
                 function(marker){
                     // if(consoleCheck) console.log("apro la modal: ", $scope.map.markers[marker.id], parseInt(marker.id));
                     // centro la mappa sul marker
