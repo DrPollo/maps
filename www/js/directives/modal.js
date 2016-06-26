@@ -382,7 +382,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             $scope.$watch('marker',function(e,old){
                 // cambia il marker
-                if(e.id != old.id){
+                if(e && e.id && (!old || e.id != old.id )){
                     loadSibillings();
                 }
             });
@@ -391,7 +391,9 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             loadSibillings();
 
             function loadSibillings (){
-
+                if(!$scope.marker || !$scope.marker.entity_type)
+                    return
+                
                 $scope.relations = {};
 
                 // caricamento dei child
@@ -550,7 +552,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 if(!e.preventDestroyNotificationCounter){
                     e.preventDestroyNotificationCounter = true;
                     if(subscribers)
-                        subscribers.unsubscribe();
+                        try{subscribers.unsubscribe();}catch(e){}
                     delete $scope;
                 }
             });
@@ -576,6 +578,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 $scope.counter = 1;
                 subscribers.subscribe(
                     function(response){
+                        $log.debug('initSubscribers fired!');
                         if(Array.isArray(response)){
                             $scope.counter = response.length;
                         }
@@ -584,17 +587,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     function(){}
                 );
             }
-//            function initCounter(){
-//                $scope.counter = 1;
-//                notificationFactory.subscribers($scope.id).then(
-//                    function(response){
-//                        if(Array.isArray(response)){
-//                            $scope.counter = response.length;
-//                        }
-//                    },
-//                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
-//                );
-//            }
+            
         }]
     }
 
@@ -606,8 +599,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             actions: '=actions',
             marker: '=marker',
             close:'=close',
-            label:'=label',
-            reset:'=reset'
+            label:'=label'
         },
         templateUrl: '/templates/map-ui-template/actionsModal.html',
         controller: ['$rootScope','$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', function($rootScope, $scope, $location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory){
@@ -628,72 +620,38 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             $scope.$watch('marker',function(e,old){
                 // cambia il marker
-                if(e.id != old.id){
+                if(e && e.id && (!old || e.id != old.id )){
                     // init delle simple entities
                     init();
                 }
             });
 
+           
+            var subscribers = notificationFactory.subscribersRx($scope.marker.id);
             init();
 
 
             function init(){
+                // lista di promise
                 var promises = [];
+                // se e' un gruppo inizializzo con i membri
                 if($scope.marker.entity_type == "FL_GROUPS"){
                     promises.push(initGroup());
                 }
-                promises.push(initSubscriptions());
-                //quando sono tutti i valori inizializzati
-                $q.all(promises).then(
-                    function(response){
+                // aggiungo il recupero dei sottoscrittori
+                promises.push(initSubscribers());
+                // creo una promise da tutte le inizializzazioni
+                var deferred = $q.all(promises);
+                // quando le promise sono pronte
+                deferred.then(
+                    function(){
                         // init delle azioni
                         initActions();
-                    });
-
-            }
-
-            // recupero i subscribers
-            function initSubscriptions(){
-                return notificationFactory.subscribers($scope.marker.id).then(
-                    function(response){
-                        $log.debug('check subscribers ',response);
-                        var subscribers = response;
-                        if($scope.user)
-                            var index = subscribers.indexOf($scope.user.id);
-                        $scope.subscriber = index < 0 ? false : true;
                     },
-                    function(response){
-                        $log.error('check subscribers ',response);
-                    }
+                    function(err){$log.error('init entityActions, err ',err);}
                 );
-
             }
 
-            // recupero i membri se e' un gruppo
-//            function initGroup(){
-//                return groupsFactory.getMembers($scope.marker.id).then(
-//                    function(response){
-//                        var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
-//                        if(index > -1){
-//                            // se esiste allora membro
-//                            $scope.member = true;
-//                            if(response[index].role == 'owner'){
-//                                // se ha impostato il ruolo proprietario
-//                                $scope.owner = true;
-//                            }
-//                        }else{
-//                            $scope.member = false;
-//                            $scope.owner = false;
-//                        }
-//                    },
-//                    function(response){
-//                        $log.log('the user is not a group member!');
-//                        // giusto per essere sicuro...
-//                        $scope.member = false;
-//                        $scope.owner = false;
-//                    }
-//                );
-//            }
             // recupero i membri se e' un gruppo
             function initGroup(){
                 var deferred = $q.defer();
@@ -726,6 +684,22 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 return deferred.promise;
             }
 
+            function initSubscribers(){
+                var deferred = $q.defer();
+                subscribers.subscribe(
+                    function(response){
+                        $log.debug('initSubscribers fired!');
+                        if($scope.user)
+                            var index = response.indexOf($scope.user.id);
+                        $scope.subscriber = index < 0 ? false : true;
+                        deferred.resolve();
+                    },
+                    function(response){ $log.error('check subscribers ',response); deferred.reject(response);},
+                    function(){deferred.resolve();}
+                );
+                return deferred.promise;
+            }
+            
             $scope.actionEntity = function(action, param){
                 $log.debug('check action ',action,param);
                 switch(action){
@@ -951,10 +925,14 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                         $rootScope.$emit('subscribersReset',{observable: notificationFactory.subscribersRx($scope.marker.id) });
                     default:
                 }
-                
-                $scope.reset = true;
             }
             
         }]
     };
+}).directive('loader',function(){
+    return {
+        scope:{},
+        restrict: 'E',
+        template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
+    }
 });

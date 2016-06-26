@@ -19,7 +19,7 @@ angular.module('firstlife.timeline',[])
                     event.preventTimelineRefresh = true;
                     if(!angular.equals($scope.data,args.list)){
                         $scope.data = angular.copy(args.list);
-                        $log.info("timeline, timeline.refresh !");
+                        $log.debug("timeline, timeline.refresh !");
                         scanData(args.list);
                     }
                 }
@@ -156,7 +156,7 @@ angular.module('firstlife.timeline',[])
                 $scope.context = getNowContext(now);
                 //$log.debug('check context ',$scope.context);
                 // stampo nei log ora, l'indice e l'array dell'unita' corrente
-                $log.info('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
+                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
                 // init del buffer con la lunghezza corretta
                 $scope.timewindow = [];
                 // inserisco le date nel buffer

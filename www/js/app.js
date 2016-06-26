@@ -6,7 +6,7 @@ angular.module('underscore', [])
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx'])
 
-    .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading) {
+    .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log) {
 
     self.config = myConfig;
     // init utente
@@ -34,27 +34,26 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
         $ionicLoading.hide();
-        console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",$stateParams);
-        // console.log($rootScope.currentUser);
+        $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",$stateParams);
         // aggiorno delle variabili sullo stato precendete e corrente
         // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
         $rootScope.previousState = fromState.name;
         $rootScope.currentState = toState.name;
         var authenticate = toState.data.authenticate;
-        console.log("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
+        $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
 
         
         // se ti trovi in uno stato che richiede autenticazione e non sei loggato
         if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn)  {
             // da cancellare self.cache.isStateCached = true;
-            console.log("Salvo lo stato prima del login: ", $stateParams);
+            $log.debug("Salvo lo stato prima del login: ", $stateParams);
             event.preventDefault();
             var params = getJsonFromUrl($location.url().split("?")[1]);
             // vai a login per effettuare l'autenticazione
             $state.go('login',{action: 'redirect', from:toState.name, params: params});
         } else {
 
-            console.log("Continuo a ", toState.name);
+            $log.debug("Continuo a ", toState.name);
 
         }
 
@@ -153,16 +152,13 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 
     //error handler
-    $provide.decorator("$exceptionHandler", ["$delegate", function($delegate){
+    $provide.decorator("$exceptionHandler", ["$delegate", '$log', function($delegate,$log){
         return function(exception, cause){
             $delegate(exception, cause);
             //alert(exception.message);
-            console.log("EXCP: ", exception.message);
+            $log.error("EXCP: ", exception.message);
         }
     }]);
-
-
-
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
@@ -176,6 +172,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CONTENT: 'Contenuto',
         CREATED_BY:'pubblicato da',
         OF:'del',
+        LOADING:'Caricamento',
         LOADING_MESSAGE:'Caricamento in corso...',
         SAVING_MESSAGE:'Salvataggio in corso...',
         UNKNOWN_ERROR: 'Errore sconosciuto. Controllare la connessione di rete e riprovare.',
@@ -434,6 +431,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CONTENT:'Content',
         CREATED_BY:'posted by',
         OF:'of',
+        LOADING:'Loading',
         LOADING_MESSAGE:'Loading...',
         SAVING_MESSAGE:'Saving...',
         UNKNOWN_ERROR: 'An unknown error has occured, please check the connection and try again.',
@@ -681,7 +679,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif",
         ADVANCED_TIME:"Advanced time setup",
     });
-    console.log('Set della lingua di default ',myConfig.design.default_language);
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }]).factory('myInterceptor', ['$log', function($log) {  

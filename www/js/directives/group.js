@@ -15,7 +15,7 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                 if(!e.preventDestroyMembersCounter){
                     e.preventDestroyMembersCounter = true;
                     if($scope.members)
-                        $scope.members.unsubscribe();
+                        try{$scope.members.unsubscribe();}catch(e){}
                     delete $scope;
                 }
             });
@@ -85,7 +85,7 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                 if(!e.preventDestroyMembersList){
                     e.preventDestroyMembersList = true;
                     if($scope.members)
-                        $scope.members.unsubscribe();
+                        try{$scope.members.unsubscribe();}catch(e){}
                     
                     delete $scope;
                 }
@@ -110,28 +110,6 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
             
             $scope.members = groupsFactory.getMembersRx($scope.id);
             initList();
-
-
-//            function initList(){
-//                $scope.role = false;
-//                $scope.counter = [];
-//                $scope.membersList = [];
-//                groupsFactory.getMembers($scope.id).then(
-//                    function(response){
-//                        if(Array.isArray(response)){
-//                            $scope.membersList = response;
-//                            if($scope.user){
-//                                var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
-//                                if(index > -1){
-//                                    $scope.role = response[index].role?response[index].role:'member';
-//                                }
-//                            }
-//                        }
-//                    },
-//                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
-//                );
-//
-//            }
             
             function initList(){
                 $scope.role = false;

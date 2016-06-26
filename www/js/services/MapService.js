@@ -1,6 +1,6 @@
 angular.module('firstlife.services')
 
-    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$log','$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', function(myConfig, leafletData, entityFactory, $log,$ionicLoading, $rootScope ,$q, $cordovaGeolocation) {
+    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$log','$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', 'rx', function(myConfig, leafletData, entityFactory, $log,$ionicLoading, $rootScope ,$q, $cordovaGeolocation, rx) {
 
         self.config = myConfig;
 
@@ -157,7 +157,10 @@ angular.module('firstlife.services')
                         deferred.reject(err);
                     }
                 );
-                return  deferred.promise;
+                return deferred.promise;
+            },
+            getDetailsRx: function(id){
+                return rx.Observable.fromPromise(entityFactory.get(id, true));
             },
             getAll: function(){
                 var deferred = $q.defer();

@@ -510,7 +510,7 @@ angular.module('firstlife.factories')
                 } : null
             };
 
-            $log.log("Creazione del marker dal'entita': ", entity, marker);
+            $log.debug("Creazione del marker dal'entita': ", entity, marker);
             return marker;
         }
         // fine markerCreate
