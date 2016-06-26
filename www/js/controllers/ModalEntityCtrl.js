@@ -279,8 +279,8 @@ angular.module('firstlife.controllers')
             );
         }
 
-        function loadModal(marker){
-            $scope.obs = MapService.getDetailsRx(marker).subscribe(
+        function loadModal(markerId){
+            $scope.obs = MapService.getDetailsRx(markerId).subscribe(
                 function(marker){
                     $scope.infoPlace.marker = angular.copy(marker);
                     $scope.$emit('openPlaceModal', {marker: marker.id});
@@ -299,25 +299,6 @@ angular.module('firstlife.controllers')
                 function(){}
             );
         }
-//        function loadModal(marker){
-//            MapService.getDetails(marker).then(
-//                function(marker){
-//                    $scope.infoPlace.marker = angular.copy(marker);
-//                    $scope.$emit('openPlaceModal', {marker: marker.id});
-//                    $scope.loaded = true;
-//                    // inizializzo la maschera dei permessi per l'utente per il marker attuale
-//                    initPerms(marker.user);
-//                    // recupero il tipo e lo metto dentro $scope.currentType
-//                    initTypeChecks(marker.entity_type);
-//                },
-//                function(err){
-//                    $log.error("changeModal, errore ",err);
-//                    $scope.loaded = true;
-//                    $scope.error = true;
-//                    showAlert();
-//                }
-//            );
-//        }
 
         function chiudoModal(){
             // distruggo il menu popover

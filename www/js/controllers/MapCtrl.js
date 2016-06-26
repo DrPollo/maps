@@ -681,7 +681,7 @@ angular.module('firstlife.controllers')
 
         function clickMarker(markerId){
             if(consoleCheck) console.log("markerClick! ",markerId);
-            $scope.$broadcast("markerClick", {markerId: parseInt(markerId) });
+            $scope.$broadcast("markerClick", {markerId:parseInt(markerId)});
         }
 
         function updatePositionInSearch(){

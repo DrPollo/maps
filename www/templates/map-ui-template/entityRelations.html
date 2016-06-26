@@ -3,7 +3,7 @@
          ng-repeat="(key,parentRel) in relations.parents">
         <div ng-show="parentRel.list.length > 0" class="card list">
             <div class="item item-divider">{{parentRel.label |translate}}</div>
-            <div class="item item-icon-left item-icon-right" ng-repeat="parent in parentRel.list track by $index"  on-tap="click(parent)">
+            <div class="item item-icon-left item-icon-right" ng-repeat="parent in parentRel.list track by $index"  on-tap="click(parent.id)">
                 <i ng-if="parent.category" class="icon {{parent.icons[0].icon}}"  style="color:{{parent.icons[0].color}}"></i>
                 {{parent.name}}
                 <i class="icon positive ion-android-arrow-dropleft-circle"></i>
@@ -14,7 +14,7 @@
          ng-repeat="(key,childRel) in relations.children">
         <div ng-show="childRel.list.length > 0" class="card list">
             <div class="item item-divider">{{childRel.childrenLabel |translate}}</div>
-            <div class="item item-icon-left item-icon-right" ng-repeat="child in childRel.list track by $index"  on-tap="click(child)">
+            <div class="item item-icon-left item-icon-right" ng-repeat="child in childRel.list track by $index"  on-tap="click(child.id)">
                 <i ng-if="child.category" class="icon {{child.icons[0].icon}}"  style="color:{{child.icons[0].color}}"></i>
                 {{child.name}}
                 <i class="icon positive ion-android-arrow-dropright-circle"></i>
