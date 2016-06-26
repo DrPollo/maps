@@ -7,7 +7,6 @@ angular.module('firstlife.directives').directive('userHandler',function(){
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
         controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, notificationFactory,MemoryFactory,myConfig){
 
-            console.error('userHandler!')
             
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){

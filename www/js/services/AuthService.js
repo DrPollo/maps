@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['myConfig','MemoryFactory','groupsFactory', function(myConfig, MemoryFactory,groupsFactory) {
+    .factory('AuthService', ['myConfig','MemoryFactory','groupsFactory', 'rx', function(myConfig, MemoryFactory,groupsFactory, rx) {
 
         var dev = false;
         //C: (P&(~Q))
@@ -20,6 +20,9 @@ angular.module('firstlife.services')
             },
             checkMembership: function(entityId){
                 return groupsFactory.checkMembership(entityId);
+            },
+            checkMembershipRx: function(entityId){
+                return rx.Observable.fromPromise(groupsFactory.checkMembership(entityId)).share();
             }
         };
 

@@ -5,8 +5,6 @@ angular.module('firstlife.factories')
         var format = config.format;
         var url = config.domain_signature;
 
-        var members = null;
-
         var groupsUsers = {};
 
         return {
@@ -121,7 +119,6 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },// get members
             getMembersRx: function(entityId){
-                console.log('getMembersRx ',entityId)
                 var urlId = url.concat('group/').concat(entityId).concat('/member').concat(format);
                 var req = {
                     url: urlId,
@@ -129,25 +126,23 @@ angular.module('firstlife.factories')
                     headers:{"Content-Type":"application/json"},
                     data: {}
                 };
-                if(!members){
-                    members = rx.Observable.fromPromise($http(req))
-                    .map(function(val){
-                        //console.debug('response ',val)
-                        return val.data;
-                    })
-                    .do(
-                        function(data){
-                            //console.debug('do ',data)
-                            if(!groupsUsers[entityId])
-                                    groupsUsers[entityId] = {};
-                                for(var i in data){
-                                    groupsUsers[entityId][data[i].memberId] = data[i];
-                                }
-                        }
-                    ).retry()
-                    .share();
-                }
-                return members;        
+                
+                return members = rx.Observable.fromPromise($http(req))
+                .map(function(val){
+                    //console.debug('response ',val)
+                    return val.data;
+                })
+                .do(
+                    function(data){
+                        //console.debug('do ',data)
+                        if(!groupsUsers[entityId])
+                                groupsUsers[entityId] = {};
+                            for(var i in data){
+                                groupsUsers[entityId][data[i].memberId] = data[i];
+                            }
+                    }
+                ).retry()
+                .share();       
                     
             }
         }

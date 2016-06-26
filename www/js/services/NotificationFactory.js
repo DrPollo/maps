@@ -137,6 +137,16 @@ angular.module('firstlife.factories')
                     }
                 return deferred.promise;
             },
+            subscribersRx:function(markerId){
+                    var urlId = urlThings.concat('/').concat(markerId).concat("/subscribers").concat(format);
+                    var req = {
+                        url: urlId,
+                        method: 'GET',
+                        headers:{"Content-Type":"application/json"},
+                        data:true
+                    };
+                    return rx.Observable.fromPromise($http(req)).map(function(response){return response.data.users;}).retry().share();
+            },
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
                 var deferred = $q.defer();
