@@ -622,14 +622,17 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 // cambia il marker
                 if(e && e.id && (!old || e.id != old.id )){
                     // init delle simple entities
+                    subscribers = notificationFactory.subscribersRx($scope.marker.id);
                     init();
                 }
             });
 
            
-            var subscribers = notificationFactory.subscribersRx($scope.marker.id);
-            init();
-
+            var subscribers = null;
+            if($scope.marker){ 
+                subscribers = notificationFactory.subscribersRx($scope.marker.id);
+                init();
+            }
 
             function init(){
                 // lista di promise
