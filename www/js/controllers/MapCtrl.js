@@ -681,26 +681,7 @@ angular.module('firstlife.controllers')
 
         function clickMarker(markerId){
             if(consoleCheck) console.log("markerClick! ",markerId);
-            // id del marker
-            var id = parseInt(markerId);
-            $scope.$broadcast("markerClick", {marker:{id:id}});
-            // dopo che ho recuperato le informazioni del marker
-//            MapService.getDetails(markerId).then(
-//                function(marker){
-//                    // centro la mappa sul marker
-//                    // fatto nel listner $scope.locate(parseInt(marker.id));
-//                    $scope.$broadcast("markerClick", {marker:marker});
-//
-//                    // se i livelli sono abilitati e se marker ha un livello
-//                    if(levels.check && marker.level || marker.level===0){
-//                        // cambio il livello sulla mappa
-//                        // selectGeoJSONLevel(marker.level);
-//                    }
-//                },
-//                function(err){
-//                    if(consoleCheck) console.log("markerClick, get, errore: ",err);
-//                }
-//            );
+            $scope.$broadcast("markerClick", {markerId: parseInt(markerId) });
         }
 
         function updatePositionInSearch(){

@@ -25,8 +25,8 @@ angular.module('firstlife.controllers')
         $scope.$on("markerClick", function(event,args){
             if (!event.markerClickPrevented) {
                 event.markerClickPrevented = true;
-                if(args.marker){
-                    $scope.showMCardPlace(args.marker);
+                if(args.markerId){
+                    $scope.showMCardPlace(args.markerId);
                 }
             }
         }); 
@@ -51,14 +51,14 @@ angular.module('firstlife.controllers')
         
 
         //modal info sul place
-        $scope.showMCardPlace = function(marker){  
+        $scope.showMCardPlace = function(markerId){  
             // inizio caricamento modal
             $scope.loaded = false;
             $scope.error = false;
             // cancello il marker
             delete $scope.infoPlace.marker;
             
-            $log.debug('check hide!',hide,marker);
+            $log.debug('check hide!',hide,markerId);
             if(!hide){
                 $log.debug('init hide');
                 hide = $scope.$on('modal.hidden', function(e) {
@@ -97,7 +97,7 @@ angular.module('firstlife.controllers')
             }
             
             // carico il contenuto della modal
-            loadModal(marker.id);
+            loadModal(markerId);
             
             $scope.openModalPlace = function() {
                 $scope.infoPlace.modal.show();
@@ -111,72 +111,10 @@ angular.module('firstlife.controllers')
         };
         
         
-        //modal info sul place
-//        $scope.showMCardPlace = function(marker){  
-//            // inizializzo la maschera dei permessi per l'utente per il marker attuale
-//            initPerms(marker.user);
-//            // recupero il tipo e lo metto dentro $scope.currentType
-//            initTypeChecks(marker.entity_type);
-//            
-//            $log.debug('check hide!',hide,marker);
-//            if(!hide){
-//                $log.debug('init hide');
-//                hide = $scope.$on('modal.hidden', function(e) {
-//                    //segnalo la chiusura della modal
-//                    if($scope.infoPlace.modal && !e.modalHiddenPrevented){
-//                        e.modalHiddenPrevented = true;
-//
-//                        //deregistro il listner per la hide
-//                        $log.debug('check hide listner!',hide);
-//                        hide();
-//                        hide = null;
-//                        chiudoModal();
-//                    }
-//                });
-//            }
-//            // se la modal e' gia' aperta cambio solo il contenuto
-//            // to do incapsulare il codice in una closeModal con then
-//            if($scope.infoPlace.modal){
-//                // la modal esiste
-//                $scope.infoPlace.modal.show();
-//                changeModal(marker.id);
-//            }else{
-//                // la modal non esiste, la creo
-//                $scope.infoPlace = {};
-//                $scope.infoPlace.marker = angular.copy(marker);
-//                $scope.infoPlace.modify = false;    
-//                $scope.infoPlace.dataForm = {};
-//
-//                $ionicModal.fromTemplateUrl('templates/modals/cardPlace.html', {
-//                    scope: $scope,
-//                    animation: 'fade-in',//'slide-in-up',
-//                    backdropClickToClose : true,
-//                    hardwareBackButtonClose : true
-//                }).then(function(modal) {
-//                    $log.debug("infoPlace, apro modal modal: ", modal);
-//                    $scope.infoPlace.modal = modal;
-//                    $scope.openModalPlace();
-//                    // parte l'update dopo 1 secondo
-//                    $ionicLoading.show();
-//                    $scope.$emit('openPlaceModal', {marker: marker.id});
-//                    updateDetails($scope.infoPlace.marker.id);
-//                });  
-//            }
-//            $scope.openModalPlace = function() {
-//                $scope.infoPlace.modal.show();
-//                // creo il menu per la modal
-//                $scope.showPopoverMenu();
-//            };
-//
-//            $scope.closeModal = function() {
-//                chiudoModal(); 
-//            };
-//        };
-
         //action sheet init-info sul place
-        $scope.showASDeletedPlace = function(placeId){
+        $scope.showASDeletedPlace = function(entityId){
             var title="";
-            if(placeId===-1)
+            if(entityId === -1)
                 title = $filter('translate')('ERROR_CANCEL');
             else
                 title = $filter('translate')('SUCCESS_CANCEL');
@@ -185,10 +123,10 @@ angular.module('firstlife.controllers')
                 titleText: title,
                 cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                 cancel: function() {
-                    $log.debug("Deleted place cancelled: "+placeId);
+                    $log.debug("Deleted place cancelled: "+entityId);
                 }
             });
-            if(consoleCheck)console.log("actionSheet", hideSheet);
+            $log.debug("actionSheet", hideSheet);
             // to do serve per il routing, chiudo l'action sheet con il pulsante back
         };
 
