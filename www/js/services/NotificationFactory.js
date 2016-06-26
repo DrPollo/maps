@@ -145,9 +145,10 @@ angular.module('firstlife.factories')
                     headers:{"Content-Type":"application/json"},
                     data:true
                 };
-                var obs = rx.Observable.fromPromise($http(req)).map(function(response){return response.data.users;}).retry().share();
-                
-                return obs;
+                return rx.Observable.fromPromise($http(req))
+                .map(function(response){return response.data.users;})
+                .retry()
+                .share();
             },
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
