@@ -1,6 +1,6 @@
 angular.module('firstlife.services')
 
-    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$log','$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', function(myConfig, leafletData, entityFactory, $log,$ionicLoading, $rootScope ,$q, $cordovaGeolocation) {
+    .service('MapService', ['myConfig', 'leafletData', 'entityFactory', '$log','$ionicLoading', '$rootScope', '$q', '$cordovaGeolocation', 'rx', function(myConfig, leafletData, entityFactory, $log,$ionicLoading, $rootScope ,$q, $cordovaGeolocation, rx) {
 
         self.config = myConfig;
 
@@ -157,7 +157,10 @@ angular.module('firstlife.services')
                         deferred.reject(err);
                     }
                 );
-                return  deferred.promise;
+                return deferred.promise;
+            },
+            getDetailsRx: function(id){
+                return rx.Observable.fromPromise(entityFactory.get(id, true));
             },
             getAll: function(){
                 var deferred = $q.defer();
@@ -246,9 +249,7 @@ angular.module('firstlife.services')
             return map;
         };
 
-
         // centra mappa
-
         function setMapCenter(params){
             leafletData.getMap("mymap").then(function(map) {
                 var center = new L.LatLng(params.lat, params.lng);
@@ -261,8 +262,7 @@ angular.module('firstlife.services')
                 $log.error("MapService, setMapCenter, errore: ",response);
             });
 
-        }
-
+        };
 
         // gestore cambio modalita' della mappa. es. esplora, aggiungi, etc...
         function changeMode(mode){
@@ -289,7 +289,6 @@ angular.module('firstlife.services')
             }
             return true;
         };
-
 
         // cambio tile server (indice fornito dal myConfig caricato nella mappa)
         function changeBaseLayer (key) {

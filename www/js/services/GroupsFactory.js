@@ -1,10 +1,9 @@
 angular.module('firstlife.factories')
-    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'MemoryFactory', function($http, $q,  $log, myConfig, MemoryFactory) {
+    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'MemoryFactory','rx', function($http, $q,  $log, myConfig, MemoryFactory,rx) {
 
         var config = myConfig;
         var format = config.format;
         var url = config.domain_signature;
-
 
         var groupsUsers = {};
 
@@ -118,6 +117,33 @@ angular.module('firstlife.factories')
                         deferred.reject(response);
                     });
                 return deferred.promise;
+            },// get members
+            getMembersRx: function(entityId){
+                var urlId = url.concat('group/').concat(entityId).concat('/member').concat(format);
+                var req = {
+                    url: urlId,
+                    method: 'get',
+                    headers:{"Content-Type":"application/json"},
+                    data: {}
+                };
+                
+                return members = rx.Observable.fromPromise($http(req))
+                .map(function(val){
+                    //console.debug('response ',val)
+                    return val.data;
+                })
+                .do(
+                    function(data){
+                        //console.debug('do ',data)
+                        if(!groupsUsers[entityId])
+                                groupsUsers[entityId] = {};
+                            for(var i in data){
+                                groupsUsers[entityId][data[i].memberId] = data[i];
+                            }
+                    }
+                ).retry()
+                .share();       
+                    
             }
         }
 

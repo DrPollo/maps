@@ -226,7 +226,6 @@ angular.module('firstlife.controllers')
             if(!event.preventMapMarkerClick){
                 event.preventMapMarkerClick = true;
 
-
                 if(!$scope.editMode){
                     args.model.focus = false;
                     //event.target.focus = false;
@@ -682,30 +681,7 @@ angular.module('firstlife.controllers')
 
         function clickMarker(markerId){
             if(consoleCheck) console.log("markerClick! ",markerId);
-            // id del marker
-            var id = parseInt(markerId);
-            // dopo che ho recuperato le informazioni del marker
-            //todo loader
-            //showLoadingScreen();
-            MapService.get(markerId).then(
-                function(marker){
-                    // if(consoleCheck) console.log("apro la modal: ", $scope.map.markers[marker.id], parseInt(marker.id));
-                    // centro la mappa sul marker
-                    // fatto nel listner $scope.locate(parseInt(marker.id));
-                    $scope.$broadcast("markerClick", {marker:marker});
-
-                    // se i livelli sono abilitati e se marker ha un livello
-                    if(levels.check && marker.level || marker.level===0){
-                        // cambio il livello sulla mappa
-                        // selectGeoJSONLevel(marker.level);
-                    }
-                    //locate(marker.id);
-                },
-                function(err){
-                    //hideLoadingScreen();
-                    if(consoleCheck) console.log("markerClick, get, errore: ",err);
-                }
-            );
+            $scope.$broadcast("markerClick", {markerId: parseInt(markerId) });
         }
 
         function updatePositionInSearch(){

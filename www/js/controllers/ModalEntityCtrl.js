@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'MapService', 'MemoryFactory', 'AuthService', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, MapService, MemoryFactory, AuthService) { 
+    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'MapService', 'MemoryFactory', 'AuthService', 'groupsFactory', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, MapService, MemoryFactory, AuthService, groupsFactory) { 
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -25,8 +25,8 @@ angular.module('firstlife.controllers')
         $scope.$on("markerClick", function(event,args){
             if (!event.markerClickPrevented) {
                 event.markerClickPrevented = true;
-                if(args.marker){
-                    $scope.showMCardPlace(args.marker);
+                if(args.markerId){
+                    $scope.showMCardPlace(args.markerId);
                 }
             }
         }); 
@@ -42,18 +42,23 @@ angular.module('firstlife.controllers')
             if(!e.destroyModalDestroyPrevented){
                 e.destroyModalDestroyPrevented = true;
                 $log.debug('destroy modal');
+                // blocco la richiesta dei dettagli
+                try{$scope.obs.unsubscribe()}catch(e){}
                 delete $scope;
             }
         });
+        
+        
 
         //modal info sul place
-        $scope.showMCardPlace = function(marker){  
-            // inizializzo la maschera dei permessi per l'utente per il marker attuale
-            initPerms(marker.user);
-            // recupero il tipo e lo metto dentro $scope.currentType
-            initTypeChecks(marker.entity_type);
-
-            $log.debug('check hide!',hide,marker);
+        $scope.showMCardPlace = function(markerId){  
+            // inizio caricamento modal
+            $scope.loaded = false;
+            $scope.error = false;
+            // cancello il marker
+            delete $scope.infoPlace.marker;
+            
+            $log.debug('check hide!',hide,markerId);
             if(!hide){
                 $log.debug('init hide');
                 hide = $scope.$on('modal.hidden', function(e) {
@@ -69,18 +74,13 @@ angular.module('firstlife.controllers')
                     }
                 });
             }
-
-            $log.log("marker da visualizzare",marker);
-            // se la modal e' gia' aperta cambio solo il contenuto
             // to do incapsulare il codice in una closeModal con then
             if($scope.infoPlace.modal){
                 // la modal esiste
                 $scope.infoPlace.modal.show();
-                changeModal(marker.id);
             }else{
                 // la modal non esiste, la creo
                 $scope.infoPlace = {};
-                $scope.infoPlace.marker = angular.copy(marker);
                 $scope.infoPlace.modify = false;    
                 $scope.infoPlace.dataForm = {};
 
@@ -93,38 +93,28 @@ angular.module('firstlife.controllers')
                     $log.debug("infoPlace, apro modal modal: ", modal);
                     $scope.infoPlace.modal = modal;
                     $scope.openModalPlace();
-                    // parte l'update dopo 1 secondo
-                    $ionicLoading.show();
-                    $scope.$emit('openPlaceModal', {marker: marker.id});
-                    updateDetails($scope.infoPlace.marker.id);
                 });  
             }
+            
+            // carico il contenuto della modal
+            loadModal(markerId);
+            
             $scope.openModalPlace = function() {
                 $scope.infoPlace.modal.show();
                 // creo il menu per la modal
                 $scope.showPopoverMenu();
             };
-
+            
             $scope.closeModal = function() {
                 chiudoModal(); 
             };
         };
-
-        //        var hide = $scope.$on('modal.hidden', function(e) {
-        //                //segnalo la chiusura della modal
-        //                if($scope.infoPlace.modal && !e.modalHiddenPrevented){
-        //                    e.modalHiddenPrevented = true;
-        //                    //deregistro il listner per la hide
-        //                    hide();
-        //                    chiudoModal();
-        //                }
-        //            });
-        //        
-
+        
+        
         //action sheet init-info sul place
-        $scope.showASDeletedPlace = function(placeId){
+        $scope.showASDeletedPlace = function(entityId){
             var title="";
-            if(placeId===-1)
+            if(entityId === -1)
                 title = $filter('translate')('ERROR_CANCEL');
             else
                 title = $filter('translate')('SUCCESS_CANCEL');
@@ -133,10 +123,10 @@ angular.module('firstlife.controllers')
                 titleText: title,
                 cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                 cancel: function() {
-                    $log.debug("Deleted place cancelled: "+placeId);
+                    $log.debug("Deleted place cancelled: "+entityId);
                 }
             });
-            if(consoleCheck)console.log("actionSheet", hideSheet);
+            $log.debug("actionSheet", hideSheet);
             // to do serve per il routing, chiudo l'action sheet con il pulsante back
         };
 
@@ -289,18 +279,45 @@ angular.module('firstlife.controllers')
             );
         }
 
-        function changeModal(marker){
-            MapService.getDetails(marker).then(
+        function loadModal(marker){
+            $scope.obs = MapService.getDetailsRx(marker).subscribe(
                 function(marker){
                     $scope.infoPlace.marker = angular.copy(marker);
                     $scope.$emit('openPlaceModal', {marker: marker.id});
+                    $scope.loaded = true;
+                    // inizializzo la maschera dei permessi per l'utente per il marker attuale
+                    initPerms(marker.user);
+                    // recupero il tipo e lo metto dentro $scope.currentType
+                    initTypeChecks(marker.entity_type);
                 },
                 function(err){
                     $log.error("changeModal, errore ",err);
+                    $scope.loaded = true;
+                    $scope.error = true;
                     showAlert();
-                }
+                },
+                function(){}
             );
         }
+//        function loadModal(marker){
+//            MapService.getDetails(marker).then(
+//                function(marker){
+//                    $scope.infoPlace.marker = angular.copy(marker);
+//                    $scope.$emit('openPlaceModal', {marker: marker.id});
+//                    $scope.loaded = true;
+//                    // inizializzo la maschera dei permessi per l'utente per il marker attuale
+//                    initPerms(marker.user);
+//                    // recupero il tipo e lo metto dentro $scope.currentType
+//                    initTypeChecks(marker.entity_type);
+//                },
+//                function(err){
+//                    $log.error("changeModal, errore ",err);
+//                    $scope.loaded = true;
+//                    $scope.error = true;
+//                    showAlert();
+//                }
+//            );
+//        }
 
         function chiudoModal(){
             // distruggo il menu popover
@@ -315,7 +332,7 @@ angular.module('firstlife.controllers')
             $log.debug('check closePlaceModal');
             delete $scope.infoPlace.modal;
             //deregistro il listner per la hide
-            hide();
+            try{hide();}catch(e){}
         }
 
 

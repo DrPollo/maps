@@ -1,6 +1,6 @@
 angular.module('firstlife.factories')
-    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory) {
-        
+    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', 'rx', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory, rx) {
+
         var self = this;
         self.config = myConfig;
         var baseUrl = myConfig.base_domain;
@@ -8,9 +8,9 @@ angular.module('firstlife.factories')
         var urlThings= myConfig.backend_things;
         var urlNotifications= myConfig.backend_notifications;
         var format = config.format;
-        
+
         var subscriptions = {};
-        
+
         return {
             //http://localhost:3095/api/Notifications/unread?user=34&since=2013-01-01 00:00:00&domain=1
             get:function(since){
@@ -26,7 +26,7 @@ angular.module('firstlife.factories')
                     urlId = urlId.concat('?user=').concat(user.id).concat('&domain=').concat(myConfig.project);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
-                        
+
                     var req = {
                         url: urlId,
                         method: 'GET',
@@ -43,7 +43,7 @@ angular.module('firstlife.factories')
                             deferred.reject(response);
                         }
                     );
-                    }
+                }
                 return deferred.promise;
             },
             //http://localhost:3095/api/Notifications/consume
@@ -51,7 +51,7 @@ angular.module('firstlife.factories')
                 var deferred = $q.defer();
                 var user = MemoryFactory.getUser();
                 var token = MemoryFactory.getToken();
-                
+
                 // se non sono loggato rispondo errore
                 if(!user || !token){
                     deferred.reject('not logged in');
@@ -82,7 +82,7 @@ angular.module('firstlife.factories')
                 var deferred = $q.defer();
                 var user = MemoryFactory.getUser();
                 var token = MemoryFactory.getToken();
-                
+
                 // se non sono loggato rispondo errore
                 if(!user || !token){
                     deferred.reject('not logged in');
@@ -134,15 +134,28 @@ angular.module('firstlife.factories')
                             deferred.reject(response);
                         }
                     );
-                    }
+                }
                 return deferred.promise;
+            },
+            subscribersRx:function(markerId){
+                var urlId = urlThings.concat('/').concat(markerId).concat("/subscribers").concat(format);
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    headers:{"Content-Type":"application/json"},
+                    data:true
+                };
+                return rx.Observable.fromPromise($http(req))
+                .map(function(response){return response.data.users;})
+                .retry()
+                .share();
             },
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
                 var deferred = $q.defer();
                 var user = MemoryFactory.getUser();
                 var token = MemoryFactory.getToken();
-                
+
                 // se non sono loggato rispondo errore
                 if(!user || !token){
                     deferred.reject('not logged in');
@@ -174,7 +187,7 @@ angular.module('firstlife.factories')
                 var deferred = $q.defer();
                 var user = MemoryFactory.getUser();
                 var token = MemoryFactory.getToken();
-                
+
                 // se non sono loggato rispondo errore
                 if(!user || !token){
                     deferred.reject('not logged in');
@@ -202,28 +215,28 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
         }
-        
-        
+
+
         function addUser(markerId,userId){
             if(!subscriptions[markerId])
                 subscriptions[markerId] = new Array();
-            
+
             $log.debug('subscribers',subscriptions[markerId]);
             var i = subscriptions[markerId].indexOf(userId);
             if(i < 0)
                 subscriptions[markerId].push(userId);
             $log.debug('subscribers',subscriptions[markerId]);
         }
-        
+
         function removeUser(markerId,userId){
             if(!subscriptions[markerId])
                 return false;
-                
+
             var i = subscriptions[markerId].indexOf(userId);
             if(i > -1)
                 subscriptions[markerId].splice(i,1);
             $log.debug('subscribers',subscriptions[markerId]);
         }
-        
-        
+
+
     }]);
