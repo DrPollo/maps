@@ -41,7 +41,7 @@ angular.module('firstlife.services')
         },
         query: function(query){
             var deferred = $q.defer();
-            var urlId = url.concat(format).concat("?").concat(query);
+            var urlId = url.concat(format).concat("?q=").concat(query);
             var jsonObj =null;
 
             $http.get(urlId, {cache: true})
