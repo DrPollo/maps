@@ -191,7 +191,7 @@ angular.module('firstlife.factories')
                     self.bboxHistory = [];
 
                 //query senza since
-                bboxParamsString = bboxParamsString.concat( "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=6000").concat('&fields=valid_from,valid_to,parent_id,location,comment_of,article_of,group_of,group_id,categories,geometry,name');
+                bboxParamsString = bboxParamsString.concat( "&ne_lat=" + bbox.ne_lat + "&ne_lng=" + bbox.ne_lng + "&sw_lat=" + bbox.sw_lat + "&sw_lng=" + bbox.sw_lng + "&limit=6000").concat('&fields=valid_from,valid_to,parent_id,location,comment_of,article_of,group_of,group_id,categories,geometry,name,user');
                 if(bbox.from)
                     bboxParamsString += "&from="+bbox.from;
                 if(bbox.to)
