@@ -382,7 +382,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             $scope.$watch('marker',function(e,old){
                 // cambia il marker
-                if(e && e.id && (!old || e.id != old.id )){
+                if(!e.preventEntityRelationsUpdateMarker && e && e.id && (!old || e.id != old.id )){
+                    e.preventEntityRelationsUpdateMarker = true;
                     loadSibillings();
                 }
             });
