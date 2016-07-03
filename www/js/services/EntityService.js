@@ -34,7 +34,7 @@ angular.module('firstlife.services')
 
         function initEntityModel(entity_type){
             // recupero l'utente
-            var user = MemoryFactory.readUser();
+            var user = MemoryFactory.get('user');
 
             if(self.config.dev)$log.debug("EntityFactory, getDefaults ",entity_type,user);
 

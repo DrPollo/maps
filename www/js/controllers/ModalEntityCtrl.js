@@ -351,7 +351,7 @@ angular.module('firstlife.controllers')
 
         function initPerms (author){
             if(!$scope.user)
-                $scope.user = MemoryFactory.readUser();
+                $scope.user = MemoryFactory.get('user');
             // se l'utente non e' definito
             if(!$scope.user)
                 return false;

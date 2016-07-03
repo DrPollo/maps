@@ -19,7 +19,7 @@ angular.module('firstlife.controllers')
         
         $scope.isLoggedIn = false;
         // check autenticazione
-        var user = MemoryFactory.readUser();
+        var user = MemoryFactory.get('user');
         if(user){
             $scope.isLoggedIn = true;
         }

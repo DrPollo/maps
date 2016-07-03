@@ -15,7 +15,7 @@ angular.module('firstlife.controllers')
         // gestore del cambio di stato
         $scope.$on("$stateChangeSuccess", function() {
             if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState, $rootScope.isLoggedIn, $rootScope.currentUser);
-            $scope.user = MemoryFactory.readUser();
+            $scope.user = MemoryFactory.get('user');
             // valuto lo stato da dove arrivo e decido cosa fare
             if($scope.user){
                 if($scope.user.displayName && $scope.user.displayName != ''){

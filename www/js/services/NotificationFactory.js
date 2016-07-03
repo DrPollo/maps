@@ -15,7 +15,7 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/unread?user=34&since=2013-01-01 00:00:00&domain=1
             get:function(since){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
+                var user = MemoryFactory.get('user');
                 // cache
                 if(!user){
                     $log.error('user error');
@@ -49,8 +49,8 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/consume
             read:function(notificationId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){
@@ -80,8 +80,8 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/consume_until
             consume:function(){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){
@@ -153,8 +153,8 @@ angular.module('firstlife.factories')
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){
@@ -185,8 +185,8 @@ angular.module('firstlife.factories')
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/unsubscribe
             unsubscribe:function(markerId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){

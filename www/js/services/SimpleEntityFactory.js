@@ -23,8 +23,8 @@ angular.module('firstlife.factories')
             },
             add: function(entityId,data,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.getToken(),
-                    user = MemoryFactory.readUser();
+                var token = MemoryFactory.get('token'),
+                    user = MemoryFactory.get('user');
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
@@ -45,8 +45,8 @@ angular.module('firstlife.factories')
             },
             update: function(entityId,data,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.getToken(),
-                    user = MemoryFactory.readUser();
+                var token = MemoryFactory.get('token'),
+                    user = MemoryFactory.get('user');
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
@@ -67,7 +67,7 @@ angular.module('firstlife.factories')
             },
             delete: function(commentId,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.getToken();
+                var token = MemoryFactory.get('token');
                 var req = {
                     url: base_url.concat(types[type].url).concat("/").concat(commentId).concat("/delete").concat(format),
                     method: 'DELETE',

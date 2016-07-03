@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('MemoryFactory', ['$rootScope', '$window', '$q', '$http', 'myConfig', function($rootScope, $window, $q, $http, myConfig) {
+    .factory('MemoryFactory', ['$rootScope', '$window', '$q', '$http', '$localStorage', 'myConfig', function($rootScope, $window, $q, $http, $localStorage, myConfig) {
 
         self.config = myConfig;    
 
@@ -23,6 +23,17 @@ angular.module('firstlife.factories')
         });
 
         return {
+            save(key,data){
+                $localStorage[key] = data;
+            },
+            get(key){
+                return $localStorage[key];
+            },
+            delete(key){
+                delete $localStorage[key];
+            },
+            
+            
             // gestione utente
             saveUser: function(user) {
                 // set variabile globale
@@ -136,13 +147,4 @@ angular.module('firstlife.factories')
             
         };
 
-    }]).run(function($base64,myConfig){
-        var dev = false;
-        var sign = "firstlife-",
-            url_base = myConfig.domain_signature,
-            version = myConfig.version;
-        for (key in keys){
-            keys[key] = sign.concat($base64.encode(keys[key].concat("-").concat(url_base).concat("-").concat(version)));
-        }
-
-});
+    }]);
