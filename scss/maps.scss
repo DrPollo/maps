@@ -64,16 +64,46 @@
             z-index: 0;
             top:-6px;
             button{
+                height: auto;
+                top:4px;
                 min-height: 36px;
                 box-shadow: 0px 1px 1px #666;
                 border-radius: 0 0 10px 10px;
                 -o-border-radius: 0 0 10px 10px;
                 -moz-border-radius: 0 0 10px 10px;
                 -webkit-border-radius: 0 0 10px 10px;
+                
             }
-            button:hover, button:focus, button:active{
-                
-                
+            button.active:hover, button.active:active{
+                //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+                top:6px;
+            }
+            button.inactive:hover, button.inactive:active{
+                //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+                top:3px;
+            }
+            button.active:focus{
+                box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+            }
+            button.inactive:focus{
+                box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+            }
+            button.inactive{
+                height:36px;
+                top:0px;
+            }
+            button.active{
+                min-height:36px;
+                top:3px;
+            }
+            button.disabled{
+                height:36px;
+                top:0px;
+                opacity: 1;
+            }
+            button.disabled:hover, button.disabled:focus, button.disabled:active{
+                box-shadow:0px 1px 1px #666;
+                top:0px;
             }
         }
         #omnibox{
@@ -106,8 +136,11 @@
                     font-size: 0.8em;
                 }
             }
-            button:hover,button:focus {
+            button:hover,button:active,button:focus {
                 color: $positive;
+            }
+            button:focus{
+                box-shadow: inset 0px 0px 10px $positive;
             }
             button:before{
                 font-size: 1.2em;
