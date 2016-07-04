@@ -13390,12 +13390,13 @@ ion-side-menu#side-menu {
     .maps-view .css-pin-marker .icon-box i:before {
       width: 20px;
       text-align: center; }
-  .maps-view .css-pin-marker:active, .maps-view .css-pin-marker:hover {
+  .maps-view .css-pin-marker:active, .maps-view .css-pin-marker:hover, .maps-view .css-pin-marker:focus {
     z-index: 9999 !important; }
-    .maps-view .css-pin-marker:active .pin-marker, .maps-view .css-pin-marker:hover .pin-marker {
+    .maps-view .css-pin-marker:active .pin-marker, .maps-view .css-pin-marker:hover .pin-marker, .maps-view .css-pin-marker:focus .pin-marker {
       -webkit-animation: glow 1s infinite ease alternate;
       -moz-animation: glow 1s infinite ease alternate;
-      animation: glow 1s infinite ease alternate; }
+      animation: glow 1s infinite ease alternate;
+      box-shadow: 0px 0px 0px 2px #fafafa, 0px 1px 4px 1px #666; }
   .maps-view .marker-cluster div.outer {
     margin: -5px 0px 0px 0px;
     width: 40px;
@@ -13415,6 +13416,13 @@ ion-side-menu#side-menu {
     top: 8px; }
   .maps-view .marker-cluster div.inner span {
     line-height: 25px; }
+  .maps-view .pie-cluster:active, .maps-view .pie-cluster:hover, .maps-view .pie-cluster:focus {
+    z-index: 9999 !important;
+    box-shadow: 0px 0px 0px 3px #fafafa, 0px 1px 4px 1px #666; }
+    .maps-view .pie-cluster:active .inner, .maps-view .pie-cluster:hover .inner, .maps-view .pie-cluster:focus .inner {
+      -webkit-animation: glowPie 1s infinite ease alternate;
+      -moz-animation: glowPie 1s infinite ease alternate;
+      animation: glowPie 1s infinite ease alternate; }
   .maps-view #pointer {
     z-index: 11;
     margin: -15px 0 0 -15px;
@@ -13565,6 +13573,24 @@ ion-side-menu#side-menu {
     transform: rotate(-45deg) scale(1); }
   to {
     transform: rotate(-45deg) scale(1.2); } }
+
+@-webkit-keyframes glowPie {
+  from {
+    -webkit-transform: scale(1); }
+  to {
+    -webkit-transform: scale(1.2); } }
+
+@-moz-keyframes glowPie {
+  from {
+    -moz-transform: scale(1); }
+  to {
+    -moz-transform: scale(1.2); } }
+
+@keyframes glowPie {
+  from {
+    transform: scale(1); }
+  to {
+    transform: scale(1.2); } }
 
 #wizardEntity.content input, #wizardEntity.content textarea {
   width: 100% !important; }
