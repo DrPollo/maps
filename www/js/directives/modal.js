@@ -13,7 +13,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             $scope.config = myConfig;
             $scope.types = myConfig.types.simpleEntities;
             $scope.groups = [];
-            $scope.user = MemoryFactory.getUser();
+            $scope.user = MemoryFactory.get('user');
 
             var MODAL_RELOAD_TIME = myConfig.behaviour.modal_relaod_time;
             // variabile dove inserisco il timer per il polling
@@ -610,7 +610,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             $scope.owner = false;
             $scope.subscriber = false;
             if(!$scope.user)
-                $scope.user = MemoryFactory.getUser();
+                $scope.user = MemoryFactory.get('user');
 
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyActions){

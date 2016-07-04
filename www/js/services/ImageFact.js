@@ -21,7 +21,7 @@ angular.module('firstlife.factories')
         var urlThings = myConfig.backend_things;
         var format = myConfig.format;
         var response = null;
-        var token = MemoryFactory.getToken();
+        var token = MemoryFactory.get('token');
         
         for(i in self.config.types.list){
             sendUrl[self.config.types.list[i].key] = self.config.types.list[i].url;
@@ -31,9 +31,9 @@ angular.module('firstlife.factories')
         // utente di default -1 (guest)
         var user_id  = -1;
         // se l'utente è autenticato
-        if(MemoryFactory.readUser()){
+        if(MemoryFactory.get('user')){
             // set user id
-            var user = MemoryFactory.readUser();
+            var user = MemoryFactory.get('user');
             var user_id  = user.id;
         }
         

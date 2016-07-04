@@ -100,7 +100,7 @@ angular.module('firstlife.factories')
                 var feature = markerConverter(entity);
                 if(consoleCheck)console.log("PlaceFactory, token: ", token);
                 if(consoleCheck)console.log("PlaceFactory, update place query: ",entity,feature);
-                var token = MemoryFactory.getToken();
+                var token = MemoryFactory.get('token');
                 var req = {
                     url: urlId,
                     method: 'PUT',
@@ -131,7 +131,7 @@ angular.module('firstlife.factories')
                 var urlId = types[entity.entity_type].concat('/add').concat(format);
                 var deferred = $q.defer();
                 var feature = markerConverter(entity);
-                var token = MemoryFactory.getToken();
+                var token = MemoryFactory.get('token');
                 var req = {
                     url: urlId,
                     method: 'POST',
@@ -165,7 +165,7 @@ angular.module('firstlife.factories')
                 // cancello i marker dalla cache
                 delete self.markerDetailsList[entityId];
                 delete self.markerList[entityId];
-                var token = MemoryFactory.getToken();
+                var token = MemoryFactory.get('token');
                 if(consoleCheck)console.log("PlaceFactory, token: ", token);
                 var req = {
                     url: urlId,

@@ -54,7 +54,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             init();
             
             function init(){
-                $scope.user = MemoryFactory.getUser();
+                $scope.user = MemoryFactory.get('user');
                 $scope.highlight = false;
                 $log.debug('check user notification',$scope.user);
                 if($scope.user){

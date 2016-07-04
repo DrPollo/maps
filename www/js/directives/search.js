@@ -78,7 +78,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                         break;
                     case 'users':
                         // cerco il nome utente
-                        var user = MemoryFactory.getUser();
+                        var user = MemoryFactory.get('user');
                         if(value == user.id && user.displayName){
                             card.label2 = user.displayName;
                             $scope.cards[key] = card;

@@ -78,7 +78,7 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
         controller: ['$rootScope','$scope','$log','$filter','groupsFactory','MemoryFactory', function($rootScope,$scope,$log,$filter,groupsFactory,MemoryFactory){
 
             //$scope.counter = [];
-            $scope.user = MemoryFactory.getUser();
+            $scope.user = MemoryFactory.get('user');
             //$scope.role = false;
 
             $scope.$on('$destroy', function(e) {

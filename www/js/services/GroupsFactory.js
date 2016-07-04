@@ -13,8 +13,8 @@ angular.module('firstlife.factories')
             joinGroup: function (entityId){
                 $log.debug('joining 4 ',entityId);
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
                 $log.debug('joining 5 ',user,token);
                 if(user && token){
                     var urlId = url.concat('member').concat(format);
@@ -45,8 +45,8 @@ angular.module('firstlife.factories')
             // add user to group
             leaveGroup: function (entityId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
-                var token = MemoryFactory.getToken();
+                var user = MemoryFactory.get('user');
+                var token = MemoryFactory.get('token');
                 if(user && token){
                     // manda il proprio id come parametro
                     return removeUser(entityId,user.id);
@@ -62,7 +62,7 @@ angular.module('firstlife.factories')
             // get members
             checkMembership: function(entityId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.getUser();
+                var user = MemoryFactory.get('user');
                 //se in cache
                 if(!groupsUsers[entityId])
                     groupsUsers[entityId] = {};
@@ -150,8 +150,8 @@ angular.module('firstlife.factories')
 
         function removeUser (entityId,userId){
             var deferred = $q.defer();
-            var user = MemoryFactory.getUser();
-            var token = MemoryFactory.getToken();
+            var user = MemoryFactory.get('user');
+            var token = MemoryFactory.get('token');
             $log.debug('joining 5 ',user,token);
             if(user && token){
                 var urlId = url.concat('group/').concat(entityId).concat('/member/').concat(userId).concat(format);

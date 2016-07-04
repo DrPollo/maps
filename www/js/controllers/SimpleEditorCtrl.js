@@ -18,7 +18,7 @@ angular.module('firstlife.controllers')
         self.simpleEntity = {};
         self.now = new Date();
 
-        self.currentUser = MemoryFactory.readUser();
+        self.currentUser = MemoryFactory.get('user');
 
         self.types = self.config.types.simpleEntities;
 

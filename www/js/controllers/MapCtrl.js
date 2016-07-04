@@ -142,7 +142,7 @@ angular.module('firstlife.controllers')
             $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             if($rootScope.previousState !== 'app.maps'){
                 // check autenticazione
-                var user = MemoryFactory.readUser();
+                var user = MemoryFactory.get('user');
                 if(user){
                     if(consoleCheck) console.log("isLoggedIn? ", true);
                     $scope.isLoggedIn = true;

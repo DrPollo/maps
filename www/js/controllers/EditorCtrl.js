@@ -26,7 +26,7 @@ angular.module('firstlife.controllers')
         if(dev) console.log("categorie in EditorCtrl", _this.categories);
         
         
-        _this.currentUser = MemoryFactory.readUser();
+        _this.currentUser = MemoryFactory.get('user');
         _this.labels = {
             edit: "EDIT",
             create: "CREATE"
@@ -88,8 +88,7 @@ angular.module('firstlife.controllers')
 
                 // da cancellare initSearchSource();
 
-                _this.currentUser = MemoryFactory.readUser();
-                if(dev) console.log("EditorCtrl, $on $stateChangeSuccess, MemoryFactory.readUser() : ", _this.currentUser);
+                _this.currentUser = MemoryFactory.get('user');
 
                 // gestione del tipo
                 var type = _this.types.default.key,

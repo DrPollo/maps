@@ -6,7 +6,7 @@ angular.module('firstlife.controllers')
         
         
         // recupero i dati dell'utente
-        $scope.user = MemoryFactory.getUser();
+        $scope.user = MemoryFactory.get('user');
         
         // costruisco la lista dei suoi contenuti
         

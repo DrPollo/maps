@@ -16,7 +16,7 @@ angular.module('firstlife.services')
     
     return {
         getInfo: function() {
-            var user = MemoryFactory.getUser();
+            var user = MemoryFactory.get('user');
             console.log("develop ",user);
             var urlId = url.concat("/").concat(user.username).concat(format);
             if(user.type == 2){
@@ -31,12 +31,11 @@ angular.module('firstlife.services')
             
             $http(req).then(
                 function(response) {
-                    if(dev) console.log("UserService, getInfo, response ",response);
                     deferred.resolve(response.data);
                 },
                 function(err){
                     deferred.reject(err);
-                    console.log("UserService, getInfo, error ",err);
+                    $log.error("UserService, getInfo, error ",err);
                 });
             return deferred.promise;
         },
@@ -60,14 +59,13 @@ angular.module('firstlife.services')
             $http(req)
                 .then(
                 function(response, status, headers, config) {
-                    if(dev) console.log("UserService, login, response: ",response, response.headers);
                     var user = jwtHelper.decodeToken(response.headers.authorization);
                     $log.debug("token utente ",user);
                     deferred.resolve(user);
                     setUser(response.headers.authorization);
                 },
                 function(response) {
-                    console.log("UserService, login, errore: ",response);
+                    $log.error("UserService, login, errore: ",response);
                     deferred.reject(response);
                 });
             
@@ -90,7 +88,6 @@ angular.module('firstlife.services')
             };
             $http(req)
             .then(function(response, status, headers, config) {
-                if(dev) console.log("UserService, register, response: ",response);
                 deferred.resolve(response.data);
             },function(response) {
                 console.log("UserService, register, errore: ",response);
@@ -103,7 +100,6 @@ angular.module('firstlife.services')
             MemoryFactory.deleteUser();
             MemoryFactory.deleteToken();
             MemoryFactory.deleteConfig();
-            if(dev) console.log("cose rimaste in memoria: ", MemoryFactory.getConfig(), MemoryFactory.getToken(), MemoryFactory.getUser());
             return true;
         },
         
@@ -115,7 +111,7 @@ angular.module('firstlife.services')
             } 
             
             var data = angular.toJson(user, true);
-            var token = MemoryFactory.getToken();
+            var token = MemoryFactory.get('token');
             
             var req = {
                 url: urlId,
@@ -136,12 +132,12 @@ angular.module('firstlife.services')
         resetPassword: function(pass){
             var deferred = $q.defer();
             
-            var token = MemoryFactory.getToken();
+            var token = MemoryFactory.get('token');
             
             var urlId = urlResetPassword.concat(format);
             var data = {};
             data.new_pass = pass;
-            var user = MemoryFactory.readUser();
+            var user = MemoryFactory.get('user');
             data.id = user.id;
             data = angular.toJson(data, true);
             var req = {
@@ -212,7 +208,7 @@ angular.module('firstlife.services')
     function setUser(token){
         console.log("UserService, login/registration, setUser headers.Authorization: ",token);
         // salvo il token
-        MemoryFactory.setToken(token);
+        MemoryFactory.save('token',token);
         // decode token
         var user = jwtHelper.decodeToken(token);
         // salvo l'utente
@@ -226,7 +222,7 @@ angular.module('firstlife.services')
         }else{
             user.displayName = 'User';
         }
-        MemoryFactory.saveUser(user);
+        MemoryFactory.save('user',user);
         console.log("UserService, login, utente: ",user);
         self.user = user;
         self.isLoggedIn = true;
