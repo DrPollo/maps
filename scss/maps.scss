@@ -229,12 +229,13 @@
             }
         }
     } 
-    .css-pin-marker:active, .css-pin-marker:hover {
+    .css-pin-marker:active, .css-pin-marker:hover, .css-pin-marker:focus {
         z-index: 9999 !important;
         .pin-marker{
             -webkit-animation: glow 1s infinite ease alternate;
             -moz-animation: glow 1s infinite ease alternate;
             animation: glow 1s infinite ease alternate;
+            box-shadow:0px 0px 0px 2px #fafafa, 0px 1px 4px 1px #666;
         }
     }
     .marker-cluster {
@@ -260,6 +261,16 @@
         div.inner span {
             line-height: 25px;
         }
+        
+    }
+    .pie-cluster:active, .pie-cluster:hover, .pie-cluster:focus{
+        z-index: 9999 !important;
+        .inner{
+            -webkit-animation: glowPie 1s infinite ease alternate;
+            -moz-animation: glowPie 1s infinite ease alternate;
+            animation: glowPie 1s infinite ease alternate;
+        }
+        box-shadow: 0px 0px 0px 3px #fafafa, 0px 1px 4px 1px #666;
     }
 
     #pointer {
@@ -435,4 +446,16 @@
 @keyframes glow {
     from { transform: rotate(-45deg) scale(1); }
     to { transform: rotate(-45deg) scale(1.2); }
+}
+@-webkit-keyframes glowPie {
+    from { -webkit-transform: scale(1); }
+    to { -webkit-transform: scale(1.2); }
+}
+@-moz-keyframes glowPie {
+    from { -moz-transform: scale(1); }
+    to { -moz-transform: scale(1.2); }
+}
+@keyframes glowPie {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
 }
