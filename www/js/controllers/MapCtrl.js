@@ -130,21 +130,21 @@ angular.module('firstlife.controllers')
 
         
         
-        var funcLayer = null
-        // init livello griglia
-        if(!funcLayer){
-        leafletData.getMap("mymap").then(function(map) {
-            funcLayer = new L.TileLayer.Functional(function (view) {
-                    $log.debug('map view',view);
-                    $rootScope.$emit('grid-change',view);
-                });
-            funcLayer.addTo(map);
-            $log.debug('init map',map);
-            return null;
-        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
-        }
-        
-        
+//        var funcLayer = null
+//        // init livello griglia
+//        if(!funcLayer){
+//        leafletData.getMap("mymap").then(function(map) {
+//            funcLayer = new L.TileLayer.Functional(function (view) {
+//                    $log.debug('map view',view);
+//                    $rootScope.$emit('grid-change',view);
+//                });
+//            funcLayer.addTo(map);
+//            $log.debug('init map',map);
+//            return null;
+//        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
+//        }
+//        
+//        
         
         //$log.debug('check geojson ',$scope.geojson);
 
