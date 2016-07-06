@@ -74,6 +74,9 @@
                 -webkit-border-radius: 0 0 10px 10px;
                 
             }
+            .button.activated, .button.active {
+                border:0px;
+            }
             button.active:hover, button.active:active{
                 //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
                 top:6px;

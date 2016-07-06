@@ -90,27 +90,27 @@ angular.module('firstlife.controllers')
             var entry = feature.properties;
             var max = $scope.markersFilteredArray.length;
             var style = {
-                fillColor: "#6C93B3",
-                weight: 2,
+                fillColor: "rgb(221,91,42)",//"#6C93B3",
+                weight: 3,
                 opacity: 0.5,
                 color: '#6C93B3',
                 dashArray: '1',
-                fillOpacity: 0.05
+                fillOpacity: 0.5
             };
             if(entry.entities.length > 0){
                 style.fillColor = 'rgb(136, 186, 92)';
                 style.color = 'rgb(136, 186, 92)';
-                style.fillOpacity = entry.entities.length/20;
+                //style.fillOpacity = entry.entities.length/20;
             }
             if(entry.entities.length > 20){
                 style.fillColor = 'rgb(255,179,16)';
                 style.color = 'rgb(255,179,16)';
-                style.fillOpacity = entry.entities.length/60;
+                //style.fillOpacity = entry.entities.length/60;
             }
             if(entry.entities.length > 40){
                 style.fillColor = 'rgb(221,91,42)';
                 style.color = 'rgb(221,91,42)';
-                style.fillOpacity = entry.entities.length/(3*max);
+                //style.fillOpacity = entry.entities.length/(3*max);
             }
             return style;
         }

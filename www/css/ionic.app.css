@@ -13290,6 +13290,8 @@ ion-side-menu#side-menu {
         -o-border-radius: 0 0 10px 10px;
         -moz-border-radius: 0 0 10px 10px;
         -webkit-border-radius: 0 0 10px 10px; }
+      .maps-view #mapHeader #typeFilter .button.activated, .maps-view #mapHeader #typeFilter .button.active {
+        border: 0px; }
       .maps-view #mapHeader #typeFilter button.active:hover, .maps-view #mapHeader #typeFilter button.active:active {
         top: 6px; }
       .maps-view #mapHeader #typeFilter button.inactive:hover, .maps-view #mapHeader #typeFilter button.inactive:active {
