@@ -141,7 +141,7 @@ angular.module('firstlife.factories')
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
                 $http(req).then(
                     function(response) {
-                        $log.debug("entityFactory, create, get del risultato ",response);
+//                        $log.debug("entityFactory, create, get del risultato ",response);
                         getMarker(response.data.id, true).then(
                             function(marker){
                                 deferred.resolve(marker);
@@ -246,7 +246,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-                        $log.debug(response);
+//                        $log.debug(response);
                         entityToMarker(response.data).then(
                             function(marker){
                                 //aggiorno anche la lista dei dettagli
@@ -309,7 +309,7 @@ angular.module('firstlife.factories')
 
         //private function
         function entityToMarker(data) {
-            $log.debug(data);
+//            $log.debug(data);
             var deferred = $q.defer();
             // bug, formati diversi da add/get
             var entity = {},
@@ -510,7 +510,7 @@ angular.module('firstlife.factories')
                 } : null
             };
 
-            $log.debug("Creazione del marker dal'entita': ", entity, marker);
+//            $log.debug("Creazione del marker dal'entita': ", entity, marker);
             return marker;
         }
         // fine markerCreate

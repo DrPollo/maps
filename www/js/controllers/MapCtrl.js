@@ -128,6 +128,24 @@ angular.module('firstlife.controllers')
             $scope.geojson.levels = levels.check ? levels.list : null;
         }
 
+        
+        
+//        var funcLayer = null
+//        // init livello griglia
+//        if(!funcLayer){
+//        leafletData.getMap("mymap").then(function(map) {
+//            funcLayer = new L.TileLayer.Functional(function (view) {
+//                    $log.debug('map view',view);
+//                    $rootScope.$emit('grid-change',view);
+//                });
+//            funcLayer.addTo(map);
+//            $log.debug('init map',map);
+//            return null;
+//        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
+//        }
+//        
+//        
+        
         //$log.debug('check geojson ',$scope.geojson);
 
         // cambio di stato, ingresso in app.maps
@@ -151,7 +169,7 @@ angular.module('firstlife.controllers')
                 // recupero la mappa se non inizializzata
                 $scope.map = MapService.getMap();
 
-                if(consoleCheck) console.log("MapCtrl, map all'ingresso di stato ",$scope.map);
+                $log.debug("MapCtrl, map all'ingresso di stato ",$scope.map);
 
                 // valuto lo stato da dove arrivo e decido cosa fare
                 switch($rootScope.previousState){
@@ -1711,10 +1729,10 @@ angular.module('firstlife.controllers')
             }
         }
         
-    }]).run(function(MapService,myConfig,$timeout,$rootScope){
+    }]).run(function(MapService, myConfig, $timeout, $rootScope){
 
     self.map = MapService.initMap();
-
+    
     // inizializzazione poller mappa
     var RELOAD_TIME = config.behaviour.bbox_reload_time;
     var timer = false;
