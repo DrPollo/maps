@@ -19,11 +19,11 @@
         "geolocation" : true,
         "favourite_place" : true,
         "alow_login": true,
-        "alow_signup": true,
+        "alow_signup": false,
         "show_menu" : true
     },
     "behaviour":{
-        "is_login_required" : true,
+        "is_login_required" : false,
         "umask":744
     }
 }

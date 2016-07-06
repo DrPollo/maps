@@ -295,7 +295,7 @@ angular.module('firstlife.services')
             // se il layer attuale e' gia' quello richiesto
             if(self.map.layer == key)
                 return false;
-
+            
             // salvo il layer attuale
             self.map.layer = key;
             leafletData.getMap("mymap").then(function (map) {
@@ -315,7 +315,7 @@ angular.module('firstlife.services')
 
         // init della mappa
         function setInitOptions(){
-
+            
             self.map = {
                 defaults : {
                     maxZoom: config.map.max_zoom,
@@ -348,6 +348,7 @@ angular.module('firstlife.services')
                 category_filter : config.actions.category_filter,
                 name: config.app_name
             };
+            
         }
 
         // imposta i layer della mappa
@@ -378,6 +379,9 @@ angular.module('firstlife.services')
 
                           }
                          }
+                },
+                defaults:{
+                    crs: L.CRS.EPSG4326
                 }
             };
         }

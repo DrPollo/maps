@@ -39,7 +39,7 @@ angular.module('firstlife.timeline',[])
             moment().isoWeek(1);
 
             var localeData = moment.localeData();
-            $log.debug('check localeData ',localeData, localeData._monthsShort);
+//            $log.debug('check localeData ',localeData, localeData._monthsShort);
 
             // unita' temporale di default
             // 0: fasi della giornata
@@ -65,7 +65,7 @@ angular.module('firstlife.timeline',[])
             $scope.forward = function(){
                 // recupero la unit da aggiungere
                 var unit = getUnitToShift();
-                $log.debug('add a ',unit);
+//                $log.debug('add a ',unit);
                 // aggiungo una unit
                 $scope.moment = $scope.moment.add(1,unit);
                 // ricalcolo il buffer
@@ -76,7 +76,7 @@ angular.module('firstlife.timeline',[])
             $scope.rewind = function(){
                 // recupero la unit da sottrarre
                 var unit = getUnitToShift();
-                $log.debug('subtract a ',unit);
+//                $log.debug('subtract a ',unit);
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
                 // ricalcolo il buffer
@@ -156,7 +156,7 @@ angular.module('firstlife.timeline',[])
                 $scope.context = getNowContext(now);
                 //$log.debug('check context ',$scope.context);
                 // stampo nei log ora, l'indice e l'array dell'unita' corrente
-                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
+//                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
                 // init del buffer con la lunghezza corretta
                 $scope.timewindow = [];
                 // inserisco le date nel buffer
@@ -206,7 +206,7 @@ angular.module('firstlife.timeline',[])
                             array.push({label:phases[i],interval:interval});
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval phases ',array);
+//                        $log.debug('check interval phases ',array);
                         return array;
                         break;
                         // giorni della settimana
@@ -225,9 +225,9 @@ angular.module('firstlife.timeline',[])
                             var obj = {label:start.format(format),//labels[(i+1)%7],
                                        interval:interval};
                             days.push(obj);
-                            $log.debug('check interval weekdays ',interval.start(),interval.end());
+//                            $log.debug('check interval weekdays ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval weekdays ',days);
+//                        $log.debug('check interval weekdays ',days);
                         return days;
                         break;
                         // settimane del mese
@@ -242,7 +242,7 @@ angular.module('firstlife.timeline',[])
                         for(var j = 1; j <= daysInMonth+6; j += 7){
                             // prendo un giorno ogni sette, in modo da caricare nelle settimane
                             current.date(j);
-                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
+//                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
                             // calcolo l'intervallo della settimana (puo' uscire dal mese)
                             var start = angular.copy(current).weekday(0);
                             var end = angular.copy(current).weekday(6);
@@ -260,9 +260,9 @@ angular.module('firstlife.timeline',[])
                                 label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
                             }else{break;}
                             weeks.push({label:label,interval:interval}); 
-                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
+//                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
-                        $log.debug('check interval date ',weeks);
+//                        $log.debug('check interval date ',weeks);
                         return weeks;
                         break;
                         // giorni del mese
@@ -276,7 +276,7 @@ angular.module('firstlife.timeline',[])
                             days.push({label:j,interval:interval}); 
                             //$log.debug('check interval month ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval month ',days);
+//                        $log.debug('check interval month ',days);
                         return days;
                         break;
                         // mesi dell'anno
@@ -295,7 +295,7 @@ angular.module('firstlife.timeline',[])
                             months.push({label:start.format(format),interval:interval});
                             //$log.debug('check interval year ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval year ',months);
+//                        $log.debug('check interval year ',months);
                         return months;
                         break;
                         // altrimenti array vuoto
@@ -354,7 +354,7 @@ angular.module('firstlife.timeline',[])
                     default:
                         return -1;
                 }
-                $log.debug('check index ',r,getNowContext(now),getNowContext($scope.moment));
+//                $log.debug('check index ',r,getNowContext(now),getNowContext($scope.moment));
                 // se la timeline e' centrata sul momento attuale
                 if(getNowContext(now) == getNowContext($scope.moment))
                     return r;
