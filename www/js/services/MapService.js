@@ -10,12 +10,18 @@ angular.module('firstlife.services')
             edit: {
                 name: 'edit',
                 type: 'xyz',
-                url: config.map.tile_edit
+                url: config.map.tile_edit,
+                layerOptions:{
+                    attribution:config.map.tile_edit_attribution
+                }
             },
             view: {
                 name: 'view',
                 type: 'xyz',
-                url: config.map.tile_view
+                url: config.map.tile_view,
+                layerOptions:{
+                    attribution:config.map.tile_view_attribution
+                }
             }
         };
 
@@ -24,7 +30,7 @@ angular.module('firstlife.services')
                 lat: self.config.map.map_default_lat,
                 lng: self.config.map.map_default_lng,
                 zoom: self.config.map.zoom_level
-            }
+            },
         };
 
         self.filters = {};
@@ -322,7 +328,11 @@ angular.module('firstlife.services')
                     minZoom: config.map.min_zoom,
                     zoomControl: config.map.zoom && controlZoom ? true : false,
                     zoomControlPosition: config.map.zoom_position,
-                    attributionControl: config.map.attribution
+                    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//                    attributionControl: true,//config.map.attribution,
+//                    tileLayerOptions: {
+//                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//                    },
                 },
                 markers : [],
                 center : {
@@ -334,7 +344,12 @@ angular.module('firstlife.services')
                 controls: {
                     zoomControl: config.map.zoom && controlZoom ? true : false,
                     zoomControlPosition: config.map.zoom_position,
-                    attributionControl: config.map.attribution
+                    attributionControl: config.map.attribution,
+                    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    //attribution: 'Mapbox',
+//                    tileLayerOptions: {
+//                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//                    },
                 },
                 events : {},
                 layers : {},
