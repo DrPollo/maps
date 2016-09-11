@@ -4,8 +4,10 @@
 }
 .leaflet-bottom{
     .leaflet-control-attribution {
-        position: relative;
-        bottom: 152px;
+        position: fixed;
+        top:0px;
+        right: 0px;
+        height: 16px;
     }
 }
 .leaflet-control-zoom{
