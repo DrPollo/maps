@@ -371,7 +371,7 @@ angular.module('firstlife.controllers')
                     if(dev) console.log("update completed: ", newplace);
                     //$state.mode = "update";
                     // vado alla mappa e mostro la modal del place
-                    $state.go("app.maps",{entity: newplace.id});
+                    $state.go("app.maps",{entity: newplace.id,lat:newplace.lat,lng:newplace.lng,zoom:$stateParams.zoom});
                     
                     return newplace.id;
                 },function(error){
@@ -398,7 +398,7 @@ angular.module('firstlife.controllers')
                     //$state.mode = "create";
 
                     // vado alla mappa e mostro la modal del place
-                    $state.go("app.maps",{entity: newplace.id});
+                    $state.go("app.maps",{entity: newplace.id,lat:newplace.lat,lng:newplace.lng,zoom:$stateParams.zoom});
 
                     
                     return newplace.id;
@@ -412,7 +412,7 @@ angular.module('firstlife.controllers')
                         // errore di rete o bug
                         status = -1;
                     }
-                    $state.go("app.maps",{entity:status});
+                    $state.go("app.maps",{entity:status,lat:$stateParams.lat,lng:$stateParams.lng,zoom:$stateParams.zoom});
                    
                     // da testare 
                     return -1;

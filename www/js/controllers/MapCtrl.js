@@ -179,30 +179,27 @@ angular.module('firstlife.controllers')
 
                 // recupero la mappa se non inizializzata
                 $scope.map = MapService.getMap();
-
-                $log.debug("MapCtrl, map all'ingresso di stato ",$scope.map);
+                
+                
+                $log.log("MapCtrl, map all'ingresso di stato ",$scope.map);
 
                 // valuto lo stato da dove arrivo e decido cosa fare
                 switch($rootScope.previousState){
 
                     case 'app.editor':
                         // se vengo dalla creazione/modifica di posti
-                        if(consoleCheck) console.log("MapCtrl, cambio stato da intro: ",$stateParams);
+                        $log.debug("MapCtrl, cambio stato da intro: ",$stateParams);
+                        
                         if($stateParams.entity){
                             backFromEditor($stateParams.entity);
                             // click del markers
                             //clickMarker($stateParams.entity.id);
                         }
-                        //else if($stateParams){
-                        if($stateParams.entity && $stateParams.entity > -1){
-                            locate($stateParams);
-                        }
-                        //}
+                        
                         break;
 
                     case 'login':
                         // vengo dal login
-                        //if(consoleCheck) 
                         locate($stateParams);
 
                         if($stateParams.entity)
@@ -219,13 +216,17 @@ angular.module('firstlife.controllers')
                         // posiziono la mappa se ci solo le coordinate, 
                         // altrimenti si lascia il centro della mappa 
 
-                        if($stateParams.entity)
+                        if($stateParams.entity > 0)
                             clickMarker($stateParams.entity);
-
+                        else // centro la mappa sullo stato corrente
+                            locate($stateParams);
+                        
                         if($stateParams)
                             check4customFilters($stateParams,{});
                 }
-            }else{if(consoleCheck) console.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);}
+            }else{
+                $log.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);
+            }
 
             
             
@@ -398,8 +399,8 @@ angular.module('firstlife.controllers')
         $scope.$on("clickMarker",function(event,args){
             // click di un marker
             clickMarker(args.id);
+            $log.debug('clickMarker, locate ',args.id)
             locate(args.id);
-
             event.preventDefault();
         });
 
@@ -759,16 +760,15 @@ angular.module('firstlife.controllers')
         // centra la mappa
         // accetta paramentri per la locate: center, bounds, user, marker
         function locate(coord){     
-            if(consoleCheck) console.log("centro su luogo, id: "+typeof(coord)+" ",coord);
+            $log.log("centro su luogo, id: "+typeof(coord)+" ",coord);
 
             if(typeof(coord) === 'object' && 'entity' in coord && coord.entity){
                 // ho una entita' 
+                $log.debug('centro su entita',coord.entity);
                 locateEntity(coord.entity);
-                //clickMarker(coord.entity);
             }else if( typeof(coord) === 'number'){
                 // ho una entita' 
                 locateEntity(coord);
-                //clickMarker(coord);
             } else if(typeof(coord) === 'object' && 'bound' in coord){
                 if(consoleCheck) console.log("centro su bounds: ",coord);
                 // fit della mappa al bound del fav. place
@@ -780,7 +780,7 @@ angular.module('firstlife.controllers')
                 */
                 setMapCenter(coord);
             } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
-
+                $log.debug('locate coord',coord);
                 // centro su coordinate
                 /*
                 self.map.center.lat = parseFloat(coord.lat);
@@ -790,15 +790,11 @@ angular.module('firstlife.controllers')
                 } else if(self.map.center.zoom == null){
                     self.map.center.zoom = parseInt($scope.config.map.zoom_create);
                 }*/
-                if(consoleCheck) console.log("centro su coordinate: ",coord);
                 var params = {
                     lat:parseFloat(coord.lat),
                     lng:parseFloat(coord.lng),
                     zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
                 };
-
-
-                if(consoleCheck) console.log("centro su coordinate: ",params);
                 setMapCenter(params);
             } else if(coord === 'user'){
                 // localizzo su posizione utente
@@ -863,24 +859,27 @@ angular.module('firstlife.controllers')
 
         function setMapCenter(params){
             leafletData.getMap("mymap").then(function(map) {
-                if(consoleCheck) console.log("MapService, setMapCenter, response: ",map, " params ",params);
+                $log.debug("MapService, setMapCenter, response: ",map, " params ",params);
                 if(params.bound){
+                    $log.debug("MapService, setMapCenter, map.fitBounds: ",params.bound);
                     map.fitBounds(params.bound);
                 }else if(!params.zoom){
                     var center = new L.LatLng(params.lat, params.lng);
+                    $log.debug("MapService, setMapCenter, map.panTo: ",center);
                     map.panTo(center);
                 }else{
                     var center = new L.LatLng(params.lat, params.lng);
+                    $log.debug("MapService, setMapCenter, map.setView: ",center,params.zoom);
                     map.setView(center, params.zoom);
                 }
                 var c = map.getCenter(),
                     z = map.getZoom(),
                     newCenter = {lat:c.lat,lng:c.lng,zoom:z};
 
-                if(consoleCheck) console.log("Nuovo centro della mappa",newCenter);
+                $log.debug("Nuovo centro della mappa",newCenter);
                 //updateSearch(newCenter);
             },function(response){
-                if(consoleCheck) console.log("MapService, setMapCenter, errore: ",response);
+                $log.debug("MapService, setMapCenter, errore: ",response);
             });
         }
 
@@ -936,8 +935,8 @@ angular.module('firstlife.controllers')
                 content.title = $filter('translate')('SUCCESS');
                 content.text = $filter('translate')('SAVE_SUCCESS');
                 // aggiungi marker alla mappa
-                updateMarker(entityId);
                 clickMarker(entityId);
+                updateMarker(entityId);
                 // messaggio di avvenuta operazione
                 var hideSheet = $ionicActionSheet.show({
                     titleText: content.text,
@@ -1508,26 +1507,26 @@ angular.module('firstlife.controllers')
             // se il marker esiste
             if(index > -1){
                 var marker = $scope.map.markers[index];
-                if(consoleCheck) console.log("Location: ", marker);
+                $log.debug("Location: ", marker);
                 /*self.map.center.lat = marker.lat;
                     self.map.center.lng = marker.lng,
                         self.map.center.zoom = $rootScope.info_position.zoom;*/
                 var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
-                setMapCenter(params);
-                if(consoleCheck) console.log("nuova posizione", self.map.center);
+                locate(params);
+                //$log.debug("nuova posizione", self.map.center);
             }else{
                 //altrimenti invoco una get
-                if(consoleCheck) console.log("chiamo per :", entityId);
+                //$log.debug("chiamo per :", entityId);
                 MapService.get(entityId).then(
                     function(marker){
                         // localizzo su marker
-                        if(consoleCheck) console.log("Location: ", marker);
+                        $log.debug("Location: ", marker);
                         /*self.map.center.lat = marker.lat;
                             self.map.center.lng = marker.lng,
                                 self.map.center.zoom = $rootScope.info_position.zoom*/
-                        if(consoleCheck) console.log("nuova posizione", $scope.map.center);
                         var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
-                        setMapCenter(params);
+                        locate(params);
+                        //$log.debug("nuova posizione", $scope.map.center);
                     },
                     function(err){if(consoleCheck) console.log("Location error: ",err);}
                 );
