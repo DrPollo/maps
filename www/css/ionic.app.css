@@ -13229,8 +13229,10 @@ ion-side-menu#side-menu {
 .leaflet-bottom .leaflet-control {
   position: relative;
   bottom: 100px; }
-  .leaflet-bottom .leaflet-control .leaflet-control-attribution {
-    bottom: 50px; }
+
+.leaflet-bottom .leaflet-control-attribution {
+  position: relative;
+  bottom: 152px; }
 
 .leaflet-control-zoom {
   border-radius: 0px !important;

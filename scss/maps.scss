@@ -1,8 +1,11 @@
 .leaflet-bottom .leaflet-control{
     position: relative;
     bottom: 100px;
+}
+.leaflet-bottom{
     .leaflet-control-attribution {
-        bottom:50px;
+        position: relative;
+        bottom: 152px;
     }
 }
 .leaflet-control-zoom{
