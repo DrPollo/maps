@@ -163,6 +163,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
         ENTRIES:'risultati',
+        BAD_REQUEST:"Errore! Contattare l'helpdesk",
         NOT_VALID_URL: 'URL non valido',
         EXIT_MESSAGE: "Uscire dall'applicazione?",
         EXIT_FROM:"Esci da",
@@ -422,6 +423,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
+        BAD_REQUEST:"Error! Please contact the helpdesk service",
         NOT_VALID_URL: 'Not valid url',
         EXIT_MESSAGE: "Do you really want to log out?",
         EXIT_FROM: "Leaving",

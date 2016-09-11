@@ -379,9 +379,6 @@ angular.module('firstlife.services')
 
                           }
                          }
-                },
-                defaults:{
-                    crs: L.CRS.EPSG4326
                 }
             };
         }

@@ -272,6 +272,7 @@
             -webkit-animation: glowPie 1s infinite ease alternate;
             -moz-animation: glowPie 1s infinite ease alternate;
             animation: glowPie 1s infinite ease alternate;
+            box-shadow: inset 0px 0px 3px #999;
         }
         box-shadow: 0px 0px 0px 3px #fafafa, 0px 1px 4px 1px #666;
     }

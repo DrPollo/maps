@@ -262,7 +262,7 @@
             "marker_ancor": [10,10],
             "bbox_details":"full",
             "geometry_layer": true,
-            "min_zoom_geometry_layer":20,
+            "min_zoom_geometry_layer":19,
             "area":{
                 "levels":[
                     {"level":0,"name":"Livello strada","id":1,"icon":"ion-social-buffer-outline","slug":"ground-level","key":0,"index":1}

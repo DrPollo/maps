@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory) {
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', 'tilesFactory', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory, tilesFactory) {
 
 
 
@@ -90,26 +90,31 @@ angular.module('firstlife.controllers')
             var entry = feature.properties;
             var max = $scope.markersFilteredArray.length;
             var style = {
-                fillColor: "rgb(221,91,42)",//"#6C93B3",
+                fillColor: "#6C93B3",
                 weight: 3,
-                opacity: 0.5,
-                color: '#6C93B3',
+                opacity: 1,
+//                opacity: 0,
+//                color: '#fff',
+                color:'#6C93B3',
                 dashArray: '1',
-                fillOpacity: 0.5
+                fillOpacity: 0.5,
+//                fillOpacity: 0
             };
             if(entry.entities.length > 0){
                 style.fillColor = 'rgb(136, 186, 92)';
-                style.color = 'rgb(136, 186, 92)';
+//                style.color = 'rgb(136, 186, 92)';
+                //style.opacity = 1;
+                //style.fillOpacity = 1;
                 //style.fillOpacity = entry.entities.length/20;
             }
             if(entry.entities.length > 20){
                 style.fillColor = 'rgb(255,179,16)';
-                style.color = 'rgb(255,179,16)';
+//                style.color = 'rgb(255,179,16)';
                 //style.fillOpacity = entry.entities.length/60;
             }
             if(entry.entities.length > 40){
                 style.fillColor = 'rgb(221,91,42)';
-                style.color = 'rgb(221,91,42)';
+//                style.color = 'rgb(221,91,42)';
                 //style.fillOpacity = entry.entities.length/(3*max);
             }
             return style;
@@ -130,21 +135,27 @@ angular.module('firstlife.controllers')
 
         
         
-//        var funcLayer = null
-//        // init livello griglia
-//        if(!funcLayer){
-//        leafletData.getMap("mymap").then(function(map) {
-//            funcLayer = new L.TileLayer.Functional(function (view) {
-//                    $log.debug('map view',view);
-//                    $rootScope.$emit('grid-change',view);
-//                });
-//            funcLayer.addTo(map);
-//            $log.debug('init map',map);
-//            return null;
-//        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
-//        }
-//        
-//        
+        var funcLayer = null
+        // init livello griglia
+        if(!funcLayer){
+        leafletData.getMap("mymap").then(function(map) {
+            funcLayer = new L.TileLayer.Functional(
+                function (tile) {
+                    //$log.debug('subscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
+                    //$rootScope.$emit('grid-subscribe',tile);
+                    tilesFactory.subscribe(tile.x, tile.y, tile.z);
+                },function(tile){
+                    $log.info('unsubscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
+                    //$rootScope.$emit('grid-unsubscribe',tile);
+                    tilesFactory.unsubscribe(tile.x, tile.y, tile.z);
+            });
+            funcLayer.addTo(map);
+            $log.debug('init map',map);
+            return null;
+        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
+        }
+        
+        
         
         //$log.debug('check geojson ',$scope.geojson);
 
