@@ -2,6 +2,14 @@
     position: relative;
     bottom: 100px;
 }
+.leaflet-bottom{
+    .leaflet-control-attribution {
+        position: fixed;
+        top:0px;
+        right: 0px;
+        height: 16px;
+    }
+}
 .leaflet-control-zoom{
     border-radius:0px !important;
     box-shadow: none;
@@ -73,6 +81,9 @@
                 -moz-border-radius: 0 0 10px 10px;
                 -webkit-border-radius: 0 0 10px 10px;
                 
+            }
+            .button.activated, .button.active {
+                border:0px;
             }
             button.active:hover, button.active:active{
                 //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
@@ -269,6 +280,7 @@
             -webkit-animation: glowPie 1s infinite ease alternate;
             -moz-animation: glowPie 1s infinite ease alternate;
             animation: glowPie 1s infinite ease alternate;
+            box-shadow: inset 0px 0px 3px #999;
         }
         box-shadow: 0px 0px 0px 3px #fafafa, 0px 1px 4px 1px #666;
     }

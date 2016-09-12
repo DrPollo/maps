@@ -16,12 +16,20 @@
         <search-cards></search-cards>
     </div>
 
-
+<!--markers="markersFiltered"-->
 
     <ion-content scroll="false" class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
         <div ng-controller="SimpleEditorCtrl as simpleEditor"></div>
-        <leaflet id="mymap" defaults="map.defaults" bounds="bounds" center="map.center" width="100%" height="100%" controls="map.controls" markers="markersFiltered" geojson="geojson" layers="map.layers"  event-broadcast="events" ng-if="map"></leaflet>
+        <leaflet id="mymap" ng-if="map" width="100%" height="100%"
+                 bounds="bounds" 
+                 center="map.center"
+                 defaults="map.defaults"
+                 controls="map.controls" 
+                 markers="markersFiltered"
+                 geojson="geojson" 
+                 layers="map.layers"  
+                 event-broadcast="events"></leaflet>
 
     </ion-content >
 

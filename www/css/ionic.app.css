@@ -13230,6 +13230,12 @@ ion-side-menu#side-menu {
   position: relative;
   bottom: 100px; }
 
+.leaflet-bottom .leaflet-control-attribution {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 16px; }
+
 .leaflet-control-zoom {
   border-radius: 0px !important;
   box-shadow: none;
@@ -13290,6 +13296,8 @@ ion-side-menu#side-menu {
         -o-border-radius: 0 0 10px 10px;
         -moz-border-radius: 0 0 10px 10px;
         -webkit-border-radius: 0 0 10px 10px; }
+      .maps-view #mapHeader #typeFilter .button.activated, .maps-view #mapHeader #typeFilter .button.active {
+        border: 0px; }
       .maps-view #mapHeader #typeFilter button.active:hover, .maps-view #mapHeader #typeFilter button.active:active {
         top: 6px; }
       .maps-view #mapHeader #typeFilter button.inactive:hover, .maps-view #mapHeader #typeFilter button.inactive:active {
@@ -13422,7 +13430,8 @@ ion-side-menu#side-menu {
     .maps-view .pie-cluster:active .inner, .maps-view .pie-cluster:hover .inner, .maps-view .pie-cluster:focus .inner {
       -webkit-animation: glowPie 1s infinite ease alternate;
       -moz-animation: glowPie 1s infinite ease alternate;
-      animation: glowPie 1s infinite ease alternate; }
+      animation: glowPie 1s infinite ease alternate;
+      box-shadow: inset 0px 0px 3px #999; }
   .maps-view #pointer {
     z-index: 11;
     margin: -15px 0 0 -15px;
