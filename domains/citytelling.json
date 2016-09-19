@@ -1,8 +1,8 @@
 {"myConfig":
  {
-     "app_name" : "Rigenerazione",
-     "domain_name" : "rigenerazione",
-     "domain_id" : 10,
+     "app_name" : "CityTelling",
+     "domain_name" : "citytelling",
+     "domain_id" : 11,
      "design":{
          "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife", "alt":"FirstLife", "label":{"text": "FirstLife", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
             "logo_bar" : "img/firstlife-testo.svg",
@@ -30,6 +30,9 @@
          "map_default_lat" : 45.070312,
          "map_default_lng" : 7.686856,
          "zoom_level" : 14
+     },
+     "behaviour":{
+            "is_login_required" : true
      }
  }
 }
