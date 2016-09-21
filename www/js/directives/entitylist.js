@@ -158,6 +158,7 @@ angular.module('firstlife.entitylist',[])
             $scope.locate = function(r){
                 $location.search('lat',r.lat);
                 $location.search('lng',r.lng);
+                $location.search('zoom',myConfig.map.zoom_create);
                 $scope.close();
             }
 
