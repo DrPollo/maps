@@ -183,7 +183,8 @@ angular.module('firstlife.entitylist',[])
                 //                );
                 SearchService.geocoding(e).then(
                     function(response){
-                        $scope.locations = response.length >= result_limit ? response.slice(result_limit) : response;
+                        $scope.locations = response.length >= result_limit ? response.splice(0,result_limit) : response;
+                        //$log.debug('risultato geocoding ',response.splice(0,5).length,$scope.locations);
                     },
                     function(response){ 
                         $log.error("SearchCtrl, watch query, SearchService.geocoding, error: ",response);

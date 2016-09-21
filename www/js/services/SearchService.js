@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .service('SearchService', ['$q', '$http', 'myConfig', 'MemoryFactory', 'MapService', function($q, $http, myConfig, MemoryFactory, MapService) {
+    .service('SearchService', ['$q', '$http', '$log', 'myConfig', 'MemoryFactory', 'MapService', function($q, $http, $log, myConfig, MemoryFactory, MapService) {
     
         self.config = myConfig;
         var format = myConfig.format;
@@ -25,7 +25,7 @@ angular.module('firstlife.services')
                         params = params.concat("&to=").concat(timeParams.to.toISOString());
                 }
                 var query = escape(val);
-                console.log("SearchService, query, url: ", searchUrl);
+                //$log.debug("SearchService, query, url: ", searchUrl);
                 var url = searchUrl.concat(format).concat("?q=").concat(query).concat(params);
                 var req = {
                         url: url,
@@ -36,7 +36,7 @@ angular.module('firstlife.services')
                     };
                 $http(req)
                 .then(function(response) {
-                    console.log("SearchService, query, response: ", response);
+                    //$log.debug("SearchService, query, response: ", response);
                     // bug data in data
                     var entries = [];
                     if(response.data){
@@ -44,7 +44,7 @@ angular.module('firstlife.services')
                     }
                     deferred.resolve(entries);
                 },function(response) {
-                    console.log("SearchService, query, errore: ", response);
+                    $log.error("SearchService, query, errore: ", response);
                     deferred.reject(response);
                 });
 
@@ -52,10 +52,10 @@ angular.module('firstlife.services')
             }, 
             geocoding: function(val){
                 var deferred = $q.defer();
-                console.log("SerarchService, bounds: ",bound);
+                //$log.debug("SerarchService, bounds: ",bound);
                 var params = "&polygon=0&format=json&limit=10&addressdetails=1&viewbox="+bound;
                 var query = escape(val);
-                console.log("SearchService, query, url: ", searchUrl);
+                //$log.debug("SearchService, query, url: ", searchUrl);
                 var url = geoUrl.concat("?q=").concat(query).concat(params);
                 var req = {
                         url: url,
@@ -66,11 +66,11 @@ angular.module('firstlife.services')
                     };
                 $http(req)
                 .then(function(response) {
-                    console.log("SearchService, query, response: ", response);
+                    //$log.debug("SearchService, query, response: ", response);
                     deferred.resolve(geocodingDecoder(response.data));
                     
                 },function(response) {
-                    console.log("SearchService, query, errore: ", response);
+                    $log.error("SearchService, query, errore: ", response);
                     deferred.reject(response);
                 });
 
@@ -90,13 +90,13 @@ angular.module('firstlife.services')
             // recupero il centro della mappa
             var center = MapService.getCenterFromMap();
             
-            console.log("SearchService, geocodingDecoder, results: ",results);
+            //$log.debug("SearchService, geocodingDecoder, results: ",results);
             var entries = [];
             //aggiungo i risultati utili
             for(i = 0; i < results.length; i++){
-                console.log("SearchService, geocodingDecoder, check risultato: ",i,results[i]);
                 // aggiungo se manca e se non ho superato la soglia dei risultati
                 var entry = geocodingEntryParser(results[i],center);
+                //$log.debug("SearchService, geocodingDecoder, check risultato: ",i,results[i],entry);
                 if(entries.map(function(e){ return e.name; }).indexOf(entry.name) < 0){
                     entries.push(entry);
                 } 
@@ -104,14 +104,14 @@ angular.module('firstlife.services')
             
             // todo sort per distanza crescente
             //entries.sort(function(a,b){if(a.distance <= b.distance) return a; return b;});
-            console.log("SearchService, geocodingDecoder, risultati decodificati: ", entries);
+            //$log.debug("SearchService, geocodingDecoder, risultati decodificati: ", entries);
             return entries;
         }
         
         // costruisco il risultato del geocoding
         // applico regole di costruzione del nome e selezione dei risultati
         function geocodingEntryParser(entry,center){
-            console.log("SearchCtrl, geocodingEntryDecoder, entry: ",entry);
+            //$log.debug("SearchCtrl, geocodingEntryDecoder, entry: ",entry,center);
             var r = {};
             r.name = '';
             r.icon = 'ion-location';
@@ -150,7 +150,7 @@ angular.module('firstlife.services')
             // calcolo distanza
             r.distance = distance(center,r.position);
             
-            console.log("SearchService, geocodingEntryParser, r: ",r);
+            //$log.debug("SearchService, geocodingEntryParser, r: ",r);
             return r;
         }
         
@@ -158,11 +158,11 @@ angular.module('firstlife.services')
             // recupero il centro della mappa
             var center = MapService.getCenterFromMap();
             var features = results.features;
-            console.log("SearchService, searchDecoder, results: ",features);
+            $log.debug("SearchService, searchDecoder, results: ",features);
             var entries = [];
             //aggiungo i risultati utili
             for(i = 0; i < features.length; i++){
-                console.log("SearchService, searchDecoder, check risultato: ",i,features[i]);
+                $log.debug("SearchService, searchDecoder, check risultato: ",i,features[i]);
                 // aggiungo se manca e se non ho superato la soglia dei risultati
                 var entry = searchEntryParser(features[i],center);
                 if(entries.map(function(e){ return e.name; }).indexOf(entry.name) < 0){
@@ -172,20 +172,20 @@ angular.module('firstlife.services')
             
             // todo sort per distanza crescente
             //entries.sort(function(a,b){if(a.distance <= b.distance) return a; return b;});
-            console.log("SearchService, searchDecoder, risultati decodificati: ", entries);
+            $log.debug("SearchService, searchDecoder, risultati decodificati: ", entries);
             return entries;
         }
         
         function searchEntryParser(feature,center){
-            console.log("SearchCtrl, searchEntryParser, entry: ",feature, self.categories);
+            $log.debug("SearchCtrl, searchEntryParser, entry: ",feature, self.categories);
             var r = {};
             var spaceIndex = self.categories.map(function(e) { return e.category_space; }).indexOf(feature.properties.categories[0].category_space.id);
-            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",spaceIndex);
+            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",spaceIndex);
             var cat = feature.properties.categories[0].category_space.categories[0];
-            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",cat);
+            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",cat);
             var catIndex = self.categories[spaceIndex].categories.map(function(e){return e.id;}).indexOf(cat.id);
-            console.log("SearchCtrl, searchEntryParser, spaceIndex: ",catIndex);
-            console.log("SearchCtrl, searchEntryParser, indici: ",self.categories[spaceIndex],self.categories[spaceIndex].categories,self.categories[spaceIndex].categories[catIndex]);
+            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",catIndex);
+            $log.debug("SearchCtrl, searchEntryParser, indici: ",self.categories[spaceIndex],self.categories[spaceIndex].categories,self.categories[spaceIndex].categories[catIndex]);
             r.name = feature.properties.name;
             // icona e colore da categoria
             r.icon = self.categories[spaceIndex].categories[catIndex].icon;
@@ -198,7 +198,7 @@ angular.module('firstlife.services')
             r.position = {lat:parseFloat(feature.geometry.coordinates[1]),lng:parseFloat(feature.geometry.coordinates[0])};
             // calcolo distanza
             r.distance = distance(center,r.position);
-            console.log("SearchService, searchEntryParser, r: ",r);
+            $log.debug("SearchService, searchEntryParser, r: ",r);
             return r;
         }
         
