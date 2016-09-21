@@ -53,7 +53,7 @@ angular.module('firstlife.services')
             geocoding: function(val){
                 var deferred = $q.defer();
                 console.log("SerarchService, bounds: ",bound);
-                var params = "&bounded=1&polygon=0&format=json&limit=10&addressdetails=1&viewbox="+bound;
+                var params = "&polygon=0&format=json&limit=10&addressdetails=1&viewbox="+bound;
                 var query = escape(val);
                 console.log("SearchService, query, url: ", searchUrl);
                 var url = geoUrl.concat("?q=").concat(query).concat(params);
