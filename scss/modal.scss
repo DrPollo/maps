@@ -243,6 +243,9 @@
 }
 #simpleEntityList {
     .textCard{
+        .item-text-wrap{
+            white-space: pre-wrap;
+        }
         .item-footer{
             .button-box{
                 position: absolute;

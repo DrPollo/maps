@@ -13209,6 +13209,9 @@ ion-side-menu#side-menu {
   .button-bar-striped .button.selected {
     border-bottom: 4px solid; }
 
+#simpleEntityList .textCard .item-text-wrap {
+  white-space: pre-wrap; }
+
 #simpleEntityList .textCard .item-footer .button-box {
   position: absolute;
   top: 8px;
@@ -13231,7 +13234,7 @@ ion-side-menu#side-menu {
   bottom: 100px; }
 
 .leaflet-bottom .leaflet-control-attribution {
-  position: fixed;
+  position: relative;
   top: 0px;
   right: 0px;
   height: 16px; }
@@ -13265,10 +13268,9 @@ ion-side-menu#side-menu {
         font-weight: 300;
         font-size: 1em; }
   .maps-view #mapHeader {
-    position: fixed;
-    top: 8px;
-    left: 8px;
-    display: inline-block;
+    position: relative;
+    top: 0px;
+    left: 0px;
     z-index: 12; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
@@ -13319,45 +13321,49 @@ ion-side-menu#side-menu {
       .maps-view #mapHeader #typeFilter button.disabled:hover, .maps-view #mapHeader #typeFilter button.disabled:focus, .maps-view #mapHeader #typeFilter button.disabled:active {
         box-shadow: 0px 1px 1px #666;
         top: 0px; }
-    .maps-view #mapHeader #omnibox {
-      box-shadow: 1px 1px 3px #666;
-      background: #fff;
-      display: inline-flex;
+    .maps-view #mapHeader #headerControllers {
       position: relative;
-      z-index: 1; }
-      .maps-view #mapHeader #omnibox #barlogo {
-        height: 40px;
-        padding: 0px 0px 4px;
-        margin-left: 4px; }
-      .maps-view #mapHeader #omnibox .separatore {
-        height: 48px;
-        border-left: 1px solid #ccc; }
-      .maps-view #mapHeader #omnibox button {
-        min-height: 48px;
-        height: 48px;
-        width: 51px;
-        position: relative; }
-        .maps-view #mapHeader #omnibox button .badge {
-          position: absolute;
-          top: 8px;
-          right: 8px;
-          min-width: 14px;
-          height: 14px;
-          font-size: 0.8em; }
-      .maps-view #mapHeader #omnibox button:hover, .maps-view #mapHeader #omnibox button:active, .maps-view #mapHeader #omnibox button:focus {
-        color: #FC4A00; }
-      .maps-view #mapHeader #omnibox button:focus {
-        box-shadow: inset 0px 0px 10px #FC4A00; }
-      .maps-view #mapHeader #omnibox button:before {
-        font-size: 1.2em; }
-      .maps-view #mapHeader #omnibox * {
-        display: inline-block;
-        margin: 0px;
-        padding: 0px;
-        max-height: 48px;
-        vertical-align: middle; }
-      .maps-view #mapHeader #omnibox #floating-logo img {
-        max-height: 35px; }
+      top: 8px;
+      left: 8px; }
+      .maps-view #mapHeader #headerControllers #omnibox {
+        box-shadow: 1px 1px 3px #666;
+        background: #fff;
+        display: inline-flex;
+        position: relative;
+        z-index: 1; }
+        .maps-view #mapHeader #headerControllers #omnibox #barlogo {
+          height: 40px;
+          padding: 0px 0px 4px;
+          margin-left: 4px; }
+        .maps-view #mapHeader #headerControllers #omnibox .separatore {
+          height: 48px;
+          border-left: 1px solid #ccc; }
+        .maps-view #mapHeader #headerControllers #omnibox button {
+          min-height: 48px;
+          height: 48px;
+          width: 51px;
+          position: relative; }
+          .maps-view #mapHeader #headerControllers #omnibox button .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            min-width: 14px;
+            height: 14px;
+            font-size: 0.8em; }
+        .maps-view #mapHeader #headerControllers #omnibox button:hover, .maps-view #mapHeader #headerControllers #omnibox button:active, .maps-view #mapHeader #headerControllers #omnibox button:focus {
+          color: #FC4A00; }
+        .maps-view #mapHeader #headerControllers #omnibox button:focus {
+          box-shadow: inset 0px 0px 10px #FC4A00; }
+        .maps-view #mapHeader #headerControllers #omnibox button:before {
+          font-size: 1.2em; }
+        .maps-view #mapHeader #headerControllers #omnibox * {
+          display: inline-block;
+          margin: 0px;
+          padding: 0px;
+          max-height: 48px;
+          vertical-align: middle; }
+        .maps-view #mapHeader #headerControllers #omnibox #floating-logo img {
+          max-height: 35px; }
   .maps-view .center-map-action {
     position: absolute;
     top: 35px;

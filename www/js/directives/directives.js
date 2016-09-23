@@ -1,4 +1,22 @@
 angular.module('firstlife.directives', [])
+    .directive('navbar',['$http','$log','$compile', function($http,$log,$compile){
+        return{
+            strict:'EG',
+            replace: true,
+            link: function(scope,ele,attrs,c){
+                $log.debug('navbar',scope,ele,attrs,c);
+                $http.get(attrs.url).then(
+                    function(response){
+                        $log.debug('navbar, response',response);
+                        ele.html(response.data);
+                        $log.debug('navbar, html',ele);
+                        $compile(ele.contents())(scope);
+                    },
+                    function(response){$log.error(response);}
+                );
+            }
+        }
+    }])
     .directive('validPin', ['$http', function($http) {
         return {
             require: 'ngModel',

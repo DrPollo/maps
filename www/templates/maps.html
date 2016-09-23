@@ -1,24 +1,27 @@
 <ion-view class="maps-view">
     <div id="mapHeader" ng-if="!viewer">
-        <div id="omnibox">
-            <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
-            <span class="separatore"></span>
-            <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showWall()"></button>
-            <span class="separatore"></span>
-            <button class="button button-dark button-clear button-icon ion-android-checkmark-circle" ng-click="showMFilterCat()"></button>
-            <span class="separatore"></span>
-            <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
-            <span class="separatore"></span>
-            <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
-            <user-handler check="isLoggedIn"></user-handler>
+        <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ></navbar>
+        <div id="headerControllers">
+            <div id="omnibox">
+                <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
+                <span class="separatore"></span>
+                <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showWall()"></button>
+                <span class="separatore"></span>
+                <button class="button button-dark button-clear button-icon ion-android-checkmark-circle" ng-click="showMFilterCat()"></button>
+                <span class="separatore"></span>
+                <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
+                <span class="separatore"></span>
+                <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
+                <user-handler check="isLoggedIn"></user-handler>
+            </div>
+            <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+            <search-cards></search-cards>
         </div>
-        <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
-        <search-cards></search-cards>
     </div>
 
 <!--markers="markersFiltered"-->
 
-    <ion-content scroll="false" class="has-bottom" data-tap-disabled="true">
+    <ion-content class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
         <div ng-controller="SimpleEditorCtrl as simpleEditor"></div>
         <leaflet id="mymap" ng-if="map" width="100%" height="100%"
