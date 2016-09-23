@@ -4,7 +4,7 @@
      "domain_name" : "citytelling",
      "domain_id" : 11,
      "design":{
-         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife", "alt":"FirstLife", "label":{"text": "FirstLife", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife CityTelling", "alt":"FirstLife CityTelling", "label":{"text": "FirstLife CityTelling", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
             "logo_bar" : "img/firstlife-testo.svg",
             "logo_menu" : "img/firstlife-logo-palla.svg",
             "logo_width" : 160,
