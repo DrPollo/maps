@@ -13200,7 +13200,8 @@ ion-side-menu#side-menu {
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -o-border-radius: 2px;
-    -moz-border-radius: 2px; }
+    -moz-border-radius: 2px;
+    white-space: pre-wrap; }
 
 .button-bar-striped {
   background: #f5f5f5; }
