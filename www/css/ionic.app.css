@@ -14996,7 +14996,7 @@ timeline {
     margin: 0px;
     padding: 0px 0px;
     width: 100%;
-    overflow-x: scroll;
+    overflow-x: hidden;
     white-space: nowrap;
     display: block;
     table-layout: auto;
@@ -15149,7 +15149,7 @@ timeline {
       color: white;
       width: 100%;
       min-height: 100%;
-      height: auto;
+      height: 100%;
       display: table; }
       #treemapfilter .root .rootlabel .label {
         display: table-cell;
