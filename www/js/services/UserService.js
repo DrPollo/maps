@@ -97,9 +97,9 @@ angular.module('firstlife.services')
             return deferred.promise;
         },
         logout: function(){
-            MemoryFactory.deleteUser();
-            MemoryFactory.deleteToken();
-            MemoryFactory.deleteConfig();
+            MemoryFactory.delete('user');
+            MemoryFactory.delete('token');
+            MemoryFactory.delete('config');
             return true;
         },
         
