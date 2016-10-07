@@ -33,30 +33,40 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     //self.cache.isStateCached = false;
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
-        $ionicLoading.hide();
-        $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",$stateParams);
-        // aggiorno delle variabili sullo stato precendete e corrente
-        // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
-        $rootScope.previousState = fromState.name;
-        $rootScope.currentState = toState.name;
-        var authenticate = toState.data.authenticate;
-        $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required );
-
-        
-        // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-        if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn)  {
-            // da cancellare self.cache.isStateCached = true;
-            $log.debug("Salvo lo stato prima del login: ", $stateParams);
-            event.preventDefault();
+        if(!event.preventRedirectState){
+            event.preventRedirectState = true;
+            var authenticate = toState.data.authenticate;
+            var search_params = $location.search(); 
             var params = getJsonFromUrl($location.url().split("?")[1]);
-            // vai a login per effettuare l'autenticazione
-            $state.go('login',{action: 'redirect', from:toState.name, params: params});
-        } else {
+            var embed = search_params.embed ? true : false;
+            $ionicLoading.hide();
 
-            $log.debug("Continuo a ", toState.name);
+            $log.info("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+            // aggiorno delle variabili sullo stato precendete e corrente
+            // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
+            $rootScope.previousState = fromState.name;
+            $rootScope.currentState = toState.name;
+            
+            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
+            $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
+            // se ti trovi in uno stato che richiede autenticazione e non sei loggato
+            if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)  {
+                // da cancellare self.cache.isStateCached = true;
+                $log.info("Salvo lo stato prima del login: ", $stateParams);
+                event.preventDefault();
+
+                // vai a login per effettuare l'autenticazione
+                $state.go('login',{action: 'redirect', from:toState.name, params: params});
+            } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
+                $log.info('embed ',embed)
+                $state.go('app.maps',search_params);
+            }else {
+
+                $log.info("Continuo a ", toState.name);
+
+            }
         }
-
     }); 
 
     // parser di url
@@ -77,11 +87,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     .config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
-    
+
     $stateProvider
 
         .state('login', {
-        url: "/login?action&from&params",
+        url: "/login?action&from&params&embed",
         controller: 'WalktroughCtrl as walktrough',
         templateUrl: "templates/walktrough.html",
         data: {
@@ -133,7 +143,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             authenticate: true
         }
     })
-    .state('app.manager', {
+        .state('app.manager', {
         url: '/manager/?entity',
         views: {
             'menuContent': {
@@ -420,6 +430,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 5 MB.",
         IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif",
         ADVANCED_TIME:"Gestione avanzata del tempo",
+        EMBED_MAP: "Esporta"
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
@@ -680,6 +691,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PICTURE_DISCLAIMER:"Picture size must not be greater than 5 MB.",
         IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif",
         ADVANCED_TIME:"Advanced time setup",
+        EMBED_MAP: "Export embed url"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
@@ -700,10 +712,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             return response;
         }
     };
-    
+
     return myInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push('myInterceptor');
 }]).config(['$compileProvider','myConfig', function ($compileProvider,myConfig) {
-  if(!myConfig.debug) $compileProvider.debugInfoEnabled(false);
+    if(!myConfig.debug) $compileProvider.debugInfoEnabled(false);
 }]);

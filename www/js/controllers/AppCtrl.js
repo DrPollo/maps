@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, myConfig, MemoryFactory ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', 'myConfig', 'MemoryFactory', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, myConfig, MemoryFactory ) {
         
         
         $scope.config = myConfig;
@@ -29,11 +29,11 @@ angular.module('firstlife.controllers')
                 }
                 
                 $scope.isLoggedIn = true;
-                if(consoleCheck) console.log("Benvenuto", $rootScope.currentUser);
+                $log.info("Benvenuto", $scope.user.displayName);
             } else {
                 $scope.username = "Guest";
                 $scope.isLoggedIn = false;
-                if(consoleCheck) console.log("Non loggato");
+                $log.info("Non loggato");
             }
             
         });
@@ -83,6 +83,10 @@ angular.module('firstlife.controllers')
         $scope.myMap = function(){
             if($scope.user && $scope.user.id)
                 $location.search('users',$scope.user.id);
+        }
+        
+        $scope.makeEmbed = function(){
+            $location.search('embed','viewer');
         }
         
         /*

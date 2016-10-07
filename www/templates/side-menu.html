@@ -35,6 +35,10 @@
                     <i class="icon ion-android-map"></i>
                     <h3 class="menu-text">{{'GENERAL_MAP'|translate}}</h3>
                 </ion-item>
+                <ion-item ng-if="config.actions.map_tab" class="item-icon-left item-button" nav-clear menu-close on-tap="makeEmbed()">
+                    <i class="icon ion-link"></i>
+                    <h3 class="menu-text">{{'EMBED_MAP'|translate}}</h3>
+                </ion-item>
                 <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <ion-item ng-if="config.actions.profile_tab" ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close ng-href="#/app/user/">
                     <i class="icon ion-android-person"></i>
