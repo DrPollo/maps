@@ -42,10 +42,10 @@
                         <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                     </div> 
                 </label>
-                <label class="item item-text-wrap" ng-if="editor.checkList.description" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
-                    <span class="input-label">{{editor.checkList.description.label|translate}}</span>
-                    <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{editor.checkList.description.placeholder |translate}}" ng-minlength="150" ng-maxlength="1000" rows="6" ng-required="editor.checkList.description.required"></textarea>
-                    <div class="form-errors" ng-messages="editor.form.wizardform.description.$error">  
+                <label class="item item-text-wrap" ng-if="editor.checkList.thumbnail" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.thumbnail.$invalid, 'no-error' : !editor.form.wizardform.thumbnail.$invalid}">
+                    <span class="input-label">{{editor.checkList.thumbnail.label|translate}}</span>
+                    <textarea name="thumbnail" ng-model="editor.wizard.dataForm.thumbnail" placeholder="{{editor.checkList.thumbnail.placeholder |translate}}" ng-minlength="150" ng-maxlength="1000" rows="6" ng-required="editor.checkList.info.required"></textarea>
+                    <div class="form-errors" ng-messages="editor.form.wizardform.thumbnail.$error">  
                         <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
                         <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 1000 {{'CHARACTERS'|translate}}</div>
                         <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
@@ -176,6 +176,8 @@
 
         <div ng-if="config.dev">
             <p>
+                {{ editor.checkList | json }}
+            </p> <p>
                 {{ editor.wizard.dataForm | json }}
             </p>
         </div>

@@ -473,6 +473,7 @@ angular.module('firstlife.factories')
                 icon: icons[0],
                 name: entity.properties.name,
                 description: entity.properties.description,
+                thumbnail: entity.properties.thumbnail ? entity.properties.thumbnail: null,
                 text: entity.properties.text ? entity.properties.text : null,
                 "message_text": entity.properties.message ? entity.properties.message : null,
                 tags: entity.properties.tags,

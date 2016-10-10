@@ -430,7 +430,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 5 MB.",
         IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif",
         ADVANCED_TIME:"Gestione avanzata del tempo",
-        EMBED_MAP: "Esporta"
+        EMBED_MAP: "Esporta",
+        INFO_LABEL:"Info",
+        INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc..."
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
@@ -691,7 +693,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PICTURE_DISCLAIMER:"Picture size must not be greater than 5 MB.",
         IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif",
         ADVANCED_TIME:"Advanced time setup",
-        EMBED_MAP: "Export embed url"
+        EMBED_MAP: "Export embed url",
+        INFO_LABEL:"Info",
+        INFO_PLACEHOLDER:"Useful information, instructions, rules, etc."
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

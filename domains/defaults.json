@@ -21,7 +21,6 @@
                           "tags":{ "key": "tags", "label":"TAGS_LABEL", "placeholder":"TAGS_PLACEHOLDER", "default":[] },
                           "categories":{ "key": "categories", "label":"CATEGORIES", "default":[]},
                           "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
-                          "thumbnail":{ "key": "thumbnail", "label":"THUMBNAIL_LABEL","placeholder":"THUMBNAIL_PLACEHOLDER", "default":null},
                           "user":{ "key": "user", "label":"USER","placeholder":"USER" , "default":-1},
                           "wp_id":{ "key": "id_wp", "required":true, "default":1},
                           "id":{ "key": "id", "default":null},
@@ -100,6 +99,7 @@
                 {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":5,
                  "show_author":false,
                  "properties":{
+                     "thumbnail":{"key":"thumbnail","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
                      "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
                      "location":{ "key": "location", "label": "LOCATION_LABEL", "placeholder":"LOCATION_PLACEHOLDER", "default":null},
@@ -142,6 +142,7 @@
                 {"name":"GROUPS_NAME","id":5,"icon":"ion-person-stalker","slug":"group","url":"groups","key":"FL_GROUPS","index":11,
                  "show_author":false,
                  "properties":{
+                     "thumbnail":{"key":"thumbnail","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
                      "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
                      "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},

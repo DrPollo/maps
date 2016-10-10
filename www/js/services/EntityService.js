@@ -76,6 +76,7 @@ angular.module('firstlife.services')
 //                    defaults.valid_from = morning.toISOString();
 //                    defaults.valid_to = night.toISOString();
                     if(self.config.dev) defaults.description = devContent;
+                    if(self.config.dev) defaults.thumbnail = devContent;
                     break;
                 case 'FL_ARTICLES' :
                     defaults.valid_from = now;
@@ -84,6 +85,7 @@ angular.module('firstlife.services')
                 case 'FL_GROUPS' :
                     defaults.valid_from = now;
                     defaults.valid_to = null;
+                    if(self.config.dev) defaults.thumbnail = devContent;
                     break;
                 case 'FL_IMAGES' :
                     defaults.valid_from = now;
