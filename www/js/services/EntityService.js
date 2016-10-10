@@ -91,7 +91,7 @@ angular.module('firstlife.services')
                     break;
                 case 'FL_COMMENTS' :
                     defaults.valid_from = now;
-                    defaults.valid_to = now;
+                    //defaults.valid_to = now;
                     if(self.config.dev) defaults.message_text = devContent;
                     if(self.config.dev) defaults.name = defaultName;
                     break;
