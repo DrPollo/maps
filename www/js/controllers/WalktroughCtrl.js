@@ -46,10 +46,10 @@ angular.module('firstlife.controllers')
                 }
                 // controllo se l'utente e' in memoria
                 if(!$rootScope.isLoggedIn){
-                    $log.defaults("check se l'utente e' loggato");
+                    $log.debug("check se l'utente e' loggato");
                     var user = MemoryFactory.get('user');
                     $rootScope.isLoggedIn = user ? true : false;
-                    $log.defaults("check se l'utente e' loggato", user);
+                    $log.debug("check se l'utente e' loggato", user);
                 }
                 //se l'utente e' gia' loggato lo reindirizzo alla mappa
                 if($rootScope.isLoggedIn || (!config.behaviour.is_login_required && action == null)){

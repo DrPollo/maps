@@ -7,8 +7,8 @@ angular.module('firstlife.controllers')
         $scope.isLoggedIn = false;
         $rootScope.currentLang = $translate.use();
         
-        $scope.apiVersion = 'API version: ' + myConfig.api_version;
-        $scope.clientVersion = 'Client version: ' + myConfig.version;
+        $scope.apiVersion = 'API: ' + myConfig.api_version;
+        $scope.clientVersion = 'Client: v' + myConfig.version;
         
         var consoleCheck = false;
         

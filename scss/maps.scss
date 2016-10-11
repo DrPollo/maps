@@ -26,8 +26,8 @@
 }
 .maps-view{
     search-cards{
-        //position: absolute;
         display: block;
+        width: 260px;
         button {
             color: white;
             text-align: left;
@@ -47,7 +47,6 @@
         position: relative;
         top: 0px;
         left: 0px;
-        //display: inline-block;
         z-index: 12;
 
         #sideMenuToggler, #floating-logo, #floating-search-bar, #omnibox{

@@ -13255,7 +13255,8 @@ ion-side-menu#side-menu {
 .maps-view {
   background-color: #EBEBEB !important; }
   .maps-view search-cards {
-    display: block; }
+    display: block;
+    width: 260px; }
     .maps-view search-cards button {
       color: white;
       text-align: left;
