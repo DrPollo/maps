@@ -12,6 +12,7 @@
     "gulp-sass": "^2.1",
     "gulp-util": "^2.2.20",
     "json-override": "^0.2.0",
+    "lodash.clonedeep": "^4.5.0",
     "sync-exec": "^0.6.2"
   },
   "devDependencies": {
