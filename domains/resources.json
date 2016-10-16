@@ -1,10 +1,10 @@
 {"myConfig":
  {
-     "app_name" : "Communities",
-     "domain_name" : "communities",
-     "domain_id" : 13,
+     "app_name" : "Resources",
+     "domain_name" : "resources",
+     "domain_id" : 12,
      "design":{
-         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife Communities", "alt":"FirstLife Communities", "label":{"text": "FirstLife Communities", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife Resources", "alt":"FirstLife Resources", "label":{"text": "FirstLife Resources", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
             "logo_bar" : "img/firstlife-testo.svg",
             "logo_menu" : "img/firstlife-logo-palla.svg",
             "logo_width" : 160,
