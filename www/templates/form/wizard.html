@@ -184,14 +184,14 @@
     </ion-content>
 
     <ion-footer-bar class="bar-light">
-        <button class="button button-clear no-animation button-positive"
+        <button class="button button-clear no-animation"
                 ng-click="editor.close()" ng-if="!editor.slideIndex">
             <i class="icon ion-close-round"></i>
             {{'ABORT'|translate}}
         </button>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button ng-disabled="editor.form.wizardform.$invalid" class="button button-positive button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>
+            <button ng-disabled="editor.form.wizardform.$invalid" class="button button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-view>

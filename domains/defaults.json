@@ -157,7 +157,7 @@
 
                  },
                  "relations":{
-                     "FL_GROUPS":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","exclude":true,"check":"membership"},
+                     "FL_GROUPS":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_BY_GROUP_GROUP_CHILD_LABEL","exclude":true,"check":"membership"},
                      "FL_PLACES":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_PLACE_CHILD_LABEL","exclude":true,"check":"membership"},
                      "FL_EVENTS":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_EVENT_CHILD_LABEL","exclude":true,"check":"membership"},
                      "FL_ARTICLES":{"slug":"group_id","field":"group_id","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_POST_CHILD_LABEL","exclude":true,"check":"membership"},
@@ -188,8 +188,10 @@
             "disabled_color":20,
             "side_menu":[
                 {"name":"Sito web FirstLife","url":"http://firstlife.org","icon":"ion-social-rss","lang":"it"},
-                {"name":"Guida all'uso","url":"http://www.firstlife.org/category/guida-alluso_tutorial/","icon":"ion-information","lang":"it"},
-                {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"}
+                {"name":"Guida all'uso","url":"http://tutorials.firstlife.di.unito.it/","icon":"ion-information","lang":"it"},
+                {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"},
+                {"name":"Supporto","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"it"},
+                {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
             ]
         },
         "actions":{
@@ -201,7 +203,6 @@
             "reset_tab" : true,
             "logout_tab" : true,
             "wall_tab": true,
-            "helpdesk_tab" : "http://help.firstlife.di.unito.it/",
             "geolocation" : true,
             "search" : true,
             "edit_mode" : true,
@@ -271,7 +272,7 @@
             "marker_ancor": [10,10],
             "bbox_details":"full",
             "geometry_layer": true,
-            "min_zoom_geometry_layer":20,
+            "min_zoom_geometry_layer":23,
             "area":{
                 "levels":[
                     {"level":0,"name":"Livello strada","id":1,"icon":"ion-social-buffer-outline","slug":"ground-level","key":0,"index":1}

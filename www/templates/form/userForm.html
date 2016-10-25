@@ -55,14 +55,14 @@
                 <label ng-if="editable" class="item item-divider">{{'PASSWORD'|translate}}</label>
                 <label ng-if="editable" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_password.password.$invalid, 'no-error' : !user_password.password.$invalid }">
                     <span class="input-label">{{'PASSWORD'|translate}}</span>
-                    <input type="password" placeholder="{{'PASSWORD'|translate}}" name="new_password" ng-model="user.new_password"  ng-readonly="!editable" ng-minlength="6" show-hide>
+                    <input type="password" placeholder="{{'PASSWORD'|translate}}" name="new_password" ng-model="user.new_password"  ng-readonly="!editable" ng-minlength="6">
                 </label>
                 <div class="form-errors" ng-messages="user_form.new_password.$error">  
                     <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 5 {{'CHARACTERS'|translate}}</div>
                 </div> 
                 <label ng-if="editable" class="item item-input item-floating-label" ng-class="{ 'has-error' : user_form.new_2.$error.nxEqual, 'no-error' : !user_form.user_password2.$error.nxEqual }">
                     <span class="input-label">{{'CONTROLL_PASSWORD'|translate}}</span>
-                    <input type="password" placeholder="{{'CONTROLL_PASSWORD'|translate}}" name="new_password2" ng-model="user.new_password2" nx-equal="user.new_password" ng-readonly="!editable" show-hide>
+                    <input type="password" placeholder="{{'CONTROLL_PASSWORD'|translate}}" name="new_password2" ng-model="user.new_password2" nx-equal="user.new_password" ng-readonly="!editable">
                 </label>
                 <div class="form-errors" ng-messages="user_form.new_password2.$error">  
                     <div class="form-error" ng-message="nxEqual">{{'PASSWORD_CONFIRM_ERROR'|translate}}</div>
@@ -91,7 +91,8 @@
         <button ng-if="editable" class="button button-clear button-dark icon ion-chevron-left" on-tap="exitEdit()">
             {{'ABORT'|translate}}
         </button>
-        <button ng-if="!editable" class="button button-clear icon ion-close-round button-positive" on-tap="close()">
+        <button ng-if="!editable" class="button button-clear icon ion-close-round button-dark" on-tap="close()">
+            {{'CLOSE'|translate}}
         </button>
     </ion-footer-bar>
 </ion-view>

@@ -220,7 +220,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         EDIT:'Modifica',
         ABORT:'Annulla',
         RESET:'Reset',
-        SAVE:'Salva',
+        SAVE:'Pubblica',
         // commentBox
         PUBLISH:'Pubblica',
         COMMENT_ALLERT:'Il tuo commento verrà pubblicato sul Web e sarà visibile a tutti.',
@@ -231,9 +231,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         SUCCESS_CANCEL:"Cancellazione eseguita correttamente!",
         ERROR_CANCEL:"Cancellazione fallita: per favore, riprova in seguito!",
         // walktrhough
-        SIGNUP: 'Registrazione',
-        EMAIL: 'Email',
-        EMAIL_NOT_FOUND:'Email non registrata.',
+        SIGNUP: 'Registrati',
+        EMAIL: 'E-mail',
+        EMAIL_NOT_FOUND:'E-mail non registrata.',
         PASSWORD_RETRIEVE:'Recupera password',
         SIGNUP_MESSAGE:'Si riceverà una nuova password tramite e-mail',
         CLICKING:'Cliccando su',
@@ -279,7 +279,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         TO_AT:'alle',
         PERMALINK:'Permalink',
         CAMERA:'Camera',
-        GALLERY:'Galleria',
+        GALLERY:'Immagini',
         GALLERY_BUTTON:'Scegli dalla Galleria',
         FILE:'Carica file',
         PICTURE:'Foto',
@@ -347,6 +347,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REL_BY_GROUP_EVENT_CHILD_LABEL:"Eventi",
         REL_BY_GROUP_POST_CHILD_LABEL:"Extra",
         REL_BY_GROUP_COMMENT_CHILD_LABEL:"News",
+        REL_BY_GROUP_GROUP_CHILD_LABEL:"Sottogruppi",
         GROUP_FILTERING:'Gruppo ',
         USER_FILTERING:'Contenuti di ',
         SEARCH_FILTERING:'Ricerca:',
@@ -432,7 +433,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADVANCED_TIME:"Gestione avanzata del tempo",
         EMBED_MAP: "Esporta",
         INFO_LABEL:"Info",
-        INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc..."
+        INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc...",
+        CLOSE:"Chiudi",
+        PASSWORD_CONFIRM_ERROR:"Le password non corrispondono"
     });
     $translateProvider.translations('en', {
         ENTRIES:'entries',
@@ -695,7 +698,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADVANCED_TIME:"Advanced time setup",
         EMBED_MAP: "Export embed url",
         INFO_LABEL:"Info",
-        INFO_PLACEHOLDER:"Useful information, instructions, rules, etc."
+        INFO_PLACEHOLDER:"Useful information, instructions, rules, etc.",
+        CLOSE:"Close",
+        PASSWORD_CONFIRM_ERROR:"Passwords do not match"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

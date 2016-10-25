@@ -137,7 +137,8 @@ angular.module('firstlife.controllers')
         
         var funcLayer = null
         // init livello griglia
-        if(!funcLayer){
+        // testing delle chiamate tile
+        if(false && !funcLayer){
         leafletData.getMap("mymap").then(function(map) {
             funcLayer = new L.TileLayer.Functional(
                 function (tile) {

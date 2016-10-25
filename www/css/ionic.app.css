@@ -12860,6 +12860,12 @@ a.button {
 
 ion-side-menu#side-menu {
   background-color: #f8f8f8; }
+  ion-side-menu#side-menu .bar-footer {
+    height: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    font-size: 0.8em;
+    padding: 0px 10px 0px; }
   ion-side-menu#side-menu ion-item.item {
     border: none;
     background-color: transparent;
