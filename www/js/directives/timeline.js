@@ -47,7 +47,7 @@ angular.module('firstlife.timeline',[])
             // 2: settimana del mese
             // 3: giorno del mese
             // 4: mese dell'anno
-            $scope.defaultUnit = 1;
+            $scope.defaultUnit = 0;
             $scope.indexDefaultUnit = $scope.defaultUnit; //mi segno l'indice
             $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
                             {key:"day",label:"DAY_BUTTON"},
