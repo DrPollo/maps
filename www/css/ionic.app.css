@@ -13269,9 +13269,10 @@ ion-side-menu#side-menu {
       background: #333;
       display: block;
       min-width: 100%;
-      overflow: hidden; }
+      overflow: hidden;
+      height: 47px; }
       .maps-view search-cards button span {
-        display: inline-block;
+        display: inline;
         padding-right: 10px;
         font-weight: 300;
         font-size: 1em; }
