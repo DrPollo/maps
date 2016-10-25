@@ -12970,7 +12970,7 @@ ion-side-menu#side-menu {
         .signup-view .bottom-content .form-container .signup-form .list .item .input-label.has-input, .signup-view .bottom-content .form-container .login-form .list .item .input-label.has-input, .login-view .bottom-content .form-container .signup-form .list .item .input-label.has-input, .login-view .bottom-content .form-container .login-form .list .item .input-label.has-input {
           color: white; }
         .signup-view .bottom-content .form-container .signup-form .list .item input, .signup-view .bottom-content .form-container .login-form .list .item input, .login-view .bottom-content .form-container .signup-form .list .item input, .login-view .bottom-content .form-container .login-form .list .item input {
-          background-color: rgba(0, 0, 0, 0.6) !important;
+          background-color: black !important;
           color: white;
           bottom: 0;
           color: #fff;
@@ -12979,13 +12979,13 @@ ion-side-menu#side-menu {
           position: relative;
           z-index: 1; }
         .signup-view .bottom-content .form-container .signup-form .list .item input:-webkit-autofill, .signup-view .bottom-content .form-container .signup-form .list .item textarea:-webkit-autofill, .signup-view .bottom-content .form-container .signup-form .list .item select:-webkit-autofill, .signup-view .bottom-content .form-container .login-form .list .item input:-webkit-autofill, .signup-view .bottom-content .form-container .login-form .list .item textarea:-webkit-autofill, .signup-view .bottom-content .form-container .login-form .list .item select:-webkit-autofill, .login-view .bottom-content .form-container .signup-form .list .item input:-webkit-autofill, .login-view .bottom-content .form-container .signup-form .list .item textarea:-webkit-autofill, .login-view .bottom-content .form-container .signup-form .list .item select:-webkit-autofill, .login-view .bottom-content .form-container .login-form .list .item input:-webkit-autofill, .login-view .bottom-content .form-container .login-form .list .item textarea:-webkit-autofill, .login-view .bottom-content .form-container .login-form .list .item select:-webkit-autofill {
-          background-color: rgba(0, 0, 0, 0.6) !important;
+          background-color: black !important;
           color: white !important;
           background-image: none; }
         .signup-view .bottom-content .form-container .signup-form .list .item input[type=text], .signup-view .bottom-content .form-container .login-form .list .item input[type=text], .login-view .bottom-content .form-container .signup-form .list .item input[type=text], .login-view .bottom-content .form-container .login-form .list .item input[type=text] {
           width: 100% !important; }
       .signup-view .bottom-content .form-container .signup-form .list .item.input-box, .signup-view .bottom-content .form-container .login-form .list .item.input-box, .login-view .bottom-content .form-container .signup-form .list .item.input-box, .login-view .bottom-content .form-container .login-form .list .item.input-box {
-        background-color: rgba(0, 0, 0, 0.6) !important;
+        background-color: black !important;
         color: white;
         bottom: 0;
         letter-spacing: 0.25rem;
