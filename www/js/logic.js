@@ -216,7 +216,7 @@ angular.module('firstlife.config')
 //                    icon = cats[j].icon_name,
 //                    color = colors[colorIndex % colors.length]; 
                 var cats = catsList[i].categories,
-                    colorIndex = catsList[i].color_index ? cats[j].category_index + catsList[i].color_index -1 : cats[j].category_index,
+                    colorIndex = catsList[i].color_index ? cats[j].category_index + catsList[i].color_index : cats[j].category_index,
                     index = cats[j].category_index,
                     icon = cats[j].icon_name,
                     color = colors[colorIndex % colors.length]; 
