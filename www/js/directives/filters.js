@@ -25,6 +25,7 @@ angular.module('firstlife.directives')
                     scope.cats.push(scope.filters[i]);  
                 }
             }
+        
             scope.$watch(function() {
                 return element[0].clientWidth;
             }, function(value,old){
@@ -51,6 +52,7 @@ angular.module('firstlife.directives')
                         scope.cats[i].list[k].rect = toPer(boxes2[k]);
                     }
                 }
+                $log.log('treemap ',scope.cats,scope.filters)
             }
 
             scope.back = false;

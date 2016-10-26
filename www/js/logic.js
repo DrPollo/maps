@@ -208,9 +208,15 @@ angular.module('firstlife.config')
         var catsList = myConfig.types.categories,
             colors = myConfig.design.colors;
         for(i = 0; i < catsList.length; i++){
+            catsList[i]["color"] = colors[catsList[i].color_index % colors.length];
             for(j = 0; j < catsList[i].categories.length; j++){
+//                var cats = catsList[i].categories,
+//                    colorIndex = cats[j].category_index - 1,
+//                    index = cats[j].category_index,
+//                    icon = cats[j].icon_name,
+//                    color = colors[colorIndex % colors.length]; 
                 var cats = catsList[i].categories,
-                    colorIndex = cats[j].category_index - 1,
+                    colorIndex = catsList[i].color_index ? cats[j].category_index + catsList[i].color_index -1 : cats[j].category_index,
                     index = cats[j].category_index,
                     icon = cats[j].icon_name,
                     color = colors[colorIndex % colors.length]; 
@@ -218,7 +224,7 @@ angular.module('firstlife.config')
                 catsList[i].categories[j].index = index;
                 catsList[i].categories[j].color = color;
                 catsList[i].categories[j].icon = icon;
-                if(myConfig.dev)console.log("myConfig, setupColor: ", catsList[i].categories[j]);
+                //if(myConfig.dev)console.log("myConfig, setupColor: ", catsList[i].categories[j]);
             }
         }
         if(myConfig.dev)console.log("myConfig, setupColor: ", catsList);
