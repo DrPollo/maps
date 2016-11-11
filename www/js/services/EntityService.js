@@ -178,17 +178,18 @@ angular.module('firstlife.services')
             var dataForServer = {};
 
 
-            if(dev) $log.debug("processData init: ", data, typeInfo);
+            $log.debug("processData init: ", data, typeInfo);
 
 
             var typeProperties = typeInfo.perms;
             // check campi del tipo
             for(var key in typeProperties){
-                if(data[key]){
-                    dataForServer[key] = data[key];
-                }
+                $log.debug("check perm ", key, data[key], data[key] ? true : false );
+                // se c'e' setto altrimento metto null
+                dataForServer[key] = data[key] ? data[key] : null;
+                
             }
-            if(dev) $log.debug("processData, type properties : ", data, dataForServer);
+            $log.debug("processData, type properties : ", data, dataForServer);
 
 
 

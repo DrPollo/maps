@@ -358,8 +358,9 @@ angular.module('firstlife.controllers')
             if(dataForServer.title)
                 delete dataForServer.title;
             
+            $log.debug("dataForServer", dataForServer);
             dataForServer = EntityService.processData(dataForServer);
-
+            $log.debug("dataForServer", dataForServer);
             //update a place
             if($stateParams.id !=null && $stateParams.id !=""){
 
