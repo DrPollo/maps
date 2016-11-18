@@ -18,15 +18,7 @@ angular.module('firstlife.controllers')
             $scope.user = MemoryFactory.get('user');
             // valuto lo stato da dove arrivo e decido cosa fare
             if($scope.user){
-                if($scope.user.displayName && $scope.user.displayName != ''){
-                    $scope.displayName = $scope.user.displayName;
-                }else if($scope.user.type == 1){
-                    $scope.displayName = $scope.user.first_name.concat(" ").concat($scope.user.last_name);
-                }else if($scope.user.type == 2){
-                    $scope.displayName = $scope.user.name;
-                }else{
-                    
-                }
+                $scope.displayName = $scope.user.display_name;
                 
                 $scope.isLoggedIn = true;
                 $log.info("Benvenuto", $scope.user.displayName);

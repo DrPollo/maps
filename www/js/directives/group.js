@@ -119,10 +119,11 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                 $scope.members.subscribe(
                     function(results){
                         $scope.membersList = results;
+                        $log.debug('member list',results)
                         if($scope.user){
                             var index = results.map(function(e){return e.memberId}).indexOf($scope.user.id);
                             if(index > -1){
-                                $scope.role = results[index].role?results[index].role:'member';
+                                $scope.role = results[index].role? results[index].role : 'member';
                             }
                         }
                     },

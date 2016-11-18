@@ -211,17 +211,6 @@ angular.module('firstlife.services')
         MemoryFactory.save('token',token);
         // decode token
         var user = jwtHelper.decodeToken(token);
-        // salvo l'utente
-        // calcolo il displayName
-        if(user.displayName && user.displayName != ''){
-            // ok
-        }else if(user.type == 1 && user.first_name && user.last_name){
-            user.displayName = user.first_name.concat(" ").concat(user.last_name);
-        }else if(user.type == 2 && user.name){
-            user.displayName = user.name;
-        }else{
-            user.displayName = 'User';
-        }
         MemoryFactory.save('user',user);
         console.log("UserService, login, utente: ",user);
         self.user = user;

@@ -5,9 +5,7 @@
             <i class="icon ion-android-cancel"></i> 
         </button>
         <div>
-            <span ng-if="member.displayName" class="username">{{member.displayName}}</span>
-            <span ng-if="!member.displayName && member.name" class="username">{{member.name}}</span>
-            <span ng-if="!member.displayName && !member.name && member.first_name" class="username">{{member.first_name}} {{member.last_name}}</span>
+            <span ng-if="member.display_name" class="username">{{member.display_name}}</span>
         </div>
 
     </div>

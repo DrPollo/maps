@@ -9,16 +9,11 @@ angular.module('firstlife.controllers')
         var dev = false;
         
         function user (name, surname, email, username, displayname){
-            this.firstName = name;
-            this.lastName = surname;
+            this.firstName = name ? name : null;
+            this.lastName = surname ? name : null;
             this.email = email;
             this.username = username;
-            if(!displayname && name && surname){
-                this.displayName = name.concat(" ").concat(surname.substring(0,1)).concat(".");
-
-            } else {
-                this.displayName = displayname;
-            }
+            this.displayName = displayname;
         }
 
         $scope.user = {};
