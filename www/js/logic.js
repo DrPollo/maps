@@ -10,22 +10,20 @@ angular.module('firstlife.config')
             ssl = "http://";
 
         var url = "";
-        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/domains/").concat(myConfig.domain_id).concat("/");
+        url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/");
         myConfig.base_domain = ssl.concat(myConfig.api_base_domain);
         myConfig.domain_signature = url;
-        myConfig.backend_places = url.concat('places');
-        myConfig.backend_events = url.concat('events');
         myConfig.backend_things = url.concat('things');
         myConfig.backend_notifications = url.concat('notifications');
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');
-        myConfig.backend_users = url.concat('user');
+        myConfig.backend_users = 'http://firstlife-dev.di.unito.it:3095/v4/fl/domains/'.concat(myConfig.domain_id).concat('/').concat('user');
+        //myConfig.backend_users = url.concat('user');
         myConfig.backend_organization = url.concat('organization');
         myConfig.update_user = url.concat('user/update');
         myConfig.retrieve_password = myConfig.backend_users.concat('/resetpass');
         myConfig.reset_password = myConfig.backend_users.concat('/resetpass');
         myConfig.backend_tags = url.concat('tags');
-        //myConfig.backend_images = url.concat('places/');
         myConfig.backend_search = url.concat('things/search');
         myConfig.backend_autocomplete = myConfig.backend_search.concat("?q="); 
 

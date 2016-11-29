@@ -1,7 +1,6 @@
 angular.module('firstlife.factories')
     .factory('entityFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory) {
-        // Service logic
-        //var url = 'http://firstlife-dev.di.unito.it/api/index.php/api/v2/places';
+        
         var self = this;
         self.config = myConfig;
 
@@ -10,22 +9,13 @@ angular.module('firstlife.factories')
 
         var urlThings= myConfig.backend_things;
         var urlBbox= myConfig.backend_bbox;
-        // aggiungo il parametro per ottenere solo i nodi radice (senza padre)
-        var bboxBaseParams = '?types=';
-        for(var i = 0; i< self.config.types.list.length; i++){
-            if(i > 0)   
-                bboxBaseParams = bboxBaseParams.concat(',');
-            bboxBaseParams = bboxBaseParams.concat(self.config.types.list[i].key);
-        }
-        // aggiungio parametro full se necessario, altrimenti lite e' di default
-        if(self.config.map.bbox_details){
-            bboxBaseParams = bboxBaseParams.concat('&detail=full');
-        }
-
+        
+        // aggiungo il filtro al dominio
+        var bboxBaseParams = '?domainId='+self.config.domain_id;
+        
         var format = config.format;
         var response = null;
 
-        //self.placeList = [];
         self.markerList = {};
         self.markerDetailsList = {};
         self.geoJSON = {};
@@ -296,6 +286,7 @@ angular.module('firstlife.factories')
             var featureCollection = data;
             var entityList = featureCollection.features;
             var markers = [];
+            $log.debug('featureCollection.features', data)
             for (i = 0; i < entityList.length; i++) {
                 if(entityList[i] && entityList[i] != null && entityList[i] != 'undefined'){
                     var marker = markerCreate(entityList[i]);
@@ -398,7 +389,7 @@ angular.module('firstlife.factories')
                 var c       = entity.properties.categories[i];
                 var cSpace = self.categories[self.categories.map(function(e){return e.category_space;}).indexOf(c.category_space.id)];
                 var cats    = cSpace.categories;
-                var index   = parseInt(cats.map(function(e) { return e.id; }).indexOf(entity.properties.categories[i].category_space.categories[0].id));
+                var index   = parseInt(cats.map(function(e) { return e.id; }).indexOf(entity.properties.categories[i].categories[0].id));
                 var cat     = cats[index];
                 if(cSpace.is_visible){
                     icons[c.category_space.id] = {
@@ -416,7 +407,7 @@ angular.module('firstlife.factories')
                 }
             }
 
-            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].category_space.categories[0].id)),
+            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].categories[0].id)),
                 category = categories[catIndex],
                 entity_type = entity.properties.entity_type;
             var type_info = self.config.types.list[self.config.types.list.map(function(e){return e.key;}).indexOf(entity_type)];
@@ -424,7 +415,7 @@ angular.module('firstlife.factories')
             var category_list = [];
             // costruisco lista delle categorie dell'entita'
             for(var i = 0; i < entity.properties.categories.length; i++){
-                var cats = angular.copy(entity.properties.categories[i].category_space.categories.map(function(e){return e.id}));
+                var cats = angular.copy(entity.properties.categories[i].categories.map(function(e){return e.id}));
                 category_list = category_list.concat(cats);
             }
 
@@ -510,8 +501,6 @@ angular.module('firstlife.factories')
                     color : icons[0].color,
                 } : null
             };
-
-//            $log.debug("Creazione del marker dal'entita': ", entity, marker);
             return marker;
         }
         // fine markerCreate
@@ -527,14 +516,10 @@ angular.module('firstlife.factories')
                 //headers:{"Content-Type":"application/json"},
                 data:''
             };
-            var details = false;
-//            if(self.config.map.bbox_details){
-//                details = true;
-//            }
-
+            var details = 'lite';
             $http(req).then(
                 function(response) {
-                    var markers = entitiesToMarker(response.data);
+                    var markers = entitiesToMarker(response.data.things);
                     // aggiorno lista marker
                     updateMarkersList(markers,details);
                     deferred.resolve(markers);

@@ -3,9 +3,9 @@
     {
         "dev": true,
         "project": 1,
-        "api_base_domain" : "firstlife-dev.di.unito.it:3095/",
+        "api_base_domain" : "firstlife-dev.di.unito.it:3090/",
         "format":"",
-        "api_version" : "v4",
+        "api_version" : "v5",
         "ssl": false,
         "version": "0.4.9.1",
         "app_name" : "FirstLife",
@@ -285,7 +285,6 @@
             "time_to": "",
             "marker_size": [20,20],
             "marker_ancor": [10,10],
-            "bbox_details":"full",
             "geometry_layer": true,
             "min_zoom_geometry_layer":23,
             "area":{
