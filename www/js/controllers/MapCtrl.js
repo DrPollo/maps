@@ -253,7 +253,7 @@ angular.module('firstlife.controllers')
          */
         // click su marker > propago evento
         $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-            $log.log("MARKER CLICK...controlla, args: ", args,event);
+            $log.debug("MARKER CLICK...controlla, args: ", args,event);
             if(!event.preventMapMarkerClick){
                 event.preventMapMarkerClick = true;
 
@@ -711,8 +711,8 @@ angular.module('firstlife.controllers')
          */
 
         function clickMarker(markerId){
-            if(consoleCheck) console.log("markerClick! ",markerId);
-            $scope.$broadcast("markerClick", {markerId:parseInt(markerId)});
+            $log.debug("markerClick! ",markerId);
+            $scope.$broadcast("markerClick", {markerId:markerId});
         }
 
         function updatePositionInSearch(){

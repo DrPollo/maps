@@ -136,6 +136,7 @@ angular.module('firstlife.services')
                 return [];
             },
             get: function(id){
+                $log.debug('get',id);
                 var deferred = $q.defer();
                 entityFactory.get(id, false).then(
                     function (marker){
@@ -150,6 +151,7 @@ angular.module('firstlife.services')
                 return  deferred.promise;
             },
             getDetails: function(id){
+                $log.debug('getDetails',id);
                 var deferred = $q.defer();
                 //disabilito la cache
                 entityFactory.get(id, true).then(

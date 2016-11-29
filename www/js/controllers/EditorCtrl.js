@@ -160,7 +160,7 @@ angular.module('firstlife.controllers')
                         // aggiungo il campo se trovo il parametro nella search
                         //$log.debug("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
                         if($stateParams[key]){
-                            _this.wizard.dataForm[field] = parseInt($stateParams[key]);
+                            _this.wizard.dataForm[field] = $stateParams[key];
                             //$log.debug("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
                         }
                     }
@@ -470,7 +470,7 @@ angular.module('firstlife.controllers')
             // recupero le informazioni sul padre se gia' inserite
             if( mark.parent_id != null && mark.parent_id !== "undefined"){
                 if(dev) console.log("ha un parent! ", mark.parent_id);
-                _this.wizard.dataForm.parent_id = parseInt(mark.parent_id);
+                _this.wizard.dataForm.parent_id = mark.parent_id;
                 setParent(mark.parent_id);
             }
             // se door_time e' richiesto e non e' nel marker
@@ -508,7 +508,7 @@ angular.module('firstlife.controllers')
         };*/
         function setParent(parent_id){
             if(dev) console.log("carico il parent ", parent_id);
-            entityFactory.get(parseInt(parent_id)).then(
+            entityFactory.get(parent_id).then(
                 function(mark){
                     if(dev) console.log("parent ", mark);
                     _this.wizard.dataForm.parent_id = mark;

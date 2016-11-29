@@ -131,7 +131,6 @@ angular.module('firstlife.factories')
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
                 $http(req).then(
                     function(response) {
-//                        $log.debug("entityFactory, create, get del risultato ",response);
                         getMarker(response.data.id, true).then(
                             function(marker){
                                 deferred.resolve(marker);
@@ -226,7 +225,7 @@ angular.module('firstlife.factories')
                 deferred.resolve(self.markerList[id]);
             }else {
                 // altrimenti chiamo il server per i dettagli
-                var urlId = urlThings.concat('/').concat(id).concat('/details').concat(format).concat("?detail=full").concat(" ");
+                var urlId = urlThings.concat('/').concat(id).concat(format);
 
                 var req = {
                     url: urlId,
@@ -236,7 +235,6 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
-//                        $log.debug(response);
                         entityToMarker(response.data).then(
                             function(marker){
                                 //aggiorno anche la lista dei dettagli
@@ -286,7 +284,6 @@ angular.module('firstlife.factories')
             var featureCollection = data;
             var entityList = featureCollection.features;
             var markers = [];
-            $log.debug('featureCollection.features', data)
             for (i = 0; i < entityList.length; i++) {
                 if(entityList[i] && entityList[i] != null && entityList[i] != 'undefined'){
                     var marker = markerCreate(entityList[i]);
@@ -300,46 +297,16 @@ angular.module('firstlife.factories')
 
         //private function
         function entityToMarker(data) {
-//            $log.debug(data);
             var deferred = $q.defer();
-            // bug, formati diversi da add/get
-            var entity = {},
-                features = [];
-            //bug
-            if(data === "22P02"){
-                deferred.reject("Bug, risposta: 22P02");
-                $log.error('entityToMarker, error 22P02 ',data);
-            }else {
-                if(data && data.features){
-                    features = data.features;
-                }
-                //fine bug
-                if(features && Array.isArray(features) && features.length > 0){
-                    entity = features[0];
-                    if(self.mainCategories){
-                        var marker = markerCreate(entity);
-                        if(marker)
-                            deferred.resolve(marker);
-                        else{
-                            $log.error("Impossibile creare il marker!");
-                            deferred.reject("Impossibile creare il marker!");
-                        }
-                    }else if(entity){
-                        var marker = markerCreate(entity);
-                        if(marker){
-                            deferred.resolve(marker);
-                        }else{
-                            $log.error("Impossibile creare il marker!");
-                            deferred.reject("Impossibile creare il marker!");
-                        }
-                    }
-                } else if(data.id){
-                    deferred.resolve({id:-2});
-                }else {
-                    $log.error("Impossibile creare il marker!");
-                    deferred.reject("no data");
-                }
-            }
+            // niente dati
+            if(!data)
+                deferred.reject("no data");
+            // pending per moderazione
+            if(!data.id)
+                deferred.resolve({id:-2});
+            // ho i dati e creo il marker
+            deferred.resolve(markerCreate(data));
+            
             return deferred.promise;
         }        
 
@@ -442,7 +409,7 @@ angular.module('firstlife.factories')
 
             var marker = {
                 popupOptions : {closeOnClick:true},
-                id: parseInt(entity.properties.id),
+                id: entity.properties.id,
                 type: parseInt(entity.properties.type),
                 coordinates : entity.geometry.coordinates,
                 lat: parseFloat(entity.geometry.coordinates[1]),
@@ -487,7 +454,7 @@ angular.module('firstlife.factories')
                 display_name: entity.properties.display_name,
                 last_update: entity.properties.last_update,
                 eTimeline : (entity.properties.valid_from || entity.properties.valid_to) ? {
-                    id:parseInt(entity.properties.id),
+                    id:entity.properties.id,
                     icon: icons[mainCat.category_space] ? icons[mainCat.category_space] : icons[0],
                     lat: parseFloat(entity.geometry.coordinates[1]),
                     lng: parseFloat(entity.geometry.coordinates[0]),
@@ -501,6 +468,7 @@ angular.module('firstlife.factories')
                     color : icons[0].color,
                 } : null
             };
+            
             return marker;
         }
         // fine markerCreate
@@ -516,7 +484,7 @@ angular.module('firstlife.factories')
                 //headers:{"Content-Type":"application/json"},
                 data:''
             };
-            var details = 'lite';
+            var details = null;
             $http(req).then(
                 function(response) {
                     var markers = entitiesToMarker(response.data.things);

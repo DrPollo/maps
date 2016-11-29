@@ -26,6 +26,7 @@ angular.module('firstlife.controllers')
             if (!event.markerClickPrevented) {
                 event.markerClickPrevented = true;
                 if(args.markerId){
+                    $log.debug('markerClick',args);
                     $scope.showMCardPlace(args.markerId);
                 }
             }
@@ -280,9 +281,11 @@ angular.module('firstlife.controllers')
         }
 
         function loadModal(markerId){
+            $log.debug('loadModal',markerId)
             $scope.obs = MapService.getDetailsRx(markerId).subscribe(
                 function(marker){
                     $scope.infoPlace.marker = angular.copy(marker);
+                    $log.debug('openPlaceModal',marker)
                     $scope.$emit('openPlaceModal', {marker: marker.id});
                     $scope.loaded = true;
                     // inizializzo la maschera dei permessi per l'utente per il marker attuale
