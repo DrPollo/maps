@@ -3,7 +3,6 @@
         <button class="button button-positive button-clear icon-left" ng-repeat="group in groups track by $index" on-tap="setToggle($index)" ng-class="toggle == $index ? 'selected' : '' ">
                 <i class="{{group.icon}}"></i>
                 <span ng-if="!isMobile">{{group.title|translate}}</span>
-                <!--<span ng-class="toggle == $index ? '' : 'badge badge-positive' ">{{group.list.length}}</span>-->
         </button>
     </div>
     <div class="item">
@@ -17,14 +16,14 @@
                 <div class="item item-divider" ng-if="item.hasOwnProperty('title')">{{item['title']}}</div>
                 <div class="item item-text-wrap">{{item[group.contentKey]}}</div>
                 <div class="item item-footer">
-                    <span class="message"><span class="username">{{item.display_name}}</span> {{'WHEN'|translate}} {{item.timestamp| date: 'dd/MM/yyyy'}}</span>
+                    <span class="message"><span class="username">{{item.updater_display_name}}</span> {{'WHEN'|translate}} {{item.timestamp_insert| date: 'dd/MM/yyyy'}}</span>
                     <div class="button-box">
                         <button ng-if="user.id == item.user_id" 
-                            ng-click="edit(item[group.idKey],group.key,outerIndex)" 
+                            ng-click="edit(item.id,group.key,outerIndex)" 
                             class="button button-clear">
                             <i class="icon ion-edit" style="color:#333;"></i> 
                         </button>
-                        <button ng-if="user.id == item.user_id || user.id == owner" ng-click="delete(item[group.idKey],group.key,outerIndex)"
+                        <button ng-if="user.id == item.user_id || user.id == owner" ng-click="delete(item.id,group.key,outerIndex)"
                                 class="button button-clear">
                             <i class="icon ion-trash-b" style="color:#333;"></i>
                         </button>
@@ -36,19 +35,19 @@
                 <div class="row foto-mosaico" ng-repeat="image in group.list | orderBy: '-timestamp' track by $index" ng-if="$index % 4 === 0">
                     <div class="col col-25" ng-if="$index < group.list.length">
                         <img class="button" title="{{group.list[$index].title}}" ng-src="{{group.list[$index].thumb }}" width="100%" on-tap="openGallery($index, group.list)" />
-                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index][group.idKey],group.key,outerIndex)"></i>
+                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index]['id'],group.key,outerIndex)"></i>
                     </div>
                     <div class="col col-25" ng-if="$index + 1 < group.list.length">
                         <img class="button" title="{{group.list[$index + 1].title}}" ng-src="{{group.list[$index + 1].thumb }}" width="100%"  on-tap="openGallery(($index + 1),group.list)" />
-                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 1][group.idKey],group.key,outerIndex)"></i>
+                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 1]['id'],group.key,outerIndex)"></i>
                     </div>
                     <div class="col col-25" ng-if="$index + 2 < group.list.length">
                         <img class="button" title="{{group.list[$index + 2].title}}" ng-src="{{group.list[$index + 2].thumb }}" width="100%" on-tap="openGallery(($index + 2),group.list)"  />
-                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 2][group.idKey],group.key,outerIndex)"></i>
+                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 2]['id'],group.key,outerIndex)"></i>
                     </div>
                     <div class="col col-25" ng-if="$index + 3 < group.list.length">
                         <img class="button" title="{{group.list[$index + 3].title}}" ng-src="{{group.list[$index + 3].thumb }}" width="100%" on-tap="openGallery(($index + 3),group.list)" />
-                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 3][group.idKey],group.key,outerIndex)"></i>
+                        <i ng-if="user.id == image.user_id || user.id == owner" class="icon ion-trash-b" on-tap="delete(group.list[$index + 3]['id'],group.key,outerIndex)"></i>
                     </div>
                 </div>
             </div>

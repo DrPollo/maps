@@ -118,7 +118,8 @@ angular.module('firstlife.factories')
 
             },
             create: function(entity) {
-                var urlId = types[entity.entity_type].concat('/add').concat(format);
+                var urlId = urlThings.concat(format);
+//                var urlId = types[entity.entity_type].concat('/add').concat(format);
                 var deferred = $q.defer();
                 var feature = markerConverter(entity);
                 var token = MemoryFactory.get('token');
@@ -155,7 +156,6 @@ angular.module('firstlife.factories')
                 delete self.markerDetailsList[entityId];
                 delete self.markerList[entityId];
                 var token = MemoryFactory.get('token');
-                if(consoleCheck)console.log("PlaceFactory, token: ", token);
                 var req = {
                     url: urlId,
                     method: 'DELETE',

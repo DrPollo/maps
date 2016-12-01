@@ -28,8 +28,8 @@ angular.module('firstlife.factories')
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
-                    url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat("/").concat("add").concat(format),
-                    method: 'PUT',
+                    url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat(format),
+                    method: 'POST',
                     headers:{"Content-Type":"application/json", Authorization:token},
                     data:data
                 };
@@ -43,14 +43,14 @@ angular.module('firstlife.factories')
                     });
                 return deferred.promise;
             },
-            update: function(entityId,data,type){
+            update: function(entityId,id,data,type){
                 var deferred = $q.defer();
                 var token = MemoryFactory.get('token'),
                     user = MemoryFactory.get('user');
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
-                    url: base_url.concat(types[type].url).concat("/").concat(entityId).concat("/update").concat(format),
+                    url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat("/").concat(id).concat(format),
                     method: 'PUT',
                     headers:{"Content-Type":"application/json", Authorization:token},
                     data:data
@@ -65,11 +65,11 @@ angular.module('firstlife.factories')
                     });
                 return deferred.promise;
             },
-            delete: function(commentId,type){
+            delete: function(entityId,id,type){
                 var deferred = $q.defer();
                 var token = MemoryFactory.get('token');
                 var req = {
-                    url: base_url.concat(types[type].url).concat("/").concat(commentId).concat("/delete").concat(format),
+                    url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat("/").concat(id).concat(format),
                     method: 'DELETE',
                     headers:{"Content-Type":"application/json", Authorization:token},
                     data:{}

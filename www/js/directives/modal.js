@@ -100,14 +100,14 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 function upadateGroupList(list,i){
                     var group = $scope.groups[i];
                     for(var j = 0; j < list.length; j++){
-                        var id = list[j][group.idKey];
-                        var index = group.list.map(function(e){return e[group.idKey]}).indexOf(id);
+                        var id = list[j]['id'];
+                        var index = group.list.map(function(e){return e.id}).indexOf(id);
                         // se manca nella memoria locale aggiungo
                         if(index < 0){group.list.push(list[j]);}
                     }
                     for(var q = 0; q < group.list.length; q++){
-                        var id = group.list[q][group.idKey];
-                        var index = list.map(function(e){return e[group.idKey]}).indexOf(id);
+                        var id = group.list[q]['id'];
+                        var index = list.map(function(e){return e.id}).indexOf(id);
                         // se non c'e' tra i risultati online cancello dalla memoria locale
                         if(index < 0){group.list.slice(q,1);}
                     }
@@ -129,11 +129,12 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     confirmPopup.then(
                         function(res) {
                             if(res) {
-                                SimpleEntityFactory.delete(id,type).then(
+                                $log.debug('delete ',id,type,i)
+                                SimpleEntityFactory.delete($scope.id,id,type).then(
                                     function(response){
                                         // cancello l'elemento dalla memoria locale
-                                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
-                                        console.debug('check delete',id,type,i,$scope.groups[i].list,index);
+                                        var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf(id);
+                                        $log.debug('check delete',id,type,i,$scope.groups[i],$scope.groups[i].list,index);
                                         if(index > -1){
                                             $scope.groups[i].list.splice(index,1);
                                         }
@@ -154,7 +155,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             // aggiunge entita' semplice
             $scope.edit = function(id,type,i){
-                var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf(id);
+                var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf(id);
                 if(index > -1){
                     $scope.publish = false;
                     $scope.type = angular.copy($scope.types[type]);
@@ -172,14 +173,12 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 for(var k in $scope.type.fields){
                     data[k] = $scope.simpleEntity[k];
                 }
-                //data[$scope.type.idKey] = $scope.simpleEntity[$scope.type.idKey];
-                //data.type = $scope.simpleEntity.type;
                 
-                SimpleEntityFactory.update($scope.simpleEntity[$scope.type.idKey],data,$scope.simpleEntity.type).then(
+                SimpleEntityFactory.update($scope.id, $scope.simpleEntity.id,data,$scope.simpleEntity.type).then(
                     function(response){
                         // cancello l'elemento dalla memoria locale
                         var i = $scope.groups.map(function(e){return e.key}).indexOf($scope.simpleEntity.type);
-                        var index = $scope.groups[i].list.map(function(e){return e[$scope.groups[i].idKey]}).indexOf($scope.simpleEntity[$scope.type.idKey]);
+                        var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf($scope.simpleEntity.id);
                         if(index > -1){
                             $scope.groups[i].list.splice(index,1);
                         }

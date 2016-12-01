@@ -239,6 +239,8 @@ angular.module('firstlife.services')
 
             // entity_type, serve per la create
             dataForServer.entity_type = data.entity_type;
+            // aggiungo il dominio
+            dataForServer.domain_id = self.config.domain_id;
 
             // categorie
             // inserisco le categorie e scarto quelle vuote
@@ -311,17 +313,16 @@ angular.module('firstlife.services')
         function fillCats(data,dataForServer){
             // elimino categorizzazioni vuote
             var catsTmp = [];
-            if(dev) $log.debug("EntityService, processData, check categorie: ",data.categories);
             for(var i = 0; i < data.categories.length; i++){
                 var c = data.categories[i];
-                if(c && c.categories && c.categories.length > 0){
-                    catsTmp.push(c);
-                } else if(c && c.category_space && c.category_space.categories && c.category_space.categories.length > 0){
-                    catsTmp.push(c);
-                }
+                var tmp_c = {"category_space":{id:c.category_space}, "categories":[]};
+                    
+                for(var j = 0; j < c.categories.length > 0; j++){
+                    tmp_c.categories.push({"id":c.categories[j]});
+                } 
+                catsTmp.push(tmp_c);
             }
             dataForServer.categories = catsTmp;
-            if(dev) $log.debug("EntityService, processData, check categorie: ",catsTmp, data.categories,dataForServer);
             return dataForServer;
         }
 
