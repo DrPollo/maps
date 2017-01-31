@@ -1,0 +1,33 @@
+{"myConfig":
+ {
+     "app_name" : "Prossimità",
+     "domain_name" : "prossimita",
+     "domain_id" : 15,
+     "design":{
+         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife Prossimità", "alt":"FirstLife Prossimità", "label":{"text": "FirstLife Regeneration", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+            "logo_bar" : "img/firstlife-testo.svg",
+            "logo_menu" : "img/firstlife-logo-palla.svg",
+            "logo_width" : 160,
+            "logo_height" : 160,
+            "default_thumb" : "img/thumb.jpg",
+            "default_background" : "img/fondo-walktrough.jpg", 
+            "logo_partners" : [],"show_thumbs" : true,
+            "can_permalink": false,
+            "default_language" : "it",
+            "disabled_color":20,
+            "side_menu":[
+                {"name":"Sito web FirstLife","url":"http://firstlife.org","icon":"ion-social-rss","lang":"it"},
+                {"name":"Guida all'uso","url":"http://www.firstlife.org/category/guida-alluso_tutorial/","icon":"ion-information","lang":"it"},
+                {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"}
+            ]
+     },
+     "map":{
+         "map_default_lat" : 45.070312,
+         "map_default_lng" : 7.686856,
+         "zoom_level" : 14
+     },
+     "behaviour":{
+            "is_login_required" : true
+     }
+ }
+}
