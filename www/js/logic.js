@@ -36,6 +36,18 @@ angular.module('firstlife.config')
         if(myConfig.dev)console.log("url api", url);
 
     })
+// configurazione authentication
+    .config(
+    function setupAuth(myConfig){
+        var params = myConfig.authentication;
+        var url = ("https://").concat(params.auth_base_domain);
+        var redirect_uri = myConfig.base_domain;
+        myConfig.authentication["auth_url"] = url;
+        myConfig.authentication["auth_page_url"] = url.concat("oauth/authorization");
+        myConfig.authentication["registration_url"] = url.concat("registration");
+        myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
+        if(myConfig.dev)console.log("setup auth params:",myConfig.authentication);
+    })
 // logica
     .config(
     function configAppLogic(myConfig){
