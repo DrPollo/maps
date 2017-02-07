@@ -97,6 +97,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         data: {
             authenticate: false
         }
+    })   
+        .state('home', {
+        url: "/?action&from&params&embed",
+        controller: 'LandingCtrl as landing',
+        templateUrl: "templates/landingpage.html",
+        data: {
+            authenticate: false
+        }
     })
 
         .state('app', {
@@ -158,7 +166,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/');
 
 
     //error handler

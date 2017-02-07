@@ -1,0 +1,43 @@
+<ion-view class="landingpage-view">
+    <ion-header>
+      <ion-toolbar>
+        <div class="col">
+            <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}' title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
+
+            <ion-title id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">
+                {{defaults.design.landingpage.logo.title}}
+            </ion-title>
+        </div>
+        <div class="col">
+            it, en
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content scroll="true" style='background-image: url(" {{defaults.design.default_background}} ");'>
+        <div class="row top-content">
+            <div class="alternative-actions">
+                <button type="submit" class="button icon ion-log-in button-block" ng-click="doLogIn()" ng-disabled="login_form.$invalid" ng-class="{ 'button-stable' : login_form.$invalid, 'button-positive' : !login_form.$invalid}">
+                    {{'LOGIN'|translate}}
+                </button>
+                <button class="sign-up button button-small button-block button-stable ion-android-person-add" ng-click="goToSignUp()">
+                    {{'SIGNUP'|translate}}
+                </button>
+            </div>
+        </div>
+
+
+        <div class="row bottom-content">
+            
+        </div>
+
+
+        <div class="footer-content">
+            <div id="partners">
+                <span ng-repeat="logo in defaults.design.logo_partners"><img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/><label>{{logo.label}}</label></span>
+            </div>
+            <div>
+                <span ng-repeat="c in defaults.design.landingpage.credits | filter(currentLang == c.lang) track by $id">{{text}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
