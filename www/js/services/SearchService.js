@@ -113,42 +113,46 @@ angular.module('firstlife.services')
         function geocodingEntryParser(entry,center){
             //$log.debug("SearchCtrl, geocodingEntryDecoder, entry: ",entry,center);
             var r = {};
-            r.name = '';
+            // basta questo
+            r.name = entry.display_name;
             r.icon = 'ion-location';
             //bus stop
             if(entry.address.bus_stop){
-                r.name = r.name.concat(entry.address.bus_stop).concat(', ');
+//                r.name = r.name.concat(entry.address.bus_stop).concat(', ');
                 r.icon = 'ion-android-bus';
             }else if(entry.address.school){
-                r.name = r.name.concat(entry.address.school).concat(', ');
+//                r.name = r.name.concat(entry.address.school).concat(', ');
                 r.icon = 'ion-university';
             }else if(entry.address.attraction){
-                r.name = r.name.concat(entry.address.attraction).concat(', ');
+//                r.name = r.name.concat(entry.address.attraction).concat(', ');
                 r.icon = 'ion-pin';
             }
-            // strada o piazza
-            if(entry.address.road)
-                r.name = r.name.concat(entry.address.road).concat(', ');
-            else if(entry.address.pedestrian)
-                r.name = r.name.concat(entry.address.pedestrian).concat(', ');
-            else if(entry.address.footway)
-                r.name = r.name.concat(entry.address.footway).concat(', ');
-            // borgo o circoscrizione
-            if(entry.address.neighbourhood)
-                r.name = r.name.concat(entry.address.neighbourhood ).concat(', ');
-            else if(entry.address.suburb)
-                r.name = r.name.concat(entry.address.suburb).concat(', ');
-            // citta' o villaggio
-            if(entry.address.city)
-                r.name = r.name.concat(entry.address.city);
-            else if(entry.address.town)
-                r.name = r.name.concat(entry.address.town);
-            else if(entry.address.village)
-                r.name = r.name.concat(entry.address.village);
+            
+//            // strada o piazza
+//            if(entry.address.road)
+////                r.name = r.name.concat(entry.address.road).concat(', ');
+//            else if(entry.address.pedestrian)
+////                r.name = r.name.concat(entry.address.pedestrian).concat(', ');
+//            else if(entry.address.footway)
+////                r.name = r.name.concat(entry.address.footway).concat(', ');
+//            // borgo o circoscrizione
+//            if(entry.address.neighbourhood)
+////                r.name = r.name.concat(entry.address.neighbourhood ).concat(', ');
+//            else if(entry.address.suburb)
+////                r.name = r.name.concat(entry.address.suburb).concat(', ');
+//            // citta' o villaggio
+//            if(entry.address.city)
+//                r.name = r.name.concat(entry.address.city);
+//            else if(entry.address.town)
+//                r.name = r.name.concat(entry.address.town);
+//            else if(entry.address.village)
+//                r.name = r.name.concat(entry.address.village);
             // set coordinate
             r.position = {lat:entry.lat,lng:entry.lon};
             // calcolo distanza
             r.distance = distance(center,r.position);
+            
+            
             
             //$log.debug("SearchService, geocodingEntryParser, r: ",r);
             return r;

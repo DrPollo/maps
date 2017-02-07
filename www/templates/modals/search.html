@@ -1,0 +1,9 @@
+<ion-modal-view id="searchbox" on-swipe-left="closeSearchBox()" on-swipe-right="closeSearchBox()">
+    <search-box close="closeSearchBox" click="clickSearchItem" query="query"></search-box>
+    <ion-footer-bar class="bar-light">
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-outline icon ion-arrow-down-b" on-tap="closeSearchBox()" ></button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

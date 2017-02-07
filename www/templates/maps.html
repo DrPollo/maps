@@ -5,7 +5,7 @@
             <div id="omnibox">
                 <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
                 <span class="separatore"></span>
-                <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showWall()"></button>
+                <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showSearchBox()"></button>
                 <span class="separatore"></span>
                 <button class="button button-dark button-clear button-icon ion-android-checkmark-circle" ng-click="showMFilterCat()"></button>
                 <span class="separatore"></span>
@@ -49,8 +49,14 @@
         <!-- action buttons -->
         <div id="map-action-menu">
             <div class="flex-container flex-container-style fixed-height">
+                <div class="flex-item">
+                    <button class="button button-float button-float-small" ng-click="showWall()">
+                        <i class="icon ease-animation" ng-class="{'ion-android-list': !openWall, 'ion-close-round': openWall}"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-container flex-container-style fixed-height">
                 <div class="flex-item"  ng-if="config.actions.edit_mode && isLoggedIn" >
-                    <span contenteditable=""></span>
                     <button class="button button-float" ng-click="switchEditMode()">
                         <i class="icon ease-animation" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
                     </button>
