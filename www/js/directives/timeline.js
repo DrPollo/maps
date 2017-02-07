@@ -370,7 +370,7 @@ angular.module('firstlife.timeline',[])
                 switch($scope.units[$scope.indexDefaultUnit].key){
                     case 'hour':
                         // appende il giorno corrente della settimana e il numero
-                        label = label.concat(now.format('dddd')).concat(" ").concat(now.format('D'));
+                        label = label.concat(now.format('dddd')).concat(" ").concat(now.format('D')).concat(" ",localeData._months[now.month()]);
                         break;
                     case 'day':
                         // appende la settimana del mese il numero del mese
