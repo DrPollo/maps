@@ -1,6 +1,5 @@
 <ion-view class="landingpage-view">
-    <ion-header>
-      <ion-toolbar>
+    <div class="bar bar-header">
         <div class="col">
             <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}' title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
 
@@ -11,8 +10,7 @@
         <div class="col">
             it, en
         </div>
-      </ion-toolbar>
-    </ion-header>
+    </div>
     <ion-content scroll="true" style='background-image: url(" {{defaults.design.default_background}} ");'>
         <div class="row top-content">
             <div class="alternative-actions">
@@ -26,17 +24,22 @@
         </div>
 
 
-        <div class="row bottom-content">
-            
+        <div class="row upper_menu">
+            <div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">
+                <i class="icon {{link.icon}}"></i><a href="{{link.url}}">{{link.name}}</a>
+            </div>
         </div>
-
-
+        <div class="row lower_menu">
+            <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
+                <a href="{{link.url}}">{{link.name}}</a>
+            </div>
+        </div>
         <div class="footer-content">
             <div id="partners">
                 <span ng-repeat="logo in defaults.design.logo_partners"><img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/><label>{{logo.label}}</label></span>
             </div>
-            <div>
-                <span ng-repeat="c in defaults.design.landingpage.credits | filter(currentLang == c.lang) track by $id">{{text}}</span>
+            <div id="credits">
+                <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span>
             </div>
         </div>
     </ion-content>
