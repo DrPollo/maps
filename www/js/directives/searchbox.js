@@ -162,7 +162,7 @@ angular.module('firstlife.searchbox',[])
             click:'=',
             close:'='
         },
-        templateUrl: '/templates/map-ui-template/searchresults.html',
+        templateUrl: '/templates/map-ui-template/searchResults.html',
         controller: ['$scope','$log','$location','myConfig','SearchService', function($scope,$log,$location,myConfig,SearchService){
             var limit = myConfig.behaviour.query_limit;
             var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
