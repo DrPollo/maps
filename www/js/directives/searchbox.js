@@ -7,7 +7,7 @@ angular.module('firstlife.searchbox',[])
             click: '=',
             query: '='
         },
-        templateUrl: '/templates/map-ui-template/searchBox.html',
+        templateUrl: '/templates/map-ui-template/searchbox.html',
         controller: ['$scope', '$rootScope', '$location', '$log', '$filter', '$timeout','$location','myConfig', 'MemoryFactory', 'MapService','SearchService','CBuffer', function($scope,$rootScope,$location,$log,$filter,$timeout,$location, myConfig,MemoryFactory,MapService,SearchService,CBuffer){
             var config = myConfig;
             var bounds = {};
