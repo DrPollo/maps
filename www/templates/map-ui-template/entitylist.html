@@ -8,22 +8,10 @@
     </div>
 </ion-header-bar>
 <ion-content class="modal-content">
-<!--
-    <div id="cronologia-box" ng-if="bufferSearch.toArray().length > 0">
-        <div class="item item-divider">{{'SEARCH_CRONOLOGY'|translate}}</div>
-        <div class="list card">
-            <div class="icon-left ion-android-time item" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
-                {{b.query}}
-            </div>
-        </div>
-    </div>
-    <search-results query="query" click="click" close="close"></search-results>
--->
-    
     <div class="item item-divider">
         {{'CURRENTLY_ON_MAP'|translate}} {{dataArray.length}} {{'ENTRIES'|translate}}
     </div>
-    <div class="item" collection-repeat="marker in dataArray | orderBy: ['-last_update','name'] track by $index" >
+    <div class="item" ng-repeat="marker in dataArray | orderBy: ['-last_update','name'] track by $index" >
         <div on-tap="click(marker)" class="item-text-wrap item">
             <i ng-repeat="icon in marker.icons" class="icon {{icon.icon}}"  style="color:{{icon.color}}">
             </i>
