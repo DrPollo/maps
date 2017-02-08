@@ -29,16 +29,16 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $scope.form.query; }, 
             function(e, old){
-                if(dev) console.log("SearchCtrl, old: ",old, " new: ",e);
+                if(dev) $log.log("SearchCtrl, old: ",old, " new: ",e);
                 if(e && old != e && e.length > text_limit){
                     if (SEARCH_DELAY > 0) {
                         if (searchendSetTimeout) {
-                            console.log("clearTimeout");
+                            $log.debug("clearTimeout");
                             clearTimeout(searchendSetTimeout);
                         }
                         searchendSetTimeout = setTimeout(
                             function(){
-                                console.log("cerco ",$scope.form.query);
+                                $log.debug("cerco ",$scope.form.query);
                                 checkQuery(e);
                             }, SEARCH_DELAY);
                     } 
@@ -113,7 +113,7 @@ angular.module('firstlife.controllers')
         function checkQuery(e){
             //recupero il centro della mappa
             $scope.center = MapService.getCenterFromMap();
-            
+            $log.error('ok checkQuery')
             SearchService.query(e).then(
                 function(response){
                     //console.log("SearchCtrl, watch query, SearchService.query, response: ",response);
@@ -137,6 +137,7 @@ angular.module('firstlife.controllers')
         
         // aggiunge una ricerca nei buffer di ricerca
         function pushCache(){
+            $log.error('ok pushCache')
             var entry = angular.copy($scope.form);
             if($scope.bufferSearch.toArray().map(function(e) { return e.query; }).indexOf(entry.query) < 0)
                 $scope.bufferSearch.push(entry);

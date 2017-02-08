@@ -426,7 +426,8 @@ angular.module('firstlife.controllers')
          * 9) toggleFilter: aggiunge/toglie una categoria dai filtri
          * 10) chageFavCat: cambio la categoria usata per le icone della mappa
          * 11) showWall: mostra il wall
-         * 12) changeVisibility: cambia l'edit/view mode della mappa e spegne/accende gli overlays
+         * 12: showSearchBox: mostra la ricerca
+         * 13) changeVisibility: cambia l'edit/view mode della mappa e spegne/accende gli overlays
          */
 
         // da spostare nelle direttive
@@ -685,6 +686,37 @@ angular.module('firstlife.controllers')
 
             $scope.clickWallItem = function(marker){
                 $scope.closeWall();
+                clickMarker(marker.id);
+                locate(marker.id);
+            }
+        }
+        
+        // mostra il wall con il contenuto della mappa
+        $scope.showSearchBox = function(){
+            if(consoleCheck) console.log("MapCtrl, showSearchBox!");
+            if(consoleCheck) console.log("check area: ",$scope.area);
+
+            $ionicModal.fromTemplateUrl('templates/modals/search.html', {
+                scope: $scope,
+                animation: 'fade-in'
+            }).then(function(modal) {
+                $scope.searchBox = modal;
+                $scope.searchBox.show();
+            }); 
+
+            $scope.closeSearchBox = function() {
+                $scope.searchBox.hide();
+                if($scope.searchBox) $scope.searchBox.remove();
+            };
+            $scope.$on('modal.hidden', function() {
+                delete $scope.searchBox;
+            });
+            $scope.$on('$destroy', function() {
+                $scope.searchBox.remove();
+            });
+
+            $scope.clickSearchItem = function(marker){
+                $scope.closeSearchBox();
                 clickMarker(marker.id);
                 locate(marker.id);
             }

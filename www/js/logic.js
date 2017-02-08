@@ -241,6 +241,16 @@ angular.module('firstlife.config')
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
+    function setupSearchApi(myConfig){
+        if(myConfig.dev) console.log("setup search API", myConfig.navigator.search);
+        if(!myConfig.navigator.search || !myConfig.navigator.search.params)
+            return
+        var params = myConfig.navigator.search.params;
+        var url = myConfig.navigator.search.geocoding.concat('?');
+        var url = Object.keys(params).reduce(function(url,key){ return url.concat(key,"=",params[key],"&")}, url);
+        myConfig.navigator.search.url = url;
+        console.log('check api url',params,Object.keys(params),url)
+    }).config(
     function configDev(myConfig, $logProvider){
         if(myConfig.dev)console.log("setup modalità dev");
 

@@ -4,7 +4,7 @@ angular.module('underscore', [])
 });
 
 
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
+angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
 
     .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log) {
 
@@ -180,6 +180,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        SEACH_NO_RESULTS:'Nessun risultato...',
+        SEARCH_HINTS:'Cerca un indizzo, un luogo o una parola chiave...',
+        FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
         BAD_REQUEST:"Errore! Contattare l'helpdesk",
         NOT_VALID_URL: 'URL non valido',
@@ -393,7 +396,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         SEARCH_CRONOLOGY:'Cronologia ricerche',
         SEARCH_ENTITIES_RESULTS:'Risultato entità',
         SEARCH_LOCATIONS:'Stradario',
-        CURRENTLY_ON_MAP:'Sulla mappa',
+        CURRENTLY_ON_MAP:"Nell'area trovati ",
         NOTHING_TO_SEE:'Nulla da vedere...',
         SUBSCRIBE:'Segui',
         UNSUBSCRIBE:'Non seguire',
@@ -446,6 +449,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PASSWORD_CONFIRM_ERROR:"Le password non corrispondono"
     });
     $translateProvider.translations('en', {
+        SEACH_NO_RESULTS:'No results...',
+        SEARCH_HINTS:'Search an address, a place or a key word...',
+        FILTER_HINTS:'Filter by name, category or tag...',
         ENTRIES:'entries',
         BAD_REQUEST:"Error! Please contact the helpdesk service",
         NOT_VALID_URL: 'Not valid url',

@@ -51,6 +51,13 @@
     opacity: 1;
 }
 
+
+.button-float-small {
+    color:#444 !important;
+    border-color:#fbfbfb !important;
+    background: #fafafa !important;
+}
+
 .flex-container {
     display: -webkit-box;
     display: -moz-box;

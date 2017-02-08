@@ -65,6 +65,9 @@ input::-ms-input-placeholder, textarea::-ms-input-placeholder {
 .modal {
   box-shadow: 1px 1px 3px #666; }
 
+.action-sheet .action-sheet-title {
+  color: #333; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

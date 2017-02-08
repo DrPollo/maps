@@ -331,10 +331,6 @@ angular.module('firstlife.services')
                     zoomControl: config.map.zoom && controlZoom ? true : false,
                     zoomControlPosition: config.map.zoom_position,
                     attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//                    attributionControl: true,//config.map.attribution,
-//                    tileLayerOptions: {
-//                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//                    },
                 },
                 markers : [],
                 center : {
@@ -347,11 +343,7 @@ angular.module('firstlife.services')
                     zoomControl: config.map.zoom && controlZoom ? true : false,
                     zoomControlPosition: config.map.zoom_position,
                     attributionControl: config.map.attribution,
-                    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    //attribution: 'Mapbox',
-//                    tileLayerOptions: {
-//                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//                    },
+                    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 },
                 events : {},
                 layers : {},
