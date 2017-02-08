@@ -173,7 +173,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
         SEACH_NO_RESULTS:'Nessun risultato...',
-        SEARCH_HINTS:'Cerca un indizzo, un luogo o una parola chiave...',
+        SEARCH_HINTS:'Cerca un indirizzo, un luogo o una parola chiave...',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
         BAD_REQUEST:"Errore! Contattare l'helpdesk",
