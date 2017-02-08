@@ -705,7 +705,8 @@ angular.module('firstlife.controllers')
             }); 
 
             $scope.closeSearchBox = function() {
-                $scope.searchBox.remove();
+                $scope.searchBox.hide();
+                if($scope.searchBox) $scope.searchBox.remove();
             };
             $scope.$on('modal.hidden', function() {
                 delete $scope.searchBox;

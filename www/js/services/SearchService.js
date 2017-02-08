@@ -4,14 +4,18 @@ angular.module('firstlife.services')
         self.config = myConfig;
         var format = myConfig.format;
         var searchUrl = self.config.backend_search,
-            geoUrl = self.config.navigator.search.geocoding;
+            geoUrl = self.config.navigator.search.url,
+            search_key = self.config.navigator.search.search_key;
         //var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
         var bound = String(self.config.map.shouthWest_bounds).replace("[","").replace("]","");
         bound = bound.concat(",").concat(String(self.config.map.northEast_bounds)).replace("[","").replace("]","");
-        
+        // display_name dei risultati di geocoding
+        var name = myConfig.navigator.search.name;
         //var center = MapService.getCenterFromMap();
         
         self.categories = self.config.types.categories;
+        
+        
         
         return {
             query: function(val){
@@ -53,10 +57,9 @@ angular.module('firstlife.services')
             geocoding: function(val){
                 var deferred = $q.defer();
                 //$log.debug("SerarchService, bounds: ",bound);
-                var params = "&polygon=0&format=json&limit=10&addressdetails=1&viewbox="+bound;
                 var query = escape(val);
                 //$log.debug("SearchService, query, url: ", searchUrl);
-                var url = geoUrl.concat("?q=").concat(query).concat(params);
+                var url = geoUrl.concat(search_key,"=",query);
                 var req = {
                         url: url,
                         method: 'GET',
@@ -66,7 +69,7 @@ angular.module('firstlife.services')
                     };
                 $http(req)
                 .then(function(response) {
-                    //$log.debug("SearchService, query, response: ", response);
+//                    $log.debug("SearchService, query, response: ", response);
                     deferred.resolve(geocodingDecoder(response.data));
                     
                 },function(response) {
@@ -86,9 +89,10 @@ angular.module('firstlife.services')
          * 2) geocodingEntryParser: parsificatore dei risultati del geocoding
          */
         
-        function geocodingDecoder(results){
+        function geocodingDecoder(data){
             // recupero il centro della mappa
             var center = MapService.getCenterFromMap();
+            var results = data.features;
             
             //$log.debug("SearchService, geocodingDecoder, results: ",results);
             var entries = [];
@@ -97,7 +101,7 @@ angular.module('firstlife.services')
                 // aggiungo se manca e se non ho superato la soglia dei risultati
                 var entry = geocodingEntryParser(results[i],center);
                 //$log.debug("SearchService, geocodingDecoder, check risultato: ",i,results[i],entry);
-                if(entries.map(function(e){ return e.name; }).indexOf(entry.name) < 0){
+                if(entries.map(function(e){ return e[name]; }).indexOf(entry[name]) < 0){
                     entries.push(entry);
                 } 
             }
@@ -110,48 +114,18 @@ angular.module('firstlife.services')
         
         // costruisco il risultato del geocoding
         // applico regole di costruzione del nome e selezione dei risultati
-        function geocodingEntryParser(entry,center){
-            //$log.debug("SearchCtrl, geocodingEntryDecoder, entry: ",entry,center);
+        function geocodingEntryParser(feature,center){
+            var entry = feature.properties;
+            var point = feature.geometry.coordinates;
+//            $log.debug("SearchCtrl, geocodingEntryDecoder, entry: ",entry,center);
             var r = {};
             // basta questo
-            r.name = entry.display_name;
+            r.name = entry[name];
             r.icon = 'ion-location';
-            //bus stop
-            if(entry.address.bus_stop){
-//                r.name = r.name.concat(entry.address.bus_stop).concat(', ');
-                r.icon = 'ion-android-bus';
-            }else if(entry.address.school){
-//                r.name = r.name.concat(entry.address.school).concat(', ');
-                r.icon = 'ion-university';
-            }else if(entry.address.attraction){
-//                r.name = r.name.concat(entry.address.attraction).concat(', ');
-                r.icon = 'ion-pin';
-            }
-            
-//            // strada o piazza
-//            if(entry.address.road)
-////                r.name = r.name.concat(entry.address.road).concat(', ');
-//            else if(entry.address.pedestrian)
-////                r.name = r.name.concat(entry.address.pedestrian).concat(', ');
-//            else if(entry.address.footway)
-////                r.name = r.name.concat(entry.address.footway).concat(', ');
-//            // borgo o circoscrizione
-//            if(entry.address.neighbourhood)
-////                r.name = r.name.concat(entry.address.neighbourhood ).concat(', ');
-//            else if(entry.address.suburb)
-////                r.name = r.name.concat(entry.address.suburb).concat(', ');
-//            // citta' o villaggio
-//            if(entry.address.city)
-//                r.name = r.name.concat(entry.address.city);
-//            else if(entry.address.town)
-//                r.name = r.name.concat(entry.address.town);
-//            else if(entry.address.village)
-//                r.name = r.name.concat(entry.address.village);
             // set coordinate
-            r.position = {lat:entry.lat,lng:entry.lon};
+            r.position = {lat:point[1],lng:point[0]};
             // calcolo distanza
             r.distance = distance(center,r.position);
-            
             
             
             //$log.debug("SearchService, geocodingEntryParser, r: ",r);
@@ -162,11 +136,11 @@ angular.module('firstlife.services')
             // recupero il centro della mappa
             var center = MapService.getCenterFromMap();
             var features = results.features;
-            $log.debug("SearchService, searchDecoder, results: ",features);
+//            $log.debug("SearchService, searchDecoder, results: ",features);
             var entries = [];
             //aggiungo i risultati utili
             for(i = 0; i < features.length; i++){
-                $log.debug("SearchService, searchDecoder, check risultato: ",i,features[i]);
+//                $log.debug("SearchService, searchDecoder, check risultato: ",i,features[i]);
                 // aggiungo se manca e se non ho superato la soglia dei risultati
                 var entry = searchEntryParser(features[i],center);
                 if(entries.map(function(e){ return e.name; }).indexOf(entry.name) < 0){
@@ -176,20 +150,20 @@ angular.module('firstlife.services')
             
             // todo sort per distanza crescente
             //entries.sort(function(a,b){if(a.distance <= b.distance) return a; return b;});
-            $log.debug("SearchService, searchDecoder, risultati decodificati: ", entries);
+//            $log.debug("SearchService, searchDecoder, risultati decodificati: ", entries);
             return entries;
         }
         
         function searchEntryParser(feature,center){
-            $log.debug("SearchCtrl, searchEntryParser, entry: ",feature, self.categories);
+//            $log.debug("SearchCtrl, searchEntryParser, entry: ",feature, self.categories);
             var r = {};
             var spaceIndex = self.categories.map(function(e) { return e.category_space; }).indexOf(feature.properties.categories[0].category_space.id);
-            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",spaceIndex);
+//            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",spaceIndex);
             var cat = feature.properties.categories[0].category_space.categories[0];
-            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",cat);
+//            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",cat);
             var catIndex = self.categories[spaceIndex].categories.map(function(e){return e.id;}).indexOf(cat.id);
-            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",catIndex);
-            $log.debug("SearchCtrl, searchEntryParser, indici: ",self.categories[spaceIndex],self.categories[spaceIndex].categories,self.categories[spaceIndex].categories[catIndex]);
+//            $log.debug("SearchCtrl, searchEntryParser, spaceIndex: ",catIndex);
+//            $log.debug("SearchCtrl, searchEntryParser, indici: ",self.categories[spaceIndex],self.categories[spaceIndex].categories,self.categories[spaceIndex].categories[catIndex]);
             r.name = feature.properties.name;
             // icona e colore da categoria
             r.icon = self.categories[spaceIndex].categories[catIndex].icon;
@@ -202,7 +176,7 @@ angular.module('firstlife.services')
             r.position = {lat:parseFloat(feature.geometry.coordinates[1]),lng:parseFloat(feature.geometry.coordinates[0])};
             // calcolo distanza
             r.distance = distance(center,r.position);
-            $log.debug("SearchService, searchEntryParser, r: ",r);
+//            $log.debug("SearchService, searchEntryParser, r: ",r);
             return r;
         }
         

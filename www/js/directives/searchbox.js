@@ -8,15 +8,26 @@ angular.module('firstlife.searchbox',[])
             query: '='
         },
         templateUrl: '/templates/map-ui-template/searchbox.html',
-        controller: ['$scope', '$rootScope', '$location', '$log', '$filter', '$timeout','myConfig', 'MemoryFactory', 'MapService','CBuffer', function($scope,$rootScope,$location,$log,$filter,$timeout, myConfig,MemoryFactory,MapService,CBuffer){
+        controller: ['$scope', '$rootScope', '$location', '$log', '$filter', '$timeout','$location','myConfig', 'MemoryFactory', 'MapService','SearchService','CBuffer', function($scope,$rootScope,$location,$log,$filter,$timeout,$location, myConfig,MemoryFactory,MapService,SearchService,CBuffer){
             var config = myConfig;
             var bounds = {};
             var bunch = 1500;
+            var memKey = 'search-cache';
             var RELOAD_TIME = config.behaviour.moveend_delay;
             $scope.markerChildren = {};
             //$scope.query = '';
             $scope.limit = bunch;
-
+            
+            // init buffer
+            // lunghezza del buffer
+            var buffer_size = 5;
+            $scope.bufferSearch = new CBuffer(buffer_size);
+            $scope.bufferSearch.overflow = function(data) {
+                //$log.debug("Buffer overflow: ",data);
+            };  
+            
+            
+            
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyWall){
                     e.preventDestroyWall = true;
@@ -40,16 +51,17 @@ angular.module('firstlife.searchbox',[])
                 $timeout.cancel(timer);
                 timer = $timeout(function() {
                     $location.search('q',q)
+                    pushCache(q);
                 },RELOAD_TIME);
             };
             
             init();
             
             function init(){
+                if(!$scope.crono) $scope.crono = initBuffer();
                 MapService.getMapBounds().then(
                     function(response){
                         bounds = response;
-
                     },
                     function(response){
                         $log.error("searchBox, getMapBounds, errore ",response);}
@@ -69,6 +81,51 @@ angular.module('firstlife.searchbox',[])
                 return bounds.contains([val.lat,val.lng]);
             }
 
+            /*
+             * Gestione buffer cache
+             * (private) initBuffer() return array : inizializza il buffer controllando nella memoria
+             * (private) pushCache(text) return void : aggiunge alla cache una stringa, aggiorna la memoria
+             * (public) restore(index): recupera il valore e lo ripristina nella ricerca (parametro q)
+             *
+             */
+            
+            
+            function initBuffer(){
+                
+                var cache = JSON.parse(MemoryFactory.get(memKey) ? MemoryFactory.get(memKey) : '[]');
+                for(var i = 0 ; i < cache.length; i++)
+                    if(cache[i]){ 
+                        pushCache(cache[i]);
+                    }
+//                $log.debug('init cache searchbox',$scope.bufferSearch.toArray());
+                return $scope.bufferSearch.toArray();
+            }
+            function pushCache(entry){
+                if(!$scope.bufferSearch) $scope.bufferSearch = new CBuffer(buffer_size);
+                var index = $scope.bufferSearch.indexOf(entry);
+//                $log.debug('push to cache',entry, index, $scope.bufferSearch)
+                // se non e' gia' in cache
+                if(entry && index < 0){
+                    $scope.bufferSearch.push(entry);
+                    MemoryFactory.save(memKey,JSON.stringify($scope.bufferSearch.toArray() ) );
+                    $scope.crono = $scope.bufferSearch.toArray();
+//                    $log.debug('check cache in memoria',MemoryFactory.get(memKey) )
+//                    $log.debug('check cache visualizzata',$scope.crono)
+                }
+                    
+            }
+            // recupuera e ripristina un risultato nel buffer della cache
+            $scope.restore = function (index){
+//                $log.debug("cacheRestore");
+                var query = $scope.bufferSearch.get(index);
+//                $log.debug("cacheRestore: ",$scope.bufferSearch,index);
+//                initForm();
+                $location.search('q',query)
+//                $scope.form.query = query;
+            }
+        
+            
+            
 
             $scope.loadChildren = function(marker){
                 // caricamento dei child
@@ -105,7 +162,7 @@ angular.module('firstlife.searchbox',[])
             click:'=',
             close:'='
         },
-        templateUrl: '/templates/map-ui-template/searchResults.html',
+        templateUrl: '/templates/map-ui-template/searchresults.html',
         controller: ['$scope','$log','$location','myConfig','SearchService', function($scope,$log,$location,myConfig,SearchService){
             var limit = myConfig.behaviour.query_limit;
             var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
@@ -143,7 +200,10 @@ angular.module('firstlife.searchbox',[])
                 $location.search('zoom',myConfig.map.zoom_create);
                 $scope.close();
             }
-
+            
+            
+            
+            
             /*
              * Funzioni private
              * 1) checkQuery: fa partire le richieste ai service di ricerca
@@ -156,18 +216,19 @@ angular.module('firstlife.searchbox',[])
                 // togliamo la ricerca interna per ora
                 SearchService.query(e).then(
                     function(response){
-                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
+//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response);
                         $scope.results = response.length >= result_limit ? response.slice(0,result_limit) : response;
-                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
-                        if($scope.query != '' && $scope.results.length > 0)
-                            pushCache(e);
+//                        $log.debug("SearchCtrl, watch query, SearchService.query, response: ",response,$scope.results,result_limit);
+//                        if($scope.query != '' && $scope.results.length > 0)
+//                            pushCache(e);
                     },
-                    function(response){ console.log("SearchCtrl, watch query, SearchService.query, error: ",response);}
+                    function(response){ $log.error("SearchCtrl, watch query, SearchService.query, error: ",response);}
                 );
                 SearchService.geocoding(e).then(
                     function(response){
+                        $log.debug('risultato geocoding ',response);
                         $scope.locations = response.length >= result_limit ? response.splice(0,result_limit) : response;
-                        //$log.debug('risultato geocoding ',response.splice(0,5).length,$scope.locations);
+//                        $log.debug('risultato geocoding ',$scope.locations);
                     },
                     function(response){ 
                         $log.error("SearchCtrl, watch query, SearchService.geocoding, error: ",response);
@@ -175,8 +236,7 @@ angular.module('firstlife.searchbox',[])
                 );
             }
 
-
-
+           
             // inizializzazione del form di ricerca
             function initForm(){
                 $scope.locations = [];

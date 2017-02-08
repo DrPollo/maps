@@ -258,7 +258,15 @@
                 {"id":22, "visible":true, "name": "Borgo Po", "bound": [[45.0533635208,7.6951368179],[45.0634583422,7.7173669662]]}
             ],
             "search":{
-                "geocoding":"http://nominatim.openstreetmap.org/search"
+                "geocoding":"https://search.mapzen.com/v1/search",
+                "params":{
+                    "api_key":"search-ZDnkvxb",
+                    "focus.point.lat":45.070312,
+                    "focus.point.lon":7.686856,
+                    "boundary.country":"IT"
+                },
+                "search_key":"text",
+                "name":"label"
             }
         },
         "map":{

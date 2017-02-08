@@ -9,11 +9,14 @@
         </div>
     </div>
 </div>
-<div ng-if="locations.length > 0">
+<div>
     <div class="item item-divider">
         {{'SEARCH_LOCATIONS'|translate}}
     </div>
-    <div class="card list">
+    <div style="padding:16px;" ng-if="locations.length == 0">
+        {{'SEACH_NO_RESULTS'|translate}}
+    </div>
+    <div class="card list" ng-if="locations.length > 0">
         <div class="item icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
                 {{l.name}}
         </div>

@@ -172,6 +172,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        SEACH_NO_RESULTS:'Nessun risultato...',
         SEARCH_HINTS:'Cerca un indizzo, un luogo o una parola chiave...',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
@@ -440,6 +441,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PASSWORD_CONFIRM_ERROR:"Le password non corrispondono"
     });
     $translateProvider.translations('en', {
+        SEACH_NO_RESULTS:'No results...',
         SEARCH_HINTS:'Search an address, a place or a key word...',
         FILTER_HINTS:'Filter by name, category or tag...',
         ENTRIES:'entries',

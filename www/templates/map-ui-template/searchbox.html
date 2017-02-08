@@ -11,8 +11,8 @@
     <div id="cronologia-box" ng-if="bufferSearch.toArray().length > 0">
         <div class="item item-divider">{{'SEARCH_CRONOLOGY'|translate}}</div>
         <div class="list card">
-            <div class="icon-left ion-android-time item" ng-repeat="b in bufferSearch.toArray() |filter:{query: '!null'} track by $index" ng-click="cacheRestore($index)">
-                {{b.query}}
+            <div class="icon-left ion-android-time item" ng-repeat="entry in crono |filter:'!null' track by $index" ng-click="restore($index)">
+                {{entry}}
             </div>
         </div>
     </div>
