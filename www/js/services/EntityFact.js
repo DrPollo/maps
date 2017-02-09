@@ -324,7 +324,9 @@ angular.module('firstlife.factories')
 
 
             var catIndex = self.categories.map(function(e){return e.category_space;}).indexOf(mainCat.category_space.id);
-            var categories = self.categories[catIndex].categories;
+            // copio lista di categorie
+            var categories = angular.copy(self.categories[catIndex].categories).map(function(e){delete e.description; return e;});
+            
             var colors = myConfig.design.colors;
             var iSize = self.config.map.marker_size,
                 iAncor = self.config.map.marker_ancor;
@@ -374,9 +376,16 @@ angular.module('firstlife.factories')
                 }
             }
 
-            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].categories[0].id)),
-                category = categories[catIndex],
-                entity_type = entity.properties.entity_type;
+
+//            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].categories[0].id)),
+//                category = categories[catIndex],
+//                entity_type = entity.properties.entity_type;
+
+            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].category_space.categories[0].id));
+            var category = angular.copy(categories[catIndex]);
+            delete category.description;
+            var entity_type = entity.properties.entity_type;
+
             var type_info = self.config.types.list[self.config.types.list.map(function(e){return e.key;}).indexOf(entity_type)];
             type_info.color = colors[type_info.index];
             var category_list = [];
@@ -408,17 +417,24 @@ angular.module('firstlife.factories')
 
 
             var marker = {
+<<<<<<< HEAD
                 popupOptions : {closeOnClick:true},
                 id: entity.properties.id,
                 type: parseInt(entity.properties.type),
                 coordinates : entity.geometry.coordinates,
+=======
+                "popupOptions" : {closeOnClick:true},
+                "id": parseInt(entity.properties.id),
+                "type": parseInt(entity.properties.type),
+                "coordinates" : entity.geometry.coordinates,
+>>>>>>> dev
                 lat: parseFloat(entity.geometry.coordinates[1]),
                 lng: parseFloat(entity.geometry.coordinates[0]),
                 focus: false,
                 draggable: false,
                 categoryColor : category.color,
                 colorIndex: category.colorIndex,
-                categories: entity.properties.categories,
+                categories: angular.copy(entity.properties.categories).map(function(e){delete e.category_space.name; return e;}),
                 category_list: category_list,
                 category: category,
                 entity_type: entity_type,

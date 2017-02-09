@@ -15,12 +15,7 @@
             "show_thumbs" : true,
             "can_permalink": false,
             "default_language" : "it",
-            "disabled_color":20,
-            "side_menu":[
-                {"name":"Sito web FirstLife","url":"http://firstlife.org","icon":"ion-social-rss","lang":"it"},
-                {"name":"Guida all'uso","url":"http://www.firstlife.org/category/guida-alluso_tutorial/","icon":"ion-information","lang":"it"},
-                {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"}
-            ]
+            "disabled_color":20
      },
      "map":{
          "map_default_lat" : 44.807146,

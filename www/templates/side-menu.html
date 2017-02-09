@@ -17,15 +17,6 @@
                     <h2 class="greeting">{{'WELCOME'|translate}} {{displayName}}</h2>
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
-                <ion-item ng-if="config.actions.switch_language" class="item-divider">{{'LANG'|translate}}</ion-item>
-                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('it')" nav-clear menu-close>
-                    <i class="icon" ng-class="(currentLang == 'it') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
-                    <h3 class="menu-text">Italiano</h3>
-                </ion-item>
-                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('en')" nav-clear menu-close>
-                    <i class="icon" ng-class="(currentLang == 'en') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
-                    <h3 class="menu-text">English</h3>
-                </ion-item>
                 <ion-item class="item-divider">{{'EXPLORE'|translate}}</ion-item>
                 <ion-item ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close on-tap="myMap()">
                     <i class="icon ion-map"></i>
@@ -51,6 +42,15 @@
                 <ion-item ng-show="isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng-click="showConfirmLogout()">
                     <i class="icon ion-log-out"></i>
                     <h3 class="menu-text">{{'LOGOUT'|translate}}</h3>
+                </ion-item>
+                <ion-item ng-if="config.actions.switch_language" class="item-divider">{{'LANG'|translate}}</ion-item>
+                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('it')" nav-clear menu-close>
+                    <i class="icon" ng-class="(currentLang == 'it') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
+                    <h3 class="menu-text">Italiano</h3>
+                </ion-item>
+                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('en')" nav-clear menu-close>
+                    <i class="icon" ng-class="(currentLang == 'en') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
+                    <h3 class="menu-text">English</h3>
                 </ion-item>
                 <ion-item class="item-divider">{{'MENU'|translate}}</ion-item>
                 <ion-item ng-repeat="entry in config.design.side_menu |filter:{lang:currentLang} as menu track by $index" class="item-icon-left item-button" nav-clear menu-close ng-href="{{entry.url}}" target="_blank">
