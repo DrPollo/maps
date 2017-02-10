@@ -1,9 +1,18 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['myConfig','MemoryFactory','groupsFactory', 'rx', function(myConfig, MemoryFactory,groupsFactory, rx) {
+    .factory('AuthService', ['$log','myConfig','MemoryFactory','groupsFactory', 'rx', function($log, myConfig, MemoryFactory,groupsFactory, rx) {
 
-        var dev = false;
+        var dev = myConfig.dev;
         //C: (P&(~Q))
         return {
+            registration_url: function(){
+                // chiamo per recuperare l'url di registrazione
+                return myConfig.authentication["registration_url"];
+            },
+            auth_url: function(){
+                // chiamo per recuperare l'url di registrazione
+                return myConfig.authentication["auth_url"];
+            },
+            
             checkPerms: function(source){
                 
                 var checkPerms = {};

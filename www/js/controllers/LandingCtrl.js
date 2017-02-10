@@ -18,4 +18,7 @@ angular.module('firstlife.controllers')
             $rootScope.currentLang = $translate.use();
         };
 
+        
+        
+        
     }]);

@@ -14,7 +14,7 @@
             <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'" ng-click="langSelector('en')">En</div>
         </div>
     </div>
-    <ion-content scroll="true" style='background:radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));'>
+    <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
         <div class="row main-content">
             <div class="col col-center box">
                 <!--logo, infografica e azioni-->
@@ -25,14 +25,10 @@
                     </div>
                     <div class="col col-center alternative-actions">
                         <h3>
-                            <button type="submit" class="button icon ion-log-in button-block" ng-click="doLogIn()" ng-disabled="login_form.$invalid" ng-class="{ 'button-stable' : login_form.$invalid, 'button-positive' : !login_form.$invalid}">
-                                {{'LOGIN'|translate}}
-                            </button>
+                            <login></login>
                         </h3>
                         <h3>
-                            <button class="sign-up button button-small button-block button-stable ion-android-person-add" ng-click="goToSignUp()">
-                                {{'SIGNUP'|translate}}
-                            </button>
+                            <registration></registration>
                         </h3>
                     </div>
                 </div>

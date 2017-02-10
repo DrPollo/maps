@@ -42,9 +42,10 @@ angular.module('firstlife.config')
         var params = myConfig.authentication;
         var url = ("https://").concat(params.auth_base_domain);
         var redirect_uri = myConfig.base_domain;
-        myConfig.authentication["auth_url"] = url;
-        myConfig.authentication["auth_page_url"] = url.concat("oauth/authorization");
-        myConfig.authentication["registration_url"] = url.concat("registration");
+        var client_id = params.client_id;
+        myConfig.authentication["auth_base_url"] = url;
+        myConfig.authentication["auth_url"] = url.concat("oauth/authorization").concat("?redirectUri=",redirect_uri,"&responseType=token","&clientId=",client_id,"&scope=all");
+        myConfig.authentication["registration_url"] = url.concat("registration").concat("?redirectUri=",redirect_uri);
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
         if(myConfig.dev)console.log("setup auth params:",myConfig.authentication);
     })

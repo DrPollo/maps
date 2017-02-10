@@ -54,6 +54,7 @@
                 {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
             ],
             "landingpage":{
+                "css":"background:radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));",
                 "logo":{
                     "url":"img/firstlife-testo.svg",
                     "title":"FirstLife",

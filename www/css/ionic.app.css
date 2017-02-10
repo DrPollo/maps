@@ -15219,7 +15219,7 @@ timeline {
     opacity: 0.7;
     display: block; }
   #landingpage .main-content {
-    min-height: 85%;
+    min-height: 90%;
     margin: 0px;
     padding: 0px;
     text-align: center; }
@@ -15264,7 +15264,7 @@ timeline {
           text-decoration: none;
           font-weight: 500; }
   #landingpage .footer-content {
-    height: 15%;
+    height: 10%;
     margin: 0px;
     padding: 16px;
     text-align: center; }
