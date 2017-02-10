@@ -774,7 +774,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     response.data.id = response.data.group_id;
                 }
                 // gestione token, se diverso dal quello noto
-                $log.debug('check per new token',response.config.url,response.headers('new_access_token'),!(!headers.new_access_token) )
+                $log.debug('check per new token',response.config.url,response.headers(),!(!headers.new_access_token) )
                 if(headers.new_access_token){
                     $log.debug('nuovo token:',headers.new_access_token," vecchio token:",$localStorage[myConfig.authentication.token_mem_key].access_token)
                     
