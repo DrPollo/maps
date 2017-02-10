@@ -5,6 +5,10 @@
         "project": 1,
         "api_base_domain" : "firstlife-dev.di.unito.it:3090/",
         "authentication": {
+            "auth_server":"fl_auth",
+            "auth_server_name":"FIRSTLIFE",
+            "token_mem_key":"token",
+            "state_name":"oauth_state",
             "auth_base_domain": "secure.firstlife.di.unito.it/",
             "client_id": "eB1GG6lk",
             "scopes":["https://www.googleapis.com/auth/userinfo.profile"]

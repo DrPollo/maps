@@ -46,8 +46,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
             $rootScope.previousState = fromState.name;
             $rootScope.currentState = toState.name;
-            
-            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
+
+//            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
             $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
             // se ti trovi in uno stato che richiede autenticazione e non sei loggato
@@ -99,9 +99,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         }
     })   
         .state('home', {
-        url: "/?action&from&params&embed",
+        url: "/?code&state",
         controller: 'LandingCtrl as landing',
         templateUrl: "templates/landing-page.html",
+        reloadOnSearch: false, 
         data: {
             authenticate: false
         }
@@ -718,9 +719,13 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
-}]).factory('myInterceptor', ['$log', function($log) {  
+}]).factory('flInterceptor', ['$log', function($log) {  
 
-    var myInterceptor = {
+    var flInterceptor = {
+        //        request: function(request) {
+        //            //$log.debug('flInterceptor, request',request);
+        //            // inject del token nell'header se esiste
+        //        },
         response: function(response) {
             response.headers = response.headers();
             response.status = response.status;
@@ -732,13 +737,57 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             if(response.data.group_id){
                 response.data.id = response.data.group_id;
             }
+            // gestione token
+
+
             return response;
         }
     };
 
-    return myInterceptor;
+    return flInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.interceptors.push('myInterceptor');
+    $httpProvider.interceptors.push(function($log,$localStorage,myConfig){
+        return {
+            request: function(config) {
+                $log.debug('flInterceptor, request config',config.headers);
+                // inject del token nell'header se esiste
+//                var token = $localStorage[myConfig.authentication.token_mem_key];
+                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+//                config.headers["Access-Control-Expose-Headers"] = "X-Total-Results";
+//                config.headers["Access-Control-Allow-Headers"] = "new_access_token";
+                if (token)  {
+                    config.headers.Authorization = 'Bearer ' + token.access_token;
+                    config.headers.Authentication_server = myConfig.authentication.auth_server_name;
+                }
+//                $log.debug('flInterceptor, request config',!(!token),config);
+                return config;
+            },
+            response: function(response) {
+                var headers = response.headers();
+                response.status = response.status;
+                //$log.debug("http response ",response);
+                if(response.data && response.data.data){
+                    response.data = response.data.data;
+                }
+                // bug
+                if(response.data.group_id){
+                    response.data.id = response.data.group_id;
+                }
+                // gestione token, se diverso dal quello noto
+                $log.debug('check per new token',response.config.url,response.headers('new_access_token'),!(!headers.new_access_token) )
+                if(headers.new_access_token){
+                    $log.debug('nuovo token:',headers.new_access_token," vecchio token:",$localStorage[myConfig.authentication.token_mem_key].access_token)
+                    
+                    $localStorage[myConfig.authentication.token_mem_key].access_token = headers.new_access_token;
+                    
+                    $log.debug('sostituzione token:', (headers.new_access_token === $localStorage[myConfig.authentication.token_mem_key].access_token) )
+                }
+                
+                return response;
+            }
+
+        }
+    });
 }]).config(['$compileProvider','myConfig', function ($compileProvider,myConfig) {
     if(!myConfig.debug) $compileProvider.debugInfoEnabled(false);
 }]);

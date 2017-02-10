@@ -381,7 +381,8 @@ angular.module('firstlife.factories')
 //                category = categories[catIndex],
 //                entity_type = entity.properties.entity_type;
 
-            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].category_space.categories[0].id));
+            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].categories[0].id));
+//            var catIndex = parseInt(categories.map(function(e) { return e.id; }).indexOf(entity.properties.categories[0].category_space.categories[0].id));
             var category = angular.copy(categories[catIndex]);
             delete category.description;
             var entity_type = entity.properties.entity_type;

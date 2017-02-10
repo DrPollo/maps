@@ -43,10 +43,12 @@ angular.module('firstlife.config')
         var url = ("https://").concat(params.auth_base_domain);
         var redirect_uri = myConfig.base_domain;
         var client_id = params.client_id;
+        var auth_server = myConfig.authentication.auth_server;
         myConfig.authentication["auth_base_url"] = url;
         myConfig.authentication["auth_url"] = url.concat("oauth/authorization").concat("?redirectUri=",redirect_uri,"&responseType=token","&clientId=",client_id,"&scope=all");
         myConfig.authentication["registration_url"] = url.concat("registration").concat("?redirectUri=",redirect_uri);
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
+        myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
         if(myConfig.dev)console.log("setup auth params:",myConfig.authentication);
     })
 // logica
