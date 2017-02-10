@@ -417,12 +417,7 @@ angular.module('firstlife.factories')
 
 
             var marker = {
-//<<<<<<< HEAD
-//                popupOptions : {closeOnClick:true},
-//                id: entity.properties.id,
-//                type: parseInt(entity.properties.type),
-//                coordinates : entity.geometry.coordinates,
-//=======
+
                 "popupOptions" : {closeOnClick:true},
                 "id": parseInt(entity.properties.id),
                 "type": parseInt(entity.properties.type),

@@ -15188,3 +15188,95 @@ timeline {
           position: absolute;
           z-index: 1;
           padding: 10px; }
+
+#landingpage {
+  background: #fafafa; }
+  #landingpage .bar-header .title img, #landingpage .bar .title img {
+    max-height: 40px;
+    padding-top: 6px; }
+  #landingpage .bar-header .left, #landingpage .bar .left {
+    position: absolute;
+    left: 3px; }
+  #landingpage .bar-header .right, #landingpage .bar .right {
+    position: absolute;
+    right: 3px; }
+  #landingpage ion-content {
+    background-position: fixed center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    z-index: -1;
+    opacity: 1; }
+  #landingpage ion-content:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.7;
+    display: block; }
+  #landingpage .main-content {
+    min-height: 85%;
+    margin: 0px;
+    padding: 0px;
+    text-align: center; }
+    #landingpage .main-content .box {
+      background-color: #fff;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      max-width: 800px;
+      margin: 28px auto 0px;
+      padding: 0px; }
+      #landingpage .main-content .box .central-content {
+        margin: 0px;
+        padding: 32px 16px; }
+        #landingpage .main-content .box .central-content .message {
+          font-size: 2em;
+          font-weight: 400; }
+        #landingpage .main-content .box .central-content .alternative-actions {
+          margin: 20px 0px 0px; }
+          #landingpage .main-content .box .central-content .alternative-actions .button {
+            padding: 0px;
+            font-size: 14px; }
+          #landingpage .main-content .box .central-content .alternative-actions .button.disabled, #landingpage .main-content .box .central-content .alternative-actions .button[disabled] {
+            opacity: 0.9; }
+      #landingpage .main-content .box .upper-menu {
+        margin: 0px;
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.1); }
+        #landingpage .main-content .box .upper-menu img {
+          display: block;
+          max-height: 100px;
+          margin: 0px auto 10px; }
+        #landingpage .main-content .box .upper-menu a {
+          font-size: 1em;
+          text-decoration: none;
+          font-weight: 500; }
+      #landingpage .main-content .box .lower-menu {
+        margin: 0px;
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.2); }
+        #landingpage .main-content .box .lower-menu a {
+          font-size: 1.2em;
+          text-decoration: none;
+          font-weight: 500; }
+  #landingpage .footer-content {
+    height: 15%;
+    margin: 0px;
+    padding: 16px;
+    text-align: center; }
+    #landingpage .footer-content span {
+      margin: 0 10px;
+      display: inline-block;
+      position: relative; }
+      #landingpage .footer-content span img {
+        vertical-align: top; }
+      #landingpage .footer-content span label {
+        position: absolute;
+        color: #fff;
+        width: 100%;
+        display: block;
+        font-size: 8px; }

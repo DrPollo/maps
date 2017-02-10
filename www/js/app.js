@@ -101,7 +101,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         .state('home', {
         url: "/?action&from&params&embed",
         controller: 'LandingCtrl as landing',
-        templateUrl: "templates/landingpage.html",
+        templateUrl: "templates/landing-page.html",
         data: {
             authenticate: false
         }

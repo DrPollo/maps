@@ -10,7 +10,15 @@
             "scopes":["https://www.googleapis.com/auth/userinfo.profile"]
         },
         "design":{
-            "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife", "alt":"FirstLife", "label":{"text": "FirstLife", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
+            "logo" : {
+                "url": "img/firstlife-logo.svg", 
+                "title": "FirstLife", 
+                "alt":"FirstLife", 
+                "label":{
+                    "text": "FirstLife", 
+                    "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
+                }
+            },
             "logo_bar" : "img/firstlife-testo.svg",
             "logo_menu" : "img/firstlife-logo-palla.svg",
             "logo_width" : 160,
@@ -51,13 +59,59 @@
                     "title":"FirstLife",
                     "style":""
                 },
+                "center":{
+                    "image":"img/firstlife-logo-palla.svg",
+                    "alt": {
+                        "it":"Logo FirstLife",
+                        "en":"FirstLife logo"
+                    },
+                    "message":{
+                        "it":"FirstLife è<br/>il Social Network Civico<br/>della Città",
+                        "en":"FirstLife is<br/>the Civic Social Network<br/>of the City"
+                    }
+                },
                 "upper_menu":[
-                    {"name":"Standard di Cominità","url":"http://firstlife.org/standard-di-comunita","icon":"ion-social-rss","lang":"it"},
-                    {"name":"Tutoral ed esempi","url":"http://tutorials.firstlife.org","icon":"ion-help","lang":"it"},
-                    {"name":"Scopri di piuù su FirstLife","url":"http://firstlife.org","icon":"ion-information","lang":"it"},
-                    {"name":"Community Guidelines","url":"http://firstlife.org/standard-di-comunita","icon":"ion-social-rss","lang":"en"},
-                    {"name":"User Guide & examples","url":"http://tutorials.firstlife.org","icon":"ion-help","lang":"en"},
-                    {"name":"About FirstLife project","url":"http://firstlife.org","icon":"ion-information","lang":"en"}
+                    {
+                        "name":"Standard di Comunità",
+                        "url":"http://firstlife.org/standard-di-comunita",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Prova",
+                        "lang":"it"
+                    },
+                    {
+                        "name":"Tutorial ed esempi",
+                        "url":"http://tutorials.firstlife.org",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Prova",
+                        "lang":"it"
+                    },
+                    {
+                        "name":"Scopri di più su FirstLife",
+                        "url":"http://firstlife.org",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Prova",
+                        "lang":"it"
+                    },
+                    {
+                        "name":"Community Guidelines",
+                        "url":"http://firstlife.org/standard-di-comunita",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Test",
+                        "lang":"en"
+                    },
+                    {
+                        "name":"User Guide & examples",
+                        "url":"http://tutorials.firstlife.org",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Test",
+                        "lang":"en"},
+                    {
+                        "name":"About FirstLife project",
+                        "url":"http://firstlife.org",
+                        "img":"img/firstlife-logo-palla.svg",
+                        "alt":"Test",
+                        "lang":"en"
+                    }
                 ],
                 "lower_menu":[
                     {"name":"Terms of use","url":"http://firstlife.org/standard-di-comunita","lang":"en"},
@@ -68,8 +122,8 @@
                     {"name":"Centro assistenza","url":"http://firstlife.org","lang":"it"}
                 ],
                 "credits":[
-                    {"text":"Social Computing, Dep. di Informatica, Università degli Studi di Torino","lang":"it"},
-                    {"text":"Social Computing, Dep. of Computer Science, University of Turin","lang":"en"}
+                    {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino","lang":"it"},
+                    {"text":"Social Computing, Dept. of Computer Science, University of Turin","lang":"en"}
                 ]
             }
         },
