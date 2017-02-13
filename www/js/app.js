@@ -746,44 +746,60 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
     return flInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.interceptors.push(function($log,$localStorage,myConfig){
+    $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
+        
+        
+        var retries = 0,
+        waitBetweenErrors = 3000,
+        maxRetries = 3;
+
+        
+        // test test test
+        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+        // test test test
+        
+        
+        function onResponseError(httpConfig) {
+            var $http = $injector.get('$http');
+            setTimeout(function () {
+                return $http(httpConfig);
+            }, waitBetweenErrors);
+        }
+        
         return {
             request: function(config) {
-                $log.debug('flInterceptor, request config',config.headers);
+//                $log.debug('flInterceptor, request config',config.headers);
                 // inject del token nell'header se esiste
-//                var token = $localStorage[myConfig.authentication.token_mem_key];
-                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
-//                config.headers["Access-Control-Expose-Headers"] = "X-Total-Results";
-//                config.headers["Access-Control-Allow-Headers"] = "new_access_token";
+                var token = $localStorage[myConfig.authentication.token_mem_key];
+                // se il token esiste lo setto
                 if (token)  {
                     config.headers.Authorization = 'Bearer ' + token.access_token;
                     config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                 }
-//                $log.debug('flInterceptor, request config',!(!token),config);
+//                $log.debug('flInterceptor, request config',config);
                 return config;
             },
             response: function(response) {
                 var headers = response.headers();
-                response.status = response.status;
-                //$log.debug("http response ",response);
-                if(response.data && response.data.data){
-                    response.data = response.data.data;
-                }
                 // bug
                 if(response.data.group_id){
                     response.data.id = response.data.group_id;
                 }
-                // gestione token, se diverso dal quello noto
-                $log.debug('check per new token',response.config.url,response.headers(),!(!headers.new_access_token) )
-                if(headers.new_access_token){
-                    $log.debug('nuovo token:',headers.new_access_token," vecchio token:",$localStorage[myConfig.authentication.token_mem_key].access_token)
-                    
-                    $localStorage[myConfig.authentication.token_mem_key].access_token = headers.new_access_token;
-                    
-                    $log.debug('sostituzione token:', (headers.new_access_token === $localStorage[myConfig.authentication.token_mem_key].access_token) )
-                }
-                
+                response.headers = headers;
                 return response;
+            },
+            responseError: function(rejection) {
+                // gestione token, se diverso dal quello noto
+//                $log.debug('check $http error',rejection.status)
+                if(rejection.status === 401 && retries < maxRetries){
+//                    $log.debug('nuovo token!', rejection)
+                    var token = rejection.data.token;
+                    // salvo il nuovo token
+                    $localStorage[myConfig.authentication.token_mem_key] = token;
+                    return onResponseError(rejection.config);
+                }
+                retries = 0;
+                return $q.reject(rejection);
             }
 
         }
