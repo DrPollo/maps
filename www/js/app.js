@@ -750,7 +750,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         
         
         var retries = 0,
-        waitBetweenErrors = 3000,
+        waitBetweenErrors = 1000,
         maxRetries = 3;
 
         
@@ -770,7 +770,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             request: function(config) {
 //                $log.debug('flInterceptor, request config',config.headers);
                 // inject del token nell'header se esiste
-                var token = $localStorage[myConfig.authentication.token_mem_key];
+//                var token = $localStorage[myConfig.authentication.token_mem_key];
+                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
                 // se il token esiste lo setto
                 if (token)  {
                     config.headers.Authorization = 'Bearer ' + token.access_token;
@@ -791,11 +792,17 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             responseError: function(rejection) {
                 // gestione token, se diverso dal quello noto
 //                $log.debug('check $http error',rejection.status)
-                if(rejection.status === 401 && retries < maxRetries){
+                if(rejection.status === 401){
 //                    $log.debug('nuovo token!', rejection)
                     var token = rejection.data.token;
                     // salvo il nuovo token
                     $localStorage[myConfig.authentication.token_mem_key] = token;
+                }
+                
+                // in caso di errore ritento
+                if(retries < maxRetries) {
+//                    $log.debug('retries',retries)
+                    retries ++;
                     return onResponseError(rejection.config);
                 }
                 retries = 0;
