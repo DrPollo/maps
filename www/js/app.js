@@ -749,18 +749,19 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
         
         
-        var retries = 0,
-        waitBetweenErrors = 1000,
-        maxRetries = 3;
-
-        
         // test test test
         $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
         // test test test
         
         
+        var retries = 0,
+        waitBetweenErrors = 1000,
+        maxRetries = 3;
+        // retry della chiamata
         function onResponseError(httpConfig) {
+            // workaround per evitare controlli di circolarità delle dipendenze
             var $http = $injector.get('$http');
+            // chiamata temporizzata
             setTimeout(function () {
                 return $http(httpConfig);
             }, waitBetweenErrors);
@@ -770,8 +771,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             request: function(config) {
 //                $log.debug('flInterceptor, request config',config.headers);
                 // inject del token nell'header se esiste
-//                var token = $localStorage[myConfig.authentication.token_mem_key];
-                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+                var token = $localStorage[myConfig.authentication.token_mem_key];
+//                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
                 // se il token esiste lo setto
                 if (token)  {
                     config.headers.Authorization = 'Bearer ' + token.access_token;
@@ -781,31 +782,38 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 return config;
             },
             response: function(response) {
-                var headers = response.headers();
-                // bug
+                // hotfix bug
                 if(response.data.group_id){
                     response.data.id = response.data.group_id;
                 }
+                // passo gli headers a chi gestisce la chiamata
+                var headers = response.headers();
                 response.headers = headers;
                 return response;
             },
             responseError: function(rejection) {
-                // gestione token, se diverso dal quello noto
-//                $log.debug('check $http error',rejection.status)
-                if(rejection.status === 401){
+                // $log.debug('check $http error',rejection.status)
+                
+                // gestione del token scaduto
+                if(rejection.status === 401 && rejection.data.token){
 //                    $log.debug('nuovo token!', rejection)
                     var token = rejection.data.token;
                     // salvo il nuovo token
                     $localStorage[myConfig.authentication.token_mem_key] = token;
                 }
+            
                 
-                // in caso di errore ritento
+                // gestione errori: in caso di errore ritento maxRetries volte
                 if(retries < maxRetries) {
 //                    $log.debug('retries',retries)
+                    // aumento il contatore dei tentativi
                     retries ++;
+                    // retry
                     return onResponseError(rejection.config);
                 }
+                // reset del contatore dei tentativi
                 retries = 0;
+                // reject finale della chiamata 
                 return $q.reject(rejection);
             }
 

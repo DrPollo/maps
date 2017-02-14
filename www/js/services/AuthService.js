@@ -43,6 +43,12 @@ angular.module('firstlife.services')
             isAuth: function (){
                 return (MemoryFactory.get(tokenKey)) ? true : false;
             },
+            logout: function (){
+                var token = MemoryFactory.get(tokenKey);
+                // chiamata a qualcuno per annullare il token corrente
+                
+                return MemoryFactory.delete(tokenKey);
+            },
             checkPerms: function(source){
 
                 var checkPerms = {};
