@@ -6,11 +6,11 @@ angular.module('underscore', [])
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
 
-    .run(function(myConfig, $rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log) {
+    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, myConfig, AuthService) {
 
     self.config = myConfig;
     // init utente
-    $rootScope.isLoggedIn = false;
+    $rootScope.isLoggedIn = AuthService.isAuth();
 
 
 
@@ -51,15 +51,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
             // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-            if (config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)  {
-                // da cancellare self.cache.isStateCached = true;
+            if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
                 $log.info("Salvo lo stato prima del login: ", $stateParams);
                 event.preventDefault();
-
                 // vai a login per effettuare l'autenticazione
-                $state.go('login',{action: 'redirect', from:toState.name, params: params});
+                $state.go('home');
             } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
-                $log.info('embed ',embed)
                 $state.go('app.maps',search_params);
             }else {
 
@@ -88,18 +85,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     .config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
 
-    $stateProvider
-
-        .state('login', {
-        url: "/login?action&from&params&embed",
-        controller: 'WalktroughCtrl as walktrough',
-        templateUrl: "templates/walktrough.html",
-        data: {
-            authenticate: false
-        }
-    })   
-        .state('home', {
-        url: "/",
+    $stateProvider.state('home', {
+        url: "/?embed",
         controller: 'LandingCtrl as landing',
         templateUrl: "templates/landing-page.html",
         reloadOnSearch: false, 
@@ -147,20 +134,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         data: {
             authenticate: true
         }
-    })
-        .state('app.user', {
-        url: '/user/?action',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/form/userForm.html',
-                controller: 'UserCtrl as user'
-            }
-        },
-        data: {
-            authenticate: true
-        }
-    })
-        .state('app.manager', {
+    }).state('app.manager', {
         url: '/manager/?entity',
         views: {
             'menuContent': {

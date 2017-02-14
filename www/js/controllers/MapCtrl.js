@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', 'tilesFactory', function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory, tilesFactory) {
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', 'tilesFactory', 'AuthService',  function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory, tilesFactory, AuthService) {
 
 
 
@@ -170,14 +170,13 @@ angular.module('firstlife.controllers')
             check4search($location.search());
             
             $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
+            // evito reload involontari
             if($rootScope.previousState !== 'app.maps'){
+                
                 // check autenticazione
-                var user = MemoryFactory.get('user');
-                if(user){
-                    if(consoleCheck) console.log("isLoggedIn? ", true);
-                    $scope.isLoggedIn = true;
-                } else {$scope.isLoggedIn = false;}
-
+                $scope.isLoggedIn = AuthService.isAuth();
+                $log.debug("isLoggedIn? ",$scope.isLoggedIn);
+                
                 // recupero la mappa se non inizializzata
                 $scope.map = MapService.getMap();
                 

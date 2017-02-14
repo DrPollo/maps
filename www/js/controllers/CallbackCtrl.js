@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('CallbackCtrl',  ['$log','$scope', '$rootScope', '$state', '$translate', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig','AuthService', 'MemoryFactory', function($log,$scope, $rootScope,$state, $translate, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig,AuthService, MemoryFactory) {
+    .controller('CallbackCtrl',  ['$log','$scope','$state', '$translate', '$location', 'myConfig','AuthService', function($log,$scope, $state, $translate, $location, myConfig,AuthService) {
         $scope.defaults = myConfig;
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
