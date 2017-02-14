@@ -102,7 +102,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: "/?code&state",
         controller: 'LandingCtrl as landing',
         templateUrl: "templates/landing-page.html",
-        reloadOnSearch: false, 
+        //reloadOnSearch: false, 
         data: {
             authenticate: false
         }
