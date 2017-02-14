@@ -9,9 +9,9 @@ angular.module('firstlife.config')
         if(!myConfig.ssl)
             ssl = "http://";
 
+        myConfig.base_domain = ssl.concat(myConfig.base_domain);
         var url = "";
         url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/");
-        myConfig.base_domain = ssl.concat(myConfig.api_base_domain);
         myConfig.domain_signature = url;
         myConfig.backend_things = url.concat('things');
         myConfig.backend_notifications = url.concat('notifications');
