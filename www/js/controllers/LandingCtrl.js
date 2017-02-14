@@ -46,6 +46,7 @@ angular.module('firstlife.controllers')
             p.then(
                 function(result){
                     $log.debug('tutto ok con il token',result)
+                    $state.go('app.maps');
                     // se ho il token
                 },
                 function(err){

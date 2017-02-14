@@ -750,7 +750,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         
         
         // test test test
-        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+//        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
         // test test test
         
         
