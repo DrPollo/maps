@@ -1114,8 +1114,10 @@ angular.module('firstlife.controllers')
             $scope.markersFilteredArray = angular.copy($scope.filtred);
             
             // se il parametro q e' impostato nella search
-            if($scope.query)
+            if($scope.query){
                 $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray,$scope.query);
+            }
+
             
             //aggiorno la lista dei marker mettendo e togliendo
             updateMarkers($scope.markersFilteredArray);
