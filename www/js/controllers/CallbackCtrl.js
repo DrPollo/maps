@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('LandingCtrl',  ['$log','$scope', '$rootScope', '$state', '$translate', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig','AuthService', 'MemoryFactory', function($log,$scope, $rootScope,$state, $translate, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig,AuthService, MemoryFactory) {
+    .controller('CallbackCtrl',  ['$log','$scope', '$rootScope', '$state', '$translate', '$ionicPopup', '$stateParams', '$location', '$ionicLoading', '$filter','$window', 'UserService', 'myConfig','AuthService', 'MemoryFactory', function($log,$scope, $rootScope,$state, $translate, $ionicPopup, $stateParams, $location, $ionicLoading, $filter,$window, UserService, myConfig,AuthService, MemoryFactory) {
         $scope.defaults = myConfig;
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
@@ -52,6 +52,8 @@ angular.module('firstlife.controllers')
                 function(err){
                     $log.error('getToken, error',err)
                     // se non riesco a generare il token
+                    // gestione errori
+                    
                 }
             );
         }

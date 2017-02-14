@@ -1,0 +1,56 @@
+<ion-view id="landingpage">
+    <div class="bar bar-header" style="position:relative;">
+        <div class="left">
+        </div>
+        <div class="title">
+            <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}' title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
+
+            <ion-title id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">
+                {{defaults.design.landingpage.logo.title}}
+            </ion-title>
+        </div>
+        <div class="right">
+            <div class="button button-outline" ng-class="(currentLang == 'it') ? 'button-positive' : 'button-stable'" ng-click="langSelector('it')">It</div>
+            <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'" ng-click="langSelector('en')">En</div>
+        </div>
+    </div>
+    <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
+        <div class="row main-content">
+            <div class="col col-center box">
+                <!--logo, infografica e azioni-->
+                <div class="row responsive-sm central-content">
+                    <div class="col col-center">
+                        <h1><img src="{{defaults.design.landingpage.center.image}}" alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/></h1>
+                        <h2 class="message" ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
+                    </div>
+                    <div class="col col-center alternative-actions">
+                        gestione errori
+                    </div>
+                </div>
+                <!--menu inferiore-->
+                <div class="row lower-menu">
+                    <div class="row responsive-sm">
+                        <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
+                            <h4><a href="{{link.url}}">{{link.name}}</a></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer-content">
+            <div class="col col-bottom">
+                <div id="partners" class="row">
+                    <div class="col  col-bottom" ng-repeat="logo in defaults.design.logo_partners">
+                        <img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/>
+                        <label>{{logo.label}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="credits" class="col col-bottom">
+                        <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

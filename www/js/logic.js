@@ -41,7 +41,7 @@ angular.module('firstlife.config')
     function setupAuth(myConfig){
         var params = myConfig.authentication;
         var url = ("https://").concat(params.auth_base_domain);
-        var redirect_uri = myConfig.base_domain;
+        var redirect_uri = myConfig.base_domain.concat("/callback");
         var client_id = params.client_id;
         var auth_server = myConfig.authentication.auth_server;
         myConfig.authentication["auth_base_url"] = url;

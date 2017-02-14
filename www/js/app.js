@@ -99,10 +99,18 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         }
     })   
         .state('home', {
-        url: "/?code&state",
+        url: "/",
         controller: 'LandingCtrl as landing',
         templateUrl: "templates/landing-page.html",
-        //reloadOnSearch: false, 
+        reloadOnSearch: false, 
+        data: {
+            authenticate: false
+        }
+    }).state('callback', {
+        url: "/callback?code&state",
+        controller: 'CallbackCtrl as callback',
+        templateUrl: "templates/callback-page.html",
+        reloadOnSearch: false, 
         data: {
             authenticate: false
         }
