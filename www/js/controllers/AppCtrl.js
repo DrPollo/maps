@@ -34,14 +34,17 @@ angular.module('firstlife.controllers')
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login
-         * 2) toggleSideLeft: apre/chiude il menu laterale
-         * 3) showConfirmLogout: chiede conferma prima del logout
-         * 4) langSelector: switch lingua
+         * 2) profile: va nello stato login con azione = login
+         * 3) toggleSideLeft: apre/chiude il menu laterale
+         * 4) showConfirmLogout: chiede conferma prima del logout
+         * 5) langSelector: switch lingua
          */
         $scope.login = function(){
-            $state.go('login', {action:'login'});
+            $window.location.href = AuthService.login_url();
         };
-
+        $scope.profile = function(){
+            $window.location.href = AuthService.profile_url();
+        };
         // funzione togle per il menu laterale
         $scope.toggleSideLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
@@ -61,7 +64,7 @@ angular.module('firstlife.controllers')
             $scope.confirmPopup.then(function(res) {
                 if(res) {
                     //if(consoleCheck) console.log('Yes');
-                    logout();
+                    $window.location.href = AuthService.logout_url();
                 } else {
                     //if(consoleCheck) console.log('No');
                 }
@@ -82,12 +85,5 @@ angular.module('firstlife.controllers')
             $location.search('embed','viewer');
         }
         
-        /*
-         * Funzioni private
-         * 1) logout: va nel walktrough con azione = logout
-         */
-        
-        function logout (){
-            $state.go('login', {action:'logout'});
-        };
+       
     }]);

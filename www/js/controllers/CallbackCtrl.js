@@ -10,8 +10,8 @@ angular.module('firstlife.controllers')
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             event.preventDefault();
-            var action = $stateParams.action;
-            if(dev) $log.debug("sono in login, questi i parametri ",toState, action);
+            
+            if(dev) $log.debug("sono in login, questi i parametri ",toState);
 
             // controllo parametro code
             var params = $location.search();
@@ -39,7 +39,6 @@ angular.module('firstlife.controllers')
             $scope.currentLang = $translate.use();
             $rootScope.currentLang = $translate.use();
         };
-
 
         function generateToken(code){
             var p = AuthService.generateToken(code);

@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('LandingCtrl',  ['$log','$scope', '$state', '$translate','$location', 'myConfig','AuthService', function($log,$scope,$state, $translate,$location, myConfig,AuthService) {
+    .controller('LogoutCtrl',  ['$log','$scope','$state', '$translate', '$location', 'myConfig','AuthService', function($log,$scope, $state, $translate, $location, myConfig,AuthService) {
         $scope.defaults = myConfig;
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
@@ -10,13 +10,11 @@ angular.module('firstlife.controllers')
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             event.preventDefault();
-            if(dev) $log.debug("sono in login, questi i parametri ",toState);
             
-            // se l'utente e' loggato faccio redirect a app.maps
-            if(AuthService.isAuth()){
-                $state.go('app.maps')
-            }
-                
+            if(dev) $log.debug("sono in login, questi i parametri ",toState);
+
+            AuthService.logout();
+            $state.go('home');
         });
 
         // cambio lingua
@@ -25,5 +23,6 @@ angular.module('firstlife.controllers')
             $scope.currentLang = $translate.use();
             $rootScope.currentLang = $translate.use();
         };
+
 
     }]);

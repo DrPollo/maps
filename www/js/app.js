@@ -80,9 +80,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         return angular.toJson(result);
     }
 
-})
-
-    .config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+}).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
@@ -101,9 +99,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         data: {
             authenticate: false
         }
-    })
-
-        .state('app', {
+    }).state('logout', {
+        url: "/logout",
+        controller: 'LogoutCtrl',
+        templateUrl: "templates/logout-page.html",
+        reloadOnSearch: false, 
+        data: {
+            authenticate: false
+        }
+    }).state('app', {
         url: "/app",
         abstract: true,
         templateUrl: "templates/side-menu.html",

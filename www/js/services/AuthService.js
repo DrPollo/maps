@@ -13,8 +13,15 @@ angular.module('firstlife.services')
             auth_url: function(){
                 // chiamo per recuperare l'url di registrazione
                 var state = Math.random().toString(36).slice(2);
-                return myConfig.authentication["auth_url"].concat('&state=',state);
                 MemoryFactory.save(stateKey,state);
+                return myConfig.authentication["auth_url"].concat('&state=',state);
+            },
+            logout_url: function(){
+                // mando lo user all'auth server per il logout
+                return myConfig.authentication["logout_url"];
+            },
+            logout: function(){
+                return MemoryFactory.delete(tokenKey);
             },
             token: function(){
                 return MemoryFactory.get(tokenKey) || false;
