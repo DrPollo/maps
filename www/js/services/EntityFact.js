@@ -235,6 +235,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function(response) {
+                        $log.debug("entity?",response)
                         entityToMarker(response.data).then(
                             function(marker){
                                 //aggiorno anche la lista dei dettagli
@@ -420,7 +421,7 @@ angular.module('firstlife.factories')
             var marker = {
 
                 "popupOptions" : {closeOnClick:true},
-                "id": parseInt(entity.properties.id),
+                "id": entity.properties.id,
                 "type": parseInt(entity.properties.type),
                 "coordinates" : entity.geometry.coordinates,
 
@@ -460,7 +461,6 @@ angular.module('firstlife.factories')
                 children: {},
                 valid_from: entity.properties.valid_from,
                 valid_to: entity.properties.valid_to,
-                id_wp: entity.properties.id_wp,
                 self: urlThings.concat('/').concat(entity.id).concat('.html'),
                 link_url : entity.properties.link_url,
                 display_name: entity.properties.display_name,

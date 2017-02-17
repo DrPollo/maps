@@ -14,7 +14,7 @@ angular.module('firstlife.config')
         url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/");
         myConfig.domain_signature = url;
         myConfig.backend_things = url.concat('things');
-        myConfig.backend_notifications = url.concat('notifications');
+        myConfig.backend_notifications = url.concat('fl_users');
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');
         myConfig.backend_users = 'http://firstlife-dev.di.unito.it:3095/v4/fl/domains/'.concat(myConfig.domain_id).concat('/').concat('user');
@@ -47,8 +47,8 @@ angular.module('firstlife.config')
         var auth_server = myConfig.authentication.auth_server;
         myConfig.authentication["auth_base_url"] = url;
         myConfig.authentication["auth_url"] = url.concat("oauth/authorization").concat("?redirectUri=",redirect_uri_auth,"&responseType=code","&clientId=",client_id,"&scope=all");
-        myConfig.authentication["logout_url"] = url.concat("logout").concat("?redirectUri=",redirect_uri_auth,"&clientId=",client_id);
-        myConfig.authentication["profile_url"] = url.concat("profile").concat("?redirectUri=",redirect_uri_logout,"&clientId=",client_id);
+        myConfig.authentication["logout_url"] = url.concat("logout").concat("?redirectUri=",redirect_uri_logout,"&clientId=",client_id);
+        myConfig.authentication["profile_url"] = url.concat("profile").concat("?redirectUri=",redirect_uri_auth,"&clientId=",client_id);
         myConfig.authentication["registration_url"] = url.concat("registration").concat("?redirectUri=",redirect_uri_auth);
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);

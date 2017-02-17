@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', 'rx', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory, rx) {
+    .factory('notificationFactory', ['$http', '$q',  '$rootScope', '$log', 'myConfig', 'MemoryFactory', 'rx','AuthService', function($http, $q,  $rootScope, $log, myConfig, MemoryFactory, rx,AuthService) {
 
         var self = this;
         self.config = myConfig;
@@ -15,15 +15,14 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/unread?user=34&since=2013-01-01 00:00:00&domain=1
             get:function(since){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
+                var user = AuthService.getUser();
+                $log.debug('user?',AuthService.token())
                 // cache
                 if(!user){
                     $log.error('user error');
                     deferred.reject('not logged in');
                 }else{
-                    //var urlId = urlNotifications.concat("/unread").concat(format).concat('?user=').concat(user.id);
-                    var urlId = baseUrl.concat('api/notifications/unread');
-                    urlId = urlId.concat('?user=').concat(user.id).concat('&domain=').concat(myConfig.project);
+                    var urlId = urlNotifications.concat("/",user.id,'/notifications/unread','?domainId=',myConfig.project);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
 
