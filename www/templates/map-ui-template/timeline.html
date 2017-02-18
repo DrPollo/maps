@@ -11,11 +11,12 @@
                 ng-swipe-left="rewind()" 
                 on-scroll="scrolling()">
         <div ng-repeat="slot in timewindow track by $index"
-             class="repeated-item col-md-4"
+             class="repeated-item col-md-4 {{slot.class}}"
              style="position:relative;"
              ng-class="now == $index ? 'current' : ''"
              ng-click="scaleDown(slot)">
-            <div class="label">{{slot.label}}</div>
+            <div class="divider-label">{{slot.upLabel}}</div>
+            <div class="label">{{slot.label | translate}}</div>
             <div class="entities" ng-init="c = counter(slot)">
                 <span ng-repeat="(k, val) in slot.markers" 
                       ng-style="{'background':val.color,'width':(val.counter/slot.total)*100+'%'}">

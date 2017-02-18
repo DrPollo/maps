@@ -5,7 +5,7 @@ angular.module('firstlife.timeline',[])
         restrict: 'EG',
         scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log', '$filter','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,myConfig,MapService,PlatformService, leafletData){
+        controller: ['$scope','$rootScope','$log', '$filter','$translate','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,myConfig,MapService,PlatformService, leafletData){
 
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -30,11 +30,11 @@ angular.module('firstlife.timeline',[])
             $scope.isMobile = PlatformService.isMobile();
 
             //setup lingua di moment js
-            moment.locale('it');
+            moment.locale($translate.use());
             moment().isoWeek(1);
 
             var localeData = moment.localeData();
-//            $log.debug('check localeData ',localeData, localeData._monthsShort);
+            //            $log.debug('check localeData ',localeData, localeData._monthsShort);
 
             // unita' temporale di default
             // 0: fasi della giornata
@@ -60,7 +60,7 @@ angular.module('firstlife.timeline',[])
             $scope.forward = function(){
                 // recupero la unit da aggiungere
                 var unit = getUnitToShift();
-//                $log.debug('add a ',unit);
+                //                $log.debug('add a ',unit);
                 // aggiungo una unit
                 $scope.moment = $scope.moment.add(1,unit);
                 // ricalcolo il buffer
@@ -71,7 +71,7 @@ angular.module('firstlife.timeline',[])
             $scope.rewind = function(){
                 // recupero la unit da sottrarre
                 var unit = getUnitToShift();
-//                $log.debug('subtract a ',unit);
+                //                $log.debug('subtract a ',unit);
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
                 // ricalcolo il buffer
@@ -151,7 +151,7 @@ angular.module('firstlife.timeline',[])
                 setContextButtons(now);
                 //$log.debug('check context ',$scope.context);
                 // stampo nei log ora, l'indice e l'array dell'unita' corrente
-//                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
+                //                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
                 // init del buffer con la lunghezza corretta
                 $scope.timewindow = [];
                 // inserisco le date nel buffer
@@ -181,7 +181,7 @@ angular.module('firstlife.timeline',[])
             function getNowUnits(now){
                 var initStart = {hour:0,minute:0,second:0,millisecond:0};
                 var initEnd = {hour:23,minute:59,second:59,millisecond:999};
-                var phases = ['Notte','Mattina','Pomeriggio','Sera'];
+                var phases = ['NIGHT','MORNING','AFTERNOON','EVENING'];
                 // considero l'unita' correte (es. settimana, mese, anno)
                 switch($scope.units[$scope.indexDefaultUnit].key){
                         // fasi della giornata
@@ -198,10 +198,11 @@ angular.module('firstlife.timeline',[])
                             var end = angular.copy(n)
                             end.add((i+1)*duration,'hour').subtract(1,'millisecond');
                             var interval = moment.interval(start,end);
-                            array.push({label:phases[i],interval:interval});
+                            var e = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm')};
+                            array.push(e);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
-//                        $log.debug('check interval phases ',array);
+                        //                        $log.debug('check interval phases ',array);
                         return array;
                         break;
                         // giorni della settimana
@@ -217,12 +218,17 @@ angular.module('firstlife.timeline',[])
                             var start = angular.copy(now).weekday(i).set(initStart);
                             var end = angular.copy(now).weekday(i).set(initEnd);
                             var interval = moment.interval(start,end);
-                            var obj = {label:start.format(format),//labels[(i+1)%7],
-                                       interval:interval};
+                            var obj = {label:start.format(format),
+                                       interval:interval,
+                                      upLabel:interval.start().format('DD')};
+                            
+                            $log.debug('is sunday?',interval.start().format('dddd'),interval.start().format('dddd') === 'Sunday')
+                            if(interval.start().format('dddd') === 'Sunday' || interval.start().format('dddd') === 'Domenica')
+                                obj.class = 'red';
                             days.push(obj);
-//                            $log.debug('check interval weekdays ',interval.start(),interval.end());
+                            // $log.debug('check interval weekdays ',interval.start(),interval.end());
                         }
-//                        $log.debug('check interval weekdays ',days);
+                        // $log.debug('check interval weekdays ',days);
                         return days;
                         break;
                         // settimane del mese
@@ -233,11 +239,11 @@ angular.module('firstlife.timeline',[])
                         var current = angular.copy(now);
                         var daysInMonth = current.daysInMonth()+current.day();
                         var week = 1;
-//                        $log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
+                        //                        $log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
                         for(var j = 1; j <= daysInMonth+6 ; j += 7){
                             // prendo un giorno ogni sette, in modo da caricare nelle settimane
                             current.date(j);
-//                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
+                            //                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
                             // calcolo l'intervallo della settimana (puo' uscire dal mese)
                             var start = angular.copy(current).weekday(0);
                             var end = angular.copy(current).weekday(6);
@@ -254,21 +260,21 @@ angular.module('firstlife.timeline',[])
                             }
                             // scorro
                             if(now.month() == start.month()){
-//                                label = label.concat(week++).concat("a ").concat('Settimana');
+                                // label = label.concat(week++).concat("a ").concat('Settimana');
                             }else if(start.month() < now.month() || start.year() < now.year()){
                                 // caso: ultima settimana del mese precedente
                                 // ultimo lunedi del mese precedente - 1 /7 ti da il numero di settimane 
                                 var prevMonth = angular.copy(now).endOf('month').subtract(1,'month').day('Monday').date()-1;
-//                                label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
+                                //                                label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
                             }else{
                                 break;
                             }
-                            
-                            weeks.push({label:label,interval:interval}); 
-//                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
+
+                            weeks.push({interval:interval,upLabel:interval.start().format('DD MMMM')}); 
+//                            weeks.push({label:label,interval:interval,upLabel:interval.start().format('DD MMMM')}); 
+                            //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
-//                        $log.debug('check interval date ',weeks);
-                        $log.debug('weeks',weeks);
+                        // $log.debug('check interval date ',weeks);
                         return weeks;
                         break;
                         // giorni del mese
@@ -279,10 +285,10 @@ angular.module('firstlife.timeline',[])
                             var start = angular.copy(now).date(j).set(initStart);
                             var end = angular.copy(now).date(j).set(initEnd);
                             var interval = moment.interval(start,end);
-                            days.push({label:j,interval:interval}); 
+                            days.push({label:j,interval:interval,upLabel:interval.start().format('')}); 
                             //$log.debug('check interval month ',interval.start(),interval.end());
                         }
-//                        $log.debug('check interval month ',days);
+                        // $log.debug('check interval month ',days);
                         return days;
                         break;
                         // mesi dell'anno
@@ -291,17 +297,19 @@ angular.module('firstlife.timeline',[])
                         // 5: giugno, 6: luglio, 7: agosto, 8: settembre, 9: ottobre
                         // 10: novembre, 11: dicembre
                         var months = [];
-                        var format = $scope.isMobile ? 'M' : 'MMM';
                         var month = angular.copy(now);
                         for(var i = 0 ; i < 12; i ++){
                             month.month(i);
                             var start = angular.copy(month).date(1).set(initStart);
                             var end = angular.copy(month).date(month.daysInMonth()).set(initEnd);
                             var interval = moment.interval(start,end);
-                            months.push({label:start.format(format),interval:interval});
+                            var e = {label:start.format('M'),interval:interval}
+                            if(i%3 == 0 && !$scope.isMobile)
+                                e.upLabel = interval.start().format('MMMM')
+                            months.push(e);
                             //$log.debug('check interval year ',interval.start(),interval.end());
                         }
-//                        $log.debug('check interval year ',months);
+                        // $log.debug('check interval year ',months);
                         return months;
                         break;
                         // altrimenti array vuoto
@@ -360,7 +368,7 @@ angular.module('firstlife.timeline',[])
                     default:
                         return -1;
                 }
-//                $log.debug('check index ',r,getNowContext(now),getNowContext($scope.moment));
+                //                $log.debug('check index ',r,getNowContext(now),getNowContext($scope.moment));
                 // se la timeline e' centrata sul momento attuale
                 if(getNowContext(now) == getNowContext($scope.moment))
                     return r;
@@ -370,10 +378,10 @@ angular.module('firstlife.timeline',[])
 
 
             // recupera il contesto di now e inizializza le lable di bottoni
-//            $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
-//                            {key:"day",label:"DAY_BUTTON"},
-//                            {key:"date",label:"DATE_BUTTON"},
-//                            {key:"year",label:"YEAR_BUTTON"}];
+            //            $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
+            //                            {key:"day",label:"DAY_BUTTON"},
+            //                            {key:"date",label:"DATE_BUTTON"},
+            //                            {key:"year",label:"YEAR_BUTTON"}];
             function setContextButtons(now){
                 var keys = $scope.units.map(function(e){return e.key});
                 $scope.units[keys.indexOf('hour')].label = (now.format('dddd')).concat(" ").concat(now.format('D'));
@@ -388,7 +396,7 @@ angular.module('firstlife.timeline',[])
                     case 'hour':
                         // appende il giorno corrente della settimana e il numero
                         label = label.concat(now.format('dddd')).concat(" ").concat(now.format('D')).concat(" ",localeData._months[now.month()]);
-                        
+
                         break;
                     case 'day':
                         // appende la settimana del mese il numero del mese
@@ -405,7 +413,7 @@ angular.module('firstlife.timeline',[])
                         // appende 
                         // appende il mese
                         label = label.concat(localeData._months[now.month()]).concat(" ");
-                        
+
                     default:
                         label = label.concat(now.year());
                 }
@@ -443,14 +451,14 @@ angular.module('firstlife.timeline',[])
                     return false;
 
                 var timeWindow = getCurrentInterval();
-                
+
                 //todo check boundingbox
                 MapService.getMapBounds().then(
                     function(bounds){
                         dataInSlots(data,bounds);
                     },
                     function(response){});
-                 
+
             }
             // associa le features agli slot della timeline
             function dataInSlots(data,bounds){
@@ -471,13 +479,13 @@ angular.module('firstlife.timeline',[])
                 time.to = new Date($scope.timewindow[$scope.timewindow.length -1 ].interval.end().toISOString());
                 return time;
             }
-            
+
             // calcola l'intervallo definito dalla timeline
             function getCurrentInterval(){
                 return moment.interval($scope.timewindow[0].interval.start(),$scope.timewindow[$scope.timewindow.length -1 ].interval.end());
             }
-            
-            
+
+
             // calcola gli slot da occupare per un intervallo
             function calcSlot(features, unit, bounds){
                 unit.markers = {};
@@ -498,7 +506,7 @@ angular.module('firstlife.timeline',[])
                     }
                 }
             }
-            
+
             // calcola intersezione tra intervalli
             function intersect(i,j){
                 // l'inizio e' contenuto nell'intervallo
@@ -510,7 +518,7 @@ angular.module('firstlife.timeline',[])
                 // contiene l'intervallo
                 if(i.start() && i.end() && i.start() <= j.start() && i.end() >= j.end())
                     return true;
-                    
+
                 return false;
             }
 

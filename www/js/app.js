@@ -435,7 +435,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         INFO_LABEL:"Info",
         INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc...",
         CLOSE:"Chiudi",
-        PASSWORD_CONFIRM_ERROR:"Le password non corrispondono"
+        PASSWORD_CONFIRM_ERROR:"Le password non corrispondono",
+        NIGHT:'Notte',
+        MORNING:'Mattino',
+        AFTERNOON:'Pomeriggio',
+        EVENING:'Sera'
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -705,7 +709,11 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         INFO_LABEL:"Info",
         INFO_PLACEHOLDER:"Useful information, instructions, rules, etc.",
         CLOSE:"Close",
-        PASSWORD_CONFIRM_ERROR:"Passwords do not match"
+        PASSWORD_CONFIRM_ERROR:"Passwords do not match",
+        NIGHT:'Night',
+        MORNING:'Morning',
+        AFTERNOON:'Afternoon',
+        EVENING:'Evening'
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
