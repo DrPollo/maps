@@ -233,7 +233,7 @@ angular.module('firstlife.timeline',[])
                         var current = angular.copy(now);
                         var daysInMonth = current.daysInMonth()+current.day();
                         var week = 1;
-                        //$log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
+//                        $log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
                         for(var j = 1; j <= daysInMonth+6 ; j += 7){
                             // prendo un giorno ogni sette, in modo da caricare nelle settimane
                             current.date(j);
@@ -242,13 +242,9 @@ angular.module('firstlife.timeline',[])
                             var start = angular.copy(current).weekday(0);
                             var end = angular.copy(current).weekday(6);
                             var interval = angular.copy(moment.interval(start,end));
-                            if(start.month() > current.month())
-                                return weeks;
                             // creo l'etichetta per la settimana
                             var label = "";
-                            // controllo se lunedi e' nel mese corrente
-                            $log.debug(j,' start ',start.format('DD/MM/YYYY'),' check ',now.month() != start.month(), end.format('DD/MM/YYYY'));
-                            
+                            // costruzione della label
                             if(start.month() < now.month() ){
                                 label = label.concat(start.format('DD'),"-",end.format('DD'))
                             }else if( end.month() > now.month()){
@@ -256,7 +252,7 @@ angular.module('firstlife.timeline',[])
                             }else{
                                 label = label.concat(start.format('DD'),"-",end.format('DD'))
                             }
-//                            
+                            // scorro
                             if(now.month() == start.month()){
 //                                label = label.concat(week++).concat("a ").concat('Settimana');
                             }else if(start.month() < now.month() || start.year() < now.year()){
@@ -264,11 +260,15 @@ angular.module('firstlife.timeline',[])
                                 // ultimo lunedi del mese precedente - 1 /7 ti da il numero di settimane 
                                 var prevMonth = angular.copy(now).endOf('month').subtract(1,'month').day('Monday').date()-1;
 //                                label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
-                            }else{break;}
+                            }else{
+                                break;
+                            }
+                            
                             weeks.push({label:label,interval:interval}); 
 //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
 //                        $log.debug('check interval date ',weeks);
+                        $log.debug('weeks',weeks);
                         return weeks;
                         break;
                         // giorni del mese

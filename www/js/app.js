@@ -815,7 +815,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         // aumento il contatore dei tentativi
                         retries ++;
                         // retry
-                        return onResponseError(rejection.config);
+                        onResponseError(rejection.config);
+                        return $q.reject(rejection);
                     }
                     // reset del contatore dei tentativi
                     retries = 0;
