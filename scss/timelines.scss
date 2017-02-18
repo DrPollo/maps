@@ -101,7 +101,7 @@ timeline{
             width: 60px; 
             cursor: pointer;
             position: relative;
-            border-right: 2px solid #aaa;
+            border-right: 1px solid #aaa;
             .badge{
                 position:absolute;
                 right: 8px;
@@ -142,6 +142,7 @@ timeline{
                 text-transform:capitalize;
             }
         }
+       
         .repeated-item:nth-child(even){
             background: #f3f3f3;
             .label{
@@ -152,6 +153,9 @@ timeline{
             background: #fafafa;
             .label{
             }
+        }
+        .repeated-item:hover{
+            background: white;
         }
         .repeated-item:last-child{
             border-width: 0px;
@@ -166,9 +170,14 @@ timeline{
 
             }
         }
-        .current{
+        .noclick{
+            background: #fafafa !important;
+            cursor: inherit;
+        }
+        .current,.current:hover{
             background:$positive !important;
             color: white;
+            cursor: inherit;
             .label{
 
             }

@@ -198,7 +198,7 @@ angular.module('firstlife.timeline',[])
                             var end = angular.copy(n)
                             end.add((i+1)*duration,'hour').subtract(1,'millisecond');
                             var interval = moment.interval(start,end);
-                            var e = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm')};
+                            var e = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm'),class:'noclick'};
                             array.push(e);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
