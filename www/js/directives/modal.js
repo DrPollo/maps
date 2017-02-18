@@ -291,13 +291,13 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
              */
 
             // aggiunge entita' semplice
-            $scope.add = function(key){
+            $scope.add = AuthService.doAction(function(key){
                 $scope.publish = true;
                 $scope.type = angular.copy($scope.types[key]);
                 $log.debug('check type init simple entity ',$scope.type);
                 initEntity($scope.type);
                 openEditor();
-            }
+            });
 
             function initEntity(type) {
                 $scope.boxEntity = {};
