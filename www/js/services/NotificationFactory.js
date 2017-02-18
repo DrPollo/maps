@@ -16,13 +16,13 @@ angular.module('firstlife.factories')
             get:function(since){
                 var deferred = $q.defer();
                 var user = AuthService.getUser();
-                var userId = user.member_id;
-                $log.debug('user?',user)
                 // cache
                 if(!user){
                     $log.error('user error');
                     deferred.reject('not logged in');
                 }else{
+                    var userId = user.id;
+                    $log.debug('user?',user)
                     var urlId = urlNotifications.concat("/",userId,'/notifications/unread','?domainId=',myConfig.project);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
@@ -147,7 +147,7 @@ angular.module('firstlife.factories')
                     data:true
                 };
                 return rx.Observable.fromPromise($http(req))
-                .map(function(response){return response.data.users;})
+                .map(function(response){return response.data;})
                 .retry()
                 .share();
             },

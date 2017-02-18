@@ -14996,6 +14996,8 @@ timeline {
       color: #444; }
       timeline #buttons button .icon:before {
         line-height: 25px; }
+    timeline #buttons .button.disabled, timeline #buttons .button[disabled] {
+      opacity: 1; }
     timeline #buttons .group {
       margin: 0px 16px 0px 0px; }
     timeline #buttons .right {

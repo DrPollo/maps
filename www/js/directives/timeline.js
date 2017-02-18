@@ -29,11 +29,6 @@ angular.module('firstlife.timeline',[])
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
 
-            // show: visibile o no completamente la 
-            $scope.show = $scope.isMobile ? false : true;
-            $scope.toggle = function(){
-                $scope.show = !$scope.show;
-            }
             //setup lingua di moment js
             moment.locale('it');
             moment().isoWeek(1);
@@ -153,7 +148,7 @@ angular.module('firstlife.timeline',[])
                 // recupero dell'indice di ora nell'unita' corrente
                 $scope.now = getNowInUnits(moment());
                 // recupero il contesto dell'momento attuale dato l'indice
-                $scope.context = getNowContext(now);
+                setContextButtons(now);
                 //$log.debug('check context ',$scope.context);
                 // stampo nei log ora, l'indice e l'array dell'unita' corrente
 //                $log.debug('check now; ',now,'; check indice: ',$scope.now,'; check slots: ',slots);
@@ -239,7 +234,7 @@ angular.module('firstlife.timeline',[])
                         var daysInMonth = current.daysInMonth()+current.day();
                         var week = 1;
                         //$log.debug('numero di giorni del mese pesati con current day ',daysInMonth,current.day(),7-current.day());
-                        for(var j = 1; j <= daysInMonth+6; j += 7){
+                        for(var j = 1; j <= daysInMonth+6 ; j += 7){
                             // prendo un giorno ogni sette, in modo da caricare nelle settimane
                             current.date(j);
 //                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
@@ -247,17 +242,28 @@ angular.module('firstlife.timeline',[])
                             var start = angular.copy(current).weekday(0);
                             var end = angular.copy(current).weekday(6);
                             var interval = angular.copy(moment.interval(start,end));
+                            if(start.month() > current.month())
+                                return weeks;
                             // creo l'etichetta per la settimana
                             var label = "";
                             // controllo se lunedi e' nel mese corrente
-                            //$log.debug(j,' start ',start.format('DD/MM/YYYY'),' check ',now.month() <= start.month());
+                            $log.debug(j,' start ',start.format('DD/MM/YYYY'),' check ',now.month() != start.month(), end.format('DD/MM/YYYY'));
+                            
+                            if(start.month() < now.month() ){
+                                label = label.concat(start.format('DD'),"-",end.format('DD'))
+                            }else if( end.month() > now.month()){
+                                label = label.concat(start.format('DD'),"-",end.format('DD/MM'))
+                            }else{
+                                label = label.concat(start.format('DD'),"-",end.format('DD'))
+                            }
+//                            
                             if(now.month() == start.month()){
-                                label = label.concat(week++).concat("a ").concat('Settimana');
+//                                label = label.concat(week++).concat("a ").concat('Settimana');
                             }else if(start.month() < now.month() || start.year() < now.year()){
                                 // caso: ultima settimana del mese precedente
                                 // ultimo lunedi del mese precedente - 1 /7 ti da il numero di settimane 
                                 var prevMonth = angular.copy(now).endOf('month').subtract(1,'month').day('Monday').date()-1;
-                                label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
+//                                label = label.concat(parseInt((prevMonth)/7)+1).concat("a ").concat('Settimana');
                             }else{break;}
                             weeks.push({label:label,interval:interval}); 
 //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
@@ -363,7 +369,18 @@ angular.module('firstlife.timeline',[])
             }
 
 
-            // recupera il contesto di now
+            // recupera il contesto di now e inizializza le lable di bottoni
+//            $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
+//                            {key:"day",label:"DAY_BUTTON"},
+//                            {key:"date",label:"DATE_BUTTON"},
+//                            {key:"year",label:"YEAR_BUTTON"}];
+            function setContextButtons(now){
+                var keys = $scope.units.map(function(e){return e.key});
+                $scope.units[keys.indexOf('hour')].label = (now.format('dddd')).concat(" ").concat(now.format('D'));
+                $scope.units[keys.indexOf('day')].label = ("dal ").concat(now.isoWeekday(1).format('D')).concat(" al ").concat(now.isoWeekday(7).format('D'));
+                $scope.units[keys.indexOf('date')].label = localeData._months[now.month()];
+                $scope.units[keys.indexOf('year')].label = now.year();
+            }
             function getNowContext(now){
                 var label = "";
                 // considero l'unita' corrente (es. settimana, mese, anno)
@@ -371,6 +388,7 @@ angular.module('firstlife.timeline',[])
                     case 'hour':
                         // appende il giorno corrente della settimana e il numero
                         label = label.concat(now.format('dddd')).concat(" ").concat(now.format('D')).concat(" ",localeData._months[now.month()]);
+                        
                         break;
                     case 'day':
                         // appende la settimana del mese il numero del mese
@@ -387,6 +405,7 @@ angular.module('firstlife.timeline',[])
                         // appende 
                         // appende il mese
                         label = label.concat(localeData._months[now.month()]).concat(" ");
+                        
                     default:
                         label = label.concat(now.year());
                 }

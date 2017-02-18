@@ -1,13 +1,4 @@
-<button class="button button-icon icon-right linear-animation context" 
-        ng-click="toggle()" >
-    <span>
-        {{context}}
-    </span>
-    <i class="icon"
-       ng-class="show ? 'ion-android-close' : 'ion-android-time'">
-    </i>
-</button>
-<div class="vertical-show ease-in-animation" ng-show="show">
+<div class="vertical-show ease-in-animation">
     <ion-scroll id="timeline" class="row"
                 zooming="true"
                 direction="x"  scrollbar-x="false"
@@ -25,11 +16,10 @@
                       ng-style="{'background':val.color,'width':(val.counter/slot.total)*100+'%'}">
                 </span>
             </div>
-<!--            <div class="label">{{slot.label}}</div>-->
         </div>
     </ion-scroll>
     <div id="buttons">
-        <span class="group right" ng-if="!isMobile">
+        <span class="group right">
             <button class="button button-outline button-light" ng-click="reset()">
                 {{'TODAY'|translate}}
             </button>
@@ -39,7 +29,8 @@
         <span class="group">
             <button class="button button-outline" 
                     ng-repeat="unit in units track by $index" 
-                    ng-disabled="$index <= indexDefaultUnit"
+                    ng-show="$index >= indexDefaultUnit"
+                    ng-disabled="$index == indexDefaultUnit"
                     ng-class="indexDefaultUnit == $index ? 'button-positive' : 'button-light'"
                     ng-click="scaleUpTo($index)">
                 {{unit.label| translate}}

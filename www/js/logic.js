@@ -157,7 +157,7 @@ angular.module('firstlife.config')
                 if(list.indexOf(rel[key].slug) < 0 ){
                     list.push(rel[key].slug);
                 }
-                
+
                 map[rel[key].slug] = rel[key].field;
                 console.log('debug rel ',map[rel[key].slug],rel[key].field,rel[key]);
             }
@@ -226,11 +226,11 @@ angular.module('firstlife.config')
         for(i = 0; i < catsList.length; i++){
             catsList[i]["color"] = colors[catsList[i].color_index % colors.length];
             for(j = 0; j < catsList[i].categories.length; j++){
-//                var cats = catsList[i].categories,
-//                    colorIndex = cats[j].category_index - 1,
-//                    index = cats[j].category_index,
-//                    icon = cats[j].icon_name,
-//                    color = colors[colorIndex % colors.length]; 
+                //                var cats = catsList[i].categories,
+                //                    colorIndex = cats[j].category_index - 1,
+                //                    index = cats[j].category_index,
+                //                    icon = cats[j].icon_name,
+                //                    color = colors[colorIndex % colors.length]; 
                 var cats = catsList[i].categories,
                     colorIndex = catsList[i].color_index ? cats[j].category_index + catsList[i].color_index : cats[j].category_index,
                     index = cats[j].category_index,
@@ -251,13 +251,13 @@ angular.module('firstlife.config')
         if(myConfig.dev) console.log("setup search API", myConfig.navigator.search);
         if(!myConfig.navigator.search || !myConfig.navigator.search.params)
             return
-        var params = myConfig.navigator.search.params;
+            var params = myConfig.navigator.search.params;
         var url = myConfig.navigator.search.geocoding.concat('?');
         var url = Object.keys(params).reduce(function(url,key){ return url.concat(key,"=",params[key],"&")}, url);
         myConfig.navigator.search.url = url;
         console.log('check api url',params,Object.keys(params),url)
     }).config(
-    function configDev(myConfig, $logProvider){
+    function configDev($logProvider, myConfig){
         if(myConfig.dev)console.log("setup modalità dev");
 
         // se in modalita' dev

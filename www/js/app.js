@@ -47,7 +47,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             $rootScope.previousState = fromState.name;
             $rootScope.currentState = toState.name;
 
-//            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
+            //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
             $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
             // se ti trovi in uno stato che richiede autenticazione e non sei loggato
@@ -709,111 +709,122 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
-}]).factory('flInterceptor', ['$log', function($log) {  
+}])
+//    .factory('flInterceptor', ['$log', function($log) {  
+//
+//    var flInterceptor = {
+//        response: function(response) {
+//            response.headers = response.headers();
+//            response.status = response.status;
+//            //$log.debug("http response ",response);
+//            if(response.data && response.data.data){
+//                response.data = response.data.data;
+//            }
+//            // bug
+//            if(response.data.group_id){
+//                response.data.id = response.data.group_id;
+//            }
+//            // gestione token
+//
+//
+//            return response;
+//        }
+//    };
+//
+//    return flInterceptor;
+//}])
+    .config(['$httpProvider', function($httpProvider) {  
+        $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
+            // test test test
+            //        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+            // test test test
 
-    var flInterceptor = {
-        //        request: function(request) {
-        //            //$log.debug('flInterceptor, request',request);
-        //            // inject del token nell'header se esiste
-        //        },
-        response: function(response) {
-            response.headers = response.headers();
-            response.status = response.status;
-            //$log.debug("http response ",response);
-            if(response.data && response.data.data){
-                response.data = response.data.data;
+
+            var retries = 0,
+                waitBetweenErrors = 1000,
+                maxRetries = 3;
+            // retry della chiamata
+            function onResponseError(httpConfig) {
+                // workaround per evitare controlli di circolarità delle dipendenze
+                var $http = $injector.get('$http');
+                // chiamata temporizzata
+                setTimeout(function () {
+                    return $http(httpConfig);
+                }, waitBetweenErrors);
             }
-            // bug
-            if(response.data.group_id){
-                response.data.id = response.data.group_id;
-            }
-            // gestione token
+
+            var devToken = {
+                "access_token": "8533ad9ea05c2ef5b292d1cf3b908dda01d73536",
+                "token_type": "Bearer",
+                "expiration": "2017-02-18T17:35:52.361Z",
+                "auth_server": "FIRSTLIFE",
+                "member_id": "589dbba06685502f37156662",
+                "member": {
+                    "first_name": "Alessio",
+                    "last_name": "Antonini",
+                    "username": "alessio",
+                    "email": "aleyho@gmail.com",
+                    "id": "589dbba06685502f37156662"
+                }
+            };
+            $localStorage[myConfig.authentication.token_mem_key] = devToken;
+            return {
+                request: function(config) {
+                    // inject del token nell'header se esiste
+                    var token = $localStorage[myConfig.authentication.token_mem_key];
+                    //                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+                    console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
+                    // se il token esiste lo setto
+                    if (token)  {
+                        config.headers.Authorization = 'Bearer ' + token.access_token;
+                        config.headers.Authentication_server = myConfig.authentication.auth_server_name;
+                    }
+                    return config;
+                },
+                response: function(response) {
+                    // hotfix bug
+                    if(response.data.group_id){
+                        response.data.id = response.data.group_id;
+                    }
+                    // passo gli headers a chi gestisce la chiamata
+                    var headers = response.headers();
+                    response.headers = headers;
+                    return response;
+                },
+                responseError: function(rejection) {
+                    $log.debug('check $http error',rejection.status)
+
+                    // gestione del token scaduto
+                    if(rejection.status === 401 && rejection.data.token){
+                        //                    $log.debug('nuovo token!', rejection)
+                        var token = rejection.data.token;
+                        // salvo il nuovo token
+                        $localStorage[myConfig.authentication.token_mem_key] = token;
+                    }
+
+                    if(rejection.status === 400 || rejection.status === 404){
+                        $log.debug('reject because missing auth_token')
+                        retries = 0;
+                        return $q.reject(rejection);
+                    }
 
 
-            return response;
-        }
-    };
-
-    return flInterceptor;
-}]).config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
-        // test test test
-//        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
-        // test test test
-        
-        
-        var retries = 0,
-        waitBetweenErrors = 1000,
-        maxRetries = 3;
-        // retry della chiamata
-        function onResponseError(httpConfig) {
-            // workaround per evitare controlli di circolarità delle dipendenze
-            var $http = $injector.get('$http');
-            // chiamata temporizzata
-            setTimeout(function () {
-                return $http(httpConfig);
-            }, waitBetweenErrors);
-        }
-        
-        return {
-            request: function(config) {
-//                $log.debug('flInterceptor, request config',config.headers);
-                // inject del token nell'header se esiste
-                var token = $localStorage[myConfig.authentication.token_mem_key];
-//                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
-                console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
-                // se il token esiste lo setto
-                if (token)  {
-                    config.headers.Authorization = 'Bearer ' + token.access_token;
-                    config.headers.Authentication_server = myConfig.authentication.auth_server_name;
-                }
-//                $log.debug('flInterceptor, request config',config);
-                return config;
-            },
-            response: function(response) {
-                // hotfix bug
-                if(response.data.group_id){
-                    response.data.id = response.data.group_id;
-                }
-                // passo gli headers a chi gestisce la chiamata
-                var headers = response.headers();
-                response.headers = headers;
-                return response;
-            },
-            responseError: function(rejection) {
-                $log.debug('check $http error',rejection.status)
-                
-                // gestione del token scaduto
-                if(rejection.status === 401 && rejection.data.token){
-//                    $log.debug('nuovo token!', rejection)
-                    var token = rejection.data.token;
-                    // salvo il nuovo token
-                    $localStorage[myConfig.authentication.token_mem_key] = token;
-                }
-            
-                if(rejection.status === 400){
-                    $log.debug('reject because missing auth_token')
+                    // gestione errori: in caso di errore ritento maxRetries volte
+                    if(retries < maxRetries) {
+                        //                    $log.debug('retries',retries)
+                        // aumento il contatore dei tentativi
+                        retries ++;
+                        // retry
+                        return onResponseError(rejection.config);
+                    }
+                    // reset del contatore dei tentativi
                     retries = 0;
+                    // reject finale della chiamata 
                     return $q.reject(rejection);
                 }
-                    
-                
-                // gestione errori: in caso di errore ritento maxRetries volte
-                if(retries < maxRetries) {
-//                    $log.debug('retries',retries)
-                    // aumento il contatore dei tentativi
-                    retries ++;
-                    // retry
-                    return onResponseError(rejection.config);
-                }
-                // reset del contatore dei tentativi
-                retries = 0;
-                // reject finale della chiamata 
-                return $q.reject(rejection);
-            }
 
-        }
-    });
-}]).config(['$compileProvider','myConfig', function ($compileProvider,myConfig) {
+            }
+        });
+    }]).config(['$compileProvider','myConfig', function ($compileProvider,myConfig) {
     if(!myConfig.debug) $compileProvider.debugInfoEnabled(false);
 }]);

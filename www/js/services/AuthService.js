@@ -4,13 +4,15 @@ angular.module('firstlife.services')
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
         var tokenKey = myConfig.authentication.token_mem_key;
+
+
         //C: (P&(~Q))
         return {
             doAction: function (action){
                 if(MemoryFactory.get(tokenKey))
                     return action
-                
-                return loginToAct;
+
+                    return loginToAct;
             },
             registration_url: function(){
                 // chiamo per recuperare l'url di registrazione
@@ -47,7 +49,9 @@ angular.module('firstlife.services')
                     data: {code:code}
                 };
                 $http(req).then(function(response) {
-                    MemoryFactory.save(tokenKey,response.data.token);
+                    var token = response.data.token;
+                    token.member.id = token.member_id;
+                    MemoryFactory.save(tokenKey,token);
                     $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
                     deferred.resolve(response);
                 },function(err){
@@ -83,10 +87,10 @@ angular.module('firstlife.services')
             }
         };
 
-        
+
         // login to act opens a popup to redirect user to the login
         function loginToAct (){
-            
+
             var confirmPopup = $ionicPopup.confirm({
                 title: $filter('translate')('LOGIN_REQUIRED'),
                 template: ('<center>').concat($filter('translate')('LOGIN_REQUIRED_MESSAGE')).concat('</center>'),

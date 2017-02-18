@@ -564,7 +564,6 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 $scope.counter = 1;
                 subscribers.subscribe(
                     function(response){
-                        $log.debug('initSubscribers fired!');
                         if(Array.isArray(response)){
                             $scope.counter = response.length;
                         }
@@ -677,7 +676,6 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 var deferred = $q.defer();
                 subscribers.subscribe(
                     function(response){
-                        $log.debug('initSubscribers fired!');
                         if($scope.user)
                             var index = response.indexOf($scope.user.id);
                         $scope.subscriber = index < 0 ? false : true;

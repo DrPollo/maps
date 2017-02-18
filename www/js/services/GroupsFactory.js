@@ -93,7 +93,7 @@ angular.module('firstlife.factories')
             // get members
             getMembers: function(entityId){
                 var deferred = $q.defer();
-                var urlId = url.concat('group/').concat(entityId).concat('/member').concat(format);
+                var urlId = url.concat('Thing/').concat(entityId).concat('/members').concat(format);
                 var req = {
                     url: urlId,
                     method: 'get',
@@ -117,7 +117,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },// get members
             getMembersRx: function(entityId){
-                var urlId = url.concat('group/').concat(entityId).concat('/member').concat(format);
+                var urlId = url.concat('Thing/').concat(entityId).concat('/members').concat(format);
                 var req = {
                     url: urlId,
                     method: 'get',
@@ -127,7 +127,7 @@ angular.module('firstlife.factories')
                 
                 return members = rx.Observable.fromPromise($http(req))
                 .map(function(val){
-                    //console.debug('response ',val)
+                    console.debug('getMembersRx, response ',val)
                     return val.data;
                 })
                 .do(

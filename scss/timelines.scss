@@ -53,6 +53,11 @@ timeline{
                 line-height:25px;
             }
         }
+        .button.disabled, .button[disabled]{
+//            background: $dark;
+//            color:$light;
+            opacity:1;
+        }
         .group{
             margin:0px 16px 0px 0px; 
         }
