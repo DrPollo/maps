@@ -36,7 +36,7 @@ angular.module('firstlife.controllers')
         }
 
         // default utente per le azioni con il log
-        if($scope.isLoggedIn === 'undefined') $scope.isLoggedIn = false;
+        $scope.isLoggedIn = AuthService.isAuth();
 
         // ascolto del cambio dei parametri search
         // se li cambio io setto false per bypassare i controlli
@@ -169,13 +169,11 @@ angular.module('firstlife.controllers')
             check4embed($location.search());
             check4search($location.search());
             
+            $scope.isLoggedIn = AuthService.isAuth();
+            
             $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
             // evito reload involontari
             if($rootScope.previousState !== 'app.maps'){
-                
-                // check autenticazione
-                $scope.isLoggedIn = AuthService.isAuth();
-                $log.debug("isLoggedIn? ",$scope.isLoggedIn);
                 
                 // recupero la mappa se non inizializzata
                 $scope.map = MapService.getMap();

@@ -1,11 +1,12 @@
 angular.module('firstlife.controllers')
 
-    .controller('ImagesCtrl', ['$scope', '$state', '$q', '$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', '$ionicPopup', '$rootScope', '$filter', 'myConfig', 'ImageService', 'CamerasFactory', 'SenderFactory', 'PlatformService', 'MemoryFactory', function( $scope, $state, $q, $ionicModal, $rootScope, $ionicSlideBoxDelegate, $ionicLoading, $ionicPopup, $filter, myConfig, ImageService, Cameras, Sender, PlatformService, MemoryFactory) { 
+    .controller('ImagesCtrl', ['$scope', '$state', '$q', '$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', '$ionicPopup', '$rootScope', '$filter', 'myConfig', 'ImageService', 'CamerasFactory', 'SenderFactory', 'PlatformService', 'MemoryFactory','AuthService', function( $scope, $state, $q, $ionicModal, $rootScope, $ionicSlideBoxDelegate, $ionicLoading, $ionicPopup, $filter, myConfig, ImageService, Cameras, Sender, PlatformService, MemoryFactory,AuthService) { 
 
         //var $scope = this;
 
         $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
-        $scope.isLoggedIn = $rootScope.isLoggedIn;
+
+        
         $scope.config = myConfig;
         $scope.images = [];
         $scope.imageCache = [];
@@ -17,12 +18,10 @@ angular.module('firstlife.controllers')
         $scope.slider.images = [];
         $scope.slider.pointer = 0;
         
-        $scope.isLoggedIn = false;
         // check autenticazione
-        var user = MemoryFactory.get('user');
-        if(user){
-            $scope.isLoggedIn = true;
-        }
+        var user = AuthService.getUser();
+        $scope.isLoggedIn = AuthService.isAuth();
+        
 
 
         // dimensioni delle immagini

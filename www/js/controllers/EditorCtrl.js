@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['myConfig', 'entityFactory', '$state', '$scope','$stateParams', '$ionicPopup', 'entityFactory', 'EntityService', '$window', '$filter', 'TagsService', 'MemoryFactory', 'MapService', '$ionicLoading', '$previousState', '$log', function(myConfig, entityFactory, $state, $scope, $stateParams, $ionicPopup, entityFactory, EntityService, $window, $filter, TagsService, MemoryFactory, MapService, $ionicLoading, $previousState, $log) {
+    .controller('EditorCtrl', ['myConfig', 'entityFactory', '$state', '$scope','$stateParams', '$ionicPopup', 'entityFactory', 'EntityService', '$window', '$filter', '$ionicLoading', '$previousState', '$log', 'TagsService', 'MemoryFactory', 'MapService',  'AuthService', function(myConfig, entityFactory, $state, $scope, $stateParams, $ionicPopup, entityFactory, EntityService, $window, $filter,$ionicLoading, $previousState, $log, TagsService, MemoryFactory, MapService,  AuthService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -26,7 +26,7 @@ angular.module('firstlife.controllers')
         if(dev) console.log("categorie in EditorCtrl", _this.categories);
         
         
-        _this.currentUser = MemoryFactory.get('user');
+        _this.currentUser = AuthService.getUser();
         _this.labels = {
             edit: "EDIT",
             create: "CREATE"
@@ -88,7 +88,7 @@ angular.module('firstlife.controllers')
 
                 // da cancellare initSearchSource();
 
-                _this.currentUser = MemoryFactory.get('user');
+                _this.currentUser = AuthService.getUser();
 
                 // gestione del tipo
                 var type = _this.types.default.key,

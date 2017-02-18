@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('SimpleEntityFactory', ['$q', '$http', '$log', 'myConfig', 'MemoryFactory', function($q, $http, $log, myConfig, MemoryFactory) {
+    .factory('SimpleEntityFactory', ['$q', '$http', '$log', 'myConfig', 'MemoryFactory', 'AuthService', function($q, $http, $log, myConfig, MemoryFactory, AuthService) {
 
         return {
             get: function(entityId,type) {
@@ -23,14 +23,13 @@ angular.module('firstlife.factories')
             },
             add: function(entityId,data,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.get('token'),
-                    user = MemoryFactory.get('user');
+                var user = AuthService.getUser();
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
                     url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat(format),
                     method: 'POST',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:data
                 };
                 $http(req).then(
@@ -45,14 +44,13 @@ angular.module('firstlife.factories')
             },
             update: function(entityId,id,data,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.get('token'),
-                    user = MemoryFactory.get('user');
+                var user = AuthService.getUser();
                 // aggiungo l'utente
                 data.user_id = user.id;
                 var req = {
                     url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat("/").concat(id).concat(format),
                     method: 'PUT',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:data
                 };
                 $http(req).then(
@@ -67,11 +65,10 @@ angular.module('firstlife.factories')
             },
             delete: function(entityId,id,type){
                 var deferred = $q.defer();
-                var token = MemoryFactory.get('token');
                 var req = {
                     url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat("/").concat(id).concat(format),
                     method: 'DELETE',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:{}
                 };
                 $http(req).then(

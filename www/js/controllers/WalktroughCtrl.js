@@ -45,9 +45,9 @@ angular.module('firstlife.controllers')
                         $scope.action = "login";
                 }
                 // controllo se l'utente e' in memoria
-                if(!$rootScope.isLoggedIn){
+                if(!AuthService.isAuth()){
                     $log.debug("check se l'utente e' loggato");
-                    var user = MemoryFactory.get('user');
+                    var user = AuthService.getUser();
                     $rootScope.isLoggedIn = user ? true : false;
                     $log.debug("check se l'utente e' loggato", user);
                 }

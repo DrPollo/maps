@@ -16,12 +16,11 @@ angular.module('firstlife.factories')
             }
         };
     }])
-    .factory('SenderFactory', ['$http', '$rootScope','$log', 'myConfig', 'MemoryFactory', function($http , $rootScope,$log, myConfig, MemoryFactory) {
+    .factory('SenderFactory', ['$http', '$rootScope','$log', 'myConfig', 'MemoryFactory', 'AuthService', function($http , $rootScope,$log, myConfig, MemoryFactory, AuthService) {
         var sendUrl = {};// myConfig.backend_images;
         var urlThings = myConfig.backend_things;
         var format = myConfig.format;
         var response = null;
-        var token = MemoryFactory.get('token');
         
         for(i in self.config.types.list){
             sendUrl[self.config.types.list[i].key] = self.config.types.list[i].url;
@@ -31,9 +30,9 @@ angular.module('firstlife.factories')
         // utente di default -1 (guest)
         var user_id  = -1;
         // se l'utente è autenticato
-        if(MemoryFactory.get('user')){
+        if(AuthService.isAuth()){
             // set user id
-            var user = MemoryFactory.get('user');
+            var user = AuthService.getUser();
             var user_id  = user.id;
         }
         
@@ -52,12 +51,13 @@ angular.module('firstlife.factories')
                     var img = 'data:';
                     img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);
                     data.filedata = img;
+                    //test
+                    data.image_name = "test test";
                     var json =  JSON.stringify(data);
                     var req = {
                         method: 'PUT',
                         url: urlThings.concat('/').concat(id).concat('/images').concat('/add').concat(format),
-                        //url: urlThings.concat('/').concat(id).concat('/images').concat(format),
-                        headers: { 'Content-Type': 'application/json', Authorization:token},
+                        headers: { 'Content-Type': 'application/json'},
                         data: json
                     }
 

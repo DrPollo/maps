@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'MemoryFactory','rx', function($http, $q,  $log, myConfig, MemoryFactory,rx) {
+    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'rx', 'AuthService', function($http, $q,  $log, myConfig, rx, AuthService) {
 
         var config = myConfig;
         var format = config.format;
@@ -11,12 +11,11 @@ angular.module('firstlife.factories')
             check: function(){return true;},
             // add user to group
             joinGroup: function (entityId){
-                $log.debug('joining 4 ',entityId);
+//                $log.debug('joining 4 ',entityId);
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
-                $log.debug('joining 5 ',user,token);
-                if(user && token){
+                var user = AuthService.getUser();
+//                $log.debug('joining 5 ',user);
+                if(user){
                     var urlId = url.concat('member').concat(format);
                     var data = {
                         "groupId":entityId,
@@ -25,7 +24,7 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'post',
-                        headers:{"Content-Type":"application/json", Authorization:token},
+                        headers:{"Content-Type":"application/json"},
                         data: data
                     };
                     $http(req).then(
@@ -38,20 +37,19 @@ angular.module('firstlife.factories')
                             deferred.reject(response);
                         });
                 }else{
-                    deferred.reject({message:'no user or token'});
+                    deferred.reject({message:'no user'});
                 }
                 return deferred.promise;
             },
             // add user to group
             leaveGroup: function (entityId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
-                if(user && token){
+                var user = AuthService.getUser();
+                if(user){
                     // manda il proprio id come parametro
                     return removeUser(entityId,user.id);
                 }else{
-                    deferred.reject({message:'no user or token'});
+                    deferred.reject({message:'no user'});
                 }
                 return deferred.promise;
             },
@@ -62,7 +60,7 @@ angular.module('firstlife.factories')
             // get members
             checkMembership: function(entityId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
+                var user = AuthService.getUser();
                 //se in cache
                 if(!groupsUsers[entityId])
                     groupsUsers[entityId] = {};
@@ -150,16 +148,15 @@ angular.module('firstlife.factories')
 
         function removeUser (entityId,userId){
             var deferred = $q.defer();
-            var user = MemoryFactory.get('user');
-            var token = MemoryFactory.get('token');
-            $log.debug('joining 5 ',user,token);
-            if(user && token){
+            var user = AuthService.getUser();
+            $log.debug('joining 5 ',user);
+            if(user){
                 var urlId = url.concat('group/').concat(entityId).concat('/member/').concat(userId).concat(format);
                 var data = {}
                 var req = {
                     url: urlId,
                     method: 'delete',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data: data
                 };
                 $http(req).then(
@@ -174,7 +171,7 @@ angular.module('firstlife.factories')
                         deferred.reject(response);
                     });
             }else{
-                deferred.reject({message:'no user or token'});
+                deferred.reject({message:'no user'});
             }
             return deferred.promise;
         }

@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['$log','$http','$q','myConfig','MemoryFactory','groupsFactory', 'rx', function($log, $http, $q, myConfig, MemoryFactory,groupsFactory, rx) {
+    .factory('AuthService', ['$log','$http','$q','myConfig','MemoryFactory','rx', function($log, $http, $q, myConfig, MemoryFactory,rx) {
 
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
@@ -19,6 +19,10 @@ angular.module('firstlife.services')
             logout_url: function(){
                 // mando lo user all'auth server per il logout
                 return myConfig.authentication["logout_url"];
+            },
+            profile_url: function(){
+                // mando lo user all'auth server per il logout
+                return myConfig.authentication["profile_url"];
             },
             logout: function(){
                 return MemoryFactory.delete(tokenKey);
@@ -72,12 +76,6 @@ angular.module('firstlife.services')
                 if(dev) console.log("AuthService, perm ",action,source,perms,actions);
 
                 return checkAction(action,source,perms,actions);
-            },
-            checkMembership: function(entityId){
-                return groupsFactory.checkMembership(entityId);
-            },
-            checkMembershipRx: function(entityId){
-                return rx.Observable.fromPromise(groupsFactory.checkMembership(entityId)).share();
             }
         };
 

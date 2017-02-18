@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             check:'='
         },
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
-        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', 'notificationFactory', 'MemoryFactory','myConfig', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, notificationFactory,MemoryFactory,myConfig){
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window,notificationFactory,MemoryFactory,myConfig,AuthService){
 
             
             $scope.$on('$destroy', function(e) {
@@ -54,7 +54,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             init();
             
             function init(){
-                $scope.user = MemoryFactory.get('user');
+                $scope.user = AuthService.getUser();
                 $scope.highlight = false;
                 $log.debug('check user notification',$scope.user);
                 if($scope.user){
@@ -102,7 +102,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
 
 
             $scope.login = function(){
-                $state.go('login', {action:'login'});
+                $window.location.href = AuthService.auth_url();
             };
 
 

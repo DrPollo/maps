@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .service('EntityService',['myConfig', 'MemoryFactory', '$filter', '$log', function(myConfig, MemoryFactory, $filter, $log) {
+    .service('EntityService',['$filter', '$log', 'myConfig', 'MemoryFactory', 'AuthService',function($filter, $log, myConfig, MemoryFactory, AuthService) {
 
         /*
          * Service che implementa parte della logica delle proprieta' delle entita'
@@ -34,7 +34,7 @@ angular.module('firstlife.services')
 
         function initEntityModel(entity_type){
             // recupero l'utente
-            var user = MemoryFactory.get('user');
+            var user = AuthService.getUser();
 
             if(self.config.dev)$log.debug("EntityFactory, getDefaults ",entity_type,user);
 

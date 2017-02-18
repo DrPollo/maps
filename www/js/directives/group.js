@@ -75,10 +75,10 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
             details: '=details'
         },
         templateUrl: '/templates/map-ui-template/membersList.html',
-        controller: ['$rootScope','$scope','$log','$filter','groupsFactory','MemoryFactory', function($rootScope,$scope,$log,$filter,groupsFactory,MemoryFactory){
+        controller: ['$rootScope','$scope','$log','$filter','groupsFactory','MemoryFactory', 'AuthService', function($rootScope,$scope,$log,$filter,groupsFactory,MemoryFactory, AuthService){
 
             //$scope.counter = [];
-            $scope.user = MemoryFactory.get('user');
+            $scope.user = AuthService.getUser();
             //$scope.role = false;
 
             $scope.$on('$destroy', function(e) {

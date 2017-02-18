@@ -8,12 +8,12 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             logged:'=',
         },
         templateUrl: '/templates/map-ui-template/simpleEntityList.html',
-        controller: ['$scope','$log','$filter','$ionicModal','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory', function($scope,$log,$filter,$ionicModal,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory){
+        controller: ['$scope','$log','$filter','$ionicModal','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory','AuthService', function($scope,$log,$filter,$ionicModal,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory, AuthService){
 
             $scope.config = myConfig;
             $scope.types = myConfig.types.simpleEntities;
             $scope.groups = [];
-            $scope.user = MemoryFactory.get('user');
+            $scope.user = AuthService.getUser();
 
             var MODAL_RELOAD_TIME = myConfig.behaviour.modal_relaod_time;
             // variabile dove inserisco il timer per il polling
@@ -464,12 +464,12 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             $rootScope.$on('groupReset',function(e,args){
                 if(!e.preventGroupResetRelationActions){
                     e.preventGroupResetRelationActions = true;
-                    checker = AuthService.checkMembershipRx($scope.id);
+                    checker = groupsFactory.getMembersRx($scope.id);
                     initRelations();
                 }
             })
             
-            var checker = AuthService.checkMembershipRx($scope.id);
+            var checker = groupsFactory.getMembersRx($scope.id);
             var colors = myConfig.design.colors;
             // init relazioni
             initRelations();
@@ -517,20 +517,6 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     default:
                 }
             }
-//            function lazyCheck(relation,check){
-//                switch(check){
-//                    case 'membership':
-//                        AuthService.checkMembership($scope.id).then(
-//                            function(response){
-//                                relation.check = true;
-//                                $scope.count++;
-//                            },
-//                            function(response){$log.log('no member!');}
-//                        );
-//                        break;
-//                    default:
-//                }
-//            }
         }]
     }
 }).directive('subscribersCounter',function(){
@@ -602,14 +588,14 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             label:'=label'
         },
         templateUrl: '/templates/map-ui-template/actionsModal.html',
-        controller: ['$rootScope','$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', function($rootScope, $scope, $location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory){
+        controller: ['$rootScope','$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'AuthService', function($rootScope, $scope, $location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory, AuthService){
 
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
             $scope.subscriber = false;
             if(!$scope.user)
-                $scope.user = MemoryFactory.get('user');
+                $scope.user = AuthService.getUser();
 
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyActions){

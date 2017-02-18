@@ -90,11 +90,10 @@ angular.module('firstlife.factories')
                 var feature = markerConverter(entity);
                 if(consoleCheck)console.log("PlaceFactory, token: ", token);
                 if(consoleCheck)console.log("PlaceFactory, update place query: ",entity,feature);
-                var token = MemoryFactory.get('token');
                 var req = {
                     url: urlId,
                     method: 'PUT',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:feature
                 };
                 $http(req).then(function(response) {
@@ -119,14 +118,12 @@ angular.module('firstlife.factories')
             },
             create: function(entity) {
                 var urlId = urlThings.concat(format);
-//                var urlId = types[entity.entity_type].concat('/add').concat(format);
                 var deferred = $q.defer();
                 var feature = markerConverter(entity);
-                var token = MemoryFactory.get('token');
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:feature
                 };
                 if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
@@ -155,11 +152,10 @@ angular.module('firstlife.factories')
                 // cancello i marker dalla cache
                 delete self.markerDetailsList[entityId];
                 delete self.markerList[entityId];
-                var token = MemoryFactory.get('token');
                 var req = {
                     url: urlId,
                     method: 'DELETE',
-                    headers:{"Content-Type":"application/json", Authorization:token},
+                    headers:{"Content-Type":"application/json"},
                     data:''
                 };
                 return $http(req);

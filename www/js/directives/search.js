@@ -3,7 +3,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
         restrict: 'E',
         scope: {},
         templateUrl: '/templates/map-ui-template/SearchCards.html',
-        controller: ['$scope','$location', '$log', '$stateParams', 'myConfig', 'MemoryFactory', 'MapService', function($scope,$location,$log,$stateParams,myConfig,MemoryFactory,MapService){
+        controller: ['$scope','$location', '$log', '$stateParams', 'myConfig', 'MemoryFactory', 'MapService', 'AuthService', function($scope,$location,$log,$stateParams,myConfig,MemoryFactory,MapService, AuthService){
             var config = myConfig;
             var filters = config.map.filters;
             var filterList = filters.map(function(e){return e.search_param});
@@ -78,7 +78,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                         break;
                     case 'users':
                         // cerco il nome utente
-                        var user = MemoryFactory.get('user');
+                        var user = AuthService.getUser();
                         if(value == user.id && user.displayName){
                             card.label2 = user.displayName;
                             $scope.cards[key] = card;

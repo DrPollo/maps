@@ -48,11 +48,10 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/consume
             read:function(notificationId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
+                var user = AuthService.getUser();
 
                 // se non sono loggato rispondo errore
-                if(!user || !token){
+                if(!user){
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat('/consume').concat(format);
@@ -60,7 +59,7 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json", Authorization:token},
+                        headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id,id:notificationId}
                     };
                     $http(req).then(
@@ -79,8 +78,7 @@ angular.module('firstlife.factories')
             //http://localhost:3095/api/Notifications/consume_until
             consume:function(){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
+                var user = AuthService.getUser();
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){
@@ -92,7 +90,7 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json", Authorization:token},
+                        headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id,until:now.toISOString(),domain:myConfig.project}
                     };
                     $http(req).then(
@@ -152,18 +150,17 @@ angular.module('firstlife.factories')
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
+                var user = AuthService.getUser()
 
                 // se non sono loggato rispondo errore
-                if(!user || !token){
+                if(!user){
                     deferred.reject('not logged in');
                 }else{
                     var urlId = urlThings.concat('/').concat(markerId).concat("/subscribe").concat(format);
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json", Authorization:token},
+                        headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id}
                     };
                     $http(req).then(
@@ -184,8 +181,7 @@ angular.module('firstlife.factories')
             // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/unsubscribe
             unsubscribe:function(markerId){
                 var deferred = $q.defer();
-                var user = MemoryFactory.get('user');
-                var token = MemoryFactory.get('token');
+                var user = AuthService.getUser()
 
                 // se non sono loggato rispondo errore
                 if(!user || !token){
@@ -195,7 +191,7 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json", Authorization:token},
+                        headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id}
                     };
                     $http(req).then(

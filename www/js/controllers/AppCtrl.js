@@ -22,7 +22,6 @@ angular.module('firstlife.controllers')
             // setup utente se presente
             if($scope.user){
                 $scope.displayName = $scope.user.display_name;
-                $scope.isLoggedIn = true;
                 $log.debug("Benvenuto", $scope.user.display_name);
             } else {
                 $scope.username = "Guest";
@@ -40,7 +39,7 @@ angular.module('firstlife.controllers')
          * 5) langSelector: switch lingua
          */
         $scope.login = function(){
-            $window.location.href = AuthService.login_url();
+            $window.location.href = AuthService.auth_url();
         };
         $scope.profile = function(){
             $window.location.href = AuthService.profile_url();
