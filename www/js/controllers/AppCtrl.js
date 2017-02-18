@@ -14,7 +14,7 @@ angular.module('firstlife.controllers')
         
         // gestore del cambio di stato
         $scope.$on("$stateChangeSuccess", function() {
-            if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState, $rootScope.isLoggedIn, $rootScope.currentUser);
+            if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState);
             
             $scope.isLoggedIn = AuthService.isAuth();
             

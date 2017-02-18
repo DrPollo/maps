@@ -35,7 +35,7 @@
                     <i class="icon ion-android-person"></i>
                     <h3 class="menu-text">{{'EDIT_PROFILE'|translate}}</h3>
                 </ion-item>
-                <ion-item ng-show="!isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng- d="login()">
+                <ion-item ng-show="!isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng-click="login()">
                     <i class="icon ion-log-in"></i>
                     <h3 class="menu-text">{{'LOGIN'|translate}}</h3>
                 </ion-item>

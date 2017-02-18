@@ -1,20 +1,24 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['$log','$http','$q','myConfig','MemoryFactory','rx', function($log, $http, $q, myConfig, MemoryFactory,rx) {
+    .factory('AuthService', ['$log','$http','$q','$ionicPopup','$filter','$window','myConfig','MemoryFactory','rx', function($log, $http, $q,$ionicPopup, $filter,$window, myConfig, MemoryFactory,rx) {
 
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
         var tokenKey = myConfig.authentication.token_mem_key;
         //C: (P&(~Q))
         return {
+            doAction: function (action){
+                if(MemoryFactory.get(tokenKey))
+                    return action
+                
+                return loginToAct;
+            },
             registration_url: function(){
                 // chiamo per recuperare l'url di registrazione
                 return myConfig.authentication["registration_url"];
             },
             auth_url: function(){
                 // chiamo per recuperare l'url di registrazione
-                var state = Math.random().toString(36).slice(2);
-                MemoryFactory.save(stateKey,state);
-                return myConfig.authentication["auth_url"].concat('&state=',state);
+                return createAuthUrl();
             },
             logout_url: function(){
                 // mando lo user all'auth server per il logout
@@ -44,7 +48,7 @@ angular.module('firstlife.services')
                 };
                 $http(req).then(function(response) {
                     MemoryFactory.save(tokenKey,response.data.token);
-//                    $log.debug('getToken, response',MemoryFactory.get(tokenKey));
+                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
                     deferred.resolve(response);
                 },function(err){
                     deferred.reject(err);
@@ -55,19 +59,19 @@ angular.module('firstlife.services')
                 return (MemoryFactory.get(tokenKey)) ? true : false;
             },
             getUser: function (){
-                return MemoryFactory.get(tokenKey).member;
+                return (MemoryFactory.get(tokenKey) && MemoryFactory.get(tokenKey).member) ? MemoryFactory.get(tokenKey).member : null;
             },
             logout: function (){
                 var token = MemoryFactory.get(tokenKey);
                 // chiamata a qualcuno per annullare il token corrente
-                
+
                 return MemoryFactory.delete(tokenKey);
             },
             checkPerms: function(source){
 
                 var checkPerms = {};
                 for(a in actions){
-                    checkPerms[a] = checkAction(a,source,perms,actions);
+                    checkPerms[a] = checkUserPowers(a,source,perms,actions);
                 }
                 if(dev) console.log("AuthService, perms ",source,perms,actions,checkPerms);
                 return checkPerms;
@@ -75,12 +79,31 @@ angular.module('firstlife.services')
             checkPerm: function(action,source){
                 if(dev) console.log("AuthService, perm ",action,source,perms,actions);
 
-                return checkAction(action,source,perms,actions);
+                return checkUserPowers(action,source,perms,actions);
             }
         };
 
+        
+        // login to act opens a popup to redirect user to the login
+        function loginToAct (){
+            
+            var confirmPopup = $ionicPopup.confirm({
+                title: $filter('translate')('LOGIN_REQUIRED'),
+                template: ('<center>').concat($filter('translate')('LOGIN_REQUIRED_MESSAGE')).concat('</center>'),
+                buttons: [
+                    { text: $filter('translate')('ABORT') },
+                    { 
+                        text: $filter('translate')('LOGIN'),
+                        type: 'button-positive',
+                        onTap: function(e){
+                            $window.location.href = createAuthUrl();
+                        }
+                    }
+                ]
+            });
+        }
 
-        function checkAction (action,source,perms,actions){
+        function checkUserPowers (action,source,perms,actions){
 
             var index = 2;
             switch(source){
@@ -98,6 +121,16 @@ angular.module('firstlife.services')
             //console.log("Result (P&(notQ)) ",self.actions[action],(mask), (self.actions[action]&(mask)));
 
             return (actions[action]&(~mask));
+        }
+
+        // costruisce l'url per l'authentication server
+        function createAuthUrl(){
+            // genera uno stato per verificare la chiamata di callback
+            var state = Math.random().toString(36).slice(2);
+            // salvo lo stato in memoria
+            MemoryFactory.save(stateKey,state);
+            // restituisco l'url al login con lo stato generato
+            return myConfig.authentication["auth_url"].concat('&state=',state);
         }
 
     }]).run(function(myConfig){

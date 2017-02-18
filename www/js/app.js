@@ -167,6 +167,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
     $translateProvider.translations('it', {
+        LOGIN_REQUIRED:"Accesso necessario",
+        LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
         SEARCH_HINTS:'Cerca un indizzo, un luogo o una parola chiave...',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
@@ -283,7 +285,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PICTURE:'Foto',
         WHEN:'il',
         // myConfig entity properties
-        DESCRIPTION:'Descrizione',
+        DESCRIPTION:'Post',
         PLACE_NAME:'Luogo',
         EVENT_NAME:'Evento',
         POST_NAME:'Extra',
@@ -372,9 +374,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         GROUP_JOIN_ASK:'Sei sicuro di voler entrare nel gruppo?',
         MESSAGE_PLACEHOLDER:'Messaggio',
         MESSAGE_LABEL:'Messaggio',
-        DESCRIPTIONS:'Descrizioni',
+        DESCRIPTIONS:'Post',
         IMAGE:'Immagine',
-        ADD_DESCRIPTION:'Aggiungi descrizione',
+        ADD_DESCRIPTION:'Aggiungi post',
         ADD_COMMENT:'Aggiungi commento',
         ADD_IMAGE:'Aggiungi immagine',
         TITLE:'Titolo',
@@ -436,6 +438,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PASSWORD_CONFIRM_ERROR:"Le password non corrispondono"
     });
     $translateProvider.translations('en', {
+        LOGIN_REQUIRED:"Login reuired",
+        LOGIN_REQUIRED_MESSAGE:"Logging in is required to proceed",
         SEACH_NO_RESULTS:'No results...',
         SEARCH_HINTS:'Search an address, a place or a key word...',
         FILTER_HINTS:'Filter by name, category or tag...',
@@ -733,8 +737,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     return flInterceptor;
 }]).config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
-        
-        
         // test test test
 //        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
         // test test test
@@ -759,6 +761,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 // inject del token nell'header se esiste
                 var token = $localStorage[myConfig.authentication.token_mem_key];
 //                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+                console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
                 // se il token esiste lo setto
                 if (token)  {
                     config.headers.Authorization = 'Bearer ' + token.access_token;
@@ -778,7 +781,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 return response;
             },
             responseError: function(rejection) {
-                // $log.debug('check $http error',rejection.status)
+                $log.debug('check $http error',rejection.status)
                 
                 // gestione del token scaduto
                 if(rejection.status === 401 && rejection.data.token){
@@ -788,6 +791,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     $localStorage[myConfig.authentication.token_mem_key] = token;
                 }
             
+                if(rejection.status === 400){
+                    $log.debug('reject because missing auth_token')
+                    retries = 0;
+                    return $q.reject(rejection);
+                }
+                    
                 
                 // gestione errori: in caso di errore ritento maxRetries volte
                 if(retries < maxRetries) {

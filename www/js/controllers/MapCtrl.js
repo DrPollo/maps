@@ -446,7 +446,7 @@ angular.module('firstlife.controllers')
             }
         };
 
-        $scope.switchEditMode = function(){
+        $scope.switchEditMode = AuthService.doAction(function(){
             if($scope.config.dev) if(consoleCheck) console.log("MapCtrl, switchEditMode editMode ",$scope.map.mode);
             if($scope.editMode){
                 changeMode('view');
@@ -455,7 +455,7 @@ angular.module('firstlife.controllers')
             }else{
                 changeMode('edit');
             }
-        };
+        });
 
 
         $scope.showModalFavPlace = function() {

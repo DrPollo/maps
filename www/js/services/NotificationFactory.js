@@ -16,13 +16,14 @@ angular.module('firstlife.factories')
             get:function(since){
                 var deferred = $q.defer();
                 var user = AuthService.getUser();
-                $log.debug('user?',AuthService.token())
+                var userId = user.member_id;
+                $log.debug('user?',user)
                 // cache
                 if(!user){
                     $log.error('user error');
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlNotifications.concat("/",user.id,'/notifications/unread','?domainId=',myConfig.project);
+                    var urlId = urlNotifications.concat("/",userId,'/notifications/unread','?domainId=',myConfig.project);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
 
@@ -35,7 +36,10 @@ angular.module('firstlife.factories')
                     $http(req).then(
                         function(response){
                             $log.debug('notificationFactory, get, response ',response);
-                            deferred.resolve(response.data.notifications);
+                            if(response && response.data && response.data.notifications)
+                                deferred.resolve(response.data.notifications);
+                            else
+                                deferred.reject('empty');
                         },
                         function(response){
                             $log.error('notificationFactory, get, response ',response);

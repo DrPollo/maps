@@ -495,6 +495,7 @@ angular.module('firstlife.factories')
             var details = null;
             $http(req).then(
                 function(response) {
+                    $log.debug('bboxQuery',response)
                     var markers = entitiesToMarker(response.data.things);
                     // aggiorno lista marker
                     updateMarkersList(markers,details);
