@@ -13543,7 +13543,7 @@ ion-side-menu#side-menu {
       animation-delay: 1.1s; }
   .maps-view #map-action-menu {
     position: absolute;
-    bottom: 180px;
+    bottom: 80px;
     right: 8px;
     display: inline-block;
     z-index: 2000; }
@@ -14957,26 +14957,31 @@ timeline {
   bottom: 0px;
   height: auto;
   width: 100%; }
-  timeline .context {
-    position: absolute;
-    top: -60px;
-    right: 8px;
-    background: #333;
-    color: white;
-    padding: 0px 12px;
-    text-align: left;
-    overflow: hidden; }
-    timeline .context span {
-      display: inline-block;
-      padding-right: 10px;
-      font-weight: 300;
-      font-size: 1em; }
-    timeline .context span::first-letter {
-      text-transform: capitalize; }
-    timeline .context i:before {
-      font-size: 24px;
-      line-height: 41px;
-      padding: 0px 0px 1px; }
+  timeline #time-controls {
+    position: relative;
+    left: 10px;
+    display: inline-block;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
+    timeline #time-controls .reset:before {
+      font-weight: bold; }
+    timeline #time-controls button.time-control {
+      min-height: auto;
+      height: 26px;
+      width: 26px;
+      line-height: initial;
+      margin: 0px 0 0 -4px;
+      border-left: 1px #ccc solid;
+      display: inline-block; }
+    timeline #time-controls button.time-control:hover {
+      background: #f1f1f1; }
+    timeline #time-controls button.time-control:first-child {
+      border-left: 0px solid;
+      margin: 0px;
+      border-radius: 4px 0px 0px 4px; }
+    timeline #time-controls button.time-control:last-child {
+      border-radius: 0px 4px 4px 0px; }
   timeline #buttons {
     position: relative;
     z-index: 2;
@@ -14984,7 +14989,7 @@ timeline {
     width: 100%;
     height: 34px;
     background-color: #f3f3f3;
-    padding: 4px 16px;
+    padding: 4px 8px 0px;
     overflow: hidden; }
     timeline #buttons button {
       margin: 0px 4px 0px 0px;

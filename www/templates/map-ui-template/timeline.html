@@ -1,3 +1,8 @@
+<div id="time-controls">
+    <button class="button-icon ion-arrow-left-b time-control" ng-click="rewind()"></button>
+    <button class="button-icon ion-android-refresh time-control reset" ng-click="reset()"></button>
+    <button class="button-icon ion-arrow-right-b time-control" ng-click="forward()"></button>
+</div>
 <div class="vertical-show ease-in-animation">
     <ion-scroll id="timeline" class="row"
                 zooming="true"
@@ -19,22 +24,13 @@
         </div>
     </ion-scroll>
     <div id="buttons">
-        <span class="group right">
-            <button class="button button-outline button-light" ng-click="reset()">
-                {{'TODAY'|translate}}
-            </button>
-            <button class="button button-light button-outline button-icon ion-arrow-left-b" ng-click="rewind()"></button>
-            <button class="button button-light button-outline button-icon ion-arrow-right-b" ng-click="forward()"></button>
-        </span>
-        <span class="group">
-            <button class="button button-outline" 
-                    ng-repeat="unit in units track by $index" 
-                    ng-show="$index >= indexDefaultUnit"
-                    ng-disabled="$index == indexDefaultUnit"
-                    ng-class="indexDefaultUnit == $index ? 'button-positive' : 'button-light'"
-                    ng-click="scaleUpTo($index)">
-                {{unit.label| translate}}
-            </button>
-        </span>
+        <button class="button button-outline" 
+                ng-repeat="unit in units track by $index" 
+                ng-show="$index >= indexDefaultUnit"
+                ng-disabled="$index == indexDefaultUnit"
+                ng-class="indexDefaultUnit == $index ? 'button-positive' : 'button-light'"
+                ng-click="scaleUpTo($index)">
+            {{unit.label| translate}}
+        </button>
     </div>
 </div>
