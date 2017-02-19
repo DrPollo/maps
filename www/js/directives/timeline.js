@@ -42,12 +42,13 @@ angular.module('firstlife.timeline',[])
             // 2: settimana del mese
             // 3: giorno del mese
             // 4: mese dell'anno
-            $scope.defaultUnit = 0;
+            $scope.defaultUnit = 3;
             $scope.indexDefaultUnit = $scope.defaultUnit; //mi segno l'indice
-            $scope.units = [{key:"hour",label:'HOUR_BUTTON'},
-                            {key:"day",label:"DAY_BUTTON"},
-                            {key:"date",label:"DATE_BUTTON"},
-                            {key:"year",label:"YEAR_BUTTON"}]; //unità di misura delle timeline
+            $scope.units = [
+                {key:"year",label:"YEAR_BUTTON"},
+                {key:"date",label:"DATE_BUTTON"},
+                {key:"day",label:"DAY_BUTTON"},
+                {key:"hour",label:'HOUR_BUTTON'}]; //unità di misura delle timeline
 
             var defaultUnit = $scope.units[$scope.indexDefaultUnit].key; //unità di misura usata in partenza
 
@@ -82,8 +83,9 @@ angular.module('firstlife.timeline',[])
             $scope.scaleUp = function(){
                 // se non ho raggiunto la massima
                 // salgo di una unita'
-                if($scope.indexDefaultUnit < $scope.units.length-1){
-                    $scope.indexDefaultUnit++;
+                $log.debug('scaleUp', $scope.indexDefaultUnit)
+                if($scope.indexDefaultUnit > 0){
+                    $scope.indexDefaultUnit--;
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -93,11 +95,11 @@ angular.module('firstlife.timeline',[])
             $scope.scaleDown = function(slot){
                 // se non ho raggiunto la minima
                 // scalo di una scala
-                if($scope.indexDefaultUnit > 0){
+                if($scope.indexDefaultUnit < $scope.units.length-1){
                     //$log.debug('scale down start ',slot.interval.start().format('DD/MM/YYYY'),' end ',slot.interval.end().format('DD/MM/YYYY'));
                     $scope.moment = angular.copy(slot.interval.start());
                     //$log.debug('scale down moment',$scope.moment);
-                    $scope.indexDefaultUnit--;
+                    $scope.indexDefaultUnit++;
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -126,12 +128,12 @@ angular.module('firstlife.timeline',[])
             // sali alla scala
             $scope.scaleUpTo = function(index){
                 // imposto l'indice
-                if(index < 0 || index >= $scope.units.length || index < $scope.indexDefaultUnit)
+                if(index < 0 || index >= $scope.units.length || index > $scope.indexDefaultUnit)
                     return false;
                 if(index == $scope.indexDefaultUnit)
                     return true;
 
-                if(index > $scope.indexDefaultUnit){
+                if(index < $scope.indexDefaultUnit){
                     $scope.indexDefaultUnit = index;
                     // ricalcolo il buffer
                     initBuffer();

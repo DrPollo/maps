@@ -7,12 +7,24 @@ timeline{
     width: 100%;
     #time-controls{
         position:absolute;
-        left:10px;
+
         bottom:76px;
         display: inline-block;
+    }
+    #time-controls.mobile{
+        left:6px;
+        button {
+            border: 0px solid;
+            min-width: 35px;
+            min-height: 35px;
+            margin: 0px;
+        }
+    }
+    #time-controls.nomobile{
         background: #fff;
         border-radius: 4px;
         box-shadow:0 1px 5px rgba(0,0,0,0.65);
+        left:10px;
         .reset:before{
             font-weight: bold;
         }
@@ -125,12 +137,13 @@ timeline{
             .divider-label{
                 position: absolute;
                 top: 0px;
+                z-index:1;
                 overflow: hidden;
                 width: 100%;
                 padding: 0px 4px;
                 text-transform:capitalize;
-                
             }
+
             .label{
                 //                box-shadow: 0px 0px 3px #666;
                 //                border-radius:12px 12px 0px 0px;
@@ -143,23 +156,22 @@ timeline{
                 text-transform:capitalize;
             }
         }
-       
+
         .repeated-item:nth-child(even){
             background: #f3f3f3;
-            .label{
-
-            }
+            border-bottom:3px solid #f3f3f3;
         }
         .repeated-item:nth-child(odd){
             background: #fafafa;
-            .label{
-            }
+            border-bottom:3px solid #fafafa;
         }
         .repeated-item:hover{
-            background: white;
+            //            background: white;
+            border-bottom:3px solid $positive !important;
+            cursor: pointer;
         }
         .repeated-item:last-child{
-            border-width: 0px;
+            border-left: 0px solid;
         }
         .repeated-item:hover,.repeated-item:focus,.repeated-item:active{
             .entities{
@@ -171,14 +183,11 @@ timeline{
 
             }
         }
-        .noclick{
-            background: #fafafa !important;
-            cursor: inherit;
-        }
         .current,.current:hover{
-            background:$positive !important;
-            color: white;
+            //            background:$positive !important;
+            //            color: white;
             cursor: inherit;
+            border-bottom:3px solid $positive !important;
             .label{
 
             }
@@ -187,6 +196,14 @@ timeline{
                 color:$positive;
             }
 
+        }
+        .noclick{
+            background: #fafafa !important;
+            cursor: inherit !important;
+            border-bottom:3px solid white !important;
+        }
+        .noclick:hover {
+            border-bottom:3px solid white !important;
         }
     }
 }

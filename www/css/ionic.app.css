@@ -14959,15 +14959,23 @@ timeline {
   width: 100%; }
   timeline #time-controls {
     position: absolute;
-    left: 10px;
     bottom: 76px;
-    display: inline-block;
+    display: inline-block; }
+  timeline #time-controls.mobile {
+    left: 6px; }
+    timeline #time-controls.mobile button {
+      border: 0px solid;
+      min-width: 35px;
+      min-height: 35px;
+      margin: 0px; }
+  timeline #time-controls.nomobile {
     background: #fff;
     border-radius: 4px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
-    timeline #time-controls .reset:before {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    left: 10px; }
+    timeline #time-controls.nomobile .reset:before {
       font-weight: bold; }
-    timeline #time-controls button.time-control {
+    timeline #time-controls.nomobile button.time-control {
       min-height: auto;
       height: 26px;
       width: 26px;
@@ -14975,13 +14983,13 @@ timeline {
       margin: 0px 0 0 -4px;
       border-left: 1px #ccc solid;
       display: inline-block; }
-    timeline #time-controls button.time-control:hover {
+    timeline #time-controls.nomobile button.time-control:hover {
       background: #f1f1f1; }
-    timeline #time-controls button.time-control:first-child {
+    timeline #time-controls.nomobile button.time-control:first-child {
       border-left: 0px solid;
       margin: 0px;
       border-radius: 4px 0px 0px 4px; }
-    timeline #time-controls button.time-control:last-child {
+    timeline #time-controls.nomobile button.time-control:last-child {
       border-radius: 0px 4px 4px 0px; }
   timeline #buttons {
     position: relative;
@@ -15053,6 +15061,7 @@ timeline {
       timeline #timeline .repeated-item .divider-label {
         position: absolute;
         top: 0px;
+        z-index: 1;
         overflow: hidden;
         width: 100%;
         padding: 0px 4px;
@@ -15065,25 +15074,30 @@ timeline {
         display: block;
         text-transform: capitalize; }
     timeline #timeline .repeated-item:nth-child(even) {
-      background: #f3f3f3; }
+      background: #f3f3f3;
+      border-bottom: 3px solid #f3f3f3; }
     timeline #timeline .repeated-item:nth-child(odd) {
-      background: #fafafa; }
+      background: #fafafa;
+      border-bottom: 3px solid #fafafa; }
     timeline #timeline .repeated-item:hover {
-      background: white; }
+      border-bottom: 3px solid #FC4A00 !important;
+      cursor: pointer; }
     timeline #timeline .repeated-item:last-child {
-      border-width: 0px; }
+      border-left: 0px solid; }
     timeline #timeline .repeated-item:hover .entities span, timeline #timeline .repeated-item:focus .entities span, timeline #timeline .repeated-item:active .entities span {
       opacity: 0.6; }
-    timeline #timeline .noclick {
-      background: #fafafa !important;
-      cursor: inherit; }
     timeline #timeline .current, timeline #timeline .current:hover {
-      background: #FC4A00 !important;
-      color: white;
-      cursor: inherit; }
+      cursor: inherit;
+      border-bottom: 3px solid #FC4A00 !important; }
       timeline #timeline .current .badge, timeline #timeline .current:hover .badge {
         background: white;
         color: #FC4A00; }
+    timeline #timeline .noclick {
+      background: #fafafa !important;
+      cursor: inherit !important;
+      border-bottom: 3px solid white !important; }
+    timeline #timeline .noclick:hover {
+      border-bottom: 3px solid white !important; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }
