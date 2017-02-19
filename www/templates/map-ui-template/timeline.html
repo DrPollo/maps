@@ -27,11 +27,11 @@
     <div id="buttons">
         <button class="button button-outline" 
                 ng-repeat="unit in units track by $index" 
-                ng-show="$index >= indexDefaultUnit"
+                
                 ng-disabled="$index == indexDefaultUnit"
                 ng-class="indexDefaultUnit == $index ? 'button-positive' : 'button-light'"
                 ng-click="scaleUpTo($index)">
-            {{unit.label| translate}}
+            <span ng-show="$index >= indexDefaultUnit">{{unit.label| translate}}</span>
         </button>
     </div>
 </div>

@@ -125,7 +125,8 @@ timeline{
             .divider-label{
                 position: absolute;
                 top: 0px;
-                z-index: 1;
+                overflow: hidden;
+                width: 100%;
                 padding: 0px 4px;
                 text-transform:capitalize;
                 

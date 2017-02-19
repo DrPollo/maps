@@ -20,7 +20,7 @@ angular.module('firstlife.timeline',[])
                     if(!angular.equals($scope.data,args.list)){
                         $scope.data = angular.copy(args.list);
                         $log.debug("timeline, timeline.refresh !");
-                        scanData(args.list);
+//                        scanData(args.list);
                     }
                 }
             });
