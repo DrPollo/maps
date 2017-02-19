@@ -214,7 +214,7 @@ angular.module('firstlife.controllers')
                         // posiziono la mappa se ci solo le coordinate, 
                         // altrimenti si lascia il centro della mappa 
 
-                        if($stateParams.entity > 0)
+                        if($stateParams.entity)
                             clickMarker($stateParams.entity);
                         else // centro la mappa sullo stato corrente
                             locate($stateParams);
