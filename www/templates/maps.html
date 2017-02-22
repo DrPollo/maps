@@ -3,7 +3,9 @@
         <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ></navbar>
         <div id="headerControllers">
             <div id="omnibox">
-                <button ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
+                <button id="menu-switch" ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
+                <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+<!--
                 <span class="separatore"></span>
                 <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showSearchBox()"></button>
                 <span class="separatore"></span>
@@ -11,10 +13,11 @@
                 <span class="separatore"></span>
                 <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
                 <span class="separatore"></span>
+-->
                 <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
-                <user-handler check="isLoggedIn"></user-handler>
+<!--                <user-handler check="isLoggedIn"></user-handler>-->
             </div>
-            <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+            <search-bar></search-bar>
             <search-cards></search-cards>
         </div>
     </div>
@@ -48,6 +51,20 @@
     <div id="bottom-bar" ng-if="!viewer">
         <!-- action buttons -->
         <div id="map-action-menu">
+            <div class="flex-container flex-container-style fixed-height">
+                <div class="flex-item">
+                    <button class="button button-float button-float-small" ng-click="showSearchBox()">
+                        <i class="icon ion-android-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-container flex-container-style fixed-height">
+                <div class="flex-item">
+                    <button class="button button-float button-float-small  " ng-click="showMFilterCat()">
+                        <i class="icon ion-android-checkmark-circle"></i>
+                    </button>
+                </div>
+            </div>
             <div class="flex-container flex-container-style fixed-height">
                 <div class="flex-item">
                     <button class="button button-float button-float-small" ng-click="showWall()">

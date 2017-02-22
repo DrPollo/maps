@@ -46,8 +46,10 @@
     }
     #mapHeader{
         position: relative;
-        top: 0px;
-        left: 0px;
+        display: block;
+        max-width: 322px;
+        top: 8px;
+        left: 8px;
         z-index: 12;
 
         #sideMenuToggler, #floating-logo, #floating-search-bar, #omnibox{
@@ -67,81 +69,26 @@
             border-radius: 0px;
             box-shadow: 1px 1px 3px #666;
         }
-        #typeFilter{
-            position: relative;
-            z-index: 0;
-            top:-6px;
-            button{
-                height: auto;
-                top:4px;
-                min-height: 36px;
-                box-shadow: 0px 1px 1px #666;
-                border-radius: 0 0 10px 10px;
-                -o-border-radius: 0 0 10px 10px;
-                -moz-border-radius: 0 0 10px 10px;
-                -webkit-border-radius: 0 0 10px 10px;
 
-            }
-            .button.activated, .button.active {
-                border:0px;
-            }
-            button.active:hover, button.active:active{
-                //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
-                top:6px;
-            }
-            button.inactive:hover, button.inactive:active{
-                //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
-                top:3px;
-            }
-            button.active:focus{
-                box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
-            }
-            button.inactive:focus{
-                box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
-            }
-            button.inactive{
-                height:36px;
-                top:0px;
-            }
-            button.active{
-                min-height:36px;
-                top:3px;
-            }
-            button.disabled{
-                height:36px;
-                top:0px;
-                opacity: 1;
-            }
-            button.disabled:hover, button.disabled:focus, button.disabled:active{
-                box-shadow:0px 1px 1px #666;
-                top:0px;
-            }
-        }
         #headerControllers{
             position: relative;
-            top: 8px;
-            left: 8px;
+            width :100%;
             #omnibox{
-                //min-width: 350px;
-                box-shadow: 1px 1px 3px #666;
-                background: #fff;
-                display: inline-flex;
+                display: flex;
+                width: 100%;
                 position: relative;
                 z-index: 1;
-                #barlogo{
-                    height: 40px;
-                    padding: 0px 0px 4px;
-                    margin-left: 4px;
-                }
-                .separatore{
-                    height: 48px;
-                    border-left: 1px solid #ccc;
+                #menu-switch{
+                    background: #fff;
+
                 }
                 button {
                     min-height: 48px;
                     height: 48px;
-                    width: 51px;
+                    min-width: 48px;    
+                    width: 48px;    
                     position: relative;
+                    box-shadow: 1px 1px 3px #666;
                     .badge{
                         position:absolute;
                         top:8px;
@@ -160,7 +107,45 @@
                 button:before{
                     font-size: 1.2em;
                 }
-
+                #typeFilter{
+                    position: relative;
+                    z-index: 0;
+                    margin-left: 6px;
+                    button{
+                        margin-right: 6px;
+                        background: #f1f1f1;
+//                        border-radius: 50px;
+                    }
+                    button:last-child{
+                        margin-right:0px;
+                    }
+                    .button.activated, .button.active {
+                        border:0px;
+                    }
+                    button.active:hover, button.active:active{
+                        //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+                    }
+                    button.inactive:hover, button.inactive:active{
+                        //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+                    }
+                    button.active:focus, button.active:hover, button.active:active{
+                        box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+                    }
+                    button.inactive:focus{
+                        box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+                    }
+                    button.inactive{
+                    }
+                    button.active{
+                    }
+                    button.disabled{
+                        opacity: 1;
+                    }
+                    button.disabled:hover, button.disabled:focus, button.disabled:active{
+                        box-shadow:0px 1px 1px #666;
+                        top:0px;
+                    }
+                }
                 * {
                     display: inline-block;
                     margin: 0px;
@@ -451,6 +436,7 @@
         font-weight: 700;
     }
 }
+
 
 @-webkit-keyframes glow {
     from { -webkit-transform: rotate(-45deg) scale(1); }

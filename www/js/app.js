@@ -170,7 +170,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGIN_REQUIRED:"Accesso necessario",
         LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
-        SEARCH_HINTS:'Cerca un indizzo, un luogo o una parola chiave...',
+        SEARCH_HINTS:'Cerca un indizzo o una parola chiave...',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
         BAD_REQUEST:"Errore! Contattare l'helpdesk",
@@ -775,7 +775,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     "id": "589dbba06685502f37156662"
                 }
             };
-            $localStorage[myConfig.authentication.token_mem_key] = devToken;
+            if(false)$localStorage[myConfig.authentication.token_mem_key] = devToken;
             return {
                 request: function(config) {
                     // inject del token nell'header se esiste
@@ -783,7 +783,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     //                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
                     console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
                     // se il token esiste lo setto
-                    if (token)  {
+                    if (token && config.method != 'GET')  {
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }

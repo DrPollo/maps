@@ -32,13 +32,13 @@
             "default_background" : "img/fondo-walktrough.jpg", 
             "logo_partners" : [],
             "colors": ["#FC4A00",
-                       "#f44336","#88BA5C","#FFB310","#823256","#3f7f91",
+                       "#f44336","#823256","#FFB310","#88BA5C","#3f7f91",
                        "#FF7027",
                        "#800000","#b30000", "#E60000", "#E63900", "#FF8000", "#FF7027", "#DD312A", "#f3a46a", "#FF6666", "#ef9a9a", "#c64028","#a31c1c",
                        "#c64028",
                        "#790f2d","#a30f2d","#ee4466","#dc143c","#f48aa0",
                        "#11a265", "#0a5c3a","#11a265","#5deeb2","#18c291",
-                        "#00e676",
+                       "#00e676",
                        "#00c853","#00e676",
                        "#96ca68",
                        "#007a27","#92d395","#689f38","#388e3c","#3e5e21","#7bbd42","#49b64e","#56842e","#96ca68",
@@ -59,7 +59,7 @@
                 {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
             ],
             "landingpage":{
-                "css":"background:radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));",
+                "css":"background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));",
                 "logo":{
                     "url":"img/firstlife-testo.svg",
                     "title":"FirstLife",
@@ -211,7 +211,7 @@
             },
             "list":[
                 {"name":"PLACE_NAME","id":1,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
-                 "show_author":false,
+                 "show_author":false, "shape":"triangle",
                  "properties":{
                      "parent_id":{ "key": "parent_id", "label": "PARENT_PLACE_LABEL", "placeholder":"PARENT_PLACE_PLACEHOLDER", "default":null},
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true},
@@ -225,8 +225,35 @@
                      "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                  }
                 },
-                {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":2,
-                 "show_author":false,
+                {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_COMMENTS","index":2,
+                 "show_author":true, "shape":"diamond",
+                 "properties":{
+                     "comment_of":{ "key": "comment_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
+                     "message_text":{"key":"message_text", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
+                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
+                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
+                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
+                 },"relations":{}
+                },
+                {"name":"POST_NAME","id":4,"icon":"ion-document-text","slug":"article","url":"articles","key":"FL_ARTICLES","index":3,
+                 "show_author":true, "shape":"pentagon",
+                 "properties":{
+                     "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
+                     "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
+                     "text":{"key":"text","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":""},
+                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"advanced":true,"is_editable":true},
+                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
+                 },
+                 "relations":{
+                     "FL_PLACES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                     "FL_EVENTS":{"slug":"location","field":"location","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
+                     "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","bounded":true},
+                     "FL_COMMENTS":{"slug":"comment_of","field":"comment_of","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
+                     "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
+                 }
+                },
+                {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":4,
+                 "show_author":false, "shape":"exagon",
                  "properties":{
                      "thumbnail":{"key":"thumbnail","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
                      "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
@@ -247,35 +274,8 @@
                      "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                  }
                 },
-                {"name":"POST_NAME","id":4,"icon":"ion-document-text","slug":"article","url":"articles","key":"FL_ARTICLES","index":3,
-                 "show_author":true,
-                 "properties":{
-                     "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
-                     "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
-                     "text":{"key":"text","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":""},
-                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"advanced":true,"is_editable":true},
-                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
-                 },
-                 "relations":{
-                     "FL_PLACES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                     "FL_EVENTS":{"slug":"location","field":"location","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
-                     "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","bounded":true},
-                     "FL_COMMENTS":{"slug":"comment_of","field":"comment_of","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
-                     "FL_GROUPS":{"slug":"group_of","field":"group_of","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
-                 }
-                },
-                {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_COMMENTS","index":4,
-                 "show_author":true,
-                 "properties":{
-                     "comment_of":{ "key": "comment_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
-                     "message_text":{"key":"message_text", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
-                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
-                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
-                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
-                 },"relations":{}
-                },
                 {"name":"GROUPS_NAME","id":5,"icon":"ion-person-stalker","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
-                 "show_author":false,
+                 "show_author":false, "shape":"octagon",
                  "properties":{
                      "thumbnail":{"key":"thumbnail","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
                      "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},

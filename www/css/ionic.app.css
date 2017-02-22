@@ -13281,8 +13281,10 @@ ion-side-menu#side-menu {
         font-size: 1em; }
   .maps-view #mapHeader {
     position: relative;
-    top: 0px;
-    left: 0px;
+    display: block;
+    max-width: 322px;
+    top: 8px;
+    left: 8px;
     z-index: 12; }
     .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
@@ -13297,64 +13299,23 @@ ion-side-menu#side-menu {
       background-color: white;
       border-radius: 0px;
       box-shadow: 1px 1px 3px #666; }
-    .maps-view #mapHeader #typeFilter {
-      position: relative;
-      z-index: 0;
-      top: -6px; }
-      .maps-view #mapHeader #typeFilter button {
-        height: auto;
-        top: 4px;
-        min-height: 36px;
-        box-shadow: 0px 1px 1px #666;
-        border-radius: 0 0 10px 10px;
-        -o-border-radius: 0 0 10px 10px;
-        -moz-border-radius: 0 0 10px 10px;
-        -webkit-border-radius: 0 0 10px 10px; }
-      .maps-view #mapHeader #typeFilter .button.activated, .maps-view #mapHeader #typeFilter .button.active {
-        border: 0px; }
-      .maps-view #mapHeader #typeFilter button.active:hover, .maps-view #mapHeader #typeFilter button.active:active {
-        top: 6px; }
-      .maps-view #mapHeader #typeFilter button.inactive:hover, .maps-view #mapHeader #typeFilter button.inactive:active {
-        top: 3px; }
-      .maps-view #mapHeader #typeFilter button.active:focus {
-        box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #fafafa; }
-      .maps-view #mapHeader #typeFilter button.inactive:focus {
-        box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #afafaf; }
-      .maps-view #mapHeader #typeFilter button.inactive {
-        height: 36px;
-        top: 0px; }
-      .maps-view #mapHeader #typeFilter button.active {
-        min-height: 36px;
-        top: 3px; }
-      .maps-view #mapHeader #typeFilter button.disabled {
-        height: 36px;
-        top: 0px;
-        opacity: 1; }
-      .maps-view #mapHeader #typeFilter button.disabled:hover, .maps-view #mapHeader #typeFilter button.disabled:focus, .maps-view #mapHeader #typeFilter button.disabled:active {
-        box-shadow: 0px 1px 1px #666;
-        top: 0px; }
     .maps-view #mapHeader #headerControllers {
       position: relative;
-      top: 8px;
-      left: 8px; }
+      width: 100%; }
       .maps-view #mapHeader #headerControllers #omnibox {
-        box-shadow: 1px 1px 3px #666;
-        background: #fff;
-        display: inline-flex;
+        display: flex;
+        width: 100%;
         position: relative;
         z-index: 1; }
-        .maps-view #mapHeader #headerControllers #omnibox #barlogo {
-          height: 40px;
-          padding: 0px 0px 4px;
-          margin-left: 4px; }
-        .maps-view #mapHeader #headerControllers #omnibox .separatore {
-          height: 48px;
-          border-left: 1px solid #ccc; }
+        .maps-view #mapHeader #headerControllers #omnibox #menu-switch {
+          background: #fff; }
         .maps-view #mapHeader #headerControllers #omnibox button {
           min-height: 48px;
           height: 48px;
-          width: 51px;
-          position: relative; }
+          min-width: 48px;
+          width: 48px;
+          position: relative;
+          box-shadow: 1px 1px 3px #666; }
           .maps-view #mapHeader #headerControllers #omnibox button .badge {
             position: absolute;
             top: 8px;
@@ -13368,6 +13329,26 @@ ion-side-menu#side-menu {
           box-shadow: inset 0px 0px 10px #FC4A00; }
         .maps-view #mapHeader #headerControllers #omnibox button:before {
           font-size: 1.2em; }
+        .maps-view #mapHeader #headerControllers #omnibox #typeFilter {
+          position: relative;
+          z-index: 0;
+          margin-left: 6px; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button {
+            margin-right: 6px;
+            background: #f1f1f1; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button:last-child {
+            margin-right: 0px; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.activated, .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.active {
+            border: 0px; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.active:focus, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.active:hover, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.active:active {
+            box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #fafafa; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.inactive:focus {
+            box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #afafaf; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled {
+            opacity: 1; }
+          .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:hover, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:focus, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:active {
+            box-shadow: 0px 1px 1px #666;
+            top: 0px; }
         .maps-view #mapHeader #headerControllers #omnibox * {
           display: inline-block;
           margin: 0px;
@@ -15317,3 +15298,50 @@ timeline {
         width: 100%;
         display: block;
         font-size: 8px; }
+
+#searchbar {
+  margin: 10px 0px 0px;
+  display: inline-flex;
+  width: auto;
+  background: #fff;
+  border-radius: 20px;
+  height: 40px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 40px;
+  position: relative;
+  left: 6px; }
+  #searchbar button.button {
+    border-radius: 20px;
+    height: 40px;
+    min-height: 40px;
+    width: 40px;
+    min-width: 40px;
+    padding: 0px; }
+    #searchbar button.button i {
+      padding: 0px; }
+  #searchbar button:focus {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
+  #searchbar input {
+    padding: 5px;
+    line-height: 30px;
+    height: 40px;
+    width: 100%;
+    border-radius: 0px 20px 20px 0px; }
+  #searchbar input:focus {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
+
+#searchresults {
+  margin: 10px 0px 0px;
+  display: inline-flex;
+  width: auto;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 100%; }
+  #searchresults .entry {
+    line-height: 30px;
+    padding: 5px;
+    height: 40px;
+    width: 100%; }
