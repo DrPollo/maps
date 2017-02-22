@@ -24,7 +24,7 @@ angular.module('firstlife.services')
             },
             logout_url: function(){
                 // mando lo user all'auth server per il logout
-                return myConfig.authentication["logout_url"];
+                return myConfig.authentication["logout_url"].concat('&token=',MemoryFactory.get(tokenKey).access_token);
             },
             profile_url: function(){
                 // mando lo user all'auth server per il logout
