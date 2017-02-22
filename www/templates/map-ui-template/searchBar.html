@@ -1,0 +1,11 @@
+<div id="searchbar" class="ease-out-animation" ng-class="visible ? 'full-size' : '' ">
+    <button class="button" ng-click="toggleSearchBar()">
+        <i class="icon " ng-class="visible ? 'ion-android-close' : 'ion-android-search'"></i>
+    </button>
+    <input type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}">
+</div>
+<div id="searchresults" ng-show="locations.length > 0">
+    <div ng-repeat="l in locations track by $index" class="entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
+                {{l.name}}
+    </div>
+</div>
