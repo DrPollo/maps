@@ -6,15 +6,52 @@ angular.module('firstlife.controllers')
         var stateKey = myConfig.authentication.state_name;
         $scope.currentLang = $translate.use();
 
+        
+        $scope.error = null;
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             event.preventDefault();
             
-            if(dev) $log.debug("sono in login, questi i parametri ",toState);
-
+            // parametri search
+            var params = $location.search();
+            
+            if(dev) $log.debug("sono in LogoutCtrl, questi i parametri ",params);
+            
+            
+            
+            
+            // altrimenti gestisco i casi
+            // 1) missing_client
+            // 2) dberror
+            // 3) missing_token
+            // 4) unknown_client
+            // 5) not_found
+            switch(params.message) {
+                case 'missing_client':
+                    $scope.error = "UNKNOWN_LOGOUT_ERROR";
+                    break;
+                case 'dberror':
+                    $scope.error = "UNKNOWN_LOGOUT_ERROR";
+                    break;
+                case 'missing_token':
+                    $scope.error = "UNKNOWN_LOGOUT_ERROR";
+                    break;
+                case 'unknown_client':
+                    $scope.error = "UNKNOWN_LOGOUT_ERROR";
+                    break;
+                case 'not_found':
+                    $scope.error = "ALREADY_LOGOUT_ERROR";
+                    break;
+                default:
+                    $scope.message = "SUCCESS";
+            }
+            
+            // cancello il token
             AuthService.logout();
-            $state.go('home');
+            // redirect alla landingpage
+            setTimeout(function(){$state.go('home');},2000);
+            
         });
 
         // cambio lingua

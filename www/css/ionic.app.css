@@ -15281,6 +15281,14 @@ timeline {
           text-decoration: none;
           font-weight: 500;
           color: #333; }
+  #landingpage .positive-message {
+    color: #88ba5c;
+    font-style: italic;
+    margin: 40px 0px; }
+  #landingpage .error-message {
+    color: #ef473a;
+    font-style: italic;
+    margin: 40px 0px; }
   #landingpage .footer-content {
     height: 10%;
     margin: 0px;
@@ -15289,7 +15297,8 @@ timeline {
     #landingpage .footer-content span {
       margin: 0 10px;
       display: inline-block;
-      position: relative; }
+      position: relative;
+      color: #f1f1f1; }
       #landingpage .footer-content span img {
         vertical-align: top; }
       #landingpage .footer-content span label {

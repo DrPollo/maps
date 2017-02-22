@@ -18,20 +18,15 @@
         <div class="row main-content">
             <div class="col col-center box">
                 <!--logo, infografica e azioni-->
-                <div class="row responsive-sm central-content">
+                <div class="row responsive-sm central-content ">
                     <div class="col col-center">
-                        logout
-                    </div>
-                    <div class="col col-center alternative-actions">
-                        <h3>
-                            <login></login>
-                        </h3>
-                        <h3>
-                            <registration></registration>
-                        </h3>
+                        <h3>{{'LOGOUT_MESSAGE'|translate}}</h3>
+                        <h4 class="positive-message" ng-if="message">{{message | translate}}</h4>
+                        <h4 class="error-message" ng-if="error">{{error | translate}}</h4>
                     </div>
                 </div>
                 <!--menu superiore-->
+<!--
                 <div class="row upper-menu">
                     <div class="row responsive-sm">
                         <div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">
@@ -40,7 +35,9 @@
                         </div>
                     </div>
                 </div>
+-->
                 <!--menu inferiore-->
+<!--
                 <div class="row lower-menu">
                     <div class="row responsive-sm">
                         <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
@@ -48,6 +45,7 @@
                         </div>
                     </div>
                 </div>
+-->
             </div>
         </div>
         <div class="row footer-content">

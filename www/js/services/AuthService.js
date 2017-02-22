@@ -66,9 +66,7 @@ angular.module('firstlife.services')
                 return (MemoryFactory.get(tokenKey) && MemoryFactory.get(tokenKey).member) ? MemoryFactory.get(tokenKey).member : null;
             },
             logout: function (){
-                var token = MemoryFactory.get(tokenKey);
-                // chiamata a qualcuno per annullare il token corrente
-
+                // cancello il token
                 return MemoryFactory.delete(tokenKey);
             },
             checkPerms: function(source){
