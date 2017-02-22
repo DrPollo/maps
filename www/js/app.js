@@ -775,7 +775,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     "id": "589dbba06685502f37156662"
                 }
             };
-            if(false)$localStorage[myConfig.authentication.token_mem_key] = devToken;
+            $localStorage[myConfig.authentication.token_mem_key] = devToken;
             return {
                 request: function(config) {
                     // inject del token nell'header se esiste
