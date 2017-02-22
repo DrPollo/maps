@@ -47,7 +47,7 @@ angular.module('firstlife.config')
         var auth_server = myConfig.authentication.auth_server;
         myConfig.authentication["auth_base_url"] = url;
         myConfig.authentication["auth_url"] = url.concat("oauth/login").concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id,"&scope=all");
-        myConfig.authentication["logout_url"] = url.concat("logout").concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
+        myConfig.authentication["logout_url"] = url.concat("oauth/logout").concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
         myConfig.authentication["profile_url"] = url.concat("profile").concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
         myConfig.authentication["registration_url"] = url.concat("registration").concat("?redirect_uri=",redirect_uri_auth);
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
