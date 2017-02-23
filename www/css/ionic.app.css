@@ -15319,7 +15319,8 @@ timeline {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
   width: 40px;
   position: relative;
-  left: 6px; }
+  left: 6px;
+  border: 1px solid #ccc; }
   #searchbar button.button {
     border-radius: 20px;
     height: 40px;
@@ -15332,13 +15333,20 @@ timeline {
   #searchbar button:focus {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
   #searchbar input {
-    padding: 5px;
+    padding: 5px 5px 5px 14px;
     line-height: 30px;
     height: 40px;
     width: 100%;
-    border-radius: 0px 20px 20px 0px; }
+    border-radius: 20px; }
   #searchbar input:focus {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
+  #searchbar .fixed-button {
+    position: absolute;
+    right: 40px;
+    top: -1px;
+    background: trasparent; }
+  #searchbar .fixed-button::before {
+    background: white; }
 
 #searchresults {
   margin: 10px 0px 0px;
@@ -15351,6 +15359,25 @@ timeline {
   width: 100%; }
   #searchresults .entry {
     line-height: 30px;
-    padding: 5px;
+    padding: 5px 16px;
     height: 40px;
     width: 100%; }
+
+div.search-tag-card {
+  color: #333;
+  margin: 0px 10px;
+  display: inline-flex;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 0px 0px 16px;
+  position: relative;
+  top: -4px; }
+  div.search-tag-card button.button {
+    height: 40px;
+    width: 40px;
+    min-height: 20px;
+    min-width: 20px; }

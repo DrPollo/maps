@@ -170,7 +170,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGIN_REQUIRED:"Accesso necessario",
         LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
-        SEARCH_HINTS:'Cerca un indizzo o una parola chiave...',
+        SEARCH_HINTS:'Cerca un indizzo o filtra',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
         BAD_REQUEST:"Errore! Contattare l'helpdesk",

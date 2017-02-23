@@ -1,11 +1,21 @@
 <div id="searchbar" class="ease-out-animation" ng-class="visible ? 'full-size' : '' ">
     <button class="button" ng-click="toggleSearchBar()">
-        <i class="icon " ng-class="visible ? 'ion-android-close' : 'ion-android-search'"></i>
+        <i class="icon " ng-class="{ 'ion-android-close': (visible && query.length == 0), 'ion-android-add':(visible && query.length > 0),  'ion-android-search': !visible}" ></i>
     </button>
     <input type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}">
+    <button ng-show="query.length > 0" class="fixed-button button button-icon ion-android-close" ng-click="deleteSearch()"></button>
+    <button class="button" ng-click="search()" ng-disabled="(query.length == 0)">
+        <i class="icon ion-android-search"></i>
+    </button>
 </div>
-<div id="searchresults" ng-show="locations.length > 0">
+<div class="search-tag-card ease-out-animation fade-in" ng-show="card && !visible && (query.length > 0)">
+    {{query}}
+    <button class="button button-clear button-stable" ng-click="deleteSearch()" ng-disabled="(query.length == 0)">
+        <i class="icon ion-android-close" ></i>
+    </button>
+</div>
+<div id="searchresults" ng-show="results" class="ease-out-animation fade-in">
     <div ng-repeat="l in locations track by $index" class="entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
-                {{l.name}}
+        {{l.name}}
     </div>
 </div>

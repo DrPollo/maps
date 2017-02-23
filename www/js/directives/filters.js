@@ -115,7 +115,7 @@ angular.module('firstlife.directives')
             var searchendSetTimeout;
             var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
             var text_limit = 3;
-            
+
             // gestione buffer cache di ricerca
             var buffer_size = 20;
             bufferSearch = new CBuffer(buffer_size);
@@ -124,38 +124,52 @@ angular.module('firstlife.directives')
             };
             scope.visible = false;
             scope.locations = [];
-            
-            
+            scope.query = '';
+            scope.card = false;
+
+            // toggle search bar and delete query
             scope.toggleSearchBar = function (){
-                scope.visible = !scope.visible;
+                // if closing
+                $log.debug('visible?',scope.visible)
+                if(scope.visible){
+                    setTagCard();
+                    scope.visible = false;
+                }else if(!scope.visible && scope.card) {
+                    scope.card = false;
+                    setTimeout(function () {scope.$apply(function () {
+                        scope.visible = true;
+                    })}, 750);
+                }else{
+                    scope.visible = true;
+                }
             }
 
-            // se non mobile faccio l'autosearch
-            if(!scope.isMobile){
-                // listner sul campo input
-                scope.$watch(
-                    function(){ return scope.query; }, 
-                    function(e, old){
-                        if(dev) $log.log("SearchCtrl, old: ",old, " new: ",e);
-                        if(e && old != e && e.length > text_limit){
-                            if (SEARCH_DELAY > 0) {
-                                if (searchendSetTimeout) {
-                                    $log.debug("clearTimeout");
-                                    clearTimeout(searchendSetTimeout);
-                                }
-                                searchendSetTimeout = setTimeout(
-                                    function(){
-                                        $log.debug("cerco ",scope.query);
-                                        checkQuery(e);
-                                    }, SEARCH_DELAY);
-                            } 
-                            else {
-                                checkQuery(e);
-                            } 
-                        }
-
-                    });
+            // delete query
+            scope.deleteSearch = function (){
+                // clear query
+                scope.query = '';
+                scope.card = false;
             }
+
+            // close the search bar
+            function setTagCard (){
+                // hide results
+                emptyResults();
+                setTimeout(function () {scope.$apply(function () {
+                    scope.card = true;
+                })}, 750);
+            }
+
+            function emptyResults(){
+                scope.results = false;
+                setTimeout(function(){scope.locations = [];},500);
+            }
+
+            // listner sul campo input
+            scope.search = function(){
+                checkQuery(scope.query);
+            }
+
 
             function checkQuery(e){
                 // controlla lo stradario
@@ -163,6 +177,7 @@ angular.module('firstlife.directives')
                     function(response){
                         console.log("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
                         scope.locations = response;
+                        scope.results = true;
                         if(scope.query != '')
                             pushCache(scope.query);
                     },
@@ -173,6 +188,10 @@ angular.module('firstlife.directives')
 
             // aggiunge una ricerca nei buffer di ricerca
             function pushCache(query){
+                if(!query){
+                    return
+                }
+
                 $log.debug('pushCache', query)
                 var entry = angular.copy(query);
                 if(bufferSearch.toArray().indexOf(query) < 0)
