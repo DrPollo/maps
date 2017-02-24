@@ -13335,7 +13335,8 @@ ion-side-menu#side-menu {
           margin-left: 6px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter button {
             margin-right: 6px;
-            background: #f1f1f1; }
+            background: #f1f1f1;
+            border-radius: 50px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter button:last-child {
             margin-right: 0px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.activated, .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.active {
@@ -15110,6 +15111,36 @@ timeline {
 .linear-animation {
   transition: all linear 0.5s; }
 
+.fast-linear-animation.ng-hide-add, .fast-linear-animation.ng-hide-remove {
+  transition: all linear 0.25s; }
+
+.fast-ease-in-animation.ng-hide-add, .fast-ease-in-animation.ng-hide-remove {
+  transition: all ease-in 0.25s; }
+
+.fast-ease-out-animation.ng-hide-add, .fast-ease-out-animation.ng-hide-remove {
+  transition: all ease-out 0.25s; }
+
+.fast-ease-animation.ng-hide-add, .fast-ease-animation.ng-hide-remove {
+  transition: all ease 0.25s; }
+
+.fast-ease-in-out-animation.ng-hide-add, .fast-ease-in-out-animation.ng-hide-remove {
+  transition: all ease-in-out 0.25s; }
+
+.fast-ease-animation {
+  transition: all ease 0.25s; }
+
+.fast-ease-in-animation {
+  transition: all ease-in 0.25s; }
+
+.fast-ease-out-animation {
+  transition: all ease-out 0.25s; }
+
+.fast-ease-in-out-animation {
+  transition: all ease-in-out 0.25s; }
+
+.fast-linear-animation {
+  transition: all linear 0.25s; }
+
 .full-size {
   z-index: 100 !important;
   height: 100% !important;
@@ -15320,18 +15351,20 @@ timeline {
   width: 40px;
   position: relative;
   left: 6px;
-  border: 1px solid #ccc; }
+  border: 0px solid #ccc; }
   #searchbar button.button {
+    border: 0 solid;
+    background: #fff;
     border-radius: 20px;
+    padding: 0px;
     height: 40px;
     min-height: 40px;
     width: 40px;
-    min-width: 40px;
-    padding: 0px; }
+    min-width: 40px; }
     #searchbar button.button i {
       padding: 0px; }
   #searchbar button:focus {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2); }
   #searchbar input {
     padding: 5px 5px 5px 14px;
     line-height: 30px;
@@ -15339,14 +15372,13 @@ timeline {
     width: 100%;
     border-radius: 20px; }
   #searchbar input:focus {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2); }
-  #searchbar .fixed-button {
-    position: absolute;
-    right: 40px;
-    top: -1px;
+    background: #fafafa; }
+  #searchbar button.fixed-button {
     background: trasparent; }
   #searchbar .fixed-button::before {
     background: white; }
+  #searchbar .close:disabled {
+    color: white; }
 
 #searchresults {
   margin: 10px 0px 0px;
@@ -15357,11 +15389,17 @@ timeline {
   overflow: hidden;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
   width: 100%; }
-  #searchresults .entry {
-    line-height: 30px;
-    padding: 5px 16px;
+  #searchresults button.entry {
     height: 40px;
-    width: 100%; }
+    line-height: 40px;
+    min-height: 40px;
+    margin: 0px;
+    color: #333;
+    overflow: hidden; }
+  #searchresults button.entry::before {
+    padding-left: 10px; }
+  #searchresults .entry:focus, #searchresults .entry:hover, #searchresults .entry:active {
+    background: #f0f0f0; }
 
 div.search-tag-card {
   color: #333;

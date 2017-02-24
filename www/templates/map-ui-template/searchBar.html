@@ -1,21 +1,19 @@
-<div id="searchbar" class="ease-out-animation" ng-class="visible ? 'full-size' : '' ">
-    <button class="button" ng-click="toggleSearchBar()">
+<form id="searchbar" class="fast-ease-out-animation" ng-class="visible ? 'full-size' : '' " ng-submit="search()">
+    <button type="button" class="button" ng-click="toggleSearchBar()">
         <i class="icon " ng-class="{ 'ion-android-close': (visible && query.length == 0), 'ion-android-add':(visible && query.length > 0),  'ion-android-search': !visible}" ></i>
     </button>
-    <input type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}">
-    <button ng-show="query.length > 0" class="fixed-button button button-icon ion-android-close" ng-click="deleteSearch()"></button>
-    <button class="button" ng-click="search()" ng-disabled="(query.length == 0)">
-        <i class="icon ion-android-search"></i>
-    </button>
-</div>
-<div class="search-tag-card ease-out-animation fade-in" ng-show="card && !visible && (query.length > 0)">
+    <input if="inputofsearchbar" type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}" focus-on="isOpen">
+    <button type="submit" class="search button fixed-button button-icon ion-android-search" ng-click="search()" ng-disabled="(query.length == 0)"></button>
+    <button type="reset" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
+</form>
+<div class="search-tag-card fast-ease-out-animation fade-in" ng-show="card && !visible && (query.length > 0)">
     {{query}}
     <button class="button button-clear button-stable" ng-click="deleteSearch()" ng-disabled="(query.length == 0)">
         <i class="icon ion-android-close" ></i>
     </button>
 </div>
-<div id="searchresults" ng-show="results" class="ease-out-animation fade-in">
-    <div ng-repeat="l in locations track by $index" class="entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="locate(l.position)">
+<form id="searchresults" ng-show="results" class="fast-ease-out-animation fade-in">
+    <button type="button" ng-repeat="l in locations track by $index" class="button button-icon button-clear button-full entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="clickOnResult(l)">
         {{l.name}}
-    </div>
-</div>
+    </button>
+</form>

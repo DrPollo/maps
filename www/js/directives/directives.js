@@ -1,4 +1,13 @@
 angular.module('firstlife.directives', [])
+    .directive('focusOn', function($timeout) {
+          return function(scope, element, attr) {
+              scope.$on(attr.focusOn, function(e) {
+                  $timeout(function() {
+                    element[0].focus(); 
+                  });
+              });
+           };
+        })
     .directive('navbar',['$http','$log','$compile', function($http,$log,$compile){
         return{
             strict:'EG',

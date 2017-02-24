@@ -29,6 +29,46 @@
 .linear-animation {
     transition: all linear 0.5s;
 }
+
+
+
+
+.fast-linear-animation.ng-hide-add, .fast-linear-animation.ng-hide-remove {
+    transition: all linear 0.25s;
+}
+.fast-ease-in-animation.ng-hide-add, .fast-ease-in-animation.ng-hide-remove {
+    transition: all ease-in 0.25s;
+}
+.fast-ease-out-animation.ng-hide-add, .fast-ease-out-animation.ng-hide-remove {
+    transition: all ease-out 0.25s;
+}
+.fast-ease-animation.ng-hide-add, .fast-ease-animation.ng-hide-remove {
+    transition: all ease 0.25s;
+}
+.fast-ease-in-out-animation.ng-hide-add, .fast-ease-in-out-animation.ng-hide-remove {
+    transition: all ease-in-out 0.25s;
+}
+.fast-ease-animation {
+    transition: all ease 0.25s;
+}
+.fast-ease-in-animation {
+    transition: all ease-in 0.25s;
+}
+.fast-ease-out-animation {
+    transition: all ease-out 0.25s;
+}
+.fast-ease-in-out-animation {
+    transition: all ease-in-out 0.25s;
+}
+.fast-linear-animation {
+    transition: all linear 0.25s;
+}
+
+
+
+
+
+
 .full-size {
     z-index: 100 !important;
     height: 100% !important;

@@ -101,12 +101,14 @@ angular.module('firstlife.directives')
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
         }
     }
-}]).directive('searchBar',['$log','$location','myConfig', 'SearchService', 'CBuffer', function ($log, $location, myConfig, SearchService, CBuffer){
+}]).directive('searchBar',['$log','$location', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $window, myConfig, SearchService, CBuffer){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
-        scope:{},
-        link: function (scope, element) {
+        scope:{
+            locate:'&'
+        },
+        link: function (scope, element, attr) {
             scope.$on('$destroy',function(){delete scope;});
             var dev = myConfig.dev;
             // visualizzazione web o mobile?
@@ -127,6 +129,14 @@ angular.module('firstlife.directives')
             scope.query = '';
             scope.card = false;
 
+            
+            // se perdo il focus
+            element.bind('blur', function (e) {
+                 //do something
+                $log.debug('loosing focus...')
+                
+            });
+            
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
                 // if closing
@@ -138,12 +148,31 @@ angular.module('firstlife.directives')
                     scope.card = false;
                     setTimeout(function () {scope.$apply(function () {
                         scope.visible = true;
+                        focusOnBar()
                     })}, 750);
                 }else{
                     scope.visible = true;
+                    focusOnBar()
                 }
             }
 
+            //focus on the input field
+            function focusOnBar(){
+                scope.$broadcast('isOpen');
+            }
+            
+            // close the bar and result box
+            function closeBar() {
+                scope.visible = false;
+                scope.results = false;
+            }
+            
+            // reset della barra
+            function resetBar(){
+                scope.visible = false;
+                scope.deleteSearch();
+            }
+            
             // delete query
             scope.deleteSearch = function (){
                 // clear query
@@ -197,6 +226,19 @@ angular.module('firstlife.directives')
                 if(bufferSearch.toArray().indexOf(query) < 0)
                     bufferSearch.push(entry);
             }
+            
+            
+            /*
+             * Gestione click su risultato
+             * 
+             */
+            
+            scope.clickOnResult = function (entry){
+                $log.debug('click su risultato',entry, scope.locate, scope.locate(entry.location))
+                scope.locate({'location': entry.position})
+                closeBar();
+            }
+            
         }
     }
 }]);

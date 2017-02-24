@@ -54,14 +54,9 @@ border-radius: 50% !important;
 
 
 .button-float-small {
-    color:#444 !important;
-    border-color:#fbfbfb !important;
-    background: #fafafa !important;
-    min-width: 20px;
-    min-height: 20px;
-    width: 40px;
-    height: 40px;
-    margin: 3px;
+    color:#333 !important;
+    border-color:#fff !important;
+    background: #fff !important;
     padding: 0px 10px;
 }
 
