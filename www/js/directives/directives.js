@@ -3,8 +3,10 @@ angular.module('firstlife.directives', [])
           return function(scope, element, attr) {
               scope.$on(attr.focusOn, function(e) {
                   $timeout(function() {
-                    element[0].focus(); 
-                  });
+                      scope.$apply(function () {
+                        element[0].focus();
+                    })
+                  },250);
               });
            };
         })
