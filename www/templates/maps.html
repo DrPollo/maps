@@ -4,7 +4,8 @@
         <div id="headerControllers">
             <div id="omnibox">
                 <button id="menu-switch" ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
-                <entity-filter toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+                <entity-filter ng-if="!editMode" toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+                <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
 <!--
                 <span class="separatore"></span>
                 <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showSearchBox()"></button>
@@ -17,8 +18,8 @@
                 <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
 <!--                <user-handler check="isLoggedIn"></user-handler>-->
             </div>
-            <search-bar locate="locate(location)"></search-bar>
-            <search-cards></search-cards>
+            <search-bar ng-if="!editMode"></search-bar>
+<!--            <search-cards></search-cards>-->
         </div>
     </div>
 
@@ -51,6 +52,7 @@
     <div id="bottom-bar" ng-if="!viewer">
         <!-- action buttons -->
         <div id="map-action-menu">
+<!--
             <div class="flex-container flex-container-style fixed-height">
                 <div class="flex-item">
                     <button class="button button-float button-float-small" ng-click="showSearchBox()">
@@ -58,6 +60,7 @@
                     </button>
                 </div>
             </div>
+-->
             <div class="flex-container flex-container-style fixed-height">
                 <div class="flex-item">
                     <button class="button button-float button-float-small  " ng-click="showMFilterCat()">

@@ -105,9 +105,7 @@ angular.module('firstlife.directives')
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
-        scope:{
-            locate:'&'
-        },
+        scope:true,
         link: function (scope, element, attr) {
             scope.$on('$destroy',function(){delete scope;});
             var dev = myConfig.dev;
@@ -125,120 +123,165 @@ angular.module('firstlife.directives')
                 //console.log("Buffer overflow: ",data);
             };
             scope.visible = false;
-            scope.locations = [];
             scope.query = '';
             scope.card = false;
 
-            
-            // se perdo il focus
-            element.bind('blur', function (e) {
-                 //do something
-                $log.debug('loosing focus...')
-                
-            });
-            
+
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
                 // if closing
-                $log.debug('visible?',scope.visible)
                 if(scope.visible){
-                    setTagCard();
+                    // chiudo la barra
                     scope.visible = false;
-                }else if(!scope.visible && scope.card) {
+                }else if(!scope.visible && scope.card) { // se la card e' aperta
+                    // search bar nascosta
                     scope.card = false;
+                    // nascondo la card e apro la search bar
                     setTimeout(function () {scope.$apply(function () {
+                        // searchbar visibile
                         scope.visible = true;
-                        focusOnBar()
+                        // segnalo l'apertura della barra nello scope locale
+                        // usata per l'autofocus del campo input di ricerca
+                        scope.$broadcast('isOpen');
                     })}, 750);
                 }else{
+                    // searchbar visibile
                     scope.visible = true;
-                    focusOnBar()
+                    // segnalo l'apertura della barra nello scope locale
+                    // usata per l'autofocus del campo input di ricerca
+                    scope.$broadcast('isOpen');
                 }
+                $log.debug('visible?',scope.visible)
             }
 
-            //focus on the input field
-            function focusOnBar(){
-                scope.$broadcast('isOpen');
+            scope.deleteCard = function(){
+                setTimeout(function () {scope.$apply(function () {
+                    scope.card = false;
+                    $location.search('q', null);
+                })}, 0);
             }
-            
-            // close the bar and result box
-            function closeBar() {
-                scope.visible = false;
-                scope.results = false;
+
+            // check to close
+            scope.checkToClose = function(){
+                if (scope.query.length == 0)
+                    scope.visible = false;
             }
-            
+
             // reset della barra
             function resetBar(){
                 scope.visible = false;
                 scope.deleteSearch();
             }
-            
+
             // delete query
-            scope.deleteSearch = function (){
+            scope.deleteSearch = function(){
                 // clear query
                 scope.query = '';
-                scope.card = false;
             }
 
             // close the search bar
-            function setTagCard (){
-                // hide results
-                emptyResults();
-                setTimeout(function () {scope.$apply(function () {
+            scope.setTagCard = function() {
+                // chiudo la barra
+                scope.visible = false;
+                // filtro
+                setTimeout(function() {scope.$apply(function () {
                     scope.card = true;
-                })}, 750);
-            }
-
-            function emptyResults(){
-                scope.results = false;
-                setTimeout(function(){scope.locations = [];},500);
-            }
-
-            // listner sul campo input
-            scope.search = function(){
-                checkQuery(scope.query);
+                    $location.search('q', scope.query);
+                })}, 300);
             }
 
 
-            function checkQuery(e){
-                // controlla lo stradario
-                SearchService.geocoding(e).then(
-                    function(response){
-                        console.log("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
-                        scope.locations = response;
-                        scope.results = true;
-                        if(scope.query != '')
-                            pushCache(scope.query);
-                    },
-                    function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
-                );
-
-            }
-
-            // aggiunge una ricerca nei buffer di ricerca
-            function pushCache(query){
-                if(!query){
-                    return
-                }
-
-                $log.debug('pushCache', query)
-                var entry = angular.copy(query);
-                if(bufferSearch.toArray().indexOf(query) < 0)
-                    bufferSearch.push(entry);
-            }
-            
-            
-            /*
-             * Gestione click su risultato
-             * 
-             */
-            
-            scope.clickOnResult = function (entry){
-                $log.debug('click su risultato',entry, scope.locate, scope.locate(entry.location))
-                scope.locate({'location': entry.position})
-                closeBar();
-            }
-            
         }
     }
-}]);
+}])
+    .directive('geocodingBar',['$log','$location', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $window, myConfig, SearchService, CBuffer){
+        return {
+            restrinct:'EG',
+            templateUrl:'/templates/map-ui-template/geocodingbar.html',
+            scope:{
+                locate:'&'
+            },
+            link: function (scope, element, attr) {
+                scope.$on('$destroy',function(){delete scope;});
+                var dev = myConfig.dev;
+                // visualizzazione web o mobile?
+                if(!scope.isMobile) scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+
+                var searchendSetTimeout;
+                var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
+                var text_limit = 3;
+
+                // gestione buffer cache di ricerca
+                var buffer_size = 20;
+                bufferSearch = new CBuffer(buffer_size);
+                bufferSearch.overflow = function(data) {
+                    //console.log("Buffer overflow: ",data);
+                };
+                scope.visible = false;
+                scope.locations = [];
+                scope.query = '';
+                scope.card = false;
+
+
+                // se perdo il focus
+                element.bind('blur', function (e) {
+                    //do something
+                    $log.debug('loosing focus...')
+
+                });
+
+                // reset della barra
+                function resetBar(){
+                    scope.deleteSearch();
+                }
+
+                // delete query
+                scope.deleteSearch = function(){
+                    // clear query
+                    scope.query = '';
+                }
+
+                function emptyResults(){
+                    scope.results = false;
+                    setTimeout(function(){scope.locations = [];},500);
+                }
+
+                // listner sul campo input
+                scope.search = function(){
+                    checkQuery(scope.query);
+                }
+
+                scope.clickOnResult = function (entry){
+                    $log.debug('click su risultato',entry, scope.locate, scope.locate(entry.location))
+                    scope.locate({'location': entry.position})
+                }
+
+                function checkQuery(e){
+                    // controlla lo stradario
+                    SearchService.geocoding(e).then(
+                        function(response){
+                            console.log("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
+                            scope.locations = response.slice();
+                            scope.results = true;
+                            if(scope.query != '')
+                                pushCache(scope.query);
+                        },
+                        function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
+                    );
+
+                }
+
+                // aggiunge una ricerca nei buffer di ricerca
+                function pushCache(query){
+                    if(!query){
+                        return
+                    }
+
+                    $log.debug('pushCache', query)
+                    var entry = angular.copy(query);
+                    if(bufferSearch.toArray().indexOf(query) < 0)
+                        bufferSearch.push(entry);
+                }
+            }
+        }
+    }]);

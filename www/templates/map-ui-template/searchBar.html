@@ -1,16 +1,12 @@
-<form id="searchbar" class="fast-ease-out-animation" ng-class="visible ? 'full-size' : '' " ng-submit="search()">
-    <button type="button" class="button" ng-click="toggleSearchBar()">
-        <i class="icon " ng-class="{ 'ion-android-close': (visible && query.length == 0), 'ion-android-add':(visible && query.length > 0),  'ion-android-search': !visible}" ></i>
-    </button>
-    <input if="inputofsearchbar" type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}" focus-on="isOpen">
-    <button type="submit" class="search button fixed-button button-icon ion-android-search" ng-click="search()" ng-disabled="(query.length == 0)"></button>
-    <button type="reset" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
+<form id="searchbar" class="fast-ease-out-animation" ng-class="visible ? 'full-size' : '' " ng-submit="setTagCard()">
+    <button type="button" class="button button-icon ion-funnel" ng-click="toggleSearchBar()"></button>
+    <input id="inputofsearchbar" ng-show="visible" type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}" focus-on="isOpen">
+    <button type="submit" ng-show="visible" class="search button fixed-button button-icon ion-android-search" ng-click="setTagCard()" ng-disabled="(query.length == 0)"></button>
+    <button type="reset" ng-show="visible" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
 </form>
 <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="card && !visible && (query.length > 0)">
-    {{query}}
-    <button class="button button-clear button-stable" ng-click="deleteSearch()" ng-disabled="(query.length == 0)">
-        <i class="icon ion-android-close" ></i>
-    </button>
+    <span class="tag-card-body" ng-click="toggleSearchBar()">{{query}}</span>
+    <button class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteCard()" ng-disabled="(query.length == 0)"></button>
 </div>
 <form id="searchresults" ng-show="results" class="fast-ease-out-animation fade-in">
     <button type="button" ng-repeat="l in locations track by $index" class="button button-icon button-clear button-full entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="clickOnResult(l)">

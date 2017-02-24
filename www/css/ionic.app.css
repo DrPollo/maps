@@ -13350,12 +13350,6 @@ ion-side-menu#side-menu {
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:hover, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:focus, .maps-view #mapHeader #headerControllers #omnibox #typeFilter button.disabled:active {
             box-shadow: 0px 1px 1px #666;
             top: 0px; }
-        .maps-view #mapHeader #headerControllers #omnibox * {
-          display: inline-block;
-          margin: 0px;
-          padding: 0px;
-          max-height: 48px;
-          vertical-align: middle; }
         .maps-view #mapHeader #headerControllers #omnibox #floating-logo img {
           max-height: 35px; }
   .maps-view .center-map-action {
@@ -15350,7 +15344,7 @@ timeline {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
   width: 40px;
   position: relative;
-  left: 6px;
+  left: 3px;
   border: 0px solid #ccc; }
   #searchbar button.button {
     border: 0 solid;
@@ -15371,35 +15365,10 @@ timeline {
     height: 40px;
     width: 100%;
     border-radius: 20px; }
-  #searchbar input:focus {
-    background: #fafafa; }
   #searchbar button.fixed-button {
     background: trasparent; }
   #searchbar .fixed-button::before {
     background: white; }
-  #searchbar .close:disabled {
-    color: white; }
-
-#searchresults {
-  margin: 10px 0px 0px;
-  display: inline-flex;
-  width: auto;
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-  width: 100%; }
-  #searchresults button.entry {
-    height: 40px;
-    line-height: 40px;
-    min-height: 40px;
-    margin: 0px;
-    color: #333;
-    overflow: hidden; }
-  #searchresults button.entry::before {
-    padding-left: 10px; }
-  #searchresults .entry:focus, #searchresults .entry:hover, #searchresults .entry:active {
-    background: #f0f0f0; }
 
 div.search-tag-card {
   color: #333;
@@ -15414,8 +15383,66 @@ div.search-tag-card {
   padding: 0px 0px 0px 16px;
   position: relative;
   top: -4px; }
+  div.search-tag-card .tag-card-body {
+    line-height: 40px;
+    cursor: pointer; }
   div.search-tag-card button.button {
     height: 40px;
     width: 40px;
     min-height: 20px;
     min-width: 20px; }
+
+.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar {
+  max-height: 40px;
+  height: 40px;
+  margin: 4px 0px 4px;
+  border-radius: 0px 4px 4px 0px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar input {
+    min-height: 40px;
+    height: 40px;
+    padding: 4px 12px;
+    display: inline-block;
+    width: 186px; }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar button.button-geocoding {
+    min-height: 40px;
+    height: 40px;
+    min-width: 40px;
+    width: 40px;
+    display: inline-block;
+    box-shadow: none;
+    border: 0px solid;
+    padding: 0px;
+    border-radius: 4px; }
+
+.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults {
+  margin: -4px 0px 0px;
+  display: block;
+  width: auto;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 100%;
+  left: 0px;
+  position: absolute;
+  z-index: -1; }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry {
+    width: 100%;
+    min-width: 100%;
+    height: 40px;
+    line-height: 40px;
+    min-height: 40px;
+    margin: 0px;
+    color: #333;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: none;
+    border-bottom: 1px solid #ccc; }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry:last-children {
+    border-bottom: none; }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry::before {
+    padding-left: 6px; }
+  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:focus, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:hover, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:active {
+    background: #f0f0f0; }

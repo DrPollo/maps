@@ -170,7 +170,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGIN_REQUIRED:"Accesso necessario",
         LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
-        SEARCH_HINTS:'Cerca un indizzo o filtra',
+        GEOLOCATION_HINTS:'Cerca un indizzo',
+        SEARCH_HINTS:'Cerca per parola chiave',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
         BAD_REQUEST:"Errore! Contattare l'helpdesk",
@@ -448,7 +449,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGIN_REQUIRED:"Login reuired",
         LOGIN_REQUIRED_MESSAGE:"Logging in is required to proceed",
         SEACH_NO_RESULTS:'No results...',
-        SEARCH_HINTS:'Search an address, a place or a key word...',
+        GEOLOCATION_HINTS:'Search an address',
+        SEARCH_HINTS:'Search for a key word...',
         FILTER_HINTS:'Filter by name, category or tag...',
         ENTRIES:'entries',
         BAD_REQUEST:"Error! Please contact the helpdesk service",
@@ -724,33 +726,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
-//    .factory('flInterceptor', ['$log', function($log) {  
-//
-//    var flInterceptor = {
-//        response: function(response) {
-//            response.headers = response.headers();
-//            response.status = response.status;
-//            //$log.debug("http response ",response);
-//            if(response.data && response.data.data){
-//                response.data = response.data.data;
-//            }
-//            // bug
-//            if(response.data.group_id){
-//                response.data.id = response.data.group_id;
-//            }
-//            // gestione token
-//
-//
-//            return response;
-//        }
-//    };
-//
-//    return flInterceptor;
-//}])
     .config(['$httpProvider', function($httpProvider) {  
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
             // test test test
-            //        $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+                    $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
             // test test test
 
 

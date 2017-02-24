@@ -97,18 +97,20 @@ angular.module('firstlife.services')
             //$log.debug("SearchService, geocodingDecoder, results: ",results);
             var entries = [];
             //aggiungo i risultati utili
-            for(i = 0; i < results.length; i++){
+            for(var i = 0; i < results.length; i++){
                 // aggiungo se manca e se non ho superato la soglia dei risultati
                 var entry = geocodingEntryParser(results[i],center);
-                //$log.debug("SearchService, geocodingDecoder, check risultato: ",i,results[i],entry);
+//                $log.debug("SearchService, geocodingDecoder, check risultato: ",entry[name]);
                 if(entries.map(function(e){ return e[name]; }).indexOf(entry[name]) < 0){
+                    $log.debug('push',entry)
                     entries.push(entry);
                 } 
+                $log.debug(entries)
             }
             
             // todo sort per distanza crescente
             //entries.sort(function(a,b){if(a.distance <= b.distance) return a; return b;});
-            //$log.debug("SearchService, geocodingDecoder, risultati decodificati: ", entries);
+//            $log.debug("SearchService, geocodingDecoder, risultati decodificati: ", entries);
             return entries;
         }
         
