@@ -1,0 +1,61 @@
+.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar{
+    max-height: 40px;
+    height: 40px;
+    margin: 4px 0px 4px;
+    border-radius: 0px 4px 4px 0px;
+    background: #fff;
+    box-shadow:0 1px 5px rgba(0,0,0,0.65);
+    input {
+        min-height: 40px;
+        height: 40px; 
+        padding: 4px 12px;
+        display: inline-block;
+        width: 186px;
+    }
+    button.button-geocoding {
+        min-height: 40px;
+        height: 40px; 
+        min-width: 40px;
+        width: 40px; 
+        display: inline-block;
+        box-shadow:none;
+        border:0px solid;
+        padding: 0px;
+        border-radius: 4px;
+    }
+}
+.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults{
+    margin:-4px 0px 0px;
+    display: block;
+    width: auto;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow:0 1px 5px rgba(0,0,0,0.65);
+    width: 100%;
+    left: 0px;
+    position: absolute;
+    z-index: -1;
+    button.entry {
+        width: 100%;
+        min-width: 100%;
+        height: 40px;
+        line-height: 40px;
+        min-height: 40px;
+        margin:0px;
+        color:$dark;
+        overflow: hidden;
+        text-align: left;
+        box-shadow: none;
+        border-bottom: 1px solid #ccc;
+    }
+    button.entry:last-children{
+        border-bottom: none;
+    }
+    button.entry::before{
+        padding-left:6px;
+    }
+    .entry:focus, .entry:hover, .entry:active {
+        background: #f0f0f0;
+    }
+}
