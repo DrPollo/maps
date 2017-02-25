@@ -127,6 +127,16 @@ angular.module('firstlife.directives')
             scope.card = false;
 
 
+            // controllo l'esistenza del campo q all'init
+            var params = $location.search();
+            if(params.q){
+                // imposto il campo di ricerca 
+                scope.query = params.q;
+                // imposto la card
+                scope.card = true;
+            }
+
+
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
                 // if closing
@@ -202,33 +212,57 @@ angular.module('firstlife.directives')
                 locate:'&'
             },
             link: function (scope, element, attr) {
+                // pulisco all'uscita
                 scope.$on('$destroy',function(){delete scope;});
+
+
                 var dev = myConfig.dev;
                 // visualizzazione web o mobile?
                 if(!scope.isMobile) scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
+
+
+
+                // gestione buffer cache di ricerca, disabilitata
+                // var buffer_size = 20;
+                // bufferSearch = new CBuffer(buffer_size);
+                // bufferSearch.overflow = function(data) {
+                //console.log("Buffer overflow: ",data);
+                // };
+
+                // listner di ricerca per modalità desktop
+                var limit = myConfig.behaviour.query_limit;
                 var searchendSetTimeout;
                 var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
                 var text_limit = 3;
+                // al cambio della query
+                if(!scope.isMobile){ // se non mobile
+                    scope.$watch('query', function(e, old){
+                        if(e && old != e && e.length > limit){
+                            if (SEARCH_DELAY > 0) {
+                                if (searchendSetTimeout) {
+                                    clearTimeout(searchendSetTimeout);
+                                }
+                                searchendSetTimeout = setTimeout(
+                                    function(){
+                                        $log.debug("cerco ",scope.query);
+                                        checkQuery(e);
+                                    }, SEARCH_DELAY);
+                            } 
+                            else {
+                                checkQuery(e);
+                            } 
+                        }
+                    });
+                }
 
-                // gestione buffer cache di ricerca
-                var buffer_size = 20;
-                bufferSearch = new CBuffer(buffer_size);
-                bufferSearch.overflow = function(data) {
-                    //console.log("Buffer overflow: ",data);
-                };
+
+
+
                 scope.visible = false;
                 scope.locations = [];
                 scope.query = '';
                 scope.card = false;
-
-
-                // se perdo il focus
-                element.bind('blur', function (e) {
-                    //do something
-                    $log.debug('loosing focus...')
-
-                });
 
                 // reset della barra
                 function resetBar(){
@@ -239,6 +273,7 @@ angular.module('firstlife.directives')
                 scope.deleteSearch = function(){
                     // clear query
                     scope.query = '';
+                    scope.locations = [];
                 }
 
                 function emptyResults(){
@@ -251,11 +286,12 @@ angular.module('firstlife.directives')
                     checkQuery(scope.query);
                 }
 
+                // lancio la funzione definita di localizzazione
                 scope.clickOnResult = function (entry){
-                    $log.debug('click su risultato',entry, scope.locate, scope.locate(entry.location))
                     scope.locate({'location': entry.position})
                 }
 
+                // lancio la ricerca
                 function checkQuery(e){
                     // controlla lo stradario
                     SearchService.geocoding(e).then(
@@ -263,8 +299,9 @@ angular.module('firstlife.directives')
                             console.log("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
                             scope.locations = response.slice();
                             scope.results = true;
-                            if(scope.query != '')
-                                pushCache(scope.query);
+                            // buffer di ricerca disabilitato
+                            // if(scope.query != '')
+                            // pushCache(scope.query);
                         },
                         function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
                     );
@@ -282,6 +319,19 @@ angular.module('firstlife.directives')
                     if(bufferSearch.toArray().indexOf(query) < 0)
                         bufferSearch.push(entry);
                 }
+
+
+
+
+
+                // funzione locale di ricerca, alternativa a quella fornita
+                //                scope.locate = function(r){
+                //                    $location.search('q',null);
+                //                    $location.search('lat',r.lat);
+                //                    $location.search('lng',r.lng);
+                //                    $location.search('zoom',myConfig.map.zoom_create);
+                //                }
+
             }
         }
     }]);
