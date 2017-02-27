@@ -35,6 +35,8 @@ angular.module('firstlife.services')
         function initEntityModel(entity_type){
             // recupero l'utente
             var user = AuthService.getUser();
+            
+            $log.debug('initEntityModel', user);
 
             if(self.config.dev)$log.debug("EntityFactory, getDefaults ",entity_type,user);
 
@@ -44,7 +46,7 @@ angular.module('firstlife.services')
             var typeKey = type.key;
             if(self.config.dev)$log.debug("EntityFactory, getDefaults, type ",type);
             // costruisco descrizione di default
-            var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.displayName).concat(" - ").concat(day);
+            var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.username).concat(" - ").concat(day);
             
             // lorem ipsum di dev per i campi testuali principali
             var devContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius dolor non mauris cursus consectetur. Cras eget interdum ipsum, non accumsan ligula. In ultricies fermentum velit in finibus. Fusce euismod posuere nisi id tempor. Aliquam erat volutpat. Ut pulvinar a mauris nec maximus. In volutpat justo ac est convallis, vitae pellentesque orci ultricies.";
@@ -61,7 +63,8 @@ angular.module('firstlife.services')
             
             // regole di default per tutti
             defaults.coordinates = [self.config.map.map_default_lng,self.config.map.map_default_lat];
-            defaults.user = user ? parseInt(user.id) : -1;
+            defaults.zoom_level = self.config.map.zoom_create;
+            defaults.user = user ? user.id : -1;
             defaults.entity_type = typeKey;
             $log.debug('check entity_type', typeKey);
             // regole specifiche per tipi
@@ -139,16 +142,13 @@ angular.module('firstlife.services')
         
         function editPreProcessing(marker){
             var tmp = angular.copy(marker);
-            
+//            $log.debug("preparo per l'edit", marker)
             // fix categorie
             var tmpCats  = [];
             for(var i =0; i < tmp.categories.length; i++){
-                $log.debug("develop ", tmp.categories[i]);  
                 var c = tmp.categories[i];
-                var cats = [];
-                for(var j =0 ; j<c.category_space.categories.length;j++){
-                    cats.push(c.category_space.categories[j].id);
-                }
+                var cats = c.categories.map(function(e){return e.id});
+//                $log.debug("cats?", cats);
                 tmpCats.push({category_space:c.category_space.id, categories:cats});
             }
             tmp.categories = tmpCats;
@@ -157,14 +157,14 @@ angular.module('firstlife.services')
             if(!tmp.valid_from){
                 tmp.valid_from = null;
             }else if(tmp.valid_from){
-                $log.debug('converto data ',tmp.valid_from);
+//                $log.debug('converto data ',tmp.valid_from);
                 tmp.valid_from = new Date(tmp.valid_from);
             }
                 
             if(!tmp.valid_to){
                 tmp.valid_to = null;
             }else if(tmp.valid_to){
-                $log.debug('converto data ',tmp.valid_to);
+//                $log.debug('converto data ',tmp.valid_to);
                 tmp.valid_to = new Date(tmp.valid_to);
             }
             $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              

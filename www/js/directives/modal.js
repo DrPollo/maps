@@ -616,6 +616,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             var subscribers = null;
             if($scope.marker){ 
                 subscribers = notificationFactory.subscribersRx($scope.marker.id);
+                $log.debug('debug modal',$scope.marker)
                 init();
             }
 
@@ -623,8 +624,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 // lista di promise
                 var promises = [];
                 // se e' un gruppo inizializzo con i membri
-                if($scope.marker.entity_type == "FL_GROUPS"){
-                    promises.push(initGroup());
+                if($scope.marker.entity_type === "FL_GROUPS"){
+                    //bug da sistemare promises.push(initGroup());
                 }
                 // aggiungo il recupero dei sottoscrittori
                 promises.push(initSubscribers());
@@ -633,6 +634,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 // quando le promise sono pronte
                 deferred.then(
                     function(){
+                        $log.debug('ok, go to initActions')
                         // init delle azioni
                         initActions();
                     },
@@ -642,9 +644,11 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             // recupero i membri se e' un gruppo
             function initGroup(){
+                $log.debug('init group!')
                 var deferred = $q.defer();
                 groupsFactory.getMembersRx($scope.marker.id).subscribe(
                     function(response){
+                        $log.debug('groupFactory, getMembers: there are members')
                         $scope.users = response;
                         var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
                         if(index > -1){
@@ -661,7 +665,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                         deferred.resolve();
                     },
                     function(response){
-                        $log.log('the user is not a group member!');
+                        $log.debug('groupFactory, getMembers: the user is not a group member!');
                         // giusto per essere sicuro...
                         $scope.member = false;
                         $scope.owner = false;

@@ -128,7 +128,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     })
         .state('app.editor', {
         // aggiunta dinamica di parametri presi dalle relazioni
-        url: '/editor/?lat&lng&id&entity_type&group&'+config.types.relations.list.join('&'),
+        url: '/editor/?lat&lng&zoom_level&id&entity_type&group&'+config.types.relations.list.join('&'),
         views: {
             'menuContent': {
                 templateUrl: 'templates/form/wizard.html',
@@ -729,7 +729,22 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     .config(['$httpProvider', function($httpProvider) {  
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
             // test test test
-                    $localStorage[myConfig.authentication.token_mem_key]  = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
+            var devToken = {
+                "access_token": "8533ad9ea05c2ef5b292d1cf3b908dda01d73536",
+                "token_type": "Bearer",
+                "expiration": "2017-02-18T17:35:52.361Z",
+                "auth_server": "FIRSTLIFE",
+                "member_id": "589dbba06685502f37156662",
+                "member": {
+                    "first_name": "Alessio",
+                    "last_name": "Antonini",
+                    "username": "Alessio Antonini",
+                    "email": "aleyho@gmail.com",
+                    "id": "589dbba06685502f37156662"
+                }
+            };
+            if(true) $localStorage[myConfig.authentication.token_mem_key] = devToken;
+            if(true) $localStorage[myConfig.authentication.identity_mem_key] = devToken.member;
             // test test test
 
 
@@ -741,32 +756,16 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 // workaround per evitare controlli di circolarità delle dipendenze
                 var $http = $injector.get('$http');
                 // chiamata temporizzata
-                setTimeout(function () {
-                    return $http(httpConfig);
-                }, waitBetweenErrors);
+                return $http(httpConfig);
             }
 
-            var devToken = {
-                "access_token": "8533ad9ea05c2ef5b292d1cf3b908dda01d73536",
-                "token_type": "Bearer",
-                "expiration": "2017-02-18T17:35:52.361Z",
-                "auth_server": "FIRSTLIFE",
-                "member_id": "589dbba06685502f37156662",
-                "member": {
-                    "first_name": "Alessio",
-                    "last_name": "Antonini",
-                    "username": "alessio",
-                    "email": "aleyho@gmail.com",
-                    "id": "589dbba06685502f37156662"
-                }
-            };
-            if(false)$localStorage[myConfig.authentication.token_mem_key] = devToken;
+
             return {
                 request: function(config) {
                     // inject del token nell'header se esiste
                     var token = $localStorage[myConfig.authentication.token_mem_key];
                     //                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
-                    console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
+//                    console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
                     // se il token esiste lo setto
                     if (token && config.method != 'GET')  {
                         config.headers.Authorization = 'Bearer ' + token.access_token;
@@ -785,7 +784,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     return response;
                 },
                 responseError: function(rejection) {
-                    $log.debug('check $http error',rejection.status)
+//                    $log.debug('check $http error',rejection.status)
 
                     // gestione del token scaduto
                     if(rejection.status === 401 && rejection.data.token){
@@ -796,7 +795,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     }
 
                     if(rejection.status === 400 || rejection.status === 404){
-                        $log.debug('reject because missing auth_token')
+//                        $log.debug('reject because missing auth_token')
                         retries = 0;
                         return $q.reject(rejection);
                     }
@@ -808,8 +807,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         // aumento il contatore dei tentativi
                         retries ++;
                         // retry
-                        onResponseError(rejection.config);
-                        return $q.reject(rejection);
+                        return onResponseError(rejection.config);
+//                        return $q.reject(rejection);
                     }
                     // reset del contatore dei tentativi
                     retries = 0;

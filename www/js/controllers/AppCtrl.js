@@ -21,8 +21,8 @@ angular.module('firstlife.controllers')
             $scope.user = AuthService.getUser();
             // setup utente se presente
             if($scope.user){
-                $scope.displayName = $scope.user.display_name;
-                $log.debug("Benvenuto", $scope.user.display_name);
+                $scope.displayName = $scope.user.username;
+                $log.debug("Benvenuto", $scope.user.username);
             } else {
                 $scope.username = "Guest";
                 $log.info("Non loggato");

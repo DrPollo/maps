@@ -308,7 +308,7 @@ angular.module('firstlife.controllers')
             function(e, old){
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
-                    if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != parseInt(old.entity)));
+                    if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
 
                     // controllo i parametri di posizione
                     check4Position(e);
@@ -332,9 +332,9 @@ angular.module('firstlife.controllers')
         $scope.filtred = [];
         $scope.$watch("map.markers", function(newVal,oldVal) {
             if($scope.map && $scope.map.markers){
-                if(consoleCheck) console.log("cambio dei Markers: ",$scope.map.markers,$scope.map.markers.length);
+                if(consoleCheck) $log.debug("cambio dei Markers: ",$scope.map.markers,$scope.map.markers.length);
                 $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
-                if(consoleCheck) console.log("cambio dei Markers, nuovi markers filtrati: ",$scope.filtred,$scope.filtred.length);
+                if(consoleCheck) $log.debug("cambio dei Markers, nuovi markers filtrati: ",$scope.filtred,$scope.filtred.length);
             }
         },true);
         // filtro sulle condizioni, se cambiano ricalcolo i marker filtrati
@@ -351,7 +351,7 @@ angular.module('firstlife.controllers')
         },true);
 
         $scope.$watch("query", function(newVal,oldVal) {
-            $log.debug('change query ',newVal);
+//            $log.debug('change query ',newVal);
             if(!angular.equals(newVal,oldVal)){
                 check4search(newVal,oldVal);
             }
@@ -360,7 +360,7 @@ angular.module('firstlife.controllers')
 
         $scope.$on("startEditing",function(event,args){
             $scope.updateEntity = args;
-            $log.debug('check start editing ',args);
+//            $log.debug('check start editing ',args);
             // se il luogo non e' bounded ad una posizione
             if(!args.skip){
                 // centro la mappa sul luogo dei parametri
@@ -525,11 +525,11 @@ angular.module('firstlife.controllers')
         };
 
 
-        //action sheet per creazione place/evento
+        //creazione di una thing
         $scope.showASEdit = function(){
             // se devo aggionare una entita'
             if($scope.updateEntity && $scope.updateEntity.id){
-                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,id:$scope.updateEntity.id,};
+                var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,zoom_level:$scope.map.center.zoom,id:$scope.updateEntity.id,};
                 $state.go('app.editor', params);
                 //$scope.switchEditMode();
                 // back to view
@@ -543,9 +543,9 @@ angular.module('firstlife.controllers')
                 // sovrascrivo lat e lng del parent
                 params.lat = $scope.map.center.lat;
                 params.lng = $scope.map.center.lng;
+                params.zoom_level = $scope.map.center.zoom;
 
                 $state.go('app.editor', params);
-                //$scope.switchEditMode();
                 // back to view
                 changeMode('view');
             }else{
@@ -961,7 +961,7 @@ angular.module('firstlife.controllers')
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
-            }else if(entityId > 0){
+            }else if(entityId){
                 content.title = $filter('translate')('SUCCESS');
                 content.text = $filter('translate')('SAVE_SUCCESS');
                 // aggiungi marker alla mappa
@@ -1377,58 +1377,13 @@ angular.module('firstlife.controllers')
 
 
         function clickToAdd(){
-            var buttons = [];
-            // da ordinare array
-            var types = $filter('orderBy')($scope.config.types.list,'id');
-            for(k in types){
-                var text = '';
-                var entityTranslated = $filter('translate')(types[k].name);
-                text = text.concat('<i class="icon ').concat(types[k].icon).concat('"></i>');
-                text = text.concat(" ").concat(entityTranslated);
-                if(consoleCheck) console.log("test ",entityTranslated);
-                if(consoleCheck) console.log("MapCtrl, creazione dell'action sheet, aggiungo bottone: ",text);
-                buttons.push({text:text , type:types[k].slug, simple_editor:types[k].simple_editor});
-            }
-            var textTranslated = $filter('translate')('CREATION_TEXT');
-            if(consoleCheck) console.log("test ",textTranslated);
-            var hideSheet = $ionicActionSheet.show({
-                titleText: textTranslated,
-                buttons: buttons,
-                cancelText: '<i class="icon ion-ios-arrow-down"></i>',
-                cancel: function() {
-                    if(consoleCheck) console.log('CANCELLED');
+            MapService.getCenter().then(
+                function(center){
+                    var entityDetails = {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null};
+                    $state.go('app.editor', {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null});
                 },
-                buttonClicked: function(index,button) {
-                    if(consoleCheck) console.log('BUTTON CLICKED', index,button);
-
-                    // esco dalla modalita' edit
-                    $scope.switchEditMode();
-                    // chiudo l'actionSheet
-                    hideSheet();
-                    MapService.getCenter().then(
-                        function(center){
-                            var entityDetails = {lat: center.lat, lng:center.lng, id:null, entity_type:button.type};
-                            // switch evento in base al tipo di editor richiesto editor:
-                            // true > normale, false > simple
-                            if(!button.simple_editor){
-                                //$scope.showMWizardPlace();
-                                console.log("MapCtrl, clickToAdd, params ",$scope.map,entityDetails);
-                                $state.go('app.editor', entityDetails); 
-                            }else{
-                                $scope.$broadcast("simpleInsert", entityDetails);
-                            }
-                        },
-                        function(err){console.log("MapCtrl, clickToAdd, MapService.getCenter, error ",err);}
-                    );
-
-
-                    //return index;
-                }
-            });
-            if(consoleCheck) console.log("actionSheet", hideSheet);
-            // serve per il routing, chiudo l'action sheet con il pulsante back
-            $rootScope.actionSheet = hideSheet;
-            $rootScope.actionStatus = true;
+                function(err){console.log("MapCtrl, clickToAdd, MapService.getCenter, error ",err);}
+            );
         };
 
 
@@ -1739,7 +1694,7 @@ angular.module('firstlife.controllers')
                 if(consoleCheck) console.log("trovato parametro entity, devo aprire una modal: ",e.entity);
                 clickMarker(e.entity);
                 //localizzo perche' il marker potrebbe non essere nello scope
-                locate(parseInt(e.entity));
+                locate(e.entity);
                 //}
             }else if(old.entity){
                 // chiudo la modal

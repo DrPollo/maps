@@ -9,6 +9,7 @@
             "auth_server":"fl_auth",
             "auth_server_name":"FIRSTLIFE",
             "token_mem_key":"token",
+            "identity_mem_key":"user",
             "state_name":"oauth_state",
             "auth_base_domain": "secure.firstlife.di.unito.it/",
             "client_id": "eB1GG6Ik",
@@ -29,7 +30,7 @@
             "logo_width" : 160,
             "logo_height" : 160,
             "default_thumb" : "img/thumb.jpg",
-            "default_background" : "img/fondo-walktrough.jpg", 
+            "default_background" : "background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));", 
             "logo_partners" : [],
             "colors": ["#FC4A00",
                        "#f44336","#823256","#FFB310","#88BA5C","#3f7f91",
@@ -153,6 +154,7 @@
                           "user":{ "key": "user", "label":"USER","placeholder":"USER" , "default":-1},
                           "wp_id":{ "key": "id_wp", "required":true, "default":1},
                           "id":{ "key": "id", "default":null},
+                          "zoom_level":{ "key": "zoom_level", "default":null},
                           "level":{"key":"level", "default":0, "label":"LEVEL_LABEL","placeholder":"LEVEL_PLACEHOLDER"}
                       },
                       "actions":[

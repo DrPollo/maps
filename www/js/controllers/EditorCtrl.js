@@ -10,12 +10,15 @@ angular.module('firstlife.controllers')
         _this.form = {};
 
         var dev = false;
-       
 
+        _this.listOfTypes = $filter('orderBy')(myConfig.types.list,'id');
 
         _this.wizard = {};
         _this.wizard.steps = ['Info', 'Category'];
         _this.wizard.step = 0; 
+        // init form di raccolta tipo
+        _this.typeform = {};
+
 
         //init checker controllo date inserite nei datapicker
         _this.valid_from = false;
@@ -24,8 +27,8 @@ angular.module('firstlife.controllers')
         _this.types = _this.config.types;
         _this.categories = myConfig.types.categories;
         if(dev) console.log("categorie in EditorCtrl", _this.categories);
-        
-        
+
+
         _this.currentUser = AuthService.getUser();
         _this.labels = {
             edit: "EDIT",
@@ -66,7 +69,6 @@ angular.module('firstlife.controllers')
 
 
 
-
         /*
          * Listner
          * 1) cambio stato
@@ -96,62 +98,61 @@ angular.module('firstlife.controllers')
 
                 // scelgo se fare update di un marker esistente o crearne uno nuovo
                 // update place: init dataForm con dati del place...
-                if($stateParams.id!= null && $stateParams.id!= ""){
+                $log.debug('update?',($stateParams.id && $stateParams.id!= ""),$stateParams.id)
+                if($stateParams.id && $stateParams.id!= ""){
+                    $scope.chooseType = false;
                     //get place(id)
                     entityFactory.get($stateParams.id, true)
                         .then( function(mark) {
 
                         //todo gestisco la nuova posizione
                         mark.coordinates = [$stateParams.lng,$stateParams.lat];
-                        mark.lat = $stateParams.lat;
-                        mark.lng = $stateParams.lng;
+                        mark.lat = parseFloat($stateParams.lat);
+                        mark.lng = parseFloat($stateParams.lng);
+                        mark.zoom_level = parseInt($stateParams.zoom_level);
                         // init dell'edit
                         setToEdit(mark);
                         //bug datapicker che non modifica la data a cacchio
                         // se la data e' settata allora metto a true il check
                         if(_this.wizard.dataForm.valid_from)
                             _this.valid_from = true
-                        if(_this.wizard.dataForm.valid_to)
-                            _this.valid_to = true
-                        
-                    },function(error) {
+                            if(_this.wizard.dataForm.valid_to)
+                                _this.valid_to = true
+
+                                },function(error) {
                         if(dev) console.log("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error); 
                     });
                 }
                 //create place: init empty dataForm
                 else{
-                    // se il type e' settato
-                    if($stateParams.entity_type){
-                        typeIndex = _this.types.list.map(function(e){return e.slug;}).indexOf($stateParams.entity_type);
-                        type = _this.types.list[typeIndex].key;
-                        //$log.debug('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
-                        _this.wizard.title = _this.labels.create;
-                        _this.wizard.entityLabel = _this.types.list[typeIndex].name;
-                    }
-
-                    //imposto i permessi
-                    _this.checkList = _this.config.types.perms[type];
-                    //$log.debug("EditorCtrl, checkList: ", _this.checkList);
+                    // init del titolo 
+                    _this.wizard.title = _this.labels.create;
                     
-                    // recupero i default per l'init dell'entita'
-                    angular.extend(_this.wizard.dataForm,EntityService.getDefaults($stateParams.entity_type));
-                    //$log.debug("EditCtrl, init form: ",_this.wizard.dataForm);
-                    
-                    //bug datapicker che non modifica la data a cacchio
-                    // se la data e' settata allora metto a true il check
-                    if(_this.wizard.dataForm.valid_from)
-                        _this.valid_from = true
-                    if(_this.wizard.dataForm.valid_to)
-                        _this.valid_to = true
+                    // enables type form
+                    $scope.chooseType = true;
                     
                     // sistemo le coordinate
                     if($stateParams.lng && $stateParams.lng){
                         _this.wizard.dataForm.coordinates = [parseFloat($stateParams.lng),parseFloat($stateParams.lat)];
                     }
+                    // sistemo zoom_level
+                    if($stateParams.zoom_level){
+                        _this.wizard.dataForm.zoom_level = parseInt($stateParams.zoom_level);
+                    }
+                    
 
-                    // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
-                    // controllo che non sia settato una rel tra quelle definite per il tipo
-                    var rels = _this.config.types.relations;
+                    // bug datapicker che non modifica la data a cacchio
+                    // se la data e' settata allora metto a true il check
+                    if(_this.wizard.dataForm.valid_from)
+                        _this.valid_from = true
+                    
+                    if(_this.wizard.dataForm.valid_to)
+                        _this.valid_to = true
+
+
+                            // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
+                            // controllo che non sia settato una rel tra quelle definite per il tipo
+                            var rels = _this.config.types.relations;
                     //$log.debug("EditorCtrl, relazioni da controllare ",_this.config.types.relations,rels.map, rels.list.length," in $stateParams ",$stateParams);
                     for( var i = 0 ; i < rels.list.length ; i++ ){
                         //$log.debug("controllo regola ",i+1,rels[i]);
@@ -166,22 +167,8 @@ angular.module('firstlife.controllers')
                     }
                     // fine gesione relazioni
 
-                    
-                    //fine regole eventi
-
-                    // template timepicker door_time
-                    if(_this.checkList.door_time){
-                        initDoorTime();
-                    }
-                    // template timepicker duration
-                    if(_this.checkList.duration){
-                        initDuration();
-                    }
-                    
                     // fine regole gestione campi speciali
                     $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
-
-
                 }
                 // gestione di stati di arrivo diversi non necessaria
             } else {
@@ -193,6 +180,41 @@ angular.module('firstlife.controllers')
             }
         });
 
+
+        
+        $scope.$watch(function(){return _this.wizard.dataForm.entity_type},function(e,old){
+            if(e && e != old){
+                initEntity(e);
+            }
+        })
+
+        function initEntity(entity_type){
+            $log.debug('entity_type',entity_type,_this.types.list.map(function(e){return e.key;}))
+            typeIndex = _this.types.list.map(function(e){return e.key;}).indexOf(entity_type);
+            type = _this.types.list[typeIndex].key;
+            //$log.debug('EditorCtrl, creazione marker, tipo: ', type, " con indice: ", typeIndex );
+            _this.wizard.title = _this.labels.create;
+            _this.wizard.entityLabel = _this.types.list[typeIndex].name;
+
+
+            //imposto i permessi
+            _this.checkList = _this.config.types.perms[type];
+            //$log.debug("EditorCtrl, checkList: ", _this.checkList);
+
+            // recupero i default per l'init dell'entita'
+            angular.extend(_this.wizard.dataForm,EntityService.getDefaults(entity_type));
+            //$log.debug("EditCtrl, init form: ",_this.wizard.dataForm);
+
+            
+            // template timepicker door_time
+            if(_this.checkList.door_time){
+                initDoorTime();
+            }
+            // template timepicker duration
+            if(_this.checkList.duration){
+                initDuration();
+            }
+        }
 
 
         // filtro maggiore di per l'editor del place
@@ -320,26 +342,26 @@ angular.module('firstlife.controllers')
             if(dev) console.log("form valido ",_this.wizard.dataForm);
             processData();
         }
-        
+
         // preparo i dati del form per le chiamate al server
         function processData() {
             if(dev) console.log("process data:", _this.wizard.dataForm);
             // apro schermata di loading
             showLoadingScreen($filter('translate')('SAVING_MESSAGE'), _this.wizard.dataForm);
             var dataForServer = _this.wizard.dataForm;
-            
+
             // set del parent id
             if( dataForServer.parent_id != null && dataForServer.parent_id.originalObject != null && dataForServer.parent_id.originalObject.id != null){
                 if(dev) console.log("parent_id normalizzato", dataForServer.parent_id.originalObject.id);
                 dataForServer.parent_id = dataForServer.parent_id.originalObject.id;
             }
-            
-            
-            
+
+
+
             /*
              * Regole dell'editor
              */
-            
+
             //normalizzazz. tags
             for(var el in _this.wizard.dataForm.tags){
                 dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;   
@@ -357,7 +379,7 @@ angular.module('firstlife.controllers')
             // tolgo il titolo
             if(dataForServer.title)
                 delete dataForServer.title;
-            
+
             $log.debug("dataForServer", dataForServer);
             dataForServer = EntityService.processData(dataForServer);
             $log.debug("dataForServer", dataForServer);
@@ -373,17 +395,17 @@ angular.module('firstlife.controllers')
                     //$state.mode = "update";
                     // vado alla mappa e mostro la modal del place
                     $state.go("app.maps",{entity: newplace.id,lat:newplace.lat,lng:newplace.lng,zoom:$stateParams.zoom});
-                    
+
                     return newplace.id;
                 },function(error){
                     //chiudo la schermata di loading
                     hideLoadingScreen();
-                    
+
                     if(dev) console.log("update failed: ", error);
 
                     //$window.history.back();
                     $state.go("app.maps",{lat:$stateParams.lat,lng:$stateParams.lng,zoom:$stateParams.zoom,entity:-1});
-                    
+
                     return -1;
                 });
 
@@ -394,14 +416,14 @@ angular.module('firstlife.controllers')
                     .then(function(newplace){
                     //chiudo la schermata di loading
                     hideLoadingScreen();
-                    
+
                     //$log.debug("creation completed: ", newplace);
                     //$state.mode = "create";
 
                     // vado alla mappa e mostro la modal del place
                     $state.go("app.maps",{entity: newplace.id,lat:newplace.lat,lng:newplace.lng,zoom:$stateParams.zoom});
 
-                    
+
                     return newplace.id;
                 },function(error){
                     //chiudo la schermata di loading
@@ -414,7 +436,7 @@ angular.module('firstlife.controllers')
                         status = -1;
                     }
                     $state.go("app.maps",{entity:status,lat:$stateParams.lat,lng:$stateParams.lng,zoom:$stateParams.zoom});
-                   
+
                     // da testare 
                     return -1;
                 });
@@ -435,7 +457,7 @@ angular.module('firstlife.controllers')
 
         // imposto il form con i dati del marker da modificare
         function setToEdit(data){
-            
+
             var mark = EntityService.preprocessMarker(data);
             // se il type e' settato
             if(mark.entity_type){
@@ -443,7 +465,7 @@ angular.module('firstlife.controllers')
                 type = _this.types.list[typeIndex].key;
                 if(dev) console.log('EditorCtrl, edit marker, tipo: ', type, " con indice: ", typeIndex, " permessi: ", _this.perms[typeIndex]);
             }
-            
+
             //imposto i permessi
             _this.checkList = angular.copy(_this.types.perms[type]);
 
@@ -457,12 +479,12 @@ angular.module('firstlife.controllers')
             if(mark.coordinates){
                 _this.wizard.dataForm.coordinates = [mark.lng,mark.lat];
             }
-//            if(mark.valid_from){
-//                _this.wizard.dataForm.valid_from = new Date(mark.valid_from);
-//            }else{_this.wizard.dataForm.valid_from =null; }
-//            if(mark.valid_to){
-//                _this.wizard.dataForm.valid_to = new Date(mark.valid_to);
-//            }else{_this.wizard.dataForm.valid_to =null; }
+            //            if(mark.valid_from){
+            //                _this.wizard.dataForm.valid_from = new Date(mark.valid_from);
+            //            }else{_this.wizard.dataForm.valid_from =null; }
+            //            if(mark.valid_to){
+            //                _this.wizard.dataForm.valid_to = new Date(mark.valid_to);
+            //            }else{_this.wizard.dataForm.valid_to =null; }
             if(_this.currentUser.id)
                 _this.wizard.dataForm.user = parseInt(_this.currentUser.id);
             if(mark.id_wp)

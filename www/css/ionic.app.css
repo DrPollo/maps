@@ -13595,80 +13595,77 @@ ion-side-menu#side-menu {
   to {
     transform: scale(1.2); } }
 
-#wizardEntity.content input, #wizardEntity.content textarea {
-  width: 100% !important; }
-
-#wizardEntity.content .nav-bar-title h1 {
-  color: white;
-  text-align: left;
-  font-weight: 200;
-  letter-spacing: 1px; }
-
-#wizardEntity.content form .has-error {
-  border-bottom: #ef473a 2px solid; }
-
-#wizardEntity.content form .no-error {
-  border-bottom: #33cd5f 2px solid; }
-
-#wizardEntity.content form .form-errors .form-error {
-  color: #ef473a; }
-
-#wizardEntity.content form #description-textarea {
-  border-left: 0px;
-  border-right: 0px;
-  height: auto; }
-  #wizardEntity.content form #description-textarea textarea {
-    height: auto; }
-
-#wizardEntity.content form #date-form {
-  margin: 0px; }
-  #wizardEntity.content form #date-form label {
-    padding: 8px 16px;
-    border: 0px; }
-
-#wizardEntity.content form .angucomplete-dropdown {
-  position: relative;
-  z-index: 99; }
-
-#wizardEntity.content .autocompletetags {
-  overflow: visible;
-  position: relative;
-  z-index: 9; }
-  #wizardEntity.content .autocompletetags tags-input {
-    min-width: 50%; }
-    #wizardEntity.content .autocompletetags tags-input .tags {
-      box-shadow: none;
-      border: 0px solid; }
-      #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list {
-        background-color: #FC4A00; }
-        #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
-          background: white;
-          color: #FC4A00;
-          border-color: #FC4A00; }
-          #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
-            color: #FC4A00; }
-      #wizardEntity.content .autocompletetags tags-input .tags input.input {
-        padding-left: 0px; }
-    #wizardEntity.content .autocompletetags tags-input .tags.focused {
-      box-shadow: none; }
-
-#wizardEntity.content .thumbnail {
-  padding: 8px 16px;
-  display: block;
-  position: relative; }
-  #wizardEntity.content .thumbnail .remove-thumb {
-    position: absolute;
-    z-index: 1;
-    font-size: 1.4em;
-    left: 16px;
-    top: 8px;
-    background: #FC4A00;
-    text-align: center;
+#wizardEntity.content {
+  background: #fafafa;
+  padding: 6px 16px 40px; }
+  #wizardEntity.content form {
+    margin: 0px auto;
+    max-width: 1024px; }
+  #wizardEntity.content input, #wizardEntity.content textarea {
+    width: 100% !important; }
+  #wizardEntity.content .nav-bar-title h1 {
     color: white;
-    width: 30px;
-    height: 30px;
-    padding-top: 5px;
-    cursor: pointer; }
+    text-align: left;
+    font-weight: 200;
+    letter-spacing: 1px; }
+  #wizardEntity.content form .has-error {
+    border-bottom: #ef473a 2px solid; }
+  #wizardEntity.content form .no-error {
+    border-bottom: #33cd5f 2px solid; }
+  #wizardEntity.content form .form-errors .form-error {
+    color: #ef473a; }
+  #wizardEntity.content form #description-textarea {
+    border-left: 0px;
+    border-right: 0px;
+    height: auto; }
+    #wizardEntity.content form #description-textarea textarea {
+      height: auto; }
+  #wizardEntity.content form #date-form {
+    margin: 0px; }
+    #wizardEntity.content form #date-form label {
+      padding: 8px 16px;
+      border: 0px; }
+  #wizardEntity.content form .angucomplete-dropdown {
+    position: relative;
+    z-index: 99; }
+  #wizardEntity.content .autocompletetags {
+    overflow: visible;
+    position: relative;
+    z-index: 9; }
+    #wizardEntity.content .autocompletetags tags-input {
+      min-width: 50%; }
+      #wizardEntity.content .autocompletetags tags-input .tags {
+        box-shadow: none;
+        border: 0px solid; }
+        #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list {
+          background-color: #FC4A00; }
+          #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item {
+            background: white;
+            color: #FC4A00;
+            border-color: #FC4A00; }
+            #wizardEntity.content .autocompletetags tags-input .tags ul.tag-list li.tag-item .remove-button {
+              color: #FC4A00; }
+        #wizardEntity.content .autocompletetags tags-input .tags input.input {
+          padding-left: 0px; }
+      #wizardEntity.content .autocompletetags tags-input .tags.focused {
+        box-shadow: none; }
+  #wizardEntity.content .thumbnail {
+    padding: 8px 16px;
+    display: block;
+    position: relative; }
+    #wizardEntity.content .thumbnail .remove-thumb {
+      position: absolute;
+      z-index: 1;
+      font-size: 1.4em;
+      left: 16px;
+      top: 8px;
+      background: #FC4A00;
+      text-align: center;
+      color: white;
+      width: 30px;
+      height: 30px;
+      padding-top: 5px;
+      cursor: pointer; }
 
 #user_profile #user_header {
   position: fixed;

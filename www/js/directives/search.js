@@ -79,8 +79,8 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                     case 'users':
                         // cerco il nome utente
                         var user = AuthService.getUser();
-                        if(value == user.id && user.displayName){
-                            card.label2 = user.displayName;
+                        if(value == user.id && user.username){
+                            card.label2 = user.username;
                             $scope.cards[key] = card;
                         }else{ $log.error("utente sconosciuto o mancanza di displayName",value,user); }
                         break;

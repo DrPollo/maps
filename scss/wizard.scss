@@ -1,4 +1,10 @@
 #wizardEntity.content{
+    background: #fafafa;
+    padding:6px 16px 40px;
+    form {
+        margin:0px auto; 
+        max-width: 1024px;
+    }
     input,textarea {width: 100% !important;}
     .nav-bar-title{
         h1{

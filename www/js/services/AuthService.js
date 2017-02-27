@@ -4,6 +4,7 @@ angular.module('firstlife.services')
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
         var tokenKey = myConfig.authentication.token_mem_key;
+        var identityKey = myConfig.authentication.identity_mem_key;
 
 
         //C: (P&(~Q))
@@ -52,7 +53,8 @@ angular.module('firstlife.services')
                     var token = response.data.token;
                     token.member.id = token.member_id;
                     MemoryFactory.save(tokenKey,token);
-                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
+                    MemoryFactory.save(identityKey,token.member);
+//                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
                     deferred.resolve(response);
                 },function(err){
                     deferred.reject(err);
@@ -63,11 +65,13 @@ angular.module('firstlife.services')
                 return (MemoryFactory.get(tokenKey)) ? true : false;
             },
             getUser: function (){
-                return (MemoryFactory.get(tokenKey) && MemoryFactory.get(tokenKey).member) ? MemoryFactory.get(tokenKey).member : null;
+//                $log.debug('getUser',MemoryFactory.get(tokenKey));
+                return MemoryFactory.get(identityKey) ? MemoryFactory.get(identityKey) : null;
             },
             logout: function (){
                 // cancello il token
-                return MemoryFactory.delete(tokenKey);
+                MemoryFactory.delete(tokenKey);
+                return MemoryFactory.delete(tokenKey) && MemoryFactory.delete(identityKey);
             },
             checkPerms: function(source){
 
@@ -75,11 +79,11 @@ angular.module('firstlife.services')
                 for(a in actions){
                     checkPerms[a] = checkUserPowers(a,source,perms,actions);
                 }
-                if(dev) console.log("AuthService, perms ",source,perms,actions,checkPerms);
+//                if(dev) console.log("AuthService, perms ",source,perms,actions,checkPerms);
                 return checkPerms;
             },
             checkPerm: function(action,source){
-                if(dev) console.log("AuthService, perm ",action,source,perms,actions);
+//                if(dev) console.log("AuthService, perm ",action,source,perms,actions);
 
                 return checkUserPowers(action,source,perms,actions);
             }

@@ -84,7 +84,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
             update: function(entity, id) {
-                var urlId = types[entity.entity_type].concat("/").concat(entity.id).concat("/update").concat(format);
+                var urlId = urlThings.concat("/").concat(entity.id).concat(format);
                 var deferred =$q.defer();
                 if(consoleCheck)console.log("UPDATE TO: ", urlId, entity);
                 var feature = markerConverter(entity);
@@ -126,9 +126,10 @@ angular.module('firstlife.factories')
                     headers:{"Content-Type":"application/json"},
                     data:feature
                 };
-                if(consoleCheck)console.log("entityFactory, create: ",angular.toJson(feature));
+                $log.debug("entityFactory, create: ",angular.toJson(feature));
                 $http(req).then(
                     function(response) {
+                        $log.debug("entityFactory, create debug ",response);
                         getMarker(response.data.id, true).then(
                             function(marker){
                                 deferred.resolve(marker);
@@ -312,9 +313,7 @@ angular.module('firstlife.factories')
         // creazione del marker dal geoJSON
         // da cancellare una volta cambiato il formato di visualizzazione
         function markerCreate(entity) {
-            //bugfix 
-            if(Array.isArray(entity.properties))
-                entity.properties = entity.properties[0];
+//            $log.debug('marker creation from ',entity)
 
             // gestione categorie multiple
             var mainCat = entity.properties.categories[0];
@@ -418,7 +417,7 @@ angular.module('firstlife.factories')
 
                 "popupOptions" : {closeOnClick:true},
                 "id": entity.properties.id,
-                "type": parseInt(entity.properties.type),
+//                "type": parseInt(entity.properties.type),
                 "coordinates" : entity.geometry.coordinates,
 
                 lat: parseFloat(entity.geometry.coordinates[1]),
@@ -459,22 +458,8 @@ angular.module('firstlife.factories')
                 valid_to: entity.properties.valid_to,
                 self: urlThings.concat('/').concat(entity.id).concat('.html'),
                 link_url : entity.properties.link_url,
-                display_name: entity.properties.display_name,
-                last_update: entity.properties.last_update,
-                eTimeline : (entity.properties.valid_from || entity.properties.valid_to) ? {
-                    id:entity.properties.id,
-                    icon: icons[mainCat.category_space] ? icons[mainCat.category_space] : icons[0],
-                    lat: parseFloat(entity.geometry.coordinates[1]),
-                    lng: parseFloat(entity.geometry.coordinates[0]),
-                    start: moment(entity.properties.valid_from),
-                    end: moment(entity.properties.valid_to),  // end is optional
-                    interval: moment.interval(moment(entity.properties.valid_from),moment(entity.properties.valid_to)),
-                    'content':  htmlIcon,
-                    "group": groupLabel ? groupLabel : null,
-                    "editable":false,
-                    "type": entity_type,
-                    color : icons[0].color,
-                } : null
+                display_name: entity.properties.updater_display_name,
+                last_update: entity.properties.last_update
             };
             
             return marker;
