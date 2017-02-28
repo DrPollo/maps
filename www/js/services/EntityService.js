@@ -94,7 +94,7 @@ angular.module('firstlife.services')
                     defaults.valid_from = now;
                     defaults.valid_to = now;
                     break;
-                case 'FL_COMMENTS' :
+                case 'FL_NEWS' :
                     defaults.valid_from = now;
                     //defaults.valid_to = now;
                     if(self.config.dev) defaults.message_text = devContent;
@@ -200,7 +200,7 @@ angular.module('firstlife.services')
                     // controlla duration da doortime, le combina con valid_from e valid_to
                     dataForServer = checkEventTime(data,dataForServer);
                     break;
-                case 'FL_COMMENTS':
+                case 'FL_NEWS':
                     // forzo tempo puntuale
                     dataForServer.valid_to = dataForServer.valid_from;
                     // bug collisione con message del popup

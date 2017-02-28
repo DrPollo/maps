@@ -8,6 +8,16 @@
     <span class="tag-card-body" ng-click="toggleSearchBar()">{{query}}</span>
     <button class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteCard()" ng-disabled="(query.length == 0)"></button>
 </div>
+<div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(userCard)">
+    <i class="icon ion-android-person"></i>
+    <span class="tag-card-body">{{userCard}}</span>
+    <button class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
+</div>
+<div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(groupCard)">
+    <i class="icon ion-android-people"></i>
+    <span class="tag-card-body">{{groupCard}}</span>
+    <button class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
+</div>
 <form id="searchresults" ng-show="results" class="fast-ease-out-animation fade-in">
     <button type="button" ng-repeat="l in locations track by $index" class="button button-icon button-clear button-full entry icon-left {{l.icon}}" id="results-box" ng-repeat="l in locations | orderBy:'distance' track by $index" ng-click="clickOnResult(l)">
         {{l.name}}

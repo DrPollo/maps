@@ -10,7 +10,7 @@ angular.module('firstlife.controllers')
 
 
         // entity type di default
-        var default_entity = "FL_COMMENTS";
+        var default_entity = "FL_NEWS";
         var contentKey = "description";
 
 

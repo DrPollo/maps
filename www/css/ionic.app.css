@@ -15327,7 +15327,7 @@ timeline {
         font-size: 8px; }
 
 #searchbar {
-  margin: 10px 0px 0px;
+  margin: 10px 6px 10px 0px;
   display: inline-flex;
   width: auto;
   background: #fff;
@@ -15365,7 +15365,7 @@ timeline {
 
 div.search-tag-card {
   color: #333;
-  margin: 0px 10px;
+  margin: 0px 10px 6px 0px;
   display: inline-flex;
   background: #fff;
   border-radius: 20px;

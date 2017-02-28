@@ -101,7 +101,7 @@ angular.module('firstlife.directives')
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
         }
     }
-}]).directive('searchBar',['$log','$location', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $window, myConfig, SearchService, CBuffer){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', 'AuthService', 'entityFactory', function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer, AuthService, entityFactory){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
@@ -136,6 +136,20 @@ angular.module('firstlife.directives')
                 scope.card = true;
             }
 
+            scope.$watch(
+                function(){return $location.search()},
+                function(e, old){
+                    if( ( e.groups && e.groups != old.groups ) || (e.groups && !scope.groupCard) ){
+                        setGroupCard(e.groups);
+                    }
+                });
+            scope.$watch(
+                function(){return $location.search()},
+                function(e, old){
+                    if( (e.users && e.users != old.users) || (e.users && !scope.userCard) ){
+                        setUserCard(e.users);
+                    }
+                });
 
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
@@ -200,7 +214,36 @@ angular.module('firstlife.directives')
                 })}, 300);
             }
 
-
+            // groupCard
+            function setGroupCard(group) {
+                $log.debug('group?',group);
+                // chiudo la barra
+                entityFactory.get(group).then(
+                    function(results){
+                        $log.debug('get group',results)
+                        scope.groupCard = results.name;
+                    },
+                    function(err){
+                        scope.groupCard = null;
+                        $location.search('groups',null);
+                    }
+                );
+            }
+            scope.deleteGroupCard = function(){
+                scope.groupCard = null;
+                $location.search('groups',null);
+            }
+            // userCard
+            function setUserCard() {
+                // chiudo la barra
+                var user = AuthService.getUser();
+                $log.debug('user??',user)
+                scope.userCard = user.username;
+            }
+            scope.deleteUserCard = function(){
+                scope.userCard = null;
+                $location.search('users',null);
+            }
         }
     }
 }])
@@ -219,9 +262,6 @@ angular.module('firstlife.directives')
                 var dev = myConfig.dev;
                 // visualizzazione web o mobile?
                 if(!scope.isMobile) scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
-
-
-
 
                 // gestione buffer cache di ricerca, disabilitata
                 // var buffer_size = 20;
@@ -255,9 +295,6 @@ angular.module('firstlife.directives')
                         }
                     });
                 }
-
-
-
 
                 scope.visible = false;
                 scope.locations = [];
@@ -313,16 +350,11 @@ angular.module('firstlife.directives')
                     if(!query){
                         return
                     }
-
                     $log.debug('pushCache', query)
                     var entry = angular.copy(query);
                     if(bufferSearch.toArray().indexOf(query) < 0)
                         bufferSearch.push(entry);
                 }
-
-
-
-
 
                 // funzione locale di ricerca, alternativa a quella fornita
                 //                scope.locate = function(r){
