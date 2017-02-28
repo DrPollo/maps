@@ -4,7 +4,7 @@
         <div class="buttons">
             <button ng-if="isLoggedIn && (checkPerms['u']||checkPerms['d'])" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
-        <div class="flex-container flex-container-style fixed-height" style="position:fixed;top:300px;right:16px;">
+        <div class="flex-container flex-container-style fixed-height" style="position:fixed;top:15px;right:40px;">
             <div class="flex-item">
                 <button class="button button-float" style="min-height:50px;min-width:50px;" ng-click="addChildEntity()">
                     <i class="icon ion-plus-round"></i>
@@ -12,9 +12,23 @@
             </div>
         </div>
     </ion-header-bar>
-
     <ion-content scroll-event-interval="10">
         <div class="top-modal">
+            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to || currentType.show_author" class="modal-subheader">
+                <span ng-if="currentType.show_author" class="username modal-subheader-item">
+                    {{infoPlace.marker.display_name}}
+                </span>
+                <span class="valid-time modal-subheader-item">
+                    <i class="icon ion-android-time"></i>
+                    <span ng-if="infoPlace.marker.valid_from">
+                        {{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'(HH:mm) dd/MM/yyyy'}}
+                    </span>
+                    <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
+                    <span ng-if="infoPlace.marker.valid_to">
+                        {{'TO'|translate}} {{infoPlace.marker.valid_to| date:'(HH:mm) dd/MM/yyyy'}}
+                    </span>
+                </span>
+            </div>
             <div ng-if="infoPlace.marker.category || infoPlace.marker.type_info" class="modal-subheader">
                 <span ng-repeat="icon in infoPlace.marker.icons" class="modal-subheader-item">
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
@@ -23,19 +37,15 @@
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
                 <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe"></subscribers-counter>
             </div>
-            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to || currentType.show_author" class="modal-subheader">
-                <span ng-if="currentType.show_author" class="username modal-subheader-item">
-                    {{infoPlace.marker.display_name}}
-                </span>
-                <span class="valid-time modal-subheader-item">
-                    <i class="icon ion-android-time"></i>
-                    <span ng-if="infoPlace.marker.valid_from">
-                        {{'FROM'|translate}} {{infoPlace.marker.valid_from | date:'dd/MM/yyyy (HH:mm)'}}
+            <div class="tag-list content" ng-if="infoPlace.marker.tags.length > 0" >
+                <span class="tags">
+                    <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.icons[0].color}};color:white;">
+                        <!-- bug da sistemare causato dal modulo tag, stampo l'oggetto -->
+                        <i class="ion-pricetag"></i>
+                        {{isString(tag) ? tag : tag.tag}}
+                        <span></span>
                     </span>
-                    <span ng-if="infoPlace.marker.valid_to && infoPlace.marker.valid_from"> - </span>
-                    <span ng-if="infoPlace.marker.valid_to">
-                        {{'TO'|translate}} {{infoPlace.marker.valid_to| date:'dd/MM/yyyy (HH:mm)'}}
-                    </span>
+
                 </span>
             </div>
             <div ng-if="infoPlace.marker.text" class="content modal-content text-field">
@@ -59,17 +69,6 @@
                     <i class="ion-link"/>
                     <span>{{'PERMALINK'|translate}}</span>
                 </a>
-            </div>
-            <div class="tag-list content" ng-if="infoPlace.marker.tags.length > 0" >
-                <span class="tags">
-                    <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.icons[0].color}};color:white;">
-                        <!-- bug da sistemare causato dal modulo tag, stampo l'oggetto -->
-                        <i class="ion-pricetag"></i>
-                        {{isString(tag) ? tag : tag.tag}}
-                        <span></span>
-                    </span>
-
-                </span>
             </div>
         </div>
 

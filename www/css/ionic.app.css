@@ -59,9 +59,6 @@ input::-ms-input-placeholder, textarea::-ms-input-placeholder {
     max-width: 680px;
     margin: 0px auto !important; } }
 
-.modal-backdrop .modal-backdrop-bg {
-  background-color: transparent !important; }
-
 .modal {
   box-shadow: 1px 1px 3px #666; }
 
@@ -13057,7 +13054,7 @@ ion-side-menu#side-menu {
       font-size: 2em;
       text-align: left;
       letter-spacing: 1px;
-      font-weight: 200; }
+      font-weight: 400; }
     .modal .modal-header h1:first-letter {
       text-transform: uppercase; }
     .modal .modal-header .buttons {
@@ -13072,8 +13069,7 @@ ion-side-menu#side-menu {
   .modal .modal-subheader {
     color: #555;
     padding: 8px 16px;
-    font-size: 18px;
-    font-weight: 200;
+    font-size: 20px;
     border-bottom: 1px solid rgba(221, 221, 221, 0.5); }
     .modal .modal-subheader .modal-subheader-item {
       margin-right: 30px;
