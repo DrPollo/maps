@@ -128,7 +128,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     })
         .state('app.editor', {
         // aggiunta dinamica di parametri presi dalle relazioni
-        url: '/editor/?lat&lng&zoom_level&id&entity_type&group&'+config.types.relations.list.join('&'),
+        url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
         views: {
             'menuContent': {
                 templateUrl: 'templates/form/wizard.html',
@@ -292,7 +292,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         POST_NAME:'Extra',
         GROUPS_NAME:'Gruppo',
         CREATION_TEXT:'Cosa vuoi creare?',
-        URL_LABEL:'Collegamento esterno',
+        URL_LABEL:'Link esterno',
         URL_PLACEHOLDER:'URL esterno, es. http://www...',
         STARTDATE_LABEL:"Data d'inizio",
         STARTDATE_PLACEHOLDER:'Data inizio',

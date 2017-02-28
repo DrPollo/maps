@@ -1,10 +1,18 @@
 <ion-modal-view>
-    <ion-header-bar class="modal-header" >
+    <ion-header-bar class="modal-header" style="position:relative;">
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
             <button ng-if="isLoggedIn && (checkPerms['u']||checkPerms['d'])" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
+        <div class="flex-container flex-container-style fixed-height" style="position:fixed;top:300px;right:16px;">
+            <div class="flex-item">
+                <button class="button button-float" style="min-height:50px;min-width:50px;" ng-click="addChildEntity()">
+                    <i class="icon ion-plus-round"></i>
+                </button>
+            </div>
+        </div>
     </ion-header-bar>
+
     <ion-content scroll-event-interval="10">
         <div class="top-modal">
             <div ng-if="infoPlace.marker.category || infoPlace.marker.type_info" class="modal-subheader">
@@ -64,17 +72,19 @@
                 </span>
             </div>
         </div>
-        
+
         <entity-relations ng-if="infoPlace.marker" marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
-        
+
         <entity-actions ng-if="isLoggedIn && infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>
-        
+
         <members-list id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
-        
-        <relations-actions ng-if="isLoggedIn && infoPlace.marker" relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" ></relations-actions>
-        
+
+        <!--
+<relations-actions ng-if="isLoggedIn && infoPlace.marker" relations="config.types.relations[infoPlace.marker.entity_type]" callback="addChildEntity" label="currentType.name" id="infoPlace.marker.id" ></relations-actions>
+
+-->
         <simple-entity-list ng-if="infoPlace.marker.id" id="infoPlace.marker.id" owner="infoPlace.marker.user" entity-type="infoPlace.marker.type_info.key" logged=isLoggedIn></simple-entity-list>
-        
+
         <loader ng-if="!infoPlace.marker"></loader>
 
         <div ng-if="config.dev"><pre>{{infoPlace.marker | json}}</pre></div>

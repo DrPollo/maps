@@ -99,6 +99,7 @@ angular.module('firstlife.controllers')
                 // scelgo se fare update di un marker esistente o crearne uno nuovo
                 // update place: init dataForm con dati del place...
                 $log.debug('update?',($stateParams.id && $stateParams.id!= ""),$stateParams.id)
+
                 if($stateParams.id && $stateParams.id!= ""){
                     $scope.chooseType = false;
                     //get place(id)
@@ -127,10 +128,10 @@ angular.module('firstlife.controllers')
                 else{
                     // init del titolo 
                     _this.wizard.title = _this.labels.create;
-                    
+
                     // enables type form
                     $scope.chooseType = true;
-                    
+
                     // sistemo le coordinate
                     if($stateParams.lng && $stateParams.lng){
                         _this.wizard.dataForm.coordinates = [parseFloat($stateParams.lng),parseFloat($stateParams.lat)];
@@ -139,33 +140,15 @@ angular.module('firstlife.controllers')
                     if($stateParams.zoom_level){
                         _this.wizard.dataForm.zoom_level = parseInt($stateParams.zoom_level);
                     }
-                    
 
                     // bug datapicker che non modifica la data a cacchio
                     // se la data e' settata allora metto a true il check
-                    if(_this.wizard.dataForm.valid_from)
+                    if(_this.wizard.dataForm.valid_from){
                         _this.valid_from = true
-                    
-                    if(_this.wizard.dataForm.valid_to)
-                        _this.valid_to = true
-
-
-                            // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
-                            // controllo che non sia settato una rel tra quelle definite per il tipo
-                            var rels = _this.config.types.relations;
-                    //$log.debug("EditorCtrl, relazioni da controllare ",_this.config.types.relations,rels.map, rels.list.length," in $stateParams ",$stateParams);
-                    for( var i = 0 ; i < rels.list.length ; i++ ){
-                        //$log.debug("controllo regola ",i+1,rels[i]);
-                        var key = rels.list[i],
-                            field = rels.map[key];
-                        // aggiungo il campo se trovo il parametro nella search
-                        //$log.debug("check parametro ",key," in $stateParams ",$stateParams, " key, e field ",key,field);
-                        if($stateParams[key]){
-                            _this.wizard.dataForm[field] = $stateParams[key];
-                            //$log.debug("Aggiunto il parametro ",field," con valore ",_this.wizard.dataForm[key]);
-                        }
                     }
-                    // fine gesione relazioni
+                    if(_this.wizard.dataForm.valid_to){
+                        _this.valid_to = true
+                    }
 
                     // fine regole gestione campi speciali
                     $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
@@ -181,7 +164,7 @@ angular.module('firstlife.controllers')
         });
 
 
-        
+
         $scope.$watch(function(){return _this.wizard.dataForm.entity_type},function(e,old){
             if(e && e != old){
                 initEntity(e);
@@ -205,7 +188,7 @@ angular.module('firstlife.controllers')
             angular.extend(_this.wizard.dataForm,EntityService.getDefaults(entity_type));
             //$log.debug("EditCtrl, init form: ",_this.wizard.dataForm);
 
-            
+
             // template timepicker door_time
             if(_this.checkList.door_time){
                 initDoorTime();
@@ -214,6 +197,21 @@ angular.module('firstlife.controllers')
             if(_this.checkList.duration){
                 initDuration();
             }
+
+            // gestione relazioni da parametro search nel caso arrivassi da una add in una modal
+            // controllo che non sia settato una rel tra quelle definite per il tipo
+            var parentId = $stateParams.rel;
+            var parentType = $stateParams.parent_type;
+            if(!parentId || !parentType){
+                return
+            }
+            
+            var types = _this.config.types.list;
+            var index = types.map(function(e){return e.key}).indexOf(parentType)
+            var field = types[index].relations[entity_type].field ? types[index].relations[entity_type].field : 'generic_rel';
+            _this.wizard.dataForm[field] = parentId;
+            $log.debug("EditorCtrl, relazione da controllare ",field,_this.wizard.dataForm[field]);
+            // fine gesione relazioni
         }
 
 
