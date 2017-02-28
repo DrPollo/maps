@@ -165,9 +165,11 @@ angular.module('firstlife.controllers')
         $scope.$on("$stateChangeSuccess", function() {
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
-
-            check4embed($location.search());
-            check4search($location.search());
+            var params = $location.search();
+            check4embed(params);
+            check4search(params);
+            check4group(params);
+            check4user(params);
             
             $scope.isLoggedIn = AuthService.isAuth();
             
@@ -266,7 +268,7 @@ angular.module('firstlife.controllers')
         $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
             if(!event.preventMapMoveend){
                 event.preventMapMoveend = true;
-                if(consoleCheck) console.log("Event: moveend...", $scope.map);
+//                $log.debug("Event: moveend...", $scope.map);
                 // recupero i dati del layer
                 if(!$scope.config.map.area.data) getData();
                 // controllo se sono in edit mode
@@ -320,6 +322,10 @@ angular.module('firstlife.controllers')
                     check4embed(e);
                     // controllo il parametro di ricerca q
                     check4search(e,old);
+                    // controllo il filtro per gruppo
+                    check4group(e);
+                    // controllo il filtro per utente
+                    check4user(e);
                 }
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
@@ -748,7 +754,7 @@ angular.module('firstlife.controllers')
             var params = $location.search();
             MapService.getCenter().then(
                 function(center){
-                    if(consoleCheck) console.log("centro della mappa, ",center);
+                    $log.debug("centro della mappa, ",center);
                     // aggiorno i parametri della mappa sono se sono diversi!
                     if(params.lat != center.lat || params.lng != center.lng || params.zoom != center.zoom ){
                         updateSearch(center);
@@ -1725,6 +1731,46 @@ angular.module('firstlife.controllers')
                 setMapMarkers();
             }
         }
+        
+        
+        // groupCard
+        function check4group(e){
+            if(!e || !e.groups){
+                return false;
+            }
+            entityFactory.get(e.groups).then(
+                function(results){
+                    $log.debug('get group',results)
+                    if(results.name){
+                        $scope.groupCard = results.name;
+                    } else {
+                        $scope.groupCard = null;
+                        $location.search('groups',null);
+                    }
+                },
+                function(err){
+                    $scope.groupCard = null;
+                    $location.search('groups',null);
+                }
+            );
+        }
+        $scope.deleteGroupCard = function(){
+            $scope.groupCard = null;
+            $location.search('groups',null);
+        }
+        
+        // userCard
+        function check4user(e){
+            if(!e || !e.users){
+                return false;
+            }
+            $scope.userCard = AuthService.getUser().username;
+        }
+        $scope.deleteUserCard = function(){
+            $scope.userCard = null;
+            $location.search('users',null);
+        }
+        
         
     }]).run(function(MapService, myConfig, $timeout, $rootScope){
 

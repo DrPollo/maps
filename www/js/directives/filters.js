@@ -135,22 +135,6 @@ angular.module('firstlife.directives')
                 // imposto la card
                 scope.card = true;
             }
-
-            scope.$watch(
-                function(){return $location.search()},
-                function(e, old){
-                    if( ( e.groups && e.groups != old.groups ) || (e.groups && !scope.groupCard) ){
-                        setGroupCard(e.groups);
-                    }
-                });
-            scope.$watch(
-                function(){return $location.search()},
-                function(e, old){
-                    if( (e.users && e.users != old.users) || (e.users && !scope.userCard) ){
-                        setUserCard(e.users);
-                    }
-                });
-
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
                 // if closing
@@ -212,37 +196,6 @@ angular.module('firstlife.directives')
                     scope.card = true;
                     $location.search('q', scope.query);
                 })}, 300);
-            }
-
-            // groupCard
-            function setGroupCard(group) {
-                $log.debug('group?',group);
-                // chiudo la barra
-                entityFactory.get(group).then(
-                    function(results){
-                        $log.debug('get group',results)
-                        scope.groupCard = results.name;
-                    },
-                    function(err){
-                        scope.groupCard = null;
-                        $location.search('groups',null);
-                    }
-                );
-            }
-            scope.deleteGroupCard = function(){
-                scope.groupCard = null;
-                $location.search('groups',null);
-            }
-            // userCard
-            function setUserCard() {
-                // chiudo la barra
-                var user = AuthService.getUser();
-                $log.debug('user??',user)
-                scope.userCard = user.username;
-            }
-            scope.deleteUserCard = function(){
-                scope.userCard = null;
-                $location.search('users',null);
             }
         }
     }

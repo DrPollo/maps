@@ -1,8 +1,8 @@
 <ion-view class="maps-view">
-    <div id="mapHeader" ng-if="!viewer">
-        <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ></navbar>
+    <div id="mapHeader">
+        <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ng-if="!viewer"></navbar>
         <div id="headerControllers">
-            <div id="omnibox">
+            <div id="omnibox" ng-if="!viewer">
                 <button id="menu-switch" ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
                 <entity-filter ng-if="!editMode" toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
@@ -19,6 +19,16 @@
 <!--                <user-handler check="isLoggedIn"></user-handler>-->
             </div>
             <search-bar ng-if="!editMode"></search-bar>
+            <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(userCard)">
+                <i class="icon ion-android-person"></i>
+                <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>
+                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
+            </div>
+            <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(groupCard)">
+                <i class="icon ion-android-people"></i>
+                <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
+                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
+            </div>
 <!--            <search-cards></search-cards>-->
         </div>
     </div>
@@ -49,7 +59,7 @@
 
     <!-- barra filtri -->
 
-    <div id="bottom-bar" ng-if="!viewer">
+    <div id="bottom-bar">
         <!-- action buttons -->
         <div id="map-action-menu">
 <!--
@@ -75,7 +85,7 @@
                     </button>
                 </div>
             </div>
-            <div class="flex-container flex-container-style fixed-height">
+            <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item"  ng-if="config.actions.edit_mode" >
                     <button class="button button-float" ng-click="switchEditMode()">
                         <i class="icon ease-animation" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
@@ -83,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div id="timelines" ng-if="config.actions.time_filter">
+        <div id="timelines" ng-if="config.actions.time_filter && !viewer">
             <timeline></timeline>
         </div>
     </div>
