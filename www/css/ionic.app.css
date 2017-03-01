@@ -15264,7 +15264,9 @@ timeline {
       padding: 0px; }
       #landingpage .main-content .box .central-content {
         margin: 0px;
-        padding: 32px 16px; }
+        padding: 60px 16px; }
+        #landingpage .main-content .box .central-content img {
+          max-width: 70%; }
         #landingpage .main-content .box .central-content .message {
           font-size: 2em;
           font-weight: 400; }
@@ -15272,7 +15274,8 @@ timeline {
           margin: 20px 0px 0px; }
           #landingpage .main-content .box .central-content .alternative-actions .button {
             padding: 0px;
-            font-size: 14px; }
+            font-size: 14px;
+            margin: 20px 0px; }
           #landingpage .main-content .box .central-content .alternative-actions .button.disabled, #landingpage .main-content .box .central-content .alternative-actions .button[disabled] {
             opacity: 0.9; }
       #landingpage .main-content .box .upper-menu {

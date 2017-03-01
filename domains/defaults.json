@@ -81,41 +81,41 @@
                     {
                         "name":"Standard di Comunità",
                         "url":"http://firstlife.org/standard-di-comunita",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-comunita.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
                     {
                         "name":"Tutorial ed esempi",
                         "url":"http://tutorials.firstlife.org",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-tutorial.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
                     {
                         "name":"Scopri di più su FirstLife",
                         "url":"http://firstlife.org",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-logo-fl.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
                     {
                         "name":"Community Guidelines",
                         "url":"http://firstlife.org/standard-di-comunita",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-comunita.svg",
                         "alt":"Test",
                         "lang":"en"
                     },
                     {
                         "name":"User Guide & examples",
                         "url":"http://tutorials.firstlife.org",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-tutorial.svg",
                         "alt":"Test",
                         "lang":"en"},
                     {
                         "name":"About FirstLife project",
                         "url":"http://firstlife.org",
-                        "img":"img/firstlife-logo-palla.svg",
+                        "img":"img/icone-landing-page-logo-fl.svg",
                         "alt":"Test",
                         "lang":"en"
                     }
@@ -364,7 +364,7 @@
             }
         },
         "map":{
-            "tile_view" : "http://api.mapbox.com/v4/drp0ll0.0ba9e7bf/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+            "tile_view" : "https://api.mapbox.com/styles/v1/drp0ll0/cizl1thgs000u2ro17h1cv4y2/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
             "tile_view_attribution" : "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
             "tile_edit": "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",   
             "tile_edit_attribution": "<a target='_blank' href='http://maps.stamen.com/'>Stamen</a> | OpenStreetMap contributors",   
