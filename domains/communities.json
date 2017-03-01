@@ -20,8 +20,51 @@
         "title":"Communities"
       },
       "center": {
-        "image": "img/Icon5_communities_sfondo.svg"
-      }
+        "image": "img/firstlife-logo-palla.svg"
+      },
+      "upper_menu":[
+        {
+          "name":"Standard di Comunità",
+          "url":"http://firstlife.org/standard-di-comunita",
+          "img":"img/icone-landing-page-comunita.svg",
+          "alt":"Prova",
+          "lang":"it"
+        },
+        {
+          "name":"Tutorial ed esempi",
+          "url":"http://tutorials.firstlife.org",
+          "img":"img/icone-landing-page-tutorial.svg",
+          "alt":"Prova",
+          "lang":"it"
+        },
+        {
+          "name":"Scopri di più su Communities",
+          "url":"http://openlabs.firstlife.org/communities/",
+          "img":"img/Icon5_communities_sfondo.svg",
+          "alt":"Prova",
+          "lang":"it"
+        },
+        {
+          "name":"Community Guidelines",
+          "url":"http://firstlife.org/standard-di-comunita",
+          "img":"img/icone-landing-page-comunita.svg",
+          "alt":"Test",
+          "lang":"en"
+        },
+        {
+          "name":"User Guide & examples",
+          "url":"http://tutorials.firstlife.org",
+          "img":"img/icone-landing-page-tutorial.svg",
+          "alt":"Test",
+          "lang":"en"},
+        {
+          "name":"About Communities project",
+          "url":"http://openlabs.firstlife.org/communities/",
+          "img":"img/Icon5_communities_sfondo.svg",
+          "alt":"Test",
+          "lang":"en"
+        }
+      ]
     }
   },
   "map":{
