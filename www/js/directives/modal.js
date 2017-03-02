@@ -588,7 +588,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         },
         templateUrl: '/templates/map-ui-template/actionsModal.html',
         controller: ['$rootScope','$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'AuthService', function($rootScope, $scope, $location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory, AuthService){
-
+            // visualizzazione web o mobile?
+            if(!$scope.isMobile) $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
             // controllo azioni
             $scope.member = false;
             $scope.owner = false;
@@ -691,7 +692,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 return deferred.promise;
             }
             
-            $scope.actionEntity = function(action, param){
+            $scope.actionEntity = AuthService.doAction(function(action, param){
                 $log.debug('check action ',action,param);
                 switch(action){
                     case 'unsubscribe':
@@ -847,7 +848,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
                 }
 
-            }
+            });
 
             // calcolo i permessi per le azioni
             function initActions(){

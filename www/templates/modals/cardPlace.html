@@ -89,9 +89,9 @@
         <div ng-if="config.dev"><pre>{{infoPlace.marker | json}}</pre></div>
     </ion-content>
 
-    <ion-footer-bar class="bar-light">
-        <div ng-if="isLoggedIn" class="buttons right-buttons">
-            <entity-actions ng-if="isLoggedIn && infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>
+    <ion-footer-bar >
+        <div class="buttons right-buttons">
+            <entity-actions ng-if="infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>
         </div>
         <h1 class="title"></h1>
         <div class="buttons left-buttons">

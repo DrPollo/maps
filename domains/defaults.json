@@ -202,7 +202,8 @@
                     "label":"IMAGE",
                     "title":"GALLERY",
                     "fields":{
-                        "image":{"key":"image", "label":"IMAGE","default":"","required":true}
+                        "image":{"key":"image", "label":"IMAGE","default":"","required":true},
+                        "image_name":{"key":"image_name", "label":"IMAGE_NAME","default":"default name","required":true}
                     },
                     "contentKey":"filedata",
                     "contentKeyType":"image",

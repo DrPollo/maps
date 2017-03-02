@@ -1,1 +1,3 @@
-<button class="button button-icon button-outline button-small {{action.icon}}" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">{{action.label |translate}}</button>
+<button title="{{action.label |translate}}" class="button button-outline button-icon {{action.icon}}" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check">
+    <span ng-if="!isMobile">{{action.label |translate}}</span>
+</button>
