@@ -4,7 +4,7 @@ angular.module('firstlife.factories')
         var config = myConfig;
         var format = config.format;
         var url = config.domain_signature;
-
+        var default_role = "member";
         var groupsUsers = {};
 
         return {
@@ -16,14 +16,13 @@ angular.module('firstlife.factories')
                 var user = AuthService.getUser();
 //                $log.debug('joining 5 ',user);
                 if(user){
-                    var urlId = url.concat('member').concat(format);
+                    var urlId = url.concat('fl_users/',user.id,'/groups/rel/',entityId).concat(format);
                     var data = {
-                        "groupId":entityId,
-                        "memberId":user.id
+                        "role":default_role
                     }
                     var req = {
                         url: urlId,
-                        method: 'post',
+                        method: 'put',
                         headers:{"Content-Type":"application/json"},
                         data: data
                     };
