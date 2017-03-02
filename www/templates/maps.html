@@ -3,20 +3,9 @@
         <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ng-if="!viewer"></navbar>
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
-                <button id="menu-switch" ng-if="config.actions.show_menu" class="button button-clear button-dark button-icon ion-navicon-round" ng-click="toggleSideLeft()"></button>
+                <user-handler check="isLoggedIn"></user-handler>
                 <entity-filter ng-if="!editMode" toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
-<!--
-                <span class="separatore"></span>
-                <button class="button button-dark button-clear burron-icon ion-android-search" ng-click="showSearchBox()"></button>
-                <span class="separatore"></span>
-                <button class="button button-dark button-clear button-icon ion-android-checkmark-circle" ng-click="showMFilterCat()"></button>
-                <span class="separatore"></span>
-                <button class="button button-dark button-clear button-icon ion-android-locate" ng-click="locate('user')"></button>
-                <span class="separatore"></span>
--->
-                <!--<button class="button button-dark button-clear button-icon ion-android-compass" ng-click="showModalFavPlace()"></button>-->
-<!--                <user-handler check="isLoggedIn"></user-handler>-->
             </div>
             <search-bar ng-if="!editMode"></search-bar>
             <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(userCard)">
@@ -29,12 +18,8 @@
                 <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
                 <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
             </div>
-<!--            <search-cards></search-cards>-->
         </div>
     </div>
-
-<!--markers="markersFiltered"-->
-
     <ion-content class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
         <div ng-controller="SimpleEditorCtrl as simpleEditor"></div>

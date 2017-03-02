@@ -13311,14 +13311,25 @@ ion-side-menu#side-menu {
           min-width: 48px;
           width: 48px;
           position: relative;
-          box-shadow: 1px 1px 3px #666; }
+          box-shadow: 1px 1px 3px #666;
+          overflow: hidden;
+          border: none; }
           .maps-view #mapHeader #headerControllers #omnibox button .badge {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            min-width: 14px;
-            height: 14px;
-            font-size: 0.8em; }
+            top: 29px;
+            right: -1px;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            font-size: 12px;
+            border-radius: 10px 10px 4px 10px; }
+          .maps-view #mapHeader #headerControllers #omnibox button .badge:before {
+            line-height: 20px;
+            font-size: 16px;
+            position: relative;
+            top: -3px;
+            left: -4px; }
         .maps-view #mapHeader #headerControllers #omnibox button:hover, .maps-view #mapHeader #headerControllers #omnibox button:active, .maps-view #mapHeader #headerControllers #omnibox button:focus {
           color: #FC4A00; }
         .maps-view #mapHeader #headerControllers #omnibox button:focus {
@@ -13330,9 +13341,14 @@ ion-side-menu#side-menu {
           z-index: 0;
           margin-left: 6px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter button {
-            margin-right: 6px;
+            margin: 4px 6px 0px 0px;
             background: #f1f1f1;
-            border-radius: 50px; }
+            border-radius: 50px;
+            min-height: 40px;
+            height: 40px;
+            min-width: 40px;
+            width: 40px;
+            padding: 0px 10px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter button:last-child {
             margin-right: 0px; }
           .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.activated, .maps-view #mapHeader #headerControllers #omnibox #typeFilter .button.active {
@@ -15330,7 +15346,7 @@ timeline {
         font-size: 8px; }
 
 #searchbar {
-  margin: 10px 6px 10px 0px;
+  margin: 6px 6px 10px 0px;
   display: inline-flex;
   width: auto;
   background: #fff;

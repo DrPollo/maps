@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             check:'='
         },
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
-        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window,notificationFactory,MemoryFactory,myConfig,AuthService){
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
 
             
             $scope.$on('$destroy', function(e) {
@@ -17,6 +17,11 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                     delete $scope;
                 }
             });
+            $scope.config = myConfig;
+            // funzione togle per il menu laterale
+            $scope.toggleSideLeft = function() {
+                $ionicSideMenuDelegate.toggleLeft();
+            };
 
             $scope.$watch('check',function(e,old){
                 if(e!=old){
