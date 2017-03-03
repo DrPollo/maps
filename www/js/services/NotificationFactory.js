@@ -22,9 +22,9 @@ angular.module('firstlife.factories')
                 }else{
                     var userId = user.id;
                     $log.debug('user?',user)
-                    var urlId = url.concat("fl_user/",userId,'/notifications/unread','?domainId=',domainId);
+                    var urlId = url.concat("fl_users/",userId,'/notifications/unread','?domainId=',domainId);
                     // se e' impostato un tempo per la since
-                    if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
+                    if(since){ urlId = urlId.concat('&since=',since.toISOString()); }
 
                     var req = {
                         url: urlId,
@@ -35,9 +35,9 @@ angular.module('firstlife.factories')
                     $http(req).then(
                         function(response){
                             $log.debug('notificationFactory, get, response ',response);
-                            if(response && response.data && response.data.notifications)
+                            if(response && response.data && response.data.notifications){
                                 deferred.resolve(response.data.notifications);
-                            else
+                            }else
                                 deferred.reject('empty');
                         },
                         function(response){
@@ -58,7 +58,7 @@ angular.module('firstlife.factories')
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat('/consume').concat(format);
-                    var urlId = url.concat('fl_user/',user.id,"/notifications/",notificationId,"/consume",format);
+                    var urlId = url.concat('fl_users/',user.id,"/notifications/",notificationId,"/consume",format);
                     var req = {
                         url: urlId,
                         method: 'PUT',
@@ -89,7 +89,7 @@ angular.module('firstlife.factories')
                 }else{
                     var now = new Date();
                     //var urlId = urlNotifications.concat('/consume_until').concat(format);
-                    var urlId = url.concat('fl_user/',user.id,'/consume_notifications','?domainId=',domainId,'&until=',now.toISOString());
+                    var urlId = url.concat('fl_users/',user.id,'/consume_notifications','?domainId=',domainId,'&until=',now.toISOString());
 
                     var req = {
                         url: urlId,

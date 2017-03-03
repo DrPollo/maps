@@ -12,6 +12,13 @@ angular.module('firstlife.controllers')
 
         // flag per le notifiche
         $scope.checkNotifications = false;
+        $scope.$on('checkNotification',function(){
+            $scope.checkNotifications = true;
+        });
+        $scope.$on('noNotification',function(){
+            $scope.checkNotifications = false;
+        })
+
 
         var consoleCheck = false;
         

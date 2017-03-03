@@ -2,8 +2,9 @@ angular.module('firstlife.directives').directive('userHandler',function(){
     return {
         restrict: 'E',
         scope: {
-            check:'=check'
+            check:'='
         },
+        require: 'ngModel',
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
         controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
 
@@ -17,6 +18,12 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                     delete $scope;
                 }
             });
+
+            $scope.$watch('check',function(e,old){
+                    if(e != old){
+                        $log.debug('check!')
+                    }
+                })
             $scope.config = myConfig;
             // funzione togle per il menu laterale
             $scope.toggleSideLeft = function() {
@@ -46,14 +53,20 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 }
             });
             $scope.config = myConfig;
-
-            $scope.$watch('check',function(e,old){
-                if(e!=old){
-                    init();
-                }
-            })
-
-            // recupero l'utente
+            //
+            // $scope.$watch('check',function(e,old){
+            //     if(e!=old){
+            //         init();
+            //     }
+            // })
+            $log.debug('check?',$scope.check)
+            // cambio del check notifiche
+            function toCheck(){
+                if($scope.check)
+                    $scope.$emit('checkNotification');
+                else
+                    $scope.$emit('noNotification');
+            }
 
             // tempo di polling
             var MODAL_RELOAD_TIME = myConfig.behaviour.bbox_reload_time;
@@ -85,6 +98,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             function init(){
                 $scope.user = AuthService.getUser();
                 $scope.check = false;
+                toCheck();
                 if($scope.user){
                     initNotifications();
                 }else{
@@ -95,6 +109,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
 
             function initNotifications(){
                 $scope.check = false;
+                toCheck()
                 $scope.news =[];
                 polling();
             }
@@ -105,10 +120,13 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                         $scope.last = new Date();
                         $log.debug('check get notfications ',response);
                         // se c'e' qualcosa da leggere segnalo
+                        $scope.counter = response.length;
                         if(response.length > 0){
+                            $log.debug('check = true');
                             $scope.check = true;
+                            toCheck();
                         }
-                        // segno da leggere!
+                        //segno da leggere!
                         for(var i = 0; i < response.length; i++){
                             // se la notifica e' stata generata dopo il caricamento della pagina
                             if(now <= new Date(response[i].timestamp)){
@@ -140,6 +158,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 //apro modal
                 openModal();
                 $scope.check = false;
+                toCheck();
             }
 
             $scope.go = function(notification){
