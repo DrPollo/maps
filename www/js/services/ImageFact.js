@@ -25,15 +25,11 @@ angular.module('firstlife.factories')
         for(i in self.config.types.list){
             sendUrl[self.config.types.list[i].key] = self.config.types.list[i].url;
         }
-        
-        
-        // utente di default -1 (guest)
-        var user_id  = -1;
+
         // se l'utente è autenticato
         if(AuthService.isAuth()){
             // set user id
             var user = AuthService.getUser();
-            var user_id  = user.id;
         }
         
         function toObject(arr) {
@@ -46,7 +42,6 @@ angular.module('firstlife.factories')
         return {
             images:function(images, id, entity_type){
                 var data = {};
-                data.user_id = user_id;
                 for (var i = 0; i < images.length; i++){
                     var img = 'data:';
                     img = img.concat(images[i].filetype).concat(';base64,').concat(images[i].base64);

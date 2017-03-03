@@ -165,7 +165,7 @@ angular.module('firstlife.factories')
                         url: urlId,
                         method: 'PUT',
                         headers:{"Content-Type":"application/json"},
-                        data:{user_id:user.id}
+                        data:{}
                     };
                     $http(req).then(
                         function(response){

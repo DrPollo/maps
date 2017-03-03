@@ -24,8 +24,7 @@ angular.module('firstlife.factories')
             add: function(entityId,data,type){
                 var deferred = $q.defer();
                 var user = AuthService.getUser();
-                // aggiungo l'utente
-                data.user_id = user.id;
+
                 var req = {
                     url: url.concat('/').concat(entityId).concat("/").concat(types[type].url).concat(format),
                     method: 'POST',
