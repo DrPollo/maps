@@ -12871,8 +12871,7 @@ ion-side-menu#side-menu {
     background-color: transparent;
     color: #666666; }
     ion-side-menu#side-menu ion-item.item .icon:before, ion-side-menu#side-menu ion-item.item .menu-text, ion-side-menu#side-menu ion-item.item .greeting, ion-side-menu#side-menu ion-item.item .message {
-      color: #666666;
-      font-weight: 300; }
+      color: #666666; }
     ion-side-menu#side-menu ion-item.item .item-content, ion-side-menu#side-menu ion-item.item .item-content.activated {
       background: transparent; }
   ion-side-menu#side-menu ion-item.item-button {

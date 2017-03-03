@@ -18,6 +18,7 @@
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
                 <ion-item class="item-divider">{{'EXPLORE'|translate}}</ion-item>
+                <notification-link check="checkNotifications"></notification-link>
                 <ion-item ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close on-tap="myMap()">
                     <i class="icon ion-map"></i>
                     <h3 class="menu-text">{{'MY_MAP'|translate}}</h3>

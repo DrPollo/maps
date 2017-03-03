@@ -21,7 +21,7 @@ ion-side-menu#side-menu
         .icon:before, .menu-text, .greeting, .message {
             //background-color: $dark;
             color: lighten($dark, 20%);
-            font-weight:300;
+            //font-weight:300;
         }
         .item-content, .item-content.activated{background: transparent;}
 	}

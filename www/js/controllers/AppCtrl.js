@@ -9,7 +9,10 @@ angular.module('firstlife.controllers')
         
         $scope.apiVersion = 'API: ' + myConfig.api_version;
         $scope.clientVersion = 'Client: v' + myConfig.version;
-        
+
+        // flag per le notifiche
+        $scope.checkNotifications = false;
+
         var consoleCheck = false;
         
         // gestore del cambio di stato

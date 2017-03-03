@@ -1,0 +1,7 @@
+<ion-item ng-if="user" class="item-icon-left item-button" nav-clear menu-close on-tap="show()">
+    <i class="icon ion-ios-bell"></i>
+    <h3 class="menu-text">
+        {{'NOTIFICATION_TITLE'|translate}}
+        <span class="badge badge-positive" ng-if="highlight">{{counter}}</span>
+    </h3>
+</ion-item>

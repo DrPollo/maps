@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
     return {
         restrict: 'E',
         scope: {
-            check:'='
+            check:'=check'
         },
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
         controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
@@ -23,6 +23,30 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 $ionicSideMenuDelegate.toggleLeft();
             };
 
+        }]
+    }
+
+}).directive('notificationLink',function(){
+    return {
+        restrict: 'E',
+        scope: {
+            check:'='
+        },
+        templateUrl: '/templates/map-ui-template/notificationLink.html',
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
+
+
+            $scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyUserHandler){
+                    e.preventDestroyUserHandler = true;
+                    $timeout.cancel(timer);
+                    if($scope.notifications)
+                        $scope.notifications.unsubscribe();
+                    delete $scope;
+                }
+            });
+            $scope.config = myConfig;
+
             $scope.$watch('check',function(e,old){
                 if(e!=old){
                     init();
@@ -42,7 +66,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             // last check
             $scope.last = new Date();
             // funzione di polling
-            var polling = function(){ 
+            var polling = function(){
                 $log.log('check notifications!');
                 $timeout.cancel(timer);
 
@@ -57,21 +81,20 @@ angular.module('firstlife.directives').directive('userHandler',function(){
 
 
             init();
-            
+
             function init(){
                 $scope.user = AuthService.getUser();
-                $scope.highlight = false;
-                $log.debug('check user notification',$scope.user);
+                $scope.check = false;
                 if($scope.user){
                     initNotifications();
                 }else{
                     $timeout.cancel(timer);
                 }
             }
-            
+
 
             function initNotifications(){
-                $scope.highlights = 0;
+                $scope.check = false;
                 $scope.news =[];
                 polling();
             }
@@ -82,8 +105,9 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                         $scope.last = new Date();
                         $log.debug('check get notfications ',response);
                         // se c'e' qualcosa da leggere segnalo
-                        if(response.length > 0)
-                            $scope.highlight = true;
+                        if(response.length > 0){
+                            $scope.check = true;
+                        }
                         // segno da leggere!
                         for(var i = 0; i < response.length; i++){
                             // se la notifica e' stata generata dopo il caricamento della pagina
@@ -115,7 +139,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 $log.debug('show notifications ',$scope.news);
                 //apro modal
                 openModal();
-                $scope.highlight = false;
+                $scope.check = false;
             }
 
             $scope.go = function(notification){
@@ -127,7 +151,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 // cambio paramentro search
                 $location.search('entity',notification.object);
             }
-            
+
             $scope.clear = function(){
                 // consume delle notifiche
                 $scope.news = [];
@@ -138,14 +162,14 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                         $log.error('impossibile cancellare le notifiche',response);
                     }
                 );
-                
+
             }
 
             $scope.consume = function(notification){
                 var i = $scope.news.map(function(e){return e.id}).indexOf(notification.id);
                 if(i > -1)
                     $scope.news.splice(i,1);
-                
+
                 // consume della notifica
                 notificationFactory.read(notification.id).then(
                     function(response){
@@ -161,7 +185,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                     scope: $scope,
                     animation: 'fade-in'
                 }).then(function(modal){
-                    $scope.notifications = modal; 
+                    $scope.notifications = modal;
                     $scope.notifications.show();
                 }, function(err){
                     $log.error("notification modal error",err);
