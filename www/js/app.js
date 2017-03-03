@@ -730,9 +730,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
             // test test test
             var devToken = {
-                "access_token": "8533ad9ea05c2ef5b292d1cf3b908dda01d73536",
+                "access_token": "85de3ac93463bc0aea1e77b8c8b214b4d0442f06",
                 "token_type": "Bearer",
-                "expiration": "2017-02-18T17:35:52.361Z",
+                "expiration": "2017-03-03T09:53:37.619Z",
                 "auth_server": "FIRSTLIFE",
                 "member_id": "589dbba06685502f37156662",
                 "member": {
@@ -740,7 +740,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     "last_name": "Antonini",
                     "username": "Alessio Antonini",
                     "email": "aleyho@gmail.com",
-                    "id": "589dbba06685502f37156662"
+                    "rs_id": "58a82dc2b5db431b4531fa41",
+                    "id": "58a82dc2b5db431b4531fa41"
                 }
             };
             if(true) $localStorage[myConfig.authentication.token_mem_key] = devToken;

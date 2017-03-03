@@ -51,7 +51,7 @@ angular.module('firstlife.services')
                 };
                 $http(req).then(function(response) {
                     var token = response.data.token;
-                    token.member.id = token.member_id;
+                    token.member.member_id = token.member_id;
                     MemoryFactory.save(tokenKey,token);
                     MemoryFactory.save(identityKey,token.member);
 //                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));

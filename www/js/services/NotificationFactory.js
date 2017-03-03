@@ -4,11 +4,11 @@ angular.module('firstlife.factories')
         var self = this;
         self.config = myConfig;
         var baseUrl = myConfig.base_domain;
-
+        var url = myConfig.domain_signature;
         var urlThings= myConfig.backend_things;
         var urlNotifications= myConfig.backend_notifications;
         var format = config.format;
-
+        var domainId = myConfig.project;
         var subscriptions = {};
 
         return {
@@ -18,12 +18,11 @@ angular.module('firstlife.factories')
                 var user = AuthService.getUser();
                 // cache
                 if(!user){
-                    $log.error('user error');
                     deferred.reject('not logged in');
                 }else{
                     var userId = user.id;
                     $log.debug('user?',user)
-                    var urlId = urlNotifications.concat("/",userId,'/notifications/unread','?domainId=',myConfig.project);
+                    var urlId = url.concat("fl_user/",userId,'/notifications/unread','?domainId=',domainId);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=').concat(since.toISOString()); }
 
@@ -59,12 +58,12 @@ angular.module('firstlife.factories')
                     deferred.reject('not logged in');
                 }else{
                     //var urlId = urlNotifications.concat('/consume').concat(format);
-                    var urlId = baseUrl.concat('api/notifications/consume');
+                    var urlId = url.concat('fl_user/',user.id,"/notifications/",notificationId,"/consume",format);
                     var req = {
                         url: urlId,
                         method: 'PUT',
                         headers:{"Content-Type":"application/json"},
-                        data:{user_id:user.id,id:notificationId}
+                        data:{}
                     };
                     $http(req).then(
                         function(response){
@@ -85,17 +84,18 @@ angular.module('firstlife.factories')
                 var user = AuthService.getUser();
 
                 // se non sono loggato rispondo errore
-                if(!user || !token){
+                if(!user){
                     deferred.reject('not logged in');
                 }else{
-                    //var urlId = urlNotifications.concat('/consume_until').concat(format);
-                    var urlId = baseUrl.concat('api/notifications/consume_until');
                     var now = new Date();
+                    //var urlId = urlNotifications.concat('/consume_until').concat(format);
+                    var urlId = url.concat('fl_user/',user.id,'/consume_notifications','?domainId=',domainId,'&until=',now.toISOString());
+
                     var req = {
                         url: urlId,
                         method: 'PUT',
                         headers:{"Content-Type":"application/json"},
-                        data:{user_id:user.id,until:now.toISOString(),domain:myConfig.project}
+                        data:{}
                     };
                     $http(req).then(
                         function(response){
@@ -116,7 +116,7 @@ angular.module('firstlife.factories')
                 if(subscriptions[markerId]){
                     deferred.resolve(subscriptions[markerId]);
                 }else{
-                    var urlId = urlThings.concat('/').concat(markerId).concat("/subscribers").concat(format);
+                    var urlId = url.concat('Things/',markerId,"/subscribers",format);
                     var req = {
                         url: urlId,
                         method: 'GET',
@@ -139,7 +139,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
             subscribersRx:function(markerId){
-                var urlId = urlThings.concat('/').concat(markerId).concat("/subscribers").concat(format);
+                var urlId = url.concat('Things/',markerId,"/subscribers",format);
                 var req = {
                     url: urlId,
                     method: 'GET',
@@ -160,7 +160,7 @@ angular.module('firstlife.factories')
                 if(!user){
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlThings.concat('/').concat(markerId).concat("/subscribe").concat(format);
+                    var urlId = url.concat('Things/',markerId,"/subscribers/rel/",user.id,format);
                     var req = {
                         url: urlId,
                         method: 'PUT',
@@ -188,13 +188,13 @@ angular.module('firstlife.factories')
                 var user = AuthService.getUser()
 
                 // se non sono loggato rispondo errore
-                if(!user || !token){
+                if(!user){
                     deferred.reject('not logged in');
                 }else{
-                    var urlId = urlThings.concat('/').concat(markerId).concat("/unsubscribe").concat(format);
+                    var urlId = url.concat('Things/',markerId,"/subscribers/rel/",user.id,format);
                     var req = {
                         url: urlId,
-                        method: 'PUT',
+                        method: 'DELETE',
                         headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id}
                     };

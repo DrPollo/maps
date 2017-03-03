@@ -18,8 +18,8 @@
                 <div class="item item-footer">
                     <span class="message"><span class="username">{{item.updater_display_name}}</span> {{'WHEN'|translate}} {{item.timestamp_insert| date: 'dd/MM/yyyy'}}</span>
                     <div class="button-box">
-                        <button ng-if="user.id == item.user_id" 
-                            ng-click="edit(item.id,group.key,outerIndex)" 
+                        <button ng-if="user.id == item.user_id"
+                            ng-click="edit(item.id,group.key,outerIndex)"
                             class="button button-clear">
                             <i class="icon ion-edit" style="color:#333;"></i> 
                         </button>

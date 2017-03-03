@@ -13072,11 +13072,11 @@ ion-side-menu#side-menu {
     font-size: 20px;
     border-bottom: 1px solid rgba(221, 221, 221, 0.5); }
     .modal .modal-subheader .modal-subheader-item {
-      margin-right: 30px;
+      margin-right: 10px;
       font-size: 0.8em; }
       .modal .modal-subheader .modal-subheader-item i {
         font-size: 20px;
-        margin-right: 10px;
+        margin-right: 6px;
         vertical-align: middle; }
     .modal .modal-subheader modal-subheader-item:last-child {
       margin-right: 0px; }
@@ -13316,20 +13316,20 @@ ion-side-menu#side-menu {
           border: none; }
           .maps-view #mapHeader #headerControllers #omnibox button .badge {
             position: absolute;
-            top: 29px;
-            right: -1px;
-            width: 20px;
-            height: 20px;
-            min-width: 20px;
-            min-height: 20px;
-            font-size: 12px;
-            border-radius: 10px 10px 4px 10px; }
-          .maps-view #mapHeader #headerControllers #omnibox button .badge:before {
-            line-height: 20px;
-            font-size: 16px;
-            position: relative;
-            top: -3px;
-            left: -4px; }
+            top: 30px;
+            right: 0px;
+            width: 0;
+            height: 0;
+            min-width: 0px;
+            min-height: 0px;
+            padding: 0px;
+            margin: 0px;
+            border-top: 0px solid #fff;
+            border-bottom: 18px solid #FC4A00;
+            border-left: 18px solid #fff;
+            border-right: 0px solid #fff;
+            -webkit-transform: rotate(360deg);
+            border-radius: 0px; }
         .maps-view #mapHeader #headerControllers #omnibox button:hover, .maps-view #mapHeader #headerControllers #omnibox button:active, .maps-view #mapHeader #headerControllers #omnibox button:focus {
           color: #FC4A00; }
         .maps-view #mapHeader #headerControllers #omnibox button:focus {

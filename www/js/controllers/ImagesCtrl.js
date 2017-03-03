@@ -73,7 +73,7 @@ angular.module('firstlife.controllers')
             if(!isNaN(index)){
                 $scope.slider.pointer = index;
             }
-            $ionicModal.fromTemplateUrl('templates/gallery.html', {
+            $ionicModal.fromTemplateUrl('templates/modals/gallery.html', {
                 scope: $scope,
                 animation: 'fade-in'
             }).then(function(modal){

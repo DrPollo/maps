@@ -3,7 +3,7 @@
         <button class="slider-close button button-stable button-clear icon ion-close-round" on-tap="gallery.hide()" ></button>
         <div class="row row-center slider-box" 
              ng-click="gallery.close()">
-            <img ng-src="{{slider.images[slider.pointer].url}}" class="fullscreen-image" on-tap="slider.next()" />
+            <img ng-src="{{slider.images[slider.pointer].self}}" class="fullscreen-image" on-tap="slider.next()" />
         </div>
         <div class="slider-button slider-button-left" on-tap="slider.prev()"><i class="icon ion-chevron-left"></i></div>
         <div class="slider-button slider-button-right" on-tap="slider.next()"><i class="icon ion-chevron-right"></i></div>
