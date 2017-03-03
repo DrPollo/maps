@@ -147,16 +147,14 @@ angular.module('firstlife.factories')
 
         function removeUser (entityId,userId){
             var deferred = $q.defer();
-            var user = AuthService.getUser();
             $log.debug('joining 5 ',user);
             if(user){
-                var urlId = url.concat('group/').concat(entityId).concat('/member/').concat(userId).concat(format);
-                var data = {}
+                var urlId = url.concat('fl_users/',userId,'/groups/rel/',entityId,format);
                 var req = {
                     url: urlId,
                     method: 'delete',
                     headers:{"Content-Type":"application/json"},
-                    data: data
+                    data: {}
                 };
                 $http(req).then(
                     function(response) {
