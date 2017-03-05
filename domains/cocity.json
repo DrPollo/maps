@@ -22,11 +22,6 @@
       {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"}
     ]
   },
-  "map":{
-    "map_default_lat" : 45.076291,
-    "map_default_lng" : 7.401690,
-    "zoom_level" : 14
-  },
   "behaviour":{
     "is_login_required" : true
   }
