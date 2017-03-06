@@ -455,10 +455,8 @@ angular.module('firstlife.controllers')
         };
 
         $scope.switchEditMode = AuthService.doAction(function(){
-            if($scope.config.dev) $log.debug("MapCtrl, switchEditMode editMode ",$scope.map.mode);
             if($scope.editMode){
                 changeMode('view');
-
                 $scope.updateEntity = null;
             }else{
                 changeMode('edit');
@@ -537,11 +535,13 @@ angular.module('firstlife.controllers')
         $scope.showASEdit = function(){
             // se devo aggionare una entita'
             if($scope.updateEntity && $scope.updateEntity.id){
+                // back to view
+                changeMode('view');
+                // parametri per l'editor
                 var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,zoom_level:$scope.map.center.zoom,id:$scope.updateEntity.id,};
                 $state.go('app.editor', params);
                 //$scope.switchEditMode();
-                // back to view
-                changeMode('view');
+
             }if($scope.updateEntity){
                 // se ho gia' dei parametri per la insert
                 var params = {};
@@ -1446,7 +1446,7 @@ angular.module('firstlife.controllers')
         // cambio visibilita' mappa
         // gestore livelli mappa
         // si comanda dal fitro categorie
-        function changeVisibility(clickedItem){ 
+        function changeVisibility(clickedItem){
             //changeMod to Edit: tutti off per la edit
             if(clickedItem===false){
                 for(var el in $scope.map.layers.overlays){
@@ -1486,12 +1486,14 @@ angular.module('firstlife.controllers')
             switch(mode){
                 case 'edit':
                     $scope.editMode = true;
+                    changeVisibility(false);
                     break;
                 default:
                     $scope.editMode = false;
+                    changeVisibility(true);
             }
             MapService.changeMode(mode);
-            changeVisibility(!$scope.editMode);
+            // changeVisibility(!$scope.editMode);
         }
 
 
