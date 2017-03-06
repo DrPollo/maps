@@ -268,9 +268,11 @@ angular.module('firstlife.controllers')
         $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
             if(!event.preventMapMoveend){
                 event.preventMapMoveend = true;
-//                $log.debug("Event: moveend...", $scope.map);
+               $log.debug("Event: moveend...", $scope.map);
                 // recupero i dati del layer
-                if(!$scope.config.map.area.data) getData();
+                if(!$scope.config.map.area.data) {getData();}
+                // aggiornamento parametro search nell'url
+                updatePositionInSearch();
                 // controllo se sono in edit mode
                 if(!$scope.editMode){
                     // se e' stato impostato un delay
@@ -1244,9 +1246,6 @@ angular.module('firstlife.controllers')
                     console.log("updateMarkersDistributed, error", err);
                 }
             );
-            // aggiornamento parametro search nell'url
-            updatePositionInSearch();
-
         }
 
         function resetMarkersDistributed(){

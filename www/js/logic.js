@@ -13,7 +13,7 @@ angular.module('firstlife.config')
         var url = "";
         url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/");
         myConfig.domain_signature = url;
-        myConfig.backend_things = url.concat('things');
+        myConfig.backend_things = url.concat('Things');
         myConfig.backend_notifications = url.concat('fl_users');
         myConfig.backend_bbox = url.concat('things/boundingbox');
         myConfig.backend_categories = url.concat('categories');

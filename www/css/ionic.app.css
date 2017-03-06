@@ -13617,7 +13617,6 @@ ion-side-menu#side-menu {
   #wizardEntity.content .nav-bar-title h1 {
     color: white;
     text-align: left;
-    font-weight: 200;
     letter-spacing: 1px; }
   #wizardEntity.content form .has-error {
     border-bottom: #ef473a 2px solid; }
