@@ -186,6 +186,7 @@ angular.module('firstlife.services')
             },
             removeMarker: function(entityId){
                 var deferred = $q.defer();
+                $log.debug('MapService, check removeMarker',entityId)
                 entityFactory.remove(entityId).then(
                     function(response){
                         var index = self.map.markers.map(function(e){return e.id}).indexOf(entityId);

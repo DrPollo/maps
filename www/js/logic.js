@@ -15,7 +15,7 @@ angular.module('firstlife.config')
         myConfig.domain_signature = url;
         myConfig.backend_things = url.concat('Things');
         myConfig.backend_notifications = url.concat('fl_users');
-        myConfig.backend_bbox = url.concat('things/boundingbox');
+        myConfig.backend_bbox = myConfig.backend_things.concat('/boundingbox');
         myConfig.backend_categories = url.concat('categories');
         myConfig.backend_users = 'http://firstlife-dev.di.unito.it:3095/v4/fl/domains/'.concat(myConfig.domain_id).concat('/').concat('user');
         //myConfig.backend_users = url.concat('user');

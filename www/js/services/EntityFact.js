@@ -146,7 +146,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             },
             remove: function(entityId){
-                if(consoleCheck)console.log("placeFactory, remove id: ",entityId);
+                $log.debug("placeFactory, remove id: ",entityId);
                 //trova id da id_wp
                 var urlId = urlThings.concat("/",entityId,format);
                 //var urlId = types[entity.entity_type].concat("/").concat(entity.id).concat(format);
