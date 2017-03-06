@@ -381,7 +381,7 @@
             "zoom" : true,
             "zoom_position" : "bottomleft",
             "attribution" : true,
-            "max_zoom" : 22,
+            "max_zoom" : 20,
             "min_zoom" : 6,
             "cluster_limit": 23,
             "time_from": "",

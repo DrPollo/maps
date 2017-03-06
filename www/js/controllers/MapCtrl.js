@@ -1164,11 +1164,14 @@ angular.module('firstlife.controllers')
             function removeMarkers(filtred){
                 for(key in $scope.markersFiltered){
                     var marker = $scope.markersFiltered[key];
-                    if(consoleCheck) console.log("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
+                    $log.debug("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
                     // il marker non e' nella lista dei marker filtrati lo rimuovo
                     if(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0){
-                        if(consoleCheck) console.log("Rimuovo ",$scope.markersFiltered[key]);
+                        $log.debug("Rimuovo ",$scope.markersFiltered[key]);
                         delete $scope.markersFiltered[key];
+                    }
+                    else{
+                        $log.error("Rimuovo: errore! ",marker.id);
                     }
                 }
             }
