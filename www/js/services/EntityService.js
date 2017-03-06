@@ -138,7 +138,7 @@ angular.module('firstlife.services')
         }
 
 
-        //todo conversione del marker nel formato per l'editor
+        // conversione del marker nel formato per l'editor
         
         function editPreProcessing(marker){
             var tmp = angular.copy(marker);
@@ -271,7 +271,18 @@ angular.module('firstlife.services')
             if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
                 data.valid_to = angular.copy(data.valid_from);
             }
-            
+
+            // se le date non sono state impostate
+            if(!data.valid_to){
+                dataForServer.valid_to = moment(Date.now());
+                dataForServer.valid_to.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+            }
+            if(!data.valid_from){
+                dataForServer.valid_from = moment(Date.now());
+                dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+            }
+
+
             if(data.valid_from){
                 dataForServer.valid_from = moment(data.valid_from);
                 if(data.door_time){
@@ -280,6 +291,8 @@ angular.module('firstlife.services')
                 }
                 $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
             }
+
+
             if(data.valid_to){
                 dataForServer.valid_to = moment(data.valid_to);
                 if(data.close_time){
@@ -291,8 +304,10 @@ angular.module('firstlife.services')
                 $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
             }
 
+
+
             // calcolo da durata come differenza tra le due date
-            if(dataForServer.valid_from && dataForServer.valid_to){
+            if(data.valid_to && data.valid_from){
                 // differenza tra giorni
                 duration = (data.valid_to.getTime() - data.valid_from.getTime());
                 $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
