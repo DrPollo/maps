@@ -12,7 +12,6 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){
                     e.preventDestroyUserHandler = true;
-                    $timeout.cancel(timer);
                     if($scope.notifications)
                         $scope.notifications.unsubscribe();
                     delete $scope;
