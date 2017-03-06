@@ -11,7 +11,11 @@
             "token_mem_key":"token",
             "identity_mem_key":"user",
             "state_name":"oauth_state",
-            "auth_base_domain": "secure.firstlife.di.unito.it/",
+            "auth_base_domain": "https://secure.firstlife.di.unito.it/",
+            "auth_url": "https://secure.firstlife.di.unito.it/oauth/login",
+            "logout_url": "https://secure.firstlife.di.unito.it/oauth/logout",
+            "profile_url": "https://secure.firstlife.di.unito.it/profile",
+            "registration_url": "http://secure.firstlife.di.unito.it/registration",
             "client_id": "eB1GG6Ik",
             "scopes":["userinfo.profile"]
         },

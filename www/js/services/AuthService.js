@@ -9,6 +9,29 @@ angular.module('firstlife.services')
 
         //C: (P&(~Q))
         return {
+            checkSession: function(){
+                // chiedo all'oauth server se c'e' un utente attivo nell'agent
+                var deferred = $q.defer();
+                var req = {
+                    url: myConfig.authentication.token_url,
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    data: {code:code}
+                };
+                $http(req).then(function(response) {
+                    var token = response.data.token;
+                    token.member.member_id = token.member_id;
+                    MemoryFactory.save(tokenKey,token);
+                    MemoryFactory.save(identityKey,token.member);
+//                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
+                    deferred.resolve(response);
+                },function(err){
+                    deferred.reject(err);
+                });
+                return deferred.promise;
+            },
             doAction: function (action){
                 if(MemoryFactory.get(tokenKey))
                     return action
