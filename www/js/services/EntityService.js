@@ -74,10 +74,8 @@ angular.module('firstlife.services')
                     defaults.valid_to = null;
                     break;
                 case 'FL_EVENTS' :
-//                    var morning = new Date(now.setHours(0,0,0,0));
-//                    var night = new Date(now.setHours(23,59,59,999));
-//                    defaults.valid_from = morning.toISOString();
-//                    defaults.valid_to = night.toISOString();
+                    defaults.valid_to = now;
+                    defaults.valid_from = now;
                     if(self.config.dev) defaults.description = devContent;
                     if(self.config.dev) defaults.thumbnail = devContent;
                     break;
@@ -275,7 +273,7 @@ angular.module('firstlife.services')
             // se le date non sono state impostate
             if(!data.valid_to){
                 dataForServer.valid_to = moment(Date.now());
-                dataForServer.valid_to.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+                dataForServer.valid_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
             }
             if(!data.valid_from){
                 dataForServer.valid_from = moment(Date.now());

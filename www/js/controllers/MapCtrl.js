@@ -1450,7 +1450,7 @@ angular.module('firstlife.controllers')
             //changeMod to Edit: tutti off per la edit
             if(clickedItem===false){
                 for(var el in $scope.map.layers.overlays){
-                    console.log("spengo livello ",el);
+                    $log.debug("spengo livello ",el);
                     $scope.map.layers.overlays[el].visible = false;
                 }
             }
