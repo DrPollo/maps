@@ -503,7 +503,7 @@ angular.module('firstlife.controllers')
             }
             // se duration e' richiesto e non e' nel marker
             if(_this.checkList.duration && !_this.wizard.dataForm.duration){
-                $log.duration("Entro in initDuration");
+                $log.debug("Entro in initDuration");
                 initDuration();
             }
         }

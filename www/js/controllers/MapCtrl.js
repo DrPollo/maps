@@ -1153,17 +1153,17 @@ angular.module('firstlife.controllers')
                     if(marker.eTimeline){
                         marker.eTimeline.icon = marker.icons[$scope.favCat] ? marker.icons[$scope.favCat] : marker.icon;
                     }
-                    if(consoleCheck) console.log("Check update ",marker.id,(!$scope.markersFiltered[marker.id]));
+                    $log.debug("Check update ",marker.id,(!$scope.markersFiltered[marker.id]));
                     if(!$scope.markersFiltered[marker.id]){
                         $scope.markersFiltered[marker.id] = marker;
-                        if(consoleCheck) console.log("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
+                        $log.debug("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
                     }
                 }
                 // $log.debug('markers',$scope.markersFiltered)
             }
             // rimuovo i marker presenti localmente ma non presenti nel risultato
             function removeMarkers(filtred){
-                $log.debug('removeMarkers',filtred,$scope.markersFiltered);
+                // $log.debug('removeMarkers',filtred,$scope.markersFiltered);
                 for(key in $scope.markersFiltered){
                     var marker = $scope.markersFiltered[key];
                     // $log.debug("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
