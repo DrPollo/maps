@@ -395,6 +395,11 @@ angular.module('firstlife.controllers')
             deleteMarker(args.id);
             event.preventDefault();
         });
+        $scope.$on("lostMarker",function(event,args){
+            // cancello un marker
+            deleteMarker(args.id);
+            event.preventDefault();
+        });
 
         $rootScope.$on("timeUpdate",function(event,args){
             // reset dei markers

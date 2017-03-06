@@ -272,8 +272,8 @@ angular.module('firstlife.controllers')
                 },
                 function(err){
                     $ionicLoading.hide();
-                    showAlert();
-                    //todo allert per indicare il problema di caricamento
+                    showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
+                    $scope.closeModal();
                     $log.error("errore caricamento marker modal place: ",err);
                 }
             );
@@ -296,7 +296,9 @@ angular.module('firstlife.controllers')
                     $log.error("changeModal, errore ",err);
                     $scope.loaded = true;
                     $scope.error = true;
-                    showAlert();
+                    showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
+                    $scope.$emit("lostMarker",{id:markerId});
+                    $scope.closeModal();
                 },
                 function(){}
             );
@@ -339,14 +341,14 @@ angular.module('firstlife.controllers')
                 content = {};
             }
             if(!content.title){
-                content.title = $filter('translate')('ERROR');
+                content.title = 'ERROR';
             }
             if(!content.text){
-                content.text = $filter('translate')('UNKNOWN_ERROR');
+                content.text = 'UNKNOWN_ERROR';
             }
             var alertPopup = $ionicPopup.alert({
-                title: content.title,
-                template: content.text
+                title: $filter('translate')(content.title),
+                template: $filter('translate')(content.text)
             });
         };
 

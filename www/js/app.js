@@ -443,7 +443,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         EVENING:'Sera',
         UNKNOWN_LOGOUT_ERROR:"Un errore imprevisto previene il logout remoto",
         ALREADY_LOGOUT_ERROR:"Logout remoto già eseguito",
-        LOGOUT_MESSAGE:"Logging out dal client..."
+        LOGOUT_MESSAGE:"Logging out dal client...",
+        DELETED_MARKER_TITLE:"Ops",
+        DELETED_MARKER_MESSAGE:"Sembra che qualcuno abbia cancellato il contenuto che stavi guardando."
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -721,7 +723,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         EVENING:'Evening',
         UNKNOWN_LOGOUT_ERROR:"An unknown error prevents the remote logout",
         ALREADY_LOGOUT_ERROR:"Already logged out from the remote server",
-        LOGOUT_MESSAGE:"Logging out from the client..."
+        LOGOUT_MESSAGE:"Logging out from the client...",
+        DELETED_MARKER_TITLE:"Whops",
+        DELETED_MARKER_MESSAGE:"Looks like someone deleted the content you where looking for."
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

@@ -240,6 +240,9 @@ angular.module('firstlife.factories')
                                 deferred.resolve(marker);
                             },
                             function(err){
+                                // non lo trovo e quindi lo rimuovo
+                                delete self.markerDetailsList[id];
+                                delete self.markerList[id];
                                 deferred.reject(err);
                                 $log.error("EntityFactory, get, entityToMarker, error: ",err);
                             }
