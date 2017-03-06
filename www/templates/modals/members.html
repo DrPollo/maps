@@ -1,0 +1,14 @@
+<ion-modal-view id="members">
+    <ion-header-bar class="modal-header" >
+        <h1 class="title title-modal">{{'GROUP_MEMBERS'|translate}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <members-list id="infoPlace.marker.id" owner="infoPlace.marker.owner" details="infoPlace.marker.type_info.properties.members"></members-list>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-stable button-outline icon ion-arrow-down-b" on-tap="modalMembers.hide()" ></button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

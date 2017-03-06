@@ -94,7 +94,7 @@ angular.module('firstlife.controllers')
                     $log.debug("infoPlace, apro modal modal: ", modal);
                     $scope.infoPlace.modal = modal;
                     $scope.openModalPlace();
-                });  
+                });
             }
             
             // carico il contenuto della modal
@@ -158,6 +158,23 @@ angular.module('firstlife.controllers')
                 var marker = $scope.infoPlace.marker;
                 $scope.closePopover();
                 $scope.updateEntity(marker);
+            };
+
+            // apro la lista dei membri
+            $scope.membersButtonPopover = function (){
+                var marker = $scope.infoPlace.marker;
+                $scope.closePopover();
+                // apro la modal
+                $ionicModal.fromTemplateUrl('templates/modals/members.html', {
+                    scope: $scope,
+                    animation: 'fade-in',//'slide-in-up',
+                    backdropClickToClose : true,
+                    hardwareBackButtonClose : true
+                }).then(function(modal) {
+                    modal.show();
+                    $scope.modalMembers = modal;
+                    $log.debug("infoPlace, apro modal members ");
+                });
             };
 
             //Cleanup the popover when we're done with it!

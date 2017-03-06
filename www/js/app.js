@@ -445,7 +445,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ALREADY_LOGOUT_ERROR:"Logout remoto già eseguito",
         LOGOUT_MESSAGE:"Logging out dal client...",
         DELETED_MARKER_TITLE:"Ops",
-        DELETED_MARKER_MESSAGE:"Sembra che qualcuno abbia cancellato il contenuto che stavi guardando."
+        DELETED_MARKER_MESSAGE:"Sembra che qualcuno abbia cancellato il contenuto che stavi guardando.",
+        MEMBERS:"Membri del gruppo"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -725,7 +726,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ALREADY_LOGOUT_ERROR:"Already logged out from the remote server",
         LOGOUT_MESSAGE:"Logging out from the client...",
         DELETED_MARKER_TITLE:"Whops",
-        DELETED_MARKER_MESSAGE:"Looks like someone deleted the content you where looking for."
+        DELETED_MARKER_MESSAGE:"Looks like someone deleted the content you where looking for.",
+        MEMBERS:"Group members"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

@@ -76,8 +76,6 @@
 
         <entity-actions ng-if="isLoggedIn && infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>
 
-        <members-list id="infoPlace.marker.id" owner="infoPlace.marker.owner" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-list>
-
         <simple-entity-list ng-if="infoPlace.marker.id" id="infoPlace.marker.id" owner="infoPlace.marker.user" entity-type="infoPlace.marker.type_info.key" logged=isLoggedIn></simple-entity-list>
 
         <loader ng-if="!infoPlace.marker"></loader>
