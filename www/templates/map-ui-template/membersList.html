@@ -1,7 +1,7 @@
 <div ng-if="role" ng-show="membersList.length > 0" class="list card">
     <div class="item item-divider">{{'GROUP_MEMBERS'|translate}}</div>
     <div ng-repeat="member in membersList | filter:{username:''} track by $index " class="item item-button-right">
-        <button ng-if="user.id == owner && member.id != owner" ng-click="deleteMember(member.groupId,member.id)" class="button button-clear">
+        <button style="color:#333" ng-if="user.id == owner && member.id != owner" ng-click="deleteMember(member.id)" class="button button-clear">
             <i class="icon ion-android-cancel"></i> 
         </button>
         <div>

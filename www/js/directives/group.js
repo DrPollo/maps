@@ -147,8 +147,8 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                 );
             }
 
-            $scope.deleteMember = function(groupId,memberId){
-                groupsFactory.removeUser(groupId,memberId).then(
+            $scope.deleteMember = function(memberId){
+                groupsFactory.removeUser($scope.id,memberId).then(
                     function(response){
                         // reinizializzo la lista
                         initList();
