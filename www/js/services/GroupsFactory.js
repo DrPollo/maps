@@ -147,8 +147,8 @@ angular.module('firstlife.factories')
 
         function removeUser (entityId,userId){
             var deferred = $q.defer();
-            $log.debug('joining 5 ',user);
-            if(user){
+            $log.debug('joining 5 ',userId);
+            if(userId){
                 var urlId = url.concat('fl_users/',userId,'/groups/rel/',entityId,format);
                 var req = {
                     url: urlId,

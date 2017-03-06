@@ -32,7 +32,7 @@ angular.module('firstlife.controllers')
         if(!$scope.area) {
             $scope.area = AreaService.getArea();
             $scope.buildings = $scope.area.places;
-            if(consoleCheck) console.log("Area e favPlaces: ", $scope.area);
+            $log.debug("Area e favPlaces: ", $scope.area);
         }
 
         // default utente per le azioni con il log
@@ -212,7 +212,7 @@ angular.module('firstlife.controllers')
 
                     default: 
                         // 1) diretto per il viewer
-                        if(consoleCheck) console.log("MapCtrl, gestione stato, default",$stateParams);
+                        $log.debug("MapCtrl, gestione stato, default",$stateParams);
                         // posiziono la mappa se ci solo le coordinate, 
                         // altrimenti si lascia il centro della mappa 
 
@@ -278,7 +278,7 @@ angular.module('firstlife.controllers')
                     // se e' stato impostato un delay
                     if (MOVEEND_DELAY > 0) {
                         if (moveendSetTimeout) {
-                            if(consoleCheck) console.log("clearTimeout");
+                            $log.debug("clearTimeout");
                             clearTimeout(moveendSetTimeout);
                         }
                         moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
@@ -312,7 +312,7 @@ angular.module('firstlife.controllers')
             function(e, old){
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
-                    if(consoleCheck) console.log("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
+                    $log.debug("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
 
                     // controllo i parametri di posizione
                     check4Position(e);
@@ -455,7 +455,7 @@ angular.module('firstlife.controllers')
         };
 
         $scope.switchEditMode = AuthService.doAction(function(){
-            if($scope.config.dev) if(consoleCheck) console.log("MapCtrl, switchEditMode editMode ",$scope.map.mode);
+            if($scope.config.dev) $log.debug("MapCtrl, switchEditMode editMode ",$scope.map.mode);
             if($scope.editMode){
                 changeMode('view');
 
@@ -468,7 +468,7 @@ angular.module('firstlife.controllers')
 
         $scope.showModalFavPlace = function() {
             $scope.filterFavPlace = {};
-            if(consoleCheck) console.log("check area: ",$scope.area);
+            $log.debug("check area: ",$scope.area);
             $ionicModal.fromTemplateUrl('templates/form/filterFavPlace.html', {
                 scope: $scope,
                 animation: 'fade-in',
@@ -581,33 +581,33 @@ angular.module('firstlife.controllers')
                 $scope.filterConditions[index].equal = false;
                 $scope.filterConditions[index].excludeRule = false;
                 $scope.filterConditions[index].excludeProperty = false;
-                if(consoleCheck) console.log("Init della regola: ",$scope.filterConditions[index]);
+                $log.debug("Init della regola: ",$scope.filterConditions[index]);
             }
-            if(consoleCheck) console.log("Chiave? ",key);
+            $log.debug("Chiave? ",key);
             /* toggle a tre stati
              * 1) excludeRule = false e excludeProperty = false  // filtro attivo
              * 2) excludeRule = true e excludeProperty = false // tutto visibile
              * 3) excludeRule = false e excludeProperty = true  // nulla visibile
              */
             if(!key && key !== 0){
-                if(consoleCheck) console.log("Niente chiave, faccio toggle");
+                $log.debug("Niente chiave, faccio toggle");
                 // se in stato 1) vado in 2) 
                 if(!$scope.filterConditions[index].excludeRule && !$scope.filterConditions[index].excludeProperty){
-                    if(consoleCheck) console.log("Stato 1 vado in 2");
+                    $log.debug("Stato 1 vado in 2");
                     $scope.filterConditions[index].excludeRule = true;
                     $scope.filterConditions[index].excludeProperty = false;
                     $scope.filters[cat].toggle = 2;
                 }
                 // se in stato 2) vado in 3) 
                 else if($scope.filterConditions[index].excludeRule && !$scope.filterConditions[index].excludeProperty){
-                    if(consoleCheck) console.log("Stato 2 vado in 3");
+                    $log.debug("Stato 2 vado in 3");
                     $scope.filterConditions[index].excludeRule = false;
                     $scope.filterConditions[index].excludeProperty = true;
                     $scope.filters[cat].toggle = 3;
                 }
                 // se in stato 3) vado in 1) 
                 else if(!$scope.filterConditions[index].excludeRule && $scope.filterConditions[index].excludeProperty){
-                    if(consoleCheck) console.log("Stato 3 vado in 1");
+                    $log.debug("Stato 3 vado in 1");
                     $scope.filterConditions[index].excludeRule = false;
                     $scope.filterConditions[index].excludeProperty = false;
                     $scope.filters[cat].toggle = 1;
@@ -615,8 +615,8 @@ angular.module('firstlife.controllers')
             } else {
                 // se la chiave e' impostata aggiungo/rimuovo la chiave
                 var i = $scope.filterConditions[index].values.indexOf(key);
-                if(consoleCheck) console.log("Aggiungo/rimuovo chiave: ",key, " a ", $scope.filterConditions[index].values, " indice: ",i);
-                if(consoleCheck) console.log("Intervengo qui: ",$scope.filters[cat].list);
+                $log.debug("Aggiungo/rimuovo chiave: ",key, " a ", $scope.filterConditions[index].values, " indice: ",i);
+                $log.debug("Intervengo qui: ",$scope.filters[cat].list);
                 var j = $scope.filters[cat].list.map(function(e){return e.key}).indexOf(key);
                 if(i < 0) {
                     $scope.filterConditions[index].values.push(key);
@@ -635,7 +635,7 @@ angular.module('firstlife.controllers')
                 $scope.filterConditions[index].excludeRule = false;
                 $scope.filterConditions[index].excludeRule = false;
                 $scope.filters[cat].toggle = 1;
-                if(consoleCheck) console.log("Aggiunta o rimossa chiave: ",$scope.filterConditions[index].values," vado in stato 1");
+                $log.debug("Aggiunta o rimossa chiave: ",$scope.filterConditions[index].values," vado in stato 1");
             }
 
 
@@ -651,12 +651,12 @@ angular.module('firstlife.controllers')
                 maxWidth: 50,
                 showDelay: 0
             });
-            if(consoleCheck) console.log("cambio favCat da ",$scope.favCat, " a ", id);
+            $log.debug("cambio favCat da ",$scope.favCat, " a ", id);
             $scope.favCat = id;
             // lancio l'ultimo step di update dei marker
             // da migliorare
             for(i in $scope.markersFiltered){
-                if(consoleCheck) console.log("cambio icona al marker ",$scope.markersFiltered[i]);
+                $log.debug("cambio icona al marker ",$scope.markersFiltered[i]);
                 // se e' definita un icona per il category_space favCat allora assegno l'icona, altrimenti tengo quella di attuale
                 $scope.markersFiltered[i].icon = $scope.markersFiltered[i].icons[$scope.favCat] ? $scope.markersFiltered[i].icons[$scope.favCat] : $scope.markersFiltered[i].icon;
 
@@ -668,8 +668,8 @@ angular.module('firstlife.controllers')
 
         // mostra il wall con il contenuto della mappa
         $scope.showWall = function(){
-            if(consoleCheck) console.log("MapCtrl, showWall!");
-            if(consoleCheck) console.log("check area: ",$scope.area);
+            $log.debug("MapCtrl, showWall!");
+            $log.debug("check area: ",$scope.area);
 
             $ionicModal.fromTemplateUrl('templates/modals/wall.html', {
                 scope: $scope,
@@ -698,8 +698,8 @@ angular.module('firstlife.controllers')
         
         // mostra il wall con il contenuto della mappa
         $scope.showSearchBox = function(){
-            if(consoleCheck) console.log("MapCtrl, showSearchBox!");
-            if(consoleCheck) console.log("check area: ",$scope.area);
+            $log.debug("MapCtrl, showSearchBox!");
+            $log.debug("check area: ",$scope.area);
 
             $ionicModal.fromTemplateUrl('templates/modals/search.html', {
                 scope: $scope,
@@ -762,19 +762,19 @@ angular.module('firstlife.controllers')
                         updateSearch(center);
                     }
                 },
-                function(err){if(consoleCheck) console.log("updatePositionInSearch, MapService.getCenter, errore: ", err);}
+                function(err){$log.debug("updatePositionInSearch, MapService.getCenter, errore: ", err);}
             );
         }
         function updatePlaceInSearch(id){
             MapService.getCenter().then(
                 function(center){
-                    // if(consoleCheck) console.log("centro della mappa, ",center);
+                    // $log.debug("centro della mappa, ",center);
                     // aggiungo il place
                     center.entity = id;
                     // aggiorno i parametri della mappa
                     updateSearch(center);
                 },
-                function(err){if(consoleCheck) console.log("updatePlaceInSearch, MapService.getCenter, errore: ", err);}
+                function(err){$log.debug("updatePlaceInSearch, MapService.getCenter, errore: ", err);}
             );
         }
         function updateSearch(params){
@@ -784,7 +784,7 @@ angular.module('firstlife.controllers')
                 $location.search(key,params[key]);
                 //self.watchSearchEnabled = true;
             }
-            if(consoleCheck) console.log("nuovi parametri search: ", $location.search(), params);
+            $log.debug("nuovi parametri search: ", $location.search(), params);
         }
 
         function deleteInSearch(key){
@@ -808,10 +808,10 @@ angular.module('firstlife.controllers')
                 // ho una entita' 
                 locateEntity(coord);
             } else if(typeof(coord) === 'object' && 'bound' in coord){
-                if(consoleCheck) console.log("centro su bounds: ",coord);
+                $log.debug("centro su bounds: ",coord);
                 // fit della mappa al bound del fav. place
                 /*leafletData.getMap("mymap").then(function(map) {
-                    if(consoleCheck) console.log("MapCtrl, locate, object, bounds: ",coord['bound']);
+                    $log.debug("MapCtrl, locate, object, bounds: ",coord['bound']);
                     map.fitBounds(coord['bound']);
                     //map.fitBounds();
                 });
@@ -850,7 +850,7 @@ angular.module('firstlife.controllers')
                 $cordovaGeolocation
                     .getCurrentPosition()
                     .then(function (position) {
-                    if(consoleCheck) console.log(coord);
+                    $log.debug(coord);
                     /*self.map.center.lat  = position.coords.latitude;
                     self.map.center.lng = position.coords.longitude;
                     self.map.center.zoom = $rootScope.info_position.zoom;
@@ -876,7 +876,7 @@ angular.module('firstlife.controllers')
 
                 }, function(err) {
                     // error
-                    if(consoleCheck) console.log("Location error: ", err);
+                    $log.debug("Location error: ", err);
                     $ionicLoading.hide();
 
                 });  
@@ -929,7 +929,7 @@ angular.module('firstlife.controllers')
             });
 
             alertPopup.then(function(res) {
-                if(consoleCheck) console.log('Allert con contenuto: ',content);
+                $log.debug('Allert con contenuto: ',content);
             });
         };
 
@@ -946,10 +946,10 @@ angular.module('firstlife.controllers')
                     titleText: content.text,
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        if(consoleCheck) console.log('CANCELLED');
+                        $log.debug('CANCELLED');
                     }
                 });
-                if(consoleCheck) console.log("actionSheet", hideSheet);
+                $log.debug("actionSheet", hideSheet);
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
@@ -962,10 +962,10 @@ angular.module('firstlife.controllers')
                     titleText: content.text,
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        if(consoleCheck) console.log('CANCELLED');
+                        $log.debug('CANCELLED');
                     }
                 });
-                if(consoleCheck) console.log("actionSheet", hideSheet);
+                $log.debug("actionSheet", hideSheet);
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
@@ -980,16 +980,16 @@ angular.module('firstlife.controllers')
                     titleText: content.text,
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        if(consoleCheck) console.log('CANCELLED');
+                        $log.debug('CANCELLED');
                     }
                 });
-                if(consoleCheck) console.log("actionSheet", hideSheet);
+                $log.debug("actionSheet", hideSheet);
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }else{ 
 
-                if(consoleCheck) console.log("creazione/modifica ok!");}
+                $log.debug("creazione/modifica ok!");}
         }; 
 
 
@@ -1016,43 +1016,43 @@ angular.module('firstlife.controllers')
             // per ogni condizione
             var testCondition = false;
             var comparison = function(a,b,equal){
-                if(consoleCheck) console.log("markerFilter, comparison, a, b, equal ",a,b,equal);
+                $log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
                 if(Array.isArray(a)){
                     if(equal){
-                        if(consoleCheck) console.log(a,"==",b,"? ",(a == b));
+                        $log.debug(a,"==",b,"? ",(a == b));
                         return (a.indexOf(b) >= 0);
                     }
                     return (a.indexOf(b) < 0);
                 }else{
                     if(equal){
-                        if(consoleCheck) console.log(a,"==",b,"? ",(a == b));
+                        $log.debug(a,"==",b,"? ",(a == b));
                         return a == b;
                     }
-                    if(consoleCheck) console.log(a,"!=",b,"? ",(a != b));
+                    $log.debug(a,"!=",b,"? ",(a != b));
                     return a != b;
                 }
             }
-            if(consoleCheck) console.log("entry: ",val, " Condizioni: ", $scope.filterConditions);
+            // $log.debug("entry: ",val, " Condizioni: ", $scope.filterConditions);
             for(key in $scope.filterConditions){
                 // se non devo escludere la regola 
 
-                if(consoleCheck) console.log("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                $log.debug("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 // se esiste la include condition e il valore includeCondition:{value:cats.category_space,property:'category_space'}
                 var indexCheck = 0;
                 if($scope.filterConditions[key].includeCondition){
                     var checkField = val[$scope.filterConditions[key].includeCondition.property];
                     var k = Object.keys($scope.filterConditions[key].includeCondition.value)[0];
                     indexCheck = checkField.map(function(e){return e[k].id}).indexOf($scope.filterConditions[key].includeCondition.value[k]);
-                    if(consoleCheck) console.log("check per includeCondition ", (indexCheck > -1));
+                    $log.debug("check per includeCondition ", (indexCheck > -1));
                 }
 
 
-                if(consoleCheck) console.log("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                $log.debug("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 if(!$scope.filterConditions[key].excludeRule  && $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
                     // se devo escludere ogni valore possibile
                     if($scope.filterConditions[key].excludeProperty){
                         var valore = (val[$scope.filterConditions[key].key]);
-                        if(consoleCheck) console.log("Check esclusione regola: ",$scope.filterConditions[key].excludeProperty,val,$scope.filterConditions[key].key,valore);
+                        $log.debug("Check esclusione regola: ",$scope.filterConditions[key].excludeProperty,val,$scope.filterConditions[key].key,valore);
                         if(!valore 
                            || valore === null || 
                            valore === 'undefined' || 
@@ -1070,27 +1070,27 @@ angular.module('firstlife.controllers')
                     // controllo sulla condizione inizializza a true se le condizioni sono in AND, a false se sono in OR
                     var check           = checkValues;
                     // per ogni condizione
-                    if(consoleCheck) console.log("Condizione: ", $scope.filterConditions[key]);
+                    $log.debug("Condizione: ", $scope.filterConditions[key]);
                     for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
-                        if(consoleCheck) console.log("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
+                        $log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
 
                         if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){ 
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
                             if(checkValues && checkCondition){
-                                if(consoleCheck) console.log("checkValues && checkCondition: true, esco ");
+                                $log.debug("checkValues && checkCondition: true, esco ");
                                 return false;
                             }
                             // se la condizione e' obbligatoria il check = false
                             if(checkValues){
-                                if(consoleCheck) console.log("checkValues: true, check = false ");
+                                $log.debug("checkValues: true, check = false ");
                                 check = false;
                             }
                         }else{ 
-                            if(consoleCheck) console.log("val[key] == $scope.filterConditions[key].values[i]");
+                            $log.debug("val[key] == $scope.filterConditions[key].values[i]");
                             // se il valore e' rispettato e sono in OR allora check = true
                             if(!checkValues){
-                                if(consoleCheck) console.log("!checkValues, check = true");
+                                $log.debug("!checkValues, check = true");
                                 check = true;
                             }
                         }
@@ -1103,7 +1103,7 @@ angular.module('firstlife.controllers')
                         testCondition = true;
                 }
             }
-            if(consoleCheck) console.log("Test entry: ",val ,  testCondition);
+            $log.debug("Test entry: ",val ,  testCondition);
             return testCondition;
         };
 
@@ -1153,10 +1153,10 @@ angular.module('firstlife.controllers')
                     if(marker.eTimeline){
                         marker.eTimeline.icon = marker.icons[$scope.favCat] ? marker.icons[$scope.favCat] : marker.icon;
                     }
-                    $log.debug("Check update ",marker.id,(!$scope.markersFiltered[marker.id]));
+                    // $log.debug("Check update ",marker.id,(!$scope.markersFiltered[marker.id]));
                     if(!$scope.markersFiltered[marker.id]){
                         $scope.markersFiltered[marker.id] = marker;
-                        $log.debug("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
+                        // $log.debug("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
                     }
                 }
                 // $log.debug('markers',$scope.markersFiltered)
@@ -1225,10 +1225,10 @@ angular.module('firstlife.controllers')
                 (angular.isString(obj) && obj != '') ||
                 (angular.isNumber(obj))
             ) ) {
-                if(consoleCheck) console.log("Is empty ",obj, "? false");
+                $log.debug("Is empty ",obj, "? false");
                 return false;
             }
-            if(consoleCheck) console.log("Is empty ",obj, "? true");
+            $log.debug("Is empty ",obj, "? true");
             return true;
 
         }
@@ -1238,7 +1238,7 @@ angular.module('firstlife.controllers')
 
             MapService.updateMarkersDistributed().then(
                 function(markers){
-                    if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
+                    $log.debug("updateMarkersDistributed, markers: ",markers);
                     angular.extend($scope.map.markers ,markers);
                     //$log.debug("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
@@ -1254,7 +1254,7 @@ angular.module('firstlife.controllers')
 
             MapService.resetMarkersDistributed().then(
                 function(markers){
-                    if(consoleCheck) console.log("updateMarkersDistributed, markers: ",markers);
+                    $log.debug("updateMarkersDistributed, markers: ",markers);
                     $scope.map.markers = angular.copy( markers);
                     //$log.debug("resetMarkersDistributed, risultato: ",$scope.map.markers.length);
                     // filtro dei marker sulla nuova posizione
@@ -1302,7 +1302,7 @@ angular.module('firstlife.controllers')
                 typesList.push($scope.filters[filter_name].list[i].key)
             }
             $scope.filterConditions.push(rule);
-            if(consoleCheck) console.log("MapCtrl, init filtro entity_type: ",$scope.filters);
+            $log.debug("MapCtrl, init filtro entity_type: ",$scope.filters);
 
 
 
@@ -1359,7 +1359,7 @@ angular.module('firstlife.controllers')
                     rule.values.push($scope.filters[filter_nameL].list[i].key);
                 }
                 $scope.filterConditions.push(rule);
-                if(consoleCheck) console.log("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
+                $log.debug("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
             }
 
 
@@ -1418,7 +1418,7 @@ angular.module('firstlife.controllers')
 
             MapService.get(id).then(
                 function(marker){
-                    if(consoleCheck) console.log("MapCtrl, updateMarker, entityFactory.get, refresh marker ",id,marker);
+                    $log.debug("MapCtrl, updateMarker, entityFactory.get, refresh marker ",id,marker);
                     var index = searchMarkerIndex(marker.id);
                     if(index > -1){
                         $scope.map.markers[index] = marker;
@@ -1522,7 +1522,7 @@ angular.module('firstlife.controllers')
                         locate(params);
                         //$log.debug("nuova posizione", $scope.map.center);
                     },
-                    function(err){if(consoleCheck) console.log("Location error: ",err);}
+                    function(err){$log.debug("Location error: ",err);}
                 );
             }
         }
@@ -1698,7 +1698,7 @@ angular.module('firstlife.controllers')
             if(e.entity){
                 //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
                 // placeModal da aprire
-                if(consoleCheck) console.log("trovato parametro entity, devo aprire una modal: ",e.entity);
+                $log.debug("trovato parametro entity, devo aprire una modal: ",e.entity);
                 clickMarker(e.entity);
                 //localizzo perche' il marker potrebbe non essere nello scope
                 locate(e.entity);
