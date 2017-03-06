@@ -594,6 +594,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             $scope.member = false;
             $scope.owner = false;
             $scope.subscriber = false;
+            $scope.markerOwner = $scope.marker.owner;
+
             if(!$scope.user)
                 $scope.user = AuthService.getUser();
 
@@ -626,7 +628,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 var promises = [];
                 // se e' un gruppo inizializzo con i membri
                 if($scope.marker.entity_type === "FL_GROUPS"){
-                    //bug da sistemare promises.push(initGroup());
+                    //bug da sistemare
+                    promises.push(initGroup());
                 }
                 // aggiungo il recupero dei sottoscrittori
                 promises.push(initSubscribers());
@@ -645,28 +648,30 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
             // recupero i membri se e' un gruppo
             function initGroup(){
-                $log.debug('init group!')
+                // $log.debug('init group!')
                 var deferred = $q.defer();
                 groupsFactory.getMembersRx($scope.marker.id).subscribe(
                     function(response){
-                        $log.debug('groupFactory, getMembers: there are members')
+                        // $log.debug('groupFactory, getMembers: there are members')
                         $scope.users = response;
-                        var index = response.map(function(e){return e.memberId}).indexOf($scope.user.id);
+                        var index = response.map(function(e){return e.id}).indexOf($scope.user.id);
                         if(index > -1){
                             // se esiste allora membro
                             $scope.member = true;
-                            if(response[index].role == 'owner'){
-                                // se ha impostato il ruolo proprietario
-                                $scope.owner = true;
-                            }
                         }else{
                             $scope.member = false;
                             $scope.owner = false;
                         }
+                        $log.debug('check ownership', $scope.markerOwner, $scope.user.id, $scope.markerOwner == $scope.user.id)
+                        if($scope.markerOwner == $scope.user.id){
+                            // se ha impostato il ruolo proprietario
+                            $scope.owner = true;
+                            $scope.member = true;
+                        }
                         deferred.resolve();
                     },
                     function(response){
-                        $log.debug('groupFactory, getMembers: the user is not a group member!');
+                        // $log.debug('groupFactory, getMembers: the user is not a group member!');
                         // giusto per essere sicuro...
                         $scope.member = false;
                         $scope.owner = false;
