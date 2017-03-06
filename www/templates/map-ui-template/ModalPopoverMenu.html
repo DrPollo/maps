@@ -2,17 +2,14 @@
     <ion-content>
         <ion-list>
             <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="item-icon-left" on-tap="updateButtonPopover()">
-                <i ng-if="config.actions.can_modify" class="icon ion-android-create"></i>
+                <i class="icon ion-android-create"></i>
                 {{'EDIT'|translate}}
             </ion-item>
             <ion-item ng-if="config.actions.can_delete && checkPerms['d']" class="item-icon-left" on-tap="removeButtonPopover()">
-                <i ng-if="config.actions.can_delete" class="icon ion-android-delete"></i>
+                <i class="icon ion-android-delete"></i>
                 {{'CANCEL'|translate}}
             </ion-item>
-            <ion-item ng-if="infoPlace.marker.type_info.properties.members && config.actions.can_delete && checkPerms['d']" class="item-icon-left" on-tap="membersButtonPopover()">
-                <i ng-if="config.actions.can_delete" class="icon ion-person-stalker"></i>
-                {{'MEMBERS'|translate}}
-            </ion-item>
+            <members-button marker="infoPlace.marker" close="closePopover"  ng-if="infoPlace.marker.type_info.properties.members && config.actions.can_delete && checkPerms['d']"></members-button>
         </ion-list>
     </ion-content>
 </ion-popover-view>

@@ -2,7 +2,7 @@ angular.module('firstlife.config')
 // configurazione degli url alle api
     .config(
     function setupApi(myConfig){
-        if(myConfig.dev)console.log("setup url api!");
+        //if(myConfig.dev)console.log("setup url api!");
 
         // costruisco gli url delle api
         var ssl = "//";
@@ -33,7 +33,7 @@ angular.module('firstlife.config')
             }   
         }
 
-        if(myConfig.dev)console.log("url api", url);
+        //if(myConfig.dev)console.log("url api", url);
 
     })
 // configurazione authentication
@@ -46,13 +46,13 @@ angular.module('firstlife.config')
         var redirect_uri_auth = myConfig.base_domain.concat("/callback");
         var redirect_uri_logout = myConfig.base_domain.concat("/logout");
 
-        myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){ console.log(r,val); return r.concat(val);},"");
+        myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){  return r.concat(val);},"");
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
 
         if(myConfig.authentication["auth_url"])
             myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id,"&scope=all");
 
-        console.log('auth server check',myConfig.authentication["auth_url"]);
+        //console.log('auth server check',myConfig.authentication["auth_url"]);
 
         if(myConfig.authentication["logout_url"])
             myConfig.authentication["logout_url"] = myConfig.authentication.logout_url.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
@@ -66,7 +66,7 @@ angular.module('firstlife.config')
 // logica
     .config(
     function configAppLogic(myConfig){
-        if(myConfig.dev)console.log("setup parametri accesso app 1",myConfig);
+        //if(myConfig.dev)console.log("setup parametri accesso app 1",myConfig);
         // se il login non e' ammesso (viewer)
         if(!myConfig.actions.alow_login){
             // non ci si puo' registrare
@@ -82,7 +82,7 @@ angular.module('firstlife.config')
             myConfig.actions.can_delete = false;
             myConfig.actions.can_foto = false;
         }
-        if(myConfig.dev)console.log("setup parametri accesso app 2",myConfig);
+        //if(myConfig.dev)console.log("setup parametri accesso app 2",myConfig);
         if(myConfig.behaviour.viewer){
             // disabilito la cache
             myConfig.behaviour.is_login_required = false;
@@ -90,7 +90,7 @@ angular.module('firstlife.config')
             myConfig.behaviour.split_factor = 1;
             myConfig.behaviour.bbox_timeout = 5000;
         } 
-        if(myConfig.dev)console.log("setup parametri accesso app 3",myConfig);
+        //if(myConfig.dev)console.log("setup parametri accesso app 3",myConfig);
         // se le foto sono abilitate
         if(myConfig.actions.can_foto){
             // abilito la visualizzazione dei thumb
@@ -98,24 +98,24 @@ angular.module('firstlife.config')
         } else {
             myConfig.design.show_thumbs = false;
         }
-        if(myConfig.dev)console.log("setup parametri accesso app 4",myConfig);
+        //if(myConfig.dev)console.log("setup parametri accesso app 4",myConfig);
         // se la cache e' disabilitata
         if(!myConfig.behaviour.marker_cache){
             //devo disabilitare lo splitfactor 
             // altrimenti ho un anomalia che mi porta a perdere i dati dei quadranti
             myConfig.behaviour.split_factor = 1;
         }
-        if(myConfig.dev)console.log("setup parametri accesso app fine",myConfig);
+        //if(myConfig.dev)console.log("setup parametri accesso app fine",myConfig);
     })
     .config(
     function setTypePerms(myConfig){
         // init delle maschere dei campi per il form
         // prendo il form di default
-        if(myConfig.dev)console.log("setup dei tipi 1",myConfig);
+        //if(myConfig.dev)console.log("setup dei tipi 1",myConfig);
         var types = myConfig.types;
         var perms = {};
         var checkList = {};
-        if(myConfig.dev)console.log("setup dei tipi 2",myConfig);
+        //if(myConfig.dev)console.log("setup dei tipi 2",myConfig);
         for(k in types.list){
             // faccio il merge dei default con le proprieta' del tipo specifico
             var perm = angular.extend({},types.default.properties, types.list[k].properties);
@@ -126,13 +126,13 @@ angular.module('firstlife.config')
                 types.list[k].actions = types.list[k].actions.concat(angular.copy(types.default.actions));
 
             // ciclo per costruire una maschera con le key, da usare nel wizard con ng-if
-            if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi, proprieta' per il tipo: ", k, perm);
+            //if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi, proprieta' per il tipo: ", k, perm);
             perms[types.list[k].key] ={};
             for(var i in perm){
                 // controllo che non ci sia un campo escluso (definito exclude:true)
-                if(myConfig.dev)console.log("EditorCtrl, init delle maschere di permessi, parametro di esclusione: ", perms[i]);
+                //if(myConfig.dev)console.log("EditorCtrl, init delle maschere di permessi, parametro di esclusione: ", perms[i]);
                 if(!perm[i].exclude){
-                    if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi, aggiungo regola: ", perms[i],perm[i].key,perm[i]);
+                    //if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi, aggiungo regola: ", perms[i],perm[i].key,perm[i]);
                     perms[types.list[k].key][perm[i].key] = perm[i];
                 }
             }
@@ -145,75 +145,75 @@ angular.module('firstlife.config')
             types.list[k].acts = acts;
         }
         myConfig.types.perms = perms;
-        if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);
+        //if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);
     }).config(
     function setRelations(myConfig){
-        if(myConfig.dev)console.log("myConfig, config, init delle relazioni tra tipi: ", myConfig.types.list);
+        //if(myConfig.dev)console.log("myConfig, config, init delle relazioni tra tipi: ", myConfig.types.list);
         var types = myConfig.types.list;
         var relations = {},
             list = [],
             map = {};
         for(i = 0; i < types.length; i++){
-            if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
+            //if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
             var rel = types[i].relations;
             var r = [];
             for(key in rel){
-                if(myConfig.dev)console.log("ciclo relazioni di ",types[i].key, " valuto: ",key,rel,rel[key]);
+                //if(myConfig.dev)console.log("ciclo relazioni di ",types[i].key, " valuto: ",key,rel,rel[key]);
                 var t = angular.copy(types[types.map(function(e){return e.key;}).indexOf(key)]);
                 t.rel = rel[key];
-                if(myConfig.dev)console.log("relazioni per ",types[i].key, " costruito: ",t);
+                //if(myConfig.dev)console.log("relazioni per ",types[i].key, " costruito: ",t);
                 r.push(t);
                 if(list.indexOf(rel[key].slug) < 0 ){
                     list.push(rel[key].slug);
                 }
 
                 map[rel[key].slug] = rel[key].field;
-                console.log('debug rel ',map[rel[key].slug],rel[key].field,rel[key]);
+                //console.log('debug rel ',map[rel[key].slug],rel[key].field,rel[key]);
             }
-            if(myConfig.dev)console.log("aggiungo t: ",t," alle relazioni di: ",types[i].key);
+            //if(myConfig.dev)console.log("aggiungo t: ",t," alle relazioni di: ",types[i].key);
             relations[types[i].key] = r;
         }
         relations.list = list;
         relations.map = map;
-        if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: ", relations);
+        //if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: ", relations);
         myConfig.types.relations = relations;
 
 
         // figli possibili
         var children = {};
         for(i = 0; i < types.length; i++){
-            if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
+            //if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
             var rel = types[i].relations;
             var r = {};
             for(key in rel){
-                if(myConfig.dev)console.log("ciclo relazioni di ",types[i].key, " valuto: ",key,rel,rel[key]);
+                //if(myConfig.dev)console.log("ciclo relazioni di ",types[i].key, " valuto: ",key,rel,rel[key]);
                 var t = angular.copy(types[types.map(function(e){return e.key;}).indexOf(key)]);
                 t.rel = rel[key];
-                if(myConfig.dev)console.log("relazioni per ",types[i].key, " costruito: ",t);
+                //if(myConfig.dev)console.log("relazioni per ",types[i].key, " costruito: ",t);
                 r[key] = t.rel;
             }
-            if(myConfig.dev)console.log("aggiungo t: ",t," alle relazioni di: ",types[i].key);
+            //if(myConfig.dev)console.log("aggiungo t: ",t," alle relazioni di: ",types[i].key);
             children[types[i].key] = r;
         }
-        if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: figli possibili ", children);
+        //if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: figli possibili ", children);
         myConfig.types.child_relations = children;
 
         // padri possibili
         var fathers = {};
         // per ogni tipo
         for(i = 0; i < types.length; i++){
-            if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
+            //if(myConfig.dev)console.log("relazioni per ",types[i].key, " sono: ",types[i].relations);
             var rel = types[i].key;
             fathers[rel] = {};
             for(j = 0; j < types.length; j++){
-                if(myConfig.dev)console.log("myConfig, config. Ciclo tra padri possibili ",types[j]);
+                //if(myConfig.dev)console.log("myConfig, config. Ciclo tra padri possibili ",types[j]);
                 var r = types[j].relations[rel];
                 if(r){
                     fathers[rel][types[j].key] =  angular.copy(r);
                 }
             }
         }
-        if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: padri possibili ",fathers);
+        //if(myConfig.dev)console.log("myConfig, config. Relazioni tra tipi: padri possibili ",fathers);
         myConfig.types.parent_relations = fathers;
 
     }).config(
@@ -226,7 +226,7 @@ angular.module('firstlife.config')
             styles = styles.concat(".pie"+i+":after").concat("{background-color:"+colors[i]+";}");
             styles = styles.concat(".pie"+i+":before").concat("{background-color:"+colors[i]+";}");
         }
-        if(myConfig.dev)console.log("myConfig, config. init styles: ", styles);
+        //if(myConfig.dev)console.log("myConfig, config. init styles: ", styles);
         myConfig.design.css = styles;
     }).config(
     function setColors(myConfig){
@@ -252,22 +252,22 @@ angular.module('firstlife.config')
                 //if(myConfig.dev)console.log("myConfig, setupColor: ", catsList[i].categories[j]);
             }
         }
-        if(myConfig.dev)console.log("myConfig, setupColor: ", catsList);
+        //if(myConfig.dev)console.log("myConfig, setupColor: ", catsList);
         myConfig.types.categories = catsList;
         // impostazioni di dev
     }).config(
     function setupSearchApi(myConfig){
-        if(myConfig.dev) console.log("setup search API", myConfig.navigator.search);
+        //if(myConfig.dev) console.log("setup search API", myConfig.navigator.search);
         if(!myConfig.navigator.search || !myConfig.navigator.search.params)
             return
             var params = myConfig.navigator.search.params;
         var url = myConfig.navigator.search.geocoding.concat('?');
         var url = Object.keys(params).reduce(function(url,key){ return url.concat(key,"=",params[key],"&")}, url);
         myConfig.navigator.search.url = url;
-        console.log('check api url',params,Object.keys(params),url)
+        //console.log('check api url',params,Object.keys(params),url)
     }).config(
     function configDev($logProvider, myConfig){
-        if(myConfig.dev)console.log("setup modalità dev");
+        //if(myConfig.dev)console.log("setup modalità dev");
 
         // se in modalita' dev
         if(myConfig.dev){
@@ -283,5 +283,5 @@ angular.module('firstlife.config')
         // abilito/disabilito i log di debug
         $logProvider.debugEnabled(myConfig.dev);
 
-        if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
+        //if(myConfig.dev)console.log("Risultato myConfig ",myConfig);
     });

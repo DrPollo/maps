@@ -87,7 +87,7 @@ angular.module('firstlife.controllers')
 
                 $ionicModal.fromTemplateUrl('templates/modals/cardPlace.html', {
                     scope: $scope,
-                    animation: 'fade-in',//'slide-in-up',
+                    animation: 'fade-in',
                     backdropClickToClose : true,
                     hardwareBackButtonClose : true
                 }).then(function(modal) {
@@ -160,22 +160,7 @@ angular.module('firstlife.controllers')
                 $scope.updateEntity(marker);
             };
 
-            // apro la lista dei membri
-            $scope.membersButtonPopover = function (){
-                var marker = $scope.infoPlace.marker;
-                $scope.closePopover();
-                // apro la modal
-                $ionicModal.fromTemplateUrl('templates/modals/members.html', {
-                    scope: $scope,
-                    animation: 'fade-in',//'slide-in-up',
-                    backdropClickToClose : true,
-                    hardwareBackButtonClose : true
-                }).then(function(modal) {
-                    modal.show();
-                    $scope.modalMembers = modal;
-                    $log.debug("infoPlace, apro modal members ");
-                });
-            };
+
 
             //Cleanup the popover when we're done with it!
             $scope.$on('$destroy', function() {

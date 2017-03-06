@@ -146,4 +146,34 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
         }]
     }
 
-});
+}).directive('membersButton',['$log','$ionicModal',function($log,$ionicModal){
+
+    return {
+        restrict: 'EG',
+        scope:{
+            close:'=',
+            marker:'='
+        },
+        template:' <ion-item class="item-icon-left" on-tap="membersButtonPopover()"> <i class="icon ion-person-stalker"></i>{{"MEMBERS"|translate}}</ion-item>',
+        link: function(scope, element, attrs){
+            // apro la lista dei membri
+            scope.membersButtonPopover = function (){
+                scope.close();
+                // apro la modal
+                scope.modalMembers = {};
+                $ionicModal.fromTemplateUrl('templates/modals/members.html', {
+                    scope: scope,
+                    animation: 'fade-in',//'slide-in-up',
+                    backdropClickToClose : true,
+                    hardwareBackButtonClose : true
+                }).then(function(membersmodal) {
+                    scope.modalMembers = membersmodal;
+                    scope.modalMembers.show();
+                    $log.debug("infoPlace, apro modal members ",membersmodal);
+                });
+
+            };
+        }
+    }
+
+    }]);
