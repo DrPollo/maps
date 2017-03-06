@@ -148,7 +148,7 @@ angular.module('firstlife.factories')
             remove: function(entityId){
                 if(consoleCheck)console.log("placeFactory, remove id: ",entityId);
                 //trova id da id_wp
-                var urlId = urlThings.concat("/").concat(entityId).concat('/delete').concat(format);
+                var urlId = urlThings.concat("/",entityId,format);
                 //var urlId = types[entity.entity_type].concat("/").concat(entity.id).concat(format);
                 // cancello i marker dalla cache
                 delete self.markerDetailsList[entityId];
