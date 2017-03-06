@@ -112,19 +112,6 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
             $scope.members = groupsFactory.getMembersRx($scope.id);
             initList();
 
-
-            // [
-            //     {
-            //         "type": 1,
-            //         "banned": false,
-            //         "username": "STEFANIA BUCCOLIERO",
-            //         "email": "stefania.buccoliero@gmail.com",
-            //         "created": "2017-03-06T09:31:36.331Z",
-            //         "id": "58bd2c78bc78914d467b6ea5",
-            //         "modified": "2017-03-06T09:31:36.331Z"
-            //     }
-            // ]
-
             function initList(){
                 $scope.role = false;
                 $scope.counter = [];

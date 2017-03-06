@@ -619,7 +619,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             var subscribers = null;
             if($scope.marker){ 
                 subscribers = notificationFactory.subscribersRx($scope.marker.id);
-                $log.debug('debug modal',$scope.marker)
+                // $log.debug('debug modal',$scope.marker)
                 init();
             }
 
@@ -638,7 +638,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 // quando le promise sono pronte
                 deferred.then(
                     function(){
-                        $log.debug('ok, go to initActions')
+                        // $log.debug('ok, go to initActions')
                         // init delle azioni
                         initActions();
                     },
@@ -662,7 +662,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                             $scope.member = false;
                             $scope.owner = false;
                         }
-                        $log.debug('check ownership', $scope.markerOwner, $scope.user.id, $scope.markerOwner == $scope.user.id)
+                        // $log.debug('check ownership', $scope.markerOwner, $scope.user.id, $scope.markerOwner == $scope.user.id)
                         if($scope.markerOwner == $scope.user.id){
                             // se ha impostato il ruolo proprietario
                             $scope.owner = true;
@@ -682,12 +682,26 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 return deferred.promise;
             }
 
+            // [
+            //     {
+            //         "first_name": "Alessio",
+            //         "last_name": "Antonini",
+            //         "type": 1,
+            //         "banned": false,
+            //         "username": "alessio",
+            //         "email": "aleyho@gmail.com",
+            //         "created": "2017-02-18T11:19:30.483Z",
+            //         "id": "58a82dc2b5db431b4531fa41",
+            //         "modified": "2017-02-18T11:19:30.483Z"
+            //     }
+            // ]
             function initSubscribers(){
                 var deferred = $q.defer();
                 subscribers.subscribe(
                     function(response){
+                        // $log.debug('check subscribers',response);
                         if($scope.user)
-                            var index = response.indexOf($scope.user.id);
+                            var index = response.map(function(e){return e.id}).indexOf($scope.user.id);
                         $scope.subscriber = index < 0 ? false : true;
                         deferred.resolve();
                     },
@@ -698,7 +712,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             }
             
             $scope.actionEntity = AuthService.doAction(function(action, param){
-                $log.debug('check action ',action,param);
+                // $log.debug('check action ',action,param);
                 switch(action){
                     case 'unsubscribe':
                         //parte richiesta di unsubscribe
