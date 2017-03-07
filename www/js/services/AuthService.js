@@ -19,6 +19,7 @@ angular.module('firstlife.services')
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
+                        withCredentials: true,
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
                         },
