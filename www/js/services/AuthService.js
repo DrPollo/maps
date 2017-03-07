@@ -12,31 +12,35 @@ angular.module('firstlife.services')
             checkSession: function(){
                 // chiedo all'oauth server se c'e' un utente attivo nell'agent
                 var deferred = $q.defer();
-                var req = {
-                    url: myConfig.authentication.token_url,
-                    method: 'POST',
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    data: {code:code}
-                };
-                $http(req).then(function(response) {
-                    var token = response.data.token;
-                    token.member.member_id = token.member_id;
-                    MemoryFactory.save(tokenKey,token);
-                    MemoryFactory.save(identityKey,token.member);
-//                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
-                    deferred.resolve(response);
-                },function(err){
-                    deferred.reject(err);
-                });
+                if(!myConfig.authentication.api_session){
+                    deferred.reject('undefined api_session');
+                }
+                else {
+                    var req = {
+                        url: myConfig.authentication.api_session,
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        data: {}
+                    };
+                    $http(req).then(function (response) {
+                        // $log.debug('check session', response.data);
+                        if(response.data.member_id)
+                            deferred.resolve(response.data.member_id);
+                        else
+                            deferred.reject('no user logged in');
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+                }
                 return deferred.promise;
             },
             doAction: function (action){
                 if(MemoryFactory.get(tokenKey))
                     return action
 
-                    return loginToAct;
+                return loginToAct;
             },
             registration_url: function(){
                 // chiamo per recuperare l'url di registrazione
@@ -121,7 +125,7 @@ angular.module('firstlife.services')
                 template: ('<center>').concat($filter('translate')('LOGIN_REQUIRED_MESSAGE')).concat('</center>'),
                 buttons: [
                     { text: $filter('translate')('ABORT') },
-                    { 
+                    {
                         text: $filter('translate')('LOGIN'),
                         type: 'button-positive',
                         onTap: function(e){
