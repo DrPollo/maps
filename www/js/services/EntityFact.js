@@ -161,7 +161,16 @@ angular.module('firstlife.factories')
                 };
                 return $http(req);
             },
-
+            report: function (report) {
+                var urlId = myConfig.report_thing;
+                var req = {
+                    url: urlId,
+                    method: 'POST',
+                    headers:{"Content-Type":"application/json"},
+                    data:report
+                };
+                return $http(req);
+            },
             getBBox: function(bbox,reset) {
                 var deferred = $q.defer();
                 var urlId = urlBbox.concat(format);

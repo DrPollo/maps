@@ -1,0 +1,36 @@
+<ion-modal-view id="reportForm">
+    <ion-header-bar class="modal-header">
+        <h1 class="title title-modal">
+            <i class="icon {{simpleEditor.type_info.icon}}"></i>
+            {{'REPORT_TITLE'|translate}}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="content modal-content">
+            <div class="message">
+                <span class="username">{{user.username}}</span>
+                <span>{{'REPORT_DISCLAIMER'|translate}}</span>
+            </div>
+            <form name="report.form" onsubmit="submit()" novalidate>
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : report.form.title.$invalid, 'no-error' : !report.form.title.$invalid}">
+                    <span class="input-label">{{'REPORT_CONTENT_MESSAGE'|translate}}</span>
+                    <textarea style="border:none;min-height: 300px;" row="10" name="report.form.message" ng-model="report.message" placeholder="{{'REPORT_MESSAGE'|translate}}" ng-minlength="50" ng-maxlength="500" autofocus required></textarea>
+                </label>
+                <div class="form-errors" ng-messages="report.form.message.$error">
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                </div>
+            </form>
+        </div>{{report.form.message.$error}}<!-- todo fix della gestione errori-->
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons">
+            <button type="reset" class="button button-stable button-clear icon ion-close-round" on-tap="report.modal.remove()" >{{'ABORT'|translate}}</button>
+        </div>
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button type="submit" class="button button-stable button-clear icon ion-checkmark-round" on-tap="submit()" >{{'REPORT'|translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

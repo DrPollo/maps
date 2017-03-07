@@ -156,6 +156,12 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
         },
         template:' <ion-item class="item-icon-left" on-tap="membersButtonPopover()"> <i class="icon ion-person-stalker"></i>{{"MEMBERS"|translate}}</ion-item>',
         link: function(scope, element, attrs){
+            scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyActions){
+                    e.preventDestroyActions = true;
+                    delete scope;
+                }
+            });
             // apro la lista dei membri
             scope.membersButtonPopover = function (){
                 scope.close();

@@ -946,4 +946,60 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         restrict: 'E',
         template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
     }
-});
+}).directive('reportEntity',['$log', '$ionicModal', 'AuthService', 'entityFactory', function($log,$ionicModal, AuthService, entityFactory){
+    return {
+        scope:{
+            id: '=',
+            close:'='
+        },
+        restrict: 'E',
+        template:'<ion-item class="item-icon-left" on-tap="report.open()"> <i class="icon ion-alert-circled"></i>{{"REPORT_CONTENT"|translate}}</ion-item>',
+        link: function(scope, element, attrs){
+
+            scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyActions){
+                    e.preventDestroyActions = true;
+                    delete scope;
+                }
+            });
+            scope.user = AuthService.getUser();
+            scope.report = {message:'',form:{}};
+            // apro la lista dei membri
+            scope.report.open = function (){
+                scope.close();
+                // apro la modal
+                scope.report.modal = {};
+                $ionicModal.fromTemplateUrl('templates/modals/reportEntity.html', {
+                    scope: scope,
+                    animation: 'fade-in',//'slide-in-up',
+                    backdropClickToClose : true,
+                    hardwareBackButtonClose : true
+                }).then(function(membersmodal) {
+                    scope.report.modal = membersmodal;
+                    scope.report.modal.show();
+                });
+
+            };
+
+            scope.submit = function(){
+                $log.debug('check fields',scope.report.message, scope.report.form)
+                var report = {thing_id: scope.id, message: scope.report.message};
+                // invio la segnalazione
+                entityFactory.report(report).then(
+                    function (result) {
+                        // tutto ok
+                        $log.debug('segnalazione ok',result)
+                        // todo aggiungi actionsheet di conferma
+                    },
+                    function (err) {
+                        // se non e' possibile fare il report
+                        $log.debug('errore segnalazione',err)
+                    }
+                );
+            }
+        }
+
+    }
+
+
+}]);
