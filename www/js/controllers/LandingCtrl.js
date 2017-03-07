@@ -21,7 +21,7 @@ angular.module('firstlife.controllers')
                 AuthService.checkSession().then(
                     function (result) {
                         // l'utente e' attualmente loggato nell'auth server
-                        // $log.debug('checkSession',result)
+                        $log.debug('checkSession',result)
                         // redirect all'auth server
                         $window.location.href = AuthService.auth_url();
                     },

@@ -26,7 +26,7 @@ angular.module('firstlife.services')
                         data: {}
                     };
                     $http(req).then(function (response) {
-                        // $log.debug('check session', response.data);
+                        $log.debug('check session', response.data);
                         if(response.data.member_id)
                             deferred.resolve(response.data.member_id);
                         else

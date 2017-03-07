@@ -733,7 +733,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
     .config(['$httpProvider', function($httpProvider) {  
-        $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,myConfig){
+        $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,$location,myConfig){
             // test test test
             // var devToken = {
             //     "access_token": "85de3ac93463bc0aea1e77b8c8b214b4d0442f06",
@@ -771,13 +771,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 request: function(config) {
                     // inject del token nell'header se esiste
                     var token = $localStorage[myConfig.authentication.token_mem_key];
-                    //                var token = {access_token:"5d92b662faa060bcbd306886e38a12322069fc99"};
-//                    console.log('token',$localStorage[myConfig.authentication.token_mem_key]);
                     // se il token esiste lo setto
                     if (token && config.method != 'GET')  {
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }
+                    $log.debug('request headers',config)
                     return config;
                 },
                 response: function(response) {
