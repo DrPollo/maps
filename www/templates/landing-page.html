@@ -1,5 +1,5 @@
 <ion-view id="landingpage">
-    <div class="bar bar-header" style="position:relative;">
+    <div ng-if="!defaults.design.navbar" class="bar bar-header" style="position:relative;">
         <div class="left">
         </div>
         <div class="title">
@@ -14,6 +14,7 @@
             <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'" ng-click="langSelector('en')">En</div>
         </div>
     </div>
+    <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="defaults.design.navbar"  url="{{defaults.design.navbar}}" ng-if="!viewer"></navbar>
     <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
         <div class="row main-content">
             <div class="col col-center box">

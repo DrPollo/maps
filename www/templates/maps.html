@@ -1,6 +1,6 @@
-<ion-view class="maps-view">
+<navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.design.navbar && !viewer"  url="{{config.design.navbar}}"></navbar>
+<ion-view class="maps-view" ng-style="config.design.navbar? {height: 'calc(100% - 42px)', top:'42px'} : {}">
     <div id="mapHeader">
-        <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.map.navbar"  url="{{config.map.navbar}}" ng-if="!viewer"></navbar>
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
                 <user-handler check="$parent.checkNotifications"></user-handler>

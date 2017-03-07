@@ -24,6 +24,7 @@
         "text": "WeGovNow!",
         "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}
     },
+    "navbar":"https://wegovnow.liquidfeedback.com/api/1/navigation?format=raw_html",
     "default_language" : "en",
     "side_menu":[],
     "colors":["#FC4A00",
@@ -65,8 +66,7 @@
     "map_default_lng":-0.10123729705810547,
     "zoom_level" : 14,
     "shouthWest_bounds" : [-0.3514683,51.3849401],
-    "northEast_bounds" : [0.148271,51.6723432],
-    "navbar":"https://wegovnow.liquidfeedback.com/api/1/navigation?format=raw_html"
+    "northEast_bounds" : [0.148271,51.6723432]
   }
 }
 }
