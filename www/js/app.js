@@ -41,27 +41,25 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 var embed = search_params.embed ? true : false;
                 $ionicLoading.hide();
 
-                $log.info("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+                $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
                 // aggiorno delle variabili sullo stato precendete e corrente
                 // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
                 $rootScope.previousState = fromState.name;
                 $rootScope.currentState = toState.name;
 
                 //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
-                $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
+                $log.debug('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
                 // se ti trovi in uno stato che richiede autenticazione e non sei loggato
                 if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
-                    $log.info("Salvo lo stato prima del login: ", $stateParams);
+                    $log.debug("Salvo lo stato prima del login: ", $stateParams);
                     event.preventDefault();
                     // vai a login per effettuare l'autenticazione
                     $state.go('home');
                 } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
                     $state.go('app.maps',search_params);
                 }else {
-
-                    $log.info("Continuo a ", toState.name);
-
+                    $log.debug("Continuo a ", toState.name);
                 }
             }
         });
@@ -95,7 +93,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: "/callback?code&state",
         controller: 'CallbackCtrl',
         templateUrl: "templates/callback-page.html",
-        reloadOnSearch: false,
         data: {
             authenticate: false
         }
