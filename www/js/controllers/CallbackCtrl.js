@@ -10,7 +10,7 @@ angular.module('firstlife.controllers')
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
             event.preventDefault();
             
-            if(dev) $log.debug("sono in login, questi i parametri ",toState);
+            $log.debug("sono in login, questi i parametri ",toState);
 
             // controllo parametro code
             var params = $location.search();

@@ -5,21 +5,21 @@ angular.module('firstlife.controllers')
 
         var consoleCheck = false;
 
-        
+
         var levels = {check:false};
         if (myConfig.map.area.levels){
             levels = {check:true};
             levels.list = $scope.config.map.area.levels;
         }
-        
+
         // configurazione dell'applicazione
         if(!$scope.config) $scope.config = myConfig;
         var config = myConfig;
 
-        
+
         // check geometrie
         var checkGeometries = config.map.geometry_layer;
-        
+
         // visualizzazione web o mobile?
         if(!$scope.isMobile) $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
         // funzione di locate usata anche nelle modal
@@ -82,7 +82,7 @@ angular.module('firstlife.controllers')
             data:{
                 "type": "FeatureCollection",
                 "features": []
-              },
+            },
             style: style
         };
 
@@ -119,8 +119,8 @@ angular.module('firstlife.controllers')
             }
             return style;
         }
-        
-        
+
+
 
         // se ci sono dei valori di default dell'area
         if($scope.config.map.area && $scope.config.map.area.data){
@@ -129,35 +129,35 @@ angular.module('firstlife.controllers')
             // se definito sovrascrivo lo stile
             if($scope.config.map.area.style)
                 $scope.geojson.style = angular.copy($scope.config.map.area.style);
-            
+
             $scope.geojson.levels = levels.check ? levels.list : null;
         }
 
-        
-        
+
+
         var funcLayer = null
         // init livello griglia
         // testing delle chiamate tile
         if(false && !funcLayer){
-        leafletData.getMap("mymap").then(function(map) {
-            funcLayer = new L.TileLayer.Functional(
-                function (tile) {
-                    //$log.debug('subscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
-                    //$rootScope.$emit('grid-subscribe',tile);
-                    tilesFactory.subscribe(tile.x, tile.y, tile.z);
-                },function(tile){
-                    $log.info('unsubscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
-                    //$rootScope.$emit('grid-unsubscribe',tile);
-                    tilesFactory.unsubscribe(tile.x, tile.y, tile.z);
-            });
-            funcLayer.addTo(map);
-            $log.debug('init map',map);
-            return null;
-        },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
+            leafletData.getMap("mymap").then(function(map) {
+                funcLayer = new L.TileLayer.Functional(
+                    function (tile) {
+                        //$log.debug('subscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
+                        //$rootScope.$emit('grid-subscribe',tile);
+                        tilesFactory.subscribe(tile.x, tile.y, tile.z);
+                    },function(tile){
+                        $log.info('unsubscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
+                        //$rootScope.$emit('grid-unsubscribe',tile);
+                        tilesFactory.unsubscribe(tile.x, tile.y, tile.z);
+                    });
+                funcLayer.addTo(map);
+                $log.debug('init map',map);
+                return null;
+            },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
         }
-        
-        
-        
+
+
+
         //$log.debug('check geojson ',$scope.geojson);
 
         // cambio di stato, ingresso in app.maps
@@ -170,67 +170,58 @@ angular.module('firstlife.controllers')
             check4search(params);
             check4group(params);
             check4user(params);
-            
+
             $scope.isLoggedIn = AuthService.isAuth();
-            
-            $log.log("sono in app.map e vengo da ", $rootScope.previousState, $stateParams);
-            // evito reload involontari
-            if($rootScope.previousState !== 'app.maps'){
-                
-                // recupero la mappa se non inizializzata
-                $scope.map = MapService.getMap();
-                
-                
-                $log.log("MapCtrl, map all'ingresso di stato ",$scope.map);
 
-                // valuto lo stato da dove arrivo e decido cosa fare
-                switch($rootScope.previousState){
+            $log.log("sono in app.map e vengo da ", $rootScope.previousState, params);
 
-                    case 'app.editor':
-                        // se vengo dalla creazione/modifica di posti
-                        $log.debug("MapCtrl, cambio stato da intro: ",$stateParams);
-                        
-                        if($stateParams.entity){
-                            backFromEditor($stateParams.entity);
-                            // click del markers
-                            //clickMarker($stateParams.entity.id);
-                        }
-                        
-                        break;
+            // recupero la mappa se non inizializzata
+            $scope.map = MapService.getMap();
 
-                    case 'login':
-                        // vengo dal login
+            $log.log("MapCtrl, map all'ingresso di stato ",$scope.map);
+
+            // valuto lo stato da dove arrivo e decido cosa fare
+            switch($rootScope.previousState){
+
+                case 'app.editor':
+                    // se vengo dalla creazione/modifica di posti
+                    $log.debug("MapCtrl, cambio stato da intro: ",$stateParams);
+
+                    if($stateParams.entity){
+                        backFromEditor($stateParams.entity);
+                        // click del markers
+                        //clickMarker($stateParams.entity.id);
+                    }
+
+                    break;
+
+                case 'login':
+                    // vengo dal login
+                    locate($stateParams);
+
+                    if($stateParams.entity)
+                        clickMarker($stateParams.entity);
+
+                    if($stateParams)
+                        check4customFilters($stateParams,{});
+
+                    break;
+
+                default:
+                    // 1) diretto per il viewer
+                    $log.debug("MapCtrl, gestione stato, default",$stateParams);
+                    // posiziono la mappa se ci solo le coordinate,
+                    // altrimenti si lascia il centro della mappa
+
+                    if($stateParams.entity)
+                        clickMarker($stateParams.entity);
+                    else // centro la mappa sullo stato corrente
                         locate($stateParams);
 
-                        if($stateParams.entity)
-                            clickMarker($stateParams.entity);
-
-                        if($stateParams)
-                            check4customFilters($stateParams,{});
-
-                        break;
-
-                    default: 
-                        // 1) diretto per il viewer
-                        $log.debug("MapCtrl, gestione stato, default",$stateParams);
-                        // posiziono la mappa se ci solo le coordinate, 
-                        // altrimenti si lascia il centro della mappa 
-
-                        if($stateParams.entity)
-                            clickMarker($stateParams.entity);
-                        else // centro la mappa sullo stato corrente
-                            locate($stateParams);
-                        
-                        if($stateParams)
-                            check4customFilters($stateParams,{});
-                }
-            }else{
-                $log.log("MapCtrl, gestione stato, ignorato perche' vengo da ", $rootScope.previousState);
+                    if($stateParams)
+                        check4customFilters($stateParams,{});
             }
 
-            
-            
-            
             // riattivo il listner
             //self.watchSearchEnabled = true;
         });
@@ -262,13 +253,13 @@ angular.module('firstlife.controllers')
                     clickMarker(args.model.id);
                 }
             }
-        });   
+        });
 
         // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
         $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
             if(!event.preventMapMoveend){
                 event.preventMapMoveend = true;
-               $log.debug("Event: moveend...", $scope.map);
+                $log.debug("Event: moveend...", $scope.map);
                 // recupero i dati del layer
                 if(!$scope.config.map.area.data) {getData();}
                 // aggiornamento parametro search nell'url
@@ -282,7 +273,7 @@ angular.module('firstlife.controllers')
                             clearTimeout(moveendSetTimeout);
                         }
                         moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
-                    } 
+                    }
                     else {
                         updateMarkersDistributed();
                     }
@@ -308,7 +299,7 @@ angular.module('firstlife.controllers')
         });
         //listner cambio dei parametri search
         $scope.$watch(
-            function(){ return $location.search(); }, 
+            function(){ return $location.search(); },
             function(e, old){
                 if(self.watchSearchEnabled){
                     // se ho il parametro place
@@ -332,7 +323,7 @@ angular.module('firstlife.controllers')
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
                 self.watchSearchEnabled = true;
-                
+
             },
             true);
 
@@ -379,7 +370,7 @@ angular.module('firstlife.controllers')
                 // se devo saltare il riposizionamento
                 $scope.showASEdit();
             }
-            
+
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -484,7 +475,7 @@ angular.module('firstlife.controllers')
                 // rendo visibile la modal nella root per il routing dell'app
                 $rootScope.modal= modal;
                 $rootScope.modalStatus = true;
-            });  
+            });
 
             $scope.openFilterFavPlace = function() {
                 $scope.filterFavPlace.modal.show();
@@ -517,7 +508,7 @@ angular.module('firstlife.controllers')
                 // rendo visibile la modal nella root per il routing dell'app
                 $rootScope.modal = modal;
                 $rootScope.modalStatus = true;
-            });  
+            });
 
             $scope.openFilterCat = function() {
                 $scope.filterCat.modal.show();
@@ -578,7 +569,7 @@ angular.module('firstlife.controllers')
             var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(cat);
             $log.debug("Indice regola filtro: ",index,cat,key);
             // se non c'e' lo creo
-            if(index < 0){ 
+            if(index < 0){
                 // default tutti i valori
                 $scope.filterConditions[index] = {};
                 $scope.filterConditions[index].values = [null];
@@ -682,7 +673,7 @@ angular.module('firstlife.controllers')
             }).then(function(modal) {
                 $scope.wall = modal;
                 $scope.wall.show();
-            }); 
+            });
 
             $scope.closeWall = function() {
                 $scope.wall.remove();
@@ -700,7 +691,7 @@ angular.module('firstlife.controllers')
                 locate(marker.id);
             }
         }
-        
+
         // mostra il wall con il contenuto della mappa
         $scope.showSearchBox = function(){
             $log.debug("MapCtrl, showSearchBox!");
@@ -712,7 +703,7 @@ angular.module('firstlife.controllers')
             }).then(function(modal) {
                 $scope.searchBox = modal;
                 $scope.searchBox.show();
-            }); 
+            });
 
             $scope.closeSearchBox = function() {
                 $scope.searchBox.hide();
@@ -802,7 +793,7 @@ angular.module('firstlife.controllers')
 
         // centra la mappa
         // accetta paramentri per la locate: center, bounds, user, marker
-        function locate(coord){     
+        function locate(coord){
             $log.log("centro su luogo, id: "+typeof(coord)+" ",coord);
 
             if(typeof(coord) === 'object' && 'entity' in coord && coord.entity){
@@ -816,23 +807,23 @@ angular.module('firstlife.controllers')
                 $log.debug("centro su bounds: ",coord);
                 // fit della mappa al bound del fav. place
                 /*leafletData.getMap("mymap").then(function(map) {
-                    $log.debug("MapCtrl, locate, object, bounds: ",coord['bound']);
-                    map.fitBounds(coord['bound']);
-                    //map.fitBounds();
-                });
-                */
+                 $log.debug("MapCtrl, locate, object, bounds: ",coord['bound']);
+                 map.fitBounds(coord['bound']);
+                 //map.fitBounds();
+                 });
+                 */
                 setMapCenter(coord);
             } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
                 $log.debug('locate coord',coord);
                 // centro su coordinate
                 /*
-                self.map.center.lat = parseFloat(coord.lat);
-                self.map.center.lng = parseFloat(coord.lng);
-                if(coord.zoom != null){
-                    self.map.center.zoom = parseInt(coord.zoom);
-                } else if(self.map.center.zoom == null){
-                    self.map.center.zoom = parseInt($scope.config.map.zoom_create);
-                }*/
+                 self.map.center.lat = parseFloat(coord.lat);
+                 self.map.center.lng = parseFloat(coord.lng);
+                 if(coord.zoom != null){
+                 self.map.center.zoom = parseInt(coord.zoom);
+                 } else if(self.map.center.zoom == null){
+                 self.map.center.zoom = parseInt($scope.config.map.zoom_create);
+                 }*/
                 var params = {
                     lat:parseFloat(coord.lat),
                     lng:parseFloat(coord.lng),
@@ -855,42 +846,42 @@ angular.module('firstlife.controllers')
                 $cordovaGeolocation
                     .getCurrentPosition()
                     .then(function (position) {
-                    $log.debug(coord);
-                    /*self.map.center.lat  = position.coords.latitude;
-                    self.map.center.lng = position.coords.longitude;
-                    self.map.center.zoom = $rootScope.info_position.zoom;
+                        $log.debug(coord);
+                        /*self.map.center.lat  = position.coords.latitude;
+                         self.map.center.lng = position.coords.longitude;
+                         self.map.center.zoom = $rootScope.info_position.zoom;
 
-                    self.map.markers[0] = {
-                        lat:position.coords.latitude,
-                        lng:position.coords.longitude,
-                        focus: true,
-                        draggable: false
-                    };*/
+                         self.map.markers[0] = {
+                         lat:position.coords.latitude,
+                         lng:position.coords.longitude,
+                         focus: true,
+                         draggable: false
+                         };*/
 
-                    $scope.markersFiltered[0] = {
-                        lat:position.coords.latitude,
-                        lng:position.coords.longitude,
-                        focus: true,
-                        draggable: false
-                    };
-                    var params = {lat:position.coords.latitude,lng:position.coords.longitude,zoom:parseInt(config.map.zoom_create)};
-                    setMapCenter(params);
+                        $scope.markersFiltered[0] = {
+                            lat:position.coords.latitude,
+                            lng:position.coords.longitude,
+                            focus: true,
+                            draggable: false
+                        };
+                        var params = {lat:position.coords.latitude,lng:position.coords.longitude,zoom:parseInt(config.map.zoom_create)};
+                        setMapCenter(params);
 
-                    $ionicLoading.hide();
+                        $ionicLoading.hide();
 
 
-                }, function(err) {
-                    // error
-                    $log.debug("Location error: ", err);
-                    $ionicLoading.hide();
+                    }, function(err) {
+                        // error
+                        $log.debug("Location error: ", err);
+                        $ionicLoading.hide();
 
-                });  
+                    });
 
             }else{
                 // posizione default della mappa
                 /*self.map.center.lat = $scope.config.map.map_default_lat;
-                self.map.center.lng = $scope.config.map.map_default_lng;
-                self.map.center.zoom = $scope.config.map.zoom_level;*/
+                 self.map.center.lng = $scope.config.map.map_default_lng;
+                 self.map.center.zoom = $scope.config.map.zoom_level;*/
                 var params = {
                     lat:parseFloat($scope.config.map.map_default_lat),
                     lng:parseFloat($scope.config.map.map_default_lng),
@@ -992,10 +983,10 @@ angular.module('firstlife.controllers')
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
-            }else{ 
+            }else{
 
                 $log.debug("creazione/modifica ok!");}
-        }; 
+        };
 
 
 
@@ -1058,11 +1049,11 @@ angular.module('firstlife.controllers')
                     if($scope.filterConditions[key].excludeProperty){
                         var valore = (val[$scope.filterConditions[key].key]);
                         $log.debug("Check esclusione regola: ",$scope.filterConditions[key].excludeProperty,val,$scope.filterConditions[key].key,valore);
-                        if(!valore 
-                           || valore === null || 
-                           valore === 'undefined' || 
-                           (Array.isArray(valore) && valore.length == 0 ) || 
-                           (angular.isObject(valore) && angular.equals(valore,{})) ){
+                        if(!valore
+                            || valore === null ||
+                            valore === 'undefined' ||
+                            (Array.isArray(valore) && valore.length == 0 ) ||
+                            (angular.isObject(valore) && angular.equals(valore,{})) ){
                             // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
                             //if(consoleCheck) 
                             console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
@@ -1079,7 +1070,7 @@ angular.module('firstlife.controllers')
                     for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
                         $log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
 
-                        if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){ 
+                        if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
                             if(checkValues && checkCondition){
@@ -1091,7 +1082,7 @@ angular.module('firstlife.controllers')
                                 $log.debug("checkValues: true, check = false ");
                                 check = false;
                             }
-                        }else{ 
+                        }else{
                             $log.debug("val[key] == $scope.filterConditions[key].values[i]");
                             // se il valore e' rispettato e sono in OR allora check = true
                             if(!checkValues){
@@ -1119,27 +1110,27 @@ angular.module('firstlife.controllers')
          * 2) fix relazioni parents e children
          */
         function setMapMarkers(){
-            
+
             //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
             $scope.markersFilteredArray = angular.copy($scope.filtred);
-            
+
             // se il parametro q e' impostato nella search
             if($scope.query){
                 $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray,$scope.query);
             }
 
-            
+
             //aggiorno la lista dei marker mettendo e togliendo
             updateMarkers($scope.markersFilteredArray);
             removeMarkers($scope.markersFilteredArray);
 
-            
-            
+
+
             //$log.debug('check cosa va sulla timeline ',Object.keys($scope.markersFiltered).length);
-            
+
             //mando il segnale di aggiornamento degli eventi sulla timeline
             $rootScope.$emit('timeline.refresh',{list:angular.copy($scope.markersFiltered)});
-            
+
             // correggo la lista tenendo conto delle relazioni tra entita'
             relationsFixer();
             //$scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixerFilter);
@@ -1147,7 +1138,7 @@ angular.module('firstlife.controllers')
 
             //$log.debug("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
 
-            
+
             // applico le modifiche a markersFiltered
             // aggiungo i marker alla lista 
             function updateMarkers(filtred){
@@ -1179,7 +1170,7 @@ angular.module('firstlife.controllers')
                     }
                 }
             }
-            
+
             function relationsFixer(){
                 for(var key in $scope.markersFiltered){
                     var marker = $scope.markersFiltered[key];
@@ -1201,8 +1192,8 @@ angular.module('firstlife.controllers')
                     }
                 }
             }
-            
-            
+
+
             // filtro per il fix delle relazioni
             // se il padre non si vede il figlio viene visualizzato
             // generalizzato sulle relazioni di tipo parent
@@ -1224,12 +1215,12 @@ angular.module('firstlife.controllers')
 
 
         function isEmpty (obj) {
-            if(obj && ( 
-                (Array.isArray(obj) && obj.length > 0) || 
-                (angular.isObject(obj) && !angular.equals({}, obj) ) || 
-                (angular.isString(obj) && obj != '') ||
-                (angular.isNumber(obj))
-            ) ) {
+            if(obj && (
+                    (Array.isArray(obj) && obj.length > 0) ||
+                    (angular.isObject(obj) && !angular.equals({}, obj) ) ||
+                    (angular.isString(obj) && obj != '') ||
+                    (angular.isNumber(obj))
+                ) ) {
                 $log.debug("Is empty ",obj, "? false");
                 return false;
             }
@@ -1349,14 +1340,14 @@ angular.module('firstlife.controllers')
                 var checkL = 'level',
                     filter_nameL = 'Levels';
                 // costruisco regola per gli entity_type
-                var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList, 
-                            callbackPush:function(value){
-                                selectGeoJSONLevel(value);
-                            },
-                            callbackPop:function(value){
-                                //nextGeoJSONLevel(value);
-                            }
-                           };
+                var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList,
+                    callbackPush:function(value){
+                        selectGeoJSONLevel(value);
+                    },
+                    callbackPop:function(value){
+                        //nextGeoJSONLevel(value);
+                    }
+                };
                 // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
                 $scope.filters[filter_nameL] = {list: levels.list, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
                 for(var i = 0; i < $scope.filters[filter_nameL].list.length; i++){
@@ -1510,8 +1501,8 @@ angular.module('firstlife.controllers')
                 var marker = $scope.map.markers[index];
                 $log.debug("Location: ", marker);
                 /*self.map.center.lat = marker.lat;
-                    self.map.center.lng = marker.lng,
-                        self.map.center.zoom = $rootScope.info_position.zoom;*/
+                 self.map.center.lng = marker.lng,
+                 self.map.center.zoom = $rootScope.info_position.zoom;*/
                 var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
                 locate(params);
                 //$log.debug("nuova posizione", self.map.center);
@@ -1523,8 +1514,8 @@ angular.module('firstlife.controllers')
                         // localizzo su marker
                         $log.debug("Location: ", marker);
                         /*self.map.center.lat = marker.lat;
-                            self.map.center.lng = marker.lng,
-                                self.map.center.zoom = $rootScope.info_position.zoom*/
+                         self.map.center.lng = marker.lng,
+                         self.map.center.zoom = $rootScope.info_position.zoom*/
                         var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
                         locate(params);
                         //$log.debug("nuova posizione", $scope.map.center);
@@ -1553,9 +1544,9 @@ angular.module('firstlife.controllers')
         function selectGeoJSONLevel(value){
             if($scope.geojson && $scope.geojson.data && $scope.config.map.area && $scope.config.map.area.data){
                 //$scope.$apply(function(){
-                    $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
+                $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
 
-                    $scope.$broadcast('timeline.groups.setgroup',{group:value});
+                $scope.$broadcast('timeline.groups.setgroup',{group:value});
                 //});
                 $scope.$apply(function(){markerDisabler('level',value);});
 
@@ -1615,7 +1606,7 @@ angular.module('firstlife.controllers')
                         var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
                         if(index > -1 ){
                             $scope.filterConditions.splice(index,1);
-                        }   
+                        }
                     }
                 }
             }
@@ -1635,12 +1626,12 @@ angular.module('firstlife.controllers')
 //            circoscrizioni 12 - 11
 //            citta 10 - 8
 //            provincia 7 - 6
-            
+
             //$log.debug('update geometries ',checkGeometries);
             // se ho le geometrie disabilitate
             if(!checkGeometries)
                 return;
-            
+
             var max = config.map.min_zoom_geometry_layer;
             leafletData.getMap("mymap").then(
                 function(map) {
@@ -1689,7 +1680,7 @@ angular.module('firstlife.controllers')
                 $scope.viewer = false;
             }
         }
-        
+
         // controllo i parametri di posizione
         function check4Position(e){
             // se ho settati i parametri di posizione
@@ -1716,7 +1707,7 @@ angular.module('firstlife.controllers')
 
             }
         };
-        
+
         $scope.query = null;
         // controllo il parametro q di ricerca di stringhe
         function check4search(e,old){
@@ -1739,8 +1730,8 @@ angular.module('firstlife.controllers')
                 setMapMarkers();
             }
         }
-        
-        
+
+
         // groupCard
         function check4group(e){
             if(!e || !e.groups){
@@ -1766,7 +1757,7 @@ angular.module('firstlife.controllers')
             $scope.groupCard = null;
             $location.search('groups',null);
         }
-        
+
         // userCard
         function check4user(e){
             if(!e || !e.users){
@@ -1778,12 +1769,12 @@ angular.module('firstlife.controllers')
             $scope.userCard = null;
             $location.search('users',null);
         }
-        
-        
+
+
     }]).run(function(MapService, myConfig, $timeout, $rootScope){
 
     self.map = MapService.initMap();
-    
+
     // inizializzazione poller mappa
     var RELOAD_TIME = config.behaviour.bbox_reload_time;
     var timer = false;

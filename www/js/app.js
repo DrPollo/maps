@@ -90,7 +90,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             authenticate: false
         }
     }).state('callback', {
-        url: "/callback?code&state",
+        url: "/callback?code&state&profile",
         controller: 'CallbackCtrl',
         templateUrl: "templates/callback-page.html",
         data: {
