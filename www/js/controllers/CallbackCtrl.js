@@ -31,7 +31,7 @@ angular.module('firstlife.controllers')
                 }   
             }else{
                 // altrimenti torno alla landing
-                // $state.go('home');
+                $state.go('home');
             }
         });
 
