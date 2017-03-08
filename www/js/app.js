@@ -735,7 +735,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGOUT_MESSAGE:"Logging out from the client...",
         DELETED_MARKER_TITLE:"Whops",
         DELETED_MARKER_MESSAGE:"Looks like someone deleted the content you where looking for.",
-        MEMBERS:"Group members"
+        MEMBERS:"Group members",
+        REPORT_ERROR_FEEDBACK:"A unexpected error made impossible to report the entity.",
+        REPORT_SUCCESS_FEEDBACK:"We got your feedback, soon we will check the entity.",
+        REPORT_CONTENT:"Report",
+        REPORT_TITLE:"Not appropriate content",
+        REPORT_CONTENT_MESSAGE:"",
+        REPORT_DISCLAIMER:", you are reporting a content. The content will be evaluated by FirstLife editorial staff.",
+        REPORT:"Report",
+        REPORT_MESSAGE:"Motivation of the report. For instance miss leading or offensive information"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
