@@ -968,6 +968,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     delete scope;
                 }
             });
+            var hideSheet = null;
             scope.user = AuthService.getUser();
             scope.report = {
                 content:{
@@ -1015,7 +1016,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             }
 
             function feedback(title){
-                var hideSheet = $ionicActionSheet.show({
+                hideSheet = $ionicActionSheet.show({
                     titleText: $filter('translate')(title),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {

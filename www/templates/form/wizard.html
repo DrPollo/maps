@@ -23,7 +23,8 @@
                     <ion-radio name="entity_type" 
                                ng-repeat="type in editor.listOfTypes track by $index" 
                                value="{{type.key}}" class="item" 
-                               ng-model="editor.wizard.dataForm.entity_type" 
+                               ng-model="editor.wizard.dataForm.entity_type"
+                               on-tap="initEntity(type.key)"
                                ng-required="true">
                         <div class="item-icon-left">
                             <i class="icon {{type.icon}}" style="color:{{config.design.colors[type.index]}}"></i>
@@ -97,15 +98,7 @@
                     {{editor.checkList.tags.label|translate}}
                 </div>
                 <div class="item item-iput autocompletetags">
-                    <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="true">
-                        <auto-complete source="editor.loadTags($query)"
-                                       min-length="0"
-                                       load-on-focus="true"
-                                       load-on-empty="false"
-                                       max-results-to-show="10"
-                                       ng-required="editor.checkList.tags.required"
-                                       ></auto-complete>
-                    </tags-input>
+                    <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
                 </div>
             </div>
             <div class="list card" ng-if="editor.checkList.link_url">

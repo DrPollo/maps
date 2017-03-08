@@ -137,7 +137,6 @@ angular.module('firstlife.services')
 
 
         // conversione del marker nel formato per l'editor
-        
         function editPreProcessing(marker){
             var tmp = angular.copy(marker);
 //            $log.debug("preparo per l'edit", marker)
@@ -165,6 +164,10 @@ angular.module('firstlife.services')
 //                $log.debug('converto data ',tmp.valid_to);
                 tmp.valid_to = new Date(tmp.valid_to);
             }
+
+            // fix delle tag
+            tmp.tags = tmp.tags.map(function(e){return {tag:e}});
+
             $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
             return tmp;    
         }
@@ -243,6 +246,11 @@ angular.module('firstlife.services')
             // categorie
             // inserisco le categorie e scarto quelle vuote
             dataForServer = fillCats(data,dataForServer);
+
+            // fix tag
+            // [{tag:'tag1',....}] > [tag1,tags]
+            dataForServer.tags = data.tags.map(function(e){return e.tag});
+
 
             // geometrie
             // gestisco la geometria

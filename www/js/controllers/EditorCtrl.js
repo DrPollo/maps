@@ -94,20 +94,19 @@ angular.module('firstlife.controllers')
 
                 _this.currentUser = AuthService.getUser();
 
-                // gestione del tipo
-                var type = _this.types.default.key,
-                    typeIndex = _this.types.default.id;
+
+                $log.debug('update?',(params.id && params.id!= ""),params.id)
+
 
                 // scelgo se fare update di un marker esistente o crearne uno nuovo
                 // update place: init dataForm con dati del place...
-                $log.debug('update?',(params.id && params.id!= ""),params.id)
-
                 if(params.id && params.id != ""){
+                    $log.debug('update',params.id);
                     $scope.chooseType = false;
                     //get place(id)
                     entityFactory.get(params.id, true)
                         .then( function(mark) {
-
+                            $log.debug('update marker',mark);
                             //todo gestisco la nuova posizione
                             mark.coordinates = [params.lng,params.lat];
                             mark.lat = parseFloat(params.lat);
@@ -149,13 +148,9 @@ angular.module('firstlife.controllers')
 
 
 
-        $scope.$watch(function(){return _this.wizard.dataForm.entity_type},function(e,old){
-            if(e && e != old){
-                initEntity(e);
-            }
-        })
 
-        function initEntity(entity_type){
+
+        $scope.initEntity = function(entity_type){
             var params = $location.search();
 
             $log.debug('entity_type',entity_type,_this.types.list.map(function(e){return e.key;}))
@@ -257,34 +252,12 @@ angular.module('firstlife.controllers')
             }
         };
 
-        _this.loadTags = function($query) {
-            return TagsService.query($query).then(function(response) {
-                $log.debug("EditorCtrl, loadTags response: ",response);
-                return response.filter(function(resp) {
-                    $log.debug(resp);
-                    return resp.tag.toLowerCase().indexOf($query.toLowerCase()) != -1;
-                });
-            });
-        }
 
         $scope.isCatRelevant = function (item) {
             var check = ((item.entities.indexOf(_this.wizard.dataForm.entity_type) > -1) && item.is_editable);
             //$log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
             return check;
         };
-
-        // bug normalizzo i tag
-        _this.normalizeTags = function(tags){
-            var oldTags= tags,
-                newTag = "";
-
-            for(i in tags){
-                newTag += String(oldTags[i].tag)+",";
-                $log.debug("tag", newTag[i]);
-            }
-            return newTag.substring(0,newTag.length-1).split(",");
-        }
-
 
 
         _this.close = function() {
@@ -364,11 +337,6 @@ angular.module('firstlife.controllers')
              * Regole dell'editor
              */
 
-            //normalizzazz. tags
-            for(var el in _this.wizard.dataForm.tags){
-                dataForServer.tags[el] = _this.wizard.dataForm.tags[el].tag;
-            }
-
             //accettaz. date
             if(!_this.valid_from){ // null se non sono state impostate
                 dataForServer.valid_from = null;
@@ -386,7 +354,7 @@ angular.module('firstlife.controllers')
             dataForServer = EntityService.processData(dataForServer);
             $log.debug("dataForServer", dataForServer);
             //update a place
-            if(params.id !=null && params.id !=""){
+            if(params.id && params.id !=""){
 
                 //dataForServer.id=params.id;
                 entityFactory.update(dataForServer, params.id)
@@ -459,7 +427,7 @@ angular.module('firstlife.controllers')
 
         // imposto il form con i dati del marker da modificare
         function setToEdit(data){
-
+            $log.debug('setToEdit')
             var mark = EntityService.preprocessMarker(data);
             // se il type e' settato
             if(mark.entity_type){
@@ -480,12 +448,7 @@ angular.module('firstlife.controllers')
             if(mark.coordinates){
                 _this.wizard.dataForm.coordinates = [mark.lng,mark.lat];
             }
-            //            if(mark.valid_from){
-            //                _this.wizard.dataForm.valid_from = new Date(mark.valid_from);
-            //            }else{_this.wizard.dataForm.valid_from =null; }
-            //            if(mark.valid_to){
-            //                _this.wizard.dataForm.valid_to = new Date(mark.valid_to);
-            //            }else{_this.wizard.dataForm.valid_to =null; }
+
             if(_this.currentUser.id)
                 _this.wizard.dataForm.user = parseInt(_this.currentUser.id);
             if(mark.id_wp)
@@ -506,28 +469,9 @@ angular.module('firstlife.controllers')
                 $log.debug("Entro in initDuration");
                 initDuration();
             }
+            $log.debug('fine setToEdit')
         }
 
-
-        // ricerca tra i place per l'autocomplete del campo place_id
-        /* da cancellare uso api di ricerca
-         _this.searchSource = [];
-
-         function initSearchSource () {
-         // creo il buffer di ricerca
-         entityFactory.getAll().then(function(markers){
-
-         if(dev) console.log("EditorCtrl, initSearchSource, marker per il buffer: ", markers);
-         // bug deve essere dinamico
-         for (i in markers){
-         _this.searchSource.push(angular.fromJson(angular.toJson(markers[i])));
-         }
-
-         if(dev) console.log("init sorgente di ricerca per l'autocomplete del campo place_id", typeof(_this.searchSource),_this.searchSource);
-         });
-
-
-         };*/
         function setParent(parent_id){
             // $log.debug("carico il parent ", parent_id);
             entityFactory.get(parent_id).then(
