@@ -2,14 +2,14 @@
     <ion-header-bar class="modal-header">
         <h1 class="title title-modal">
             <i class="icon {{simpleEditor.type_info.icon}}"></i>
-            {{'REPORT_TITLE'|translate}}
+            {{'REPORT'|translate}}
         </h1>
     </ion-header-bar>
     <ion-content>
         <div class="content modal-content">
             <div class="message">
                 <span class="username">{{user.username}}</span>
-                <span>{{'REPORT_DISCLAIMER'|translate}}</span>
+                <span ng-bind-html="disclaimer"></span>
             </div>
             <form name="report.form" onsubmit="submit()" novalidate>
                 <label class="item item-input item-floating-label" ng-class="{ 'has-error' : report.form.message.$invalid, 'no-error' : !report.form.message.$invalid}">

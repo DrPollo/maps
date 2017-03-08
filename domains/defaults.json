@@ -84,8 +84,8 @@
                 },
                 "upper_menu":[
                     {
-                        "name":"Standard di Comunità",
-                        "url":"http://firstlife.org/standard-di-comunita",
+                        "name":"Regole di Comunità",
+                        "url":"http://firstlife.org/regole-comunita",
                         "img":"img/icone-landing-page-comunita.svg",
                         "alt":"Prova",
                         "lang":"it"
@@ -106,7 +106,7 @@
                     },
                     {
                         "name":"Community Guidelines",
-                        "url":"http://firstlife.org/standard-di-comunita",
+                        "url":"http://firstlife.org/community-standards",
                         "img":"img/icone-landing-page-comunita.svg",
                         "alt":"Test",
                         "lang":"en"
@@ -126,12 +126,12 @@
                     }
                 ],
                 "lower_menu":[
-                    {"name":"Terms of use","url":"http://firstlife.org/standard-di-comunita","lang":"en"},
-                    {"name":"Privacy policy","url":"http://tutorials.firstlife.org","lang":"en"},
-                    {"name":"Help center","url":"http://firstlife.org","lang":"en"},
-                    {"name":"Condizioni d'uso","url":"http://firstlife.org/standard-di-comunita","lang":"it"},
-                    {"name":"Trattamento dati","url":"http://tutorials.firstlife.org","lang":"it"},
-                    {"name":"Centro assistenza","url":"http://firstlife.org","lang":"it"}
+                    {"name":"Terms of use","url":"http://firstlife.org/terms-of-use","lang":"en"},
+                    {"name":"Privacy policy","url":"http://firstlife.org/privacy-policy","lang":"en"},
+                    {"name":"Help center","url":"http://help.firstlife.org","lang":"en"},
+                    {"name":"Condizioni d'uso","url":"http://firstlife.org/termini-uso","lang":"it"},
+                    {"name":"Trattamento dati","url":"http://firstlife.org/norme-privacy","lang":"it"},
+                    {"name":"Centro assistenza","url":"http://help.firstlife.org","lang":"it"}
                 ],
                 "credits":[
                     {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino","lang":"it"},

@@ -447,14 +447,13 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DELETED_MARKER_TITLE:"Ops",
         DELETED_MARKER_MESSAGE:"Sembra che qualcuno abbia cancellato il contenuto che stavi guardando.",
         MEMBERS:"Membri del gruppo",
-        REPORT_ERROR_FEEDBACK:"Un errore inatteso non ha reso possibile segnalare il cotenuto.",
-        REPORT_SUCCESS_FEEDBACK:"Abbiamo raccolto la segnalazione, provvederemo a breve a valutarla.",
+        REPORT_ERROR_FEEDBACK:"Ops! Un errore inatteso non ha reso possibile ricevere la tua segnalazione.",
+        REPORT_SUCCESS_FEEDBACK:"La tua segnalazione è stata ricevuta.",
         REPORT_CONTENT:"Segnala",
-        REPORT_TITLE:"Contenuto inappropriato",
-        REPORT_CONTENT_MESSAGE:"",
-        REPORT_DISCLAIMER:"stai segnalando questo contenuto. Il contenuto verrà valutato dalla redazione di FirstLife.",
+        REPORT_CONTENT_MESSAGE:"Motivazione della segnalazione",
+        REPORT_DISCLAIMER:"segnalando questo contenuto renderai publico che viola le <a href='http://firstlife.org/regole-comunita' target='_blank'>regole di comunità</a>, le <a href='http://firstlife.org/norme-privacy' target='_blank'>norme sulla privacy</a> o i <a href='http://firstlife.org/termini-uso' target='_blank'>termini d'uso</a>",
         REPORT:"Segnala",
-        REPORT_MESSAGE:"Motivazione della segnalazione. Ad esempio il contenuto è errato o offensivo"
+        REPORT_MESSAGE:"il cotenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -736,14 +735,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DELETED_MARKER_TITLE:"Whops",
         DELETED_MARKER_MESSAGE:"Looks like someone deleted the content you where looking for.",
         MEMBERS:"Group members",
-        REPORT_ERROR_FEEDBACK:"A unexpected error made impossible to report the entity.",
-        REPORT_SUCCESS_FEEDBACK:"We got your feedback, soon we will check the entity.",
+        REPORT_ERROR_FEEDBACK:"Whops! A unexpected error made impossible to receive your report.",
+        REPORT_SUCCESS_FEEDBACK:"We got your report, we will check the entity soon.",
         REPORT_CONTENT:"Report",
-        REPORT_TITLE:"Not appropriate content",
-        REPORT_CONTENT_MESSAGE:"",
-        REPORT_DISCLAIMER:", you are reporting a content. The content will be evaluated by FirstLife editorial staff.",
+        REPORT_CONTENT_MESSAGE:"Motivazione della segnalazione",
+        REPORT_DISCLAIMER:"reporting this content you will make public that is violating the <a href='http://firstlife.org/community-standards' target='_blank'>community standards</a>, the <a href='http://firstlife.org/privacy-policy' target='_blank'>privacy policy</a> or the <a href='http://firstlife.org/terms-of-use' target='_blank'>terms of use</a>",
         REPORT:"Report",
-        REPORT_MESSAGE:"Motivation of the report. For instance miss leading or offensive information"
+        REPORT_MESSAGE_TITLE:"Motivation of the report",
+        REPORT_MESSAGE:"the content containing offenses, threats, violent messages or explicit sexual references? Content is considerable as spam or advertising? The content violates the copyright laws?"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

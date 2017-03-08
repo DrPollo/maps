@@ -969,6 +969,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 }
             });
             var hideSheet = null;
+            scope.disclaimer = $filter('translate')('REPORT_DISCLAIMER');
             scope.user = AuthService.getUser();
             scope.report = {
                 content:{

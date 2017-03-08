@@ -13277,7 +13277,6 @@ ion-side-menu#side-menu {
       .maps-view search-cards button span {
         display: inline;
         padding-right: 10px;
-        font-weight: 300;
         font-size: 1em; }
   .maps-view #mapHeader {
     position: relative;
