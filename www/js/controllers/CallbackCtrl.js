@@ -1,5 +1,4 @@
 angular.module('firstlife.controllers')
-
     .controller('CallbackCtrl',  ['$log','$scope','$state', '$translate', '$location', 'myConfig','AuthService', function($log,$scope, $state, $translate, $location, myConfig,AuthService) {
         $scope.defaults = myConfig;
         var dev = myConfig.dev;
@@ -30,6 +29,11 @@ angular.module('firstlife.controllers')
                     $log.debug('non ho trovato state')
                     generateToken(params.code)
                 }   
+            }if(state.profile){
+                $state.go('app.maps');
+            }else{
+                // altrimenti torno alla landing
+                $state.go('home');
             }
         });
 
