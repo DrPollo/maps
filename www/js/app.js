@@ -93,7 +93,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         }
     }).state('callback', {
         url: "/callback?code&state",
-        controller: 'CallbackCtrl as callback',
+        controller: 'CallbackCtrl',
         templateUrl: "templates/callback-page.html",
         reloadOnSearch: false,
         data: {
