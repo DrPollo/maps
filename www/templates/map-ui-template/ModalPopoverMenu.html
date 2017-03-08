@@ -1,16 +1,16 @@
 <ion-popover-view>
     <ion-content>
         <ion-list>
-            <members-button marker="infoPlace.marker" close="closePopover"  ng-if="infoPlace.marker.type_info.properties.members && config.actions.can_delete && checkPerms['d']"></members-button>
-            <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="item-icon-left" on-tap="updateButtonPopover()">
+            <members-button class="delimited" marker="infoPlace.marker" close="closePopover"  ng-if="infoPlace.marker.type_info.properties.members && config.actions.can_delete && checkPerms['d']"></members-button>
+            <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="delimited item-icon-left" on-tap="updateButtonPopover()">
                 <i class="icon ion-android-create"></i>
                 {{'EDIT'|translate}}
             </ion-item>
-            <ion-item ng-if="config.actions.can_delete && checkPerms['d']" class="item-icon-left" on-tap="removeButtonPopover()">
+            <ion-item ng-if="config.actions.can_delete && checkPerms['d']" class="delimited item-icon-left" on-tap="removeButtonPopover()">
                 <i class="icon ion-android-delete"></i>
                 {{'CANCEL'|translate}}
             </ion-item>
-            <report-entity id="infoPlace.marker.id" close="closePopover"></report-entity>
+            <report-entity class="delimited" id="infoPlace.marker.id" close="closePopover"></report-entity>
         </ion-list>
     </ion-content>
 </ion-popover-view>

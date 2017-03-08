@@ -954,7 +954,7 @@ angular.module('firstlife.controllers')
                         $log.debug('CANCELLED');
                     }
                 });
-                $log.debug("actionSheet", hideSheet);
+                // $log.debug("actionSheet", hideSheet);
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;

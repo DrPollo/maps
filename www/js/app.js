@@ -1,93 +1,93 @@
 angular.module('underscore', [])
     .factory('_', function() {
-    return window._; 
-});
+        return window._;
+    });
 
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, myConfig, AuthService) {
 
-    self.config = myConfig;
-    // init utente
-    $rootScope.isLoggedIn = AuthService.isAuth();
+        self.config = myConfig;
+        // init utente
+        $rootScope.isLoggedIn = AuthService.isAuth();
 
 
 
-    $ionicPlatform.ready(function() {
-        if(window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if(window.StatusBar) {
-            StatusBar.styleDefault();
-        }
-    });
-
-
-    // supporto al routing tra stati
-    $rootScope.previousState;
-    $rootScope.currentState;
-    self.logoutHandler = false;
-    // da cancellare cache stati da usare per recuperare il redirect al login
-    //self.cache = {};
-    //self.cache.isStateCached = false;
-
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
-        if(!event.preventRedirectState){
-            event.preventRedirectState = true;
-            var authenticate = toState.data.authenticate;
-            var search_params = $location.search(); 
-            var params = getJsonFromUrl($location.url().split("?")[1]);
-            var embed = search_params.embed ? true : false;
-            $ionicLoading.hide();
-
-            $log.info("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
-            // aggiorno delle variabili sullo stato precendete e corrente
-            // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
-            $rootScope.previousState = fromState.name;
-            $rootScope.currentState = toState.name;
-
-            //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
-            $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
-
-            // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-            if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
-                $log.info("Salvo lo stato prima del login: ", $stateParams);
-                event.preventDefault();
-                // vai a login per effettuare l'autenticazione
-                $state.go('home');
-            } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
-                $state.go('app.maps',search_params);
-            }else {
-
-                $log.info("Continuo a ", toState.name);
-
+        $ionicPlatform.ready(function() {
+            if(window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             }
+            if(window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
+
+
+        // supporto al routing tra stati
+        $rootScope.previousState;
+        $rootScope.currentState;
+        self.logoutHandler = false;
+        // da cancellare cache stati da usare per recuperare il redirect al login
+        //self.cache = {};
+        //self.cache.isStateCached = false;
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+            if(!event.preventRedirectState){
+                event.preventRedirectState = true;
+                var authenticate = toState.data.authenticate;
+                var search_params = $location.search();
+                var params = getJsonFromUrl($location.url().split("?")[1]);
+                var embed = search_params.embed ? true : false;
+                $ionicLoading.hide();
+
+                $log.info("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+                // aggiorno delle variabili sullo stato precendete e corrente
+                // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
+                $rootScope.previousState = fromState.name;
+                $rootScope.currentState = toState.name;
+
+                //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
+                $log.info('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
+
+                // se ti trovi in uno stato che richiede autenticazione e non sei loggato
+                if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
+                    $log.info("Salvo lo stato prima del login: ", $stateParams);
+                    event.preventDefault();
+                    // vai a login per effettuare l'autenticazione
+                    $state.go('home');
+                } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
+                    $state.go('app.maps',search_params);
+                }else {
+
+                    $log.info("Continuo a ", toState.name);
+
+                }
+            }
+        });
+
+        // parser di url
+        function getJsonFromUrl(query) {
+            var result = {};
+
+            if(query && query != null && query != 'undefined' && query != ''){
+                query.split("&").forEach(function(part) {
+                    var item = part.split("=");
+                    result[item[0]] = decodeURIComponent(item[1]);
+                });
+            }
+
+            return angular.toJson(result);
         }
-    }); 
 
-    // parser di url
-    function getJsonFromUrl(query) {
-        var result = {};
-
-        if(query && query != null && query != 'undefined' && query != ''){
-            query.split("&").forEach(function(part) {
-                var item = part.split("=");
-                result[item[0]] = decodeURIComponent(item[1]);
-            });
-        }
-
-        return angular.toJson(result);
-    }
-
-}).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
         url: "/?embed",
         controller: 'LandingCtrl as landing',
         templateUrl: "templates/landing-page.html",
-        reloadOnSearch: false, 
+        reloadOnSearch: false,
         data: {
             authenticate: false
         }
@@ -95,7 +95,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: "/callback?code&state",
         controller: 'CallbackCtrl as callback',
         templateUrl: "templates/callback-page.html",
-        reloadOnSearch: false, 
+        reloadOnSearch: false,
         data: {
             authenticate: false
         }
@@ -103,7 +103,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: "/logout",
         controller: 'LogoutCtrl',
         templateUrl: "templates/logout-page.html",
-        reloadOnSearch: false, 
+        reloadOnSearch: false,
         data: {
             authenticate: false
         }
@@ -114,31 +114,31 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         controller: 'AppCtrl as app'
     })
         .state('app.maps', {
-        url: "/maps?zoom&lat&lng&entity&embed&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
-        reloadOnSearch: false, 
-        views: {
-            'menuContent': {
-                templateUrl: "templates/maps.html",
-                controller: 'MapCtrl as map'
+            url: "/maps?zoom&lat&lng&entity&embed&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+            reloadOnSearch: false,
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/maps.html",
+                    controller: 'MapCtrl as map'
+                }
+            },
+            data: {
+                authenticate: config.behaviour.is_login_required
             }
-        },
-        data: {
-            authenticate: config.behaviour.is_login_required
-        }
-    })
+        })
         .state('app.editor', {
-        // aggiunta dinamica di parametri presi dalle relazioni
-        url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/form/wizard.html',
-                controller: 'EditorCtrl as editor'
+            // aggiunta dinamica di parametri presi dalle relazioni
+            url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/form/wizard.html',
+                    controller: 'EditorCtrl as editor'
+                }
+            },
+            data: {
+                authenticate: true
             }
-        },
-        data: {
-            authenticate: true
-        }
-    }).state('app.manager', {
+        }).state('app.manager', {
         url: '/manager/?entity',
         views: {
             'menuContent': {
@@ -226,7 +226,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PUBLISH:'Pubblica',
         COMMENT_ALLERT:'Il tuo commento verrà pubblicato sul Web e sarà visibile a tutti.',
         ADD_ENTITY_ALLERT:'Il tuo contributo verrà pubblicato sul Web e sarà visibile a tutti.',
-        COMMENT_TO:'Commento a', 
+        COMMENT_TO:'Commento a',
         // menu edit
         CANCEL: 'Cancella',
         SUCCESS_CANCEL:"Cancellazione eseguita correttamente!",
@@ -446,7 +446,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGOUT_MESSAGE:"Logging out dal client...",
         DELETED_MARKER_TITLE:"Ops",
         DELETED_MARKER_MESSAGE:"Sembra che qualcuno abbia cancellato il contenuto che stavi guardando.",
-        MEMBERS:"Membri del gruppo"
+        MEMBERS:"Membri del gruppo",
+        REPORT_ERROR_FEEDBACK:"Un errore inatteso non ha reso possibile segnalare il cotenuto.",
+        REPORT_SUCCESS_FEEDBACK:"Abbiamo raccolto la segnalazione, provvederemo a breve a valutarla.",
+        REPORT_CONTENT:"Segnala",
+        REPORT_TITLE:"Contenuto inappropriato",
+        REPORT_CONTENT_MESSAGE:"",
+        REPORT_DISCLAIMER:"stai segnalando questo contenuto. Il contenuto verrà valutato dalla redazione di FirstLife.",
+        REPORT:"Segnala",
+        REPORT_MESSAGE:"Motivazione della segnalazione. Ad esempio il contenuto è errato o offensivo"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -508,7 +516,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         PUBLISH:'Post',
         COMMENT_ALLERT:'Your comment will be published on the Web and will be visible to all.',
         ADD_ENTITY_ALLERT:'Your contribution will be published on the Web and will be visible to all.',
-        COMMENT_TO:'Comment of', 
+        COMMENT_TO:'Comment of',
         // menu edit
         CANCEL: 'Trash',
         SUCCESS_CANCEL:"Success: the content is no more!",
@@ -732,7 +740,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
-    .config(['$httpProvider', function($httpProvider) {  
+    .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,$location,myConfig){
             // test test test
             // var devToken = {

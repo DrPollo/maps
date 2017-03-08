@@ -19,7 +19,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             // variabile dove inserisco il timer per il polling
             var timer = false;
             // funzione di polling
-            var polling = function(){ 
+            var polling = function(){
                 $log.log('simple entity polling ',$scope);
                 $timeout.cancel(timer);
                 updateGroups();
@@ -119,7 +119,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             // cancella entita' semplice
             $scope.delete = function(id,type,i){
                 // aggiungi check con alert
-                
+
                 $scope.showConfirm = function() {
                     var confirmPopup = $ionicPopup.confirm({
                         title: $filter('translate')('DELETE'),
@@ -173,7 +173,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 for(var k in $scope.type.fields){
                     data[k] = $scope.simpleEntity[k];
                 }
-                
+
                 SimpleEntityFactory.update($scope.id, $scope.simpleEntity.id,data,$scope.simpleEntity.type).then(
                     function(response){
                         // cancello l'elemento dalla memoria locale
@@ -205,9 +205,9 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
 
 
             /*
-         * Gestione galleria foto
-         * openGallery: inizializza e apre la galleria
-         */
+             * Gestione galleria foto
+             * openGallery: inizializza e apre la galleria
+             */
             $scope.gallery = {};
             $scope.slider = {};
             $scope.slider.images = [];
@@ -224,7 +224,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     animation: 'fade-in'
                 }).then(function(modal){
                     console.log("gallery modal",modal);
-                    $scope.gallery = modal; 
+                    $scope.gallery = modal;
                     if(index > 0){
                         //$scope.galery.goToSlide(index);
                     }
@@ -302,7 +302,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             function initEntity(type) {
                 $scope.boxEntity = {};
                 $scope.simpleEntity = {
-                    type: type.key, 
+                    type: type.key,
                     parent: $scope.id,
                     label: type.label,
                     contentKey: type.contentKey
@@ -325,7 +325,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 }).then(function(modal) {
                     $scope.editor = modal;
                     $scope.editor.show();
-                },function(err){$log.error('open modal ',err);});  
+                },function(err){$log.error('open modal ',err);});
             }
 
             $scope.addEntity = function(){
@@ -351,9 +351,9 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                             $log.error("SimpleEditorCtrl, addComment, error: ",error);
                             actionReport(false);
                         }
-                    ); 
+                    );
 
-                }           
+                }
             }
 
 
@@ -393,7 +393,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             function loadSibillings (){
                 if(!$scope.marker || !$scope.marker.entity_type)
                     return
-                
+
                 $scope.relations = {};
 
                 // caricamento dei child
@@ -453,7 +453,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         templateUrl: '/templates/map-ui-template/AddChildren.html',
         controller: ['$rootScope', '$scope','$log','$filter','myConfig','AuthService','groupsFactory', function($rootScope, $scope,$log,$filter,myConfig,AuthService,groupsFactory){
 
-        
+
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyRelationsActions){
                     e.preventDestroyRelationsActions = true;
@@ -468,7 +468,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     initRelations();
                 }
             })
-            
+
             var checker = groupsFactory.getMembersRx($scope.id);
             var colors = myConfig.design.colors;
             // init relazioni
@@ -499,8 +499,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 //$log.debug('check relations',$scope.relations,$scope.relationsList);
             }
 
-            
-            
+
+
             function lazyCheck(relation,check){
                 switch(check){
                     case 'membership':
@@ -529,7 +529,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         templateUrl: '/templates/map-ui-template/subscribersCounter.html',
         controller: ['$rootScope','$scope','$log','$filter','notificationFactory', function($rootScope, $scope,$log,$filter,notificationFactory){
 
-            
+
             var subscribers = notificationFactory.subscribersRx($scope.id);
             initCounter();
 
@@ -558,8 +558,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     initCounter();
                 }
             })
-            
-            
+
+
             function initCounter(){
                 $scope.counter = 1;
                 subscribers.subscribe(
@@ -572,7 +572,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     function(){}
                 );
             }
-            
+
         }]
     }
 
@@ -615,9 +615,9 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 }
             });
 
-           
+
             var subscribers = null;
-            if($scope.marker){ 
+            if($scope.marker){
                 subscribers = notificationFactory.subscribersRx($scope.marker.id);
                 // $log.debug('debug modal',$scope.marker)
                 init();
@@ -710,7 +710,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 );
                 return deferred.promise;
             }
-            
+
             $scope.actionEntity = AuthService.doAction(function(action, param){
                 // $log.debug('check action ',action,param);
                 switch(action){
@@ -937,7 +937,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     default:
                 }
             }
-            
+
         }]
     };
 }).directive('loader',function(){
@@ -946,7 +946,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         restrict: 'E',
         template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
     }
-}).directive('reportEntity',['$log', '$ionicModal', 'AuthService', 'entityFactory', function($log,$ionicModal, AuthService, entityFactory){
+}).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory){
     return {
         scope:{
             id: '=',
@@ -959,44 +959,71 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyActions){
                     e.preventDestroyActions = true;
+                    if(hideSheet){
+                        hideSheet.hide();
+                    }
+                    if(scope.report.modal && scope.report.modal.remove){
+                        scope.report.modal.remove();
+                    }
                     delete scope;
                 }
             });
             scope.user = AuthService.getUser();
-            scope.report = {message:'',form:{}};
-            // apro la lista dei membri
-            scope.report.open = function (){
-                scope.close();
-                // apro la modal
-                scope.report.modal = {};
-                $ionicModal.fromTemplateUrl('templates/modals/reportEntity.html', {
-                    scope: scope,
-                    animation: 'fade-in',//'slide-in-up',
-                    backdropClickToClose : true,
-                    hardwareBackButtonClose : true
-                }).then(function(membersmodal) {
-                    scope.report.modal = membersmodal;
-                    scope.report.modal.show();
-                });
-
+            scope.report = {
+                content:{
+                    thing_id: scope.id,
+                    message:'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
+                },
+                form:{}
             };
+            // apro la lista dei membri
+            scope.report.open = AuthService.doAction(
+                function (){
+                    scope.close();
+                    // apro la modal
+                    scope.report.modal = {};
+                    $ionicModal.fromTemplateUrl('templates/modals/reportEntity.html', {
+                        scope: scope,
+                        animation: 'fade-in',//'slide-in-up',
+                        backdropClickToClose : true,
+                        hardwareBackButtonClose : true
+                    }).then(function(membersmodal) {
+                        scope.report.modal = membersmodal;
+                        scope.report.modal.show();
+                    });
+
+                }
+            );
 
             scope.submit = function(){
-                $log.debug('check fields',scope.report.message, scope.report.form)
-                var report = {thing_id: scope.id, message: scope.report.message};
+                $log.debug('check fields',scope.report.content);
+
                 // invio la segnalazione
-                entityFactory.report(report).then(
+                entityFactory.report(scope.report.content).then(
                     function (result) {
                         // tutto ok
-                        $log.debug('segnalazione ok',result)
-                        // todo aggiungi actionsheet di conferma
+                        $log.debug('segnalazione ok',result);
+                        scope.report.modal.remove();
+                        feedback('REPORT_SUCCESS_FEEDBACK');
                     },
                     function (err) {
                         // se non e' possibile fare il report
                         $log.debug('errore segnalazione',err)
+                        feedback('REPORT_ERROR_FEEDBACK');
                     }
                 );
             }
+
+            function feedback(title){
+                var hideSheet = $ionicActionSheet.show({
+                    titleText: $filter('translate')(title),
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                        // $log.debug('CANCELLED');
+                    }
+                });
+            }
+
         }
 
     }

@@ -4,12 +4,16 @@
         .popover  {
             .list{
                 .item{
-                    
+                    border: 0px solid;
                     cursor: pointer;
+                    background: transparent;
                     i {
                     
                     }
-
+                }
+                .delimited{
+                    box-shadow:inset 0px -1px 0px #ddd;
+                    display: block;
                 }
             }
         }
