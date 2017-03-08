@@ -29,8 +29,6 @@ angular.module('firstlife.controllers')
                     $log.debug('non ho trovato state')
                     generateToken(params.code)
                 }   
-            }if(params.profile){
-                $state.go('app.maps');
             }else{
                 // altrimenti torno alla landing
                 $state.go('home');
