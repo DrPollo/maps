@@ -810,6 +810,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         var token = rejection.data.token;
                         // salvo il nuovo token
                         $localStorage[myConfig.authentication.token_mem_key] = token;
+                    }else if(rejection.status === 401){
+                        $localStorage[myConfig.authentication.token_mem_key] = null;
+                        $localStorage[myConfig.authentication.identity_mem_key] = null;
                     }
 
                     if(rejection.status === 400 || rejection.status === 404){
