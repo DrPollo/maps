@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('CallbackCtrl',  ['$log','$scope','$state', '$translate', '$location', 'myConfig','AuthService', function($log,$scope, $state, $translate, $location, myConfig,AuthService) {
+    .controller('CallbackCtrl',  ['$log','$scope','$state', '$translate', '$location', 'myConfig','AuthService', 'MemoryFactory', function($log,$scope, $state, $translate, $location, myConfig,AuthService, MemoryFactory) {
         $scope.defaults = myConfig;
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
@@ -20,8 +20,8 @@ angular.module('firstlife.controllers')
                 // controllo dello stato
                 if(params.state){
                     var currentState = MemoryFactory.get(stateKey);
-                    $log.debug('ho trovato state',state, currentState)
-                    if(state === currentState){
+                    $log.debug('ho trovato state',params.state, currentState)
+                    if(params.state === currentState){
                         generateToken(params.code)
                     }
                     // errore stato non coincide

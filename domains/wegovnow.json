@@ -5,16 +5,16 @@
   "domain_id" : 8,
   "ssl": true,
   "authentication": {
-    "auth_server":"uwum",
+    "auth_server":"uwum_auth",
     "auth_server_name":"UWUM",
     "token_mem_key":"token",
     "identity_mem_key":"user",
     "state_name":"oauth_state",
-    "auth_base_domain": "http://secure.firstlife.di.unito.it/",
+    "auth_base_domain": "https://wegovnow.liquidfeedback.com/",
     "auth_url": "https://wegovnow.liquidfeedback.com/api/1/authorization",
     "api_session":"https://wegovnow.liquidfeedback.com/api/1/session",
     "client_id": "wegovnow.firstlife.di.unito.it",
-    "scopes":["userinfo.profile"]
+    "scopes":["profile"]
   },
   "design":{
     "logo" : {

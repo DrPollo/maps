@@ -48,12 +48,20 @@ angular.module('firstlife.config')
         var redirect_uri_auth = myConfig.base_callback.concat("callback");
         var redirect_uri_logout = myConfig.base_callback.concat("logout");
 
-        myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){  return r.concat(val);},"");
+
+        console.log('scopes',myConfig.authentication["scopes"])
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
 
 
         if(myConfig.authentication["auth_url"])
-            myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id,"&scope=all");
+            myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id);
+        if(params.scopes && params.scopes.length > 0){
+            var scopes = params.scopes.reduce(function(r,val){  return r.concat(val,",");},"");
+            // taglio l'ultima virgola
+            scopes = scopes.substring(0, scopes.length - 1);
+            myConfig.authentication["scopes"] = scopes;
+            myConfig.authentication["auth_url"] = myConfig.authentication["auth_url"].concat("&scope=",scopes);
+        }
 
         //console.log('auth server check',myConfig.authentication["auth_url"]);
 
