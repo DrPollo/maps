@@ -17,7 +17,7 @@ angular.module('firstlife.directives', [])
             link: function(scope,ele,attrs,c){
                 $log.debug('navbar',scope,ele,attrs,c);
                 var token = AuthService.token();
-                var url = token ? attrs.url.concat('&access_token=',token) : attrs.url;
+                var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
                 $http.get(url).then(
                     function(response){
                         $log.debug('navbar, response',response);
