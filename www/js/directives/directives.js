@@ -20,9 +20,12 @@ angular.module('firstlife.directives', [])
                 var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
                 var errors = 0
 
+                getNavBar();
+
                 function getNavBar(){
-                    if(errors > 3)
+                    if(errors > 3) {
                         return
+                    }
 
                     $http.get(url).then(
                         function(response){
