@@ -12,26 +12,11 @@ angular.module('firstlife.controllers')
             event.preventDefault();
             if(dev) $log.debug("sono in login, questi i parametri ",toState);
             
-            // se l'utente e' loggato faccio redirect a app.maps
+            //se autenticato
             if(AuthService.isAuth()){
+                // se autenticato vado alla mappa
                 $state.go('app.maps')
-            }else{
-                // se l'utente non e' loggato
-                // controllo se posso fare l'autologin con l'auth server
-                AuthService.checkSession().then(
-                    function (result) {
-                        // l'utente e' attualmente loggato nell'auth server
-                        $log.debug('checkSession',result)
-                        // redirect all'auth server
-                        $window.location.href = AuthService.auth_url();
-                    },
-                    function (err) {
-                        // l'utente non e' loggato
-                        // resta nella landing page
-                    }
-                )
             }
-
                 
         });
 

@@ -39,7 +39,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 var search_params = $location.search();
                 var params = getJsonFromUrl($location.url().split("?")[1]);
                 var embed = search_params.embed ? true : false;
+                // tolgo i caricamenti
                 $ionicLoading.hide();
+
 
                 $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
                 // aggiorno delle variabili sullo stato precendete e corrente
@@ -49,6 +51,28 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
                 //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
                 $log.debug('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
+
+
+                // controllo di autenticazione
+                // con autologin
+                if(!AuthService.isAuth()){
+                    // se l'utente non e' loggato
+                    // controllo se posso fare l'autologin con l'auth server
+                    AuthService.checkSession().then(
+                        function (result) {
+                            // l'utente e' attualmente loggato nell'auth server
+                            $log.debug('checkSession',result)
+                            // redirect all'auth server
+                            $window.location.href = AuthService.auth_url();
+                        },
+                        function (err) {
+                            // l'utente non e' loggato
+                            // resta nella landing page
+                        }
+                    )
+                }
+
+
 
                 // se ti trovi in uno stato che richiede autenticazione e non sei loggato
                 if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
