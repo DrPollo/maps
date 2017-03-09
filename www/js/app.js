@@ -37,7 +37,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 event.preventRedirectState = true;
                 var authenticate = toState.data.authenticate;
                 var search_params = $location.search();
-                var params = getJsonFromUrl($location.url().split("?")[1]);
+                // var params = getJsonFromUrl($location.url().split("?")[1]);
+                var params = $location.search();
                 var embed = search_params.embed ? true : false;
                 // tolgo i caricamenti
                 $ionicLoading.hide();
@@ -56,7 +57,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 // controllo di autenticazione
                 // con autologin
                 $log.debug('devo loggarmi?',!AuthService.isAuth())
-                if(!AuthService.isAuth()){
+                if(!AuthService.isAuth() && fromState.name !='callback'){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
                     AuthService.checkSession().then(
