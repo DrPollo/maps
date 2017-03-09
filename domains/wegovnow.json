@@ -2,6 +2,7 @@
 {
   "app_name" : "WeGovNow!",
   "domain_name" : "wegovnow",
+  "base_domain" : "wegovnow.dev.firstlife.di.unito.it",
   "domain_id" : 8,
   "authentication": {
     "auth_server":"uwum",
