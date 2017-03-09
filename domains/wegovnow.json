@@ -3,6 +3,7 @@
   "app_name" : "WeGovNow!",
   "domain_name" : "wegovnow",
   "domain_id" : 8,
+  "ssl": true,
   "authentication": {
     "auth_server":"uwum",
     "auth_server_name":"UWUM",
