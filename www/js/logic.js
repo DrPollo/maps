@@ -44,11 +44,12 @@ angular.module('firstlife.config')
         var client_id = params.client_id;
         var auth_server = params.auth_server;
 
-        var redirect_uri_auth = myConfig.base_domain.concat("/callback");
-        var redirect_uri_logout = myConfig.base_domain.concat("/logout");
+        var redirect_uri_auth = myConfig.domain_signature.concat("/callback");
+        var redirect_uri_logout = myConfig.domain_signature.concat("/logout");
 
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){  return r.concat(val);},"");
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
+
 
         if(myConfig.authentication["auth_url"])
             myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id,"&scope=all");
