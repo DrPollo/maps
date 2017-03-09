@@ -16,8 +16,7 @@ angular.module('firstlife.directives', [])
             replace: true,
             link: function(scope,ele,attrs,c){
                 $log.debug('navbar',scope,ele,attrs,c);
-                var token = AuthService.token();
-                var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
+
                 var errors = 0
 
                 getNavBar();
@@ -26,7 +25,8 @@ angular.module('firstlife.directives', [])
                     if(errors > 3) {
                         return
                     }
-
+                    var token = AuthService.token();
+                    var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
                     $http.get(url).then(
                         function(response){
                             $log.debug('navbar, response',response);
