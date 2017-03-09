@@ -55,6 +55,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
                 // controllo di autenticazione
                 // con autologin
+                $log.debug('devo loggarmi?',!AuthService.isAuth())
                 if(!AuthService.isAuth()){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
