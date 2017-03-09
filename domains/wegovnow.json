@@ -5,7 +5,7 @@
   "domain_id" : 8,
   "ssl": true,
   "authentication": {
-    "auth_server":"uwum_auth",
+    "auth_server":"fl_auth",
     "auth_server_name":"UWUM",
     "token_mem_key":"token",
     "identity_mem_key":"user",
