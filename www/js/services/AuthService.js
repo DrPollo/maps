@@ -14,8 +14,7 @@ angular.module('firstlife.services')
                 var deferred = $q.defer();
                 if(!myConfig.authentication.api_session){
                     deferred.reject('undefined api_session');
-                }
-                else {
+                } else {
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
