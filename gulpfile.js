@@ -45,19 +45,23 @@ gulp.task('rebuild',function(){
 
 gulp.task('setupenv',function(){
     var config = JSON.parse(fs.readFileSync('./domains/config.json','utf-8'));
+    var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
     if(gutil.env.prod){
         console.log('env prod');
         config.myConfig.api_base_domain = "api.firstlife.di.unito.it/";
+        config.myConfig.base_callback = domain_name ? domain_name.concat(".firstlife.di.unito.it/") : "firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }else if(gutil.env.test){
         console.log('env test');
         config.myConfig.api_base_domain = "api.test.firstlife.di.unito.it/";
+        config.myConfig.base_callback = domain_name ? domain_name.concat(".test.firstlife.di.unito.it/") : "test.firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }else if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
+        config.myConfig.base_callback = domain_name ? domain_name.concat(".dev.firstlife.di.unito.it/") : "dev.firstlife.di.unito.it/";
     }
-    console.log('setup env host: ',config.myConfig.api_base_domain);
+    console.log('setup env host: ',config.myConfig.api_base_domain, config.myConfig.base_callback);
     fs.writeFile('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('setup env: ',e ? e : 'ok!');}); 
 });
 

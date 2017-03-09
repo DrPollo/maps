@@ -11,7 +11,7 @@ angular.module('firstlife.config')
 
         myConfig.base_domain = ssl.concat(myConfig.base_domain);
         var url = "";
-        myConfig.client_url = url.concat(ssl).concat(myConfig.api_base_domain);
+        myConfig.base_callback = ssl.concat(myConfig.base_callback);
         url = url.concat(ssl).concat(myConfig.api_base_domain).concat(myConfig.api_version).concat("/fl/");
         myConfig.domain_signature = url;
         myConfig.backend_things = url.concat('Things');
@@ -45,8 +45,8 @@ angular.module('firstlife.config')
         var client_id = params.client_id;
         var auth_server = params.auth_server;
 
-        var redirect_uri_auth = myConfig.client_url.concat("/callback");
-        var redirect_uri_logout = myConfig.client_url.concat("/logout");
+        var redirect_uri_auth = myConfig.base_callback.concat("callback");
+        var redirect_uri_logout = myConfig.base_callback.concat("logout");
 
         myConfig.authentication["scopes"] = params.scopes.reduce(function(r,val){  return r.concat(val);},"");
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
