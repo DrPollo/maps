@@ -10,13 +10,23 @@ angular.module('firstlife.directives', [])
               });
            };
         })
-    .directive('navbar',['$http','$log','$compile', function($http,$log,$compile){
+    .directive('navbar',['$http','$log','$compile', 'AuthService', function($http,$log,$compile, AuthService){
         return{
             strict:'EG',
             replace: true,
             link: function(scope,ele,attrs,c){
                 $log.debug('navbar',scope,ele,attrs,c);
-                $http.get(attrs.url).then(
+                var token = AuthService.token();
+                var url = token ? attrs.url.concat('?access_token=',token) : attrs.url;
+                var req = {
+                    url: url,
+                    method: 'get',
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    data: {}
+                };
+                $http(req).then(
                     function(response){
                         $log.debug('navbar, response',response);
                         ele.html(response.data);
