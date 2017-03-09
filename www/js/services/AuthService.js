@@ -166,6 +166,7 @@ angular.module('firstlife.services')
             // salvo lo stato in memoria
             MemoryFactory.save(stateKey,state);
             // restituisco l'url al login con lo stato generato
+            $log.debug('url authentication',myConfig.authentication["auth_url"].concat('&state=',state))
             return myConfig.authentication["auth_url"].concat('&state=',state);
         }
 
