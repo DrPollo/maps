@@ -14,7 +14,9 @@ angular.module('firstlife.authentication', [])
             replace: true,
             template:'<button class="button button-positive icon ion-log-in button-block" ng-click="doLogIn()">{{"LOGIN"|translate}}</button>',
             link:function(scope, element, attrs){
-                scope.doLogIn = function(){$window.location.href = AuthService.auth_url();}
+                scope.doLogIn = function(){
+                    $window.location.href = AuthService.auth_url();
+                }
             }
         }
     }]).directive('logout',['$window','$log','$location','AuthService', function($window,$log,$location,AuthService){
