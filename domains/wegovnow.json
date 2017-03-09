@@ -12,7 +12,7 @@
     "auth_base_domain": "http://secure.firstlife.di.unito.it/",
     "auth_url": "https://wegovnow.liquidfeedback.com/api/1/authorization",
     "api_session":"https://wegovnow.liquidfeedback.com/api/1/session",
-    "client_id": "eB1GG6Ik",
+    "client_id": "wegovnow.firstlife.di.unito.it",
     "scopes":["userinfo.profile"]
   },
   "design":{
