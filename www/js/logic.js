@@ -48,7 +48,8 @@ angular.module('firstlife.config')
         var redirect_uri_auth = myConfig.base_callback.concat("callback");
         var redirect_uri_logout = myConfig.base_callback.concat("logout");
 
-
+        myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
+        myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;
         console.log('scopes',myConfig.authentication["scopes"])
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
 

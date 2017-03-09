@@ -74,7 +74,10 @@ angular.module('firstlife.services')
                     headers:{
                         "Content-Type":"application/json"
                     },
-                    data: {code:code}
+                    data: {
+                        code:code,
+                        redirect_uri:myConfig.authentication.redirect_uri_auth
+                    }
                 };
                 $http(req).then(function(response) {
                     var token = response.data.token;
