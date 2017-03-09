@@ -18,15 +18,30 @@ angular.module('firstlife.directives', [])
                 $log.debug('navbar',scope,ele,attrs,c);
                 var token = AuthService.token();
                 var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
-                $http.get(url).then(
-                    function(response){
-                        $log.debug('navbar, response',response);
-                        ele.html(response.data);
-                        $log.debug('navbar, html',ele);
-                        $compile(ele.contents())(scope);
-                    },
-                    function(response){$log.error(response);}
-                );
+                var errors = 0
+
+                function getNavBar(){
+                    if(errors > 3)
+                        return
+
+                    $http.get(url).then(
+                        function(response){
+                            $log.debug('navbar, response',response);
+                            ele.html(response.data);
+                            $log.debug('navbar, html',ele);
+                            $compile(ele.contents())(scope);
+                        },
+                        function(err){
+                            // riprovo se il problema e' il token
+                            if(err.status === 401){
+                                errors++;
+                                getNavBar();
+                            }
+                            $log.error(err);
+                        }
+                    );
+                }
+
             }
         }
     }])
