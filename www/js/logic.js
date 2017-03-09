@@ -5,7 +5,7 @@ angular.module('firstlife.config')
         //if(myConfig.dev)console.log("setup url api!");
 
         // costruisco gli url delle api
-        var ssl = "//";
+        var ssl = "https://";
         if(!myConfig.ssl)
             ssl = "http://";
 
