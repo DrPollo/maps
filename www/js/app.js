@@ -57,22 +57,22 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 // controllo di autenticazione
                 // con autologin
                 $log.debug('devo loggarmi?',!AuthService.isAuth())
-                if(!AuthService.isAuth() && fromState.name !='callback'){
-                    // se l'utente non e' loggato
-                    // controllo se posso fare l'autologin con l'auth server
-                    AuthService.checkSession().then(
-                        function (result) {
-                            // l'utente e' attualmente loggato nell'auth server
-                            $log.debug('checkSession',result)
-                            // redirect all'auth server
-                            $window.location.href = AuthService.auth_url();
-                        },
-                        function (err) {
-                            // l'utente non e' loggato
-                            // resta nella landing page
-                        }
-                    )
-                }
+                // if(!AuthService.isAuth() && fromState.name !='callback'){
+                //     // se l'utente non e' loggato
+                //     // controllo se posso fare l'autologin con l'auth server
+                //     AuthService.checkSession().then(
+                //         function (result) {
+                //             // l'utente e' attualmente loggato nell'auth server
+                //             $log.debug('checkSession',result)
+                //             // redirect all'auth server
+                //             $window.location.href = AuthService.auth_url();
+                //         },
+                //         function (err) {
+                //             // l'utente non e' loggato
+                //             // resta nella landing page
+                //         }
+                //     )
+                // }
 
 
 
