@@ -24,6 +24,7 @@
             "logout_url": "https://secure.firstlife.di.unito.it/oauth/logout",
             "profile_url": "https://secure.firstlife.di.unito.it/profile",
             "registration_url": "https://secure.firstlife.di.unito.it/registration",
+            "api_session":"https://secure.firstlife.di.unito.it/session",
             "client_id": "eB1GG6Ik",
             "scopes":["userinfo.profile"]
         },
