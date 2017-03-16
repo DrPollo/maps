@@ -319,6 +319,8 @@ angular.module('firstlife.controllers')
                     check4group(e);
                     // controllo il filtro per utente
                     check4user(e);
+                    // check timeline
+                    check4timeline(e,old);
                 }
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
@@ -1124,13 +1126,6 @@ angular.module('firstlife.controllers')
             updateMarkers($scope.markersFilteredArray);
             removeMarkers($scope.markersFilteredArray);
 
-
-
-            //$log.debug('check cosa va sulla timeline ',Object.keys($scope.markersFiltered).length);
-
-            //mando il segnale di aggiornamento degli eventi sulla timeline
-            $rootScope.$emit('timeline.refresh',{list:angular.copy($scope.markersFiltered)});
-
             // correggo la lista tenendo conto delle relazioni tra entita'
             relationsFixer();
             //$scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixerFilter);
@@ -1731,6 +1726,19 @@ angular.module('firstlife.controllers')
             }
         }
 
+        function check4timeline(e,old){
+            if(!e)
+                return false;
+            var q = e.date;
+            var o = old && old.date ? old.date : null;
+            var p = e.unit;
+            var f = old && old.unit ? old.unit : null;
+            if( (q && o && q == o) && (p && f && p == f) )
+                return false;
+            // se il parametro e' settato
+            // mando il segnale di aggiornamento degli eventi sulla timeline
+            $rootScope.$emit('timeline.refresh');
+        }
 
         // groupCard
         function check4group(e){
