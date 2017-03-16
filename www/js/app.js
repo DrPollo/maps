@@ -57,7 +57,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 // controllo di autenticazione
                 // con autologin (controllo e login se non vado a callback)
                 $log.debug('devo loggarmi?',!AuthService.isAuth())
-                if(!AuthService.isAuth() && toState.name != 'callback'){
+                if(!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback'){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
                     AuthService.checkSession().then(
@@ -137,7 +137,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         controller: 'AppCtrl as app'
     })
         .state('app.maps', {
-            url: "/maps?zoom&lat&lng&entity&embed&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+            url: "/maps?zoom&lat&lng&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
             reloadOnSearch: false,
             views: {
                 'menuContent': {

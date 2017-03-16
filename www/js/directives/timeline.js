@@ -5,7 +5,7 @@ angular.module('firstlife.timeline',[])
         restrict: 'EG',
         scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log', '$filter','$translate','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,myConfig,MapService,PlatformService, leafletData){
+        controller: ['$scope','$rootScope','$log', '$filter','$translate', '$location','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,$location,myConfig,MapService,PlatformService, leafletData){
 
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -21,6 +21,10 @@ angular.module('firstlife.timeline',[])
                         $scope.data = angular.copy(args.list);
                         $log.debug("timeline, timeline.refresh !");
 //                        scanData(args.list);
+                    }
+                    var params = $location.search();
+                    if(params.date || params.unit){
+                        initBuffer();
                     }
                 }
             });
@@ -142,9 +146,24 @@ angular.module('firstlife.timeline',[])
 
             // inizializzo la timeline
             function initBuffer(){
+                // init del tempo a oggi
                 var now = angular.copy($scope.moment);
+                // parametri temporali nell'url
+                // "date" e' la data centrale e "unit" la granularita'
+                var params = $location.search();
+                $log.debug('timeline search date',params.date, ' - unit', params.unit);
+                // se parametro date impostato sovrascrivo il now
+                if(params.date && moment(params.date)){
+                    $scope.moment = moment(params.date);
+                    now = angular.copy($scope.moment);
+                }
+                if(params.unit && params.unit >= 0 && params.unit < $scope.units.length){
+                    $scope.indexDefaultUnit= params.unit;
+                    defaultUnit = $scope.units[$scope.indexDefaultUnit].key;
+                }
                 // recupero l'unita' corrente (es. mese, giorno, settimana)
-                var unit = getNowWithFilter(now);
+                // se definit parametro unit o default
+                var unit = getNowWithFilter(now, params.unit || defaultUnit);
                 // recupero la lungheza dell'unita' corrente
                 var slots = getNowUnits(now);
                 // recupero dell'indice di ora nell'unita' corrente
@@ -169,13 +188,15 @@ angular.module('firstlife.timeline',[])
 
 
             //applicare questi filtri per il dato che si vuole effettivamente vedere
-            function getNowWithFilter(time){
-                var filter;
-                if(defaultUnit == "day") filter = time.date();  //per mostrare il giorno del mese
-                else if (defaultUnit == "month") filter = time.get($scope.indexDefaultUnit) +1; //i mesi sono da 0 a 11, io voglio da 1 a 12
-                else filter = time.get($scope.indexDefaultUnit);
-
-                return filter;
+            function getNowWithFilter(time,unit){
+                switch(unit) {
+                    case "day":
+                        return time.date();  //per mostrare il giorno del mese
+                    case "month":
+                        return time.get($scope.indexDefaultUnit) + 1; //i mesi sono da 0 a 11, io voglio da 1 a 12
+                    default:
+                        return time.get($scope.indexDefaultUnit);
+                }
             }
 
 
@@ -533,6 +554,10 @@ angular.module('firstlife.timeline',[])
             function applyTimeFilters(){
                 var time = getFullInterval();
                 MapService.setTimeFilters(time);
+                // setup dei parametri search
+                $location.search('date',$scope.moment);
+                $location.search('unit',$scope.indexDefaultUnit);
+                // evento di update per mapCtrl
                 $rootScope.$emit("timeUpdate",{time:time});
                 //MapService.resetMarkersDistributed();
                 //$log.error('timeUpdate! ',time);
