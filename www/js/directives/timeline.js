@@ -38,7 +38,7 @@ angular.module('firstlife.timeline',[])
             moment().isoWeek(1);
 
             var localeData = moment.localeData();
-            //            $log.debug('check localeData ',localeData, localeData._monthsShort);
+            // $log.debug('check localeData ',localeData, localeData._monthsShort);
 
             // unita' temporale di default
             // 0: fasi della giornata
@@ -76,7 +76,7 @@ angular.module('firstlife.timeline',[])
             $scope.rewind = function(){
                 // recupero la unit da sottrarre
                 var unit = getUnitToShift();
-                //                $log.debug('subtract a ',unit);
+                // $log.debug('subtract a ',unit);
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
                 // ricalcolo il buffer
@@ -154,15 +154,19 @@ angular.module('firstlife.timeline',[])
                 $log.debug('timeline search date',params.date, ' - unit', params.unit);
                 // se parametro date impostato sovrascrivo il now
                 if(params.date && moment(params.date)){
+                    // recupero il moment da parametro
                     $scope.moment = moment(params.date);
+                    // sovrascrivo il now
                     now = angular.copy($scope.moment);
                 }
+                // se definito parametro unit o default valido (tra gli indici delle unita' temporali)
                 if(params.unit && params.unit >= 0 && params.unit < $scope.units.length){
+                    // recupero l'indice
                     $scope.indexDefaultUnit= params.unit;
+                    // recupero la key dell'unita' corrente
                     defaultUnit = $scope.units[$scope.indexDefaultUnit].key;
                 }
                 // recupero l'unita' corrente (es. mese, giorno, settimana)
-                // se definit parametro unit o default
                 var unit = getNowWithFilter(now, params.unit || defaultUnit);
                 // recupero la lungheza dell'unita' corrente
                 var slots = getNowUnits(now);
