@@ -30,7 +30,7 @@
         },
         "design":{
             "logo" : {
-                "url": "img/firstlife-logo.svg", 
+                "url": "img/firstlife-logo-solologo.svg",
                 "title": "FirstLife", 
                 "alt":"FirstLife", 
                 "label":{
@@ -38,8 +38,8 @@
                     "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
                 }
             },
-            "logo_bar" : "img/firstlife-testo.svg",
-            "logo_menu" : "img/firstlife-logo-palla.svg",
+            "logo_bar" : "img/firstlife-logo-soloscritta.svg",
+            "logo_menu" : "img/firstlife-logo-solologo.svg",
             "logo_width" : 160,
             "logo_height" : 160,
             "default_thumb" : "img/thumb.jpg",
@@ -75,7 +75,7 @@
             "landingpage":{
                 "css":"",
                 "logo":{
-                    "url":"img/firstlife-testo.svg",
+                    "url":"img/firstlife-logo-soloscritta.svg",
                     "title":"FirstLife",
                     "style":""
                 },
@@ -108,7 +108,7 @@
                     {
                         "name":"Scopri di più su FirstLife",
                         "url":"http://firstlife.org",
-                        "img":"img/icone-landing-page-logo-fl.svg",
+                        "img":"img/firstlife-logo-solologo.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
@@ -128,7 +128,7 @@
                     {
                         "name":"About FirstLife project",
                         "url":"http://firstlife.org",
-                        "img":"img/icone-landing-page-logo-fl.svg",
+                        "img":"img/firstlife-logo-solologo.svg",
                         "alt":"Test",
                         "lang":"en"
                     }
