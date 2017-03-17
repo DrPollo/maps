@@ -26,9 +26,14 @@ angular.module('firstlife.controllers')
                     }
                     // errore stato non coincide
                 }else{
-                    $log.debug('non ho trovato state')
+                    // $log.debug('non ho trovato state')
                     generateToken(params.code)
                 }   
+            }else if(params.profile && params.profile == 'true'){
+                // profilo modificato
+                $scope.message = 'UPDATE_PROFILE_SUCCESS';
+                // redirect alla landingpage
+                setTimeout(function(){$state.go('home');},2000);
             }else{
                 // altrimenti torno alla landing
                 $state.go('home');

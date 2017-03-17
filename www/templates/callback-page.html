@@ -17,22 +17,11 @@
     <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
         <div class="row main-content">
             <div class="col col-center box">
-                <!--logo, infografica e azioni-->
-                <div class="row responsive-sm central-content">
+                <div class="row responsive-sm central-content ">
                     <div class="col col-center">
-                        <h1><img src="{{defaults.design.landingpage.center.image}}" alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/></h1>
-                        <h2 class="message" ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
-                    </div>
-                    <div class="col col-center alternative-actions">
-                        gestione errori
-                    </div>
-                </div>
-                <!--menu inferiore-->
-                <div class="row lower-menu">
-                    <div class="row responsive-sm">
-                        <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
-                            <h4><a href="{{link.url}}">{{link.name}}</a></h4>
-                        </div>
+                        <h3>{{'CALLBACK_TITLE'|translate}}</h3>
+                        <h4 class="positive-message" ng-if="message">{{message | translate}}</h4>
+                        <h4 class="error-message" ng-if="error">{{error | translate}}</h4>
                     </div>
                 </div>
             </div>

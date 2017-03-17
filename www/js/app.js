@@ -478,7 +478,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REPORT:"Segnala",
         REPORT_MESSAGE:"il cotenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?",
         DO_YOU_SIGNUP: "Non hai un account?",
-        DO_YOU_LOGIN: "Hai già un account?"
+        DO_YOU_LOGIN: "Hai già un account?",
+        CALLBACK_TITLE: "Successo",
+        UPDATE_PROFILE_SUCCESS: "Profilo aggiornato"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -769,7 +771,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REPORT_MESSAGE_TITLE:"Motivation of the report",
         REPORT_MESSAGE:"the content containing offenses, threats, violent messages or explicit sexual references? Content is considerable as spam or advertising? The content violates the copyright laws?",
         DO_YOU_SIGNUP: "Don't you have an account?",
-        DO_YOU_LOGIN: "Do you have an account?"
+        DO_YOU_LOGIN: "Do you have an account?",
+        CALLBACK_TITLE: "Success",
+        UPDATE_PROFILE_SUCCESS: "Profile updated"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
