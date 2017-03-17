@@ -21,9 +21,9 @@ var paths = {
 gulp.task('deploy',['config','move']);
 
 gulp.task('move',function(){
-    var dir = '../html'
+    var dir = '../firstlife'
     if(gutil.env.domain)
-        dir = '../'+gutil.env.domain;
+        dir = '../firstlife-'+gutil.env.domain;
     
     fse.copySync('www', dir, {mkdirp: true,clobber:true}, function(err) {console.log('move clent ',err ? err : 'ok!');}); 
     console.log("move file ok!");
