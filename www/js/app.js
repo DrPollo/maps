@@ -110,7 +110,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     $stateProvider.state('home', {
         url: "/?embed",
         controller: 'LandingCtrl as landing',
-        templateUrl: "templates/landing-page.html",
+        templateUrl: "/templates/landing-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -118,14 +118,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     }).state('callback', {
         url: "/callback?code&state&profile",
         controller: 'CallbackCtrl',
-        templateUrl: "templates/callback-page.html",
+        templateUrl: "/templates/callback-page.html",
         data: {
             authenticate: false
         }
     }).state('logout', {
         url: "/logout",
         controller: 'LogoutCtrl',
-        templateUrl: "templates/logout-page.html",
+        templateUrl: "/templates/logout-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -141,7 +141,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             reloadOnSearch: false,
             views: {
                 'menuContent': {
-                    templateUrl: "templates/maps.html",
+                    templateUrl: "/templates/maps.html",
                     controller: 'MapCtrl as map'
                 }
             },
@@ -154,7 +154,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/form/wizard.html',
+                    templateUrl: '/templates/form/wizard.html',
                     controller: 'EditorCtrl as editor'
                 }
             },
@@ -165,7 +165,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: '/manager/?entity',
         views: {
             'menuContent': {
-                templateUrl: 'templates/manager.html',
+                templateUrl: '/templates/manager.html',
                 controller: 'ManagerCtrl'
             }
         },
