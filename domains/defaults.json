@@ -73,35 +73,35 @@
                 {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
             ],
             "landingpage":{
-                "css":"background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));",
+                "css":"",
                 "logo":{
                     "url":"img/firstlife-testo.svg",
                     "title":"FirstLife",
                     "style":""
                 },
                 "center":{
-                    "image":"img/firstlife-logo-palla.svg",
+                    "image":"img/infografica-landingpage3.svg",
                     "alt": {
                         "it":"Logo FirstLife",
                         "en":"FirstLife logo"
                     },
                     "message":{
-                        "it":"FirstLife è<br/>il Social Network Civico<br/>della Città",
-                        "en":"FirstLife is<br/>the Civic Social Network<br/>of the City"
+                        "it":"il Social Network Civico",
+                        "en":"the Civic Social Network"
                     }
                 },
                 "upper_menu":[
                     {
-                        "name":"Regole di Comunità",
+                        "name":"Linee guida di Comunità",
                         "url":"http://firstlife.org/regole-comunita",
-                        "img":"img/icone-landing-page-comunita.svg",
+                        "img":"img/icone-linee-guida-comunita-0.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
                     {
-                        "name":"Tutorial ed esempi",
+                        "name":"Esempi e Applicazioni",
                         "url":"http://tutorials.firstlife.org",
-                        "img":"img/icone-landing-page-tutorial.svg",
+                        "img":"img/icone-tutorial.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
@@ -115,14 +115,14 @@
                     {
                         "name":"Community Guidelines",
                         "url":"http://firstlife.org/community-standards",
-                        "img":"img/icone-landing-page-comunita.svg",
+                        "img":"img/icone-linee-guida-comunita-0.svg",
                         "alt":"Test",
                         "lang":"en"
                     },
                     {
                         "name":"User Guide & examples",
                         "url":"http://tutorials.firstlife.org",
-                        "img":"img/icone-landing-page-tutorial.svg",
+                        "img":"img/icone-tutorial.svg",
                         "alt":"Test",
                         "lang":"en"},
                     {

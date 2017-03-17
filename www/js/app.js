@@ -225,7 +225,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         WELCOME_MESSAGE: 'Benvenuto in',
         LANG: 'Lingua',
         PROFILE: 'Profilo',
-        LOGIN:'Accedi',
+        LOGIN:'Entra',
         LOGOUT:'Esci',
         EDIT_PROFILE:'Modifica profilo',
         EXPLORE: 'Esplora',
@@ -476,7 +476,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REPORT_CONTENT_MESSAGE:"Motivazione della segnalazione",
         REPORT_DISCLAIMER:"segnalando questo contenuto renderai publico che viola le <a href='http://firstlife.org/regole-comunita' target='_blank'>regole di comunità</a>, le <a href='http://firstlife.org/norme-privacy' target='_blank'>norme sulla privacy</a> o i <a href='http://firstlife.org/termini-uso' target='_blank'>termini d'uso</a>",
         REPORT:"Segnala",
-        REPORT_MESSAGE:"il cotenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?"
+        REPORT_MESSAGE:"il cotenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?",
+        DO_YOU_SIGNUP: "Non hai un account?",
+        DO_YOU_LOGIN: "Hai già un account?"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -765,7 +767,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         REPORT_DISCLAIMER:"reporting this content you will make public that is violating the <a href='http://firstlife.org/community-standards' target='_blank'>community standards</a>, the <a href='http://firstlife.org/privacy-policy' target='_blank'>privacy policy</a> or the <a href='http://firstlife.org/terms-of-use' target='_blank'>terms of use</a>",
         REPORT:"Report",
         REPORT_MESSAGE_TITLE:"Motivation of the report",
-        REPORT_MESSAGE:"the content containing offenses, threats, violent messages or explicit sexual references? Content is considerable as spam or advertising? The content violates the copyright laws?"
+        REPORT_MESSAGE:"the content containing offenses, threats, violent messages or explicit sexual references? Content is considerable as spam or advertising? The content violates the copyright laws?",
+        DO_YOU_SIGNUP: "Don't you have an account?",
+        DO_YOU_LOGIN: "Do you have an account?"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

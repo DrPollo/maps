@@ -48,38 +48,57 @@
         padding: 0px;
         text-align: center;
         .box {
-            background-color: #fff;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            border-radius:2px;
             max-width: 800px;
-            margin: 28px auto 0px;
+            margin: 0px auto;
             padding: 0px;
             .central-content{
-                margin: 0px;
-                padding: 60px 16px;
+                margin: 0px 0px 40px;
+                padding: 0px 16px 0px;
                 img {
-                    max-width: 70%;
+                    max-width: 100%;
                 }
                 .message {
                     font-size: 2em;
-                    font-weight: 400;
+                    font-weight: 500;
+                    color:#333;
                 }
                 .alternative-actions{
-                    margin: 20px 0px 0px;
-                    .button {
-                        padding:0px;
-                        font-size:14px;
-                        margin: 20px 0px;
-                    }
-                    .button.disabled, .button[disabled] {
-                        opacity: 0.9;
+                    margin: 0px;
+                    .wrap{
+                        margin: 0px auto;
+                        display: inline-block;
+                        width: auto;
+                        .disclaimer {
+                            text-align: right;
+                        }
+                        .button {
+                            padding:0px;
+                            font-size:14px;
+                            margin: 20px 0px 40px auto;
+                            border-radius:14px;
+                            width: 300px;
+                            font-weight: bold;
+                            font-size: 1.2em;
+                            padding: 10px 0px;
+
+                        }
+                        .button.disabled, .button[disabled] {
+                            opacity: 0.9;
+                        }
                     }
                 }        
+            }
+            .divider{
+                margin:0px auto 40px;
+                width: 70%;
+                height: 4px;
+                background: #666;
+                border-radius: 2px;
             }
             .upper-menu {
                 margin: 0px;
                 padding: 16px;
-                background: rgba(0,0,0,0.1);
+                //background: rgba(0,0,0,0.1);
                 img {
                     display: block;
                     max-height: 100px;
@@ -87,19 +106,6 @@
                 }
                 a {
                     font-size: 1em;
-                    text-decoration: none;
-                    font-weight: 500;
-                    color:$dark;
-                }
-            }
-            .lower-menu {
-                margin: 0px;
-                padding: 16px;
-                background: rgba(0,0,0,0.2);
-                overflow: hidden;
-                border-radius:0px 0px 2px 2px;
-                a {
-                    font-size: 1.2em;
                     text-decoration: none;
                     font-weight: 500;
                     color:$dark;
@@ -120,8 +126,14 @@
     .footer-content {
         height:10%;
         margin: 0px;
-        padding: 16px;
+        padding: 0px;
         text-align: center;
+        background: #4d4d4d;
+        color: #f1f1f1;
+        #credits{
+            position: absolute;
+            bottom: 0px;
+        }
         span{
             margin: 0 10px;
             display: inline-block;
@@ -136,6 +148,17 @@
                 width: 100%;
                 display: block;
                 font-size: 8px;
+            }
+        }
+        .lower-menu {
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            a {
+                font-size: 1.2em;
+                text-decoration: none;
+                font-weight: 500;
+                color:#fff;
             }
         }
     }
