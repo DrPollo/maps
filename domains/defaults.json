@@ -43,8 +43,7 @@
             "logo_width" : 160,
             "logo_height" : 160,
             "default_thumb" : "img/thumb.jpg",
-            "default_background" : "background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));", 
-            "logo_partners" : [],
+            "default_background" : "background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));",
             "colors": ["#FC4A00",
                        "#f44336","#823256","#FFB310","#88BA5C","#3f7f91",
                        "#FF7027",
@@ -90,6 +89,7 @@
                         "en":"the Civic Social Network"
                     }
                 },
+
                 "upper_menu":[
                     {
                         "name":"Linee guida di Comunità",
@@ -144,7 +144,8 @@
                 "credits":[
                     {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino","lang":"it"},
                     {"text":"Social Computing, Dept. of Computer Science, University of Turin","lang":"en"}
-                ]
+                ],
+                "logo_partners" : []
             }
         },
         "types" : {

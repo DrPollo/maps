@@ -15270,7 +15270,7 @@ timeline {
     display: block; }
   #landingpage .main-content {
     min-height: 90%;
-    margin: 0px;
+    margin: 50px 0px 0px;
     padding: 0px;
     text-align: center; }
     #landingpage .main-content .box {
@@ -15278,7 +15278,7 @@ timeline {
       margin: 0px auto;
       padding: 0px; }
       #landingpage .main-content .box .central-content {
-        margin: 0px 0px 40px;
+        margin: 0px 0px 20px;
         padding: 0px 16px 0px; }
         #landingpage .main-content .box .central-content img {
           max-width: 100%; }
@@ -15306,11 +15306,15 @@ timeline {
             #landingpage .main-content .box .central-content .alternative-actions .wrap .button.disabled, #landingpage .main-content .box .central-content .alternative-actions .wrap .button[disabled] {
               opacity: 0.9; }
       #landingpage .main-content .box .divider {
-        margin: 0px auto 40px;
+        margin: 20px auto;
         width: 70%;
-        height: 4px;
+        height: 3px;
         background: #666;
-        border-radius: 2px; }
+        border-radius: 1px; }
+      #landingpage .main-content .box #about .about-description {
+        padding: 16px;
+        font-size: 1.2em;
+        line-height: 20px; }
       #landingpage .main-content .box .upper-menu {
         margin: 0px;
         padding: 16px; }
@@ -15332,15 +15336,10 @@ timeline {
     font-style: italic;
     margin: 40px 0px; }
   #landingpage .footer-content {
-    height: 10%;
+    min-height: 10%;
     margin: 0px;
     padding: 0px;
-    text-align: center;
-    background: #4d4d4d;
-    color: #f1f1f1; }
-    #landingpage .footer-content #credits {
-      position: absolute;
-      bottom: 0px; }
+    text-align: center; }
     #landingpage .footer-content span {
       margin: 0 10px;
       display: inline-block;
@@ -15354,15 +15353,28 @@ timeline {
         width: 100%;
         display: block;
         font-size: 8px; }
-    #landingpage .footer-content .lower-menu {
+    #landingpage .footer-content #credits {
+      background: #4d4d4d;
+      width: 100%;
+      color: #f1f1f1; }
+    #landingpage .footer-content #lower-menu {
+      background: #4d4d4d;
+      color: #f1f1f1;
       margin: 0px;
       padding: 0px;
-      overflow: hidden; }
-      #landingpage .footer-content .lower-menu a {
+      overflow: hidden;
+      width: 100%; }
+      #landingpage .footer-content #lower-menu a {
         font-size: 1.2em;
         text-decoration: none;
         font-weight: 500;
         color: #fff; }
+    #landingpage .footer-content #partners {
+      min-height: 60px;
+      text-align: center;
+      width: 100%; }
+      #landingpage .footer-content #partners .col {
+        margin: 0px 10px; }
 
 #searchbar {
   margin: 6px 6px 10px 0px;

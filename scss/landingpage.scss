@@ -44,7 +44,7 @@
 
     .main-content {
         min-height:90%;
-        margin: 0px;
+        margin: 50px 0px 0px;
         padding: 0px;
         text-align: center;
         .box {
@@ -52,7 +52,7 @@
             margin: 0px auto;
             padding: 0px;
             .central-content{
-                margin: 0px 0px 40px;
+                margin: 0px 0px 20px;
                 padding: 0px 16px 0px;
                 img {
                     max-width: 100%;
@@ -89,11 +89,21 @@
                 }        
             }
             .divider{
-                margin:0px auto 40px;
+                margin:20px auto;
                 width: 70%;
-                height: 4px;
+                height: 3px;
                 background: #666;
-                border-radius: 2px;
+                border-radius: 1px;
+            }
+            #about{
+                .about-image{
+
+                }
+                .about-description{
+                    padding: 16px;
+                    font-size: 1.2em;
+                    line-height: 20px;
+                }
             }
             .upper-menu {
                 margin: 0px;
@@ -124,16 +134,11 @@
         margin: 40px 0px;
     }
     .footer-content {
-        height:10%;
+        min-height:10%;
         margin: 0px;
         padding: 0px;
         text-align: center;
-        background: #4d4d4d;
-        color: #f1f1f1;
-        #credits{
-            position: absolute;
-            bottom: 0px;
-        }
+
         span{
             margin: 0 10px;
             display: inline-block;
@@ -150,15 +155,31 @@
                 font-size: 8px;
             }
         }
-        .lower-menu {
+        #credits{
+            background: #4d4d4d;
+            width: 100%;
+            color: #f1f1f1;
+        }
+        #lower-menu {
+            background: #4d4d4d;
+            color: #f1f1f1;
             margin: 0px;
             padding: 0px;
             overflow: hidden;
+            width: 100%;
             a {
                 font-size: 1.2em;
                 text-decoration: none;
                 font-weight: 500;
                 color:#fff;
+            }
+        }
+        #partners{
+            min-height: 60px;
+            text-align: center;
+            width: 100%;
+            .col{
+                margin: 0px 10px;
             }
         }
     }

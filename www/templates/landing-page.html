@@ -40,42 +40,51 @@
                     </div>
                 </div>
                 <div class="divider"></div>
+                <!-- about del progetto-->
+                <div class="row upper-menu responsive-sm" id="about" ng-if="defaults.design.landingpage.about">
+                    <div class="col col-center about-logo">
+                        <a href="{{defaults.design.landingpage.about.url}}" title="defaults.design.landingpage.about.label[currentLang]}}">
+                            <img src="{{defaults.design.landingpage.about.image.url}}" alt="{{defaults.design.landingpage.about.image.alt[currentLang]}}">
+                        </a>
+                    </div>
+                    <div class="col col-center about-description">
+                        {{defaults.design.landingpage.about.content[currentLang]}}
+                    </div>
+                </div>
+                <div class="divider"></div>
                 <!--menu superiore-->
-                <div class="row upper-menu">
-                    <div class="row responsive-sm">
-                        <div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">
-                            <h3 class="row responsive-sm">
-                                <img class="col" src="{{link.img}}" alt="{{link.alt}}" >
-                                <a class="col col-center" href="{{link.url}}"ng-bind-html="link.name"></a>
-                            </h3>
-                        </div>
+                <div class="row upper-menu responsive-sm">
+                    <div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">
+                        <h3 class="row responsive-sm">
+                            <img class="col" src="{{link.img}}" alt="{{link.alt}}" >
+                            <a class="col col-center" href="{{link.url}}"ng-bind-html="link.name"></a>
+                        </h3>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="lower-menu" class="row footer-content">
-            <div class="col">
-                <div class="row lower-menu">
-                    <div class="row responsive-sm">
-                        <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
-                            <h4><a href="{{link.url}}">{{link.name}}</a></h4>
+        <div class="footer-content">
+            <div id="lower-menu" class="row lower-menu">
+                <div class="row responsive-sm">
+                    <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
+                        <h4><a href="{{link.url}}">{{link.name}}</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div id="credits" class="row" >
+                <div class="col col-bottom">
+                    <div class="row">
+                        <div id="credits" class="col col-bottom">
+                            <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="row" id="credits">
-                    <div class="col col-bottom">
-                        <div id="partners" class="row">
-                            <div class="col  col-bottom" ng-repeat="logo in defaults.design.logo_partners">
-                                <img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/>
-                                <label>{{logo.label}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div id="credits" class="col col-bottom">
-                                <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div id="partners" class="row responsive-sm">
+                <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
+                    <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
+                        <img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>
+                    </a>
                 </div>
             </div>
         </div>
