@@ -39,7 +39,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="divider"></div>
+                <div class="divider" ng-if="defaults.design.landingpage.about"></div>
                 <!-- about del progetto-->
                 <div class="row upper-menu responsive-sm" id="about" ng-if="defaults.design.landingpage.about">
                     <div class="col col-center about-logo">
@@ -71,6 +71,13 @@
                     </div>
                 </div>
             </div>
+            <div id="partners" class="row responsive-sm" ng-if="defaults.design.landingpage.logo_partners.length > 0">
+                <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
+                    <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
+                        <img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>
+                    </a>
+                </div>
+            </div>
             <div id="credits" class="row" >
                 <div class="col col-bottom">
                     <div class="row">
@@ -78,13 +85,6 @@
                             <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div id="partners" class="row responsive-sm">
-                <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
-                    <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
-                        <img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>
-                    </a>
                 </div>
             </div>
         </div>

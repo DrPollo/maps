@@ -15270,8 +15270,8 @@ timeline {
     display: block; }
   #landingpage .main-content {
     min-height: 90%;
-    margin: 50px 0px 0px;
-    padding: 0px;
+    margin: 0px;
+    padding: 50px 0px 0px;
     text-align: center; }
     #landingpage .main-content .box {
       max-width: 800px;

@@ -142,8 +142,8 @@
                     {"name":"Centro assistenza","url":"http://help.firstlife.org","lang":"it"}
                 ],
                 "credits":[
-                    {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino","lang":"it"},
-                    {"text":"Social Computing, Dept. of Computer Science, University of Turin","lang":"en"}
+                    {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino - P.I. 02099550010 C.F. 80088230018","lang":"it"},
+                    {"text":"Social Computing, Dept. of Computer Science, University of Turin - P.I. 02099550010 C.F. 80088230018","lang":"en"}
                 ],
                 "logo_partners" : []
             }
