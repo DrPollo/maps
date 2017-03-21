@@ -8,11 +8,12 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
-            if(event.preventCallbackEvent && toState != 'callback')
+            if(event.preventCallbackEvent)
                 return
-
             event.preventCallbackEvent = true;
-            
+            // se non devo gestire l'evento
+            if(toState.name != 'callback')
+                return
             $log.debug("sono in login, questi i parametri ",toState);
 
             // controllo parametro code

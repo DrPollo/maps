@@ -163,12 +163,15 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            if(event.preventMapsEvent && toState != 'app.maps')
+            if(event.preventMapsEvent)
                 return
-
             event.preventMapsEvent = true;
 
-            $log.log("sono in app.map e vengo per lo stato ",toState);
+            // se non devo gestire questo evento
+            if(toState.name != 'app.maps')
+                return
+
+            $log.debug("sono in app.map e vengo per lo stato",toState);
 
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
@@ -308,27 +311,31 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $location.search(); },
             function(e, old){
-                if(self.watchSearchEnabled){
-                    // se ho il parametro place
-                    $log.debug("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
+                if($state.current.name != 'app.maps')
+                    return
+                if(!self.watchSearchEnabled)
+                    return
 
-                    // controllo i parametri di posizione
-                    check4Position(e);
-                    // controllo i parametri di entita'
-                    check4entity(e,old);
-                    // controllo i filtri custom
-                    check4customFilters(e,old);
-                    // controlla il parametro embed per il visualizzatore
-                    check4embed(e);
-                    // controllo il parametro di ricerca q
-                    check4search(e,old);
-                    // controllo il filtro per gruppo
-                    check4group(e);
-                    // controllo il filtro per utente
-                    check4user(e);
-                    // check timeline
-                    check4timeline(e,old);
-                }
+                // se ho il parametro place
+                $log.debug("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
+
+                // controllo i parametri di posizione
+                check4Position(e);
+                // controllo i parametri di entita'
+                check4entity(e,old);
+                // controllo i filtri custom
+                check4customFilters(e,old);
+                // controlla il parametro embed per il visualizzatore
+                check4embed(e);
+                // controllo il parametro di ricerca q
+                check4search(e,old);
+                // controllo il filtro per gruppo
+                check4group(e);
+                // controllo il filtro per utente
+                check4user(e);
+                // check timeline
+                check4timeline(e,old);
+
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
                 self.watchSearchEnabled = true;
@@ -694,7 +701,7 @@ angular.module('firstlife.controllers')
                 delete $scope.wall;
             });
             $scope.$on('$destroy', function() {
-                $scope.wall.remove();
+                if($scope.wall) $scope.wall.remove();
             });
 
             $scope.clickWallItem = function(marker){
@@ -806,7 +813,7 @@ angular.module('firstlife.controllers')
         // centra la mappa
         // accetta paramentri per la locate: center, bounds, user, marker
         function locate(coord){
-            $log.log("centro su luogo, id: "+typeof(coord)+" ",coord);
+            $log.debug("centro su luogo, id: "+typeof(coord)+" ",coord);
 
             if(typeof(coord) === 'object' && 'entity' in coord && coord.entity){
                 // ho una entita' 
@@ -1067,8 +1074,7 @@ angular.module('firstlife.controllers')
                             (Array.isArray(valore) && valore.length == 0 ) ||
                             (angular.isObject(valore) && angular.equals(valore,{})) ){
                             // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
-                            //if(consoleCheck) 
-                            console.log("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
+                            $log.debug("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
                         }else{return false;}
                     }
                     // se ha delle alternative
@@ -1246,7 +1252,7 @@ angular.module('firstlife.controllers')
                     setMapMarkers();
                 },
                 function(err){
-                    console.log("updateMarkersDistributed, error", err);
+                    $log.erro("updateMarkersDistributed, error", err);
                 }
             );
         }
@@ -1262,7 +1268,7 @@ angular.module('firstlife.controllers')
                     setMapMarkers();
                 },
                 function(err){
-                    console.log("updateMarkersDistributed, error", err);
+                    $log.error("updateMarkersDistributed, error", err);
                 }
             );
             // aggiornamento parametro search nell'url
@@ -1390,7 +1396,7 @@ angular.module('firstlife.controllers')
                     var entityDetails = {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null};
                     $state.go('app.editor', {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null});
                 },
-                function(err){console.log("MapCtrl, clickToAdd, MapService.getCenter, error ",err);}
+                function(err){$log.error("MapCtrl, clickToAdd, MapService.getCenter, error ",err);}
             );
         };
 
@@ -1400,7 +1406,7 @@ angular.module('firstlife.controllers')
         function deleteMarker(id){
 
             var index = searchMarkerIndex(id);
-            //console.log("delete marker ",index,$scope.map.markers[index]);
+            //$log.debug("delete marker ",index,$scope.map.markers[index]);
             if(index > -1){
                 delete $scope.map.markers[index];
                 return true;
@@ -1427,7 +1433,7 @@ angular.module('firstlife.controllers')
                         $scope.map.markers.push(marker);
                     }
                 },
-                function(err){console.log("MapCtrl, updateMarker, entityFactory.get, errore ",err);}
+                function(err){$log.error("MapCtrl, updateMarker, entityFactory.get, errore ",err);}
 
             );
         }
@@ -1568,7 +1574,7 @@ angular.module('firstlife.controllers')
 
         function markerDisabler(prop,value){
             var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
-            //console.log("develop ",value,$scope.favCat);
+            //$log.debug("develop ",value,$scope.favCat);
             for(var k in $scope.markersFiltered){
 
                 if($scope.markersFiltered[k][prop] !== value){
@@ -1800,7 +1806,7 @@ angular.module('firstlife.controllers')
         $timeout.cancel(timer);
         $rootScope.$broadcast("leafletDirectiveMap.mymap.moveend");
         timer = $timeout(function() {
-            console.log("polling!");
+            $log.debug("polling!");
             polling();
         },RELOAD_TIME);
     };

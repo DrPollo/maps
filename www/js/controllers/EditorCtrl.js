@@ -75,10 +75,16 @@ angular.module('firstlife.controllers')
          */
         // al cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            if(event.preventEditorEvent && toState != 'app.editor')
+            if(event.preventEditorEvent)
                 return
-
             event.preventEditorEvent = true;
+            // se non devo gestire l'evento
+            if(toState.name != 'app.editor')
+                return
+            //recupero lo stato precedente!
+            var previousState = $previousState.get();
+            if( previousState && previousState.state && previousState.state.name == 'app.editor' )
+                return
 
             // cancello il form
             _this.wizard.dataForm = {};
@@ -87,9 +93,8 @@ angular.module('firstlife.controllers')
 
             var params = $location.search();
 
-            //recupero lo stato precedente!
-            var previousState = $previousState.get();
-            $log.log("sono in EditorCtrl e vengo da ", (previousState || null) , " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+
+            $log.debug("sono in EditorCtrl e vengo da ", (previousState && previousState.state && previousState.state.name ) ?  previousState.state.name :  null, " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
             // attualmente non e' necessario gestire gli stati di arrivo
             // if(previousState && previousState.state && previousState.state.name == 'app.maps'){
 

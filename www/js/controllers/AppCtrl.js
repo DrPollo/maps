@@ -24,7 +24,7 @@ angular.module('firstlife.controllers')
         
         // gestore del cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            if(event.preventAppSideEvent && toState != 'app')
+            if(event.preventAppSideEvent && toState.name != 'app')
                 return
 
             event.preventAppSideEvent = true;

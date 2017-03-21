@@ -11,10 +11,12 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
-            if(event.preventLogoutEvent && toState != 'logout')
+            if(event.preventLogoutEvent)
                 return
             event.preventLogoutEvent = true;
-            
+            // se non devo gestire l'evento
+            if(toState.name != 'logout')
+                return
             // parametri search
             var params = $location.search();
             
