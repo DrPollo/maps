@@ -1795,7 +1795,7 @@ angular.module('firstlife.controllers')
         }
 
 
-    }]).run(function(MapService, myConfig, $timeout, $rootScope){
+    }]).run(function(MapService, myConfig, $timeout, $rootScope, $log){
 
     self.map = MapService.initMap();
 

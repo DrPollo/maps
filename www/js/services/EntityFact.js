@@ -426,7 +426,6 @@ angular.module('firstlife.factories')
 
 
             var marker = {
-
                 "popupOptions" : {closeOnClick:true},
                 "id": entity.properties.id,
 //                "type": parseInt(entity.properties.type),
