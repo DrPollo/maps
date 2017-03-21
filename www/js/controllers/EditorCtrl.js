@@ -85,65 +85,71 @@ angular.module('firstlife.controllers')
 
             //recupero lo stato precedente!
             var previousState = $previousState.get();
-            $log.debug("sono in EditorCtrl e vengo da ", previousState, " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+            $log.debug("sono in EditorCtrl e vengo da ", (previousState || null) , " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
             // attualmente non e' necessario gestire gli stati di arrivo
-            if(previousState && previousState.state && previousState.state.name === 'app.maps'){
+            // if(previousState && previousState.state && previousState.state.name == 'app.maps'){
 
-
-                // da cancellare initSearchSource();
-
-                _this.currentUser = AuthService.getUser();
-
-
-                $log.debug('update?',(params.id && params.id!= ""),params.id)
-
-
-                // scelgo se fare update di un marker esistente o crearne uno nuovo
-                // update place: init dataForm con dati del place...
-                if(params.id && params.id != ""){
-                    $log.debug('update',params.id);
-                    $scope.chooseType = false;
-                    //get place(id)
-                    entityFactory.get(params.id, true)
-                        .then( function(mark) {
-                            $log.debug('update marker',mark);
-                            //todo gestisco la nuova posizione
-                            mark.coordinates = [params.lng,params.lat];
-                            mark.lat = parseFloat(params.lat);
-                            mark.lng = parseFloat(params.lng);
-                            mark.zoom_level = parseInt(params.zoom_level);
-                            // init dell'edit
-                            setToEdit(mark);
-                            //bug datapicker che non modifica la data a cacchio
-                            // se la data e' settata allora metto a true il check
-                            if(_this.wizard.dataForm.valid_from)
-                                _this.valid_from = true
-                            if(_this.wizard.dataForm.valid_to)
-                                _this.valid_to = true
-
-                        },function(error) {
-                            // $log.debug("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error);
-                        });
-                }
-                //create place: init empty dataForm
-                else{
-                    // init del titolo 
-                    _this.wizard.title = _this.labels.create;
-
-                    // enables type form
-                    $scope.chooseType = true;
-
-                    // fine regole gestione campi speciali
-                    $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
-                }
-                // gestione di stati di arrivo diversi non necessaria
-            } else {
-                $log.debug("Ignoro perche' vengo da un altro stato o via link diretto, faccio redirect a app.maps");
-                if(params && params.lat && params.lng)
-                    $state.go('app.maps',{lat:params.lat,lng:params.lng});
-                else
-                    $state.go('app.maps');
+            // se non ho i parametri per il wizard o utente non loggato
+            if( !params.lat && !params.id || !AuthService.isAuth()){
+                // esco dal wizard
+                $state.go('home');
             }
+
+            // da cancellare initSearchSource();
+
+            _this.currentUser = AuthService.getUser();
+
+
+            $log.debug('update?',(params.id && params.id!= ""),params.id)
+
+
+            // scelgo se fare update di un marker esistente o crearne uno nuovo
+            // update place: init dataForm con dati del place...
+            if(params.id && params.id != ""){
+                $log.debug('update',params.id);
+
+                $scope.chooseType = false;
+                //get place(id)
+                entityFactory.get(params.id, true)
+                    .then( function(mark) {
+                        $log.debug('update marker',mark);
+                        //todo gestisco la nuova posizione
+                        mark.coordinates = params.lng && params.lat ?  [params.lng,params.lat] : mark.coordinates;
+                        mark.lat = params.lat ? parseFloat(params.lat) : mark.lat;
+                        mark.lng = params.lng ? parseFloat(params.lng) : mark.lng;
+                        mark.zoom_level = params.zoom_level ? parseInt(params.zoom_level) : mark.zoom_level;
+                        // init dell'edit
+                        setToEdit(mark);
+                        //bug datapicker che non modifica la data a cacchio
+                        // se la data e' settata allora metto a true il check
+                        if(_this.wizard.dataForm.valid_from)
+                            _this.valid_from = true
+                        if(_this.wizard.dataForm.valid_to)
+                            _this.valid_to = true
+
+                    },function(error) {
+                        // $log.debug("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error);
+                    });
+            }
+            //create place: init empty dataForm
+            else{
+                // init del titolo
+                _this.wizard.title = _this.labels.create;
+
+                // enables type form
+                $scope.chooseType = true;
+
+                // fine regole gestione campi speciali
+                $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
+            }
+            // gestione di stati di arrivo diversi non necessaria
+            // } else {
+            //     $log.debug("Ignoro perche' vengo da un altro stato o via link diretto, faccio redirect a app.maps");
+            //     if(params && params.lat && params.lng)
+            //         $state.go('app.maps',{lat:params.lat,lng:params.lng});
+            //     else
+            //         $state.go('app.maps');
+            // }
         });
 
 
