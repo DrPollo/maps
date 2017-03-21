@@ -85,7 +85,7 @@ angular.module('firstlife.controllers')
 
             //recupero lo stato precedente!
             var previousState = $previousState.get();
-            $log.debug("sono in EditorCtrl e vengo da ", (previousState || null) , " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+            $log.log("sono in EditorCtrl e vengo da ", (previousState || null) , " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
             // attualmente non e' necessario gestire gli stati di arrivo
             // if(previousState && previousState.state && previousState.state.name == 'app.maps'){
 
