@@ -60,6 +60,7 @@ gulp.task('setupenv',function(){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
         config.myConfig.base_callback = domain_name ? domain_name.concat(".dev.firstlife.di.unito.it/") : "dev.firstlife.di.unito.it/";
+        config.myConfig.dev = false;
     }
     console.log('setup env host: ',config.myConfig.api_base_domain, config.myConfig.base_callback);
     fs.writeFile('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('setup env: ',e ? e : 'ok!');}); 
