@@ -6,12 +6,43 @@ angular.module('underscore', [])
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication', 'underscore', 'leaflet-directive', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
 
-    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log,$window, myConfig, AuthService) {
+    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window, myConfig, AuthService) {
 
         self.config = myConfig;
         // init utente
         $rootScope.isLoggedIn = AuthService.isAuth();
 
+
+        // fix callback
+        myConfig.base_callback = $location.protocol().concat( "://" ,$location.host(),":", $location.port(),'/');
+        var client_id = myConfig.authentication.client_id;
+        var auth_server = myConfig.authentication.auth_server;
+
+        var redirect_uri_auth = myConfig.base_callback.concat("callback");
+        var redirect_uri_logout = myConfig.base_callback.concat("logout");
+
+        console.log('auth server check',myConfig.authentication);
+
+        myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
+        myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;
+        myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
+
+        if(myConfig.authentication["auth_url"])
+            myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id);
+        if(myConfig.authentication.scopes && myConfig.authentication.scopes.length > 0){
+            myConfig.authentication["scopes"] = myConfig.authentication.scopes.join();
+            myConfig.authentication["auth_url"] = myConfig.authentication["auth_url"].concat("&scope=",myConfig.authentication["scopes"]);
+        }
+
+        if(myConfig.authentication["logout_url"])
+            myConfig.authentication["logout_url"] = myConfig.authentication.logout_url.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
+
+        if(myConfig.authentication["profile_url"])
+            myConfig.authentication["profile_url"] = myConfig.authentication.profile_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
+
+        if(myConfig.authentication.registration_url)
+            myConfig.authentication["registration_url"] = myConfig.authentication.registration_url.concat("?redirect_uri=",redirect_uri_auth);
+        // fine fix callback
 
 
         $ionicPlatform.ready(function() {
