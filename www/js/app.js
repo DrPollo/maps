@@ -75,7 +75,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 $ionicLoading.hide();
 
 
-                $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+                $log.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
                 // aggiorno delle variabili sullo stato precendete e corrente
                 // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
                 $rootScope.previousState = fromState.name;
@@ -104,8 +104,6 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         }
                     )
                 }
-
-
 
                 // se ti trovi in uno stato che richiede autenticazione e non sei loggato
                 if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {

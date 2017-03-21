@@ -23,7 +23,12 @@ angular.module('firstlife.controllers')
         var consoleCheck = false;
         
         // gestore del cambio di stato
-        $scope.$on("$stateChangeSuccess", function() {
+        $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+            if(event.preventAppSideEvent && toState != 'app')
+                return
+
+            event.preventAppSideEvent = true;
+
             if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState);
             
             $scope.isLoggedIn = AuthService.isAuth();

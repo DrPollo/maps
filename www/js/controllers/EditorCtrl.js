@@ -75,6 +75,10 @@ angular.module('firstlife.controllers')
          */
         // al cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+            if(event.preventEditorEvent && toState != 'app.editor')
+                return
+
+            event.preventEditorEvent = true;
 
             // cancello il form
             _this.wizard.dataForm = {};

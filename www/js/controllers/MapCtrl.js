@@ -162,7 +162,14 @@ angular.module('firstlife.controllers')
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
-        $scope.$on("$stateChangeSuccess", function() {
+        $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+            if(event.preventMapsEvent && toState != 'app.maps')
+                return
+
+            event.preventMapsEvent = true;
+
+            $log.log("sono in app.map e vengo per lo stato ",toState);
+
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
             var params = $location.search();
@@ -173,12 +180,12 @@ angular.module('firstlife.controllers')
 
             $scope.isLoggedIn = AuthService.isAuth();
 
-            $log.log("sono in app.map e vengo da ", $rootScope.previousState, params);
+
 
             // recupero la mappa se non inizializzata
             $scope.map = MapService.getMap();
 
-            $log.log("MapCtrl, map all'ingresso di stato ",$scope.map);
+
 
             // valuto lo stato da dove arrivo e decido cosa fare
             switch($rootScope.previousState){
@@ -535,12 +542,15 @@ angular.module('firstlife.controllers')
             if($scope.updateEntity && $scope.updateEntity.id){
                 // back to view
                 changeMode('view');
+
                 // parametri per l'editor
                 var params = {lat: $scope.map.center.lat, lng:$scope.map.center.lng,zoom_level:$scope.map.center.zoom,id:$scope.updateEntity.id,};
                 $state.go('app.editor', params);
-                //$scope.switchEditMode();
 
             }if($scope.updateEntity){
+                // back to view
+                changeMode('view');
+
                 // se ho gia' dei parametri per la insert
                 var params = {};
                 for(var k in $scope.updateEntity){
@@ -552,9 +562,9 @@ angular.module('firstlife.controllers')
                 params.zoom_level = $scope.map.center.zoom;
 
                 $state.go('app.editor', params);
+            }else{
                 // back to view
                 changeMode('view');
-            }else{
                 // se non devo aggiornare nessuna entita'
                 // e non ho paramentri gia' stabiliti
                 clickToAdd();

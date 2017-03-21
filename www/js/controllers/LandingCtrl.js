@@ -9,7 +9,10 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
-            event.preventDefault();
+            if(event.preventLandingEvent && toState != 'home')
+                return
+            event.preventLandingEvent = true;
+
             if(dev) $log.debug("sono in login, questi i parametri ",toState);
             
             //se autenticato
