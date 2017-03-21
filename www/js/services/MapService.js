@@ -375,7 +375,7 @@ angular.module('firstlife.services')
                           //type: "group",
                           visible: true, 
                           layerOptions: {
-                              //chunkedLoading: true,
+                              chunkedLoading: true,
                               showCoverageOnHover: false,
                               //zoomToBoundsOnClick: false,
                               spiderfyDistanceMultiplier: 2,
