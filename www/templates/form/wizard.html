@@ -224,7 +224,7 @@
         </button>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button ng-disabled="editor.form.wizardform.$invalid" class="button button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>
+            <button ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid" class="button button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-view>
