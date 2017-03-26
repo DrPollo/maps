@@ -1,111 +1,7 @@
 /**
  * Created by drpollo on 25/03/2017.
  */
-angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService' , function ($log, AuthService) {
-    return{
-        restrict: 'E',
-        scope: {
-            marker:'='
-        },
-        template: '<post-editor id="marker.id" ng-if="user"></post-editor><post-list ng-if="marker.id" id="marker.id"></post-list>',
-        link: function(scope, element, attrs){
-
-            scope.$on('$destroy', function(e) {
-                if(!e.preventEventPosts){
-                    e.preventEventPosts = true;
-                    delete scope;
-                }
-            });
-            // controllo se loggato
-            scope.user = AuthService.isAuth();
-
-        }}
-}]).directive('postEditor', ['$log' , 'AuthService', 'postFactory' , function ($log, AuthService, postFactory) {
-    return{
-        restrict: 'E',
-        scope: {
-            id: '='
-        },
-        templateUrl: '/templates/post/postEditor.html',
-        link: function(scope, element, attrs){
-
-            scope.$on('$destroy', function(e) {
-                if(!e.preventEventPostEditor){
-                    e.preventEventPostEditor = true;
-                    delete scope;
-                }
-            });
-
-            element.on('click', function (e) {
-                if(!e.preventEventPostEditorFocus){
-                    e.preventEventPostEditorFocus = true;
-                    scope.$apply(function(){scope.focus = true;});
-                }
-            });
-
-            scope.user = AuthService.getUser();
-            scope.loading = false;
-
-            // init del form
-            initPost();
-
-            // raccolgo l'evento focus
-            scope.focus = false;
-            scope.setFocus = function(value){
-                scope.focus = value;
-            }
-
-            // reset dei campi
-            scope.clear = function(){
-                initPost();
-                scope.focus = false;
-            }
-
-            // pubblica un post
-            scope.publish = function(){
-                var post = angular.copy(scope.post);
-                // $log.log('post: ',post);
-                initPost();
-                scope.loading = true;
-                postFactory.createPost(scope.id, post).then(
-                    function (results) {
-                        $log.log('ok caricamento post',results);
-                        // reset del form
-                        scope.loading = false;
-                    },
-                    function (err){
-                        $log.error('errore salvataggio post',err);
-                        // ripristino il contenuto
-                        restorePost(post);
-                        scope.loading = false;
-                    }
-                );
-            }
-            // reset del form
-            function initPost(){
-                // init del post
-                scope.post = {
-                    title: '',
-                    message: '',
-                    filedata: null,
-                    tags:[]
-                };
-                scope.form.post.$setPristine();
-            }
-            // restore del form
-            function restorePost(post){
-                // init del post
-                scope.post = {
-                    title: post.title,
-                    message: post.message,
-                    filedata: post.filedata,
-                    tags:post.tags
-                };
-                scope.focus = false;
-            }
-        }
-    };
-}]).directive('postList',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService) {
+angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService) {
     return {
         restrict:'EG',
         scope: {
@@ -126,6 +22,11 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
             scope.dev = myConfig.dev;
             scope.config = myConfig;
 
+            //reset della lista
+            scope.reset = function () {
+                $log.log('reset di ', scope.id)
+                initList();
+            };
             // open popover menu
             $ionicPopover.fromTemplateUrl('/templates/popovers/post-menu.html',{
                 scope: scope
@@ -244,6 +145,99 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
 
         }
     }
+}]).directive('postEditor', ['$log' , 'AuthService', 'postFactory' , function ($log, AuthService, postFactory) {
+    return{
+        restrict: 'E',
+        scope: {
+            id: '=id',
+            reset: '=reset'
+        },
+        templateUrl: '/templates/post/postEditor.html',
+        link: function(scope, element, attrs){
+
+            scope.$on('$destroy', function(e) {
+                if(!e.preventEventPostEditor){
+                    e.preventEventPostEditor = true;
+                    delete scope;
+                }
+            });
+
+            element.on('click', function (e) {
+                if(!e.preventEventPostEditorFocus){
+                    e.preventEventPostEditorFocus = true;
+                    scope.$apply(function(){scope.focus = true;});
+                }
+            });
+
+            scope.user = AuthService.getUser();
+            scope.loading = false;
+
+            // init del form
+            initPost();
+
+            // raccolgo l'evento focus
+            scope.focus = false;
+            scope.setFocus = function(value){
+                scope.focus = value;
+            }
+
+            // reset dei campi
+            scope.clear = function(){
+                initPost();
+                scope.focus = false;
+            }
+
+            // pubblica un post
+            scope.publish = function(){
+                var post = angular.copy(scope.post);
+                // $log.log('post: ',post);
+                initPost();
+                scope.loading = true;
+                postFactory.createPost(scope.id, post).then(
+                    function (results) {
+                        $log.log('ok caricamento post',results);
+                        reset();
+                        // reset del form
+                        scope.loading = false;
+                    },
+                    function (err){
+                        $log.error('errore salvataggio post',err);
+                        // ripristino il contenuto
+                        restorePost(post);
+                        scope.loading = false;
+                    }
+                );
+            }
+            // reset del form
+            function initPost(){
+                // init del post
+                scope.post = {
+                    title: '',
+                    message: '',
+                    filedata: null,
+                    tags:[]
+                };
+                scope.form.post.$setPristine();
+            }
+            // restore del form
+            function restorePost(post){
+                // init del post
+                scope.post = {
+                    title: post.title,
+                    message: post.message,
+                    filedata: post.filedata,
+                    tags:post.tags
+                };
+                scope.focus = false;
+            }
+
+            function reset() {
+                $log.log('reset', scope.reset);
+                // scope.$eval(attrs.reset,{'id':scope.id});
+                scope.reset();
+            }
+        }
+    };
 }]).directive('pictureLoader',function(){
     return {
         restrict: 'EG',
@@ -323,7 +317,7 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
                     //  alert('img' + imageUri);
                     addToimages(imageUri);
                 }, function(err) {
-                    console.log('error'+ err);
+                    console.log('error', err);
                 });
             };
 
