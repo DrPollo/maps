@@ -6,13 +6,13 @@ angular.module('firstlife.factories')
         self.keys = {user: 'user', token:'token', config:'config' };
 
         return {
-            save(key,data){
+            save: function(key,data){
                 $localStorage[key] = data;
             },
-            get(key){
+            get: function(key){
                 return $localStorage[key];
             },
-            delete(key){
+            delete: function(key){
                 delete $localStorage[key];
             }
             

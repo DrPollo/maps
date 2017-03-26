@@ -378,14 +378,14 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                     delete $scope;
                 }
             });
-
-            $scope.$watch('marker',function(e,old){
-                // cambia il marker
-                if(!e.preventEntityRelationsUpdateMarker && e && e.id && (!old || e.id != old.id )){
-                    e.preventEntityRelationsUpdateMarker = true;
-                    loadSibillings();
-                }
-            });
+            //
+            // $scope.$watch('marker',function(e,old){
+            //     // cambia il marker
+            //     if(!e.preventEntityRelationsUpdateMarker && e && e.id && (!old || e.id != old.id )){
+            //         e.preventEntityRelationsUpdateMarker = true;
+            //         loadSibillings();
+            //     }
+            // });
 
 
             loadSibillings();
@@ -946,7 +946,34 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         restrict: 'E',
         template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
     }
-}).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory){
+}).directive('modalLists',  ['$log', 'AuthService',function($log, AuthService){
+    return{
+        restrict: 'E',
+        scope: {
+            marker: '=',
+            showMCardPlace: '&'
+        },
+        templateUrl: '/templates/map-ui-template/modalLists.html',
+        link: function(scope, element, attrs){
+
+            scope.$on('$destroy', function(e) {
+                if(!e.preventEventModalLists){
+                    e.preventEventModalLists = true;
+                    delete scope;
+                }
+            });
+
+            // numero di tab
+            var tabs = 2;
+            // parto con la prima tag
+            scope.toggle = 0;
+            // cambio di tab
+            scope.setToggle = function(i){
+                scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
+            }
+        }
+    }
+}]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory){
     return {
         scope:{
             id: '=',
@@ -1029,6 +1056,4 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         }
 
     }
-
-
 }]);

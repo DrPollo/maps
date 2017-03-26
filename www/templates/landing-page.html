@@ -64,18 +64,18 @@
             </div>
         </div>
         <div class="footer-content">
-            <div id="lower-menu" class="row lower-menu">
-                <div class="row responsive-sm">
-                    <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
-                        <h4><a href="{{link.url}}">{{link.name}}</a></h4>
-                    </div>
-                </div>
-            </div>
             <div id="partners" class="row responsive-sm" ng-if="defaults.design.landingpage.logo_partners.length > 0">
                 <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
                     <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
                         <img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>
                     </a>
+                </div>
+            </div>
+            <div id="lower-menu" class="row lower-menu">
+                <div class="row responsive-sm">
+                    <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
+                        <h4><a href="{{link.url}}">{{link.name}}</a></h4>
+                    </div>
                 </div>
             </div>
             <div id="credits" class="row" >

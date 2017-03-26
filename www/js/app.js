@@ -82,19 +82,19 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 $rootScope.currentState = toState.name;
 
                 //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
-                $log.debug('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
+                $log.log('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
 
                 // controllo di autenticazione
                 // con autologin (controllo e login se non vado a callback)
-                $log.debug('devo loggarmi?',!AuthService.isAuth())
+                $log.debug('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback')
                 if(!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback'){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
                     AuthService.checkSession().then(
                         function (result) {
                             // l'utente e' attualmente loggato nell'auth server
-                            $log.debug('checkSession',result)
+                            $log.log('checkSession',result)
                             // redirect all'auth server
                             $window.location.href = AuthService.auth_url();
                         },
@@ -106,7 +106,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 }
 
                 // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-                if (config.behaviour.is_login_required && authenticate && AuthService.isAuth() && !embed)  {
+                $log.debug('check loging',config.behaviour.is_login_required, authenticate, AuthService.isAuth(), !embed)
+                if (config.behaviour.is_login_required && authenticate && !AuthService.isAuth() && !embed)  {
                     $log.debug("Salvo lo stato prima del login: ", $stateParams);
                     event.preventDefault();
                     // vai a login per effettuare l'autenticazione
@@ -222,7 +223,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         LOGIN_REQUIRED:"Accesso necessario",
         LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
-        GEOLOCATION_HINTS:'Cerca un indizzo',
+        GEOLOCATION_HINTS:'Cerca un indirizzo',
         SEARCH_HINTS:'Cerca per parola chiave',
         FILTER_HINTS:'Filtra per nome, categoria o tag...',
         ENTRIES:'risultati',
@@ -509,7 +510,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DO_YOU_SIGNUP: "Non hai un account?",
         DO_YOU_LOGIN: "Hai già un account?",
         CALLBACK_TITLE: "Successo",
-        UPDATE_PROFILE_SUCCESS: "Profilo aggiornato"
+        UPDATE_PROFILE_SUCCESS: "Profilo aggiornato",
+        POSTEDITOR_PLACEHOLDER: "vuoi aggiungere un tuo contribuito?",
+        POSTEDITOR_TITLE_PLACEHOLDER: "vuoi dare un titolo?",
+        POSTEDITOR_TAGS_PLACEHOLDER:"aggiungi dei tag separati da virgola o invio",
+        LOAD_FOTO:"Carica Foto",
+        CREATE_POST:"Crea un Post",
+        POSTS: 'Post',
+        CONTRIBUTE_OF: "Contributo di",
+        COMMENTEDITOR_PLACEHOLDER:"Scrivi un commento..."
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -802,7 +811,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DO_YOU_SIGNUP: "Don't you have an account?",
         DO_YOU_LOGIN: "Do you have an account?",
         CALLBACK_TITLE: "Success",
-        UPDATE_PROFILE_SUCCESS: "Profile updated"
+        UPDATE_PROFILE_SUCCESS: "Profile updated",
+        POSTEDITOR_PLACEHOLDER: "do you have a contribute to share?",
+        POSTEDITOR_TITLE_PLACEHOLDER: "do you wish to provide a title?",
+        POSTEDITOR_TAGS_PLACEHOLDER:"add a tags separated by commas or return",
+        LOAD_FOTO:"Load Picture",
+        CREATE_POST:"Create a Post",
+        POSTS: 'Post',
+        CONTRIBUTE_OF: "Contribute of",
+        COMMENTEDITOR_PLACEHOLDER:"Leave a comment..."
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

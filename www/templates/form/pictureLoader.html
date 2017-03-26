@@ -1,47 +1,30 @@
-<div class="content">
-    <button class="button button-outline button-positive button-small button-block ion-images" 
+<div ng-show="!images" id="pictureloader">
+    <div class="button button-clear"
             ng-if="config.actions.can_foto && isMobile"
             on-tap="loadCamera()">
-        <span>{{'CAMERA'|translate}}</span>
-    </button>
-    <button class="button button-outline button-positive button-small button-block ion-images" 
-            ng-if="config.actions.can_foto && isMobile"
-            on-tap="imagePicker()">
-        <span>{{'GALLERY_BUTTON'|translate}}</span>
-    </button>
-</div>
-<div class="content">
-   {{'PICTURE_DISCLAIMER'|translate}} {{'IMAGE_FORMATS'|translate}}
-</div>
-<div class="content">
-    <div class="button button-outline button-positive button-small button-block ion-images" 
-            ng-if="true || config.actions.can_foto" id="fileUpload">
-        <span>{{'FILE'|translate}}</span>
+        <i class="icon ion-images"></i>
+        <div ng-if="!isMobile">{{'CAMERA'|translate}}</div>
+    </div>
+    <!--<button class="button button-outline button-positive button-small ion-images"-->
+            <!--ng-if="config.actions.can_foto && isMobile"-->
+            <!--on-tap="imagePicker()">-->
+        <!--<span>{{'GALLERY_BUTTON'|translate}}</span>-->
+    <!--</button>-->
+    <div class="button button-clear"
+         ng-if="true || config.actions.can_foto" id="fileUpload">
+        <div class="col col-center col-100">
+            <i class="icon ion-android-add"></i>
+            <div title="{{'LOAD_FOTO'|translate}}"><i class="icon ion-images"></i></div>
+        </div>
         <form name="loader.box" style="padding:0px;">
-            <input id="input-fileUpload" type="file" maxsize="5000" ng-model="file" name="file" multiple base-sixty-four-input accept=".gif, .jpg, .jpeg, .png" onload="onLoad" >
+            <input id="input-fileUpload" type="file" maxsize="5000" ng-model="file" name="file" base-sixty-four-input accept=".gif, .jpg, .jpeg, .png" onload="onLoad" >
         </form>
     </div>
 </div>
-<span ng-show="loader.box.file.$error.maxsize" class="content assertive">{{'ERROR'|translate}}: {{'PICTURE_DISCLAIMER'|translate}}</span>
-<div ng-show="imageCache.length > 0" id="area-foto" class="content">
-    <div class="foto-box">
-        <div class="row foto-mosaico" ng-repeat="image in imageCache" ng-if="$index % 4 === 0">
-            <div class="col col-25" ng-if="$index < imageCache.length">
-                <img data-ng-src="{{imageCache[$index]}}" width="100%" /> 
-                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-            </div>
-            <div class="col col-25" ng-if="$index + 1 < imageCache.length">
-                <img data-ng-src="{{imageCache[$index + 1]}}" width="100%" /> 
-                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-            </div>
-            <div class="col col-25" ng-if="$index + 2 < imageCache.length">
-                <img data-ng-src="{{imageCache[$index + 2]}}" width="100%" /> 
-                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-            </div>
-            <div class="col col-25" ng-if="$index + 3 < imageCache.length">
-                <img data-ng-src="{{imageCache[$index + 3]}}" width="100%" /> 
-                <i class="icon ion-close-round" on-tap="removeImage($index)"></i>
-            </div>
-        </div>
-    </div>
+<div id="foto-box" ng-if="images">
+    <img data-ng-src="{{images}}" width="100%" />
+    <i class="icon ion-close-round" on-tap="resetimages()"></i>
 </div>
+
+
+<!--<span ng-show="loader.box.file.$error.maxsize" class="content assertive fast-linear-animation">{{'ERROR'|translate}}: {{'PICTURE_DISCLAIMER'|translate}}</span>-->

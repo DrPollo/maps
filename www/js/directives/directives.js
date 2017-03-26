@@ -253,143 +253,74 @@ angular.module('firstlife.directives', [])
             });
         });
     };
-}) .directive('pictureLoader',function(){
+}).directive('autogrow', ['$window', function($window){
     return {
-        restrict: 'EG',
-        scope: {
-            id:'=id',
-            imageCache:'=images'
-        },
-        templateUrl: '/templates/form/pictureLoader.html',
-        controller:['$scope','$log','$filter','$ionicLoading',function($scope,$log,$filter,$ionicloading){
+        link: function($scope, $element, $attrs){
 
-
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventPictureLoader){
-                    e.preventPictureLoader = true;
-                    delete $scope;
-                }
-            });
-
-
-            initLoader();
-
-            if(!$scope.imageCache)
-                $scope.imageCache = [];
-
-            function initLoader(){
-
-                $scope.file = '';
-            }
-
-            $scope.removeImage = function(index) {
-                $scope.imageCache.splice(index, 1);
+            /**
+             * Default settings
+             */
+            $scope.attrs = {
+                rows: 1,
+                maxLines: 999
             };
 
-            //action to upload photos
-            $scope.loadCamera = function(){
-                Cameras.getPicture({
-                    destinationType : Camera.DestinationType.DATA_URL,
-                    sourceType : Camera.PictureSourceType.CAMERA,
-                    quality: 70,
-                    targetWidth: 800,
-                    targetHeight: 800,
-                    saveToPhotoAlbum: false
-                }).then(function(imageURI) {
-                    //  alert(imageURI);
-                    addToImageCache(imageURI);
-                }, function(err) {
-                    console.log(err);
-                });    
-            };
-
-            //action to choose images
-            $scope.imagePicker = function(){
-
-                var options = {
-                    quality: 70,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    targetWidth: 800,
-                    targetHeight: 800
-                };
-
-                $cordovaCamera.getPicture(options).then(function(imageUri) {
-                    //  alert('img' + imageUri);
-                    addToImageCache(imageUri);
-
-                }, function(err) {
-                    console.log('error'+ err);
-                });
-
-            };
-
-
-            // init form
-            $scope.loader = {};
-            var limit = 5000000;
-            $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
-                $log.error('check onLoad, da scartare? ',e,reader,file,fileObj);
-                // se non supera la dimensione massima di 5Mb
-                if(fileObj.filesize <= limit){
-                    addToImageCache(fileObj);
+            /**
+             * Merge defaults with user preferences
+             */
+            for(var i in $scope.attrs){
+                if($attrs[i]){
+                    $scope.attrs[i] = parseInt($attrs[i]);
                 }
             }
 
-            function addToImageCache(image){
-                // aggiungo le immagini alla cache, senza duplicati
-                if($scope.imageCache.indexOf(image) < 0){
-                    var data = 'data:';
-                    data = data.concat(image.filetype).concat(';base64,').concat(image.base64);
-                    $scope.imageCache.push(data);
+            /**
+             * Calculates the vertical padding of the element
+             * @returns {number}
+             */
+            $scope.getOffset = function(){
+                var style = $window.getComputedStyle($element[0], null),
+                    props = ['paddingTop', 'paddingBottom'],
+                    offset = 0;
+
+                for(var i=0; i<props.length; i++){
+                    offset += parseInt(style[props[i]]);
                 }
+                return offset;
+            };
+
+            /**
+             * Sets textarea height as exact height of content
+             * @returns {boolean}
+             */
+            $scope.autogrowFn = function(){
+                var newHeight = 0, hasGrown = false;
+                if(($element[0].scrollHeight - $scope.offset) > $scope.maxAllowedHeight){
+                    $element[0].style.overflowY = 'scroll';
+                    newHeight = $scope.maxAllowedHeight;
+                }
+                else {
+                    $element[0].style.overflowY = 'hidden';
+                    $element[0].style.height = 'auto';
+                    newHeight = $element[0].scrollHeight - $scope.offset;
+                    hasGrown = true;
+                }
+                $element[0].style.height = newHeight + 'px';
+                return hasGrown;
+            };
+
+            $scope.offset = $scope.getOffset();
+            $scope.lineHeight = ($element[0].scrollHeight / $scope.attrs.rows) - ($scope.offset / $scope.attrs.rows);
+            $scope.maxAllowedHeight = ($scope.lineHeight * $scope.attrs.maxLines) - $scope.offset;
+
+            $element[0].addEventListener('input', $scope.autogrowFn);
+
+            /**
+             * Auto-resize when there's content on page load
+             */
+            if($element[0].value != ''){
+                $scope.autogrowFn();
             }
-
-            // send photo to api
-            $scope.sendPhoto = function(entity_id,entity_type) {
-                if(Array($scope.imageCache).length > 0){
-                    Sender.images($scope.imageCache, entity_id,entity_type).then(
-                        function(data){
-                            // reset immagini
-                            $scope.resetImageCache();
-                            //console.log('Immagini caricate!',data);
-                            // ho salvato le immagini, le ricarico dal server
-                            $scope.refreshImages(entity_id,entity_type);
-                        },
-                        function(err){
-                            // reset immagini
-                            $scope.resetImageCache();
-                            // todo errore di caricamento
-                            var title = $filter('translate')('ERROR');
-                            var template = $filter('translate')('UNKNOWN_ERROR');
-                            switch(err.status){
-                                case '413':
-                                    // immagine troppo grande
-                                    // errore di rete
-                                    template = $filter('translate')('SIZE_ERROR');
-                                    break;
-                                default:
-                                    // errore di rete
-
-                            }
-                            var alertPopup = $ionicPopup.alert({
-                                title: title,
-                                template: template
-                            });
-                            $log.error('sendPhoto, errore',err);
-                        });
-                }
-
-            };
-
-            // send photo to api
-            $scope.resetImageCache = function(markerId) {
-                //console.log("reset immagini");
-                $scope.imageCache = [];
-                $scope.isPendingImages = false;
-
-            };
-
-        }]
+        }
     }
-});
+}]);

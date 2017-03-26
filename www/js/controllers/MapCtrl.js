@@ -163,6 +163,8 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+            $log.log("sono in app.map e vengo per lo stato",toState);
+
             if(event.preventMapsEvent)
                 return
             event.preventMapsEvent = true;
@@ -171,7 +173,7 @@ angular.module('firstlife.controllers')
             if(toState.name != 'app.maps')
                 return
 
-            $log.debug("sono in app.map e vengo per lo stato",toState);
+
 
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
@@ -205,7 +207,7 @@ angular.module('firstlife.controllers')
 
                     break;
 
-                case 'login':
+                case 'home':
                     // vengo dal login
                     locate($stateParams);
 
@@ -1182,6 +1184,9 @@ angular.module('firstlife.controllers')
                 }
             }
 
+            // filtro per il fix delle relazioni
+            // se il padre non si vede il figlio viene visualizzato
+            // generalizzato sulle relazioni di tipo parent
             function relationsFixer(){
                 for(var key in $scope.markersFiltered){
                     var marker = $scope.markersFiltered[key];

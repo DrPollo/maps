@@ -13160,11 +13160,6 @@ ion-side-menu#side-menu {
       display: block;
       padding-top: 100%;
       /* initial ratio of 1:1*/ }
-  .modal #box-commenti .item pre:first-letter {
-    text-transform: uppercase; }
-  .modal #box-commenti .item pre {
-    font-family: "Georgia","trebouchet MS", "Verdana", "monospace";
-    font-style: italic; }
   .modal .item-divider {
     letter-spacing: 1px;
     font-weight: 400; }
@@ -13181,53 +13176,17 @@ ion-side-menu#side-menu {
     margin-left: 6px; }
   .modal .bar-footer .right-buttons .button {
     margin-right: 6px; }
-
-.username {
-  font-weight: 700; }
-
-.message {
-  font-size: .9em;
-  color: #666; }
-
-#commentBox .disclaimer {
-  padding: 16px; }
-
-#commentBox form {
-  padding: 16px; }
-  #commentBox form .username {
-    font-size: 1.2em; }
-  #commentBox form textarea {
-    width: 100%;
-    min-height: 160px;
-    border: 1px solid #999;
-    padding: 8px;
-    border-radius: 2px;
-    -webkit-border-radius: 2px;
-    -o-border-radius: 2px;
-    -moz-border-radius: 2px;
-    white-space: pre-wrap; }
-
-.button-bar-striped {
-  background: #f5f5f5; }
-  .button-bar-striped .button {
-    padding-bottom: 4px; }
-  .button-bar-striped .button.selected {
-    border-bottom: 4px solid; }
-
-#simpleEntityList .textCard .item-text-wrap {
-  white-space: pre-wrap; }
-
-#simpleEntityList .textCard .item-footer .button-box {
-  position: absolute;
-  top: 8px;
-  right: 16px; }
-  #simpleEntityList .textCard .item-footer .button-box button {
-    display: inline-block;
-    align-items: center;
-    min-width: 34px;
-    min-height: 34px;
-    font-size: 18px;
-    line-height: 32px; }
+  .modal .username {
+    font-weight: 700; }
+  .modal .message {
+    font-size: .9em;
+    color: #666; }
+  .modal .button-bar-striped {
+    background: #f5f5f5; }
+    .modal .button-bar-striped .button {
+      padding-bottom: 4px; }
+    .modal .button-bar-striped .button.selected {
+      border-bottom: 4px solid; }
 
 .popover-backdrop.active {
   z-index: 11; }
@@ -15326,7 +15285,8 @@ timeline {
           font-size: 1em;
           text-decoration: none;
           font-weight: 500;
-          color: #333; }
+          color: #333;
+          text-align: left; }
   #landingpage .positive-message {
     color: #88ba5c;
     font-style: italic;
@@ -15372,7 +15332,8 @@ timeline {
     #landingpage .footer-content #partners {
       min-height: 60px;
       text-align: center;
-      width: 100%; }
+      width: 100%;
+      background: #999; }
       #landingpage .footer-content #partners .col {
         margin: 0px 10px; }
 
@@ -15489,3 +15450,160 @@ div.search-tag-card {
     padding-left: 6px; }
   .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:focus, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:hover, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:active {
     background: #f0f0f0; }
+
+#posteditor input, #posteditor tags-input .tags {
+  border: none;
+  box-shadow: none; }
+
+#posteditor textarea {
+  resize: vertical; }
+
+#posteditor tags-input {
+  width: 100%; }
+  #posteditor tags-input .tag-list {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    float: left;
+    clear: both;
+    padding-bottom: 6px; }
+    #posteditor tags-input .tag-list .tag-item {
+      background: transparent;
+      border: 1px solid #FC4A00;
+      border-radius: 10px; }
+
+#posteditor .row, #posteditor col {
+  padding: 0px; }
+
+#posteditor .left {
+  float: left; }
+
+#posteditor .right {
+  float: right; }
+
+#posteditor .title {
+  line-height: 30px;
+  height: 30px; }
+
+#posteditor .cover {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 9;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.25); }
+  #posteditor .cover .spinner {
+    position: absolute;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px); }
+    #posteditor .cover .spinner svg {
+      width: 40px;
+      height: 40px;
+      stroke: #fff;
+      fill: #fff; }
+
+#posteditor #foto-box {
+  padding-bottom: 100%;
+  height: 0px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px; }
+  #posteditor #foto-box img {
+    border-radius: 10px;
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  #posteditor #foto-box i {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    right: 6px;
+    opacity: 0; }
+
+#posteditor #foto-box:hover {
+  background: #333; }
+  #posteditor #foto-box:hover img {
+    opacity: 0.5; }
+  #posteditor #foto-box:hover i {
+    opacity: 1;
+    color: #fff; }
+
+#posteditor #posteditor-controls {
+  clear: both; }
+  #posteditor #posteditor-controls button::before {
+    margin-right: 6px; }
+
+#posteditor #pictureloader {
+  height: 100%;
+  width: 100%;
+  position: relative; }
+  #posteditor #pictureloader .button {
+    color: #999;
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #999; }
+    #posteditor #pictureloader .button input {
+      width: 100%;
+      height: 100%; }
+    #posteditor #pictureloader .button .icon::before {
+      font-size: 2.5em; }
+
+#post-list .post .title {
+  font-weight: bold;
+  border-bottom: 1px solid #999; }
+
+#post-list .post .text {
+  line-height: 1.5em;
+  padding-bottom: 1.5em; }
+
+#post-list .post .tags .tag {
+  padding: 2px 6px;
+  margin-right: 6px;
+  border: 1px solid #FC4A00;
+  border-radius: 10px;
+  font-size: 0.9em; }
+
+#post-list .post .tags .tag:last-child {
+  margin-right: 0px; }
+
+#post-list .post .credits {
+  font-size: 0.8em;
+  font-style: italic; }
+
+#post-list .comments-list {
+  width: 100%;
+  position: relative;
+  border-top: 1px solid #ccc; }
+  #post-list .comments-list .comment {
+    border-bottom: 1px solid #ccc;
+    padding: 6px 0px;
+    font-size: 0.9em; }
+    #post-list .comments-list .comment .credits {
+      color: #666;
+      font-size: 0.8em; }
+      #post-list .comments-list .comment .credits .username {
+        font-style: italic; }
+  #post-list .comments-list .comment-editor {
+    width: 100%;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    line-height: 29px;
+    padding: 0px 6px;
+    min-height: 31px;
+    border-radius: 2px; }
+    #post-list .comments-list .comment-editor .comment-box {
+      width: calc(100% - 31px);
+      display: inline-block;
+      overflow: auto;
+      resize: vertical; }
+    #post-list .comments-list .comment-editor .button {
+      width: 31px; }
+
+#post-list .right {
+  float: right; }
