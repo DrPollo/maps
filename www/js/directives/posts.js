@@ -12,6 +12,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             scope.$on('$destroy', function(e) {
                 if(!e.preventPostListEvent){
                     e.preventPostListEvent = true;
+                    // rimuovo il menu
+                    scope.popover.remove();
                     delete scope;
                 }
             });

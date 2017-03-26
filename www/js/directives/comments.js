@@ -14,7 +14,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
                 if (!e.preventEventCommentsLists) {
                     e.preventEventCommentsLists = true;
                     // rimuovo il menu
-                    $scope.popover.remove();
+                    scope.popover.remove();
                     // cancello lo scope
                     delete scope;
                 }
