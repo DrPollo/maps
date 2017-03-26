@@ -15554,56 +15554,107 @@ div.search-tag-card {
     #posteditor #pictureloader .button .icon::before {
       font-size: 2.5em; }
 
-#post-list .post .title {
-  font-weight: bold;
-  border-bottom: 1px solid #999; }
-
-#post-list .post .text {
-  line-height: 1.5em;
-  padding-bottom: 1.5em; }
-
-#post-list .post .tags .tag {
-  padding: 2px 6px;
-  margin-right: 6px;
-  border: 1px solid #FC4A00;
-  border-radius: 10px;
-  font-size: 0.9em; }
-
-#post-list .post .tags .tag:last-child {
-  margin-right: 0px; }
-
-#post-list .post .credits {
-  font-size: 0.8em;
-  font-style: italic; }
-
-#post-list .comments-list {
-  width: 100%;
-  position: relative;
-  border-top: 1px solid #ccc; }
-  #post-list .comments-list .comment {
-    border-bottom: 1px solid #ccc;
-    padding: 6px 0px;
-    font-size: 0.9em; }
-    #post-list .comments-list .comment .credits {
-      color: #666;
-      font-size: 0.8em; }
-      #post-list .comments-list .comment .credits .username {
-        font-style: italic; }
-  #post-list .comments-list .comment-editor {
+#post-list .post-outer {
+  position: relative; }
+  #post-list .post-outer .menu {
+    position: absolute;
+    z-index: 9;
+    top: 0px;
+    right: 0px;
+    width: 30px;
+    height: 30px; }
+  #post-list .post-outer .post {
+    position: relative; }
+    #post-list .post-outer .post .imgbg {
+      position: absolute;
+      top: 35px;
+      left: 36px;
+      z-index: -1; }
+    #post-list .post-outer .post .imgbg::before {
+      font-size: 2em;
+      color: #afafaf; }
+    #post-list .post-outer .post .title {
+      font-weight: bold;
+      border-bottom: 1px solid #999;
+      padding-bottom: 0.5em; }
+    #post-list .post-outer .post .text {
+      line-height: 1.5em;
+      padding-bottom: 0.5em; }
+    #post-list .post-outer .post .tags {
+      padding-bottom: 0.5em; }
+      #post-list .post-outer .post .tags .tag {
+        padding: 2px 6px;
+        margin-right: 6px;
+        font-size: 0.9em; }
+      #post-list .post-outer .post .tags .tag::before {
+        margin-right: 4px;
+        font-size: 0.8em; }
+      #post-list .post-outer .post .tags .tag:last-child {
+        margin-right: 0px; }
+    #post-list .post-outer .post .credits {
+      font-size: 0.8em;
+      font-style: italic; }
+  #post-list .post-outer .comments-list {
     width: 100%;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    line-height: 29px;
-    padding: 0px 6px;
-    min-height: 31px;
-    border-radius: 2px; }
-    #post-list .comments-list .comment-editor .comment-box {
-      width: calc(100% - 31px);
-      display: inline-block;
-      overflow: auto;
-      resize: vertical; }
-    #post-list .comments-list .comment-editor .button {
-      width: 31px; }
+    position: relative;
+    border-top: 1px solid #ccc; }
+    #post-list .post-outer .comments-list .comment {
+      position: relative;
+      border-bottom: 1px solid #ccc;
+      padding: 6px 6px 6px 12px;
+      font-size: 0.9em; }
+      #post-list .post-outer .comments-list .comment .credits {
+        color: #666;
+        font-size: 0.8em; }
+        #post-list .post-outer .comments-list .comment .credits .username {
+          font-style: italic; }
+      #post-list .post-outer .comments-list .comment .menu {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 30px;
+        height: 30px; }
+    #post-list .post-outer .comments-list .comment-editor {
+      width: block;
+      margin: 6px;
+      border: 1px solid #ccc;
+      line-height: 29px;
+      padding: 0px 6px 0px 12px;
+      min-height: 31px;
+      border-radius: 2px; }
+      #post-list .post-outer .comments-list .comment-editor .comment-box {
+        width: 100%;
+        display: inline-block;
+        overflow: auto;
+        resize: vertical; }
+      #post-list .post-outer .comments-list .comment-editor .button {
+        width: 31px; }
+      #post-list .post-outer .comments-list .comment-editor .cover {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 9;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.25); }
+        #post-list .post-outer .comments-list .comment-editor .cover .spinner {
+          position: absolute;
+          top: calc(50% - 10px);
+          left: calc(50% - 10px); }
+          #post-list .post-outer .comments-list .comment-editor .cover .spinner svg {
+            width: 20px;
+            height: 20px;
+            stroke: #fff;
+            fill: #fff; }
+  #post-list .post-outer .right {
+    float: right; }
 
-#post-list .right {
-  float: right; }
+#comment-menu .button {
+  width: 41px; }
+  #comment-menu .button i.icon {
+    margin: 0px auto; }
+
+#post-menu .button {
+  width: 41px; }
+  #post-menu .button i.icon {
+    margin: 0px auto; }

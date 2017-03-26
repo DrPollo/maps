@@ -10,7 +10,7 @@ angular.module('firstlife.factories')
     return {
         getPosts: function(id){
             var deferred = $q.defer();
-            var url = urlPost.concat("/",id,"/posts",format);
+            var url = urlThings.concat("/",id,"/posts",format);
             var req = {
                 url: url,
                 method: 'get',
@@ -29,7 +29,7 @@ angular.module('firstlife.factories')
         },
         getPost: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,format);
+            var url = urlPosts.concat("/",id,format);
             var req = {
                 url: url,
                 method: 'get',
@@ -48,7 +48,7 @@ angular.module('firstlife.factories')
         },
         createPost: function(id, post){
             var deferred = $q.defer();
-            var url = urlPost.concat("/",id,'/posts',format);
+            var url = urlThings.concat("/",id,'/posts',format);
             var req = {
                 url: url,
                 method: 'post',
@@ -67,7 +67,7 @@ angular.module('firstlife.factories')
         },
         updatePost: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,format);
+            var url = urlPosts.concat("/",id,format);
             var req = {
                 url: url,
                 method: 'put',
@@ -86,7 +86,7 @@ angular.module('firstlife.factories')
         },
         deletePost: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,format);
+            var url = urlPosts.concat("/",id,format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {
@@ -107,7 +107,7 @@ angular.module('firstlife.factories')
         },
         getComments: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,"/comments",format);
+            var url = urlPosts.concat("/",id,"/comments",format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {
@@ -128,7 +128,7 @@ angular.module('firstlife.factories')
         },
         createComment: function(id, message){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,"/comments",format);
+            var url = urlPosts.concat("/",id,"/comments",format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {
@@ -149,7 +149,7 @@ angular.module('firstlife.factories')
         },
         updateComment: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,"/comments",format);
+            var url = urlComments.concat("/",id,format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {
@@ -170,7 +170,7 @@ angular.module('firstlife.factories')
         },
         deleteComment: function(id){
             var deferred = $q.defer();
-            var url = urlComment.concat("/",id,"/comments",format);
+            var url = urlComments.concat("/",id,format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {
@@ -197,8 +197,9 @@ angular.module('firstlife.factories')
 
     self.format = myConfig.format;
     self.config = myConfig;
-    self.urlPost = myConfig.backend_things;
-    self.urlComment = myConfig.domain_signature.concat('posts');
+    self.urlThings = myConfig.backend_things;
+    self.urlPosts = myConfig.domain_signature.concat('posts');
+    self.urlComments = myConfig.domain_signature.concat('Comments');
     self.base_url = myConfig.domain_signature;
     self.comments = {};
 });

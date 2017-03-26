@@ -1,0 +1,24 @@
+<ion-popover-view id="post-menu">
+    <ion-content>
+        <div class="list">
+            <div class="item item-button-right">
+                {{"REPORT_POST"|translate}}
+                <button class="button button-positive" ng-click="reportPost(current)">
+                    <i class="icon ion-alert"></i>
+                </button>
+            </div>
+            <!--<div class="item item-button-right" ng-if="config.actions.can_delete && checkPerms['u']">-->
+            <!--{{"UPDATE_POST"|translate}}-->
+            <!--<button class="button button-positive" ng-click="updatePostå(current)">-->
+            <!--<i class="icon ion-android-create"></i>-->
+            <!--</button>-->
+            <!--</div>-->
+            <div class="item item-button-right" ng-if="config.actions.can_delete && checkPerms['d']">
+                {{"DELETE_POST"|translate}}
+                <button class="button button-positive" ng-click="deletePost(current)">
+                    <i class="icon ion-android-delete"></i>
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-popover-view>

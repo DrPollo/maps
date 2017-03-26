@@ -1257,7 +1257,7 @@ angular.module('firstlife.controllers')
                     setMapMarkers();
                 },
                 function(err){
-                    $log.erro("updateMarkersDistributed, error", err);
+                    $log.error("updateMarkersDistributed, error", err);
                 }
             );
         }

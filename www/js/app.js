@@ -518,7 +518,13 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CREATE_POST:"Crea un Post",
         POSTS: 'Post',
         CONTRIBUTE_OF: "Contributo di",
-        COMMENTEDITOR_PLACEHOLDER:"Scrivi un commento..."
+        COMMENTEDITOR_PLACEHOLDER:"Scrivi un commento...",
+        DELETE_COMMENT: "Cancella il commento",
+        REPORT_COMMENT: "Commento inappropriato",
+        UPDATE_COMMENT: "Modifica commento",
+        REPORT_POST: "Segnala post inappropriato",
+        DELETE_POST: "Cancella il post",
+        UPDATE_POST: "Modifica il post"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -819,7 +825,13 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CREATE_POST:"Create a Post",
         POSTS: 'Post',
         CONTRIBUTE_OF: "Contribute of",
-        COMMENTEDITOR_PLACEHOLDER:"Leave a comment..."
+        COMMENTEDITOR_PLACEHOLDER:"Leave a comment...",
+        DELETE_COMMENT: "Delete the comment",
+        REPORT_COMMENT: "Report an abuse",
+        UPDATE_COMMENT: "Update commento",
+        REPORT_POST: "Report an abuse",
+        DELETE_POST: "Delete the post",
+        UPDATE_POST: "Update the post"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

@@ -135,7 +135,7 @@ angular.module('firstlife.controllers')
         // menu popover della modals
         $scope.showPopoverMenu = function (){
 
-            $ionicPopover.fromTemplateUrl('templates/map-ui-template/ModalPopoverMenu.html', {
+            $ionicPopover.fromTemplateUrl('templates/popovers/ModalPopoverMenu.html', {
                 scope: $scope,
             }).then(function(popover) {
                 $scope.popover = popover;
@@ -290,7 +290,7 @@ angular.module('firstlife.controllers')
                     $scope.$emit('openPlaceModal', {marker: marker.id});
                     $scope.loaded = true;
                     // inizializzo la maschera dei permessi per l'utente per il marker attuale
-                    initPerms(marker.user);
+                    initPerms(marker.owner);
                     // recupero il tipo e lo metto dentro $scope.currentType
                     initTypeChecks(marker.entity_type);
                 },

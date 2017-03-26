@@ -1,0 +1,9 @@
+<div id="post-list" ng-if="posts.length > 0" class="linear-fastanimation fade-in">
+    <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
+    <!--<div class="item-divider">{{'POSTS' | translate}}</div>-->
+    <div ng-repeat="post in posts |orderBy:'-timestamp_insert' track by $index" class="post-outer">
+        <button ng-if="user" ng-click="openMenu($event,post.id, post.owner)" class="menu button button-dark button-small button-clear button-icon ion-android-arrow-dropdown"></button>
+        <post post="post"></post>
+        <comments-list id="post.id"></comments-list>
+    </div>
+</div>

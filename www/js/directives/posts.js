@@ -26,7 +26,7 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
         scope: {
             id: '='
         },
-        templateUrl: '/templates/form/postEditor.html',
+        templateUrl: '/templates/post/postEditor.html',
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
@@ -64,7 +64,7 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
             // pubblica un post
             scope.publish = function(){
                 var post = angular.copy(scope.post);
-                $log.log('post: ',post);
+                // $log.log('post: ',post);
                 initPost();
                 scope.loading = true;
                 postFactory.createPost(scope.id, post).then(
@@ -105,13 +105,13 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
             }
         }
     };
-}]).directive('postList',['$log', 'myConfig', 'postFactory', function ($log, myConfig, postFactory) {
+}]).directive('postList',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService) {
     return {
         restrict:'EG',
         scope: {
             id: '=id'
         },
-        templateUrl: '/templates/map-ui-template/postList.html',
+        templateUrl: '/templates/post/postList.html',
         link:function(scope, element, attrs){
             scope.$on('$destroy', function(e) {
                 if(!e.preventPostListEvent){
@@ -119,18 +119,108 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
                     delete scope;
                 }
             });
-            $log.log('id',scope.id);
+
+            // init della lista di post
             initList();
+            scope.user = AuthService.getUser();
+            scope.dev = myConfig.dev;
+            scope.config = myConfig;
+
+            // open popover menu
+            $ionicPopover.fromTemplateUrl('/templates/popovers/post-menu.html',{
+                scope: scope
+            }).then(
+                function (popover){
+                    scope.popover = popover;
+                }
+            );
+            // apro il menu
+            scope.openMenu = function($event, id, owner) {
+                scope.current = id;
+                initPerms(owner);
+                if(scope.popover)
+                    scope.popover.show($event);
+            };
+
+            // cancello il commento
+            scope.deletePost = function(id){
+                scope.loading = true;
+                scope.popover.hide();
+                postFactory.deletePost(id).then(
+                    function (response) {
+                        $log.log('ok delete post',response);
+                        initList().then(
+                            function(){
+                                scope.loading = false;
+                            },
+                            function () {
+                                scope.loading = false;
+                            }
+                        );
+
+                    },
+                    function (err) {
+                        $log.error(err);
+                        scope.loading = false;
+                        // todo messaggio d'errore all'utente
+                    }
+                );
+            }
+            // segnalo il post
+            scope.reportPost = function(id){
+                scope.loading = true;
+                scope.popover.hide();
+                var report = {
+                    post_id: id,
+                    message: 'default message'
+                };
+                entityFactory.report(report).then(
+                    function (response) {
+                        $log.log('ok delete post',response);
+                        scope.loading = false;
+                        // todo messaggio ok all'utente
+                    },
+                    function (err) {
+                        $log.error(err);
+                        scope.loading = false;
+                        // todo messaggio d'errore all'utente
+                    }
+                );
+            }
+
             function initList(){
+                var deferred = $q.defer();
                 postFactory.getPosts(scope.id).then(
                     function (results) {
                         $log.log('posts',results);
                         scope.posts = results;
+                        deferred.resolve(results);
                     },
                     function (err) {
                         $log.error(err);
+                        deferred.reject(err)
                     }
                 );
+                return deferred.promise;
+            }
+
+
+
+
+            // init perms
+            function initPerms (author){
+                if(!scope.user)
+                    scope.user = AuthService.getUser();
+                // se l'utente non e' definito
+                if(!scope.user)
+                    return false;
+
+                var source = 'others';
+                if(author == scope.user.id)
+                    source = 'self';
+
+                scope.checkPerms = AuthService.checkPerms(source);
+                return scope.perms;
             }
 
         }
@@ -141,7 +231,7 @@ angular.module('firstlife.directives').directive('posts', ['$log', 'AuthService'
         scope: {
             post: '=post'
         },
-        templateUrl: '/templates/map-ui-template/post.html',
+        templateUrl: '/templates/post/post.html',
         link:function(scope, element, attrs){
             scope.$on('$destroy', function(e) {
                 if(!e.preventPostEvent){
