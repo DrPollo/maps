@@ -84,10 +84,10 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
                 $log.log('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
-
+                $log.log('debug autologin con errore', search_params.error)
                 // controllo di autenticazione
                 // con autologin (controllo e login se non vado a callback)
-                $log.debug('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback')
+                $log.debug('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error)
                 if(!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback'){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
@@ -138,7 +138,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     self.config = myConfig;
 
     $stateProvider.state('home', {
-        url: "/?embed",
+        url: "/?embed&error",
         controller: 'LandingCtrl as landing',
         templateUrl: "/templates/landing-page.html",
         reloadOnSearch: false,

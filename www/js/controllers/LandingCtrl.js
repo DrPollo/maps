@@ -15,8 +15,22 @@ angular.module('firstlife.controllers')
             // se non devo gestire l'evento
             if(toState.name != 'home')
                 return
-            if(dev) $log.debug("sono in login, questi i parametri ",toState);
-            
+
+            var params = $location.search();
+
+            $log.log("sono in login, questi i parametri ",params);
+            if(params.error){
+                switch (error){
+                    case 'login':
+                        // todo gestione errore login
+                        break;
+                    default:
+                    // todo gestione errore ignoto
+                }
+            }
+
+
+
             //se autenticato
             if(AuthService.isAuth()){
                 // se autenticato vado alla mappa

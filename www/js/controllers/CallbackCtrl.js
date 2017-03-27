@@ -19,7 +19,10 @@ angular.module('firstlife.controllers')
             // controllo parametro code
             var params = $location.search();
             $log.debug("check $location",params)
-            if(params.code){
+            if(params.error){
+                // gestisco l'errore
+                $state.go('home', {error: 'login'});
+            }else if(params.code){
                 $log.debug('trovato code',params.code)
                 // controllo dello stato
                 if(params.state){
