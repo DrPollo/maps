@@ -59,6 +59,7 @@ angular.module('firstlife.controllers')
             // elimino il code dai parametri search
             $location.search('code',null);
             // genero token
+            $log.log('richiedo token per code',code);
             AuthService.generateToken(code).then(
                 function(result){
                     $log.debug('tutto ok con il token',result)
@@ -69,6 +70,7 @@ angular.module('firstlife.controllers')
                     $log.error('getToken, error',err)
                     // se non riesco a generare il token
                     // gestione errori
+                    $location.search('error','login');
                 }
             );
         }
