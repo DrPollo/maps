@@ -14,7 +14,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 
         // fix callback
-        myConfig.base_callback = $location.protocol().concat( "://" ,$location.host(),":", $location.port(),'/');
+        myConfig.base_callback = $location.protocol().concat( "://" ,$location.host(),'/');
         var client_id = myConfig.authentication.client_id;
         var auth_server = myConfig.authentication.auth_server;
 
