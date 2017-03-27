@@ -360,86 +360,6 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         }]
     }
 
-}).directive('entityRelations',function(){
-    return {
-        restrict: 'EG',
-        scope: {
-            marker: '=marker',
-            click: '=click'
-        },
-        templateUrl: '/templates/map-ui-template/entityRelations.html',
-        controller: ['$scope','$log','$filter','myConfig','MapService', function($scope,$log,$filter,myConfig,MapService){
-
-            $scope.config = myConfig;
-
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventDestroyEntityRelations){
-                    e.preventDestroyEntityRelations = true;
-                    delete $scope;
-                }
-            });
-            //
-            // $scope.$watch('marker',function(e,old){
-            //     // cambia il marker
-            //     if(!e.preventEntityRelationsUpdateMarker && e && e.id && (!old || e.id != old.id )){
-            //         e.preventEntityRelationsUpdateMarker = true;
-            //         loadSibillings();
-            //     }
-            // });
-
-
-            loadSibillings();
-
-            function loadSibillings (){
-                if(!$scope.marker || !$scope.marker.entity_type)
-                    return
-
-                $scope.relations = {};
-
-                // caricamento dei child
-                var childrenRelations = $scope.config.types.child_relations[$scope.marker.entity_type];
-                var children = {};
-                for(key in childrenRelations){
-                    var childRel = childrenRelations[key];
-                    var c = MapService.searchFor($scope.marker.id, childRel.field);
-                    if(!$filter('isEmpty')(c)){
-                        children[key] = angular.copy(childRel);
-                        for(var j = 0; j<c.length;j++){
-                            var thing = c[j];
-                            if(!children[thing.entity_type])
-                                children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
-                            if(!children[thing.entity_type].list)
-                                children[thing.entity_type].list = [];
-
-                            var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
-                            if(index < 0)
-                                children[thing.entity_type].list.push(thing);
-                        }
-
-                    }
-                }
-                $scope.relations.children = children;
-
-                // caricamento dei parent
-                var parentsRelations = $scope.config.types.parent_relations[$scope.marker.entity_type];
-                var parents = {};
-                // serve ad impedire la duplicazione della ricerca per entita' con lo stesso field
-                var keysBanList = {};
-                for(key in parentsRelations){
-                    var parentRel = parentsRelations[key];
-                    if(!$filter('isEmpty')($scope.marker[parentRel.field]) && !keysBanList[parentRel.field]){
-                        // aggiungo il campo alla banList 
-                        keysBanList[parentRel.field] = true;
-                        var p = MapService.searchFor($scope.marker[parentRel.field], 'id');
-                        parents[key] = angular.copy(parentRel);
-                        parents[key].list = p;
-                    }
-                }
-                $scope.relations.parents = parents;
-            }
-        }]
-    }
-
 }).directive('relationsActions', function() {
 
     return {
@@ -951,7 +871,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         restrict: 'E',
         scope: {
             marker: '=',
-            showMCardPlace: '&'
+            showMCardPlace: '&',
+            add:'&'
         },
         templateUrl: '/templates/map-ui-template/modalLists.html',
         link: function(scope, element, attrs){
@@ -1056,4 +977,8 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         }
 
     }
-}]);
+}]).directive('nothingToRead',function () {
+    return {
+        'template':'<div class="no-content-box row"><div class="col col-center">{{"NOCONTENTS_MESSAGE"|translate}}</div></div>'
+    }
+});

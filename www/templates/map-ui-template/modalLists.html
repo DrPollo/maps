@@ -1,16 +1,16 @@
 <div class="list" id="modalLists">
-    <div class="button-bar button-bar-striped">
+    <div class="button-bar button-bar-striped list-toggler">
         <button class="button button-positive button-clear icon-left" on-tap="setToggle(0)" ng-class="toggle == 0 ? 'selected' : '' ">
-            <i class="icon ion-chatbox-working"></i>
-            <span ng-if="!isMobile">{{ 'POSTS' |translate}}</span>
-        </button>
-        <button class="button button-positive button-clear icon-left" on-tap="setToggle(1)" ng-class="toggle == 1 ? 'selected' : '' ">
             <i class="icon ion-social-buffer"></i>
             <span ng-if="!isMobile">{{ 'CONTENTS' |translate}}</span>
         </button>
+        <button class="button button-positive button-clear icon-left" on-tap="setToggle(1)" ng-class="toggle == 1 ? 'selected' : '' ">
+            <i class="icon ion-chatbox-working"></i>
+            <span ng-if="!isMobile">{{ 'POSTS' |translate}}</span>
+        </button>
     </div>
-    <!-- lista dei post -->
-    <posts ng-if="marker.id " ng-show="toggle == 0" id="marker.id"></posts>
     <!-- lista dei figli -->
-    <entity-relations ng-show="toggle == 1" marker="marker" click="showMCardPlace"></entity-relations>
+    <entity-children ng-if="marker" ng-show="toggle == 0" marker="marker" click="showMCardPlace" add="add"></entity-children>
+    <!-- lista dei post -->
+    <posts ng-if="marker.id " ng-show="toggle == 1" id="marker.id"></posts>
 </div>

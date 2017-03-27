@@ -5,13 +5,6 @@
             <!-- todo fix permessi menu modal card -->
             <button class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
-        <div class="flex-container flex-container-style fixed-height" style="position:fixed;top:15px;right:40px;">
-            <div class="flex-item">
-                <button class="button button-float" style="min-height:50px;min-width:50px;" ng-click="addChildEntity()">
-                    <i class="icon ion-plus-round"></i>
-                </button>
-            </div>
-        </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10">
         <div class="top-modal">
@@ -73,13 +66,13 @@
             </div>
         </div>
 
-        <entity-relations ng-if="infoPlace.marker" marker="infoPlace.marker" click="showMCardPlace"></entity-relations>
+        <!--<entity-relations ng-if="infoPlace.marker" marker="infoPlace.marker" click="showMCardPlace"></entity-relations>-->
 
         <!--<entity-actions ng-if="isLoggedIn && infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>-->
 
         <!--<simple-entity-list ng-if="infoPlace.marker.id" id="infoPlace.marker.id" owner="infoPlace.marker.user" entity-type="infoPlace.marker.type_info.key" logged="isLoggedIn"></simple-entity-list>-->
 
-        <modal-lists marker="infoPlace.marker" click="showMCardPlace"></modal-lists>
+        <modal-lists marker="infoPlace.marker" click="showMCardPlace" add="addChildEntity()"></modal-lists>
 
         <loader ng-if="!infoPlace.marker"></loader>
 
