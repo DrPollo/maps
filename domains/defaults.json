@@ -89,7 +89,36 @@
                         "en":"the Civic Social Network"
                     }
                 },
-
+                "errors":{
+                    "overload":{
+                        "img":"img/errors/rete-sovraffollata.svg",
+                        "message":{
+                            "it":"",
+                            "en":""
+                        }
+                    },
+                    "network":{
+                        "img":"img/errors/mancata-connessione.svg",
+                        "message":{
+                            "it":"",
+                            "en":""
+                        }
+                    },
+                    "working":{
+                        "img":"img/errors/dimenticato-qualcosa.svg",
+                        "message":{
+                            "it":"Lavori in corso... attenti ai detriti :D",
+                            "en":"Work in progress... watch out the debris :D"
+                        }
+                    },
+                    "any":{
+                        "img":"img/errors/errore-imprevisto.svg",
+                        "message":{
+                            "it":"Ops... qualcosa è andato storto@!#?",
+                            "en":"Whops... something wrong happened#?@!"
+                        }
+                    }
+                },
                 "upper_menu":[
                     {
                         "name":"Linee guida di Comunità",

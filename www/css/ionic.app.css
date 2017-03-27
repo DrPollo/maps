@@ -15247,12 +15247,20 @@ timeline {
       #landingpage .main-content .box .central-content {
         margin: 0px 0px 20px;
         padding: 0px 16px 0px; }
+        #landingpage .main-content .box .central-content .error {
+          background: #d1d3d6;
+          border-radius: 16px;
+          padding: 16px; }
+          #landingpage .main-content .box .central-content .error .message {
+            font-style: italic; }
         #landingpage .main-content .box .central-content img {
-          max-width: 100%; }
+          max-width: 600px;
+          width: 100%; }
         #landingpage .main-content .box .central-content .message {
           font-size: 2em;
           font-weight: 500;
-          color: #333; }
+          color: #333;
+          padding: 16px 0px; }
         #landingpage .main-content .box .central-content .alternative-actions {
           margin: 0px; }
           #landingpage .main-content .box .central-content .alternative-actions .wrap {

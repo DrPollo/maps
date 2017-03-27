@@ -67,7 +67,7 @@ angular.module('firstlife.services')
             generateToken: function (code){
                 // richiedo il token al server
                 var deferred = $q.defer();
-                $log.log('recupero il token con il code',code," con redirect uri",myConfig.authentication.redirect_uri_auth, 'a url: ',myConfig.authentication.token_url);
+                $log.debug('recupero il token con il code',code," con redirect uri",myConfig.authentication.redirect_uri_auth, 'a url: ',myConfig.authentication.token_url);
                 var req = {
                     url: myConfig.authentication.token_url,
                     method: 'POST',

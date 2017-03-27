@@ -22,11 +22,12 @@ angular.module('firstlife.controllers')
             if(params.error){
                 switch (params.error){
                     case 'login':
-                        // todo gestione errore login
+                        $scope.error = 'working';
                         break;
                     default:
-                    // todo gestione errore ignoto
+                        $scope.error = 'any';
                 }
+                return
             }
 
 

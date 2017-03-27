@@ -20,9 +20,17 @@
             <div class="col col-center box">
                 <!--logo, infografica e azioni-->
                 <div class="row responsive-sm central-content">
-                    <div class="col col-center">
+                    <div class="col col-center" ng-if="!error">
                         <h1><img src="{{defaults.design.landingpage.center.image}}" alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/></h1>
                         <h2 class="message" ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
+                    </div>
+                    <div class="col col-center error" ng-if="(error == 'working')">
+                        <h1><img src="{{defaults.design.landingpage.errors.working.img}}"/></h1>
+                        <h2 ng-if="error == 'working'" class="message">{{defaults.design.landingpage.errors.working.message[currentLang]}}</h2>
+                    </div>
+                    <div class="col col-center error" ng-if=" (error == 'any') ">
+                        <h1><img src="{{defaults.design.landingpage.errors.any.img}}"/></h1>
+                        <h2 ng-if="error == 'any'" class="message">{{defaults.design.landingpage.errors.any.message[currentLang]}}</h2>
                     </div>
                 </div>
                 <div class="row responsive-sm central-content">
