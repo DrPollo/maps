@@ -30,7 +30,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         if(myConfig.authentication["auth_url"])
             myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id);
         if(myConfig.authentication.scopes && myConfig.authentication.scopes.length > 0){
-            myConfig.authentication["scopes"] = myConfig.authentication.scopes.join();
+            myConfig.authentication["scopes"] = myConfig.authentication.scopes.join('+');
             myConfig.authentication["auth_url"] = myConfig.authentication["auth_url"].concat("&scope=",myConfig.authentication["scopes"]);
         }
 
