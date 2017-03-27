@@ -21,6 +21,7 @@ angular.module('firstlife.controllers')
             $log.debug("check $location",params)
             if(params.error){
                 // gestisco l'errore
+                $location.search('error','login')
                 $state.go('home', {error: 'login'});
             }else if(params.code){
                 $log.debug('trovato code',params.code)
