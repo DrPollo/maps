@@ -1,10 +1,10 @@
 <div class="comments-list list" ng-submit="publishComment()">
     <div class="comment item-text-wrap" ng-repeat="comment in comments |orderBy:'timestamp_insert' track by $index">
-        <span ng-if="dev">{{comment.id}}</span>
+        <!--<span ng-if="dev">{{comment.id}}</span>-->
         <button ng-if="user" ng-click="openMenu($event,comment.id, comment.owner)" class="menu button button-dark button-small button-clear button-icon ion-android-arrow-dropdown"></button>
         {{comment.message}}<span class="credits">{{' - '}}<span class="username">{{comment.owner_display_name}}</span>{{', '}}{{comment.timestamp_insert | date : 'd/MM/yyyy'}}</span>
     </div>
-    <form name="comment" class="comment-editor" novalidate>
+    <form ng-if="user" name="comment" class="comment-editor" novalidate>
         <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
         <textarea ng-enter="publishComment()" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="text" ng-minlength="5" maxlength="500" autogrow required></textarea>
         <!--<button ng-show="false" type="submit" class="button button-positive button-small button-clear ion-android-add" ng-disabled="comment.$invalid" ng-click="publishComment()" ></button>-->

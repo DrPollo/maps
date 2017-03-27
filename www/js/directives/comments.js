@@ -59,7 +59,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
                 scope.popover.hide();
                 postFactory.deleteComment(id).then(
                     function (response) {
-                        $log.log('ok delete comment',response);
+                        // $log.debug('ok delete comment',response);
                         initCommentsList().then(
                             function(){
                                 scope.loading = false;
@@ -87,7 +87,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
                 };
                 entityFactory.report(report).then(
                     function (response) {
-                        $log.log('ok delete comment',response);
+                        // $log.debug('ok delete comment',response);
                         scope.loading = false;
                         // todo messaggio ok all'utente
                     },
@@ -122,7 +122,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
                 var deferred = $q.defer();
                 postFactory.getComments(scope.id).then(
                     function (results) {
-                        $log.log(results);
+                        // $log.debug(results);
                         scope.comments = results;
                         deferred.resolve(results);
                     },

@@ -171,8 +171,7 @@ angular.module('firstlife.factories')
         deleteComment: function(id){
             var deferred = $q.defer();
             var url = urlComments.concat("/",id,format);
-            //$log.debug('x',x,'y',y,'z',z);
-            //$log.debug('url ',url)
+            // $log.debug('delete url ',url)
             var req = {
                 url: url,
                 method: 'delete',
@@ -199,7 +198,7 @@ angular.module('firstlife.factories')
     self.config = myConfig;
     self.urlThings = myConfig.backend_things;
     self.urlPosts = myConfig.domain_signature.concat('posts');
-    self.urlComments = myConfig.domain_signature.concat('Comments');
+    self.urlComments = myConfig.domain_signature.concat('postcomments');
     self.base_url = myConfig.domain_signature;
     self.comments = {};
 });

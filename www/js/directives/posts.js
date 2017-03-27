@@ -95,7 +95,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 var deferred = $q.defer();
                 postFactory.getPosts(scope.id).then(
                     function (results) {
-                        $log.log('posts',results);
+                        // $log.debug('posts',results.length);
                         scope.posts = results;
                         deferred.resolve(results);
                     },
