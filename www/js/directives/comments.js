@@ -24,13 +24,11 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
             initCommentsList();
             initCommentEditor();
 
-            scope.publishComment = function(){
-                var comment = scope.text;
-                initCommentEditor()
+            scope.publishComment = function(text){;
                 scope.loading = true;
-                postFactory.createComment(scope.id,angular.copy(comment)).then(
+                postFactory.createComment(scope.id,angular.copy(text)).then(
                     function (response) {
-                        $log.log('ok comment',response);
+                        $log.debug('ok comment',response);
                         initCommentsList().then(
                             function(){
                                 scope.loading = false;
@@ -119,6 +117,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
 
             // init della lista dei commenti
             function initCommentsList(){
+                initCommentEditor();
                 var deferred = $q.defer();
                 postFactory.getComments(scope.id).then(
                     function (results) {
@@ -136,7 +135,7 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
 
             // init dell'editor del commento
             function initCommentEditor() {
-                scope.text = "";
+                scope.message = "";
             }
 
 
