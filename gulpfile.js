@@ -48,7 +48,7 @@ gulp.task('setupenv',function(){
     var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
     if(gutil.env.prod){
         console.log('env prod');
-        config.myConfig.api_base_domain = "api.firstlife.di.unito.it/";
+        config.myConfig.api_base_domain = "api.firstlife.org/";
         config.myConfig.base_callback = domain_name ? domain_name.concat(".firstlife.di.unito.it/") : "firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }else if(gutil.env.test){
@@ -58,7 +58,7 @@ gulp.task('setupenv',function(){
         config.myConfig.dev = false;
     }else if(gutil.env.dev){
         console.log('env dev');
-        config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
+        config.myConfig.api_base_domain = "fldev.di.unito.it/";
         config.myConfig.base_callback = domain_name ? domain_name.concat(".dev.firstlife.di.unito.it/") : "dev.firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }
