@@ -24,6 +24,9 @@ angular.module('firstlife.controllers')
                     case 'login':
                         $scope.error = 'working';
                         break;
+                    case 'loggedin':
+                        $location.url(AuthService.auth_url());
+                        break;
                     default:
                         $scope.error = 'any';
                 }

@@ -95,8 +95,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         function (result) {
                             // l'utente e' attualmente loggato nell'auth server
                             $log.log('checkSession',result, 'go to ',AuthService.auth_url());
+                            $location.search('error','loggedin');
+                            $state.go('home');
                             // redirect all'auth server
-                            $timeout(function(){$location.url(AuthService.auth_url())},1);
+                            // $timeout(function(){
+                            //     $location.url(AuthService.auth_url());
+                            // },1);
                         },
                         function (err) {
                             // l'utente non e' loggato
