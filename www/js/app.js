@@ -94,7 +94,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                     AuthService.checkSession().then(
                         function (result) {
                             // l'utente e' attualmente loggato nell'auth server
-                            $log.log('checkSession',result)
+                            $log.log('checkSession',result, 'go to ',AuthService.auth_url());
                             // redirect all'auth server
                             $location.url(AuthService.auth_url());
                         },
