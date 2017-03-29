@@ -145,7 +145,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         url: "/?embed&error",
         controller: 'LandingCtrl as landing',
         templateUrl: "/templates/landing-page.html",
-        reloadOnSearch: false,
+        reloadOnSearch: true,
         data: {
             authenticate: false
         }
