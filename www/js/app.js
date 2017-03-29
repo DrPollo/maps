@@ -87,7 +87,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 $log.log('debug autologin con errore', search_params.error)
                 // controllo di autenticazione
                 // con autologin (controllo e login se non vado a callback)
-                $log.debug('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error)
+                $log.log('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error)
                 if(!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
@@ -106,17 +106,17 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 }
 
                 // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-                $log.debug('check loging',config.behaviour.is_login_required, authenticate, AuthService.isAuth(), !embed)
+                $log.log('check loging',config.behaviour.is_login_required, authenticate, AuthService.isAuth(), !embed)
                 if (config.behaviour.is_login_required && authenticate && !AuthService.isAuth() && !embed)  {
-                    $log.debug("Salvo lo stato prima del login: ", $stateParams);
+                    $log.log("Salvo lo stato prima del login: ", $stateParams);
                     event.preventDefault();
                     // vai a login per effettuare l'autenticazione
                     $state.go('home');
                 } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
                     $state.go('app.maps',search_params);
-                }else {
-                    $log.debug("Continuo a ", toState.name);
                 }
+                $log.log("Continuo a ", toState.name);
+
             }
         });
 
