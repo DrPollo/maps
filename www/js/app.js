@@ -96,7 +96,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                             // l'utente e' attualmente loggato nell'auth server
                             $log.log('checkSession',result)
                             // redirect all'auth server
-                            $window.location.href = AuthService.auth_url();
+                            $location.url(AuthService.auth_url());
                         },
                         function (err) {
                             // l'utente non e' loggato
@@ -165,21 +165,19 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         abstract: true,
         templateUrl: "templates/side-menu.html",
         controller: 'AppCtrl as app'
-    })
-        .state('app.maps', {
-            url: "/maps?zoom&lat&lng&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
-            reloadOnSearch: false,
-            views: {
-                'menuContent': {
-                    templateUrl: "/templates/maps.html",
-                    controller: 'MapCtrl as map'
-                }
-            },
-            data: {
-                authenticate: config.behaviour.is_login_required
+    }).state('app.maps', {
+        url: "/maps?zoom&lat&lng&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+        reloadOnSearch: false,
+        views: {
+            'menuContent': {
+                templateUrl: "/templates/maps.html",
+                controller: 'MapCtrl as map'
             }
-        })
-        .state('app.editor', {
+        },
+        data: {
+            authenticate: config.behaviour.is_login_required
+        }
+    }).state('app.editor', {
             // aggiunta dinamica di parametri presi dalle relazioni
             url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
             views: {

@@ -54,10 +54,10 @@ angular.module('firstlife.controllers')
          * 5) langSelector: switch lingua
          */
         $scope.login = function(){
-            $window.location.href = AuthService.auth_url();
+            $location.url(AuthService.auth_url());
         };
         $scope.profile = function(){
-            $window.location.href = AuthService.profile_url();
+            $location.url( AuthService.profile_url());
         };
         // funzione togle per il menu laterale
         $scope.toggleSideLeft = function() {
@@ -78,7 +78,7 @@ angular.module('firstlife.controllers')
             $scope.confirmPopup.then(function(res) {
                 if(res) {
                     //if(consoleCheck) console.log('Yes');
-                    $window.location.href = AuthService.logout_url();
+                    $location.url(AuthService.logout_url());
                 } else {
                     //if(consoleCheck) console.log('No');
                 }
