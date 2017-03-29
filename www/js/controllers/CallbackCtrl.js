@@ -22,8 +22,7 @@ angular.module('firstlife.controllers')
             $log.log("check $location",params)
             if(params.error){
                 // gestisco l'errore
-                $location.search('error','login')
-                $state.go('home', {error: 'login'});
+                loginError();
             }else if(params.code){
                 $log.log('trovato code',params.code)
                 // controllo dello stato
@@ -32,8 +31,10 @@ angular.module('firstlife.controllers')
                     $log.log('ho trovato state',params.state, currentState)
                     if(params.state === currentState){
                         generateToken(params.code)
+                    }else{// errore stato non coincide
+                        // todo verifica corretta gestione state
+                        loginError();
                     }
-                    // errore stato non coincide
                 }else{
                     // $log.debug('non ho trovato state')
                     generateToken(params.code)
@@ -75,5 +76,11 @@ angular.module('firstlife.controllers')
                 }
             );
         }
+
+        function loginError(){
+            $location.search('error','login')
+            $state.go('home', {error: 'login'});
+        }
+
 
     }]);
