@@ -8,27 +8,28 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
+            $log.log('sono in callback, continuo?',!event.preventCallbackEvent)
             if(event.preventCallbackEvent)
                 return
             event.preventCallbackEvent = true;
             // se non devo gestire l'evento
             if(toState.name != 'callback')
                 return
-            $log.debug("sono in login, questi i parametri ",toState);
+            $log.log("sono in login, questi i parametri ",toState);
 
             // controllo parametro code
             var params = $location.search();
-            $log.debug("check $location",params)
+            $log.log("check $location",params)
             if(params.error){
                 // gestisco l'errore
                 $location.search('error','login')
                 $state.go('home', {error: 'login'});
             }else if(params.code){
-                $log.debug('trovato code',params.code)
+                $log.log('trovato code',params.code)
                 // controllo dello stato
                 if(params.state){
                     var currentState = MemoryFactory.get(stateKey);
-                    $log.debug('ho trovato state',params.state, currentState)
+                    $log.log('ho trovato state',params.state, currentState)
                     if(params.state === currentState){
                         generateToken(params.code)
                     }
@@ -62,12 +63,12 @@ angular.module('firstlife.controllers')
             $log.log('richiedo token per code',code);
             AuthService.generateToken(code).then(
                 function(result){
-                    $log.debug('tutto ok con il token',result)
+                    $log.log('tutto ok con il token',result)
                     $state.go('app.maps');
                     // se ho il token
                 },
                 function(err){
-                    $log.error('getToken, error',err)
+                    $log.log('getToken, error',err)
                     // se non riesco a generare il token
                     // gestione errori
                     $location.search('error','login');
