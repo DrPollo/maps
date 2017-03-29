@@ -25,10 +25,6 @@ angular.module('firstlife.controllers')
                     case 'login':
                         $scope.error = 'working';
                         break;
-                    case 'loggedin':
-                        $log.log('tento il redirect');
-                        $window.location.href = AuthService.auth_url();
-                        break;
                     default:
                         $scope.error = 'any';
                 }
