@@ -20,6 +20,7 @@ angular.module('firstlife.controllers')
 
             $log.log("sono in login, questi i parametri ",params);
             if(params.error){
+                $log.log('errore ',params.error);
                 switch (params.error){
                     case 'login':
                         $scope.error = 'working';
