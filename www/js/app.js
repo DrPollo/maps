@@ -6,7 +6,7 @@ angular.module('underscore', [])
 
 angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication', 'underscore', 'nemLogging', 'ui-leaflet', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
 
-    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window, myConfig, AuthService) {
+    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
         self.config = myConfig;
         // init utente
@@ -96,9 +96,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                             // l'utente e' attualmente loggato nell'auth server
                             $log.log('checkSession',result, 'go to ',AuthService.auth_url());
                             // redirect all'auth server
-                            $location.url(AuthService.auth_url());
-                            if (!$rootScope.$$phase)
-                                $rootScope.$apply()
+                            $timeout(function(){$location.url(AuthService.auth_url())},1);
                         },
                         function (err) {
                             // l'utente non e' loggato
