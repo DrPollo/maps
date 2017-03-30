@@ -66,6 +66,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
             if(!event.preventRedirectState){
                 event.preventRedirectState = true;
+
+
                 var authenticate = toState.data.authenticate;
                 var search_params = $location.search();
                 // var params = getJsonFromUrl($location.url().split("?")[1]);
@@ -75,20 +77,56 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                 $ionicLoading.hide();
 
 
-                $log.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+
                 // aggiorno delle variabili sullo stato precendete e corrente
                 // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
                 $rootScope.previousState = fromState.name;
                 $rootScope.currentState = toState.name;
 
-                //            $log.debug("is auth required? ",authenticate, " is auth requested?", config.behaviour.is_login_required, search_params, params );
-                $log.log('vado a login? ',config.behaviour.is_login_required && authenticate && !$rootScope.isLoggedIn && !embed)
 
-                $log.log('debug autologin con errore', search_params.error)
-                // controllo di autenticazione
-                // con autologin (controllo e login se non vado a callback)
-                $log.log('devo loggarmi?',!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error)
-                if(!myConfig.dev && !AuthService.isAuth() && toState.name != 'callback' && !search_params.error){
+                $log.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+
+                switch (toState.name){
+                    case 'app.maps':
+                        if(authenticate && !AuthService.isAuth()){
+                            $log.log('login obbligatorio, redirect a home');
+                            // vai a login per effettuare l'autenticazione
+                            event.preventDefault();
+                            $state.go('home',search_params);
+                        }else if(!AuthService.isAuth()){
+                            autoLogin();
+                        }
+                        break;
+                    case 'home':
+                        // if it is a viewer and it is not already going to the map
+                        if(embed){
+                            // go directly to the map
+                            $log.log('embed, redirect a app.maps');
+                            event.preventDefault();
+                            $state.go('app.maps',search_params);
+                        }
+                        break;
+                    case 'app.editor':
+                        if(authenticate && !AuthService.isAuth()){
+                            $log.log('login obbligatorio, redirect a home');
+                            // vai a login per effettuare l'autenticazione
+                            event.preventDefault();
+                            $state.go('home',search_params);
+                        }
+                        break;
+                    default:
+                        $log.log("Continuo a ", toState.name);
+                        // if it is a viewer and it is not already going to the map
+                        if(embed){
+                            // go directly to the map
+                            $log.log('embed, redirect a app.maps');
+                            event.preventDefault();
+                            $state.go('app.maps',search_params);
+                        }
+                }
+
+
+                function autoLogin(){
                     // se l'utente non e' loggato
                     // controllo se posso fare l'autologin con l'auth server
                     AuthService.checkSession().then(
@@ -104,37 +142,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                             // l'utente non e' loggato
                             // resta nella landing page
                         }
-                    )
+                    );
                 }
 
-                // se ti trovi in uno stato che richiede autenticazione e non sei loggato
-                $log.log('check loging',config.behaviour.is_login_required, authenticate, AuthService.isAuth(), !embed)
-                if (config.behaviour.is_login_required && authenticate && !AuthService.isAuth() && !embed)  {
-                    $log.log("Salvo lo stato prima del login: ", $stateParams);
-                    event.preventDefault();
-                    // vai a login per effettuare l'autenticazione
-                    $state.go('home');
-                } if(embed && toState.name !='app.maps'){ // se in modalita' embed faccio redirect alla mappa
-                    $state.go('app.maps',search_params);
-                }
-                $log.log("Continuo a ", toState.name);
+
+
 
             }
         });
-
-        // parser di url
-        function getJsonFromUrl(query) {
-            var result = {};
-
-            if(query && query != null && query != 'undefined' && query != ''){
-                query.split("&").forEach(function(part) {
-                    var item = part.split("=");
-                    result[item[0]] = decodeURIComponent(item[1]);
-                });
-            }
-
-            return angular.toJson(result);
-        }
 
     }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
