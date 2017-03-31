@@ -121,7 +121,7 @@
                 "upper_menu":[
                     {
                         "name":"Linee guida di Comunità",
-                        "url":"http://firstlife.org/regole-comunita",
+                        "url":"http://openlabs.firstlife.org/comingsoon.html",
                         "img":"img/icone-linee-guida-comunita-0.svg",
                         "alt":"Prova",
                         "lang":"it"
@@ -135,14 +135,14 @@
                     },
                     {
                         "name":"Scopri di più su FirstLife",
-                        "url":"http://firstlife.org",
+                        "url":"http://www.firstlife.org",
                         "img":"img/firstlife-logo-solologo.svg",
                         "alt":"Prova",
                         "lang":"it"
                     },
                     {
                         "name":"Community Guidelines",
-                        "url":"http://firstlife.org/community-standards",
+                        "url":"http://openlabs.firstlife.org/comingsoon.html",
                         "img":"img/icone-linee-guida-comunita-0.svg",
                         "alt":"Test",
                         "lang":"en"
@@ -155,7 +155,7 @@
                         "lang":"en"},
                     {
                         "name":"About FirstLife project",
-                        "url":"http://firstlife.org",
+                        "url":"http://www.firstlife.org",
                         "img":"img/firstlife-logo-solologo.svg",
                         "alt":"Test",
                         "lang":"en"
