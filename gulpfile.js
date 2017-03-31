@@ -58,7 +58,7 @@ gulp.task('setupenv',function(){
         config.myConfig.dev = false;
     }else if(gutil.env.dev){
         console.log('env dev');
-        config.myConfig.api_base_domain = "fldev.di.unito.it/";
+        config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
         config.myConfig.base_callback = domain_name ? domain_name.concat(".dev.firstlife.di.unito.it/") : "dev.firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }
