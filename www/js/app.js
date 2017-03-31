@@ -88,7 +88,9 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
                 switch (toState.name){
                     case 'app.maps':
-                        if(authenticate && !AuthService.isAuth()){
+                        if(embed){
+                            // ok vado avanti
+                        } else if(authenticate && !AuthService.isAuth()){
                             $log.log('login obbligatorio, redirect a home');
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
