@@ -1,5 +1,5 @@
 <ion-modal-view>
-    <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':inappropriate}">
+    <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
             <!-- todo fix permessi menu modal card -->
@@ -65,12 +65,6 @@
                 </a>
             </div>
         </div>
-
-        <!--<entity-relations ng-if="infoPlace.marker" marker="infoPlace.marker" click="showMCardPlace"></entity-relations>-->
-
-        <!--<entity-actions ng-if="isLoggedIn && infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>-->
-
-        <!--<simple-entity-list ng-if="infoPlace.marker.id" id="infoPlace.marker.id" owner="infoPlace.marker.user" entity-type="infoPlace.marker.type_info.key" logged="isLoggedIn"></simple-entity-list>-->
 
         <modal-lists marker="infoPlace.marker" click="showMCardPlace" add="addChildEntity()"></modal-lists>
 

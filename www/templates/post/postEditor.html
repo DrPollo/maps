@@ -3,10 +3,6 @@
         {{'CREATE_POST'|translate}}
         <button ng-show="focus" type="reset" class="right button button-dark button-clear button-small button-float-small icon ion-android-close linear-fastanimation fade-in" on-tap="clear()" ></button>
     </div>
-    <!--<div class="message">-->
-    <!--<span class="username">{{user.username}}</span>-->
-    <!--<span>{{'ADD_ENTITY_ALLERT'|translate}}</span>-->
-    <!--</div>-->
     <form name="form.post" novalidate>
         <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
         <div class="row">
@@ -15,13 +11,9 @@
             </div>
             <div class="col">
                 <label class="item item-input">
-                    <!--ng-class="{ 'has-error' : boxEntity.form.title.$invalid, 'no-error' : !boxEntity.form.title.$invalid}">-->
-                    <!--<span class="input-label">{{'TITLE'|translate}}</span>-->
                     <input type="text" name="title" ng-model="post.title" placeholder="{{'POSTEDITOR_TITLE_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
                 </label>
                 <label class="item item-input item-floating-label">
-                    <!--ng-class="{ 'has-error' : boxEntity.form.content.$invalid, 'no-error' : !boxEntity.form.content.$invalid}">-->
-                    <!--<span class="input-label">{{type.label |translate}}</span>-->
                     <textarea name="message" placeholder="{{'POSTEDITOR_PLACEHOLDER' |translate}}" rows="4" ng-model="post.message" ng-minlength="5" maxlength="1000" autogrow></textarea>
                 </label>
             </div>
