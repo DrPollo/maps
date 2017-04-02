@@ -430,9 +430,9 @@ angular.module('firstlife.factories')
                 "id": entity.properties.id,
 //                "type": parseInt(entity.properties.type),
                 "coordinates" : entity.geometry.coordinates,
-
                 lat: parseFloat(entity.geometry.coordinates[1]),
                 lng: parseFloat(entity.geometry.coordinates[0]),
+                inappropriate: entity.properties.inappropriate ? entity.properties.inappropriate : false,
                 focus: false,
                 draggable: false,
                 categoryColor : category.color,

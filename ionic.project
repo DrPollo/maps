@@ -7,7 +7,7 @@
     "templatecache"
   ],
   "watchPatterns": [
-    "www/scss/**/*",
+    "www/scss/*",
     "www/**/*",
     "!www/lib/**/*"
   ]

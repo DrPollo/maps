@@ -3,7 +3,7 @@
         "dev": true,
         "project": 1,
         "base_domain" : "firstlife-dev.di.unito.it",
-        "api_base_domain" : "fldev.di.unito.it/",
+        "api_base_domain" : "api.dev.firstlife.di.unito.it/",
         "api_base_callback" : "firstlife-dev.di.unito.it",
         "format":"",
         "api_version" : "v5",

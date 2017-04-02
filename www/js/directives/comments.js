@@ -1,97 +1,107 @@
 /**
  * Created by drpollo on 25/03/2017.
  */
-angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$ionicPopover','postFactory', 'AuthService', 'entityFactory', 'myConfig',function($log,$q, $ionicPopover, postFactory, AuthService, entityFactory, myConfig){
+angular.module('firstlife.directives').directive('commentsList',function(){
     return {
         restrict:'EG',
         scope:{
             id:'='
         },
         templateUrl:'/templates/post/commentsList.html',
-        link: function(scope, element, attrs) {
+        controller:[ '$scope', '$log', '$q','$ionicPopover','postFactory', 'AuthService', 'entityFactory', 'myConfig',function($scope, $log,$q, $ionicPopover, postFactory, AuthService, entityFactory, myConfig) {
 
-            scope.$on('$destroy', function (e) {
+            $scope.$on('$destroy', function (e) {
                 if (!e.preventEventCommentsLists) {
                     e.preventEventCommentsLists = true;
                     // rimuovo il menu
                     scope.popover.remove();
                     // cancello lo scope
-                    delete scope;
+                    delete $scope;
                 }
             });
-            scope.dev = myConfig.dev;
+
+
+            $scope.dev = myConfig.dev;
+            // $scope.comment = {message : 'asdone'};
 
             initCommentsList();
-            initCommentEditor();
 
-            scope.publishComment = function(text){;
-                scope.loading = true;
-                postFactory.createComment(scope.id,angular.copy(text)).then(
+            $scope.publishComment = function(){
+                $scope.loading = true;
+                $log.debug('publishComment',$scope.comment.message);
+                postFactory.createComment($scope.id,angular.copy($scope.comment.message)).then(
                     function (response) {
                         $log.debug('ok comment',response);
                         initCommentsList().then(
                             function(){
-                                scope.loading = false;
+                                $scope.loading = false;
                             },
                             function () {
-                                scope.loading = false;
+                                $scope.loading = false;
                             }
                         );
 
                     },
                     function (err) {
                         $log.error(err);
-                        scope.loading = false;
+                        $scope.loading = false;
                         // todo messaggio d'errore all'utente
                     }
                 );
             }
 
 
-            scope.config = myConfig;
-            scope.user = AuthService.getUser();
+
+            $scope.config = myConfig;
+            $scope.user = AuthService.getUser();
 
             // cancello il commento
-            scope.deleteComment = function(id){
-                scope.loading = true;
-                scope.popover.hide();
+            $scope.deleteComment = function(id){
+                $scope.loading = true;
+                $scope.popover.hide();
                 postFactory.deleteComment(id).then(
                     function (response) {
                         // $log.debug('ok delete comment',response);
                         initCommentsList().then(
                             function(){
-                                scope.loading = false;
+                                $scope.loading = false;
                             },
                             function () {
-                                scope.loading = false;
+                                $scope.loading = false;
                             }
                         );
 
                     },
                     function (err) {
                         $log.error(err);
-                        scope.loading = false;
+                        $scope.loading = false;
                         // todo messaggio d'errore all'utente
                     }
                 );
             }
             // segnalo il commento
-            scope.reportComment = function(id){
-                scope.loading = true;
-                scope.popover.hide();
+            $scope.reportComment = function(id){
+                $scope.loading = true;
+                $scope.popover.hide();
                 var report = {
                     comment_id: id,
                     message: 'default message'
                 };
                 entityFactory.report(report).then(
                     function (response) {
-                        // $log.debug('ok delete comment',response);
-                        scope.loading = false;
-                        // todo messaggio ok all'utente
+                        $log.debug('ok delete comment',response);
+                        initCommentsList().then(
+                            function(){
+                                $scope.loading = false;
+                            },
+                            function () {
+                                $scope.loading = false;
+                            }
+                        );
                     },
                     function (err) {
                         $log.error(err);
-                        scope.loading = false;
+                        $scope.loading = false;
                         // todo messaggio d'errore all'utente
                     }
                 );
@@ -101,28 +111,28 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
             // open popover menu
             var template = '';
             $ionicPopover.fromTemplateUrl('/templates/popovers/comment-menu.html',{
-                scope: scope
+                scope: $scope
             }).then(
                 function (popover){
-                    scope.popover = popover;
+                    $scope.popover = popover;
                 }
             );
             // apro il menu
-            scope.openMenu = function($event, id, owner) {
-                scope.current = id;
+            $scope.openMenu = function($event, id, owner) {
+                $scope.current = id;
                 initPerms(owner);
-                if(scope.popover)
-                    scope.popover.show($event);
+                if($scope.popover)
+                    $scope.popover.show($event);
             };
 
             // init della lista dei commenti
             function initCommentsList(){
                 initCommentEditor();
                 var deferred = $q.defer();
-                postFactory.getComments(scope.id).then(
+                postFactory.getComments($scope.id).then(
                     function (results) {
                         // $log.debug(results);
-                        scope.comments = results;
+                        $scope.comments = results;
                         deferred.resolve(results);
                     },
                     function (err) {
@@ -133,28 +143,31 @@ angular.module('firstlife.directives').directive('commentsList',['$log', '$q','$
                 return deferred.promise;
             }
 
-            // init dell'editor del commento
-            function initCommentEditor() {
-                scope.message = "";
-            }
 
 
             // init perms
             function initPerms (author){
-                if(!scope.user)
-                    scope.user = AuthService.getUser();
+                if(!$scope.user)
+                    $scope.user = AuthService.getUser();
                 // se l'utente non e' definito
-                if(!scope.user)
+                if(!$scope.user)
                     return false;
 
                 var source = 'others';
-                if(author == scope.user.id)
+                if(author == $scope.user.id)
                     source = 'self';
 
-                scope.checkPerms = AuthService.checkPerms(source);
-                return scope.perms;
+                $scope.checkPerms = AuthService.checkPerms(source);
+                return $scope.perms;
             }
 
-        }
+
+
+            // init dell'editor del commento
+            function initCommentEditor() {
+                $scope.comment = {message:""};
+            }
+
+        }]
     }
-}]);
+});

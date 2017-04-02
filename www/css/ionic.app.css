@@ -15610,6 +15610,14 @@ div.search-tag-card {
     #post-list .post-outer .post .credits {
       font-size: 0.8em;
       font-style: italic; }
+  #post-list .post-outer .post.inappropriate::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-top: 40px solid #ef473a;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid transparent; }
   #post-list .post-outer .comments-list {
     width: 100%;
     position: relative;
@@ -15647,6 +15655,14 @@ div.search-tag-card {
         right: 0px;
         width: 30px;
         height: 30px; }
+    #post-list .post-outer .comments-list .comment.inappropriate::after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      border-top: 20px solid #ef473a;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid transparent; }
     #post-list .post-outer .comments-list .comment-editor-box {
       padding: 6px;
       background: #f2f2f2; }

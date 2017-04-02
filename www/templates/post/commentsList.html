@@ -5,9 +5,9 @@
         {{comment.message}}<span class="credits">{{' - '}}<span class="username">{{comment.owner_display_name}}</span>{{', '}}{{comment.timestamp_insert | date : 'd/MM/yyyy'}}</span>
     </div>
     <div class="comment-editor-box">
-        <form ng-if="user" name="comment" class="comment-editor" novalidate>
+        <form ng-if="user" name="commentEditor" class="comment-editor" novalidate>
             <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
-            <textarea ng-enter="publishComment(message)" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="message" ng-minlength="5" maxlength="500" autogrow required></textarea>
+            <textarea ng-enter="publishComment(message)" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="comment.message" minlength="5" maxlength="500" autogrow required></textarea>
             <!--<button ng-show="false" type="submit" class="button button-positive button-small button-clear ion-android-add" ng-disabled="comment.$invalid" ng-click="publishComment()" ></button>-->
         </form>
     </div>

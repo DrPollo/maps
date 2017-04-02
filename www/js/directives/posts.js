@@ -1,7 +1,7 @@
 /**
  * Created by drpollo on 25/03/2017.
  */
-angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService) {
+angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', 'entityFactory', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService, entityFactory) {
     return {
         restrict:'EG',
         scope: {
@@ -60,7 +60,6 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                                 scope.loading = false;
                             }
                         );
-
                     },
                     function (err) {
                         $log.error(err);
@@ -77,11 +76,18 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     post_id: id,
                     message: 'default message'
                 };
+                $log.debug('reporting post',id);
                 entityFactory.report(report).then(
                     function (response) {
                         $log.log('ok delete post',response);
-                        scope.loading = false;
-                        // todo messaggio ok all'utente
+                        initList().then(
+                            function(){
+                                scope.loading = false;
+                            },
+                            function () {
+                                scope.loading = false;
+                            }
+                        );
                     },
                     function (err) {
                         $log.error(err);
