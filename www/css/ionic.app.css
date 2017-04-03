@@ -13065,6 +13065,14 @@ ion-side-menu#side-menu {
         color: black;
         width: 40px;
         height: 45px; }
+  .modal .modal-header.inappropriate::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-top: 40px solid #ef473a;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid transparent; }
   .modal .modal-subheader {
     color: #555;
     padding: 8px 16px;
@@ -13739,7 +13747,7 @@ ion-side-menu#side-menu {
         display: inline-flex; }
 
 .pie-cluster {
-  border-radius: 40px;
+  border-radius: 30px;
   overflow: hidden;
   box-shadow: 0px 1px 1px #999; }
 
@@ -13750,10 +13758,10 @@ Also ensure that overflow is set to hidden.
 */
 .pie {
   position: absolute;
-  width: 20px;
-  height: 40px;
+  width: 15px;
+  height: 30px;
   overflow: hidden;
-  left: 20px;
+  left: 15px;
   -moz-transform-origin: left center;
   -ms-transform-origin: left center;
   -o-transform-origin: left center;
@@ -13777,8 +13785,8 @@ move transform origin to the middle of the right side.
 Push it out to the left of the containing box.
 */
 .pie.big {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   left: 0px;
   z-index: 1;
   -moz-transform-origin: center center;
@@ -13794,26 +13802,26 @@ Push it out to the left of the containing box.
 .pie.big:after {
   content: "";
   position: absolute;
-  width: 20px;
-  height: 40px;
-  left: 20px;
-  border-radius: 0px 20px 20px 0px;
-  -moz-radius: 0px 20px 20px 0px;
-  -webkit-radius: 0px 20px 20px 0px;
-  -o-radius: 0px 20px 20px 0px;
-  -ms-radius: 0px 20px 20px 0px; }
+  width: 15px;
+  height: 30px;
+  left: 15px;
+  border-radius: 0px 15px 15px 0px;
+  -moz-radius: 0px 15px 15px 0px;
+  -webkit-radius: 0px 15px 15px 0px;
+  -o-radius: 0px 15px 15px 0px;
+  -ms-radius: 0px 15px 15px 0px; }
 
 .pie:before {
   content: "";
   position: absolute;
-  width: 20px;
-  height: 40px;
-  left: -20px;
-  border-radius: 20px 0px 0px 20px;
-  -moz--radius: 20px 0px 0px 20px;
-  -webkit-radius: 20px 0px 0px 20px;
-  -o-radius: 20px 0px 0px 20px;
-  -ms-radius: 20px 0px 0px 20px;
+  width: 15px;
+  height: 30px;
+  left: -15px;
+  border-radius: 15px 0px 0px 15px;
+  -moz--radius: 15px 0px 0px 15px;
+  -webkit-radius: 15px 0px 0px 15px;
+  -o-radius: 15px 0px 0px 15px;
+  -ms-radius: 15px 0px 0px 15px;
   -moz-transform-origin: right center;
   -ms-transform-origin: right center;
   -o-transform-origin: right center;
@@ -13826,25 +13834,25 @@ opposite direction to hide the first part behind.
 */
 .outer {
   margin: -5px 0px 0px 0px;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-clip: padding-box;
-  border-radius: 20px; }
+  border-radius: 15px; }
 
 .inner {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   text-align: center;
   border-radius: 15px;
   font: 12px "Helvetica Neue",Arial,Helvetica,sans-serif;
   background-color: #FFF;
   position: relative;
-  top: 8px;
-  left: 8px;
+  top: 6px;
+  left: 6px;
   z-index: 3; }
 
 .inner span {
-  line-height: 25px; }
+  line-height: 18px; }
 
 /*
 add colour to each piece.
@@ -15655,6 +15663,17 @@ div.search-tag-card {
         right: 0px;
         width: 30px;
         height: 30px; }
+      #post-list .post-outer .comments-list .comment .comment-update-editor {
+        position: relative; }
+        #post-list .post-outer .comments-list .comment .comment-update-editor .comment-box {
+          width: 100%;
+          line-height: 30px;
+          height: 30px; }
+        #post-list .post-outer .comments-list .comment .comment-update-editor .button {
+          background: #fff;
+          position: absolute;
+          top: 0px;
+          right: 0px; }
     #post-list .post-outer .comments-list .comment.inappropriate::after {
       content: '';
       position: absolute;

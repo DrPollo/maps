@@ -39,13 +39,13 @@ angular.module('firstlife.services')
             to: self.config.map.time_to
         };
 
-        
+
         // se mobile disattivo i controlli di zoom
         var controlZoom = true;
         if ( ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone() ) {
             //if(consoleCheck) console.log("mobile");
             controlZoom = false;
-        } 
+        }
 
 
 
@@ -115,7 +115,7 @@ angular.module('firstlife.services')
                         // restituisco centro + zoom
                         deferred.resolve({lat:center.lat, lng:center.lng, zoom:zoom});
                     },
-                    function(err){deferred.reject();}           
+                    function(err){deferred.reject();}
                 );
                 return deferred.promise;
             },
@@ -287,8 +287,8 @@ angular.module('firstlife.services')
                     // cambio layer
                     changeBaseLayer('edit');
                     //if(consoleCheck) console.log("edit mode");
-                    break;  
-                    //view
+                    break;
+                //view
                 default:
                     // cambio layer
                     changeBaseLayer('view');
@@ -304,7 +304,7 @@ angular.module('firstlife.services')
             // se il layer attuale e' gia' quello richiesto
             if(self.map.layer == key)
                 return false;
-            
+
             // salvo il layer attuale
             self.map.layer = key;
             leafletData.getMap("mymap").then(function (map) {
@@ -324,7 +324,7 @@ angular.module('firstlife.services')
 
         // init della mappa
         function setInitOptions(){
-            
+
             self.map = {
                 defaults : {
                     maxZoom: config.map.max_zoom,
@@ -358,37 +358,35 @@ angular.module('firstlife.services')
                 category_filter : config.actions.category_filter,
                 name: config.app_name
             };
-            
+
         }
 
         // imposta i layer della mappa
         function setDefaultLayers() {
             self.map.layers = {
-                baselayers: { 
+                baselayers: {
                     view: baseLayer['view'],
                     edit: baseLayer['edit']
                 },
                 overlays: {
                     pie: {id: 1,
-                          name: 'Categoria',
-                          type: "markercluster",
-                          //type: "group",
-                          visible: true, 
-                          layerOptions: {
-                              chunkedLoading: true,
-                              showCoverageOnHover: false,
-                              //zoomToBoundsOnClick: false,
-                              spiderfyDistanceMultiplier: 2,
-                              //maxClusterRadius: 80,
-                              disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
-                              chunkedLoading: true,
-                              //chunkDelay:500,
-                              //chunkInterval:200,
-                              iconCreateFunction :bakeThePie,
-                              zoomToBoundsOnClick:true
-
-                          }
-                         }
+                        name: 'Categoria',
+                        type: "markercluster",
+                        visible: true,
+                        layerOptions: {
+                            chunkedLoading: true,
+                            showCoverageOnHover: false,
+                            spiderfyDistanceMultiplier: 2,
+                            maxClusterRadius: 60,
+                            disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
+                            chunkDelay:500,
+                            chunkInterval:200,
+                            iconCreateFunction :bakeThePie,
+                            zoomToBoundsOnClick:true,
+                            removeOutsideVisibleBounds: true,
+                            singleMarkerMode: false
+                        }
+                    }
                 }
             };
         }
@@ -421,14 +419,14 @@ angular.module('firstlife.services')
                 if(!self.filters){
                     self.filters = {};
                 }
-                
+
                 if(!self.filters.time){
                     self.filters.time = {
                         from: self.config.map.time_from ,
                         to: self.config.map.time_to
                     };
                 }
-                
+
                 var from = self.filters.time.from,
                     to = self.filters.time.to;
 
@@ -471,16 +469,16 @@ angular.module('firstlife.services')
                         //if(consoleCheck) console.log("parametri query BBox: ", bboxTmp);
                         entityFactory.getBBox(bboxTmp,reset)
                             .then(
-                            function(markers) {
-                                if (markers) {
-                                    updateMarkers(markers);
-                                }
-                                deferred.resolve(markers);
-                            },
-                            function(error) {
-                                $log.error("Failed to get all markers, result is " , error);
-                                deferred.reject(error);
-                            });
+                                function(markers) {
+                                    if (markers) {
+                                        updateMarkers(markers);
+                                    }
+                                    deferred.resolve(markers);
+                                },
+                                function(error) {
+                                    $log.error("Failed to get all markers, result is " , error);
+                                    deferred.reject(error);
+                                });
                         q++;
                     }
                     q++;
@@ -521,13 +519,13 @@ angular.module('firstlife.services')
                     item[id].count++;
                 }else{
                     item[id] = {index:markers[i].options.icon.options.index, color:markers[i].options.icon.options.color,
-                                count:1};
+                        count:1};
                 }
                 //if(consoleCheck) console.log("bakeThePie, check2 ",item[id]);
             }
             //if(consoleCheck) console.log("fette di torta: ", item);
             for(i in item){
-                var value = Math.round(item[i].count*360/(granularity*total))*granularity;  	
+                var value = Math.round(item[i].count*360/(granularity*total))*granularity;
                 item[i].degree = value;
                 //if(consoleCheck) console.log("bakeThePie, calcolo: ",i,item[i],value, item[i].degree);
                 if(value > 180){
@@ -539,9 +537,10 @@ angular.module('firstlife.services')
                 sum += value;
 
             }
-            html = html.concat('<div class="inner"><span>'+total+'</span></div>');
+            var content = total < 99 ? total : '*';
+            html = html.concat('<div class="inner"><span>',content,'</span></div>');
             //tieni per i test semplici return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
-            return new L.DivIcon({ html: html,className: 'pie-cluster',iconSize: new L.Point(40, 40) });
+            return new L.DivIcon({ html: html,className: 'pie-cluster',iconSize: new L.Point(30, 30) });
         }
 
 
@@ -552,4 +551,4 @@ angular.module('firstlife.services')
             from: self.config.map.time_from ,
             to: self.config.map.time_to
         };
-});
+    });

@@ -55,6 +55,44 @@ angular.module('firstlife.directives').directive('commentsList',function(){
             $scope.config = myConfig;
             $scope.user = AuthService.getUser();
 
+            // inizializzo aggiorno il commento con id
+            $scope.updateComment = function(id){
+                // chiudo il popup
+                $scope.popover.hide();
+                // assegno l'id
+                $scope.edit = id;
+            }
+            // chiudo l'editor
+            $scope.abortEdit = function () {
+                // tolgo l'id
+                $scope.edit = null;
+            }
+            // aggiorno il commento
+            $scope.update = function(id, message){
+                $scope.loading = true;
+                $scope.edit = null;
+                postFactory.updateComment(id, message).then(
+                    function (response) {
+                        $log.debug('ok update comment',response);
+                        initCommentsList().then(
+                            function(){
+                                $scope.loading = false;
+                            },
+                            function () {
+                                $scope.loading = false;
+                            }
+                        );
+
+                    },
+                    function (err) {
+                        $log.error(err);
+                        $scope.loading = false;
+                        // todo messaggio d'errore all'utente
+                    }
+                );
+            }
+
+
             // cancello il commento
             $scope.deleteComment = function(id){
                 $scope.loading = true;

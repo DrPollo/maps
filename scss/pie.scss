@@ -1,5 +1,11 @@
+$size : 30px;
+$half : 15px;
+
+$inner : 18px;
+$innerAncor: 6px;
+
 .pie-cluster{
-    border-radius: 40px;
+    border-radius: $size;
     overflow: hidden;
     box-shadow: 0px 1px 1px #999;
 }
@@ -10,10 +16,10 @@ Also ensure that overflow is set to hidden.
 */
 .pie {
     position: absolute;
-    width: 20px;
-    height: 40px;
+    width: $half;
+    height: $size;
     overflow: hidden;
-    left: 20px;
+    left: $half;
     -moz-transform-origin:left center;
     -ms-transform-origin:left center;
     -o-transform-origin:left center;
@@ -39,8 +45,8 @@ move transform origin to the middle of the right side.
 Push it out to the left of the containing box.
 */
 .pie.big {
-    width: 40px;
-    height: 40px;
+    width: $size;
+    height: $size;
     left: 0px;
     z-index: 1;
     -moz-transform-origin:center center;
@@ -56,28 +62,28 @@ Push it out to the left of the containing box.
 .pie.big:after {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 40px;
-    left: 20px;
+    width: $half;
+    height: $size;
+    left: $half;
     //background: inherit;    
-    border-radius: 0px 20px 20px 0px;
-    -moz-radius: 0px 20px 20px 0px;
-    -webkit-radius: 0px 20px 20px 0px;
-    -o-radius: 0px 20px 20px 0px;
-    -ms-radius: 0px 20px 20px 0px;
+    border-radius: 0px $half $half 0px;
+    -moz-radius: 0px $half $half 0px;
+    -webkit-radius: 0px $half $half 0px;
+    -o-radius: 0px $half $half 0px;
+    -ms-radius: 0px $half $half 0px;
 }
 .pie:before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 40px;
-    left: -20px;
+    width: $half;
+    height: $size;
+    left: -$half;
     //background: inherit;
-    border-radius: 20px 0px 0px 20px;
-    -moz--radius: 20px 0px 0px 20px;
-    -webkit-radius: 20px 0px 0px 20px;
-    -o-radius: 20px 0px 0px 20px;
-    -ms-radius: 20px 0px 0px 20px;
+    border-radius: $half 0px 0px $half;
+    -moz--radius: $half 0px 0px $half;
+    -webkit-radius: $half 0px 0px $half;
+    -o-radius: $half 0px 0px $half;
+    -ms-radius: $half 0px 0px $half;
     -moz-transform-origin:right center;
     -ms-transform-origin:right center;
     -o-transform-origin:right center;
@@ -93,25 +99,25 @@ opposite direction to hide the first part behind.
 
 .outer {
     margin: -5px 0px 0px 0px;
-    width: 40px;
-    height: 40px;
+    width: $size;
+    height: $size;
     background-clip: padding-box;
-    border-radius: 20px;
+    border-radius: $half;
 }
 .inner {
-    width: 24px;
-    height: 24px;
+    width: $inner;
+    height: $inner;
     text-align: center;
     border-radius: 15px;
     font: 12px "Helvetica Neue",Arial,Helvetica,sans-serif;
     background-color: #FFF;
     position: relative;
-    top: 8px;
-    left: 8px;
+    top: $innerAncor;
+    left: $innerAncor;
     z-index: 3;
 }
 .inner span {
-    line-height: 25px;
+    line-height: $inner;
 }
 /*
 add colour to each piece.

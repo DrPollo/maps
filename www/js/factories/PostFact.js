@@ -147,7 +147,7 @@ angular.module('firstlife.factories')
                 });
             return deferred.promise;
         },
-        updateComment: function(id){
+        updateComment: function(id,message){
             var deferred = $q.defer();
             var url = urlComments.concat("/",id,format);
             //$log.debug('x',x,'y',y,'z',z);
