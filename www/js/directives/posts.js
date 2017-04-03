@@ -110,7 +110,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 scope.popover.hide();
                 var report = {
                     post_id: id,
-                    message: 'default message'
+                    message: ''
                 };
                 $log.debug('reporting post',id);
                 entityFactory.report(report).then(
@@ -306,7 +306,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 // cancello riferimenti all'immagine
                 delete scope.content.image_thumbnail;
                 delete scope.content.image_url;
-                scope.content.filename = false;
+                scope.content.filename = null;
                 // init del campo
                 scope.content.filedata = '';
             }

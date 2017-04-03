@@ -122,8 +122,8 @@ angular.module('firstlife.directives').directive('commentsList',function(){
                 $scope.loading = true;
                 $scope.popover.hide();
                 var report = {
-                    comment_id: id,
-                    message: 'default message'
+                    postcomment_id: id,
+                    message: ''
                 };
                 $log.debug('report comment',report);
                 entityFactory.report(report).then(
