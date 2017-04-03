@@ -25,7 +25,7 @@
                 <tags-input ng-model="content.tags" display-property="tag" placeholder="{{'POSTEDITOR_TAGS_PLACEHOLDER' |translate}}" replace-spaces-with-dashes="false"></tags-input>
             </div>
             <div id="posteditor-controls">
-                <button type="submit" class="right button button-positive button-small icon ion-checkmark-round" on-tap="sendUpdate()" ng-disabled="(!content.message && !content.filedata)">{{'UPDATE'|translate}}</button>
+                <button type="submit" class="right button button-positive button-small icon ion-checkmark-round" on-tap="sendUpdate()" ng-disabled="form.$pristine || (!content.message && !content.filedata)">{{'UPDATE'|translate}}</button>
             </div>
         </div>
     </form>

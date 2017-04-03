@@ -312,6 +312,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             }
 
             scope.sendUpdate = function () {
+                $log.debug('check pristine', scope.here);
                 $log.debug('start update',scope.content);
                 scope.update({'id': scope.content.id, 'content': scope.content});
             }
