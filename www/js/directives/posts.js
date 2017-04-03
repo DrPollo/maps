@@ -306,7 +306,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 // cancello riferimenti all'immagine
                 delete scope.content.image_thumbnail;
                 delete scope.content.image_url;
-                delete scope.content.filename;
+                scope.content.filename = false;
                 // init del campo
                 scope.content.filedata = '';
             }
