@@ -138,11 +138,15 @@ gulp.task('deploy-all', function(){
                 // fix directory owner
                 var user = gutil.env.user ? gutil.env.user : '';
                 var group = gutil.env.group ? gutil.env.group : '';
-                if (gutil.env.apache && sh.exec('chown -R '+user+':'+group+' '+dir).code !== 0) {
-                    sh.echo('Error: chown failed');
-                    sh.exit(1);
-                }else{
-                    console.log('fix owner ok');
+                if (user || group ) {
+                    var code = sh.exec('chown -R ' + user + ':' + group + ' ' + dir).code;
+                    if (code !== 0){
+                        console.error('Error: chown failed');
+                        //sh.exit(1);
+                    }else{
+                        //sh.exit(0);
+                        console.log('fix owner ',user,':',group, 'of dir',dir);
+                    }
                 }
             }
         }
@@ -155,8 +159,8 @@ gulp.task('move',function(){
     var dir = '../firstlife'
     if(gutil.env.domain)
         dir = '../firstlife-'+gutil.env.domain;
-    
-    fse.copySync('www', dir, {mkdirp: true,clobber:true}, function(err) {console.log('move clent ',err ? err : 'ok!');}); 
+
+    fse.copySync('www', dir, {mkdirp: true,clobber:true}, function(err) {console.log('move clent ',err ? err : 'ok!');});
     console.log("move file ok!");
 });
 
@@ -166,10 +170,10 @@ gulp.task('rebuild',function(){
     try{
         run('npm build .');
     }catch(err){
-         throw new gutil.PluginError({
-                plugin: 'mergeconfig',
-                message: 'npm build error'
-            });
+        throw new gutil.PluginError({
+            plugin: 'mergeconfig',
+            message: 'npm build error'
+        });
     }
     console.log('rebuild npm packages!');
 });
@@ -201,9 +205,9 @@ gulp.task('mergeconfig', function(){
     }catch(err){
         console.log('defaults.json parse error ',err);
         throw new gutil.PluginError({
-                plugin: 'mergeconfig',
-                message: 'defaults.json JSON.parse error'
-            });
+            plugin: 'mergeconfig',
+            message: 'defaults.json JSON.parse error'
+        });
     }
     var domain = null;
     var config = null;
@@ -225,7 +229,7 @@ gulp.task('mergeconfig', function(){
         }
         if(extras)
             config = override(defaults,extras,true);
-            
+
     }
     fs.writeFileSync('./www/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('merge result: ',e ? e : 'ok!');});
 });
@@ -252,8 +256,8 @@ gulp.task('sass', function(done) {
         .pipe(sass())
         .pipe(gulp.dest('./www/css/'))
         .pipe(minifyCss({
-        keepSpecialComments: 0
-    }))
+            keepSpecialComments: 0
+        }))
         .pipe(rename({ extname: '.min.css' }))
         .pipe(gulp.dest('./www/css/'))
         .on('end', done);
@@ -267,8 +271,8 @@ gulp.task('watch', function() {
 gulp.task('install', ['git-check'], function() {
     return bower.commands.install()
         .on('log', function(data) {
-        gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
+            gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+        });
 });
 
 gulp.task('git-check', function(done) {
