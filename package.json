@@ -10,6 +10,7 @@
     "configstore": "^3.0.0",
     "fs": "0.0.1-security",
     "fs-extra": "^0.30.0",
+    "fs-sync": "^1.0.4",
     "graceful-fs": "^4.1.11",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^1.9.1",

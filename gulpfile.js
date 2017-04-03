@@ -14,9 +14,129 @@ var fse = require('fs-extra');
 var run = require('sync-exec');
 
 var paths = {
-    sass: ['./scss/**/*.scss'],
+    sass: ['./scss/*.scss'],
     templatecache: ['./www/templates/ng-templates/**/*.html']
 };
+
+gulp.task('deploy-all', function(){
+
+    // setup packages
+    try{
+        run('npm build .');
+    }catch(err){
+        throw new gutil.PluginError({
+            plugin: 'mergeconfig',
+            message: 'npm build error'
+        });
+    }
+    console.log('rebuild npm packages!');
+    // fine setup packages
+
+    // carico defaults
+    var defaults = null;
+    try{
+        defaults = JSON.parse(fs.readFileSync('./domains/defaults.json','utf-8'));
+    }catch(err){
+        console.log('defaults.json parse error ',err);
+        throw new gutil.PluginError({
+            plugin: 'mergeconfig',
+            message: 'defaults.json JSON.parse error'
+        });
+    }
+    // fine carico defaults
+
+    // catturo environment
+    var env = false;
+    if(gutil.env.prod)
+        env = 'prod';
+    if(gutil.env.test)
+        env = 'test';
+    if(gutil.env.dev)
+        env = 'dev';
+    // catturo environment
+
+
+    // ciclo i file environment
+    var files = fs.readdirSync('domains/');
+    console.log('files to process: ',files.length);
+    for(var i in files){
+        var file = files[i];
+        if(file.search('.json') != -1 && file != 'config.json') {
+            console.log('loading ',file);
+            var config = null;
+            var extras = null;
+            try {
+                extras = JSON.parse(fs.readFileSync('./domains/' + file, 'utf-8'));
+            } catch (err) {
+                console.error(file, ' parse error ', err);
+                // throw new gutil.PluginError({
+                //     plugin: 'mergeconfig',
+                //     message: file.name + ".json JSON.parse error"
+                // });
+            }
+            // i need to skip?
+            var ok = true;
+            if (extras && file != "defaults.json"){
+                try{
+                    config = override(defaults, extras, true);
+                } catch(err){
+                    console.error(file, ' merge error ', err);
+                    // skip
+                    ok = false;
+                }
+            }else if(file == "defaults.json"){
+                config = defaults;
+            }
+
+            if(ok){
+                var domain = file.slice(0,-5);
+                console.log('setup domain:', domain);
+
+                // setup variabilit e url
+                switch (env) {
+                    case 'prod':
+                        console.log('env prod');
+                        config.myConfig.api_base_domain = "api.firstlife.org/";
+                        config.myConfig.dev = false;
+                        break;
+                    case 'test':
+                        console.log('env test');
+                        config.myConfig.api_base_domain = "api.test.firstlife.di.unito.it/";
+                        config.myConfig.dev = false;
+                        break;
+                    case 'dev':
+                        console.log('env dev');
+                        config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
+                        config.myConfig.dev = false;
+                        break;
+                    default:
+                        config.myConfig.dev = true;
+                }
+                console.log('setup env host: ', config.myConfig.api_base_domain);
+                fs.writeFileSync('./www/config.json', JSON.stringify(config), 'utf-8', function (e) {
+                    console.log('setup env: ', e ? e : 'ok!');
+                });
+                // end setup the environment
+
+
+                // build config file
+                gulp.src('./www/config.json').pipe(gulpNgConfig('firstlife.config'))
+                    .pipe(gulp.dest('./www/js'));
+                console.log('buildconfig ok!');
+                // end build config file
+
+
+                // copy file to target directory
+                var dir = (domain != 'defaults') ?  '../firstlife-' + domain : '../firstlife';
+                console.log('moving to directory',dir);
+                fse.copySync('www', dir, {mkdirp: true, clobber: true}, function (err) {
+                    console.log('move clent ', err ? err : 'ok!');
+                });
+                console.log("move file ok!");
+            }
+        }
+    }
+});
 
 gulp.task('deploy',['config','move']);
 
@@ -59,8 +179,8 @@ gulp.task('setupenv',function(){
         config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
         config.myConfig.dev = false;
     }
-    console.log('setup env host: ',config.myConfig.api_base_domain, config.myConfig.base_callback);
-    fs.writeFile('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('setup env: ',e ? e : 'ok!');}); 
+    console.log('setup env host: ',config.myConfig.api_base_domain);
+    fs.writeFileSync('./www/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('setup env: ',e ? e : 'ok!');});
 });
 
 gulp.task('mergeconfig', function(){
@@ -96,11 +216,11 @@ gulp.task('mergeconfig', function(){
             config = override(defaults,extras,true);
             
     }
-    fs.writeFileSync('./domains/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('merge result: ',e ? e : 'ok!');});
+    fs.writeFileSync('./www/config.json',JSON.stringify(config),'utf-8', function(e){ console.log('merge result: ',e ? e : 'ok!');});
 });
 
 gulp.task('buildconfig', function () {
-    gulp.src('./domains/config.json')
+    gulp.src('./www/config.json')
         .pipe(gulpNgConfig('firstlife.config'))
         .pipe(gulp.dest('./www/js'));
     console.log('buildconfig ok!');
