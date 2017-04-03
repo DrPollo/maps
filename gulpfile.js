@@ -133,6 +133,17 @@ gulp.task('deploy-all', function(){
                     console.log('move clent ', err ? err : 'ok!');
                 });
                 console.log("move file ok!");
+                // end copy file to target directory
+
+                // fix directory owner
+                var user = gutil.env.user ? gutil.env.user : '';
+                var group = gutil.env.group ? gutil.env.group : '';
+                if (gutil.env.apache && sh.exec('chown -R '+user+':'+group+' '+dir).code !== 0) {
+                    sh.echo('Error: chown failed');
+                    sh.exit(1);
+                }else{
+                    console.log('fix owner ok');
+                }
             }
         }
     }
