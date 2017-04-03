@@ -9,6 +9,9 @@ $radius: 10px;
   }
   tags-input{
     width: 100%;
+    input {
+      margin: 0px;
+    }
     .tag-list{
       display: block;
       width: 100%;
@@ -64,6 +67,12 @@ $radius: 10px;
     }
   }
 }
+.extrafield {
+  input, textarea {
+    width: 100%;
+    padding-left: 6px;
+  }
+}
 .postupdateeditor {
   input, tags-input .tags{
     border:none;
@@ -71,6 +80,9 @@ $radius: 10px;
   }
   textarea {
     resize: vertical;
+  }
+  input {
+    width: 100%;
   }
   tags-input{
     width: 100%;
@@ -159,6 +171,10 @@ $radius: 10px;
     }
     .post {
       position: relative;
+      img{
+        height: auto;
+      }
+
       .imgbg {
         position: absolute;
         top:35px;
@@ -177,6 +193,13 @@ $radius: 10px;
       .text{
         line-height: 1.5em;
         padding-bottom: 0.5em;
+      }
+      .ext_ref {
+        padding-bottom: 0.5em;
+        a {
+          color: #333;
+          text-decoration: none;
+        }
       }
       .tags{
         padding-bottom: 0.5em;
@@ -203,9 +226,24 @@ $radius: 10px;
       position: absolute;
       top: 0px;
       left: 0px;
-      border-top:40px solid $error;
-      border-right:40px solid transparent;
-      border-bottom:40px solid transparent;
+      border-top:25px solid $error;
+      border-right:25px solid transparent;
+      border-bottom:25px solid transparent;
+    }
+    .post.highlight{
+      padding:0px;
+      img{
+        position: relative;
+        top:0px;
+        left: 0px;
+        max-width: 100%;
+        max-height: none;
+        height: inherit;
+      }
+      .postbody{
+        position: relative;
+        padding: 8px;
+      }
     }
     .comments-list{
       width: 100%;

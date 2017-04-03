@@ -18,7 +18,10 @@
             </div>
         </div>
         <div class="linear-fastanimation fade-in">
-            <div>
+            <div class="extrafield">
+                <input type="text" name="ext_ref" ng-model="content.ext_ref" placeholder="{{'POSTEDITOR_EX_REF_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
+            </div>
+            <div class="extrafield">
                 <tags-input ng-model="content.tags" display-property="tag" placeholder="{{'POSTEDITOR_TAGS_PLACEHOLDER' |translate}}" replace-spaces-with-dashes="false"></tags-input>
             </div>
             <div id="posteditor-controls">

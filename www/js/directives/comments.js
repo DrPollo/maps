@@ -125,6 +125,7 @@ angular.module('firstlife.directives').directive('commentsList',function(){
                     comment_id: id,
                     message: 'default message'
                 };
+                $log.debug('report comment',report);
                 entityFactory.report(report).then(
                     function (response) {
                         $log.debug('ok delete comment',response);

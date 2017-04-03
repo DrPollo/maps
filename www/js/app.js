@@ -544,7 +544,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         UPDATE_POST: "Modifica il post",
         CONTENTS: "Contenuti",
         ADDCHILD:"Aggiungi un contenuto",
-        NOCONTENTS_MESSAGE:"niente da leggere... :( "
+        NOCONTENTS_MESSAGE:"niente da leggere... :( ",
+        POSTEDITOR_EX_REF_PLACEHOLDER: "Link URL esterno"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -853,7 +854,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         DELETE_POST: "Delete the post",
         UPDATE_POST: "Update the post",
         CONTENTS: "Contents",
-        ADDCHILD:"Add a child entity"
+        ADDCHILD:"Add a child entity",
+        POSTEDITOR_EX_REF_PLACEHOLDER: "External URL reference"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

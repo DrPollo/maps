@@ -894,7 +894,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             }
         }
     }
-}]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory){
+}]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', 'myConfig', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory, myConfig){
     return {
         scope:{
             id: '=',
@@ -917,12 +917,14 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 }
             });
             var hideSheet = null;
+            var dev = myConfig.dev;
+
             scope.disclaimer = $filter('translate')('REPORT_DISCLAIMER');
             scope.user = AuthService.getUser();
             scope.report = {
                 content:{
                     thing_id: scope.id,
-                    message:'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
+                    message: !dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
                 },
                 form:{}
             };
@@ -946,19 +948,19 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             );
 
             scope.submit = function(){
-                $log.debug('check fields',scope.report.content);
+                // $log.debug('check fields',scope.report.content);
 
                 // invio la segnalazione
                 entityFactory.report(scope.report.content).then(
                     function (result) {
                         // tutto ok
-                        $log.debug('segnalazione ok',result);
+                        // $log.debug('segnalazione ok',result);
                         scope.report.modal.remove();
                         feedback('REPORT_SUCCESS_FEEDBACK');
                     },
                     function (err) {
                         // se non e' possibile fare il report
-                        $log.debug('errore segnalazione',err)
+                        $log.error('errore segnalazione',err)
                         feedback('REPORT_ERROR_FEEDBACK');
                     }
                 );

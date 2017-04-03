@@ -81,8 +81,6 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     }
                 );
             }
-
-
             // cancello il commento
             scope.deletePost = function(id){
                 scope.loading = true;
@@ -188,7 +186,10 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             });
 
             // todo click on a picture
-
+            scope.highlight = false;
+            scope.togglePicture = function(){
+                scope.highlight = !scope.highlight;
+            }
         }
     }
 }]).directive('postEditor', ['$log' , 'AuthService', 'postFactory' , function ($log, AuthService, postFactory) {
@@ -260,6 +261,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 scope.post = {
                     title: '',
                     message: '',
+                    ext_ref: '',
                     filedata: null,
                     tags:[]
                 };
@@ -272,6 +274,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     title: post.title,
                     message: post.message,
                     filedata: post.filedata,
+                    ext_ref: post.ext_ref,
                     tags:post.tags
                 };
                 scope.focus = false;

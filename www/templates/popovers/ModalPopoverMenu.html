@@ -10,7 +10,7 @@
                 <i class="icon ion-android-delete"></i>
                 {{'CANCEL'|translate}}
             </ion-item>
-            <report-entity class="delimited" id="infoPlace.marker.id" close="closePopover"></report-entity>
+            <report-entity ng-if="infoPlace.marker.id" class="delimited" id="infoPlace.marker.id" close="closePopover"></report-entity>
         </ion-list>
     </ion-content>
 </ion-popover-view>

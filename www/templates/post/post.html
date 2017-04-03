@@ -1,12 +1,20 @@
-<div class="post item item-thumbnail-left" ng-class="{'inappropriate' : post.inappropriate}">
-    <img src="{{post.image_thumbnail}}" width="100%"/>
+<div class="post item item-thumbnail-left" ng-class="{'inappropriate' : post.inappropriate, 'highlight' : highlight}">
+    <img src="{{ !highlight ? post.image_thumbnail : post.image_url}}" width="100%" class="fast-ease-in-out-animation"  on-tap="togglePicture()"/>
     <i class="icon ion-images imgbg"></i>
-    <div class="title" ng-if="post.title">{{post.title}}</div>
-    <div class="text item-text-wrap" ng-if="post.message">{{post.message}}</div>
-    <div ng-if="post.tags && post.tags.length > 0" class="tags">
-        <span ng-repeat="entry in post.tags track by $index" class="tag ion-pricetag">{{entry.tag}}</span>
-    </div>
-    <div class="credits">
-        {{'CONTRIBUTE_OF'|translate}} <span class="username">{{post.owner_display_name}}</span>,  {{post.timestamp_insert | date : 'd/MM/yyyy'}}
+    <div class="postbody">
+        <div class="title" ng-if="post.title">{{post.title}}</div>
+        <div class="text item-text-wrap" ng-if="post.message">{{post.message}}</div>
+        <div class="ext_ref" ng-if="post.ext_ref">
+            <i class="icon ion-link positive"></i>
+            <a href="{{post.ext_ref}}" target="_blank">
+                {{post.ext_ref}}
+            </a>
+        </div>
+        <div ng-if="post.tags && post.tags.length > 0" class="tags">
+            <span ng-repeat="entry in post.tags track by $index" class="tag ion-pricetag">{{entry.tag}}</span>
+        </div>
+        <div class="credits">
+            {{'CONTRIBUTE_OF'|translate}} <span class="username">{{post.owner_display_name}}</span>,  {{post.timestamp_insert | date : 'd/MM/yyyy'}}
+        </div>
     </div>
 </div>

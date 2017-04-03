@@ -13070,9 +13070,9 @@ ion-side-menu#side-menu {
     position: absolute;
     top: 0px;
     left: 0px;
-    border-top: 40px solid #ef473a;
-    border-right: 40px solid transparent;
-    border-bottom: 40px solid transparent; }
+    border-top: 30px solid #ef473a;
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid transparent; }
   .modal .modal-subheader {
     color: #555;
     padding: 8px 16px;
@@ -15484,6 +15484,8 @@ div.search-tag-card {
 
 #posteditor tags-input {
   width: 100%; }
+  #posteditor tags-input input {
+    margin: 0px; }
   #posteditor tags-input .tag-list {
     display: block;
     width: 100%;
@@ -15532,12 +15534,19 @@ div.search-tag-card {
   #posteditor #posteditor-controls button::before {
     margin-right: 6px; }
 
+.extrafield input, .extrafield textarea {
+  width: 100%;
+  padding-left: 6px; }
+
 .postupdateeditor input, .postupdateeditor tags-input .tags {
   border: none;
   box-shadow: none; }
 
 .postupdateeditor textarea {
   resize: vertical; }
+
+.postupdateeditor input {
+  width: 100%; }
 
 .postupdateeditor tags-input {
   width: 100%; }
@@ -15610,6 +15619,8 @@ div.search-tag-card {
     height: 30px; }
   #post-list .post-outer .post {
     position: relative; }
+    #post-list .post-outer .post img {
+      height: auto; }
     #post-list .post-outer .post .imgbg {
       position: absolute;
       top: 35px;
@@ -15625,6 +15636,11 @@ div.search-tag-card {
     #post-list .post-outer .post .text {
       line-height: 1.5em;
       padding-bottom: 0.5em; }
+    #post-list .post-outer .post .ext_ref {
+      padding-bottom: 0.5em; }
+      #post-list .post-outer .post .ext_ref a {
+        color: #333;
+        text-decoration: none; }
     #post-list .post-outer .post .tags {
       padding-bottom: 0.5em; }
       #post-list .post-outer .post .tags .tag {
@@ -15644,9 +15660,21 @@ div.search-tag-card {
     position: absolute;
     top: 0px;
     left: 0px;
-    border-top: 40px solid #ef473a;
-    border-right: 40px solid transparent;
-    border-bottom: 40px solid transparent; }
+    border-top: 25px solid #ef473a;
+    border-right: 25px solid transparent;
+    border-bottom: 25px solid transparent; }
+  #post-list .post-outer .post.highlight {
+    padding: 0px; }
+    #post-list .post-outer .post.highlight img {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      max-width: 100%;
+      max-height: none;
+      height: inherit; }
+    #post-list .post-outer .post.highlight .postbody {
+      position: relative;
+      padding: 8px; }
   #post-list .post-outer .comments-list {
     width: 100%;
     position: relative;
