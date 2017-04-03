@@ -65,7 +65,7 @@ angular.module('firstlife.factories')
                 });
             return deferred.promise;
         },
-        updatePost: function(id){
+        updatePost: function(id, post){
             var deferred = $q.defer();
             var url = urlPosts.concat("/",id,format);
             var req = {

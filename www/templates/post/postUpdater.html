@@ -1,0 +1,29 @@
+<div class="postupdateeditor item">
+    <form name="form" novalidate>
+        <div class="row">
+            <div class="col col-25">
+                <div id="foto-box" ng-if="content.image_thumbnail">
+                    <i type="button" class="icon ion-close-round" on-tap="deleteimage()"></i>
+                    <img id="foto" src="{{content.image_thumbnail}}" width="100%">
+                </div>
+                <picture-loader ng-if="!content.image_thumbnail" images="content.filedata" class="focus"></picture-loader>
+            </div>
+            <div class="col">
+                <label class="item item-input">
+                    <input type="text" name="title" ng-model="content.title" placeholder="{{'POSTEDITOR_TITLE_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <textarea name="message" placeholder="{{'POSTEDITOR_PLACEHOLDER' |translate}}" rows="4" ng-model="content.message" ng-minlength="5" maxlength="1000" autogrow></textarea>
+                </label>
+            </div>
+        </div>
+        <div class="linear-fastanimation fade-in">
+            <div>
+                <tags-input ng-model="content.tags" display-property="tag" placeholder="{{'POSTEDITOR_TAGS_PLACEHOLDER' |translate}}" replace-spaces-with-dashes="false"></tags-input>
+            </div>
+            <div id="posteditor-controls">
+                <button type="submit" class="right button button-positive button-small icon ion-checkmark-round" on-tap="sendUpdate()" ng-disabled="(!content.message && !content.filedata)">{{'UPDATE'|translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

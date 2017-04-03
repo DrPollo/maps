@@ -15527,43 +15527,37 @@ div.search-tag-card {
       stroke: #fff;
       fill: #fff; }
 
-#posteditor #foto-box {
-  padding-bottom: 100%;
-  height: 0px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px; }
-  #posteditor #foto-box img {
-    border-radius: 10px;
-    position: absolute;
-    width: 100%;
-    height: 100%; }
-  #posteditor #foto-box i {
-    position: absolute;
-    z-index: 1;
-    top: 2px;
-    right: 6px;
-    opacity: 0; }
-
-#posteditor #foto-box:hover {
-  background: #333; }
-  #posteditor #foto-box:hover img {
-    opacity: 0.5; }
-  #posteditor #foto-box:hover i {
-    opacity: 1;
-    color: #fff; }
-
 #posteditor #posteditor-controls {
   clear: both; }
   #posteditor #posteditor-controls button::before {
     margin-right: 6px; }
 
-#posteditor #pictureloader {
+.postupdateeditor input, .postupdateeditor tags-input .tags {
+  border: none;
+  box-shadow: none; }
+
+.postupdateeditor textarea {
+  resize: vertical; }
+
+.postupdateeditor tags-input {
+  width: 100%; }
+  .postupdateeditor tags-input .tag-list {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    float: left;
+    clear: both;
+    padding-bottom: 6px; }
+    .postupdateeditor tags-input .tag-list .tag-item {
+      background: transparent;
+      border: 1px solid #FC4A00;
+      border-radius: 10px; }
+
+#pictureloader {
   height: 100%;
   width: 100%;
   position: relative; }
-  #posteditor #pictureloader .button {
+  #pictureloader .button {
     color: #999;
     height: 100%;
     width: 100%;
@@ -15572,11 +15566,38 @@ div.search-tag-card {
     border-width: 2px;
     border-style: dashed;
     border-color: #999; }
-    #posteditor #pictureloader .button input {
+    #pictureloader .button input {
       width: 100%;
       height: 100%; }
-    #posteditor #pictureloader .button .icon::before {
+    #pictureloader .button .icon::before {
       font-size: 2.5em; }
+
+#foto-box {
+  padding-bottom: 100%;
+  height: 0px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px; }
+  #foto-box img {
+    border-radius: 10px;
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  #foto-box i {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    right: 6px;
+    opacity: 0; }
+
+#foto-box:hover {
+  background: #333; }
+  #foto-box:hover img {
+    opacity: 0.5; }
+  #foto-box:hover i {
+    opacity: 1;
+    color: #fff; }
 
 #post-list .post-outer {
   position: relative; }

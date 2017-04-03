@@ -45,6 +45,44 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     scope.popover.show($event);
             };
 
+            // inizio l'edit del post
+            scope.updatePost = function (id) {
+                // id del post in edit
+                scope.edit = id;
+                // chiudi menu
+                scope.popover.hide();
+            }
+            // annullo l'update
+            scope.abortUpdate = function(){
+                // tolgo l'id
+                scope.edit = null;
+            }
+            // aggiorno il post
+            scope.sendUpdate = function(id, post){
+                $log.debug('sendUpdate init',id,post);
+                scope.edit = null;
+                scope.loading = true;
+                postFactory.updatePost(id, post).then(
+                    function (response) {
+                        $log.debug('ok update post',response);
+                        initList().then(
+                            function(){
+                                scope.loading = false;
+                            },
+                            function () {
+                                scope.loading = false;
+                            }
+                        );
+                    },
+                    function (err) {
+                        $log.error(err);
+                        scope.loading = false;
+                        // todo messaggio d'errore all'utente
+                    }
+                );
+            }
+
+
             // cancello il commento
             scope.deletePost = function(id){
                 scope.loading = true;
@@ -246,6 +284,36 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             }
         }
     };
+}]).directive('postUpdater',['$log',function ($log) {
+    return {
+        restrict: 'EG',
+        templateUrl: '/templates/post/postUpdater.html',
+        scope:{
+            post:'=post',
+            update: '&update'
+        },
+        link: function (scope,element,attr) {
+
+            scope.content = angular.copy(scope.post);
+            $log.debug('content',scope.content)
+
+
+            // delete image
+            scope.deleteimage = function () {
+                // cancello riferimenti all'immagine
+                delete scope.content.image_thumbnail;
+                delete scope.content.image_url;
+                delete scope.content.filename;
+                // init del campo
+                scope.content.filedata = '';
+            }
+
+            scope.sendUpdate = function () {
+                $log.debug('start update',scope.content);
+                scope.update({'id': scope.content.id, 'content': scope.content});
+            }
+        }
+    }
 }]).directive('pictureLoader',function(){
     return {
         restrict: 'EG',
