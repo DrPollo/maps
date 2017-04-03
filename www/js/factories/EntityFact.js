@@ -11,7 +11,8 @@ angular.module('firstlife.factories')
         var urlBbox= myConfig.backend_bbox;
         
         // aggiungo il filtro al dominio
-        var bboxBaseParams = '?domainId='+self.config.domain_id;
+        var domains = [self.config.domain_id].concat(self.config.read_domains).join(',');
+        var bboxBaseParams = '?domainId='+domains;
         
         var format = config.format;
         var response = null;

@@ -4,6 +4,7 @@
     "domain_name" : "wegovnow",
     "domain_id" : 8,
     "ssl": true,
+    "read_domains":[],
     "authentication": {
       "auth_server":"uwum_auth",
       "auth_server_name":"UWUM",

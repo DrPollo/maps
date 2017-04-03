@@ -12,6 +12,7 @@
         "app_name" : "FirstLife",
         "domain_name" : "firstlife",
         "domain_id" : 1,
+        "read_domains":[10,11,12,13,14,16],
         "authentication": {
             "auth_server":"fl_auth",
             "auth_server_name":"FIRSTLIFE",
