@@ -75,7 +75,7 @@ angular.module('firstlife.timeline',[])
                 // aggiungo una unit
                 $scope.moment = $scope.moment.add(1,unit);
                 // avviso del cambio di timeline
-                applyTimeFilters();
+                // applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -88,7 +88,7 @@ angular.module('firstlife.timeline',[])
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
                 // avviso del cambio di timeline
-                applyTimeFilters();
+                // applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -101,7 +101,7 @@ angular.module('firstlife.timeline',[])
                 if($scope.indexDefaultUnit > 0){
                     $scope.indexDefaultUnit--;
                     // avviso del cambio di timeline
-                    applyTimeFilters();
+                    // applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -117,7 +117,7 @@ angular.module('firstlife.timeline',[])
                     //$log.debug('scale down moment',$scope.moment);
                     $scope.indexDefaultUnit++;
                     // avviso del cambio di timeline
-                    applyTimeFilters();
+                    // applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -131,7 +131,7 @@ angular.module('firstlife.timeline',[])
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
                 // avviso del cambio di timeline
-                applyTimeFilters();
+                // applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -141,7 +141,7 @@ angular.module('firstlife.timeline',[])
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
                 // avviso del cambio di timeline
-                applyTimeFilters();
+                // applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -158,7 +158,7 @@ angular.module('firstlife.timeline',[])
                 if(index < $scope.indexDefaultUnit){
                     $scope.indexDefaultUnit = index;
                     // avviso del cambio di timeline
-                    applyTimeFilters();
+                    // applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -212,6 +212,8 @@ angular.module('firstlife.timeline',[])
                 for(var i = 0; i < slots.length; i++){
                     $scope.timewindow.push(slots[i]);
                 }
+                // avviso del cambiamento
+                applyTimeFilters();
             }
 
 
