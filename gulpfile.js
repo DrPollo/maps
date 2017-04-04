@@ -202,7 +202,7 @@ gulp.task('buildconfig', function () {
         });
     }
     // create wrap
-    var file = ('angular.module("firstlife.config", []).config("myConfig",').concat(config, ");");
+    var file = ('angular.module("firstlife.config", []).constant("myConfig",').concat(config, ");");
     try{
         fs.writeFileSync(path+'config.js',file,'utf-8');
     }catch (err) {
