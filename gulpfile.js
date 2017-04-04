@@ -53,8 +53,8 @@ gulp.task('golive', function(){
 
     // setup enviroment
     env({
-        user: 'drpollo',
-        // group: 'apache',
+        user: 'apache',
+        group: 'apache'
     })
     gulp.start('deploy-all');
 
