@@ -13,11 +13,53 @@ var fs = require('fs');
 var fse = require('fs-extra');
 var run = require('sync-exec');
 var sequence = require('run-sequence');
+var env = require('gulp-env');
 
 var paths = {
     sass: ['./scss/*.scss'],
     templatecache: ['./www/templates/ng-templates/**/*.html']
 };
+
+gulp.task('golive', function(){
+    var defaultBranch = 'dev';
+
+    // reset delle modifiche locali
+    var c1 = sh.exec('git reset --hard').code;
+    console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
+    if(c1 !== 0)
+        throw new gutil.PluginError({
+            plugin: 'git reset',
+            message: "cannot reset git local repo"
+        });
+
+    // switch branch
+    var c3 = sh.exec('git checkout ', (gutil.env.branch) ? gutil.env.branch : defaultBranch ).code;
+    if(c3 !== 0)
+        throw new gutil.PluginError({
+            plugin: 'git checkout',
+            message: "cannot switch branch to "+gutil.env.branch
+        });
+    console.log('swithched to branch',(gutil.env.branch) ? gutil.env.branch : defaultBranch );
+
+    // pull del progetto
+    var c2 = sh.exec('git pull').code;
+    console.log('pull remote repo result',c2 === 0 ? 'ok' : 'error '+c2);
+    if(c2 !== 0)
+        throw new gutil.PluginError({
+            plugin: 'git pull',
+            message: "cannot pull remote repo"
+        });
+    console.log('local repo updated')
+
+    // setup enviroment
+    env({
+        user: 'drpollo',
+        // group: 'apache',
+    })
+    gulp.start('deploy-all');
+
+    console.log('golive ok!');
+})
 
 gulp.task('deploy-all', function(){
     var setup = null;
