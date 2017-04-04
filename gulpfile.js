@@ -179,7 +179,7 @@ gulp.task('rebuild',function(){
 });
 
 gulp.task('setupenv',function(){
-    var config = JSON.parse(fs.readFileSync('./domains/config.json','utf-8'));
+    var config = JSON.parse(fs.readFileSync('./www/config.json','utf-8'));
     var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
     if(gutil.env.prod){
         console.log('env prod');
