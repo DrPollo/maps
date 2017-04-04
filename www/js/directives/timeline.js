@@ -56,10 +56,15 @@ angular.module('firstlife.timeline',[])
 
             // momento attuale
             $scope.moment = moment();
-            // inizializzo il buffer
-            initBuffer();
+
+
+
             // imposto i nuovi parametri search
             setSearchParams();
+            // inizializzo il buffer
+            initBuffer(true);
+            // applyTimeFilters(true);
+
 
 
             /*
@@ -69,13 +74,16 @@ angular.module('firstlife.timeline',[])
 
             // ruoto indietro la timeline
             $scope.forward = function(){
+                // $log.debug('forward');
                 // recupero la unit da aggiungere
                 var unit = getUnitToShift();
-                //                $log.debug('add a ',unit);
+                $log.debug($scope.moment,'add 1 ',unit);
                 // aggiungo una unit
+                // $log.debug('forward to ',$scope.moment, moment().add(1,unit));
                 $scope.moment = $scope.moment.add(1,unit);
+                $log.debug('forward to ',$scope.moment.toISOString());
                 // avviso del cambio di timeline
-                // applyTimeFilters();
+                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -88,7 +96,7 @@ angular.module('firstlife.timeline',[])
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
                 // avviso del cambio di timeline
-                // applyTimeFilters();
+                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -101,7 +109,7 @@ angular.module('firstlife.timeline',[])
                 if($scope.indexDefaultUnit > 0){
                     $scope.indexDefaultUnit--;
                     // avviso del cambio di timeline
-                    // applyTimeFilters();
+                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -117,7 +125,7 @@ angular.module('firstlife.timeline',[])
                     //$log.debug('scale down moment',$scope.moment);
                     $scope.indexDefaultUnit++;
                     // avviso del cambio di timeline
-                    // applyTimeFilters();
+                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -131,7 +139,7 @@ angular.module('firstlife.timeline',[])
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
                 // avviso del cambio di timeline
-                // applyTimeFilters();
+                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -141,7 +149,7 @@ angular.module('firstlife.timeline',[])
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
                 // avviso del cambio di timeline
-                // applyTimeFilters();
+                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -158,7 +166,7 @@ angular.module('firstlife.timeline',[])
                 if(index < $scope.indexDefaultUnit){
                     $scope.indexDefaultUnit = index;
                     // avviso del cambio di timeline
-                    // applyTimeFilters();
+                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -173,9 +181,17 @@ angular.module('firstlife.timeline',[])
 
 
             // inizializzo la timeline
-            function initBuffer(){
+            function initBuffer(skip){
+                if(!skip) {
+                    // setup dei parametri search
+                    $location.search('date',$scope.moment.toISOString());
+                    // fix unit nei parametri search
+                    $location.search('unit', $scope.units[$scope.indexDefaultUnit].key);
+                }
+
                 // init del tempo a oggi
                 var now = angular.copy($scope.moment);
+                $log.debug('init buffer from',$scope.moment.toISOString());
                 // parametri temporali nell'url
                 // "date" e' la data centrale e "unit" la granularita'
                 var params = $location.search();
@@ -201,6 +217,7 @@ angular.module('firstlife.timeline',[])
                 var slots = getNowUnits(now);
                 // recupero dell'indice di ora nell'unita' corrente
                 $scope.now = getNowInUnits(moment());
+
                 // recupero il contesto dell'momento attuale dato l'indice
                 setContextButtons(now);
                 //$log.debug('check context ',$scope.context);
@@ -212,8 +229,13 @@ angular.module('firstlife.timeline',[])
                 for(var i = 0; i < slots.length; i++){
                     $scope.timewindow.push(slots[i]);
                 }
-                // avviso del cambiamento
-                applyTimeFilters();
+                // imposto filtro temporale
+                var newInterval = getFullInterval();
+                $log.debug('new interval ',newInterval);
+                MapService.setTimeFilters(newInterval);
+
+                // evento di update per mapCtrl
+                $rootScope.$emit("timeUpdate",{time:newInterval});
             }
 
 
@@ -233,6 +255,7 @@ angular.module('firstlife.timeline',[])
 
             // recupera l'array dei possibili valori dell'unita' temporale
             function getNowUnits(now){
+                $log.debug('getNowUnits',now.toISOString(), 'calc for unit ',$scope.units[$scope.indexDefaultUnit].key);
                 var initStart = {hour:0,minute:0,second:0,millisecond:0};
                 var initEnd = {hour:23,minute:59,second:59,millisecond:999};
                 var phases = ['NIGHT','MORNING','AFTERNOON','EVENING'];
@@ -256,7 +279,7 @@ angular.module('firstlife.timeline',[])
                             array.push(e);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
-                        //                        $log.debug('check interval phases ',array);
+                        $log.debug('check interval phases ',array);
                         return array;
                         break;
                         // giorni della settimana
@@ -498,29 +521,6 @@ angular.module('firstlife.timeline',[])
                 return null;
             }
 
-
-            // scansione dei dati dalla mappa
-            function scanData(data){
-                if(!data)
-                    return false;
-
-                var timeWindow = getCurrentInterval();
-
-                //todo check boundingbox
-                MapService.getMapBounds().then(
-                    function(bounds){
-                        dataInSlots(data,bounds);
-                    },
-                    function(response){});
-
-            }
-            // associa le features agli slot della timeline
-            function dataInSlots(data,bounds){
-                // per ogni feature controllo se cadono nella timeline
-                for(var i = 0; i < $scope.timewindow.length; i++){
-                    calcSlot(data, $scope.timewindow[i],bounds);
-                }
-            }
             // filtro bounding box della mappa, filtro preventivamente
             function boundsFiltering(val,bounds){
                 return bounds.contains([val.lat,val.lng]);
@@ -582,9 +582,13 @@ angular.module('firstlife.timeline',[])
              */
 
             // salvo il nuovo intervallo e avviso la mappa
-            function applyTimeFilters(){
-                var time = getFullInterval();
-                MapService.setTimeFilters(time);
+            function applyTimeFilters(skip){
+                return
+
+                // imposto filtro temporale
+                var newInterval = getFullInterval();
+                $log.debug('new interval ',newInterval);
+                MapService.setTimeFilters(newInterval);
                 // imposto i nuovi parametri search
                 setSearchParams();
                 // evento di update per mapCtrl
@@ -594,6 +598,8 @@ angular.module('firstlife.timeline',[])
             }
 
             function setSearchParams(){
+                return
+
                 // setup dei parametri search
                 $location.search('date',$scope.moment.toISOString());
                 $location.search('unit', $scope.units[$scope.indexDefaultUnit].key);
