@@ -7,7 +7,7 @@
         "api_base_callback" : "firstlife-dev.di.unito.it",
         "format":"",
         "api_version" : "v5",
-        "ssl": false,
+        "ssl": true,
         "version": "0.4.9.1",
         "app_name" : "FirstLife",
         "domain_name" : "firstlife",
