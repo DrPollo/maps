@@ -313,9 +313,11 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $location.search(); },
             function(e, old){
-                $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
                 if($state.current.name != 'app.maps')
                     return
+
+                $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
+
                 if(!self.watchSearchEnabled){
                     self.watchSearchEnabled = true;
                     return
@@ -369,12 +371,22 @@ angular.module('firstlife.controllers')
 
         },true);
 
-        $scope.$watch("query", function(newVal,oldVal) {
-//            $log.debug('change query ',newVal);
-            if(!angular.equals(newVal,oldVal)){
-                check4search(newVal,oldVal);
-            }
-        },true);
+
+        // todo cancellare se tutto ok
+        // $scope.$watch("query", function(newVal,oldVal) {
+        //    $log.debug('change query ',newVal);
+        //     if(!angular.equals(newVal,oldVal)){
+        //         check4search(newVal,oldVal);
+        //     }
+        // },true);
+        $scope.$on("newSearchParam", function(e,params) {
+            if(e.defaultPrevented)
+                return
+            e.preventDefault();
+
+           $log.debug('change query ',params.q);
+            setMapMarkers();
+        });
 
 
         $scope.$on("startEditing",function(event,args){
@@ -702,6 +714,8 @@ angular.module('firstlife.controllers')
                 $scope.wall.remove();
             };
             $scope.$on('modal.hidden', function() {
+                $log.debug('closing wall');
+                // setup della search card se la ricerca e' (q) non nulla
                 delete $scope.wall;
             });
             $scope.$on('$destroy', function() {
@@ -1735,18 +1749,21 @@ angular.module('firstlife.controllers')
             var o = old && old.q ? old.q : null;
             if(q && o && q == o)
                 return false;
+
+            $log.debug('check4search, param q', e.q, old);
             // se il parametro e' settato
+            // logica
             if(q && q != ''){
-                $log.debug('modalita filtro per testo q = ',q);
                 $scope.query = q;
-                setMapMarkers();
             }else if(q == ''){
+                // se parametro non valido lo rimuovo
                 $location.search('q',null);
-            }
-            if(o && o != '' && !q){
                 $scope.query = null;
-                setMapMarkers();
+            }else if(o && o != '' && !q){
+                $scope.query = null;
             }
+            // avviso del cambio di parametro
+            $scope.$broadcast('newSearchParam',{q: q ? q : null});
         }
 
         function check4timeline(e,old){

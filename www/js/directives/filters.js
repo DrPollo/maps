@@ -105,9 +105,22 @@ angular.module('firstlife.directives')
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
-        scope:true,
         link: function (scope, element, attr) {
             scope.$on('$destroy',function(){delete scope;});
+
+            scope.$on('newSearchParam',function(e,params){
+                $log.debug('newSearchParam',e)
+
+                var q = params.q;
+                $log.debug('searchBar, nuovo parametro q ',q)
+                // imposto il campo di ricerca
+                scope.query = params.q;
+                // // barra chiusa
+                // scope.visible = false;
+                // // imposto la card
+                // scope.card = true;
+            })
+
             var dev = myConfig.dev;
             // visualizzazione web o mobile?
             if(!scope.isMobile) scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
@@ -130,7 +143,7 @@ angular.module('firstlife.directives')
             // controllo l'esistenza del campo q all'init
             var params = $location.search();
             if(params.q){
-                // imposto il campo di ricerca 
+                // imposto il campo di ricerca
                 scope.query = params.q;
                 // imposto la card
                 scope.card = true;
@@ -241,10 +254,10 @@ angular.module('firstlife.directives')
                                         $log.debug("cerco ",scope.query);
                                         checkQuery(e);
                                     }, SEARCH_DELAY);
-                            } 
+                            }
                             else {
                                 checkQuery(e);
-                            } 
+                            }
                         }
                     });
                 }
