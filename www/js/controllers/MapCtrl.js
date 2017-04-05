@@ -987,8 +987,8 @@ angular.module('firstlife.controllers')
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }if(entityId == -2){
-                content.title = $filter('translate')('SUCCESS');
-                content.text = $filter('translate')('SUCCESS_MODARATION');
+                content.title = $filter('translate')('ERROR');
+                content.text = $filter('translate')('ERROR_LOGIN');
 
 
                 var hideSheet = $ionicActionSheet.show({
@@ -1003,23 +1003,24 @@ angular.module('firstlife.controllers')
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }else if(entityId){
-                content.title = $filter('translate')('SUCCESS');
-                content.text = $filter('translate')('SAVE_SUCCESS');
-                // aggiungi marker alla mappa
                 clickMarker(entityId);
                 updateMarker(entityId);
+                // todo cancello messaggio ok creazione thing
+                // content.title = $filter('translate')('SUCCESS');
+                // content.text = $filter('translate')('SAVE_SUCCESS');
+                // aggiungi marker alla mappa
                 // messaggio di avvenuta operazione
-                var hideSheet = $ionicActionSheet.show({
-                    titleText: content.text,
-                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
-                    cancel: function() {
-                        $log.debug('CANCELLED');
-                    }
-                });
-                $log.debug("actionSheet", hideSheet);
-                // serve per il routing, chiudo l'action sheet con il pulsante back
-                $rootScope.actionSheet = hideSheet;
-                $rootScope.actionStatus = true;
+                // var hideSheet = $ionicActionSheet.show({
+                //     titleText: content.text,
+                //     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                //     cancel: function() {
+                //         $log.debug('CANCELLED');
+                //     }
+                // });
+                // $log.debug("actionSheet", hideSheet);
+                // // serve per il routing, chiudo l'action sheet con il pulsante back
+                // $rootScope.actionSheet = hideSheet;
+                // $rootScope.actionStatus = true;
             }else{
 
                 $log.debug("creazione/modifica ok!");}
