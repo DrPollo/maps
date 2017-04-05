@@ -313,13 +313,15 @@ angular.module('firstlife.controllers')
         $scope.$watch(
             function(){ return $location.search(); },
             function(e, old){
+                $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
                 if($state.current.name != 'app.maps')
                     return
-                if(!self.watchSearchEnabled)
+                if(!self.watchSearchEnabled){
+                    self.watchSearchEnabled = true;
                     return
+                }
 
-                // se ho il parametro place
-                $log.debug("check paramentro entity, old: ",old.entity, " nuovo: ",e.entity, " scelta ", (!old.entity && e.entity) || (old && e.entity != old.entity));
+
 
                 // controllo i parametri di posizione
                 check4Position(e);
