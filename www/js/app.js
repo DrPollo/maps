@@ -91,7 +91,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         if(embed){
                             // ok vado avanti
                         } else if(authenticate && !AuthService.isAuth()){
-                            $log.log('login obbligatorio, redirect a home');
+                            $log.debug('login obbligatorio, redirect a home');
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
                             $state.go('home',search_params);
@@ -103,25 +103,25 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
                         // if it is a viewer and it is not already going to the map
                         if(embed){
                             // go directly to the map
-                            $log.log('embed, redirect a app.maps');
+                            $log.debug('embed, redirect a app.maps');
                             event.preventDefault();
                             $state.go('app.maps',search_params);
                         }
                         break;
                     case 'app.editor':
                         if(authenticate && !AuthService.isAuth()){
-                            $log.log('login obbligatorio, redirect a home');
+                            $log.debug('login obbligatorio, redirect a home');
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
                             $state.go('home',search_params);
                         }
                         break;
                     default:
-                        $log.log("Continuo a ", toState.name);
+                        $log.debug("Continuo a ", toState.name);
                         // if it is a viewer and it is not already going to the map
                         if(embed){
                             // go directly to the map
-                            $log.log('embed, redirect a app.maps');
+                            $log.debug('embed, redirect a app.maps');
                             event.preventDefault();
                             $state.go('app.maps',search_params);
                         }
