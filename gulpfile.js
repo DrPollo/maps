@@ -160,19 +160,23 @@ gulp.task('setupenv',function(){
     var path = './www/config.json';
     var config = JSON.parse(fs.readFileSync('./www/config.json','utf-8'));
     var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
+
+    // setup defaults
+    console.log('default env test');
+    config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
+    config.myConfig.dev = false;
+
+    // override defaults
     if(gutil.env.prod){
         console.log('env prod');
         config.myConfig.api_base_domain = "api.firstlife.org/";
         config.myConfig.dev = false;
-    }else if(gutil.env.test){
-        console.log('env test');
-        config.myConfig.api_base_domain = "api.test.firstlife.di.unito.it/";
-        config.myConfig.dev = false;
     }else if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
-        config.myConfig.dev = false;
+        config.myConfig.dev = true;
     }
+
     console.log('setup env host: ',config.myConfig.api_base_domain);
     // cancello il file
     try{
