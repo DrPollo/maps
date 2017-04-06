@@ -1,7 +1,7 @@
 <div class="post item item-thumbnail-left" ng-class="{'inappropriate' : post.inappropriate, 'highlight' : highlight}">
     <img src="{{ !highlight ? post.image_thumbnail : post.image_url}}" width="100%" class="fast-ease-in-out-animation"  on-tap="togglePicture()"/>
     <i class="icon ion-images imgbg"></i>
-    <div class="postbody">
+    <div class="postbody">{{post.id}}
         <div class="title" ng-if="post.title">{{post.title}}</div>
         <div class="text item-text-wrap" ng-if="post.message">{{post.message}}</div>
         <div class="ext_ref" ng-if="post.ext_ref">

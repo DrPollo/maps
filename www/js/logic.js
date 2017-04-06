@@ -43,10 +43,10 @@ angular.module('firstlife.config')
     function setupAuth(myConfig){
         var params = myConfig.authentication;
         var url = params.auth_base_domain;
-        myConfig.auth_url = url.concat(params.auth_url);
-        myConfig.logout_url = url.concat(params.logout_url);
-        myConfig.profile_url = url.concat(params.profile_url);
-        myConfig.registration_url = url.concat(params.registration_url);
+        myConfig.authentication.auth_url = url.concat(params.auth_url);
+        myConfig.authentication.logout_url = url.concat(params.logout_url);
+        myConfig.authentication.profile_url = url.concat(params.profile_url);
+        myConfig.authentication.registration_url = url.concat(params.registration_url);
    })
 // logica
     .config(
