@@ -41,40 +41,13 @@ angular.module('firstlife.config')
 // configurazione authentication
     .config(
     function setupAuth(myConfig){
-        // var params = myConfig.authentication;
-        // var client_id = params.client_id;
-        // var auth_server = params.auth_server;
-        //
-        // var redirect_uri_auth = myConfig.base_callback.concat("callback");
-        // var redirect_uri_logout = myConfig.base_callback.concat("logout");
-        //
-        // myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
-        // myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;
-        // console.log('scopes',myConfig.authentication["scopes"])
-        // myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
-        //
-        //
-        // if(myConfig.authentication["auth_url"])
-        //     myConfig.authentication["auth_url"] = myConfig.authentication.auth_url.concat("?redirect_uri=",redirect_uri_auth,"&response_type=code","&client_id=",client_id);
-        // if(params.scopes && params.scopes.length > 0){
-        //     var scopes = params.scopes.reduce(function(r,val){  return r.concat(val,",");},"");
-        //     // taglio l'ultima virgola
-        //     scopes = scopes.substring(0, scopes.length - 1);
-        //     myConfig.authentication["scopes"] = scopes;
-        //     myConfig.authentication["auth_url"] = myConfig.authentication["auth_url"].concat("&scope=",scopes);
-        // }
-        //
-        // //console.log('auth server check',myConfig.authentication["auth_url"]);
-        //
-        // if(myConfig.authentication["logout_url"])
-        //     myConfig.authentication["logout_url"] = myConfig.authentication.logout_url.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
-        //
-        // if(myConfig.authentication["profile_url"])
-        //     myConfig.authentication["profile_url"] = myConfig.authentication.profile_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
-        //
-        // if(myConfig.authentication.registration_url)
-        //     myConfig.authentication["registration_url"] = myConfig.authentication.registration_url.concat("?redirect_uri=",redirect_uri_auth);
-    })
+        var params = myConfig.authentication;
+        var url = params.auth_base_domain;
+        myConfig.auth_url = url.concat(params.auth_url);
+        myConfig.logout_url = url.concat(params.logout_url);
+        myConfig.profile_url = url.concat(params.profile_url);
+        myConfig.registration_url = url.concat(params.registration_url);
+   })
 // logica
     .config(
     function configAppLogic(myConfig){
