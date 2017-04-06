@@ -867,25 +867,25 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,$location,myConfig){
             // token di sviluppo
-            if(myConfig.dev){
-                var devToken = {
-                    "access_token": "e4d55dd0998bcb0afd1767a0855ac8848c6f017e",
-                    "token_type": "Bearer",
-                    "expiration": "2017-03-03T09:53:37.619Z",
-                    "auth_server": "FIRSTLIFE",
-                    "member_id": "589dbba06685502f37156662",
-                    "member": {
-                        "first_name": "Alessio",
-                        "last_name": "Antonini",
-                        "username": "Alessio Antonini",
-                        "email": "aleyho@gmail.com",
-                        "rs_id": "58a82dc2b5db431b4531fa41",
-                        "id": "58a82dc2b5db431b4531fa41"
-                    }
-                };
-                $localStorage[myConfig.authentication.token_mem_key] = devToken;
-                $localStorage[myConfig.authentication.identity_mem_key] = devToken.member;
-            }
+            // if(myConfig.dev){
+            //     var devToken = {
+            //         "access_token": "e4d55dd0998bcb0afd1767a0855ac8848c6f017e",
+            //         "token_type": "Bearer",
+            //         "expiration": "2017-03-03T09:53:37.619Z",
+            //         "auth_server": "FIRSTLIFE",
+            //         "member_id": "589dbba06685502f37156662",
+            //         "member": {
+            //             "first_name": "Alessio",
+            //             "last_name": "Antonini",
+            //             "username": "Alessio Antonini",
+            //             "email": "aleyho@gmail.com",
+            //             "rs_id": "58a82dc2b5db431b4531fa41",
+            //             "id": "58a82dc2b5db431b4531fa41"
+            //         }
+            //     };
+            //     $localStorage[myConfig.authentication.token_mem_key] = devToken;
+            //     $localStorage[myConfig.authentication.identity_mem_key] = devToken.member;
+            // }
             // fine dev
 
 
