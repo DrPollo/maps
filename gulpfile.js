@@ -174,7 +174,7 @@ gulp.task('setupenv',function(){
     }else if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.fldev.di.unito.it/";
-        // config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
+        config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
         config.myConfig.dev = true;
     }
 
