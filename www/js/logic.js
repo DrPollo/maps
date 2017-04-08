@@ -28,6 +28,7 @@ angular.module('firstlife.config')
         myConfig.backend_search = url.concat('things/search');
         myConfig.backend_autocomplete = myConfig.backend_search.concat("?q="); 
         myConfig.report_thing = url.concat("inappropriates");
+        myConfig.initiatives = url.concat("initiatives");
 
         for(k in myConfig.types.list){
             if(myConfig.types.list[k].url){

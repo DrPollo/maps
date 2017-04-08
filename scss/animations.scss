@@ -65,7 +65,12 @@
 }
 
 
-
+.fast-ease-in-noout-animation.ng-hide-add {
+    transition: all ease-in-out 0s;
+}
+.fast-ease-in-out-animation.ng-hide-remove {
+    transition: all ease-in-out 0.25s;
+}
 
 
 

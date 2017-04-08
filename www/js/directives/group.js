@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
             id: '=id',
             details: '=details'
         },
-        templateUrl: '/templates/map-ui-template/membersCounter.html',
+        templateUrl: '/templates/modals/membersCounter.html',
         controller: ['$rootScope','$scope','$log','$filter','groupsFactory', function($rootScope, $scope,$log,$filter,groupsFactory){
 
             $scope.members = groupsFactory.getMembersRx($scope.id);
@@ -75,7 +75,7 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
             details: '=details',
             owner: '=owner'
         },
-        templateUrl: '/templates/map-ui-template/membersList.html',
+        templateUrl: '/templates/modals/membersList.html',
         controller: ['$rootScope','$scope','$log','$filter','groupsFactory','MemoryFactory', 'AuthService', function($rootScope,$scope,$log,$filter,groupsFactory,MemoryFactory, AuthService){
 
             //$scope.counter = [];

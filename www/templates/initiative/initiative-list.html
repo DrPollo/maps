@@ -1,0 +1,18 @@
+<div id="add-initiative" class="item item-button-right" title="{{'LINK_INITIATIVE' | translate}}" ng-show="!edit">
+    {{'LINK_INITIATIVE' | translate}}
+    <button class="button button-positive" on-tap="openEditor()">
+        <i class="icon ion-plus-round"></i>
+    </button>
+</div>
+<div id="initiative-list">
+    <initiative-editor id="thingId" close="closeEditor()" ng-if="edit"></initiative-editor>
+    <ul ng-show="!edit">
+        <li class="item item-divider">{{'CONNECTED_INITIATIVES' | translate}}</li>
+        <li ng-repeat="initiative in initiatives track by $index" class="item item-button-right">
+            {{initiative.name}}
+            <button class="button button-positive" on-tap="show(initiative)">
+                <i class="icon ion-android-search"></i>
+            </button>
+        </li>
+    </ul>
+</div>

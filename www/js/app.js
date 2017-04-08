@@ -547,7 +547,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         ADDCHILD:"Aggiungi un contenuto",
         NOCONTENTS_MESSAGE:"niente da leggere... :( ",
         POSTEDITOR_EX_REF_PLACEHOLDER: "Link URL esterno",
-        POSTS_ADDED: "ha aggiunto un post in"
+        POSTS_ADDED: "ha aggiunto un post in",
+        INITIATIVES: "Iniziative",
+        LINK_INITIATIVE:"Collega ad una iniziativa",
+        LINK_TO:"Collega",
+        CREATE_AND_LINK_TO: "Crea e Collega",
+        INITIATIVE_FORM_PLACEHOLDER: "Trova o crea una nuova iniziativa...",
+        CONNECTED_INITIATIVES: "Iniziative collegate",
+        AVAILABLE_INITIATIVES:"Iniziative disponibili"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -859,7 +866,14 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CONTENTS: "Contents",
         ADDCHILD:"Add a child entity",
         POSTEDITOR_EX_REF_PLACEHOLDER: "External URL reference",
-        POSTS_ADDED: "added a post to"
+        POSTS_ADDED: "added a post to",
+        INITIATIVES: "Initiatives",
+        LINK_INITIATIVE:"Link it to an initiative",
+        LINK_TO: "Link",
+        CREATE_AND_LINK_TO: "Create and Link",
+        INITIATIVE_FORM_PLACEHOLDER: "Find or start a new initiative...",
+        CONNECTED_INITIATIVES: "Connected initiatives",
+        AVAILABLE_INITIATIVES:"Available initiatives"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

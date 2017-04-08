@@ -1,0 +1,13 @@
+<form id="initiative-form" name="initiative" class="fast-ease-in-out-animation fade-in" ng-submit="linkTo()" novalidate>
+    <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
+    <div class="item">
+        <button class="reset-button right button button-dark button-small button-clear button-icon ion-close"
+                type="reset" on-tap="resetChoice(initiative)" title="{{'RESET'|translate}}"></button>
+        <input class="item" type="text" name="search" ng-model="q.name" placeholder="{{'INITIATIVE_FORM_PLACEHOLDER' | translate}}" ng-change="check(initiative,q)">
+        <button class="submit-button right button button-positive button-small" title="{{'LINK_TO' |translate}}" type="submit">{{ choice.id ?  'LINK_TO' : 'CREATE_AND_LINK_TO' |translate}}</button>
+    </div>
+    <ion-list>
+        <li class="item item-divider">{{'AVAILABLE_INITIATIVES'| translate}}</li>
+        <ion-radio ng-repeat="i in list | filter:q track by $index" ng-value="i.id" ng-model="select" on-tap="setChoice(initiative, i)">{{i.name}}</ion-radio>
+    </ion-list>
+</form>

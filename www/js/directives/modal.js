@@ -874,7 +874,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             showMCardPlace: '&',
             add:'&'
         },
-        templateUrl: '/templates/map-ui-template/modalLists.html',
+        templateUrl: '/templates/modals/modalLists.html',
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
@@ -885,9 +885,9 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             });
 
             // numero di tab
-            var tabs = 2;
+            var tabs = 3;
             // parto con la prima tag
-            scope.toggle = 0;
+            scope.toggle = 1;
             // cambio di tab
             scope.setToggle = function(i){
                 scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
