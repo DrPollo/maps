@@ -6,7 +6,7 @@
 </div>
 <div id="initiative-list">
     <initiative-editor id="thingId" close="closeEditor()" ng-if="edit"></initiative-editor>
-    <ul ng-show="!edit">
+    <ul ng-if="initiatives.length > 0" ng-show="!edit">
         <li class="item item-divider">{{'CONNECTED_INITIATIVES' | translate}}</li>
         <li ng-repeat="initiative in initiatives track by $index" class="item item-button-right">
             {{initiative.name}}
@@ -15,4 +15,5 @@
             </button>
         </li>
     </ul>
+    <nothing-to-read ng-if="!loading && initiatives.length < 1"></nothing-to-read>
 </div>

@@ -218,6 +218,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
 
             scope.user = AuthService.getUser();
             scope.loading = false;
+            scope.error = false;
 
             // init del form
             initPost();
@@ -252,11 +253,13 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         // ripristino il contenuto
                         restorePost(post);
                         scope.loading = false;
+                        scope.error = true;
                     }
                 );
             }
             // reset del form
             function initPost(){
+                scope.error = false;
                 // init del post
                 scope.post = {
                     title: '',
@@ -278,6 +281,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     tags:post.tags
                 };
                 scope.focus = false;
+                scope.error = false;
             }
 
             function reset() {

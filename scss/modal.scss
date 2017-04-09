@@ -228,3 +228,21 @@
     font-size: 1.4em;
     color: #999;
 }
+.error-box {
+    height: 146px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 1.4em;
+    color: #999;
+    position: relative;
+    img{
+        max-height: 70px;
+        max-width: 200px;
+        margin-bottom: 10px;
+    }
+    .button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

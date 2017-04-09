@@ -983,4 +983,23 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
     return {
         'template':'<div class="no-content-box row"><div class="col col-center">{{"NOCONTENTS_MESSAGE"|translate}}</div></div>'
     }
+}).directive('errorWithSomething',function () {
+    return {
+        scope:{
+            flag:'='
+        },
+        'template':'<div class="error-box row"><button on-tap="close()" class="button button-icon button-clear button-small button-dark ion-close"></button><div class="col col-center"><img src="/img/errors/errore-imprevisto.svg"><div>{{"SORRY_UNEXPECTED_ERROR"|translate}}</div></div></div>',
+        link: function (scope, element, attr) {
+            scope.$on('$destroy', function (e) {
+                if (!e.defaultPrevented)
+                    e.preventDefault();
+
+                delete scope;
+            });
+
+            scope.close = function(){
+                scope.flag = false;
+            }
+        }
+    }
 });

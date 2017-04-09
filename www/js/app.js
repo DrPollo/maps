@@ -554,7 +554,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CREATE_AND_LINK_TO: "Crea e Collega",
         INITIATIVE_FORM_PLACEHOLDER: "Trova o crea una nuova iniziativa...",
         CONNECTED_INITIATIVES: "Iniziative collegate",
-        AVAILABLE_INITIATIVES:"Iniziative disponibili"
+        AVAILABLE_INITIATIVES:"Iniziative disponibili",
+        SORRY_UNEXPECTED_ERROR:"Ops :( qualcosa si è rotto ..."
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -873,7 +874,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         CREATE_AND_LINK_TO: "Create and Link",
         INITIATIVE_FORM_PLACEHOLDER: "Find or start a new initiative...",
         CONNECTED_INITIATIVES: "Connected initiatives",
-        AVAILABLE_INITIATIVES:"Available initiatives"
+        AVAILABLE_INITIATIVES:"Available initiatives",
+        SORRY_UNEXPECTED_ERROR:"Sorry :( something broke up ..."
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

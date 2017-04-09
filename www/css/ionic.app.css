@@ -13204,6 +13204,22 @@ ion-side-menu#side-menu {
   font-size: 1.4em;
   color: #999; }
 
+.error-box {
+  height: 146px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 1.4em;
+  color: #999;
+  position: relative; }
+  .error-box img {
+    max-height: 70px;
+    max-width: 200px;
+    margin-bottom: 10px; }
+  .error-box .button {
+    position: absolute;
+    top: 0;
+    right: 0; }
+
 .popover-backdrop.active {
   z-index: 11; }
   .popover-backdrop.active .popover-wrapper .popover .list .item {

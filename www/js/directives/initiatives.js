@@ -78,6 +78,7 @@ angular.module('firstlife.directives')
             };
             scope.choice = null;
             scope.list = [];
+            scope.error = false;
 
             initFullList();
 
@@ -110,7 +111,6 @@ angular.module('firstlife.directives')
             scope.resetChoice = function (form) {
                 resetForm(form);
                 scope.close();
-
             };
 
 
@@ -141,8 +141,7 @@ angular.module('firstlife.directives')
                         function (error) {
                             $log.error(error);
                             scope.loading = false;
-
-                            // todo handle the creation error
+                            scope.error = true;
                         }
                     )
                 }
@@ -160,6 +159,8 @@ angular.module('firstlife.directives')
                 scope.choice = null;
                 // deselect the choice from radio buttons
                 scope.select = false;
+                // reset errors
+                scope.error = true;
             }
 
             // link an initiative
@@ -175,7 +176,7 @@ angular.module('firstlife.directives')
                     function (error) {
                         scope.loading = false;
                         $log.error(error);
-                        // todo handle the linking error
+                        scope.error = true;
                     }
                 );
             }
@@ -193,6 +194,7 @@ angular.module('firstlife.directives')
                     },
                     function (error) {
                         $log.error(error);
+                        scope.error = false;
                     }
                 );
             }

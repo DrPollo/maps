@@ -176,6 +176,8 @@ gulp.task('setupenv',function(){
         config.myConfig.api_base_domain = "api.firstlife.org/";
         config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
         config.myConfig.dev = true;
+        config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+        config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
     }
 
     console.log('setup env host: ',config.myConfig.api_base_domain);
