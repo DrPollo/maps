@@ -1,8 +1,8 @@
 <div id="typeFilter">
-    <button ng-repeat="category in filter.list track by $index" 
+    <button ng-repeat="category in filter.list track by $index"
         class="button {{category.shape}} entity-type" on-tap="toggle('entity_type',category.key)"
-        ng-style="category.visible ? {'color': !category.color ? '#666' : '#fff', 'background' : category.color}:{'background': '#fff', 'color' : category.color ? category.color: '#666'}"
-        ng-class="[(category.visible) ? 'active' : 'inactive', (category.color) ? '' : 'disabled']">
+        ng-style="category.visible ? {'color':  '#fff', 'background' : colors[category.index]}:{'background': '#fff', 'color' : colors[category.index]}"
+        ng-class="[(category.visible) ? 'active' : 'inactive']">
         <i class="icon {{category.icon}}"></i>
     </button>
 </div>

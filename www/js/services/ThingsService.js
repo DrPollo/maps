@@ -82,6 +82,78 @@ angular.module('firstlife.services')
                     filterConditions.splice(index,1);
                 }
             },
+            toggleFilter: function (cat, key) {
+                var index = filterConditions.map(function(e){return e.name}).indexOf(cat);
+                $log.debug("Indice regola filtro: ",index,cat,key);
+                // se non c'e' lo creo
+                if(index < 0){
+                    // default tutti i valori
+                    filterConditions[index] = {};
+                    filterConditions[index].values = [null];
+                    filterConditions[index].mandatory = {condition:true,values:false};
+                    filterConditions[index].equal = false;
+                    filterConditions[index].excludeRule = false;
+                    filterConditions[index].excludeProperty = false;
+                    $log.debug("Init della regola: ",filterConditions[index]);
+                }
+                $log.debug("Chiave? ",key);
+                /* toggle a tre stati
+                 * 1) excludeRule = false e excludeProperty = false  // filtro attivo
+                 * 2) excludeRule = true e excludeProperty = false // tutto visibile
+                 * 3) excludeRule = false e excludeProperty = true  // nulla visibile
+                 */
+                if(!key && key !== 0){
+                    $log.debug("Niente chiave, faccio toggle");
+                    // se in stato 1) vado in 2)
+                    if(!filterConditions[index].excludeRule && !filterConditions[index].excludeProperty){
+                        $log.debug("Stato 1 vado in 2");
+                        filterConditions[index].excludeRule = true;
+                        filterConditions[index].excludeProperty = false;
+                        filters[cat].toggle = 2;
+                    }
+                    // se in stato 2) vado in 3)
+                    else if(filterConditions[index].excludeRule && !filterConditions[index].excludeProperty){
+                        $log.debug("Stato 2 vado in 3");
+                        filterConditions[index].excludeRule = false;
+                        filterConditions[index].excludeProperty = true;
+                        filters[cat].toggle = 3;
+                    }
+                    // se in stato 3) vado in 1)
+                    else if(!filterConditions[index].excludeRule && filterConditions[index].excludeProperty){
+                        $log.debug("Stato 3 vado in 1");
+                        filterConditions[index].excludeRule = false;
+                        filterConditions[index].excludeProperty = false;
+                        filters[cat].toggle = 1;
+                    }
+                } else {
+                    // se la chiave e' impostata aggiungo/rimuovo la chiave
+                    var i = filterConditions[index].values.indexOf(key);
+                    $log.debug("Aggiungo/rimuovo chiave: ",key, " a ", filterConditions[index].values, " indice: ",i);
+                    $log.debug("Intervengo qui: ",filters[cat].list);
+                    var j = filters[cat].list.map(function(e){return e.key}).indexOf(key);
+                    if(i < 0) {
+                        filterConditions[index].values.push(key);
+                        filters[cat].list[j].visible = true;
+                        if(filterConditions[index].callbackPush){
+                            filterConditions[index].callbackPush(key);
+                        }
+                    } else {
+                        filterConditions[index].values.splice(i,1);
+                        filters[cat].list[j].visible = false;
+                        if(filterConditions[index].callbackPop){
+                            filterConditions[index].callbackPop(key);
+                        }
+                    }
+                    //vado in stato 1)
+                    filterConditions[index].excludeRule = false;
+                    filterConditions[index].excludeRule = false;
+                    filters[cat].toggle = 1;
+                    $log.debug("Aggiunta o rimossa chiave: ",filterConditions[index].values," vado in stato 1");
+                }
+            },
+            getFilter: function (key) {
+                return filters[key] ? filters[key] : null;
+            },
             setQuery: function (q) {
                 if(!q)
                     return query = null;
@@ -89,10 +161,6 @@ angular.module('firstlife.services')
                 return query = q;
             }
         };
-
-
-
-        // var results = $filter('fullsearch')(buffer,q);
 
 
         /*

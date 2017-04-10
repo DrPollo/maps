@@ -88,17 +88,19 @@ angular.module('firstlife.directives')
 
             }
         };
-    }]).directive('entityFilter',['$log','myConfig', function ($log,myConfig) {
+    }]).directive('entityFilter',['$log','myConfig','ThingsService', function ($log,myConfig,ThingsService) {
     return {
         restrict: 'EG',
         templateUrl: '/templates/map-ui-template/entityTypeFilter.html',
         scope: {
-            toggle:"=",
-            filter:"="
+            toggle:"="
         },
-        link: function (scope, element) {
+        link: function (scope, element, attr) {
             scope.$on('$destroy',function(){delete scope;});
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
+            scope.filter = ThingsService.getFilter('entity_type');
+            scope.colors = myConfig.design.colors;
+            scope.types = myConfig.types.list;
         }
     }
 }]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', 'AuthService', 'entityFactory', function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer, AuthService, entityFactory){

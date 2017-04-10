@@ -497,76 +497,8 @@ angular.module('firstlife.controllers')
          */
         $scope.toggleFilter = function(cat, key){
             // cerco l'indice della regola per le categorie
-            var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(cat);
-            $log.debug("Indice regola filtro: ",index,cat,key);
-            // se non c'e' lo creo
-            if(index < 0){
-                // default tutti i valori
-                $scope.filterConditions[index] = {};
-                $scope.filterConditions[index].values = [null];
-                $scope.filterConditions[index].mandatory = {condition:true,values:false};
-                $scope.filterConditions[index].equal = false;
-                $scope.filterConditions[index].excludeRule = false;
-                $scope.filterConditions[index].excludeProperty = false;
-                $log.debug("Init della regola: ",$scope.filterConditions[index]);
-            }
-            $log.debug("Chiave? ",key);
-            /* toggle a tre stati
-             * 1) excludeRule = false e excludeProperty = false  // filtro attivo
-             * 2) excludeRule = true e excludeProperty = false // tutto visibile
-             * 3) excludeRule = false e excludeProperty = true  // nulla visibile
-             */
-            if(!key && key !== 0){
-                $log.debug("Niente chiave, faccio toggle");
-                // se in stato 1) vado in 2) 
-                if(!$scope.filterConditions[index].excludeRule && !$scope.filterConditions[index].excludeProperty){
-                    $log.debug("Stato 1 vado in 2");
-                    $scope.filterConditions[index].excludeRule = true;
-                    $scope.filterConditions[index].excludeProperty = false;
-                    $scope.filters[cat].toggle = 2;
-                }
-                // se in stato 2) vado in 3) 
-                else if($scope.filterConditions[index].excludeRule && !$scope.filterConditions[index].excludeProperty){
-                    $log.debug("Stato 2 vado in 3");
-                    $scope.filterConditions[index].excludeRule = false;
-                    $scope.filterConditions[index].excludeProperty = true;
-                    $scope.filters[cat].toggle = 3;
-                }
-                // se in stato 3) vado in 1) 
-                else if(!$scope.filterConditions[index].excludeRule && $scope.filterConditions[index].excludeProperty){
-                    $log.debug("Stato 3 vado in 1");
-                    $scope.filterConditions[index].excludeRule = false;
-                    $scope.filterConditions[index].excludeProperty = false;
-                    $scope.filters[cat].toggle = 1;
-                }
-            } else {
-                // se la chiave e' impostata aggiungo/rimuovo la chiave
-                var i = $scope.filterConditions[index].values.indexOf(key);
-                $log.debug("Aggiungo/rimuovo chiave: ",key, " a ", $scope.filterConditions[index].values, " indice: ",i);
-                $log.debug("Intervengo qui: ",$scope.filters[cat].list);
-                var j = $scope.filters[cat].list.map(function(e){return e.key}).indexOf(key);
-                if(i < 0) {
-                    $scope.filterConditions[index].values.push(key);
-                    $scope.filters[cat].list[j].visible = true;
-                    if($scope.filterConditions[index].callbackPush){
-                        $scope.filterConditions[index].callbackPush(key);
-                    }
-                } else {
-                    $scope.filterConditions[index].values.splice(i,1);
-                    $scope.filters[cat].list[j].visible = false;
-                    if($scope.filterConditions[index].callbackPop){
-                        $scope.filterConditions[index].callbackPop(key);
-                    }
-                }
-                //vado in stato 1) 
-                $scope.filterConditions[index].excludeRule = false;
-                $scope.filterConditions[index].excludeRule = false;
-                $scope.filters[cat].toggle = 1;
-                $log.debug("Aggiunta o rimossa chiave: ",$scope.filterConditions[index].values," vado in stato 1");
-            }
-
-
-
+            ThingsService.toggleFilter(cat, key);
+            getMarkers();
         };
 
         // cambio il category space utilizzato per le icone

@@ -4,7 +4,7 @@
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
                 <user-handler check="$parent.checkNotifications"></user-handler>
-                <entity-filter ng-if="!editMode" toggle="toggleFilter" filter="filters['entity_type']"></entity-filter>
+                <entity-filter ng-if="!editMode" toggle="toggleFilter"></entity-filter>
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
             </div>
             <search-bar ng-if="!editMode"></search-bar>
