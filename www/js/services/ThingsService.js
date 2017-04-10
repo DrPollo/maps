@@ -9,12 +9,6 @@ angular.module('firstlife.services')
         var types = config.types.keys;
         var defIcons = config.types.icons;
 
-        var mapName = 'mymap';
-
-        var filters = {
-            from: config.map.time_from ,
-            to: config.map.time_to
-        };
 
 
         return {
@@ -39,7 +33,10 @@ angular.module('firstlife.services')
                     return deferred.promise;
                 }
 
-                var params = {};
+                var params = {
+                    from: filters.time.from,
+                    to: filters.time.to
+                };
                 var bbox = {
                     ne_lat: bounds.northEast.lat,
                     ne_lng: bounds.northEast.lng,
@@ -47,12 +44,11 @@ angular.module('firstlife.services')
                     sw_lat: bounds.southWest.lat
                 };
                 angular.extend(params,bbox);
-                $log.debug('bbox params',params);
+                // $log.debug('bbox params',params);
                 ThingsFact.bbox(params).then(
                     function (features) {
-                        $log.debug('got ',features.length,' features');
                         var markers = makeMarkers(features);
-                        $log.debug('bbox result',Object.keys(markers).length);
+                        $log.log('bbox result',features.length);
                         deferred.resolve(markers);
                     },
                     function (err) {
@@ -63,9 +59,15 @@ angular.module('firstlife.services')
 
                 return deferred.promise;
             },
-            setFilter: function(filter){
-
-            }
+            setTimeFilters: function(time){
+                self.filters.time = time;
+            },
+            getTimeFilters: function(){
+                if(angular.equals({}, self.filters.time)){
+                    return false;
+                }
+                return self.filters.time;
+            },
         };
 
 
@@ -84,7 +86,7 @@ angular.module('firstlife.services')
         function makeMarkers(features) {
             var markers = features.reduce(function(markers,feature){
                 // if needs to be filtered
-                if(!checkFilters(feature))
+                if(!check(feature))
                     return markers;
 
                 var marker = makeMarker(feature);
@@ -105,12 +107,18 @@ angular.module('firstlife.services')
             angular.extend(marker, feature.properties);
             angular.extend(marker,{id: feature.properties.id, lat: parseFloat(feature.geometry.coordinates[1]), lng : parseFloat(feature.geometry.coordinates[0])});
 
+            // set lista categorie
+            var clist = marker.categories.reduce(function(cats,cat){
+                cats = cats.concat(cat.categories.map(function(c){return c.id}));
+                return cats;
+            },[]);
+            angular.extend(marker,{category_list: clist });
+
             // gestione icona di tipo
             var type = types[marker.entity_type];
             // icona di tipo
             var icon = angular.copy(defIcons[type.key]);
             angular.extend(marker, {icon:icon});
-            $log.log('icon?', defIcons, type, defIcons[type.key]);
             // gestione icone di categoria
             var icons = {
                 type : icon
@@ -122,14 +130,198 @@ angular.module('firstlife.services')
             },{});
             angular.extend(icons, catIcons);
 
-            $log.log(marker);
             return marker;
         }
 
 
 
-        function checkFilters(feature) {
-            return true;
+        /*
+         * Manuale d'uso dei filtri
+         * Una regola per ogni proprieta' da valutare
+         * 1) key:              chiave della proprieta'
+         * 2) values:           array dei valori da controllare
+         * 3) mandatory:        condition:  true valutare la regola in AND con le altre
+         *                                  false vauta la regola in OR
+         *                      values:     true valuta i valori in AND tra loro
+         *                                  false valuta i valori in OR
+         * 4) equal:            true valuta il confronto di valori con il parametro con "=="
+         *                      false valuta il confronto di valori con il parametro con "!="
+         * 5) excludeRule:      true salta la regola
+         *                      false valuta la regola
+         * 6) excludeProperty:  true scarta se l'entita' ha un valore per quella proprieta'
+         * 7) setMapMarkers:    imposta i filtri e i fix sui marker prima di inviarli alla mappa
+         */
+        function check(feature){
+            var val = feature.properties;
+            // set lista categorie per i filtri
+            var clist = val.categories.reduce(function(cats,cat){
+                cats = cats.concat(cat.categories.map(function(c){return c.id}));
+                return cats;
+            },[]);
+            angular.extend(val,{category_list: clist });
+
+            // per ogni condizione
+            var testCondition = false;
+
+            for(key in filterConditions){
+                // se non devo escludere la regola
+
+                $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                // se esiste la include condition e il valore includeCondition:{value:cats.category_space,property:'category_space'}
+                var indexCheck = 0;
+                if(filterConditions[key].includeCondition){
+                    var checkField = val[filterConditions[key].includeCondition.property];
+                    var k = Object.keys(filterConditions[key].includeCondition.value)[0];
+                    indexCheck = checkField.map(function(e){return e[k].id}).indexOf(filterConditions[key].includeCondition.value[k]);
+                    $log.debug("check per includeCondition ", (indexCheck > -1));
+                }
+
+
+                $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                if(!filterConditions[key].excludeRule  && filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
+                    // se devo escludere ogni valore possibile
+                    if(filterConditions[key].excludeProperty){
+                        var valore = (val[filterConditions[key].key]);
+                        $log.debug("Check esclusione regola: ",filterConditions[key].excludeProperty,val,filterConditions[key].key,valore);
+                        if(!valore
+                            || valore === null ||
+                            valore === 'undefined' ||
+                            (Array.isArray(valore) && valore.length == 0 ) ||
+                            (angular.isObject(valore) && angular.equals(valore,{})) ){
+                            // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
+                            $log.debug("property non impostata per: ",val, "prorpieta'",filterConditions[key].key);
+                        }else{return false;}
+                    }
+                    // se ha delle alternative
+                    var checkCondition  = filterConditions[key].mandatory.condition,
+                        checkValues     = filterConditions[key].mandatory.values,
+                        equal           = filterConditions[key].equal;
+                    // controllo sulla condizione inizializza a true se le condizioni sono in AND, a false se sono in OR
+                    var check           = checkValues;
+                    // per ogni condizione
+                    $log.debug("Condizione: ", filterConditions[key]);
+                    for ( i = 0; i < filterConditions[key].values.length; i++ ){
+                        $log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",filterConditions[key].key);
+
+                        if( comparison(val[filterConditions[key].key], filterConditions[key].values[i], equal) ){
+
+                            // se il valore e' obbligatorio e la condizione e' obbligatoria esco
+                            if(checkValues && checkCondition){
+                                $log.debug("checkValues && checkCondition: true, esco ");
+                                return false;
+                            }
+                            // se la condizione e' obbligatoria il check = false
+                            if(checkValues){
+                                $log.debug("checkValues: true, check = false ");
+                                check = false;
+                            }
+                        }else{
+                            $log.debug("val[key] == filterConditions[key].values[i]");
+                            // se il valore e' rispettato e sono in OR allora check = true
+                            if(!checkValues){
+                                $log.debug("!checkValues, check = true");
+                                check = true;
+                            }
+                        }
+                    }
+                    // se la condizione era obbligatoria e il test e' falso esco
+                    if(checkCondition && !check)
+                        return false;
+                    // se il test e' positivo
+                    if(check)
+                        testCondition = true;
+                }
+            }
+            $log.debug("Test entry: ",val ,  testCondition);
+            return testCondition;
+
+
+            // comparatore
+            function comparison(a,b,equal){
+                $log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
+                if(Array.isArray(a)){
+                    if(equal){
+                        $log.debug(a,"==",b,"? ",(a == b));
+                        return (a.indexOf(b) >= 0);
+                    }
+                    return (a.indexOf(b) < 0);
+                }else{
+                    if(equal){
+                        $log.debug(a,"==",b,"? ",(a == b));
+                        return a == b;
+                    }
+                    $log.debug(a,"!=",b,"? ",(a != b));
+                    return a != b;
+                }
+            }
         }
 
-    }]);
+
+
+
+    }]).run(function(ThingsService, myConfig){
+    self.favCat = 0;
+    self.filters = {
+        time:{
+            from: new Date(),
+            to: new Date()
+        }
+    };
+    self.filterConditions = [];
+    var config = myConfig;
+
+    initFilters();
+
+    function initFilters(){
+
+
+        // filtri tipo
+        var types = config.types.list,
+            check = 'key',
+            filter_name = 'entity_type',
+            typesList = [];
+        // costruisco regola per gli entity_type
+        var rule = {key:filter_name,name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:[]};
+        // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
+        self.filters[filter_name] = {list:types, toggle:1, iconSwitcher:true, label:'TYPES',check:check,name:filter_name, category_space:0,visible:true};
+        for(var k = 0; k < filters[filter_name].list.length; k++){
+            filters[filter_name].list[k].visible = true;
+            rule.values.push(filters[filter_name].list[k].key);
+            rule.includeTypes.push(filters[filter_name].list[k].key);
+            typesList.push(filters[filter_name].list[k].key)
+        }
+        self.filterConditions.push(rule);
+
+        // init category
+        // bug da sistemare, infilo la categoria in catIndex in entityFactory, da tenere allineati!!!!
+
+        var categories = config.types.categories;
+        // filtri categorie
+        // costruisco regola per le categorizzazione
+        for(var i = 0; i< categories.length; i++){
+            var cats = categories[i];
+            if(cats.is_visible){
+                // imposto la prima come category_space di default
+                if(favCat == 0 && cats.is_visible){
+                    favCat = cats.category_space;
+                }
+
+                // todo aggiungi slug
+                var filter_name = cats.name;//'catIndex',
+                var check = 'id';
+                var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities,includeCondition:{value:{category_space:cats.category_space},property:'categories'}};
+                // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
+                self.filters[filter_name] = {list: cats.categories, toggle:1, iconSwitcher:true, label:filter_name,check:check,name:filter_name,category_space:cats.category_space,visible:cats.is_visible, color:cats.color};
+                // bug init i = 1
+                for(var j = 0; j < filters[filter_name].list.length; j++){
+                    self.filters[filter_name].list[j].visible = true;
+                    self.filters[filter_name].list[j].key = self.filters[filter_name].list[j].id;
+                    rule.values.push(self.filters[filter_name].list[j].id);
+                }
+                self.filterConditions.push(rule);
+            }
+        }
+        console.log('filters',self.filters);
+        console.log('filterConditions',self.filterConditions);
+    }
+});
