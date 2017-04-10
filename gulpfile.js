@@ -15,6 +15,7 @@ var run = require('sync-exec');
 var sequence = require('run-sequence');
 var env = require('gulp-env');
 
+
 var paths = {
     sass: ['./scss/*.scss'],
     templatecache: ['./www/templates/ng-templates/**/*.html']
@@ -158,7 +159,7 @@ gulp.task('rebuild',function(){
 
 gulp.task('setupenv',function(){
     var path = './www/config.json';
-    var config = JSON.parse(fs.readFileSync('./www/config.json','utf-8'));
+    var config = fse.readJsonSync('./www/config.json','utf-8');
     var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
 
     // setup defaults

@@ -1,5 +1,5 @@
 <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.design.navbar && !viewer"  url="{{config.design.navbar}}"></navbar>
-<ion-view class="maps-view" ng-style="config.design.navbar? {height: 'calc(100% - 42px)', top:'42px'} : {}">
+<ion-view class="maps-view" ng-style="config.design.navbar ? {height: 'calc(100% - 42px)', top:'42px'} : {}">
     <div id="mapHeader">
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
@@ -23,15 +23,14 @@
     <ion-content class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
         <div ng-controller="SimpleEditorCtrl as simpleEditor"></div>
-        <leaflet id="mymap" ng-if="map" width="100%" height="100%"
-                 bounds="bounds" 
-                 center="map.center"
-                 defaults="map.defaults"
-                 controls="map.controls" 
-                 markers="markersFiltered"
-                 geojson="geojson" 
-                 layers="map.layers"  
-                 event-broadcast="events"></leaflet>
+        <leaflet id="mymap" ng-if="flmap.loaded" width="100%" height="100%"
+                 center="flmap.center"
+                 bounds="flmap.bounds"
+                 defaults="flmap.defaults"
+                 controls="flmap.controls"
+                 markers="flmap.markers"
+                 layers="flmap.layers"
+                 event-broadcast="flmap.events"></leaflet>
 
     </ion-content >
 
@@ -73,5 +72,5 @@
             <timeline></timeline>
         </div>
     </div>
-    <style id="pie-styles" type="text/css">{{map.css}}</style>
+    <style id="pie-styles" type="text/css">{{flmap.css}}</style>
 </ion-view>

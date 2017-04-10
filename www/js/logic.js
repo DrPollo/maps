@@ -101,6 +101,10 @@ angular.module('firstlife.config')
         var types = myConfig.types;
         var perms = {};
         var checkList = {};
+        // creo l'accesso da chiave
+        myConfig.types.keys = {};
+        // creo le icone di tipo
+        myConfig.types.icons = {};
         //if(myConfig.dev)console.log("setup dei tipi 2",myConfig);
         for(k in types.list){
             // faccio il merge dei default con le proprieta' del tipo specifico
@@ -129,6 +133,25 @@ angular.module('firstlife.config')
                 acts[a.key] = a;
             }
             types.list[k].acts = acts;
+
+
+            // nuovi setup
+            var type = types.list[k];
+            // accesso da chiave
+            myConfig.types.keys[types.list[k].key] = type;
+            // icona di tipo
+            myConfig.types.icons[types.list[k].key] = {
+                type: 'div',
+                className: 'css-pin-marker',
+                iconSize: myConfig.map.marker_size,
+                iconAnchor: myConfig.map.marker_ancor,
+                color: myConfig.design.colors[type.index],
+                name:type.name,
+                index: type.index,
+                icon: type.icon,
+                html : '<div class="pin-marker" style="background-color:'+ myConfig.design.colors[type.index]+'"></div>'+
+                '<div class="icon-box"><i class="icon ' + type.icon + '"></i></div>'
+            };
         }
         myConfig.types.perms = perms;
         //if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);
@@ -220,6 +243,9 @@ angular.module('firstlife.config')
             colors = myConfig.design.colors;
         for(i = 0; i < catsList.length; i++){
             catsList[i]["color"] = colors[catsList[i].color_index % colors.length];
+            // init icone del category space
+            var space = catsList[i].category_space;
+            myConfig.types.icons[space] = {};
             for(j = 0; j < catsList[i].categories.length; j++){
                 //                var cats = catsList[i].categories,
                 //                    colorIndex = cats[j].category_index - 1,
@@ -236,6 +262,19 @@ angular.module('firstlife.config')
                 catsList[i].categories[j].color = color;
                 catsList[i].categories[j].icon = icon;
                 //if(myConfig.dev)console.log("myConfig, setupColor: ", catsList[i].categories[j]);
+                var cat = catsList[i].categories[j];
+                myConfig.types.icons[space][cat.id] = {
+                    type: 'div',
+                    className: 'css-pin-marker',
+                    name: cat.name,
+                    iconSize:  myConfig.map.marker_size,
+                    iconAnchor:   myConfig.map.marker_ancor,
+                    color: cat.color,
+                    index: cat.colorIndex,
+                    icon: cat.icon,
+                    html : '<div class="pin-marker" style="background-color:'+ cat.color+'"></div>'+
+                    '<div class="icon-box"><i class="icon ' + cat.icon + '"></i></div>'
+                };
             }
         }
         //if(myConfig.dev)console.log("myConfig, setupColor: ", catsList);
@@ -253,6 +292,7 @@ angular.module('firstlife.config')
         //console.log('check api url',params,Object.keys(params),url)
     }).config(
     function configDev($logProvider, myConfig){
+        console.debug(myConfig);
         //if(myConfig.dev)console.log("setup modalità dev");
 
         // se in modalita' dev

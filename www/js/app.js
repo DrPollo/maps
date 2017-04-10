@@ -185,7 +185,7 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
         templateUrl: "templates/side-menu.html",
         controller: 'AppCtrl as app'
     }).state('app.maps', {
-        url: "/maps?zoom&lat&lng&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+        url: "/maps?zoom&lat&lng&entity&embed&date&unit&initiative&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false,
         views: {
             'menuContent': {

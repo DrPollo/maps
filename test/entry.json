@@ -1,0 +1,51 @@
+{
+  "type":"Feature",
+  "properties":{
+    "name":"Luogo ",
+    "description":"entry di test generata automaticamente",
+    "valid_from":null,
+    "valid_to":null,
+    "link_url":null,
+    "tags":[
+      "test"
+    ],
+    "categories":[
+      {
+        "category_space":{
+          "id":1
+        },
+        "categories":[
+          {
+            "id":-1
+          }
+        ]
+      },
+      {
+        "category_space":{
+          "id":13
+        },
+        "categories":[
+          {
+            "id":-90
+          }
+        ]
+      }
+    ],
+    "group_id":null,
+    "id_wp":1,
+    "id":null,
+    "zoom_level":13,
+    "level":null,
+    "parent_id":null,
+    "type":1,
+    "entity_type":"FL_PLACES",
+    "domain_id":1
+  },
+  "geometry":{
+    "type":"Point",
+    "coordinates":[
+      7.69094467163086,
+      45.10557617099446
+    ]
+  }
+}

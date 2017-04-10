@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="map" id="ng-app">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Map</title>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script type="text/javascript" src="/bower_components/leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript" src="/bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script type="text/javascript" src="/bower_components/ui-leaflet/dist/ui-leaflet.min.js"></script>
+    <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <style>
+        body{
+            min-height: 100%;
+            width: 100%;
+        }
+        .angular-leaflet-map {
+            display: block;
+            height: 100%;
+        }
+    </style>
+    <script>
+        var app = angular.module("map", ['ui-leaflet']);
+        app.controller("MapController", ['$scope','MarkerFactory',function($scope,MarkerFactory) {
+            console.log('hello');
+            angular.extend($scope, {
+                defaults: {
+                    maxZoom:20
+                },
+                center: {
+                    zoom: 10,
+                    lat: 45.070312,
+                    lng: 7.686856
+                },
+                events: {
+                    map: {
+                        enable: ['moveend', 'drag', 'click', 'zoomend'],
+                        logic: 'emit'
+                    }
+                },
+                layers : {
+                    baselayers:{
+                        tiles:{
+                            name:'carto',
+                            url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        }
+                    },
+                    overlays: {
+                        cluster: {
+                            id: 1,
+                            name: 'Clusters',
+                            type: "markercluster",
+                            visible: true,
+                            layerOptions: {
+                                chunkedLoading: true,
+                                showCoverageOnHover: false,
+                                spiderfyDistanceMultiplier: 2,
+                                maxClusterRadius: 60,
+                                chunkDelay:500,
+                                chunkInterval:200,
+                                zoomToBoundsOnClick:true,
+                                removeOutsideVisibleBounds: true,
+                                singleMarkerMode: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            console.time('get');
+            MarkerFactory.get().then(
+                function (geojson) {
+                    console.timeEnd('get');
+                    $scope.markers = geojson;
+
+                }
+            );
+
+
+            $scope.$on('leafletDirectiveMap.moveend', function(event, args) {
+                updateMap();
+            });
+            function updateMap() {
+                console.time('update');
+                MarkerFactory.get().then(
+                    function (markers) {
+                        angular.extend({},$scope.markers);
+                        console.timeEnd('update');
+
+                    }
+                );
+            }
+
+        }]);
+        app.factory('MarkerFactory',['$http','$q', function ($http, $q) {
+            // var config = fse.readJsonSync('./www/config.json','utf-8');
+            var bbox = [[7.577835,45.00679],[7.773339,45.140221]];
+
+
+            var url = 'api.firstlife.org';
+            var domain = 1;
+            var ne_lat = bbox[1][1]+0.1;
+            var ne_lon = bbox[1][0]+0.1;
+            var sw_lat = bbox[0][1]-0.1;
+            var sw_lon = bbox[0][0]-0.1;
+            var token = 'Bearer bf8c1c7d738d493f93635bb3dd0ba03388c450f9';
+
+            return {
+                get: function(){
+                    var deferred = $q.defer();
+                    var options = {
+                        method: 'GET',
+                        url: 'https://api.firstlife.org/v5/fl/Things/boundingbox?domainId='+domain+'&ne_lat='+ne_lat+'&ne_lng='+ne_lon+'&sw_lat='+sw_lat+'&sw_lng='+sw_lon+'&limit=6000'
+                    };
+                    $http(options).then(
+                        function (response) {
+                            var markers = response.data.things.features.reduce(function(markers,feature){
+//                                console.log(markers);
+                                var marker = {
+                                    id : feature.properties.id,
+                                    lng: feature.geometry.coordinates[0],
+                                    lat: feature.geometry.coordinates[1],
+                                    name : feature.properties.name,
+                                    message: feature.properties.name,
+                                    layer:'cluster',
+                                    focus: false,
+                                    draggable: false,
+                                    interactive: true
+                                }
+                                markers[marker.id] = marker;
+                                return markers;
+                            },{});
+                            deferred.resolve(markers);
+                        },
+                        function (err) {
+                            deferred.reject(err);
+                        }
+                    );
+
+                    return deferred.promise;
+                }
+            }
+        }])
+    </script>
+</head>
+<body ng-controller="MapController">
+    <leaflet width="100%" height="800px" center="center" defaults="defaults" markers="markers" layers="layers" events="events"></leaflet>
+</body>
+</html>

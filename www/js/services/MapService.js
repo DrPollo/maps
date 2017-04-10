@@ -30,7 +30,7 @@ angular.module('firstlife.services')
                 lat: self.config.map.map_default_lat,
                 lng: self.config.map.map_default_lng,
                 zoom: self.config.map.zoom_level
-            },
+            }
         };
 
         self.filters = {};

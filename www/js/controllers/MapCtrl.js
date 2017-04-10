@@ -1,10 +1,10 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log',  'leafletData', 'leafletMapEvents', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', 'tilesFactory', 'AuthService',  function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, leafletData, leafletMapEvents, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory, tilesFactory, AuthService) {
+    .controller('MapCtrl', ['$scope', '$state', '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$q', '$ionicPopover', '$rootScope', '$window', '$location', '$filter', '$timeout', '$log', 'ThingsService',  'leafletData', 'leafletBoundsHelpers', 'entityFactory', 'MapService', 'myConfig', 'PlatformService', 'MemoryFactory', 'AreaService', 'leafletMarkersHelpers','indexingFactory', 'tilesFactory', 'AuthService',  function($scope, $state, $stateParams, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $q, $ionicPopover, $rootScope,  $window, $location, $filter, $timeout, $log, ThingsService, leafletData, leafletBoundsHelpers, entityFactory, MapService, myConfig, PlatformService, MemoryFactory, AreaService, leafletMarkersHelpers,indexingFactory, tilesFactory, AuthService) {
 
 
 
         var consoleCheck = false;
-
+        var mapName = 'myMap';
 
         var levels = {check:false};
         if (myConfig.map.area.levels){
@@ -16,6 +16,13 @@ angular.module('firstlife.controllers')
         if(!$scope.config) $scope.config = myConfig;
         var config = myConfig;
 
+
+        $log.log('init myMap?',!$scope.flmap);
+        if(!$scope.flmap){
+            angular.extend($scope,{flmap : map});
+            angular.extend($scope.flmap,{loaded:true});
+            $log.log('myMap',$scope.flmap);
+        }
 
         // check geometrie
         var checkGeometries = config.map.geometry_layer;
@@ -46,21 +53,19 @@ angular.module('firstlife.controllers')
 
 
         // Leaflet Map: inizializzazioni
-        if(!$scope.map || angular.equals($scope.map,{}) ){
-            $scope.map = map;
+        // se mobile disattivo i controlli di zoom
+        var controlZoom = true;
+        if ( ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone() ) {
+            //if(consoleCheck) console.log("mobile");
+            controlZoom = false;
         }
+
+
+
+
+
         if(!$scope.categories) $scope.categories = $scope.config.types.categories;
         //definizione dei listner su mappa
-        $scope.events = {
-            map: {
-                enable: ['click', 'moveend','focus','drag'],
-                logic: 'broadcast'
-            },
-            marker: {
-                enable: ['click'],
-                logic: 'broadcast'
-            }
-        };
         $scope.options1 = null;
         $scope.details1 = '';
 
@@ -175,6 +180,7 @@ angular.module('firstlife.controllers')
 
 
 
+
             // gestisco i parametri al cambio di stato disattivando il listner
             self.watchSearchEnabled = false;
             var params = $location.search();
@@ -182,14 +188,10 @@ angular.module('firstlife.controllers')
             check4search(params);
             check4group(params);
             check4user(params);
+            check4Initiative(params);
+
 
             $scope.isLoggedIn = AuthService.isAuth();
-
-
-
-            // recupero la mappa se non inizializzata
-            $scope.map = MapService.getMap();
-
 
 
             // valuto lo stato da dove arrivo e decido cosa fare
@@ -269,28 +271,32 @@ angular.module('firstlife.controllers')
 
         // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
         $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
-            if(!event.preventMapMoveend){
-                event.preventMapMoveend = true;
-                $log.debug("Event: moveend...", $scope.map);
-                // recupero i dati del layer
-                if(!$scope.config.map.area.data) {getData();}
-                // aggiornamento parametro search nell'url
-                updatePositionInSearch();
-                // controllo se sono in edit mode
-                if(!$scope.editMode){
-                    // se e' stato impostato un delay
-                    if (MOVEEND_DELAY > 0) {
-                        if (moveendSetTimeout) {
-                            $log.debug("clearTimeout");
-                            clearTimeout(moveendSetTimeout);
-                        }
-                        moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
-                    }
-                    else {
-                        updateMarkersDistributed();
-                    }
-                }
-            }
+
+            getMarkers();
+
+            //
+            // if(!event.preventMapMoveend){
+            //     event.preventMapMoveend = true;
+            //     $log.debug("Event: moveend...", $scope.map);
+            //     // recupero i dati del layer
+            //     if(!$scope.config.map.area.data) {getData();}
+            //     // aggiornamento parametro search nell'url
+            //     updatePositionInSearch();
+            //     // controllo se sono in edit mode
+            //     if(!$scope.editMode){
+            //         // se e' stato impostato un delay
+            //         if (MOVEEND_DELAY > 0) {
+            //             if (moveendSetTimeout) {
+            //                 $log.debug("clearTimeout");
+            //                 clearTimeout(moveendSetTimeout);
+            //             }
+            //             moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
+            //         }
+            //         else {
+            //             updateMarkersDistributed();
+            //         }
+            //     }
+            // }
         });
 
         //listner apertura e chiusura della modal del place
@@ -341,6 +347,8 @@ angular.module('firstlife.controllers')
                 check4user(e);
                 // check timeline
                 check4timeline(e,old);
+                // check initiative
+                check4Initiative(e,old);
 
                 // abilito il listner (serve per gestire il pulsante back del browser)
                 // il listner si auto-abilita dopo ogni cambio di parametri
@@ -372,19 +380,13 @@ angular.module('firstlife.controllers')
         },true);
 
 
-        // todo cancellare se tutto ok
-        // $scope.$watch("query", function(newVal,oldVal) {
-        //    $log.debug('change query ',newVal);
-        //     if(!angular.equals(newVal,oldVal)){
-        //         check4search(newVal,oldVal);
-        //     }
-        // },true);
+        // catturo il cambio di parametro search
         $scope.$on("newSearchParam", function(e,params) {
             if(e.defaultPrevented)
                 return
             e.preventDefault();
 
-           $log.debug('change query ',params.q);
+            $log.debug('change query ',params.q);
             setMapMarkers();
         });
 
@@ -425,8 +427,9 @@ angular.module('firstlife.controllers')
         });
 
         $rootScope.$on("timeUpdate",function(event,args){
-            // reset dei markers
-            resetMarkersDistributed();
+            // todo set time filter
+
+            getMarkers();
             event.preventDefault();
         });
 
@@ -1263,20 +1266,20 @@ angular.module('firstlife.controllers')
         }
 
 
-        function updateMarkersDistributed(){
-
-            MapService.updateMarkersDistributed().then(
-                function(markers){
-                    $log.debug("updateMarkersDistributed, markers: ",markers);
-                    angular.extend($scope.map.markers ,markers);
-                    //$log.debug("updateMarkersDistributed, risultato: ",$scope.map.markers.length);
-                    // filtro dei marker sulla nuova posizione
-                    setMapMarkers();
+        function getMarkers(){
+            $log.log('update markers',$scope.flmap.bounds);
+            // chiedo i nuovi marker
+            ThingsService.bbox($scope.flmap.bounds).then(
+                function (markers){
+                    // sostituisco i marker
+                    $log.log('markers',markers);
+                    $scope.flmap.markers = angular.extend({},markers);
                 },
-                function(err){
-                    $log.error("updateMarkersDistributed, error", err);
+                function (err){
+                    $log.error(err);
                 }
             );
+
         }
 
         function resetMarkersDistributed(){
@@ -1724,6 +1727,16 @@ angular.module('firstlife.controllers')
             }
 
         }
+        // controllo i parametri di posizione
+        function check4Initiative(e, old){
+            // se ho settati i parametri di posizione
+            if(old && old.initiative && old.initiative !== e.initiative || e.initiative){
+                $log.debug('cambio parametro iniziativa',e.initiative);
+                // avviso del cambio di parametro
+                $scope.$broadcast('newInitiativeSearch',{id: e.initiative ? e.initiative : null});
+            }
+
+        }
         // controllo il parametro entity
         function check4entity(e,old){
             if(e.entity){
@@ -1819,12 +1832,144 @@ angular.module('firstlife.controllers')
             $location.search('users',null);
         }
 
-
     }]).run(function(MapService, myConfig, $timeout, $rootScope, $log){
 
-    self.map = MapService.initMap();
+    self.map = {
+        loaded:false,
+        layers: {
+            baselayers: {
+                edit: {
+                    name: 'edit',
+                    type: 'xyz',
+                    visible: true,
+                    url: config.map.tile_edit,
+                    layerOptions: {
+                        attribution: config.map.tile_edit_attribution
+                    }
+                },
+                view: {
+                    name: 'view',
+                    type: 'xyz',
+                    visible: false,
+                    url: config.map.tile_view,
+                    layerOptions: {
+                        attribution: config.map.tile_view_attribution
+                    }
+                }
+            },
+            overlays: {
+                pie: {
+                    id: 1,
+                    name: 'Categoria',
+                    type: "markercluster",
+                    visible: true,
+                    layerOptions: {
+                        chunkedLoading: true,
+                        showCoverageOnHover: false,
+                        spiderfyDistanceMultiplier: 2,
+                        maxClusterRadius: 60,
+                        disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
+                        chunkDelay: 500,
+                        chunkInterval: 200,
+                        iconCreateFunction: bakeThePie,
+                        zoomToBoundsOnClick: true,
+                        removeOutsideVisibleBounds: true,
+                        singleMarkerMode: false
+                    }
+                }
+            }
+        },
+        center: {
+            lat: config.map.map_default_lat,
+            lng: config.map.map_default_lng,
+            zoom: config.map.zoom_level
+        },
+        bounds:{
+            southWest:{
 
-    // inizializzazione poller mappa
+            },
+            northEast:{}
+        },
+        defaults: {
+            maxZoom: config.map.max_zoom,
+            minZoom: config.map.min_zoom,
+            zoomControl: (config.map.zoom),
+            zoomControlPosition: config.map.zoom_position,
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        },
+        markers: {},
+        controls: {
+            zoomControl: (config.map.zoom),
+            zoomControlPosition: config.map.zoom_position,
+            attributionControl: config.map.attribution,
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        },
+        events: {
+            map: {
+                enable: ['click', 'moveend', 'focus', 'drag'],
+                logic: 'broadcast'
+            },
+            marker: {
+                enable: ['click'],
+                logic: 'broadcast'
+            }
+        },
+        //maxBounds: config.map.bounds,
+        editMode: false,
+        // controlli degli action button della mappa
+        locate: config.actions.geolocation,
+        search: config.actions.search,
+        edit_action: config.actions.edit_mode,
+        favourite_place: config.actions.favourite_place,
+        category_filter: config.actions.category_filter,
+        name: config.app_name,
+        css: config.design.css
+    };
+
+
+    // calculate marker cluster icons
+    function bakeThePie(cluster) {
+        var markers = cluster.getAllChildMarkers();
+        //if(consoleCheck) console.log("bakeThePie, cluster: ",markers);
+        var granularity = 5;
+        var total = cluster.getChildCount();
+        //if(consoleCheck) console.log("totale: ",total);
+        var sum = 0,
+            html = '';
+
+        var item = {};
+        for(i in markers){
+            console.log("bakeThePie, check ",markers[i].options.icon);
+            var id = markers[i].options.icon.options.index;
+            if(item[id]){
+                item[id].count++;
+            }else{
+                item[id] = {index:markers[i].options.icon.options.index, color:markers[i].options.icon.options.color,
+                    count:1};
+            }
+            //if(consoleCheck) console.log("bakeThePie, check2 ",item[id]);
+        }
+        //if(consoleCheck) console.log("fette di torta: ", item);
+        for(i in item){
+            var value = Math.round(item[i].count*360/(granularity*total))*granularity;
+            item[i].degree = value;
+            //if(consoleCheck) console.log("bakeThePie, calcolo: ",i,item[i],value, item[i].degree);
+            if(value > 180){
+                html = html.concat('<div class="pie big pie'+(item[i].index)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
+            }else{
+                html = html.concat('<div class="pie pie'+(item[i].index)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
+
+            }
+            sum += value;
+
+        }
+        var content = total < 99 ? total : '*';
+        html = html.concat('<div class="inner"><span>',content,'</span></div>');
+        //tieni per i test semplici return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+        return new L.DivIcon({ html: html,className: 'pie-cluster',iconSize: new L.Point(30, 30) });
+    }
+
+// inizializzazione poller mappa
     var RELOAD_TIME = config.behaviour.bbox_reload_time;
     var timer = false;
     var polling = function (){

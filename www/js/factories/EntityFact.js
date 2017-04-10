@@ -36,6 +36,8 @@ angular.module('firstlife.factories')
         }
 
 
+        var flagDev = false;
+
         return {
             markerCreate: function(feature){
                 return markerCreate(feature);
@@ -174,6 +176,15 @@ angular.module('firstlife.factories')
             },
             getBBox: function(bbox,reset) {
                 var deferred = $q.defer();
+
+                // test disable update
+                if(flagDev){
+                    deferred.reject('');
+                    return deferred.promise;
+                }
+                flagDev = true;
+
+
                 var urlId = urlBbox.concat(format);
                 //var eType = ['FL_PLACES','FL_EVENTS'];
                 var checkRst=checkBboxHistory(bbox);
@@ -289,6 +300,8 @@ angular.module('firstlife.factories')
 
         //private function
         function entitiesToMarker(data) {
+            var deferred = $q.defer();
+
             if(!data)
                 return [];
 
@@ -297,13 +310,18 @@ angular.module('firstlife.factories')
             var markers = [];
             for (i = 0; i < entityList.length; i++) {
                 if(entityList[i] && entityList[i] != null && entityList[i] != 'undefined'){
+                    // todo ottimizzare
+                    console.time('marker creation');
                     var marker = markerCreate(entityList[i]);
+                    console.timeEnd('marker creation');
                     if(marker){
                         markers.push(marker);//markers[entityList[i].id] = marker;
                     }
                 }
             }
             return markers;
+
+            // return deferred.promise;
         }
 
         //private function
@@ -436,6 +454,7 @@ angular.module('firstlife.factories')
                 inappropriate: entity.properties.inappropriate ? entity.properties.inappropriate : false,
                 focus: false,
                 draggable: false,
+                interactive: true,
                 categoryColor : category.color,
                 colorIndex: category.colorIndex,
                 categories: angular.copy(entity.properties.categories).map(function(e){delete e.category_space.name; return e;}),
@@ -444,7 +463,7 @@ angular.module('firstlife.factories')
                 entity_type: entity_type,
                 type_info: type_info,
                 catIndex: category,
-                layer:'pie',
+                // layer:'pie',
                 images: Array(),
                 icons: icons,
                 //icon: icons[mainCat.category_space.id] ? icons[mainCat.category_space.id] : icons[0],
@@ -495,10 +514,17 @@ angular.module('firstlife.factories')
             var details = null;
             $http(req).then(
                 function(response) {
-                    $log.debug('bboxQuery',response)
+                    $log.debug('bboxQuery',response);
+                    // todo ottimizza
+                    console.time('conversion');
                     var markers = entitiesToMarker(response.data.things);
+                    console.timeEnd('conversion');
                     // aggiorno lista marker
+                    // todo ottimizza
+                    console.time('update list');
                     updateMarkersList(markers,details);
+                    console.timeEnd('update list');
+                    // todo passa a rxjs
                     deferred.resolve(markers);
 
                 },function(response) {
