@@ -2,14 +2,12 @@
  * Created by drpollo on 10/04/2017.
  */
 angular.module('firstlife.services')
-    .service('ThingsService',['$q','$log','AuthService','myConfig', 'ThingsFact', function ($q, $log, AuthService, myConfig, ThingsFact){
+    .service('ThingsService',['$q','$log', '$filter' ,'AuthService','myConfig', 'ThingsFact', function ($q, $log,$filter, AuthService, myConfig, ThingsFact){
 
         var config = myConfig;
         var colors = config.design.colors;
         var types = config.types.keys;
         var defIcons = config.types.icons;
-
-
 
         return {
             get: function(id){
@@ -48,6 +46,8 @@ angular.module('firstlife.services')
                 ThingsFact.bbox(params).then(
                     function (features) {
                         var markers = makeMarkers(features);
+                        // aggiungo al buffer
+                        buffer = angular.extend({},markers);
                         $log.log('bbox result',features.length);
                         deferred.resolve(markers);
                     },
@@ -60,19 +60,39 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             setTimeFilters: function(time){
-                self.filters.time = time;
+                filters.time = angular.extend({},time);
             },
             getTimeFilters: function(){
-                if(angular.equals({}, self.filters.time)){
+                if(angular.equals({}, filters.time)){
                     return false;
                 }
-                return self.filters.time;
+                return filters.time;
             },
+            setFilter: function (rule) {
+                var index = filterConditions.map(function(e){return e.name}).indexOf(rule.name);
+                if(index > -1){
+                    filterConditions[index] = rule;
+                }else{
+                    filterConditions.push(rule);
+                }
+            },
+            removeFilter: function (name) {
+                var index = filterConditions.map(function(e){return e.name}).indexOf(name);
+                if(index > -1 ){
+                    filterConditions.splice(index,1);
+                }
+            },
+            setQuery: function (q) {
+                if(!q)
+                    return query = null;
+
+                return query = q;
+            }
         };
 
 
 
-
+        // var results = $filter('fullsearch')(buffer,q);
 
 
         /*
@@ -153,12 +173,21 @@ angular.module('firstlife.services')
          */
         function check(feature){
             var val = feature.properties;
+
+
+
             // set lista categorie per i filtri
             var clist = val.categories.reduce(function(cats,cat){
                 cats = cats.concat(cat.categories.map(function(c){return c.id}));
                 return cats;
             },[]);
             angular.extend(val,{category_list: clist });
+
+            // filtro testuale
+            if(query && JSON.stringify(val).toLowerCase().indexOf(query) < 0){
+                return false;
+            }
+
 
             // per ogni condizione
             var testCondition = false;
@@ -260,11 +289,13 @@ angular.module('firstlife.services')
 
 
     }]).run(function(ThingsService, myConfig){
+    self.buffer = {};
+    self.query = null;
     self.favCat = 0;
     self.filters = {
         time:{
-            from: new Date(),
-            to: new Date()
+            from: new Date().toISOString(),
+            to: new Date().toISOString()
         }
     };
     self.filterConditions = [];

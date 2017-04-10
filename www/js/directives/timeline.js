@@ -5,7 +5,7 @@ angular.module('firstlife.timeline',[])
         restrict: 'EG',
         scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log', '$filter','$translate', '$location','myConfig','MapService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,$location,myConfig,MapService,PlatformService, leafletData){
+        controller: ['$scope','$rootScope','$log', '$filter','$translate', '$location','myConfig','ThingsService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,$location,myConfig,ThingsService,PlatformService, leafletData){
 
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -232,7 +232,7 @@ angular.module('firstlife.timeline',[])
                 // imposto filtro temporale
                 var newInterval = getFullInterval();
                 $log.debug('new interval ',newInterval);
-                MapService.setTimeFilters(newInterval);
+                ThingsService.setTimeFilters(newInterval);
 
                 // evento di update per mapCtrl
                 $rootScope.$emit("timeUpdate",{time:newInterval});
@@ -588,12 +588,12 @@ angular.module('firstlife.timeline',[])
                 // imposto filtro temporale
                 var newInterval = getFullInterval();
                 $log.debug('new interval ',newInterval);
-                MapService.setTimeFilters(newInterval);
+                ThingsService.setTimeFilters(newInterval);
                 // imposto i nuovi parametri search
                 setSearchParams();
                 // evento di update per mapCtrl
                 $rootScope.$emit("timeUpdate",{time:time});
-                //MapService.resetMarkersDistributed();
+                //ThingsService.resetMarkersDistributed();
                 //$log.error('timeUpdate! ',time);
             }
 

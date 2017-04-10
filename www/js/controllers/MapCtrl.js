@@ -77,97 +77,6 @@ angular.module('firstlife.controllers')
         var RELOAD_TIME = config.behaviour.bbox_reload_time;
 
 
-        // todo cancellare
-        // // init dei filtri
-        // if(!$scope.markersFiltered)
-        //     initFilters();
-
-
-        // init layer geoJSON
-        // todo cancellare
-        // $scope.geojson = {
-        //     data:{
-        //         "type": "FeatureCollection",
-        //         "features": []
-        //     },
-        //     style: style
-        // };
-//
-//         function style(feature){
-//             var entry = feature.properties;
-//             var max = $scope.markersFilteredArray.length;
-//             var style = {
-//                 fillColor: "#6C93B3",
-//                 weight: 3,
-//                 opacity: 1,
-// //                opacity: 0,
-// //                color: '#fff',
-//                 color:'#6C93B3',
-//                 dashArray: '1',
-//                 fillOpacity: 0.5,
-// //                fillOpacity: 0
-//             };
-//             if(entry.entities.length > 0){
-//                 style.fillColor = 'rgb(136, 186, 92)';
-// //                style.color = 'rgb(136, 186, 92)';
-//                 //style.opacity = 1;
-//                 //style.fillOpacity = 1;
-//                 //style.fillOpacity = entry.entities.length/20;
-//             }
-//             if(entry.entities.length > 20){
-//                 style.fillColor = 'rgb(255,179,16)';
-// //                style.color = 'rgb(255,179,16)';
-//                 //style.fillOpacity = entry.entities.length/60;
-//             }
-//             if(entry.entities.length > 40){
-//                 style.fillColor = 'rgb(221,91,42)';
-// //                style.color = 'rgb(221,91,42)';
-//                 //style.fillOpacity = entry.entities.length/(3*max);
-//             }
-//             return style;
-//         }
-//
-//
-//
-//         // se ci sono dei valori di default dell'area
-//         if($scope.config.map.area && $scope.config.map.area.data){
-//             // copio i dati
-//             $scope.geojson.data = angular.copy($scope.config.map.area.data);
-//             // se definito sovrascrivo lo stile
-//             if($scope.config.map.area.style)
-//                 $scope.geojson.style = angular.copy($scope.config.map.area.style);
-//
-//             $scope.geojson.levels = levels.check ? levels.list : null;
-//         }
-//
-//
-//
-//         var funcLayer = null
-//         // init livello griglia
-//         // testing delle chiamate tile
-//         if(false && !funcLayer){
-//             leafletData.getMap("mymap").then(function(map) {
-//                 funcLayer = new L.TileLayer.Functional(
-//                     function (tile) {
-//                         //$log.debug('subscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
-//                         //$rootScope.$emit('grid-subscribe',tile);
-//                         tilesFactory.subscribe(tile.x, tile.y, tile.z);
-//                     },function(tile){
-//                         $log.info('unsubscribe tile x',tile.x,' y ',tile.y,' z ',tile.z);
-//                         //$rootScope.$emit('grid-unsubscribe',tile);
-//                         tilesFactory.unsubscribe(tile.x, tile.y, tile.z);
-//                     });
-//                 funcLayer.addTo(map);
-//                 $log.debug('init map',map);
-//                 return null;
-//             },{reuseTiles:false,updateWhenIdle:true,unloadInvisibleTiles:true})
-//         }
-        //$log.debug('check geojson ',$scope.geojson);
-
-
-
-
-
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
@@ -362,29 +271,6 @@ angular.module('firstlife.controllers')
             true);
 
 
-        // todo cancellare
-        // filtro sui marker, se cambiano ricalcolo i marker filtrati
-        // $scope.filtred = [];
-        // $scope.$watch("map.markers", function(newVal,oldVal) {
-        //     if($scope.map && $scope.map.markers){
-        //         if(consoleCheck) $log.debug("cambio dei Markers: ",$scope.map.markers,$scope.map.markers.length);
-        //         $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
-        //         if(consoleCheck) $log.debug("cambio dei Markers, nuovi markers filtrati: ",$scope.filtred,$scope.filtred.length);
-        //     }
-        // },true);
-        // // filtro sulle condizioni, se cambiano ricalcolo i marker filtrati
-        // $scope.$watch("filterConditions", function(newVal,oldVal) {
-        //     if($scope.map && $scope.map.markers){
-        //         $scope.filtred = $filter('filter')($scope.map.markers, markerFilter);
-        //     }
-        // },true);
-        // $scope.$watch("filtred", function(newVal,oldVal) {
-        //     if(!angular.equals(newVal,oldVal)){
-        //         setMapMarkers();
-        //     }
-        //
-        // },true);
-
 
         // catturo il cambio di parametro search
         $scope.$on("newSearchParam", function(e,params) {
@@ -394,7 +280,7 @@ angular.module('firstlife.controllers')
 
             $log.debug('change query ',params.q);
             // setMapMarkers();
-            // todo filtro per testo
+            ThingsService.setQuery(params.q);
         });
 
 
@@ -840,6 +726,7 @@ angular.module('firstlife.controllers')
 
         // centra la mappa
         // accetta paramentri per la locate: center, bounds, user, marker
+        // todo refactory
         function locate(coord){
             $log.debug("centro su luogo, id: "+typeof(coord)+" ",coord);
 
@@ -852,25 +739,9 @@ angular.module('firstlife.controllers')
                 locateEntity(coord);
             } else if(typeof(coord) === 'object' && 'bound' in coord){
                 $log.debug("centro su bounds: ",coord);
-                // fit della mappa al bound del fav. place
-                /*leafletData.getMap("mymap").then(function(map) {
-                 $log.debug("MapCtrl, locate, object, bounds: ",coord['bound']);
-                 map.fitBounds(coord['bound']);
-                 //map.fitBounds();
-                 });
-                 */
                 setMapCenter(coord);
             } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
                 $log.debug('locate coord',coord);
-                // centro su coordinate
-                /*
-                 self.map.center.lat = parseFloat(coord.lat);
-                 self.map.center.lng = parseFloat(coord.lng);
-                 if(coord.zoom != null){
-                 self.map.center.zoom = parseInt(coord.zoom);
-                 } else if(self.map.center.zoom == null){
-                 self.map.center.zoom = parseInt($scope.config.map.zoom_create);
-                 }*/
                 var params = {
                     lat:parseFloat(coord.lat),
                     lng:parseFloat(coord.lng),
@@ -1022,225 +893,6 @@ angular.module('firstlife.controllers')
                 $log.debug("creazione/modifica ok!");}
         };
 
-
-        // todo cancellare
-        /*
-         * Manuale d'uso dei filtri
-         * Una regola per ogni proprieta' da valutare
-         * 1) key:              chiave della proprieta'
-         * 2) values:           array dei valori da controllare
-         * 3) mandatory:        condition:  true valutare la regola in AND con le altre
-         *                                  false vauta la regola in OR
-         *                      values:     true valuta i valori in AND tra loro
-         *                                  false valuta i valori in OR
-         * 4) equal:            true valuta il confronto di valori con il parametro con "=="
-         *                      false valuta il confronto di valori con il parametro con "!="
-         * 5) excludeRule:      true salta la regola
-         *                      false valuta la regola
-         * 6) excludeProperty:  true scarta se l'entita' ha un valore per quella proprieta'
-         * 7) setMapMarkers:    imposta i filtri e i fix sui marker prima di inviarli alla mappa
-         */
-
-        // le condizioni in and fanno return false, quelle in or si accumulano e vengono valutate alla fine
-        // function markerFilter(val){
-        //     // per ogni condizione
-        //     var testCondition = false;
-        //     var comparison = function(a,b,equal){
-        //         $log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
-        //         if(Array.isArray(a)){
-        //             if(equal){
-        //                 $log.debug(a,"==",b,"? ",(a == b));
-        //                 return (a.indexOf(b) >= 0);
-        //             }
-        //             return (a.indexOf(b) < 0);
-        //         }else{
-        //             if(equal){
-        //                 $log.debug(a,"==",b,"? ",(a == b));
-        //                 return a == b;
-        //             }
-        //             $log.debug(a,"!=",b,"? ",(a != b));
-        //             return a != b;
-        //         }
-        //     }
-        //     // $log.debug("entry: ",val, " Condizioni: ", $scope.filterConditions);
-        //     for(key in $scope.filterConditions){
-        //         // se non devo escludere la regola
-        //
-        //         $log.debug("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
-        //         // se esiste la include condition e il valore includeCondition:{value:cats.category_space,property:'category_space'}
-        //         var indexCheck = 0;
-        //         if($scope.filterConditions[key].includeCondition){
-        //             var checkField = val[$scope.filterConditions[key].includeCondition.property];
-        //             var k = Object.keys($scope.filterConditions[key].includeCondition.value)[0];
-        //             indexCheck = checkField.map(function(e){return e[k].id}).indexOf($scope.filterConditions[key].includeCondition.value[k]);
-        //             $log.debug("check per includeCondition ", (indexCheck > -1));
-        //         }
-        //
-        //
-        //         $log.debug("il tipo e' da includere? ", $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
-        //         if(!$scope.filterConditions[key].excludeRule  && $scope.filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
-        //             // se devo escludere ogni valore possibile
-        //             if($scope.filterConditions[key].excludeProperty){
-        //                 var valore = (val[$scope.filterConditions[key].key]);
-        //                 $log.debug("Check esclusione regola: ",$scope.filterConditions[key].excludeProperty,val,$scope.filterConditions[key].key,valore);
-        //                 if(!valore
-        //                     || valore === null ||
-        //                     valore === 'undefined' ||
-        //                     (Array.isArray(valore) && valore.length == 0 ) ||
-        //                     (angular.isObject(valore) && angular.equals(valore,{})) ){
-        //                     // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
-        //                     $log.debug("property non impostata per: ",val, "prorpieta'",$scope.filterConditions[key].key);
-        //                 }else{return false;}
-        //             }
-        //             // se ha delle alternative
-        //             var checkCondition  = $scope.filterConditions[key].mandatory.condition,
-        //                 checkValues     = $scope.filterConditions[key].mandatory.values,
-        //                 equal           = $scope.filterConditions[key].equal;
-        //             // controllo sulla condizione inizializza a true se le condizioni sono in AND, a false se sono in OR
-        //             var check           = checkValues;
-        //             // per ogni condizione
-        //             $log.debug("Condizione: ", $scope.filterConditions[key]);
-        //             for ( i = 0; i < $scope.filterConditions[key].values.length; i++ ){
-        //                 $log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",$scope.filterConditions[key].key);
-        //
-        //                 if( comparison(val[$scope.filterConditions[key].key], $scope.filterConditions[key].values[i], equal) ){
-        //
-        //                     // se il valore e' obbligatorio e la condizione e' obbligatoria esco
-        //                     if(checkValues && checkCondition){
-        //                         $log.debug("checkValues && checkCondition: true, esco ");
-        //                         return false;
-        //                     }
-        //                     // se la condizione e' obbligatoria il check = false
-        //                     if(checkValues){
-        //                         $log.debug("checkValues: true, check = false ");
-        //                         check = false;
-        //                     }
-        //                 }else{
-        //                     $log.debug("val[key] == $scope.filterConditions[key].values[i]");
-        //                     // se il valore e' rispettato e sono in OR allora check = true
-        //                     if(!checkValues){
-        //                         $log.debug("!checkValues, check = true");
-        //                         check = true;
-        //                     }
-        //                 }
-        //             }
-        //             // se la condizione era obbligatoria e il test e' falso esco
-        //             if(checkCondition && !check)
-        //                 return false;
-        //             // se il test e' positivo
-        //             if(check)
-        //                 testCondition = true;
-        //         }
-        //     }
-        //     $log.debug("Test entry: ",val ,  testCondition);
-        //     return testCondition;
-        // };
-        /*
-         * aggiunge ai marker filtrati: 
-         * 1) filtro preventivo su boundig box della mappa
-         * 2) fix relazioni parents e children
-         */
-        // function setMapMarkers(){
-        //
-        //     //$scope.markersFiltered = _.object(filtred.map(function(e){return e.id;}), filtred);
-        //     $scope.markersFilteredArray = angular.copy($scope.filtred);
-        //
-        //     // se il parametro q e' impostato nella search
-        //     if($scope.query){
-        //         $scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray,$scope.query);
-        //     }
-        //
-        //
-        //     //aggiorno la lista dei marker mettendo e togliendo
-        //     updateMarkers($scope.markersFilteredArray);
-        //     removeMarkers($scope.markersFilteredArray);
-        //
-        //     // correggo la lista tenendo conto delle relazioni tra entita'
-        //     relationsFixer();
-        //     //$scope.markersFilteredArray = $filter('filter')($scope.markersFilteredArray, relationsFixerFilter);
-        //
-        //
-        //     //$log.debug("cambio dei Markers, nuovi markers filtrati: ",$scope.markersFilteredArray);
-        //
-        //
-        //     // applico le modifiche a markersFiltered
-        //     // aggiungo i marker alla lista
-        //     function updateMarkers(filtred){
-        //         for(var i = 0; i < filtred.length; i++){
-        //             var marker = filtred[i];
-        //             // aggiorno l'icona con quella preferita
-        //             marker.icon = marker.icons[$scope.favCat] ? marker.icons[$scope.favCat] : marker.icon;
-        //             if(marker.eTimeline){
-        //                 marker.eTimeline.icon = marker.icons[$scope.favCat] ? marker.icons[$scope.favCat] : marker.icon;
-        //             }
-        //             // $log.debug("Check update ",marker.id,(!$scope.markersFiltered[marker.id]));
-        //             if(!$scope.markersFiltered[marker.id]){
-        //                 $scope.markersFiltered[marker.id] = marker;
-        //                 // $log.debug("Aggiungo ",marker,$scope.markersFiltered[marker.id]);
-        //             }
-        //         }
-        //         // $log.debug('markers',$scope.markersFiltered)
-        //     }
-        //     // rimuovo i marker presenti localmente ma non presenti nel risultato
-        //     function removeMarkers(filtred){
-        //         // $log.debug('removeMarkers',filtred,$scope.markersFiltered);
-        //         for(key in $scope.markersFiltered){
-        //             var marker = $scope.markersFiltered[key];
-        //             // $log.debug("Check delete ",marker.id,filtred.map(function(e){return e.id;}).indexOf(marker.id),(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0));
-        //             // il marker non e' nella lista dei marker filtrati lo rimuovo
-        //             if(filtred.map(function(e){return e.id;}).indexOf(marker.id) < 0){
-        //                 // $log.debug("Rimuovo ",$scope.markersFiltered[key]);
-        //                 delete $scope.markersFiltered[key];
-        //             }
-        //         }
-        //     }
-        //
-        //     // filtro per il fix delle relazioni
-        //     // se il padre non si vede il figlio viene visualizzato
-        //     // generalizzato sulle relazioni di tipo parent
-        //     function relationsFixer(){
-        //         for(var key in $scope.markersFiltered){
-        //             var marker = $scope.markersFiltered[key];
-        //             // recupero le relazioni per l'entity type
-        //             var parentsRels = $scope.config.types.parent_relations[marker.entity_type];
-        //             //$log.debug("MapCtrl, relationsFixer, parentsRels ",parentsRels);
-        //             // per ogni relazione di tipo parent controllo che non sia settata e non ci sia un padre
-        //             for(var q in parentsRels){
-        //                 var parentRel = parentsRels[q];
-        //                 // se non devo escludere la relazione
-        //                 // se il marker ha un valore nel campo della relazione padre
-        //                 // se il padre e' nella lista dei marker
-        //                 //if(!parentRel.exclude) $log.debug('check condizioni in relationsFixer ',parentRel.field, marker[parentRel.field], $scope.markersFiltered[marker[parentRel.field]] );
-        //                 //$log.debug("MapCtrl, relationsFixer, parentsRel.field ",parentRel.field);
-        //                 if(!parentRel.exclude && marker[parentRel.field] && $scope.markersFiltered[marker[parentRel.field]] ){
-        //                     // rimuovo il marker dalla lista
-        //                     delete $scope.markersFiltered[key];
-        //                 }
-        //             }
-        //         }
-        //     }
-        //
-        //
-        //     // filtro per il fix delle relazioni
-        //     // se il padre non si vede il figlio viene visualizzato
-        //     // generalizzato sulle relazioni di tipo parent
-        //     function relationsFixerFilter(val){
-        //         //$log.debug("MapCtrl, relationsFixerFilter, val ",val);
-        //         var parents = $scope.config.types.parent_relations[val.entity_type];
-        //         for(key in parents){
-        //             var parentRel = parents[key];
-        //             if(parentRel.exclude)
-        //                 return true;
-        //             //$log.debug("MapCtrl, relationsFixerFilter, check ",val.id," in ", parents[key].field);
-        //             if($scope.filtred.map(function(e){return e.id;}).indexOf(val[parentRel.field]) >= 0)
-        //                 return false;
-        //         }
-        //         return true;
-        //     }
-        //
-        // }
-        //
-
         function isEmpty (obj) {
             if(obj && (
                     (Array.isArray(obj) && obj.length > 0) ||
@@ -1278,177 +930,14 @@ angular.module('firstlife.controllers')
         }
 
 
-        // todo cancellare
-        // function initFilters(){
-        //     // lista di marker che viene visualizzata da leaflet
-        //     $scope.markersFiltered = {};
-        //     $scope.markersFilteredArray = [];
-        //     // category_space preferenziale per le icone
-        //     $scope.favCat = 0;
-        //
-        //     $scope.filters = {};
-        //     // init filtri
-        //     $scope.filterConditions = [
-        //         //{key:'parent_id',name:'parent_id',values:[null],mandatory:{condition:true,values:true},equal:false,excludeRule:false,excludeProperty:true},
-        //         //{key:'location',name:'location',values:[null],mandatory:{condition:true,values:true},equal:false,excludeRule:false,excludeProperty:true}
-        //     ];
-        //
-        //
-        //
-        //     // filtri tipo
-        //     var types = $scope.config.types.list,
-        //         check = 'key',
-        //         filter_name = 'entity_type',
-        //         typesList = [];
-        //     // costruisco regola per gli entity_type
-        //     var rule = {key:filter_name,name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:[]};
-        //     // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-        //     $scope.filters[filter_name] = {list:types, toggle:1, iconSwitcher:true, label:'TYPES',check:check,name:filter_name, category_space:0,visible:true};
-        //     for(var i = 0; i < $scope.filters[filter_name].list.length; i++){
-        //         $scope.filters[filter_name].list[i].visible = true;
-        //         rule.values.push($scope.filters[filter_name].list[i].key);
-        //         rule.includeTypes.push($scope.filters[filter_name].list[i].key);
-        //         typesList.push($scope.filters[filter_name].list[i].key)
-        //     }
-        //     $scope.filterConditions.push(rule);
-        //     $log.debug("MapCtrl, init filtro entity_type: ",$scope.filters);
-        //
-        //
-        //
-        //
-        //
-        //     // init category
-        //     // bug da sistemare, infilo la categoria in catIndex in entityFactory, da tenere allineati!!!!
-        //
-        //     var categories = $scope.config.types.categories;
-        //     // filtri categorie
-        //     // costruisco regola per le categorizzazione
-        //     for(var i = 0; i< categories.length; i++){
-        //         var cats = categories[i];
-        //         if(cats.is_visible){
-        //             // imposto la prima come category_space di default
-        //             if($scope.favCat == 0 && cats.is_visible){
-        //                 $scope.favCat = cats.category_space;
-        //             }
-        //
-        //             // todo aggiungi slug
-        //             var filter_name = cats.name;//'catIndex',
-        //             var check = 'id';
-        //             var rule = {key:'category_list',name:filter_name,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:cats.entities,includeCondition:{value:{category_space:cats.category_space},property:'categories'}};
-        //             // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-        //             $scope.filters[filter_name] = {list: cats.categories, toggle:1, iconSwitcher:true, label:filter_name,check:check,name:filter_name,category_space:cats.category_space,visible:cats.is_visible, color:cats.color};
-        //             // bug init i = 1
-        //             for(j = 0; j < $scope.filters[filter_name].list.length; j++){
-        //                 $scope.filters[filter_name].list[j].visible = true;
-        //                 $scope.filters[filter_name].list[j].key = $scope.filters[filter_name].list[j].id;
-        //                 rule.values.push($scope.filters[filter_name].list[j].id);
-        //             }
-        //             $scope.filterConditions.push(rule);
-        //         }
-        //     }
-        //     // init filtro per livelli in area
-        //     // es. level: 0, level:1, etc....
-        //     if( $scope.config.map.area && levels.check && levels.list.length > 1){
-        //         // filtri livello
-        //         var checkL = 'level',
-        //             filter_nameL = 'Levels';
-        //         // costruisco regola per gli entity_type
-        //         var rule = {key:checkL,name:filter_nameL,values:[],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:typesList,
-        //             callbackPush:function(value){
-        //                 selectGeoJSONLevel(value);
-        //             },
-        //             callbackPop:function(value){
-        //                 //nextGeoJSONLevel(value);
-        //             }
-        //         };
-        //         // toggle: tiene lo stato di visualizzazione: 1 > filtro attivo, 2 > vedo tutto, 3 > non vedo nulla
-        //         $scope.filters[filter_nameL] = {list: levels.list, toggle:1, iconSwitcher:false, label:'Level',check:checkL,name:filter_nameL, visible:true};
-        //         for(var i = 0; i < $scope.filters[filter_nameL].list.length; i++){
-        //             $scope.filters[filter_nameL].list[i].visible = true;
-        //             rule.values.push($scope.filters[filter_nameL].list[i].key);
-        //         }
-        //         $scope.filterConditions.push(rule);
-        //         $log.debug("MapCtrl, init filtro level: ",$scope.filters[filter_nameL],rule);
-        //     }
-        //
-        //
-        //
-        //
-        // }
 
-        function showLoadingScreen(text){
-            if(!text || text === 'undefined'){
-                text = $filter('translate')('LOADING');
-            }
-
-            $ionicLoading.show({
-                template: text
-            });
-
-        }
-        function hideLoadingScreen(){
-            $ionicLoading.hide();
-        }
-
-
-
+        // passa il centro della mappa all'editor
         function clickToAdd(){
-            MapService.getCenter().then(
-                function(center){
-                    var entityDetails = {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null};
-                    $state.go('app.editor', {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null});
-                },
-                function(err){$log.error("MapCtrl, clickToAdd, MapService.getCenter, error ",err);}
-            );
-        };
-
-
-        // todo delete
-        // // rimuove un marker
-        // function deleteMarker(id){
-        //
-        //     var index = searchMarkerIndex(id);
-        //     //$log.debug("delete marker ",index,$scope.map.markers[index]);
-        //     if(index > -1){
-        //         delete $scope.map.markers[index];
-        //         return true;
-        //     }
-        //
-        //     return false;
-        // }
-        //
-        //
-        // // aggiorna i markers della mappa
-        // function updateMarker(id){
-        //
-        //     if(id < 1){
-        //         return false;
-        //     }
-        //
-        //     MapService.get(id).then(
-        //         function(marker){
-        //             $log.debug("MapCtrl, updateMarker, entityFactory.get, refresh marker ",id,marker);
-        //             var index = searchMarkerIndex(marker.id);
-        //             if(index > -1){
-        //                 $scope.map.markers[index] = marker;
-        //             } else {
-        //                 $scope.map.markers.push(marker);
-        //             }
-        //         },
-        //         function(err){$log.error("MapCtrl, updateMarker, entityFactory.get, errore ",err);}
-        //
-        //     );
-        // }
-        //
-        //
-        // // cerca marker nella lista locale
-        // function searchMarkerIndex(id){
-        //     var index = $scope.map.markers.map(function(e){return e.id}).indexOf(id);
-        //     if(index > -1){
-        //         return index;
-        //     }
-        //     return -1
-        // }
+            $timeout(function(){
+                var center = $scope.flmap.center;
+                $state.go('app.editor', {lat: center.lat, lng:center.lng, zoom_level: center.zoom, id:null});
+            },50);
+        }
 
 
 
@@ -1524,7 +1013,7 @@ angular.module('firstlife.controllers')
             }else{
                 //altrimenti invoco una get
                 //$log.debug("chiamo per :", entityId);
-                MapService.get(entityId).then(
+                ThingsService.get(entityId).then(
                     function(marker){
                         // localizzo su marker
                         $log.debug("Location: ", marker);
@@ -1540,140 +1029,24 @@ angular.module('firstlife.controllers')
             }
         }
 
-
-
-        // filtro i geoJSON per property (in properties) = value
-        // es. level = 1
-        function selectGeoJSONData(prop,value){
-            $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON(prop,value));
-
-        }
-        function nextGeoJSONLevel(value){
-            if($scope.geojson && $scope.geojson.data && $scope.geojson.levels){
-                var index = $scope.geojson.levels.map(function(e){return e.key;}).indexOf(value);
-                var newIndex = (index + 1) %$scope.geojson.levels.length;
-                var newVal = $scope.geojson.levels[newIndex].key
-                selectGeoJSONLevel(newVal);
-            }
-        }
-        function selectGeoJSONLevel(value){
-            if($scope.geojson && $scope.geojson.data && $scope.config.map.area && $scope.config.map.area.data){
-                //$scope.$apply(function(){
-                $scope.geojson.data = $filter('filter')($scope.config.map.area.data.features,filterGeoJSON('level',value));
-
-                $scope.$broadcast('timeline.groups.setgroup',{group:value});
-                //});
-                $scope.$apply(function(){markerDisabler('level',value);});
-
-            }
-        }
-        function filterGeoJSON(prop,value){
-            return function (feature){
-                if((!feature.properties[prop] && feature.properties[prop] !== 0) || feature.properties[prop] == value){
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        function markerDisabler(prop,value){
-            var disabledColor = $scope.config.design.colors[$scope.config.design.disabled_color];
-            //$log.debug("develop ",value,$scope.favCat);
-            for(var k in $scope.markersFiltered){
-
-                if($scope.markersFiltered[k][prop] !== value){
-                    var icon = angular.copy($scope.markersFiltered[k].icons[$scope.favCat]? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icon);
-
-                    var disabledHtml = '<div class="pin-marker" style="background-color:'+ disabledColor +'"></div>'+
-                        '<div class="icon-box"><i class="icon ' + icon.icon + '"></i></div>';
-                    icon.html = disabledHtml;
-                    icon.color = disabledColor;
-                    icon.index = $scope.config.design.disabled_color;
-                    $scope.markersFiltered[k].icon = icon;
-                }else{
-                    $scope.markersFiltered[k].icon = $scope.markersFiltered[k].icons[$scope.favCat] ? $scope.markersFiltered[k].icons[$scope.favCat] : $scope.markersFiltered[k].icons[0];
-                }
-            }
-        }
-
-
-
         // toggle dei parametri search custom
-
         function check4customFilters(e,old){
             var filters = config.map.filters;
             for(var i = 0 ; i < filters.length; i ++){
                 var param = filters[i].search_param;
                 var filter = filters[i];
-                var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
                 if(!filter.skip){
                     if(e[param]){//trovato un parametro
                         // filtro per per la property
                         var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
-
-                        if(index > -1){
-                            $scope.filterConditions[index] = rule;
-                        }else{
-                            $scope.filterConditions.push(rule);
-                        }
+                        // imposto il filtro nel service
+                        ThingsService.setFilter(rule);
                     }else{
                         // rimuovo filtro per la property
-                        var index = $scope.filterConditions.map(function(e){return e.name}).indexOf(filter.key);
-                        if(index > -1 ){
-                            $scope.filterConditions.splice(index,1);
-                        }
+                        ThingsService.removeFilter(filter.key);
                     }
                 }
             }
-
-        }
-
-
-
-
-        // recupero il layer geoJson
-        function getData(){
-//            interni 22 - 20 
-//            building 19 - 18
-//            city block 17 - 16
-//            quartieri 15 - 15
-//            borghi 14 - 13
-//            circoscrizioni 12 - 11
-//            citta 10 - 8
-//            provincia 7 - 6
-
-            //$log.debug('update geometries ',checkGeometries);
-            // se ho le geometrie disabilitate
-            if(!checkGeometries)
-                return;
-
-            var max = config.map.min_zoom_geometry_layer;
-            leafletData.getMap("mymap").then(
-                function(map) {
-                    //$log.debug('check map',map);
-                    var bounds = map.getBounds();
-                    var zoom = map.getZoom();
-                    var sw = {lat:bounds._southWest.lat,lng:bounds._southWest.lng};
-                    var ne = {lat:bounds._northEast.lat,lng:bounds._northEast.lng};
-                    //$log.debug('check map parameters',max,zoom,bounds);
-                    if(max <= zoom){
-                        indexingFactory.get(zoom,sw,ne).then(
-                            function(response){
-                                //$log.debug("indexFactory.get, response",response);
-                                $scope.geojson.data = response;
-
-                            },
-                            function(response){
-                                $log.error(response);
-                            }
-                        );
-                    }else{
-                        $scope.geojson.data.features = [];
-                    }
-                },
-                function(response){
-                    $log.error("MapService, getMapBounds, errore: ",response);
-                });
         }
 
 
@@ -1707,6 +1080,7 @@ angular.module('firstlife.controllers')
 
         }
         // controllo i parametri di posizione
+        // todo implementa soluzione possibilmente filtro
         function check4Initiative(e, old){
             // se ho settati i parametri di posizione
             if(old && old.initiative && old.initiative !== e.initiative || e.initiative){
@@ -1714,8 +1088,8 @@ angular.module('firstlife.controllers')
                 // avviso del cambio di parametro
                 $scope.$broadcast('newInitiativeSearch',{id: e.initiative ? e.initiative : null});
             }
-
         }
+
         // controllo il parametro entity
         function check4entity(e,old){
             if(e.entity){
