@@ -10,6 +10,9 @@ angular.module('firstlife.services')
         var defIcons = config.types.icons;
 
         return {
+            filter: function () {
+              return makeMarkers(cache);
+            },
             get: function(id){
                 var deferred = $q.defer();
                 ThingsFact.get(id).then(
@@ -45,9 +48,9 @@ angular.module('firstlife.services')
                 // $log.debug('bbox params',params);
                 ThingsFact.bbox(params).then(
                     function (features) {
+                        // aggiungo alla cache
+                        cache = angular.extend([],features);
                         var markers = makeMarkers(features);
-                        // aggiungo al buffer
-                        buffer = angular.extend({},markers);
                         $log.log('bbox result',features.length);
                         deferred.resolve(markers);
                     },
@@ -371,7 +374,7 @@ angular.module('firstlife.services')
 
 
     }]).run(function(ThingsService, myConfig){
-    self.buffer = {};
+    self.cache = [];
     self.query = null;
     self.favCat = 0;
     self.filters = {

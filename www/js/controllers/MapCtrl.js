@@ -443,7 +443,8 @@ angular.module('firstlife.controllers')
             };
 
             $scope.closeFilterCat = function() {
-                $scope.filterCat.modal.remove();
+                if($scope.filterCat.modal)
+                    $scope.filterCat.modal.remove();
             };
             $scope.$on('modal.hidden', function() {
                 delete $scope.filterCat.modal;
@@ -499,34 +500,18 @@ angular.module('firstlife.controllers')
             $log.log('toggleFilter',cat,key)
             // cerco l'indice della regola per le categorie
             ThingsService.toggleFilter(cat, key);
-            getMarkers();
+            // aggiorno i marker
+            updateMarkers();
         };
 
         // cambio il category space utilizzato per le icone
         $scope.changeFavCat = function (id){
-            //$log.debug("check change favCat ",id);
-            // $ionicLoading.show({
-            //     animation: 'fade-in',
-            //     showBackdrop: false,
-            //     maxWidth: 50,
-            //     showDelay: 0
-            // });
-            // $log.debug("cambio favCat da ",$scope.favCat, " a ", id);
-            // $scope.favCat = id;
-            // // lancio l'ultimo step di update dei marker
-            // // da migliorare
-            // for(i in $scope.markersFiltered){
-            //     $log.debug("cambio icona al marker ",$scope.markersFiltered[i]);
-            //     // se e' definita un icona per il category_space favCat allora assegno l'icona, altrimenti tengo quella di attuale
-            //     $scope.markersFiltered[i].icon = $scope.markersFiltered[i].icons[$scope.favCat] ? $scope.markersFiltered[i].icons[$scope.favCat] : $scope.markersFiltered[i].icon;
-            //
-            // }
-            // $ionicLoading.hide();
             var icon = ThingsService.setIcon(id);
             $scope.closeFilterCat();
-            getMarkers();
+            // aggiorno i marker
+            $timeout(updateMarkers,400);
             return icon;
-        }
+        };
 
 
         // mostra il wall con il contenuto della mappa
@@ -864,7 +849,10 @@ angular.module('firstlife.controllers')
                 );
             },50);
         }
-
+        // filtro i marker in cache
+        function updateMarkers() {
+            $scope.flmap.markers = angular.extend({},ThingsService.filter());
+        }
 
 
         // passa il centro della mappa all'editor
