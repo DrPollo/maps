@@ -8,20 +8,21 @@
                 <i class="icon ion-android-arrow-dropleft-circle"></i>
                 {{space.name}}
             </button>
-            <i class="legend" ng-if="!back" on-tap="changeFavCat(space.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != space.category_space, 'ion-android-star': favCat == space.category_space }"></i>
+            <i class="legend" ng-if="!back" on-tap="iconToggle(space.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != space.category_space, 'ion-android-star': favCat == space.category_space }"></i>
             <div class="rootlabel" on-tap="toggle(space)" class="button button-light button-block button-clear" ng-if="!back">
                 <div class="label">
                     {{space.name}}
                 </div>
             </div>
             <div class="child" ng-show="back && (back == space.category_space)">
-                <div class="childblock" ng-repeat="cat in space.list track by $index" 
-                     ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],color: cat.visible ? 'white' : cat.color,background:cat.visible?cat.color:'#fff'}"
-                     on-tap="toggleCat(space.name,cat[space.check])">
+                <div class="childblock"
+                     ng-repeat="cat in space.list track by $index"
+                     ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],color: toggled[space.name][cat[space.check]] ? 'white' : cat.color,background:toggled[space.name][cat[space.check]]?cat.color:'#fff'}"
+                     on-tap="catToggle(space.name,cat[space.check])">
                     <i class="checker icon medium-dark" 
-                       ng-class="{ 'ion-close-circled': !cat.visible, 'ion-checkmark-circled': cat.visible}" 
-                       style="color:{{ cat.visible ? 'white' : cat.color }};"></i>
-                    <button class="label button linear-animation" style="color:{{ cat.visible ? 'white' : cat.color }};">
+                       ng-class="{ 'ion-close-circled': !toggled[space.name][cat[space.check]], 'ion-checkmark-circled': toggled[space.name][cat[space.check]]}"
+                       style="color:{{ toggled[space.name][cat[space.check]] ? 'white' : cat.color }};"></i>
+                    <button class="label button linear-animation" style="color:{{ toggled[space.name][cat[space.check]] ? 'white' : cat.color }};">
                         <i class="icon {{cat.icon_name}}"></i>
                         {{cat.name}}
                     </button>

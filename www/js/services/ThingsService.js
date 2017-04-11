@@ -152,13 +152,25 @@ angular.module('firstlife.services')
                 }
             },
             getFilter: function (key) {
-                return filters[key] ? filters[key] : null;
+                if(key)
+                    return filters[key] ? filters[key] : null;
+                return filters;
+            },
+            getRules : function () {
+                return filterConditions;
             },
             setQuery: function (q) {
                 if(!q)
                     return query = null;
 
                 return query = q;
+            },
+            setIcon: function(id){
+                if(!id)
+                    return favCat;
+
+                favCat = (favCat === id) ?  0 : id;
+                return favCat;
             }
         };
 
@@ -206,10 +218,9 @@ angular.module('firstlife.services')
             var type = types[marker.entity_type];
             // icona di tipo
             var icon = angular.copy(defIcons[type.key]);
-            angular.extend(marker, {icon:icon});
             // gestione icone di categoria
             var icons = {
-                type : icon
+                0 : icon
             };
             var catIcons = marker.categories.reduce(function(icons, cat){
                 var icon = defIcons[cat.category_space.id][cat.categories[0].id];
@@ -217,6 +228,9 @@ angular.module('firstlife.services')
                 return icons;
             },{});
             angular.extend(icons, catIcons);
+            angular.extend(marker,{icons:icons});
+            // icona di default
+            angular.extend(marker, {icon:icons[favCat] ? icons[favCat] : icons[0]});
 
             return marker;
         }
@@ -401,9 +415,9 @@ angular.module('firstlife.services')
             var cats = categories[i];
             if(cats.is_visible){
                 // imposto la prima come category_space di default
-                if(favCat == 0 && cats.is_visible){
-                    favCat = cats.category_space;
-                }
+                // if(favCat == 0 && cats.is_visible){
+                //     favCat = cats.category_space;
+                // }
 
                 // todo aggiungi slug
                 var filter_name = cats.name;//'catIndex',

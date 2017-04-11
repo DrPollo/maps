@@ -1,9 +1,9 @@
 <ion-modal-view on-swipe-left="closeFilterCat()" on-swipe-right="closeFilterCat()">
-    <ion-header-bar class="modal-header" >
-        <h1 class="title title-modal">{{'FILTERS'|translate}}</h1>
-    </ion-header-bar>
+    <!--<ion-header-bar class="modal-header" >-->
+        <!--<h1 class="title title-modal">{{'FILTERS'|translate}}</h1>-->
+    <!--</ion-header-bar>-->
     <ion-content>
-       <category-filters style="position:absolute;height:100%;width:100%;" array="filtred" toggle="toggleFilter" filters="filters" fav-cat="favCat" change-fav-cat="changeFavCat"></category-filters>
+       <category-filters style="position:absolute;height:100%;width:100%;" array="filtred" toggle="toggleFilter(cat,key)" filters="filters" change-fav-cat="changeFavCat(id)"></category-filters>
     </ion-content>
     <ion-footer-bar class="bar-light">
         <h1 class="title"></h1>
