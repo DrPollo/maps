@@ -4,3 +4,4 @@ bower_components
 .DS_Store
 www/config.json
 www/js/config.js
+www/lib/rx-angular/docs/

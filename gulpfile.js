@@ -164,22 +164,29 @@ gulp.task('setupenv',function(){
 
     // setup defaults
     console.log('default env test');
-    config.myConfig.api_base_domain = "api.dev.firstlife.di.unito.it/";
+    config.myConfig.api_base_domain = "api.firstlife.org/";
     config.myConfig.dev = false;
+    config.myConfig.ssl = true;
 
     // override defaults
     if(gutil.env.prod){
         console.log('env prod');
         config.myConfig.api_base_domain = "api.firstlife.org/";
-        config.myConfig.dev = false;
+        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
     }else if(gutil.env.dev){
         console.log('env dev');
-        config.myConfig.api_base_domain = "api.firstlife.org/";
-        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
-        config.myConfig.dev = true;
+        config.myConfig.api_base_domain = "api.fldev.di.unito.it/";
+        config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
         config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
         config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
     }
+    if(gutil.env.logs){
+        config.myConfig.dev = true;
+    }
+    if(gutil.env.ssl){
+        config.myConfig.ssl = false;
+    }
+
 
     console.log('setup env host: ',config.myConfig.api_base_domain);
     // cancello il file
