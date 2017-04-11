@@ -190,7 +190,7 @@ angular.module('firstlife.controllers')
                 if($state.current.name != 'app.maps')
                     return
 
-                $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
+                $log.log("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
 
                 if(!self.watchSearchEnabled){
                     self.watchSearchEnabled = true;
@@ -249,15 +249,16 @@ angular.module('firstlife.controllers')
         });
 
         // catturo il cambio di parametro search
-        $scope.$on("newSearchParam", function(e,params) {
-            if(e.defaultPrevented)
-                return
-            e.preventDefault();
-
-            $log.debug('change query ',params.q);
-            // setMapMarkers();
-            ThingsService.setQuery(params.q);
-        });
+        // $scope.$on("newSearchParam", function(e,params) {
+        //     // if(e.defaultPrevented)
+        //     //     return
+        //     // e.preventDefault();
+        //
+        //     $log.log('change query ',params.q);
+        //     // setMapMarkers();
+        //     ThingsService.setQuery(params.q);
+        //     updateMarkers();
+        // });
 
 
         $scope.$on("startEditing",function(event,args){
@@ -502,10 +503,11 @@ angular.module('firstlife.controllers')
             });
 
             $scope.closeWall = function() {
-                $scope.wall.remove();
+                if($scope.wall)
+                    $scope.wall.remove();
             };
             $scope.$on('modal.hidden', function() {
-                $log.debug('closing wall');
+                $log.log('closing wall');
                 // setup della search card se la ricerca e' (q) non nulla
                 delete $scope.wall;
             });
@@ -513,10 +515,10 @@ angular.module('firstlife.controllers')
                 if($scope.wall) $scope.wall.remove();
             });
 
-            $scope.clickWallItem = function(marker){
+            $scope.clickWallItem = function(id){
                 $scope.closeWall();
-                clickMarker(marker.id);
-                locate(marker.id);
+                clickMarker(id);
+                locate(id);
             }
         }
 
@@ -787,20 +789,23 @@ angular.module('firstlife.controllers')
                 $log.debug("creazione/modifica ok!");}
         };
 
-        function isEmpty (obj) {
-            if(obj && (
-                    (Array.isArray(obj) && obj.length > 0) ||
-                    (angular.isObject(obj) && !angular.equals({}, obj) ) ||
-                    (angular.isString(obj) && obj != '') ||
-                    (angular.isNumber(obj))
-                ) ) {
-                $log.debug("Is empty ",obj, "? false");
-                return false;
-            }
-            $log.debug("Is empty ",obj, "? true");
-            return true;
 
-        }
+
+        // todo delete
+        // function isEmpty (obj) {
+        //     if(obj && (
+        //             (Array.isArray(obj) && obj.length > 0) ||
+        //             (angular.isObject(obj) && !angular.equals({}, obj) ) ||
+        //             (angular.isString(obj) && obj != '') ||
+        //             (angular.isNumber(obj))
+        //         ) ) {
+        //         $log.debug("Is empty ",obj, "? false");
+        //         return false;
+        //     }
+        //     $log.debug("Is empty ",obj, "? true");
+        //     return true;
+        //
+        // }
 
 
         // update marker bbox
@@ -1015,7 +1020,7 @@ angular.module('firstlife.controllers')
             if(q && o && q == o)
                 return false;
 
-            $log.debug('check4search, param q', e.q, old);
+            $log.log('check4search, param q', e.q, old);
             // se il parametro e' settato
             // logica
             if(q && q != ''){
@@ -1029,6 +1034,10 @@ angular.module('firstlife.controllers')
             }
             // avviso del cambio di parametro
             $scope.$broadcast('newSearchParam',{q: q ? q : null});
+            $log.log('change query ',q);
+            // setMapMarkers();
+            ThingsService.setQuery(q);
+            updateMarkers();
         }
 
         function check4timeline(e,old){

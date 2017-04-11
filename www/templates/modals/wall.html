@@ -1,5 +1,5 @@
 <ion-modal-view id="wall" on-swipe-left="closeWall()" on-swipe-right="closeWall()">
-    <entity-list data="markersFiltered" close="closeWall" click="clickWallItem" query="query"></entity-list>
+    <entity-list close="closeWall()" click="clickWallItem(id)"></entity-list>
     <ion-footer-bar class="bar-light">
         <h1 class="title"></h1>
         <div class="buttons">

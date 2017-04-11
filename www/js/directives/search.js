@@ -1,7 +1,6 @@
 angular.module('firstlife.directives').directive('searchCards', function() {
     return {
         restrict: 'E',
-        scope: {},
         templateUrl: '/templates/map-ui-template/SearchCards.html',
         controller: ['$scope','$location', '$log', '$stateParams', 'myConfig', 'MemoryFactory', 'MapService', 'AuthService', function($scope,$location,$log,$stateParams,myConfig,MemoryFactory,MapService, AuthService){
             var config = myConfig;
@@ -9,7 +8,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
             var filterList = filters.map(function(e){return e.search_param});
 
             var listners = {};
-            
+
             // inizializzazione
             if(!$scope.cards){
                 $scope.cards = {};
@@ -22,14 +21,16 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                     delete $scope;
                 }
             });
-            
-            // todo listner su rootscope
-            $scope.$watch(
-                function(){return $location.search()},
+
+            //
+            $scope.$on('newSearchParam',
                 function(e, old){
-                // se cambiati controllo
-                checkParams($location.search());
-            },true);
+                    if(e.defaultPrevented)
+                        return
+                    e.preventDefault();
+                    // se cambiati controllo
+                    checkParams(e);
+                },true);
 
             $scope.closeCard = function(k,value){
                 // rimuovo il parametro
@@ -56,7 +57,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                             if(!$scope.cards[key]){
                                 createCard(k,values[j],filters[i],key);
                             }
-                        } 
+                        }
                     }
                 }
                 // rimuovo le schede se i parametri sono stati rimossi
@@ -120,7 +121,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                     for(var i = 0 ; i < a.length; i ++){
                         if(a[i] == value){
                             a.splice(i,1);
-                        } 
+                        }
                     }
                     var newValues = a.join(',');
                     if(newValues != '')
