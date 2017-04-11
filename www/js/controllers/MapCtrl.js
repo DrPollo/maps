@@ -783,7 +783,6 @@ angular.module('firstlife.controllers')
                 $rootScope.actionStatus = true;
             }else if(entityId){
                 clickMarker(entityId);
-                updateMarker(entityId);
             }else{
                 $log.debug("creazione/modifica ok!");}
         };

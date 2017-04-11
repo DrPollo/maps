@@ -10,9 +10,6 @@ angular.module('firstlife.services')
         var defIcons = config.types.icons;
 
         return {
-            filter: function () {
-              return makeMarkers(cache);
-            },
             get: function(id){
                 var deferred = $q.defer();
                 ThingsFact.get(id).then(
@@ -26,6 +23,21 @@ angular.module('firstlife.services')
                     }
                 );
                 return deferred.promise;
+            },
+            create: function (marker) {
+                return ThingsFact.create(markerConverter(marker));
+            },
+            update: function (marker) {
+                return ThingsFact.update(marker.id,markerConverter(marker));
+            },
+            remove: function (id) {
+                return ThingsFact.remove(id);
+            },
+            report: function(report){
+                return ThingsFact.report(report);
+            },
+            filter: function () {
+                return makeMarkers(cache);
             },
             bbox: function(bounds){
                 var deferred = $q.defer();
@@ -252,6 +264,23 @@ angular.module('firstlife.services')
             return marker;
         }
 
+
+        function markerConverter(marker){
+            var templatePlace = '{"type":"Feature", "properties":{}, "geometry": {}}';
+            var feature = angular.fromJson(templatePlace);
+            for(var i in marker){
+                feature.properties[i] = marker[i];
+            }
+            if(marker.coordinates){
+                feature.geometry = {"type": "Point", "coordinates":marker.coordinates};
+            }else if(marker.coordinates){
+                feature.geometry = {"type": "Point", "coordinates":[parseFloat(marker.coordinates[0]),parseFloat(marker.coordinates[1])]};
+            }else if(marker.lat){
+                feature.geometry = {"type": "Point", "coordinates":[parseFloat(marker.lng),parseFloat(marker.lat)]};
+            }
+
+            return feature;
+        }
 
 
         /*

@@ -106,6 +106,16 @@ angular.module('firstlife.factories')
 
                 return deferred.promise;
             },
+            report: function (report) {
+                var urlId = myConfig.report_thing;
+                var req = {
+                    url: urlId,
+                    method: 'POST',
+                    headers:{"Content-Type":"application/json"},
+                    data:report
+                };
+                return $http(req);
+            },
             bbox: function (params) {
                 var deferred = $q.defer();
                 // costruisco i parametri

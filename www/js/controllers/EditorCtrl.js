@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['myConfig', 'entityFactory', '$state', '$scope','$location', '$ionicPopup', 'entityFactory', 'EntityService', '$window', '$filter', '$ionicLoading', '$previousState', '$log', 'TagsService', 'MemoryFactory', 'MapService',  'AuthService', function(myConfig, entityFactory, $state, $scope, $location, $ionicPopup, entityFactory, EntityService, $window, $filter,$ionicLoading, $previousState, $log, TagsService, MemoryFactory, MapService,  AuthService) {
+    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', 'EntityService', '$window', '$filter', '$ionicLoading', '$previousState', '$log', 'myConfig',  'TagsService', 'MemoryFactory', 'ThingsService',  'AuthService', function($state, $scope, $location, $ionicPopup, EntityService, $window, $filter,$ionicLoading, $previousState, $log, myConfig, TagsService, MemoryFactory, ThingsService,  AuthService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -397,7 +397,7 @@ angular.module('firstlife.controllers')
             }
             //create place
             else{
-                MapService.createMarker(dataForServer)
+                ThingsService.create(dataForServer)
                     .then(function(newplace){
                         //chiudo la schermata di loading
                         hideLoadingScreen();
