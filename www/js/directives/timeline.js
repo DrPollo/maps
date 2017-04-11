@@ -18,7 +18,7 @@ angular.module('firstlife.timeline',[])
                 if(!event.preventTimelineRefresh){
                     event.preventTimelineRefresh = true;
                     var params = $location.search();
-                    $log.debug("timeline, timeline.refresh?", params.date, params.unit);
+                    //$log.debug("timeline, timeline.refresh?", params.date, params.unit);
                     // se i parametri sono impostati e sono cambiati
                     if( (params.date && params.date != $scope.moment.toISOString()) || (params.unit && params.unit != defaultUnit) ){
                         // inizializzo il buffer
@@ -77,11 +77,11 @@ angular.module('firstlife.timeline',[])
                 // $log.debug('forward');
                 // recupero la unit da aggiungere
                 var unit = getUnitToShift();
-                $log.debug($scope.moment,'add 1 ',unit);
+                //$log.debug($scope.moment,'add 1 ',unit);
                 // aggiungo una unit
                 // $log.debug('forward to ',$scope.moment, moment().add(1,unit));
                 $scope.moment = $scope.moment.add(1,unit);
-                $log.debug('forward to ',$scope.moment.toISOString());
+                //$log.debug('forward to ',$scope.moment.toISOString());
                 // avviso del cambio di timeline
                 applyTimeFilters();
                 // ricalcolo il buffer
@@ -105,7 +105,7 @@ angular.module('firstlife.timeline',[])
             $scope.scaleUp = function(){
                 // se non ho raggiunto la massima
                 // salgo di una unita'
-                $log.debug('scaleUp', $scope.indexDefaultUnit)
+                //$log.debug('scaleUp', $scope.indexDefaultUnit)
                 if($scope.indexDefaultUnit > 0){
                     $scope.indexDefaultUnit--;
                     // avviso del cambio di timeline
@@ -191,7 +191,7 @@ angular.module('firstlife.timeline',[])
 
                 // init del tempo a oggi
                 var now = angular.copy($scope.moment);
-                $log.debug('init buffer from',$scope.moment.toISOString());
+                //$log.debug('init buffer from',$scope.moment.toISOString());
                 // parametri temporali nell'url
                 // "date" e' la data centrale e "unit" la granularita'
                 var params = $location.search();
@@ -231,7 +231,7 @@ angular.module('firstlife.timeline',[])
                 }
                 // imposto filtro temporale
                 var newInterval = getFullInterval();
-                $log.debug('new interval ',newInterval);
+                //$log.debug('new interval ',newInterval);
                 ThingsService.setTimeFilters(newInterval);
 
                 // evento di update per mapCtrl
@@ -255,7 +255,7 @@ angular.module('firstlife.timeline',[])
 
             // recupera l'array dei possibili valori dell'unita' temporale
             function getNowUnits(now){
-                $log.debug('getNowUnits',now.toISOString(), 'calc for unit ',$scope.units[$scope.indexDefaultUnit].key);
+                //$log.debug('getNowUnits',now.toISOString(), 'calc for unit ',$scope.units[$scope.indexDefaultUnit].key);
                 var initStart = {hour:0,minute:0,second:0,millisecond:0};
                 var initEnd = {hour:23,minute:59,second:59,millisecond:999};
                 var phases = ['NIGHT','MORNING','AFTERNOON','EVENING'];
@@ -279,7 +279,7 @@ angular.module('firstlife.timeline',[])
                             array.push(e);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
-                        $log.debug('check interval phases ',array);
+                        //$log.debug('check interval phases ',array);
                         return array;
                         break;
                         // giorni della settimana
@@ -299,7 +299,7 @@ angular.module('firstlife.timeline',[])
                                        interval:interval,
                                       upLabel:interval.start().format('DD')};
                             
-                            $log.debug('is sunday?',interval.start().format('dddd'),interval.start().format('dddd') === 'Sunday')
+                            //$log.debug('is sunday?',interval.start().format('dddd'),interval.start().format('dddd') === 'Sunday')
                             if(interval.start().format('dddd') === 'Sunday' || interval.start().format('dddd') === 'Domenica')
                                 obj.class = 'red';
                             days.push(obj);
@@ -587,7 +587,7 @@ angular.module('firstlife.timeline',[])
 
                 // imposto filtro temporale
                 var newInterval = getFullInterval();
-                $log.debug('new interval ',newInterval);
+                //$log.debug('new interval ',newInterval);
                 ThingsService.setTimeFilters(newInterval);
                 // imposto i nuovi parametri search
                 setSearchParams();

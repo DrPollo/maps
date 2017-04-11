@@ -292,7 +292,7 @@ angular.module('firstlife.config')
         //console.log('check api url',params,Object.keys(params),url)
     }).config(
     function configDev($logProvider, myConfig){
-        console.debug(myConfig);
+        console.debug('configs',myConfig);
         //if(myConfig.dev)console.log("setup modalità dev");
 
         // se in modalita' dev

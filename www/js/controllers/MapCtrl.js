@@ -17,11 +17,11 @@ angular.module('firstlife.controllers')
         var config = myConfig;
 
 
-        $log.log('init myMap?',!$scope.flmap);
+        //$log.debug('init myMap?',!$scope.flmap);
         if(!$scope.flmap){
             angular.extend($scope,{flmap : map});
             angular.extend($scope.flmap,{loaded:true});
-            $log.log('myMap',$scope.flmap);
+            //$log.debug('myMap',$scope.flmap);
         }
 
         // check geometrie
@@ -39,7 +39,7 @@ angular.module('firstlife.controllers')
         if(!$scope.area) {
             $scope.area = AreaService.getArea();
             $scope.buildings = $scope.area.places;
-            $log.debug("Area e favPlaces: ", $scope.area);
+            //$log.debug("Area e favPlaces: ", $scope.area);
         }
 
         // default utente per le azioni con il log
@@ -81,7 +81,7 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            $log.log("sono in app.map e vengo per lo stato",toState);
+            //$log.debug("sono in app.map e vengo per lo stato",toState);
 
             if(event.preventMapsEvent)
                 return
@@ -112,7 +112,7 @@ angular.module('firstlife.controllers')
 
                 case 'app.editor':
                     // se vengo dalla creazione/modifica di posti
-                    $log.debug("MapCtrl, cambio stato da intro: ",$stateParams);
+                    //$log.debug("MapCtrl, cambio stato da intro: ",$stateParams);
 
                     if($stateParams.entity){
                         backFromEditor($stateParams.entity);
@@ -136,7 +136,7 @@ angular.module('firstlife.controllers')
 
                 default:
                     // 1) diretto per il viewer
-                    $log.debug("MapCtrl, gestione stato, default",$stateParams);
+                    //$log.debug("MapCtrl, gestione stato, default",$stateParams);
                     // posiziono la mappa se ci solo le coordinate,
                     // altrimenti si lascia il centro della mappa
 
@@ -170,7 +170,7 @@ angular.module('firstlife.controllers')
          */
         // click su marker > propago evento
         $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-            $log.debug("MARKER CLICK...controlla, args: ", args,event);
+            //$log.debug("MARKER CLICK...controlla, args: ", args,event);
             if(!event.preventMapMarkerClick){
                 event.preventMapMarkerClick = true;
 
@@ -190,7 +190,7 @@ angular.module('firstlife.controllers')
                 if($state.current.name != 'app.maps')
                     return
 
-                $log.log("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
+                //$log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
 
                 if(!self.watchSearchEnabled){
                     self.watchSearchEnabled = true;
@@ -248,18 +248,6 @@ angular.module('firstlife.controllers')
             }
         });
 
-        // catturo il cambio di parametro search
-        // $scope.$on("newSearchParam", function(e,params) {
-        //     // if(e.defaultPrevented)
-        //     //     return
-        //     // e.preventDefault();
-        //
-        //     $log.log('change query ',params.q);
-        //     // setMapMarkers();
-        //     ThingsService.setQuery(params.q);
-        //     updateMarkers();
-        // });
-
 
         $scope.$on("startEditing",function(event,args){
             $scope.updateEntity = args;
@@ -304,7 +292,7 @@ angular.module('firstlife.controllers')
         $scope.$on("clickMarker",function(event,args){
             // click di un marker
             clickMarker(args.id);
-            $log.debug('clickMarker, locate ',args.id)
+            //$log.debug('clickMarker, locate ',args.id)
             locate(args.id);
             event.preventDefault();
         });
@@ -365,7 +353,7 @@ angular.module('firstlife.controllers')
 
         $scope.showModalFavPlace = function() {
             $scope.filterFavPlace = {};
-            $log.debug("check area: ",$scope.area);
+            //$log.debug("check area: ",$scope.area);
             $ionicModal.fromTemplateUrl('templates/form/filterFavPlace.html', {
                 scope: $scope,
                 animation: 'fade-in',
@@ -472,7 +460,7 @@ angular.module('firstlife.controllers')
          * Attiva/Disattiva filtri di categorie 
          */
         $scope.toggleFilter = function(cat, key){
-            $log.log('toggleFilter',cat,key)
+            //$log.debug('toggleFilter',cat,key)
             // cerco l'indice della regola per le categorie
             ThingsService.toggleFilter(cat, key);
             // aggiorno i marker
@@ -491,8 +479,8 @@ angular.module('firstlife.controllers')
 
         // mostra il wall con il contenuto della mappa
         $scope.showWall = function(){
-            $log.debug("MapCtrl, showWall!");
-            $log.debug("check area: ",$scope.area);
+            //$log.debug("MapCtrl, showWall!");
+            //$log.debug("check area: ",$scope.area);
 
             $ionicModal.fromTemplateUrl('templates/modals/wall.html', {
                 scope: $scope,
@@ -507,7 +495,7 @@ angular.module('firstlife.controllers')
                     $scope.wall.remove();
             };
             $scope.$on('modal.hidden', function() {
-                $log.log('closing wall');
+                //$log.debug('closing wall');
                 // setup della search card se la ricerca e' (q) non nulla
                 delete $scope.wall;
             });
@@ -524,8 +512,8 @@ angular.module('firstlife.controllers')
 
         // mostra il wall con il contenuto della mappa
         $scope.showSearchBox = function(){
-            $log.debug("MapCtrl, showSearchBox!");
-            $log.debug("check area: ",$scope.area);
+            //$log.debug("MapCtrl, showSearchBox!");
+            //$log.debug("check area: ",$scope.area);
 
             $ionicModal.fromTemplateUrl('templates/modals/search.html', {
                 scope: $scope,
@@ -574,7 +562,7 @@ angular.module('firstlife.controllers')
          */
 
         function clickMarker(markerId){
-            $log.debug("markerClick! ",markerId);
+            //$log.debug("markerClick! ",markerId);
             $scope.$broadcast("markerClick", {markerId:markerId});
         }
 
@@ -582,13 +570,13 @@ angular.module('firstlife.controllers')
             var params = $location.search();
             MapService.getCenter().then(
                 function(center){
-                    $log.debug("centro della mappa, ",center);
+                    //$log.debug("centro della mappa, ",center);
                     // aggiorno i parametri della mappa sono se sono diversi!
                     if(params.lat != center.lat || params.lng != center.lng || params.zoom != center.zoom ){
                         updateSearch(center);
                     }
                 },
-                function(err){$log.debug("updatePositionInSearch, MapService.getCenter, errore: ", err);}
+                function(err){$log.error("updatePositionInSearch, MapService.getCenter, errore: ", err);}
             );
         }
         function updatePlaceInSearch(id){
@@ -600,7 +588,7 @@ angular.module('firstlife.controllers')
                     // aggiorno i parametri della mappa
                     updateSearch(center);
                 },
-                function(err){$log.debug("updatePlaceInSearch, MapService.getCenter, errore: ", err);}
+                function(err){$log.error("updatePlaceInSearch, MapService.getCenter, errore: ", err);}
             );
         }
         function updateSearch(params){
@@ -610,7 +598,7 @@ angular.module('firstlife.controllers')
                 $location.search(key,params[key]);
                 //self.watchSearchEnabled = true;
             }
-            $log.debug("nuovi parametri search: ", $location.search(), params);
+            //$log.debug("nuovi parametri search: ", $location.search(), params);
         }
 
         function deleteInSearch(key){
@@ -625,20 +613,20 @@ angular.module('firstlife.controllers')
         // accetta paramentri per la locate: center, bounds, user, marker
         // todo refactory
         function locate(coord){
-            $log.debug("centro su luogo, id: "+typeof(coord)+" ",coord);
+            //$log.debug("centro su luogo, id: "+typeof(coord)+" ",coord);
 
             if(typeof(coord) === 'object' && 'entity' in coord && coord.entity){
                 // ho una entita' 
-                $log.debug('centro su entita',coord.entity);
+                //$log.debug('centro su entita',coord.entity);
                 locateEntity(coord.entity);
             }else if( typeof(coord) === 'number'){
                 // ho una entita' 
                 locateEntity(coord);
             } else if(typeof(coord) === 'object' && 'bound' in coord){
-                $log.debug("centro su bounds: ",coord);
+                //$log.debug("centro su bounds: ",coord);
                 setMapCenter(coord);
             } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
-                $log.debug('locate coord',coord);
+                //$log.debug('locate coord',coord);
                 var params = {
                     lat:parseFloat(coord.lat),
                     lng:parseFloat(coord.lng),
@@ -661,7 +649,7 @@ angular.module('firstlife.controllers')
                 $cordovaGeolocation
                     .getCurrentPosition()
                     .then(function (position) {
-                        $log.debug(coord);
+                        //$log.debug(coord);
                         /*self.map.center.lat  = position.coords.latitude;
                          self.map.center.lng = position.coords.longitude;
                          self.map.center.zoom = $rootScope.info_position.zoom;
@@ -687,7 +675,7 @@ angular.module('firstlife.controllers')
 
                     }, function(err) {
                         // error
-                        $log.debug("Location error: ", err);
+                        $log.error("Location error: ", err);
                         $ionicLoading.hide();
 
                     });
@@ -711,27 +699,27 @@ angular.module('firstlife.controllers')
 
 
             leafletData.getMap("mymap").then(function(map) {
-                $log.debug("MapService, setMapCenter, response: ",map, " params ",params);
+                //$log.debug("MapService, setMapCenter, response: ",map, " params ",params);
                 if(params.bound){
-                    $log.debug("MapService, setMapCenter, map.fitBounds: ",params.bound);
+                    //$log.debug("MapService, setMapCenter, map.fitBounds: ",params.bound);
                     map.fitBounds(params.bound);
                 }else if(!params.zoom){
                     var center = new L.LatLng(params.lat, params.lng);
-                    $log.debug("MapService, setMapCenter, map.panTo: ",center);
+                    //$log.debug("MapService, setMapCenter, map.panTo: ",center);
                     map.panTo(center);
                 }else{
                     var center = new L.LatLng(params.lat, params.lng);
-                    $log.debug("MapService, setMapCenter, map.setView: ",center,params.zoom);
+                    //$log.debug("MapService, setMapCenter, map.setView: ",center,params.zoom);
                     map.setView(center, params.zoom);
                 }
                 var c = map.getCenter(),
                     z = map.getZoom(),
                     newCenter = {lat:c.lat,lng:c.lng,zoom:z};
 
-                $log.debug("Nuovo centro della mappa",newCenter);
+                //$log.debug("Nuovo centro della mappa",newCenter);
                 //updateSearch(newCenter);
             },function(response){
-                $log.debug("MapService, setMapCenter, errore: ",response);
+                $log.error("MapService, setMapCenter, errore: ",response);
             });
         }
 
@@ -743,13 +731,13 @@ angular.module('firstlife.controllers')
             });
 
             alertPopup.then(function(res) {
-                $log.debug('Allert con contenuto: ',content);
+                //$log.debug('Allert con contenuto: ',content);
             });
         };
 
         // action sheet di ritorno dall'editor
         function backFromEditor(entityId){
-            $log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
+            //$log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
             if(entityId == -1){
                 content.title = $filter('translate')('ERROR');
@@ -760,7 +748,7 @@ angular.module('firstlife.controllers')
                     titleText: content.text,
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        $log.debug('CANCELLED');
+                        //$log.debug('CANCELLED');
                     }
                 });
                 // $log.debug("actionSheet", hideSheet);
@@ -776,17 +764,16 @@ angular.module('firstlife.controllers')
                     titleText: content.text,
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        $log.debug('CANCELLED');
+                        //$log.debug('CANCELLED');
                     }
                 });
-                $log.debug("actionSheet", hideSheet);
+                //$log.debug("actionSheet", hideSheet);
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
             }else if(entityId){
                 clickMarker(entityId);
-            }else{
-                $log.debug("creazione/modifica ok!");}
+            }
         };
 
 
@@ -851,7 +838,7 @@ angular.module('firstlife.controllers')
             //changeMod to Edit: tutti off per la edit
             if(clickedItem===false){
                 for(var el in $scope.flmap.layers.overlays){
-                    $log.debug("spengo livello ",el);
+                    //$log.debug("spengo livello ",el);
                     $scope.flmap.layers.overlays[el].visible = false;
                 }
             }
@@ -906,7 +893,7 @@ angular.module('firstlife.controllers')
             // se il marker esiste
             if(index > -1){
                 var marker = $scope.flmap.markers[index];
-                $log.debug("Location: ", marker);
+                //$log.debug("Location: ", marker);
                 /*self.map.center.lat = marker.lat;
                  self.map.center.lng = marker.lng,
                  self.map.center.zoom = $rootScope.info_position.zoom;*/
@@ -919,7 +906,7 @@ angular.module('firstlife.controllers')
                 ThingsService.get(entityId).then(
                     function(marker){
                         // localizzo su marker
-                        $log.debug("Location: ", marker);
+                        //$log.debug("Location: ", marker);
                         /*self.map.center.lat = marker.lat;
                          self.map.center.lng = marker.lng,
                          self.map.center.zoom = $rootScope.info_position.zoom*/
@@ -927,7 +914,7 @@ angular.module('firstlife.controllers')
                         locate(params);
                         //$log.debug("nuova posizione", $scope.flmap.center);
                     },
-                    function(err){$log.debug("Location error: ",err);}
+                    function(err){$log.error("Location error: ",err);}
                 );
             }
         }
@@ -957,7 +944,7 @@ angular.module('firstlife.controllers')
         function check4embed(e){
             // se il parametro e' settato
             if(e.embed){
-                $log.debug('modalita embed',e.embed);
+                //$log.debug('modalita embed',e.embed);
                 switch(e.embed){
                     // visualizzatore vuoto per mappa embed
                     case 'viewer':
@@ -987,7 +974,7 @@ angular.module('firstlife.controllers')
         function check4Initiative(e, old){
             // se ho settati i parametri di posizione
             if(old && old.initiative && old.initiative !== e.initiative || e.initiative){
-                $log.debug('cambio parametro iniziativa',e.initiative);
+                //$log.debug('cambio parametro iniziativa',e.initiative);
                 // avviso del cambio di parametro
                 $scope.$broadcast('newInitiativeSearch',{id: e.initiative ? e.initiative : null});
             }
@@ -998,7 +985,7 @@ angular.module('firstlife.controllers')
             if(e.entity){
                 //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
                 // placeModal da aprire
-                $log.debug("trovato parametro entity, devo aprire una modal: ",e.entity);
+                //$log.debug("trovato parametro entity, devo aprire una modal: ",e.entity);
                 clickMarker(e.entity);
                 //localizzo perche' il marker potrebbe non essere nello scope
                 locate(e.entity);
@@ -1020,7 +1007,7 @@ angular.module('firstlife.controllers')
             if(q && o && q == o)
                 return false;
 
-            $log.log('check4search, param q', e.q, old);
+            //$log.debug('check4search, param q', e.q, old);
             // se il parametro e' settato
             // logica
             if(q && q != ''){
@@ -1034,7 +1021,7 @@ angular.module('firstlife.controllers')
             }
             // avviso del cambio di parametro
             $scope.$broadcast('newSearchParam',{q: q ? q : null});
-            $log.log('change query ',q);
+            //$log.debug('change query ',q);
             // setMapMarkers();
             ThingsService.setQuery(q);
             updateMarkers();
@@ -1061,7 +1048,7 @@ angular.module('firstlife.controllers')
             }
             entityFactory.get(e.groups).then(
                 function(results){
-                    $log.debug('get group',results)
+                    //$log.debug('get group',results)
                     if(results.name){
                         $scope.groupCard = results.name;
                     } else {
@@ -1083,6 +1070,7 @@ angular.module('firstlife.controllers')
         // userCard
         function check4user(e){
             if(!e || !e.users){
+
                 return false;
             }
             $scope.userCard = AuthService.getUser().username;
@@ -1090,7 +1078,13 @@ angular.module('firstlife.controllers')
         $scope.deleteUserCard = function(){
             $scope.userCard = null;
             $location.search('users',null);
-        }
+        };
+
+        // initiative card
+        $scope.deleteInitiativeCard = function () {
+            $scope.initiativeCard = null;
+            $location.search('initiative',null);
+        };
 
     }]).run(function(MapService, myConfig, $timeout, $rootScope, $log){
 
@@ -1167,7 +1161,7 @@ angular.module('firstlife.controllers')
         },
         events: {
             map: {
-                enable: ['click', 'moveend', 'focus', 'drag'],
+                enable: ['click', 'moveend', 'focus'],
                 logic: 'broadcast'
             },
             marker: {

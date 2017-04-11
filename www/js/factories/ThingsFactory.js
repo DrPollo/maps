@@ -23,7 +23,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("get Thing ", response);
+                        //$log.debug("get Thing ", response);
                         deferred.resolve(response.data);
                     },
                     function (err) {
@@ -47,7 +47,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("post Thing ", response);
+                        //$log.debug("post Thing ", response);
                         deferred.resolve(response.data);
                     },
                     function (err) {
@@ -71,7 +71,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("update Thing ", response);
+                        //$log.debug("update Thing ", response);
                         deferred.resolve(response.data);
                     },
                     function (err) {
@@ -95,7 +95,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("delete Thing ", response);
+                        //$log.debug("delete Thing ", response);
                         deferred.resolve(response.data);
                     },
                     function (err) {
@@ -133,7 +133,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("bbox response", response);
+                        //$log.debug("bbox response", response);
                         deferred.resolve(response.data.things.features);
                     },
                     function (err) {
@@ -157,7 +157,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("get Thing children ", response);
+                        //$log.debug("get Thing children ", response);
                         // todo togli il bugfix
                         deferred.resolve(response.data.data ? response.data.data.features: response.data.features );
                     },

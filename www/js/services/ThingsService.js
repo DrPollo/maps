@@ -15,7 +15,7 @@ angular.module('firstlife.services')
                 ThingsFact.get(id).then(
                     function (feature) {
                         var marker = makeMarker(feature);
-                        $log.debug('get marker ',marker);
+                        //$log.debug('get marker ',marker);
                         deferred.resolve(marker);
                     },
                     function (err) {
@@ -63,7 +63,7 @@ angular.module('firstlife.services')
                         // aggiungo alla cache
                         cache = angular.extend([],features);
                         var markers = makeMarkers(features);
-                        $log.debug('bbox result',features.length);
+                        //$log.debug('bbox result',features.length);
                         deferred.resolve(markers);
                     },
                     function (err) {
@@ -99,7 +99,7 @@ angular.module('firstlife.services')
             },
             toggleFilter: function (cat, key) {
                 var index = filterConditions.map(function(e){return e.name}).indexOf(cat);
-                $log.debug("Indice regola filtro: ",index,cat,key);
+                //$log.debug("Indice regola filtro: ",index,cat,key);
                 // se non c'e' lo creo
                 if(index < 0){
                     // default tutti i valori
@@ -109,33 +109,33 @@ angular.module('firstlife.services')
                     filterConditions[index].equal = false;
                     filterConditions[index].excludeRule = false;
                     filterConditions[index].excludeProperty = false;
-                    $log.debug("Init della regola: ",filterConditions[index]);
+                    //$log.debug("Init della regola: ",filterConditions[index]);
                 }
-                $log.debug("Chiave? ",key);
+                //$log.debug("Chiave? ",key);
                 /* toggle a tre stati
                  * 1) excludeRule = false e excludeProperty = false  // filtro attivo
                  * 2) excludeRule = true e excludeProperty = false // tutto visibile
                  * 3) excludeRule = false e excludeProperty = true  // nulla visibile
                  */
                 if(!key && key !== 0){
-                    $log.debug("Niente chiave, faccio toggle");
+                    //$log.debug("Niente chiave, faccio toggle");
                     // se in stato 1) vado in 2)
                     if(!filterConditions[index].excludeRule && !filterConditions[index].excludeProperty){
-                        $log.debug("Stato 1 vado in 2");
+                        //$log.debug("Stato 1 vado in 2");
                         filterConditions[index].excludeRule = true;
                         filterConditions[index].excludeProperty = false;
                         filters[cat].toggle = 2;
                     }
                     // se in stato 2) vado in 3)
                     else if(filterConditions[index].excludeRule && !filterConditions[index].excludeProperty){
-                        $log.debug("Stato 2 vado in 3");
+                        //$log.debug("Stato 2 vado in 3");
                         filterConditions[index].excludeRule = false;
                         filterConditions[index].excludeProperty = true;
                         filters[cat].toggle = 3;
                     }
                     // se in stato 3) vado in 1)
                     else if(!filterConditions[index].excludeRule && filterConditions[index].excludeProperty){
-                        $log.debug("Stato 3 vado in 1");
+                        //$log.debug("Stato 3 vado in 1");
                         filterConditions[index].excludeRule = false;
                         filterConditions[index].excludeProperty = false;
                         filters[cat].toggle = 1;
@@ -143,8 +143,8 @@ angular.module('firstlife.services')
                 } else {
                     // se la chiave e' impostata aggiungo/rimuovo la chiave
                     var i = filterConditions[index].values.indexOf(key);
-                    $log.debug("Aggiungo/rimuovo chiave: ",key, " a ", filterConditions[index].values, " indice: ",i);
-                    $log.debug("Intervengo qui: ",filters[cat].list);
+                    //$log.debug("Aggiungo/rimuovo chiave: ",key, " a ", filterConditions[index].values, " indice: ",i);
+                    //$log.debug("Intervengo qui: ",filters[cat].list);
                     var j = filters[cat].list.map(function(e){return e.key}).indexOf(key);
                     if(i < 0) {
                         filterConditions[index].values.push(key);
@@ -163,7 +163,7 @@ angular.module('firstlife.services')
                     filterConditions[index].excludeRule = false;
                     filterConditions[index].excludeRule = false;
                     filters[cat].toggle = 1;
-                    $log.debug("Aggiunta o rimossa chiave: ",filterConditions[index].values," vado in stato 1");
+                    //$log.debug("Aggiunta o rimossa chiave: ",filterConditions[index].values," vado in stato 1");
                 }
             },
             getChildren: function (id,relation) {
@@ -171,7 +171,7 @@ angular.module('firstlife.services')
                 ThingsFact.children(id,relation).then(
                     function (features) {
                         var markers = makeMarkers(features);
-                        $log.debug('children result',features.length);
+                        //$log.debug('children result',features.length);
                         deferred.resolve(markers);
                     },
                     function (err) {
@@ -323,30 +323,30 @@ angular.module('firstlife.services')
             for(key in filterConditions){
                 // se non devo escludere la regola
 
-                $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                //$log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 // se esiste la include condition e il valore includeCondition:{value:cats.category_space,property:'category_space'}
                 var indexCheck = 0;
                 if(filterConditions[key].includeCondition){
                     var checkField = val[filterConditions[key].includeCondition.property];
                     var k = Object.keys(filterConditions[key].includeCondition.value)[0];
                     indexCheck = checkField.map(function(e){return e[k].id}).indexOf(filterConditions[key].includeCondition.value[k]);
-                    $log.debug("check per includeCondition ", (indexCheck > -1));
+                    //$log.debug("check per includeCondition ", (indexCheck > -1));
                 }
 
 
-                $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                //$log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 if(!filterConditions[key].excludeRule  && filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
                     // se devo escludere ogni valore possibile
                     if(filterConditions[key].excludeProperty){
                         var valore = (val[filterConditions[key].key]);
-                        $log.debug("Check esclusione regola: ",filterConditions[key].excludeProperty,val,filterConditions[key].key,valore);
+                        //$log.debug("Check esclusione regola: ",filterConditions[key].excludeProperty,val,filterConditions[key].key,valore);
                         if(!valore
                             || valore === null ||
                             valore === 'undefined' ||
                             (Array.isArray(valore) && valore.length == 0 ) ||
                             (angular.isObject(valore) && angular.equals(valore,{})) ){
                             // non e' elegante ma faccio prima un check per vedere se il valore e' tra quelli considerabili nulli
-                            $log.debug("property non impostata per: ",val, "prorpieta'",filterConditions[key].key);
+                            //$log.debug("property non impostata per: ",val, "prorpieta'",filterConditions[key].key);
                         }else{return false;}
                     }
                     // se ha delle alternative
@@ -356,27 +356,27 @@ angular.module('firstlife.services')
                     // controllo sulla condizione inizializza a true se le condizioni sono in AND, a false se sono in OR
                     var check           = checkValues;
                     // per ogni condizione
-                    $log.debug("Condizione: ", filterConditions[key]);
+                    //$log.debug("Condizione: ", filterConditions[key]);
                     for ( i = 0; i < filterConditions[key].values.length; i++ ){
-                        $log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",filterConditions[key].key);
+                        //$log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",filterConditions[key].key);
 
                         if( comparison(val[filterConditions[key].key], filterConditions[key].values[i], equal) ){
 
                             // se il valore e' obbligatorio e la condizione e' obbligatoria esco
                             if(checkValues && checkCondition){
-                                $log.debug("checkValues && checkCondition: true, esco ");
+                                //$log.debug("checkValues && checkCondition: true, esco ");
                                 return false;
                             }
                             // se la condizione e' obbligatoria il check = false
                             if(checkValues){
-                                $log.debug("checkValues: true, check = false ");
+                                //$log.debug("checkValues: true, check = false ");
                                 check = false;
                             }
                         }else{
-                            $log.debug("val[key] == filterConditions[key].values[i]");
+                            //$log.debug("val[key] == filterConditions[key].values[i]");
                             // se il valore e' rispettato e sono in OR allora check = true
                             if(!checkValues){
-                                $log.debug("!checkValues, check = true");
+                                //$log.debug("!checkValues, check = true");
                                 check = true;
                             }
                         }
@@ -389,25 +389,25 @@ angular.module('firstlife.services')
                         testCondition = true;
                 }
             }
-            $log.debug("Test entry: ",val ,  testCondition);
+            //$log.debug("Test entry: ",val ,  testCondition);
             return testCondition;
 
 
             // comparatore
             function comparison(a,b,equal){
-                $log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
+                //$log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
                 if(Array.isArray(a)){
                     if(equal){
-                        $log.debug(a,"==",b,"? ",(a == b));
+                        //$log.debug(a,"==",b,"? ",(a == b));
                         return (a.indexOf(b) >= 0);
                     }
                     return (a.indexOf(b) < 0);
                 }else{
                     if(equal){
-                        $log.debug(a,"==",b,"? ",(a == b));
+                        //$log.debug(a,"==",b,"? ",(a == b));
                         return a == b;
                     }
-                    $log.debug(a,"!=",b,"? ",(a != b));
+                    //$log.debug(a,"!=",b,"? ",(a != b));
                     return a != b;
                 }
             }
@@ -480,7 +480,7 @@ angular.module('firstlife.services')
                 self.filterConditions.push(rule);
             }
         }
-        console.log('filters',self.filters);
-        console.log('filterConditions',self.filterConditions);
+        //console.log('filters',self.filters);
+        //console.log('filterConditions',self.filterConditions);
     }
 });

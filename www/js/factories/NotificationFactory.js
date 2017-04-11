@@ -21,7 +21,7 @@ angular.module('firstlife.factories')
                     deferred.reject('not logged in');
                 }else{
                     var userId = user.id;
-                    $log.debug('user?',user)
+                    // $log.debug('user?',user);
                     var urlId = url.concat("fl_users/",userId,'/notifications/unread','?domainId=',domainId);
                     // se e' impostato un tempo per la since
                     if(since){ urlId = urlId.concat('&since=',since.toISOString()); }
@@ -34,7 +34,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('notificationFactory, get, response ',response);
+                            //$log.debug('notificationFactory, get, response ',response);
                             if(response && response.data && response.data.notifications){
                                 deferred.resolve(response.data.notifications);
                             }else
@@ -67,7 +67,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('EntityFactory, read, response ',response);
+                            //$log.debug('EntityFactory, read, response ',response);
                             deferred.resolve(response.data);
                         },
                         function(response){
@@ -99,7 +99,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('EntityFactory, consume, response ',response);
+                            //$log.debug('EntityFactory, consume, response ',response);
                             deferred.resolve(response.data);
                         },
                         function(response){
@@ -125,7 +125,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('notificationFactory, subscribes, response ',response);
+                            //$log.debug('notificationFactory, subscribes, response ',response);
                             //aggiungo alla cache
                             subscriptions[markerId] = response.data.users;
                             deferred.resolve(response.data.users);
@@ -169,7 +169,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('EntityFactory, subscribe, response ',response);
+                            //$log.debug('EntityFactory, subscribe, response ',response);
                             deferred.resolve(response.data);
                             //aggiungo utente
                             addUser(markerId,user.id);
@@ -200,7 +200,7 @@ angular.module('firstlife.factories')
                     };
                     $http(req).then(
                         function(response){
-                            $log.debug('EntityFactory, unsubscribe, response ',response);
+                            //$log.debug('EntityFactory, unsubscribe, response ',response);
                             deferred.resolve(response.data);
                             //rimuovo utente
                             removeUser(markerId,user.id);
@@ -220,11 +220,11 @@ angular.module('firstlife.factories')
             if(!subscriptions[markerId])
                 subscriptions[markerId] = new Array();
 
-            $log.debug('subscribers',subscriptions[markerId]);
+            //$log.debug('subscribers',subscriptions[markerId]);
             var i = subscriptions[markerId].indexOf(userId);
             if(i < 0)
                 subscriptions[markerId].push(userId);
-            $log.debug('subscribers',subscriptions[markerId]);
+            //$log.debug('subscribers',subscriptions[markerId]);
         }
 
         function removeUser(markerId,userId){
@@ -234,7 +234,7 @@ angular.module('firstlife.factories')
             var i = subscriptions[markerId].indexOf(userId);
             if(i > -1)
                 subscriptions[markerId].splice(i,1);
-            $log.debug('subscribers',subscriptions[markerId]);
+            //$log.debug('subscribers',subscriptions[markerId]);
         }
 
 

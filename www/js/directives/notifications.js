@@ -20,7 +20,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
 
             $scope.$watch('check',function(e,old){
                     if(e != old){
-                        $log.debug('check!')
+                        //$log.debug('check!')
                     }
                 })
             $scope.config = myConfig;
@@ -58,7 +58,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             //         init();
             //     }
             // })
-            $log.debug('check?',$scope.check)
+            //$log.debug('check?',$scope.check)
             // cambio del check notifiche
             function toCheck(){
                 if($scope.check)
@@ -79,7 +79,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             $scope.last = new Date();
             // funzione di polling
             var polling = function(){
-                $log.log('check notifications!');
+                // $log.debug('check notifications!');
                 $timeout.cancel(timer);
 
                 // check notifiche
@@ -117,11 +117,11 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 notificationFactory.get(since).then(
                     function(response){
                         $scope.last = new Date();
-                        $log.debug('check get notfications ',response);
+                        //$log.debug('check get notfications ',response);
                         // se c'e' qualcosa da leggere segnalo
                         $scope.counter = response.length;
                         if(response.length > 0){
-                            $log.debug('check = true');
+                            //$log.debug('check = true');
                             $scope.check = true;
                             toCheck();
                         }
@@ -153,7 +153,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
 
 
             $scope.show = function(){
-                $log.debug('show notifications ',$scope.news);
+                //$log.debug('show notifications ',$scope.news);
                 //apro modal
                 openModal();
                 $scope.check = false;
@@ -161,7 +161,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             }
 
             $scope.go = function(notification){
-                $log.debug('check notification ',notification);
+                //$log.debug('check notification ',notification);
                 // notifica letta
                 notification.new = false;
                 // chiudo la modal
@@ -210,7 +210,7 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 });
 
                 $scope.close = function() {
-                    $log.debug('hide close');
+                    //$log.debug('hide close');
                     $scope.notifications.hide();
                 };
                 // Cleanup the modal when we're done with it!
@@ -220,14 +220,14 @@ angular.module('firstlife.directives').directive('userHandler',function(){
                 // Execute action on hide modal
                 $scope.$on('notifications.hidden', function() {
                     // Execute action
-                    $log.debug('chiuse le notifiche');
+                    //$log.debug('chiuse le notifiche');
                 });
                 // Execute action on remove modal
                 $scope.$on('notifications.removed', function() {
                     // Execute action
                 });
                 $scope.$on('notifications.shown', function() {
-                    //$log.log('Notification modal is shown!');
+                    //$log.debug('Notification modal is shown!');
                 });
 
             };
