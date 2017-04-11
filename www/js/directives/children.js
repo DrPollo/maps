@@ -1,23 +1,23 @@
 /**
  * Created by drpollo on 27/03/2017.
  */
-angular.module('firstlife.directives').directive('entityChildren',function(){
+angular.module('firstlife.directives').directive('entityChildren',['$log','$filter','myConfig','ThingsService', function($log,$filter,myConfig,ThingsService){
     return {
         restrict: 'EG',
         scope: {
             marker: '=marker',
-            click: '=click',
-            add: '='
+            show: '&click',
+            add: '&'
         },
         templateUrl: '/templates/children/children.html',
-        controller: ['$scope','$log','$filter','myConfig','MapService', function($scope,$log,$filter,myConfig,MapService){
+        link: function(scope,element,attr){
 
-            $scope.config = myConfig;
+            scope.config = myConfig;
 
-            $scope.$on('$destroy', function(e) {
+            scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyEntityRelations){
                     e.preventDestroyEntityRelations = true;
-                    delete $scope;
+                    delete scope;
                 }
             });
 
@@ -26,76 +26,98 @@ angular.module('firstlife.directives').directive('entityChildren',function(){
             var delay = 1500;
 
             // check dei contenuti
-            $scope.ok = false;
+            scope.ok = false;
             // caricamento
-            $scope.loading = true;
+            scope.loading = true;
 
             loadSibillings();
 
             function loadSibillings (){
-                if(!$scope.marker || !$scope.marker.entity_type)
+                if(!scope.marker || !scope.marker.entity_type)
                     return
 
-                $scope.relations = {};
+                scope.relations = {
+                    children: [],
+                    parents: []
+                };
 
                 // caricamento dei child
-                var childrenRelations = $scope.config.types.child_relations[$scope.marker.entity_type];
-                var children = {};
-                for(key in childrenRelations){
-                    var childRel = childrenRelations[key];
-                    var c = MapService.searchFor($scope.marker.id, childRel.field);
-                    if(!$filter('isEmpty')(c)){
-                        children[key] = angular.copy(childRel);
-                        for(var j = 0; j<c.length;j++){
-                            var thing = c[j];
-                            if(!children[thing.entity_type])
-                                children[thing.entity_type] = angular.copy(childrenRelations[thing.entity_type]);
-                            if(!children[thing.entity_type].list)
-                                children[thing.entity_type].list = [];
-
-                            var index = children[thing.entity_type].list.map(function(e){return e.id}).indexOf(thing.id);
-                            if(index < 0) {
-                                // evito il check se ho trovato qualcosa
-                                $scope.ok = true;
-                                children[thing.entity_type].list.push(thing);
+                var childrenRelations = scope.config.types.child_relations[scope.marker.entity_type];
+                // $log.log(childrenRelations);
+                for(var key in childrenRelations) {
+                    ThingsService.getChildren(scope.marker.id,childrenRelations[key].relation).then(
+                        function (markers) {
+                            var list = Object.keys(markers).map(function (k) {
+                                return markers[k];
+                            });
+                            if(list.length > 0){
+                                var type = list[0].entity_type;
+                                var entry = angular.extend({},childrenRelations[type]);
+                                angular.extend(entry,{markers:list});
+                                scope.relations.children.push(entry);
+                                // qualcosa da leggere
+                                scope.ok = true;
+                                scope.loading = false;
                             }
+                        },
+                        function (err) {
+                            $log.error(err);
+                            scope.loading = false;
                         }
-
-                    }
+                    );
                 }
-                $scope.relations.children = children;
 
-                // caricamento dei parent
-                var parentsRelations = $scope.config.types.parent_relations[$scope.marker.entity_type];
-                var parents = {};
-                // serve ad impedire la duplicazione della ricerca per entita' con lo stesso field
-                var keysBanList = {};
-                for(key in parentsRelations){
+                // caricamento dei padri
+                var parentsRelations = scope.config.types.parent_relations[scope.marker.entity_type];
+                var ban = {};
+                for(key in parentsRelations) {
                     var parentRel = parentsRelations[key];
-                    if(!$filter('isEmpty')($scope.marker[parentRel.field]) && !keysBanList[parentRel.field]){
-                        // aggiungo il campo alla banList
-                        keysBanList[parentRel.field] = true;
-                        var p = MapService.searchFor($scope.marker[parentRel.field], 'id');
-                        parents[key] = angular.copy(parentRel);
-                        parents[key].list = p;
-                        // evito il check se ho trovato qualcosa
-                        $scope.ok = true;
+                    // evito i duplicati
+                    if(!ban[parentRel.field]){
+                        ban[parentRel.field] = true;
+
+                        var id = scope.marker[parentRel.field];
+                        if(id){
+                            ThingsService.get(id).then(
+                                function (marker) {
+                                    if(marker){
+                                        var type = marker.entity_type;
+                                        var entry = angular.extend({},parentsRelations[type]);
+                                        angular.extend(entry,{marker:marker});
+                                        scope.relations.parents.push(entry);
+                                        // qualcosa da leggere
+                                        scope.ok = true;
+                                        scope.loading = false;
+                                    }
+                                },
+                                function (err) {
+                                    $log.error(err);
+                                    scope.loading = false;
+                                }
+                            );
+                        }
                     }
                 }
-                $scope.relations.parents = parents;
+
 
                 // se non ho trovato nulla riprovo dopo x secondi una volta sola (per il caricamento diretto di entita')
-                if(!$scope.ok && tries < maxTries){
+                if(!scope.ok && tries < maxTries){
                     tries++;
-                    setTimeout(function(){ $scope.$apply(function(){loadSibillings()})}, delay);
+                    setTimeout(function(){ scope.$apply(function(){loadSibillings()})}, delay);
                 }
 
                 // se ho trovato qualcosa o se ho provato abbastanza
-                if(tries == maxTries || $scope.ok){
-                    $scope.loading = false;
+                if(tries == maxTries || scope.ok){
+                    scope.loading = false;
                 }
+
+                scope.click = function (id) {
+                    // $log.debug('show',id,scope.show);
+                    scope.show({id:id});
+                }
+
             }
-        }]
+        }
     }
 
-});
+}]);

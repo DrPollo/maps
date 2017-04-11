@@ -182,52 +182,7 @@ angular.module('firstlife.controllers')
             }
         });
 
-        // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
-        $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
 
-            getMarkers();
-
-            //
-            // if(!event.preventMapMoveend){
-            //     event.preventMapMoveend = true;
-            //     $log.debug("Event: moveend...", $scope.map);
-            //     // recupero i dati del layer
-            //     if(!$scope.config.map.area.data) {getData();}
-            //     // aggiornamento parametro search nell'url
-            //     updatePositionInSearch();
-            //     // controllo se sono in edit mode
-            //     if(!$scope.editMode){
-            //         // se e' stato impostato un delay
-            //         if (MOVEEND_DELAY > 0) {
-            //             if (moveendSetTimeout) {
-            //                 $log.debug("clearTimeout");
-            //                 clearTimeout(moveendSetTimeout);
-            //             }
-            //             moveendSetTimeout = setTimeout(updateMarkersDistributed, MOVEEND_DELAY);
-            //         }
-            //         else {
-            //             updateMarkersDistributed();
-            //         }
-            //     }
-            // }
-        });
-
-        //listner apertura e chiusura della modal del place
-        $scope.$on('openPlaceModal', function(event, args){
-            if(!event.preventOpenPlaceModal){
-                event.preventOpenPlaceModal = true;
-                // aggiorno il parametro place dalla search
-                // updateSearch({place:args.marker});
-                updatePlaceInSearch(args.marker);
-            }
-        });
-        $scope.$on('closePlaceModal', function(event, args){
-            if(!event.preventClosePlaceModal){
-                event.preventClosePlaceModal = true;
-                // rimuovo il parametro place dalla search
-                deleteInSearch('entity');
-            }
-        });
         //listner cambio dei parametri search
         $scope.$watch(
             function(){ return $location.search(); },
@@ -271,6 +226,27 @@ angular.module('firstlife.controllers')
             true);
 
 
+        // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
+        $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
+            getMarkers();
+        });
+
+        //listner apertura e chiusura della modal del place
+        $scope.$on('openPlaceModal', function(event, args){
+            if(!event.preventOpenPlaceModal){
+                event.preventOpenPlaceModal = true;
+                // aggiorno il parametro place dalla search
+                // updateSearch({place:args.marker});
+                updatePlaceInSearch(args.marker);
+            }
+        });
+        $scope.$on('closePlaceModal', function(event, args){
+            if(!event.preventClosePlaceModal){
+                event.preventClosePlaceModal = true;
+                // rimuovo il parametro place dalla search
+                deleteInSearch('entity');
+            }
+        });
 
         // catturo il cambio di parametro search
         $scope.$on("newSearchParam", function(e,params) {
@@ -286,7 +262,6 @@ angular.module('firstlife.controllers')
 
         $scope.$on("startEditing",function(event,args){
             $scope.updateEntity = args;
-//            $log.debug('check start editing ',args);
             // se il luogo non e' bounded ad una posizione
             if(!args.skip){
                 // centro la mappa sul luogo dei parametri
@@ -320,9 +295,8 @@ angular.module('firstlife.controllers')
         });
 
         $rootScope.$on("timeUpdate",function(event,args){
-            // todo set time filter
-
-            getMarkers();
+            // al cambio filtro temporale ricalcolo i dati
+            getMarkers(true);
             event.preventDefault();
         });
 
@@ -831,15 +805,16 @@ angular.module('firstlife.controllers')
 
 
         // update marker bbox
-        function getMarkers(){
+        function getMarkers(reset){
             // chiedo i nuovi marker
             $timeout(function () {
                 ThingsService.bbox($scope.flmap.bounds).then(
                     function (markers){
                         // reset dei marker
-                        $scope.flmap.markers = angular.extend({},markers);
+                        if(reset)
+                            $scope.flmap.markers = angular.extend({},markers);
                         // update dei marker
-                        // $scope.flmap.markers = angular.extend($scope.flmap.markers,markers);
+                        else $scope.flmap.markers = angular.extend($scope.flmap.markers,markers);
                         console.timeEnd('getMarkers');
                     },
                     function (err){

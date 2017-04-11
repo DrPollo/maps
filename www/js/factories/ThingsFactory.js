@@ -133,6 +133,30 @@ angular.module('firstlife.factories')
                 );
 
                 return deferred.promise;
+            },
+            children: function (id,relation) {
+                var deferred = $q.defer();
+
+                var urlId = urlThings.concat('/',id,'/',relation).concat(format);
+
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    headers: {"Content-Type": "application/json"},
+                    data: {}
+                };
+                $http(req).then(
+                    function (response) {
+                        $log.debug("get Thing children ", response);
+                        // todo togli il bugfix
+                        deferred.resolve(response.data.data ? response.data.data.features: response.data.features );
+                    },
+                    function (err) {
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
             }
         }
     }]);

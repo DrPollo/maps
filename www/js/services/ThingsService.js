@@ -51,7 +51,7 @@ angular.module('firstlife.services')
                         // aggiungo alla cache
                         cache = angular.extend([],features);
                         var markers = makeMarkers(features);
-                        $log.log('bbox result',features.length);
+                        $log.debug('bbox result',features.length);
                         deferred.resolve(markers);
                     },
                     function (err) {
@@ -153,6 +153,20 @@ angular.module('firstlife.services')
                     filters[cat].toggle = 1;
                     $log.debug("Aggiunta o rimossa chiave: ",filterConditions[index].values," vado in stato 1");
                 }
+            },
+            getChildren: function (id,relation) {
+                var deferred = $q.defer();
+                ThingsFact.children(id,relation).then(
+                    function (features) {
+                        var markers = makeMarkers(features);
+                        $log.debug('children result',features.length);
+                        deferred.resolve(markers);
+                    },
+                    function (err) {
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
             },
             getFilter: function (key) {
                 if(key)

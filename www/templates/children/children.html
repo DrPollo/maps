@@ -7,25 +7,27 @@
 <div id="children">
     <div class="cover" ng-show="loading"><ion-spinner icon="android"></ion-spinner></div>
     <nothing-to-read ng-if="!loading && !ok"></nothing-to-read>
-    <div class="parent_relation" ng-if="!(angular.equals(relations.parents,{}))"
-         ng-repeat="(key,parentRel) in relations.parents">
-        <div ng-show="parentRel.list.length > 0">
-            <div class="item item-divider">{{parentRel.label |translate}}</div>
-            <div class="item item-icon-left item-icon-right" ng-repeat="parent in parentRel.list track by $index"  on-tap="click(parent.id)">
-                <i ng-if="parent.category" class="icon {{parent.icons[0].icon}}"  style="color:{{parent.icons[0].color}}"></i>
-                {{parent.name}}
-                <i class="icon positive ion-android-arrow-dropleft-circle"></i>
-            </div>
+    <div class="parent_relation" ng-if="relations.parents.length > 0"
+         ng-repeat="parent in relations.parents">
+        <div class="item item-divider">{{parent.label |translate}}</div>
+        <div class="item item-button-right">
+            <i class="icon {{parent.marker.icons[0].icon}}"  style="color:{{parent.marker.icons[0].color}}"></i>
+            {{parent.marker.name}}
+            <button class="button button-positive" on-tap="click(parent.marker.id)">
+                <i class="icon ion-android-search"></i>
+            </button>
         </div>
     </div>
     <div class="child_relation" ng-if="!isEmpty(relations.children)"
-         ng-repeat="(key,childRel) in relations.children">
-        <div ng-show="childRel.list.length > 0">
-            <div class="item item-divider">{{childRel.childrenLabel |translate}}</div>
-            <div class="item item-icon-left item-icon-right" ng-repeat="child in childRel.list track by $index"  on-tap="click(child.id)">
-                <i ng-if="child.category" class="icon {{child.icons[0].icon}}"  style="color:{{child.icons[0].color}}"></i>
+         ng-repeat="children in relations.children">
+        <div ng-show="children.markers.length > 0">
+            <div class="item item-divider">{{children.childrenLabel |translate}}</div>
+            <div class="item item-button-right" ng-repeat="child in children.markers track by $index" >
+                <i class="icon {{child.icons[0].icon}}"  style="color:{{child.icons[0].color}}"></i>
                 {{child.name}}
-                <i class="icon positive ion-android-arrow-dropright-circle"></i>
+                <button class="button button-positive" on-tap="click(child.id)">
+                    <i class="icon ion-android-search"></i>
+                </button>
             </div>
         </div>
     </div>

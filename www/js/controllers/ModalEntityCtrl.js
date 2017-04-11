@@ -52,7 +52,8 @@ angular.module('firstlife.controllers')
         
 
         //modal info sul place
-        $scope.showMCardPlace = function(markerId){  
+        $scope.showMCardPlace = function(markerId){
+            $log.log('showMCardPlace',markerId);
             // inizio caricamento modal
             $scope.loaded = false;
             $scope.error = false;

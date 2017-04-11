@@ -871,7 +871,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
         restrict: 'E',
         scope: {
             marker: '=',
-            showMCardPlace: '&',
+            show: '&show',
             add:'&'
         },
         templateUrl: '/templates/modals/modalLists.html',
@@ -891,6 +891,10 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             // cambio di tab
             scope.setToggle = function(i){
                 scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
+            }
+            scope.click = function (id) {
+                // $log.debug('modal.js',id);
+                scope.show({id:id});
             }
         }
     }

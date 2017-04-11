@@ -24,13 +24,10 @@ angular.module('firstlife.directives')
                 });
 
                 function initTree(rect){
-                    $log.log(firstLevel);
                     scope.size = rect;
                     var boxes = Treemap.generate(firstLevel,rect.width,rect.height);
-                    //$log.debug(scope.cats,boxes);
                     for(var i = 0; i < boxes.length; i++){
                         scope.cats[i].rect = toPer(boxes[i]);
-                        //$log.debug(scope.cats[i],boxes[i]);
                         scope.cats[i].toggle = false;
                     }
                     for (var i = 0 ; i < scope.cats.length; i++) {
@@ -62,7 +59,6 @@ angular.module('firstlife.directives')
                 };
                 // toggle categoria
                 scope.catToggle = function(cat,key){
-                    $log.log('cat toggle!',cat,key, scope.cats);
                     // toggle della categoria
                     scope.toggled[cat][key] = !scope.toggled[cat][key];
                     // toggle del filtro
@@ -70,13 +66,11 @@ angular.module('firstlife.directives')
                 };
                 //
                 scope.iconToggle = function(id){
-                    $log.log('icon toggle!',id);
                     // toggle dell'icona e assegno il nuovo valor
                     scope.favCat = scope.changeFavCat({id:id});
                 }
 
                 function toPer(rect){
-                    //$log.debug(rect,scope.size);
                     // x,y,width,height
 
                     var x = (rect[0]/scope.size.width)*100;
@@ -163,7 +157,6 @@ angular.module('firstlife.directives')
             var buffer_size = 20;
             bufferSearch = new CBuffer(buffer_size);
             bufferSearch.overflow = function(data) {
-                //console.log("Buffer overflow: ",data);
             };
             scope.visible = false;
             scope.query = '';
@@ -329,7 +322,6 @@ angular.module('firstlife.directives')
                     // controlla lo stradario
                     SearchService.geocoding(e).then(
                         function(response){
-                            console.log("SearchCtrl, watch query, SearchService.geocoding, response: ",response);
                             scope.locations = response.slice();
                             scope.results = true;
                             // buffer di ricerca disabilitato
