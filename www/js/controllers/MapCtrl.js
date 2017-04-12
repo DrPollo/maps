@@ -180,7 +180,7 @@ angular.module('firstlife.controllers')
                 if($state.current.name != 'app.maps')
                     return
 
-                //$log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
+                // $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
 
                 if(!self.watchSearchEnabled){
                     self.watchSearchEnabled = true;
@@ -280,7 +280,6 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
                 // aggiorno il parametro place dalla search
-                // updateSearch({place:args.marker});
                 updatePlaceInSearch(args.marker);
 
         });
@@ -634,108 +633,19 @@ angular.module('firstlife.controllers')
 
 
         // centra la mappa
-        // accetta paramentri per la locate: center, bounds, user, marker
-        // todo refactory
-        function locate(coord){
-            //$log.debug("centro su luogo, id: "+typeof(coord)+" ",coord);
+        // accetta paramentri per la locate: center, marker, coords
+        function locate(params){
+            $log.debug("centro su luogo: ",params);
 
-            if(typeof(coord) === 'object' && 'entity' in coord && coord.entity){
-                // ho una entita' 
-                //$log.debug('centro su entita',coord.entity);
-                locateEntity(coord.entity);
-            }else if( typeof(coord) === 'number'){
-                // ho una entita' 
-                locateEntity(coord);
-            } else if(typeof(coord) === 'object' && 'bound' in coord){
-                //$log.debug("centro su bounds: ",coord);
-                setMapCenter(coord);
-            } else if(typeof(coord) === 'object' && 'lat' in coord && 'lng' in coord && coord.lat && coord.lng){
-                //$log.debug('locate coord',coord);
-                var params = {
-                    lat:parseFloat(coord.lat),
-                    lng:parseFloat(coord.lng),
-                    zoom:coord.zoom ? parseInt(coord.zoom) : parseInt(config.map.zoom_create)
-                };
-                setMapCenter(params);
-            } else if(coord === 'user'){
-                // localizzo su posizione utente
-                // Setup the loader
-                $ionicLoading.show({
-                    content: '<div>Localizzazione in corso...<br> Assicurati di aver abilitato il gps o il browser!<i class="icon ion-loading-c"></i></div>',
-                    animation: 'fade-in',
-                    showBackdrop: false,
-                    maxWidth: 50,
-                    showDelay: 0
-                });
-
-
-                //using ngCordova
-                $cordovaGeolocation
-                    .getCurrentPosition()
-                    .then(function (position) {
-                        //$log.debug(coord);
-                        /*self.map.center.lat  = position.coords.latitude;
-                         self.map.center.lng = position.coords.longitude;
-                         self.map.center.zoom = $rootScope.info_position.zoom;
-
-                         self.map.markers[0] = {
-                         lat:position.coords.latitude,
-                         lng:position.coords.longitude,
-                         focus: true,
-                         draggable: false
-                         };*/
-
-                        $scope.markersFiltered[0] = {
-                            lat:position.coords.latitude,
-                            lng:position.coords.longitude,
-                            focus: true,
-                            draggable: false
-                        };
-                        var params = {lat:position.coords.latitude,lng:position.coords.longitude,zoom:parseInt(config.map.zoom_create)};
-                        setMapCenter(params);
-
-                        $ionicLoading.hide();
-
-
-                    }, function(err) {
-                        // error
-                        $log.error("Location error: ", err);
-                        $ionicLoading.hide();
-
-                    });
-
-            }else{
-                // posizione default della mappa
-                /*self.map.center.lat = $scope.config.map.map_default_lat;
-                 self.map.center.lng = $scope.config.map.map_default_lng;
-                 self.map.center.zoom = $scope.config.map.zoom_level;*/
-                var params = {
-                    lat:parseFloat($scope.config.map.map_default_lat),
-                    lng:parseFloat($scope.config.map.map_default_lng),
-                    zoom:parseInt($scope.config.map.zoom_level)};
-                setMapCenter(params);
+            if(params.id){
+                // ho una entita'
+                locateEntity(params.id);
+            }else if(params.lat && params.lng){
+                // posiziono la mappa
+                updateSearch(params);
             }
-
         };
 
-        // aggiorno i parametri di posizione della mappa
-        function setMapCenter(params){
-            //$log.debug("MapService, setMapCenter, response: ",map, " params ",params);
-            if(params.bound){
-                $scope.flmap.bounds = params.bound;
-            }
-            if(params.zoom){
-                $scope.flmap.center.zoom = params.zoom;
-            }
-            if(params.lat){
-                $scope.flmap.center.lat = params.lat;
-            }
-            if(params.lng){
-                $scope.flmap.center.lng = params.lng;
-            }
-            //$log.debug("Nuovo centro della mappa",newCenter);
-            //updateSearch(newCenter);
-        }
 
         // An alert dialog
         function showAlert (content) {
@@ -915,30 +825,17 @@ angular.module('firstlife.controllers')
 
         // centra su entita'
         function locateEntity(entityId){
-            var index = searchMarkerIndex(entityId);
+            var marker = $scope.flmap.markers[entityId];
             // se il marker esiste
-            if(index > -1){
-                var marker = $scope.flmap.markers[index];
-                //$log.debug("Location: ", marker);
-                /*self.map.center.lat = marker.lat;
-                 self.map.center.lng = marker.lng,
-                 self.map.center.zoom = $rootScope.info_position.zoom;*/
-                var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
-                locate(params);
-                //$log.debug("nuova posizione", self.map.center);
+            if(marker){
+                var params = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                updateSearch(params);
             }else{
                 //altrimenti invoco una get
-                //$log.debug("chiamo per :", entityId);
                 ThingsService.get(entityId).then(
                     function(marker){
-                        // localizzo su marker
-                        //$log.debug("Location: ", marker);
-                        /*self.map.center.lat = marker.lat;
-                         self.map.center.lng = marker.lng,
-                         self.map.center.zoom = $rootScope.info_position.zoom*/
-                        var params = {lat:marker.lat,lng:marker.lng};//,zoom:parseInt(config.map.zoom_create)};
-                        locate(params);
-                        //$log.debug("nuova posizione", $scope.flmap.center);
+                        var params = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                        updateSearch(params);
                     },
                     function(err){$log.error("Location error: ",err);}
                 );
@@ -987,10 +884,12 @@ angular.module('firstlife.controllers')
 
         // controllo i parametri di posizione
         function check4Position(e){
+            $log.debug('check4Position')
             // se ho settati i parametri di posizione
             if(e.lat && e.lng && e.zoom){
                 if($scope.flmap.center.lat != e.lat || e.lng != $scope.flmap.center.lng || e.zoom != $scope.flmap.center.zoom){
-                    locate(e);
+                    // locate(e);
+                    $scope.flmap.center = {lat:e.lat, lng:e.lng, zoom:e.zoom};
                 }
             }
 
