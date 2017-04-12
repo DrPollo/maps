@@ -73,10 +73,10 @@ function deleteData(i,data,url,token,limit){
     var entry = data[i];
     console.log('to be delteted?', entry.properties.tags[0] === 'test');
 
-    // if(entry.properties.tags[0] !== 'test') {
-    //     return deleteData(1 + i, data, url, token);
-    // }
-    // console.log('entry',entry);
+    if(entry.properties.tags[0] !== 'test') {
+        return deleteData(1 + i, data, url, token);
+    }
+    console.log('entry',entry);
     var id = entry.properties.id;
     var options = {
         hostname: url,

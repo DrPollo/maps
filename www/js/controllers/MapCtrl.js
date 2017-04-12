@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'myConfig', 'AuthService',  function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService, myConfig, AuthService) {
+    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'myConfig', 'AuthService', 'leafletData', function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService, myConfig, AuthService, leafletData) {
 
 
 
@@ -222,8 +222,55 @@ angular.module('firstlife.controllers')
                 return ;
 
             event.preventDefault();
-            getMarkers();
+            // aggiorno posizione parametro search
             updatePositionInSearch();
+        });
+        $scope.$on('leafletDirectiveMap.mymap.tileload', function(event, args) {
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+            // aggiorno posizione parametro search
+            // $log.debug('tileload',args)
+            addTile(args.coords);
+        });
+        $scope.$on('leafletDirectiveMap.mymap.tileunload', function(event, args) {
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+            // aggiorno posizione parametro search
+            // $log.debug('tileunload',args)
+            removeTile(args.coords);
+        });
+        // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
+        $scope.$on('leafletDirectiveMap.mymap.load', function(event, args) {
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+
+            // $log.debug('map loaded');
+
+            // listners al livello tile
+            leafletData.getLayers().then(
+                function (layers) {
+                    // $log.debug(layers.baselayers.view);
+                    // $log.debug('init layer ref',!$scope.tileLayer);
+                    if(!$scope.tileLayer){
+                        $scope.tileLayer = layers.baselayers.view;
+                        // $log.debug('tile layer',$scope.tileLayer);
+                        $scope.tileLayer.on('tileload',function (e) {
+                            // $log.debug('tileload',e);
+                            $scope.$broadcast('leafletDirectiveMap.mymap.tileload',{coords:e.coords});
+                        });
+                        $scope.tileLayer.on('tileunload',function (e) {
+                            // $log.debug('tileunload',e);
+                            $scope.$broadcast('leafletDirectiveMap.mymap.tileunload',{coords:e.coords});
+                        });
+                    }
+                }
+            );
         });
 
         //listner apertura e chiusura della modal del place
@@ -299,7 +346,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
             // al cambio filtro temporale ricalcolo i dati
-            getMarkers(true);
+            updateMarkers(true);
         });
 
         $scope.$on("clickMarker",function(event,args){
@@ -448,7 +495,7 @@ angular.module('firstlife.controllers')
             // cerco l'indice della regola per le categorie
             ThingsService.toggleFilter(cat, key);
             // aggiorno i marker
-            updateMarkers();
+            updateMarkers(true);
         };
 
         // cambio il category space utilizzato per le icone
@@ -744,30 +791,37 @@ angular.module('firstlife.controllers')
         };
 
 
-
-        // update marker bbox
-        function getMarkers(reset){
-            // chiedo i nuovi marker
-            $timeout(function () {
-                ThingsService.bbox($scope.flmap.bounds).then(
-                    function (markers){
-                        // reset dei marker
-                        if(reset)
-                            $scope.flmap.markers = angular.extend({},markers);
-                        // update dei marker
-                        else $scope.flmap.markers = angular.extend($scope.flmap.markers,markers);
-                        console.timeEnd('getMarkers');
-                    },
-                    function (err){
-                        $log.error(err);
-                        console.timeEnd('getMarkers');
-                    }
-                );
-            },50);
+        // add tile alla lista delle tile attive e get dei marker
+        var tiles = {};
+        function addTile(tile) {
+            // add tile to list of tiles
+            tiles[tile.z+':'+tile.x+':'+tile.y] = tile;
+            getTile(tile);
         }
+        function removeTile(tile) {
+            delete tiles[tile.z+':'+tile.x+':'+tile.y];
+        }
+        function getTile(tile) {
+            ThingsService.tile(tile).then(
+                function (markers) {
+                    // aggiorno lista tile
+                    $scope.flmap.markers = angular.extend($scope.flmap.markers,markers);
+                },
+                function (err) {
+                    $log.error(err);
+                }
+            );
+        }
+
         // filtro i marker in cache
-        function updateMarkers() {
-            $scope.flmap.markers = angular.extend({},ThingsService.filter());
+        function updateMarkers(reset) {
+            // clear cache
+            if(reset)
+                ThingsService.resetCache();
+            // chiamate alle tile attive
+            angular.forEach(tiles,function (tile,id) {
+                getTile(tile);
+            })
         }
 
 
@@ -974,7 +1028,7 @@ angular.module('firstlife.controllers')
             //$log.debug('change query ',q);
             // setMapMarkers();
             ThingsService.setQuery(q);
-            updateMarkers();
+            updateMarkers(true);
         }
 
         function check4timeline(e,old){
@@ -1111,7 +1165,7 @@ angular.module('firstlife.controllers')
         },
         events: {
             map: {
-                enable: ['click', 'moveend', 'focus'],
+                enable: ['click', 'moveend', 'focus','load', 'unload'],
                 logic: 'broadcast'
             },
             marker: {

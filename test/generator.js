@@ -13,11 +13,11 @@ function generate(){
 
     var url = 'api.firstlife.org';
 
-    var token = 'Bearer 19f5719004921307e6bcda3539b0d6d6e769c94d';
+    var token = 'Bearer 080b8e532d50ec06f31d26b0dc239f7931b50e15';
 
     console.log('connecting to ',url, 'with token ',token);
 
-    var ratio = 12;
+    var ratio = 15;
     //westlimit=7.577835; southlimit=45.00679; eastlimit=7.773339; northlimit=45.140221
     var bbox = [[7.577835,45.00679],[7.773339,45.140221]];
     var deltas = [

@@ -71,6 +71,27 @@ angular.module('firstlife.services')
                     }
                 );
 
+                return deferred.promise;
+            },
+            resetCache : function () {
+                return cache = [];
+            },
+            tile: function (tile) {
+                var deferred = $q.defer();
+
+                ThingsFact.tile(tile).then(
+                    function (features) {
+                        // $log.debug(features);
+                        // aggiungo alla cache
+                        angular.extend(cache,features);
+                        var markers = makeMarkers(features);
+                        //$log.debug('tile result',features.length);
+                        deferred.resolve(markers);
+                    },
+                    function (error) {
+                        $log.error(error);
+                    }
+                );
 
                 return deferred.promise;
             },

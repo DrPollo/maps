@@ -5,6 +5,7 @@ angular.module('firstlife.factories')
         var format = myConfig.format;
         var urlThings= myConfig.backend_things;
         var urlBbox= myConfig.backend_bbox;
+        var urlTile= myConfig.backend_tilesearch;
         var fields = 'fields=valid_from,valid_to,parent_id,location,comment_of,article_of,group_of,group_id,categories,geometry,name,user,tags';
         var domains = [self.config.domain_id].concat(self.config.read_domains).join(',');
         var limit= 99999;
@@ -123,7 +124,7 @@ angular.module('firstlife.factories')
                     list.push(key+'='+params[key]);
                     return list;
                 },[]);
-                var urlId = urlBbox.concat('?domainId=',domains,'&limit=',limit,'&',fields,'&',p.join('&')).concat(format);
+                var urlId = urlBbox.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&',p.join('&'));
 
                 var req = {
                     url: urlId,
@@ -134,6 +135,35 @@ angular.module('firstlife.factories')
                 $http(req).then(
                     function (response) {
                         //$log.debug("bbox response", response);
+                        deferred.resolve(response.data.things.features);
+                    },
+                    function (err) {
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+
+                return deferred.promise;
+            },
+            tile: function (tile) {
+                var deferred = $q.defer();
+                // controllo i parametri
+                if(!tile.z || !tile.y, !tile.x){
+                    deferred.reject('no tile param');
+                    return deferred.promise;
+                }
+
+                var urlId = urlTile.concat('/',tile.z,'/',tile.x,'/',tile.y,format,'?domainId=',domains,'&limit=',limit,'&',fields);
+
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    headers: {"Content-Type": "application/json"},
+                    data: {}
+                };
+                $http(req).then(
+                    function (response) {
+                        // $log.debug("tile response", response);
                         deferred.resolve(response.data.things.features);
                     },
                     function (err) {
