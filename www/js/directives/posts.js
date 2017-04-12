@@ -39,6 +39,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             );
             // apro il menu
             scope.openMenu = function($event, id, owner) {
+                // $log.debug('openMenu',$event,id,owner);
                 scope.current = id;
                 initPerms(owner);
                 if(scope.popover)
@@ -134,6 +135,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             }
 
             function initList(){
+                scope.posts = [];
                 var deferred = $q.defer();
                 postFactory.getPosts(scope.id).then(
                     function (results) {
@@ -161,9 +163,10 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     return false;
 
                 var source = 'others';
-                if(author == scope.user.id)
+                if(author === scope.user.id)
                     source = 'self';
 
+                // $log.debug(author ,'==',scope.user.id);
                 scope.checkPerms = AuthService.checkPerms(source);
                 return scope.perms;
             }
@@ -189,7 +192,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             scope.highlight = false;
             scope.togglePicture = function(){
                 scope.highlight = !scope.highlight;
-            }
+            };
+
         }
     }
 }]).directive('postEditor', ['$log' , 'AuthService', 'postFactory' , function ($log, AuthService, postFactory) {

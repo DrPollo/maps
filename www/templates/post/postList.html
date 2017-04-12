@@ -3,7 +3,7 @@
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
     <!--<div class="item-divider">{{'POSTS' | translate}}</div>-->
     <div ng-repeat="post in posts |orderBy:'-timestamp_insert' track by $index" class="post-outer">
-        <button ng-if="user" ng-show="edit !== post.id" on-tap="openMenu($event,post.id, post.owner)" class="menu button button-dark button-clear button-icon ion-android-arrow-dropdown" linear-fastanimation fade-in></button>
+        <button ng-if="user" ng-show="edit !== post.id" on-tap="openMenu($event,post.id, post.owner.id)" class="menu button button-dark button-clear button-icon ion-android-arrow-dropdown" linear-fastanimation fade-in></button>
         <post post="post" ng-show="edit !== post.id" class="linear-fastanimation fade-in"></post>
         <button ng-if="user" ng-show="edit === post.id" on-tap="abortUpdate()" class="menu button button-small button-dark button-clear button-icon icon ion-ios-close-empty linear-fastanimation fade-in"></button>
         <post-updater ng-if="edit === post.id" post="post" update="sendUpdate(id,content)" class="linear-fastanimation fade-in"></post-updater>

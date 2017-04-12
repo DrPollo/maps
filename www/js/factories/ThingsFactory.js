@@ -166,7 +166,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        // $log.debug("tile response", response);
+                        // $log.log("tile response",params.z,'/',params.x,'/',params.y, response.data.things.features.length);
                         deferred.resolve(response.data.things.features);
                     },
                     function (err) {

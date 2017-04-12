@@ -1,3 +1,4 @@
+<!--<button ng-if="user" ng-show="edit" on-tap="openMenu($event,post.id, post.owner.id)" class="menu button button-dark button-clear button-icon ion-android-arrow-dropdown" linear-fastanimation fade-in></button>-->
 <div class="post item item-thumbnail-left" ng-class="{'inappropriate' : post.inappropriate, 'highlight' : highlight}">
     <img src="{{ !highlight ? post.image_thumbnail : post.image_url}}" width="100%" class="fast-ease-in-out-animation"  on-tap="togglePicture()"/>
     <i class="icon ion-images imgbg"></i>
@@ -18,3 +19,6 @@
         </div>
     </div>
 </div>
+<!--<button ng-if="user" ng-show="edit" on-tap="abortUpdate()" class="menu button button-small button-dark button-clear button-icon icon ion-ios-close-empty linear-fastanimation fade-in"></button>-->
+<!--<post-updater ng-if="edit" post="post" update="sendUpdate(id,content)" class="linear-fastanimation fade-in"></post-updater>-->
+<!--<comments-list id="post.id"></comments-list>-->

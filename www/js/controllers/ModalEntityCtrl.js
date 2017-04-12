@@ -320,7 +320,6 @@ angular.module('firstlife.controllers')
 
 
         function initPerms (author){
-            $log.log(author);
             if(!$scope.user)
                 $scope.user = AuthService.getUser();
             // se l'utente non e' definito
@@ -332,7 +331,7 @@ angular.module('firstlife.controllers')
                 source = 'self';
 
 
-            $log.log(author,'==',$scope.user.id);
+            // $log.debug(author,'==',$scope.user.id);
             $scope.checkPerms = AuthService.checkPerms(source);
             return $scope.perms;
         }
