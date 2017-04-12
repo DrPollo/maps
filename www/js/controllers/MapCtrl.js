@@ -97,6 +97,7 @@ angular.module('firstlife.controllers')
             check4Initiative(params);
 
 
+
             $scope.isLoggedIn = AuthService.isAuth();
 
 
@@ -125,14 +126,14 @@ angular.module('firstlife.controllers')
 
                 default:
                     // 1) diretto per il viewer
-                    //$log.debug("MapCtrl, gestione stato, default",params);
+                    $log.debug("MapCtrl, gestione stato, default",params);
                     // posiziono la mappa se ci solo le coordinate,
                     // altrimenti si lascia il centro della mappa
 
                     if(params.entity)
                         clickMarker(params.entity);
-                    else // centro la mappa sullo stato corrente
-                        locate(params);
+                    // centro la mappa sullo stato corrente
+                    locate(params);
 
                     if(params)
                         check4customFilters(params,{});
@@ -636,8 +637,10 @@ angular.module('firstlife.controllers')
         // accetta paramentri per la locate: center, marker, coords
         function locate(params){
             $log.debug("centro su luogo: ",params);
-
-            if(params.id){
+            if(params.entity){
+                // ho una entita'
+                locateEntity(params.entity);
+            }else if(params.id){
                 // ho una entita'
                 locateEntity(params.id);
             }else if(params.lat && params.lng){
@@ -825,17 +828,20 @@ angular.module('firstlife.controllers')
 
         // centra su entita'
         function locateEntity(entityId){
+            // $log.debug('locate entity',entityId);
             var marker = $scope.flmap.markers[entityId];
             // se il marker esiste
             if(marker){
-                var params = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
-                updateSearch(params);
+                var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                // $log.debug('locate entity cached',center);
+                updateSearch(center);
             }else{
                 //altrimenti invoco una get
                 ThingsService.get(entityId).then(
                     function(marker){
-                        var params = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
-                        updateSearch(params);
+                        var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                        // $log.debug('remote entity',center);
+                        updateSearch(center);
                     },
                     function(err){$log.error("Location error: ",err);}
                 );
