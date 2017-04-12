@@ -231,7 +231,7 @@ angular.module('firstlife.timeline',[])
                 }
                 // imposto filtro temporale
                 var newInterval = getFullInterval();
-                //$log.debug('new interval ',newInterval);
+                // $log.debug('new interval ',newInterval);
                 ThingsService.setTimeFilters(newInterval);
 
                 // evento di update per mapCtrl
@@ -529,8 +529,8 @@ angular.module('firstlife.timeline',[])
             // calcola l'intervallo definito dalla timeline
             function getFullInterval(){
                 var time = {};
-                time.from = new Date($scope.timewindow[0].interval.start().toISOString());
-                time.to = new Date($scope.timewindow[$scope.timewindow.length -1 ].interval.end().toISOString());
+                time.from = new Date($scope.timewindow[0].interval.start()).toISOString();
+                time.to = new Date($scope.timewindow[$scope.timewindow.length -1 ].interval.end()).toISOString();
                 return time;
             }
 

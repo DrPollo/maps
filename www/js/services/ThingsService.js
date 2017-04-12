@@ -78,8 +78,12 @@ angular.module('firstlife.services')
             },
             tile: function (tile) {
                 var deferred = $q.defer();
-
-                ThingsFact.tile(tile).then(
+                var params = {
+                    from: filters.time.from,
+                    to: filters.time.to
+                };
+                angular.extend(params,tile);
+                ThingsFact.tile(params).then(
                     function (features) {
                         // $log.debug(features);
                         // aggiungo alla cache
@@ -96,6 +100,7 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             setTimeFilters: function(time){
+                // $log.debug('set time',time);
                 filters.time = angular.extend({},time);
             },
             getTimeFilters: function(){

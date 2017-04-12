@@ -16,13 +16,13 @@ function clean(limit){
     var bbox = [[7.577835,45.00679],[7.773339,45.140221]];
 
 
-    var url = 'api.firstlife.org';
+    var url = 'api.fldev.di.unito.it';
     var domain = 1;
     var ne_lat = bbox[1][1]+0.1;
     var ne_lon = bbox[1][0]+0.1;
     var sw_lat = bbox[0][1]-0.1;
     var sw_lon = bbox[0][0]-0.1;
-    var token = 'Bearer 19f5719004921307e6bcda3539b0d6d6e769c94d';
+    var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
 
 
 
@@ -76,7 +76,7 @@ function deleteData(i,data,url,token,limit){
     if(entry.properties.tags[0] !== 'test') {
         return deleteData(1 + i, data, url, token);
     }
-    console.log('entry',entry);
+    // console.log('entry',entry);
     var id = entry.properties.id;
     var options = {
         hostname: url,

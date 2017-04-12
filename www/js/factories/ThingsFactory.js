@@ -145,16 +145,19 @@ angular.module('firstlife.factories')
 
                 return deferred.promise;
             },
-            tile: function (tile) {
+            tile: function (params) {
                 var deferred = $q.defer();
                 // controllo i parametri
-                if(!tile.z || !tile.y, !tile.x){
+                if(!params.z || !params.y, !params.x){
                     deferred.reject('no tile param');
                     return deferred.promise;
                 }
 
-                var urlId = urlTile.concat('/',tile.z,'/',tile.x,'/',tile.y,format,'?domainId=',domains,'&limit=',limit,'&',fields);
-
+                var urlId = urlTile.concat('/',params.z,'/',params.x,'/',params.y,format,'?domainId=',domains,'&limit=',limit,'&',fields);
+                if(params.from)
+                    urlId = urlId.concat('&from=',params.from);
+                if(params.to)
+                    urlId = urlId.concat('&from=',params.to);
                 var req = {
                     url: urlId,
                     method: 'GET',
