@@ -223,7 +223,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
             // aggiorno posizione parametro search
-            updatePositionInSearch();
+            $timeout(updatePositionInSearch,50);
         });
         $scope.$on('leafletDirectiveMap.mymap.tileload', function(event, args) {
             if(event.defaultPrevented)
@@ -495,7 +495,7 @@ angular.module('firstlife.controllers')
             // cerco l'indice della regola per le categorie
             ThingsService.toggleFilter(cat, key);
             // aggiorno i marker
-            updateMarkers(true);
+            updateMarkers();
         };
 
         // cambio il category space utilizzato per le icone
@@ -805,7 +805,26 @@ angular.module('firstlife.controllers')
             ThingsService.tile(tile).then(
                 function (markers) {
                     // aggiorno lista tile
-                    $scope.flmap.markers = angular.extend($scope.flmap.markers,markers);
+                    angular.extend($scope.flmap.markers,markers);
+                    // $log.log('markers',Object.keys($scope.flmap.markers).length);
+                    // $timeout(function(){
+                    //     $scope.flmap.markers = angular.extend({},$scope.flmap.markers,markers);
+                    //     $log.log('markers',Object.keys($scope.flmap.markers).length);
+                    //     },500);
+
+                },
+                function (err) {
+                    $log.error(err);
+                }
+            );
+        }
+        function filterTile(tile) {
+            $scope.flmap.markers = {};
+            ThingsService.filterTile(tile).then(
+                function (markers) {
+                    // aggiorno lista tile
+                    angular.extend($scope.flmap.markers,markers);
+                    // $log.log('markers',Object.keys($scope.flmap.markers).length);
                 },
                 function (err) {
                     $log.error(err);
@@ -816,11 +835,14 @@ angular.module('firstlife.controllers')
         // filtro i marker in cache
         function updateMarkers(reset) {
             // clear cache
-            if(reset)
+            if(reset){
                 ThingsService.resetCache();
+                $scope.flmap.markers = {};
+            }
             // chiamate alle tile attive
             angular.forEach(tiles,function (tile,id) {
-                getTile(tile);
+                if(reset) getTile(tile,reset);
+                else filterTile(tile);
             })
         }
 
@@ -1028,7 +1050,7 @@ angular.module('firstlife.controllers')
             //$log.debug('change query ',q);
             // setMapMarkers();
             ThingsService.setQuery(q);
-            updateMarkers(true);
+            updateMarkers();
         }
 
         function check4timeline(e,old){
@@ -1157,6 +1179,10 @@ angular.module('firstlife.controllers')
             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         },
         markers: {},
+        watch:{
+            doWatch:true,
+            isDeep: false
+        },
         controls: {
             zoomControl: (config.map.zoom),
             zoomControlPosition: config.map.zoom_position,

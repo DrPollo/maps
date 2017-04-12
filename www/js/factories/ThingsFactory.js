@@ -157,7 +157,7 @@ angular.module('firstlife.factories')
                 if(params.from)
                     urlId = urlId.concat('&from=',params.from);
                 if(params.to)
-                    urlId = urlId.concat('&from=',params.to);
+                    urlId = urlId.concat('&to=',params.to);
                 var req = {
                     url: urlId,
                     method: 'GET',

@@ -118,6 +118,7 @@ opposite direction to hide the first part behind.
 }
 .inner span {
     line-height: $inner;
+    word-wrap: initial;
 }
 /*
 add colour to each piece.

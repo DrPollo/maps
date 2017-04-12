@@ -13868,7 +13868,8 @@ opposite direction to hide the first part behind.
   z-index: 3; }
 
 .inner span {
-  line-height: 18px; }
+  line-height: 18px;
+  word-wrap: initial; }
 
 /*
 add colour to each piece.

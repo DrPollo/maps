@@ -36,68 +36,23 @@ angular.module('firstlife.services')
             report: function(report){
                 return ThingsFact.report(report);
             },
-            filter: function () {
-                return makeMarkers(cache);
-            },
-            bbox: function(bounds){
-                var deferred = $q.defer();
-                if(!bounds.northEast.lat){
-                    deferred.reject('no bounds');
+            filterTile: function (tile) {
+                var features = cache[tile.z+':'+tile.x+':'+tile.y];
+                // se la tile è in cache
+                if(features){
+                    var deferred = $q.defer();
+                    deferred.resolve(makeMarkers(features));
                     return deferred.promise;
                 }
 
-                var params = {
-                    from: filters.time.from,
-                    to: filters.time.to
-                };
-                var bbox = {
-                    ne_lat: bounds.northEast.lat,
-                    ne_lng: bounds.northEast.lng,
-                    sw_lng: bounds.southWest.lng,
-                    sw_lat: bounds.southWest.lat
-                };
-                angular.extend(params,bbox);
-                // $log.debug('bbox params',params);
-                ThingsFact.bbox(params).then(
-                    function (features) {
-                        // aggiungo alla cache
-                        cache = angular.extend([],features);
-                        var markers = makeMarkers(features);
-                        //$log.debug('bbox result',features.length);
-                        deferred.resolve(markers);
-                    },
-                    function (err) {
-                        deferred.reject(err);
-                    }
-                );
-
-                return deferred.promise;
+                // altrimenti chiedo la tile
+                return getTile(tile);
             },
             resetCache : function () {
-                return cache = [];
+                return cache = {};
             },
             tile: function (tile) {
-                var deferred = $q.defer();
-                var params = {
-                    from: filters.time.from,
-                    to: filters.time.to
-                };
-                angular.extend(params,tile);
-                ThingsFact.tile(params).then(
-                    function (features) {
-                        // $log.debug(features);
-                        // aggiungo alla cache
-                        angular.extend(cache,features);
-                        var markers = makeMarkers(features);
-                        //$log.debug('tile result',features.length);
-                        deferred.resolve(markers);
-                    },
-                    function (error) {
-                        $log.error(error);
-                    }
-                );
-
-                return deferred.promise;
+                return getTile(tile);
             },
             setTimeFilters: function(time){
                 // $log.debug('set time',time);
@@ -215,6 +170,7 @@ angular.module('firstlife.services')
                 return filterConditions;
             },
             setQuery: function (q) {
+                // $log.debug('set filter',q);
                 if(!q)
                     return query = null;
 
@@ -226,7 +182,42 @@ angular.module('firstlife.services')
 
                 favCat = (favCat === id) ?  0 : id;
                 return favCat;
-            }
+            },
+
+            bbox: function(bounds){
+                var deferred = $q.defer();
+                if(!bounds.northEast.lat){
+                    deferred.reject('no bounds');
+                    return deferred.promise;
+                }
+
+                var params = {
+                    from: filters.time.from,
+                    to: filters.time.to
+                };
+                var bbox = {
+                    ne_lat: bounds.northEast.lat,
+                    ne_lng: bounds.northEast.lng,
+                    sw_lng: bounds.southWest.lng,
+                    sw_lat: bounds.southWest.lat
+                };
+                angular.extend(params,bbox);
+                // $log.debug('bbox params',params);
+                ThingsFact.bbox(params).then(
+                    function (features) {
+                        // aggiungo alla cache
+                        cache = angular.extend([],features);
+                        var markers = makeMarkers(features);
+                        //$log.debug('bbox result',features.length);
+                        deferred.resolve(markers);
+                    },
+                    function (err) {
+                        deferred.reject(err);
+                    }
+                );
+
+                return deferred.promise;
+            },
         };
 
 
@@ -237,7 +228,35 @@ angular.module('firstlife.services')
          * 3) checkFilters: filters check
          */
 
+        function getTile(tile) {
+            var deferred = $q.defer();
+            if(!tile.z || !tile.y, !tile.x){
+                deferred.reject('no tile param');
+                return deferred.promise;
+            }
 
+            var params = {
+                from: filters.time.from,
+                to: filters.time.to
+            };
+            angular.extend(params,tile);
+            ThingsFact.tile(params).then(
+                function (features) {
+                    // $log.debug(features);
+                    // aggiungo alla cache
+                    // $log.log(params.z+':'+params.x+':'+params.y, features);
+                    cache[params.z+':'+params.x+':'+params.y] = features;
+                    var markers = makeMarkers(features);
+                    //$log.debug('tile result',features.length);
+                    deferred.resolve(markers);
+                },
+                function (error) {
+                    $log.error(error);
+                }
+            );
+
+            return deferred.promise;
+        }
         function makeMarkers(features) {
             var markers = features.reduce(function(markers,feature){
                 // if needs to be filtered
