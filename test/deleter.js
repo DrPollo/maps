@@ -16,13 +16,15 @@ function clean(limit){
     var bbox = [[7.577835,45.00679],[7.773339,45.140221]];
 
 
-    var url = 'api.fldev.di.unito.it';
+    var url = 'api.firstlife.org';
+    // var url = 'api.fldev.di.unito.it';
     var domain = 1;
     var ne_lat = bbox[1][1]+0.1;
     var ne_lon = bbox[1][0]+0.1;
     var sw_lat = bbox[0][1]-0.1;
     var sw_lon = bbox[0][0]-0.1;
-    var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
+    var token = 'Bearer 6bbfa7990aa715ce0fb6ff66b7a808fc2c867cfe';
+    // var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
 
 
 

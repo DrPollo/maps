@@ -2,8 +2,23 @@
     "app_name" : "Sandbox",
     "domain_name" : "sandbox",
     "domain_id" : 9,
+    "read_domains":[],
     "design":{
-        "logo" : {"url": "", "title": "", "alt":"", "label":{"text": "Sandbox", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}}
+      "logo" : {
+      "title": "FirstLife Sandbox",
+      "alt":"FirstLife Sandbox",
+      "label":{
+        "text": "FirstLife Sandbox"
+      }
+    },
+      "default_language" : "it",
+      "landingpage":{
+          "message":{
+            "it":"FirstLife Sandbox",
+            "en":"FirstLife Sandbox"
+          }
+        }
+      }
     },
     "behaviour":{
             "is_login_required" : true

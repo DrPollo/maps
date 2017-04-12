@@ -3,75 +3,29 @@
   "app_name" : "CityTelling",
   "domain_name" : "citytelling",
   "domain_id" : 11,
+  "read_domains":[],
   "design":{
-    "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife CityTelling", "alt":"FirstLife CityTelling", "label":{"text": "FirstLife CityTelling", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
-    "logo_bar" : "img/firstlife-testo.svg",
-    "logo_menu" : "img/firstlife-logo-palla.svg",
-    "logo_width" : 160,
-    "logo_height" : 160,
-    "default_thumb" : "img/thumb.jpg",
-    "default_background" : "img/fondo-walktrough.jpg",
-    "logo_partners" : [],
-    "show_thumbs" : true,
-    "can_permalink": false,
+    "logo" : {
+      "title": "FirstLife CityTelling",
+      "alt":"FirstLife CityTelling",
+      "label":{
+        "text": "FirstLife CityTelling"
+      }
+    },
     "default_language" : "it",
-    "disabled_color":20,
     "landingpage":{
-      "logo":{
-        "title":"CityTelling"
-      },
-      "center": {
-        "image": "img/firstlife-logo-palla.svg"
-      },
-      "upper_menu":[
-        {
-          "name":"Standard di Comunità",
-          "url":"http://firstlife.org/standard-di-comunita",
-          "img":"img/icone-landing-page-comunita.svg",
-          "alt":"Prova",
-          "lang":"it"
+      "center":{
+        "image":"img/landing/Icon1_citytelling_sfondo.svg",
+        "alt": {
+          "it":"Logo FirstLife CityTelling",
+          "en":"FirstLife CityTelling logo"
         },
-        {
-          "name":"Tutorial ed esempi",
-          "url":"http://tutorials.firstlife.org",
-          "img":"img/icone-landing-page-tutorial.svg",
-          "alt":"Prova",
-          "lang":"it"
-        },
-        {
-          "name":"Scopri di più su CityTelling",
-          "url":"http://openlabs.firstlife.org/citytelling/",
-          "img":"img/Icon1_citytelling_sfondo.svg",
-          "alt":"Prova",
-          "lang":"it"
-        },
-        {
-          "name":"Community Guidelines",
-          "url":"http://firstlife.org/standard-di-comunita",
-          "img":"img/icone-landing-page-comunita.svg",
-          "alt":"Test",
-          "lang":"en"
-        },
-        {
-          "name":"User Guide & examples",
-          "url":"http://tutorials.firstlife.org",
-          "img":"img/icone-landing-page-tutorial.svg",
-          "alt":"Test",
-          "lang":"en"},
-        {
-          "name":"About CityTelling project",
-          "url":"http://openlabs.firstlife.org/citytelling/",
-          "img":"img/Icon1_citytelling_sfondo.svg",
-          "alt":"Test",
-          "lang":"en"
+        "message":{
+          "it":"il Social Network Civico",
+          "en":"the Civic Social Network"
         }
-      ]
+      }
     }
-  },
-  "map":{
-    "map_default_lat" : 45.070312,
-    "map_default_lng" : 7.686856,
-    "zoom_level" : 14
   },
   "behaviour":{
     "is_login_required" : true

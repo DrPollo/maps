@@ -3,68 +3,28 @@
      "app_name" : "Prossimità",
      "domain_name" : "prossimita",
      "domain_id" : 13,
+   "read_domains":[],
      "design":{
-         "logo" : {"url": "img/firstlife-logo.svg", "title": "FirstLife Prossimità", "alt":"FirstLife Prossimità", "label":{"text": "FirstLife Regeneration", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
-            "logo_bar" : "img/firstlife-testo.svg",
-            "logo_menu" : "img/firstlife-logo-palla.svg",
-            "logo_width" : 160,
-            "logo_height" : 160,
-            "default_thumb" : "img/thumb.jpg",
-            "default_background" : "img/fondo-walktrough.jpg", 
-            "logo_partners" : [],"show_thumbs" : true,
-            "can_permalink": false,
-            "default_language" : "it",
-            "disabled_color":20,
+       "logo" : {
+         "title": "FirstLife Biennale della Prossimità",
+         "alt":"FirstLife Biennale della Prossimità",
+         "label":{
+           "text": "FirstLife Biennale della Prossimità"
+         }
+       },
+       "default_language" : "it",
        "landingpage":{
-         "logo":{
-           "title":"Prossimità"
-         },
-         "center": {
-           "image": "img/firstlife-logo-palla.svg"
-         },
-         "upper_menu":[
-           {
-             "name":"Standard di Comunità",
-             "url":"http://firstlife.org/standard-di-comunita",
-             "img":"img/icone-landing-page-comunita.svg",
-             "alt":"Prova",
-             "lang":"it"
+         "center":{
+           "image":"img/landing/Icon5_communities_sfondo.svg",
+           "alt": {
+             "it":"Logo FirstLife Prossimità",
+             "en":"FirstLife Prossimità logo"
            },
-           {
-             "name":"Tutorial ed esempi",
-             "url":"http://tutorials.firstlife.org",
-             "img":"img/icone-landing-page-tutorial.svg",
-             "alt":"Prova",
-             "lang":"it"
-           },
-           {
-             "name":"Scopri di più su Communities",
-             "url":"http://openlabs.firstlife.org/communities/",
-             "img":"img/Icon5_communities_sfondo.svg",
-             "alt":"Prova",
-             "lang":"it"
-           },
-           {
-             "name":"Community Guidelines",
-             "url":"http://firstlife.org/standard-di-comunita",
-             "img":"img/icone-landing-page-comunita.svg",
-             "alt":"Test",
-             "lang":"en"
-           },
-           {
-             "name":"User Guide & examples",
-             "url":"http://tutorials.firstlife.org",
-             "img":"img/icone-landing-page-tutorial.svg",
-             "alt":"Test",
-             "lang":"en"},
-           {
-             "name":"About Communities project",
-             "url":"http://openlabs.firstlife.org/communities/",
-             "img":"img/Icon5_communities_sfondo.svg",
-             "alt":"Test",
-             "lang":"en"
+           "message":{
+             "it":"il Social Network Civico",
+             "en":"the Civic Social Network"
            }
-         ]
+         }
        }
      },
      "map":{
