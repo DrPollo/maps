@@ -7,7 +7,7 @@
 var https = require('https');
 // var fse = require('fs-extra');
 
-clean(50);
+clean();
 
 function clean(limit){
     console.log('start generating data');
@@ -22,7 +22,7 @@ function clean(limit){
     var ne_lon = bbox[1][0]+0.1;
     var sw_lat = bbox[0][1]-0.1;
     var sw_lon = bbox[0][0]-0.1;
-    var token = 'Bearer 99b1c22efe5c043aff7c5e13272d06c347963125';
+    var token = 'Bearer 19f5719004921307e6bcda3539b0d6d6e769c94d';
 
 
 
@@ -73,9 +73,9 @@ function deleteData(i,data,url,token,limit){
     var entry = data[i];
     console.log('to be delteted?', entry.properties.tags[0] === 'test');
 
-    if(entry.properties.tags[0] !== 'test') {
-        return deleteData(1 + i, data, url, token);
-    }
+    // if(entry.properties.tags[0] !== 'test') {
+    //     return deleteData(1 + i, data, url, token);
+    // }
     // console.log('entry',entry);
     var id = entry.properties.id;
     var options = {

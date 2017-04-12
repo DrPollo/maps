@@ -125,7 +125,7 @@ angular.module('firstlife.directives')
             scope.types = myConfig.types.list;
         }
     }
-}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', 'AuthService', 'entityFactory', function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer, AuthService, entityFactory){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',

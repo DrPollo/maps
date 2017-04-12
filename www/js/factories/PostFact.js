@@ -19,7 +19,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('posts of ',id, " - results ",response);
+                    //$log.debug('posts of ',id, " - results ",response);
                     deferred.resolve(response.data);
                 },
                 function(err) {
@@ -38,7 +38,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('posts of ',id, " - results ",response);
+                    //$log.debug('posts of ',id, " - results ",response);
                     deferred.resolve(response.data);
                 },
                 function(err) {
@@ -57,7 +57,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('posts of ',id, " - results ",response);
+                    //$log.debug('posts of ',id, " - results ",response);
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -76,7 +76,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('posts of ',id, " - results ",response);
+                    //$log.debug('posts of ',id, " - results ",response);
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -139,7 +139,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('comments of ',id, " - results ",response);
+                    //$log.debug('comments of ',id, " - results ",response);
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -160,7 +160,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('comments of ',id, " - results ",response);
+                    //$log.debug('comments of ',id, " - results ",response);
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -180,7 +180,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(response) {
-                    $log.debug('comments of ',id, " - results ",response);
+                    //$log.debug('comments of ',id, " - results ",response);
                     deferred.resolve(response);
                 },
                 function(err) {

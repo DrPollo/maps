@@ -13,7 +13,7 @@ function generate(){
 
     var url = 'api.firstlife.org';
 
-    var token = 'Bearer 99b1c22efe5c043aff7c5e13272d06c347963125';
+    var token = 'Bearer 19f5719004921307e6bcda3539b0d6d6e769c94d';
 
     console.log('connecting to ',url, 'with token ',token);
 

@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('SearchCtrl', ['$scope', '$location', 'myConfig', 'MapService', 'SearchService', 'CBuffer', function($scope, $location, myConfig, MapService, SearchService, CBuffer) {
+    .controller('SearchCtrl', ['$scope', '$location', 'myConfig', 'SearchService', 'CBuffer', function($scope, $location, myConfig, SearchService, CBuffer) {
 
         $scope.config = myConfig;
         

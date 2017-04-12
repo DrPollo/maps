@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'MapService', 'MemoryFactory', 'AuthService', 'groupsFactory', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, MapService, MemoryFactory, AuthService, groupsFactory) { 
+    .controller('ModalEntityCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', function($scope, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService) {
 
         $scope.config = myConfig;
         $scope.infoPlace = {};
@@ -26,7 +26,7 @@ angular.module('firstlife.controllers')
             if (!event.markerClickPrevented) {
                 event.markerClickPrevented = true;
                 if(args.markerId){
-                    $log.debug('markerClick',args);
+                    //$log.debug('markerClick',args);
                     $scope.showMCardPlace(args.markerId);
                 }
             }
@@ -42,7 +42,7 @@ angular.module('firstlife.controllers')
         $scope.$on('$destroy', function(e) {
             if(!e.destroyModalDestroyPrevented){
                 e.destroyModalDestroyPrevented = true;
-                $log.debug('destroy modal');
+                //$log.debug('destroy modal');
                 // blocco la richiesta dei dettagli
                 try{$scope.obs.unsubscribe()}catch(e){}
                 delete $scope;
@@ -53,23 +53,23 @@ angular.module('firstlife.controllers')
 
         //modal info sul place
         $scope.showMCardPlace = function(markerId){
-            $log.log('showMCardPlace',markerId);
+            $log.log('opening modal for',markerId);
             // inizio caricamento modal
             $scope.loaded = false;
             $scope.error = false;
             // cancello il marker
-            delete $scope.infoPlace.marker;
+            $scope.infoPlace.marker = angular.extend({});
             
-            $log.debug('check hide!',hide,markerId);
+            // $log.debug('check hide!',hide,markerId);
             if(!hide){
-                $log.debug('init hide');
+                //$log.debug('init hide');
                 hide = $scope.$on('modal.hidden', function(e) {
                     //segnalo la chiusura della modal
                     if($scope.infoPlace.modal && !e.modalHiddenPrevented){
                         e.modalHiddenPrevented = true;
 
                         //deregistro il listner per la hide
-                        $log.debug('check hide listner!',hide);
+                        //$log.debug('check hide listner!',hide);
                         hide();
                         hide = null;
                         chiudoModal();
@@ -92,12 +92,11 @@ angular.module('firstlife.controllers')
                     backdropClickToClose : true,
                     hardwareBackButtonClose : true
                 }).then(function(modal) {
-                    $log.debug("infoPlace, apro modal modal: ", modal);
+                    //$log.debug("infoPlace, apro modal modal: ", modal);
                     $scope.infoPlace.modal = modal;
                     $scope.openModalPlace();
                 });
             }
-            
             // carico il contenuto della modal
             loadModal(markerId);
             
@@ -125,10 +124,10 @@ angular.module('firstlife.controllers')
                 titleText: title,
                 cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                 cancel: function() {
-                    $log.debug("Deleted place cancelled: "+entityId);
+                    //$log.debug("Deleted place cancelled: "+entityId);
                 }
             });
-            $log.debug("actionSheet", hideSheet);
+            //$log.debug("actionSheet", hideSheet);
             // to do serve per il routing, chiudo l'action sheet con il pulsante back
         };
 
@@ -151,7 +150,7 @@ angular.module('firstlife.controllers')
 
             $scope.removeButtonPopover = function (){
                 var markerId = $scope.infoPlace.marker;
-                if(consoleCheck)console.log("rimuovo il place ", markerId);
+                //$log.debug("rimuovo il place ", markerId);
                 $scope.closePopover();
                 $scope.remove(markerId);
             };
@@ -178,11 +177,10 @@ angular.module('firstlife.controllers')
                     title: $filter('translate')('DELETE'),
                     template: $filter('translate')('DELETE_ASK')
                 });
-
                 confirmPopup.then(
                     function(res) {
                         if(res) {
-                            MapService.removeMarker(marker.id).then(
+                            ThingsService.remove(marker.id).then(
                                 // success function 
                                 function(response) {
                                     $scope.showASDeletedPlace(marker.id);
@@ -209,7 +207,7 @@ angular.module('firstlife.controllers')
         //action sheet init-info sul place
         $scope.showASDeleted = function(entityId){
             var title="";
-            if(entityId===-1)
+            if(entityId===-1 || entityId === -2)
                 title = $filter('translate')('ERROR_CANCEL');
             else
                 title = $filter('translate')('SUCCESS_CANCEL');
@@ -235,23 +233,6 @@ angular.module('firstlife.controllers')
          * Add child marker/place
          */
         $scope.addChildEntity = function(){
-//            var entity_type = childType.slug;
-//            var entity_key = childType.key;
-//            var relations = $scope.currentType.relations;
-//            $log.debug('check add children ',entity_key,entity_type,rel,relations);
-//
-//            //logica add child entity
-//            var skip = false;
-//            // se l'entita' e' bounded vuol dire che deve avere la posizione del padre
-//            if(relations[entity_key].bounded){
-//                // faccio saltare il riposizionamento
-//                skip = true;
-//            }
-//
-//            $log.debug('add child ',entity_type,rel);
-//            if(!entity_type)
-//                type = parent_type;
-
             var marker = $scope.infoPlace.marker,
                 params = {lat:marker.lat, lng:marker.lng, zoom_level:marker.zoom_level, rel: marker.id, parent_type:marker.entity_type};
             // mando il messaggio 
@@ -266,32 +247,15 @@ angular.module('firstlife.controllers')
          * funzioni private
          */
 
-        function updateDetails(entityId){
-            // richiedo i dettagli del marker
-            MapService.getDetails(entityId).then(
-                function(marker){
-                    angular.extend($scope.infoPlace.marker,marker);
-                    $ionicLoading.hide();
-                },
-                function(err){
-                    $ionicLoading.hide();
-                    showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
-                    $scope.closeModal();
-                    $log.error("errore caricamento marker modal place: ",err);
-                }
-            );
-        }
-
         function loadModal(markerId){
-            $log.debug('loadModal',markerId)
-            $scope.obs = MapService.getDetailsRx(markerId).subscribe(
+            $scope.obs = ThingsService.get(markerId).then(
                 function(marker){
                     $scope.infoPlace.marker = angular.copy(marker);
                     $log.debug('openPlaceModal',marker)
                     $scope.$emit('openPlaceModal', {marker: marker.id});
                     $scope.loaded = true;
                     // inizializzo la maschera dei permessi per l'utente per il marker attuale
-                    initPerms(marker.owner);
+                    initPerms(marker.owner.id);
                     // recupero il tipo e lo metto dentro $scope.currentType
                     initTypeChecks(marker.entity_type);
                 },
@@ -302,8 +266,7 @@ angular.module('firstlife.controllers')
                     showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
                     $scope.$emit("lostMarker",{id:markerId});
                     $scope.closeModal();
-                },
-                function(){}
+                }
             );
         }
 
@@ -317,7 +280,7 @@ angular.module('firstlife.controllers')
                 $scope.infoPlace.modal.remove();
 
             $scope.$emit("closePlaceModal");
-            $log.debug('check closePlaceModal');
+            // $log.debug('check closePlaceModal');
             delete $scope.infoPlace.modal;
             //deregistro il listner per la hide
             try{hide();}catch(e){}

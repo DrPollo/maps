@@ -10,7 +10,7 @@
         <div class="top-modal">
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to || currentType.show_author" class="modal-subheader">
                 <span ng-if="currentType.show_author" class="username modal-subheader-item">
-                    {{infoPlace.marker.display_name}}
+                    {{infoPlace.marker.updater.display_name}}
                 </span>
                 <span class="valid-time modal-subheader-item">
                     <i class="icon ion-android-time"></i>
@@ -23,7 +23,7 @@
                     </span>
                 </span>
             </div>
-            <div ng-if="infoPlace.marker.category || infoPlace.marker.type_info" class="modal-subheader">
+            <div class="modal-subheader">
                 <span ng-repeat="icon in infoPlace.marker.icons" class="modal-subheader-item">
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
                     <span ng-if="!isMobile">{{icon.name |translate}}</span>

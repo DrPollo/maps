@@ -1,10 +1,9 @@
 {
   "type":"Feature",
   "properties":{
-    "name":"Luogo ",
-    "description":"entry di test generata automaticamente",
-    "valid_from":null,
-    "valid_to":null,
+    "name":"News del 11/04/2017, 17:52",
+    "valid_from":"2017-04-11T15:52:16.128Z",
+    "valid_to":"2017-04-11T15:52:16.128Z",
     "link_url":null,
     "tags":[
       "test"
@@ -12,40 +11,34 @@
     "categories":[
       {
         "category_space":{
-          "id":1
+          "id":12
         },
         "categories":[
           {
-            "id":-1
-          }
-        ]
-      },
-      {
-        "category_space":{
-          "id":13
-        },
-        "categories":[
-          {
-            "id":-90
+            "id":-80
           }
         ]
       }
     ],
     "group_id":null,
-    "id_wp":1,
+    "user":"58e4cb6f41735c7f734ffa27@FIRSTLIFE",
     "id":null,
-    "zoom_level":13,
+    "zoom_level":16,
     "level":null,
-    "parent_id":null,
-    "type":1,
-    "entity_type":"FL_PLACES",
-    "domain_id":1
+    "comment_of":null,
+    "description":null,
+    "entity_type":"FL_NEWS",
+    "domain_id":1,
+    "coordinates":[
+      7.665699720382691,
+      45.04592721373556
+    ]
   },
   "geometry":{
     "type":"Point",
     "coordinates":[
-      7.69094467163086,
-      45.10557617099446
+      7.665699720382691,
+      45.04592721373556
     ]
   }
 }

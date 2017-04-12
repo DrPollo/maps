@@ -898,7 +898,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             }
         }
     }
-}]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'entityFactory', 'myConfig', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, entityFactory, myConfig){
+}]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'ThingsService', 'myConfig', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, ThingsService, myConfig){
     return {
         scope:{
             id: '=',
@@ -955,7 +955,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
                 // $log.debug('check fields',scope.report.content);
 
                 // invio la segnalazione
-                entityFactory.report(scope.report.content).then(
+                ThingsService.report(scope.report.content).then(
                     function (result) {
                         // tutto ok
                         // $log.debug('segnalazione ok',result);

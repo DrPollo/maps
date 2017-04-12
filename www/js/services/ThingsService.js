@@ -215,7 +215,9 @@ angular.module('firstlife.services')
         function makeMarkers(features) {
             var markers = features.reduce(function(markers,feature){
                 // if needs to be filtered
-                if(!check(feature))
+                var ok = check(feature);
+                // $log.debug('check',feature.properties.entity_type,ok);
+                if(!ok)
                     return markers;
 
                 var marker = makeMarker(feature);
@@ -302,8 +304,6 @@ angular.module('firstlife.services')
         function check(feature){
             var val = feature.properties;
 
-
-
             // set lista categorie per i filtri
             var clist = val.categories.reduce(function(cats,cat){
                 cats = cats.concat(cat.categories.map(function(c){return c.id}));
@@ -323,7 +323,7 @@ angular.module('firstlife.services')
             for(key in filterConditions){
                 // se non devo escludere la regola
 
-                //$log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                // $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 // se esiste la include condition e il valore includeCondition:{value:cats.category_space,property:'category_space'}
                 var indexCheck = 0;
                 if(filterConditions[key].includeCondition){
@@ -334,7 +334,7 @@ angular.module('firstlife.services')
                 }
 
 
-                //$log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
+                // $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
                 if(!filterConditions[key].excludeRule  && filterConditions[key].includeTypes.indexOf(val.entity_type) > -1 && indexCheck > -1){
                     // se devo escludere ogni valore possibile
                     if(filterConditions[key].excludeProperty){
@@ -356,7 +356,7 @@ angular.module('firstlife.services')
                     // controllo sulla condizione inizializza a true se le condizioni sono in AND, a false se sono in OR
                     var check           = checkValues;
                     // per ogni condizione
-                    //$log.debug("Condizione: ", filterConditions[key]);
+                    // $log.debug("Condizione: ", filterConditions[key]);
                     for ( i = 0; i < filterConditions[key].values.length; i++ ){
                         //$log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",filterConditions[key].key);
 
@@ -373,7 +373,7 @@ angular.module('firstlife.services')
                                 check = false;
                             }
                         }else{
-                            //$log.debug("val[key] == filterConditions[key].values[i]");
+                            // $log.debug("val[key] == filterConditions[key].values[i]");
                             // se il valore e' rispettato e sono in OR allora check = true
                             if(!checkValues){
                                 //$log.debug("!checkValues, check = true");
@@ -389,7 +389,7 @@ angular.module('firstlife.services')
                         testCondition = true;
                 }
             }
-            //$log.debug("Test entry: ",val ,  testCondition);
+            // $log.debug("Test entry: ",val ,  testCondition);
             return testCondition;
 
 

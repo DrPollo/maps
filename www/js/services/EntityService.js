@@ -36,15 +36,14 @@ angular.module('firstlife.services')
             // recupero l'utente
             var user = AuthService.getUser();
             
-            $log.debug('initEntityModel', user);
+            // $log.debug('initEntityModel', user);
 
-            if(self.config.dev)$log.debug("EntityFactory, getDefaults ",entity_type,user);
 
             var now = new Date();
             var day = $filter('date')(now,'dd/MM/yyyy, HH:mm');
             var type = getType(entity_type);
             var typeKey = type.key;
-            if(self.config.dev)$log.debug("EntityFactory, getDefaults, type ",type);
+            // $log.debug("EntityService, getDefaults, type ",type);
             // costruisco descrizione di default
             var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.username).concat(" - ").concat(day);
             
@@ -66,7 +65,7 @@ angular.module('firstlife.services')
             defaults.zoom_level = self.config.map.zoom_create;
             defaults.user = user ? user.id : -1;
             defaults.entity_type = typeKey;
-            $log.debug('check entity_type', typeKey);
+            // $log.debug('check entity_type', typeKey);
             // regole specifiche per tipi
             switch(typeKey){
                 case 'FL_PLACES' :
@@ -131,7 +130,7 @@ angular.module('firstlife.services')
             //dev rules
             if(self.config.dev) defaults.name = defaultName;
             
-            $log.debug("EntityService, getDefaults ",defaults,defaultDescription);
+            // $log.debug("EntityService, getDefaults ",defaults,defaultDescription);
             return defaults;
         }
 
@@ -168,7 +167,7 @@ angular.module('firstlife.services')
             // fix delle tag
             tmp.tags = tmp.tags.map(function(e){return {tag:e}});
 
-            $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);              
+            // $log.debug("EntityService, editPreProcessing, marker ", marker, " conversione ", tmp);
             return tmp;    
         }
 
@@ -179,7 +178,7 @@ angular.module('firstlife.services')
             var dataForServer = {};
 
 
-            $log.debug("processData init: ", data, typeInfo);
+            // $log.debug("processData init: ", data, typeInfo);
 
 
             var typeProperties = typeInfo.perms;
@@ -190,7 +189,7 @@ angular.module('firstlife.services')
                 dataForServer[key] = data[key] ? data[key] : null;
                 
             }
-            $log.debug("processData, type properties : ", data, dataForServer);
+            // $log.debug("processData, type properties : ", data, dataForServer);
 
 
 
@@ -216,7 +215,7 @@ angular.module('firstlife.services')
                 default: // FL_PLACES
                     // gestione type
                     if(data.type){
-                        if(dev) $log.debug("trovato il type: ", data.type);
+                        // $log.debug("trovato il type: ", data.type);
                         dataForServer.type = parseInt(data.type);
                     } else {
                         dataForServer.type = 1;
@@ -235,7 +234,7 @@ angular.module('firstlife.services')
             else
                 dataForServer.valid_from = null;
             
-            if(dev) $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
+            // $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
 
             // entity_type, serve per la create
@@ -260,8 +259,7 @@ angular.module('firstlife.services')
             }
             // todo geometrie diverse
 
-            // fix ?
-            $log.debug('check data for server',dataForServer);
+            // $log.debug('check data for server',dataForServer);
             return dataForServer;
         }
 
@@ -269,7 +267,7 @@ angular.module('firstlife.services')
 
         function checkEventTime(data, dataForServer){
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
-            $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
+            // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
             
             
@@ -295,7 +293,7 @@ angular.module('firstlife.services')
                     dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
                     dataForServer.valid_from.add(data.door_time,'seconds');
                 }
-                $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
+                // $log.debug("Set data valid_from Risultato ",dataForServer.valid_from);
             }
 
 
@@ -307,7 +305,7 @@ angular.module('firstlife.services')
                 }else{
                     dataForServer.valid_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
                 }
-                $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
+                // $log.debug("Set data valid_to Risultato ",dataForServer.valid_to);
             }
 
 
@@ -316,7 +314,7 @@ angular.module('firstlife.services')
             if(data.valid_to && data.valid_from){
                 // differenza tra giorni
                 duration = (data.valid_to.getTime() - data.valid_from.getTime());
-                $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
+                // $log.debug("EditorCtrl, calcolo durata da valid_to - valid_from:",duration);
                 dataForServer.duration = duration;
             }
             // fix campo door_time
@@ -326,7 +324,7 @@ angular.module('firstlife.services')
                 dataForServer.door_time = m;
             }
 
-            $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",dataForServer.valid_from,dataForServer.valid_to,dataForServer.door_time,dataForServer.close_time,dataForServer.duration);
+            // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",dataForServer.valid_from,dataForServer.valid_to,dataForServer.door_time,dataForServer.close_time,dataForServer.duration);
             // fix orario delle date, l'orario impostato e' errato e va troncato
             return dataForServer;
         }

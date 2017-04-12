@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', 'EntityService', '$window', '$filter', '$ionicLoading', '$previousState', '$log', 'myConfig',  'TagsService', 'MemoryFactory', 'ThingsService',  'AuthService', function($state, $scope, $location, $ionicPopup, EntityService, $window, $filter,$ionicLoading, $previousState, $log, myConfig, TagsService, MemoryFactory, ThingsService,  AuthService) {
+    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', 'myConfig', 'EntityService', 'ThingsService',  'AuthService', function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, myConfig, EntityService, ThingsService,  AuthService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -82,9 +82,9 @@ angular.module('firstlife.controllers')
             if(toState.name != 'app.editor')
                 return
             //recupero lo stato precedente!
-            var previousState = $previousState.get();
-            if( previousState && previousState.state && previousState.state.name == 'app.editor' )
-                return
+            // var previousState = $previousState.get();
+            // if( previousState && previousState.state && previousState.state.name == 'app.editor' )
+            //     return
 
             // cancello il form
             _this.wizard.dataForm = {};
@@ -93,8 +93,7 @@ angular.module('firstlife.controllers')
 
             var params = $location.search();
 
-
-            $log.debug("sono in EditorCtrl e vengo da ", (previousState && previousState.state && previousState.state.name ) ?  previousState.state.name :  null, " parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+            $log.debug("sono in EditorCtrl  parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
             // attualmente non e' necessario gestire gli stati di arrivo
             // if(previousState && previousState.state && previousState.state.name == 'app.maps'){
 
@@ -119,7 +118,7 @@ angular.module('firstlife.controllers')
 
                 $scope.chooseType = false;
                 //get place(id)
-                entityFactory.get(params.id, true)
+                ThingsService.get(params.id)
                     .then( function(mark) {
                         $log.debug('update marker',mark);
                         //todo gestisco la nuova posizione
@@ -137,7 +136,7 @@ angular.module('firstlife.controllers')
                             _this.valid_to = true
 
                     },function(error) {
-                        // $log.debug("EditorCtrl, cambio di stato, edit marker, entityFactory.get, errore: ",error);
+                        $log.error(error);
                     });
             }
             //create place: init empty dataForm
@@ -328,7 +327,7 @@ angular.module('firstlife.controllers')
         };
 
         _this.wizard.save = function(){
-            // $log.debug("form valido ",_this.wizard.dataForm);
+            $log.debug("form valido ",_this.wizard.dataForm);
             processData();
         }
 
@@ -372,7 +371,7 @@ angular.module('firstlife.controllers')
             if(params.id && params.id !=""){
 
                 //dataForServer.id=params.id;
-                entityFactory.update(dataForServer, params.id)
+                ThingsService.update(dataForServer, params.id)
                     .then(function(newplace){
                         //chiudo la schermata di loading
                         hideLoadingScreen();
@@ -489,7 +488,7 @@ angular.module('firstlife.controllers')
 
         function setParent(parent_id){
             // $log.debug("carico il parent ", parent_id);
-            entityFactory.get(parent_id).then(
+            ThingsService.get(parent_id).then(
                 function(mark){
                     // $log.debug("parent ", mark);
                     _this.wizard.dataForm.parent_id = mark;

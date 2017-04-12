@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
     return {
         restrict: 'E',
         templateUrl: '/templates/map-ui-template/SearchCards.html',
-        controller: ['$scope','$location', '$log', '$stateParams', 'myConfig', 'MemoryFactory', 'MapService', 'AuthService', function($scope,$location,$log,$stateParams,myConfig,MemoryFactory,MapService, AuthService){
+        controller: ['$scope','$location', '$log', '$stateParams', 'myConfig', 'ThingsService', 'AuthService', function($scope,$location,$log,$stateParams,myConfig, ThingsService, AuthService){
             var config = myConfig;
             var filters = config.map.filters;
             var filterList = filters.map(function(e){return e.search_param});
@@ -87,7 +87,7 @@ angular.module('firstlife.directives').directive('searchCards', function() {
                         break;
                     case 'groups':
                         // cerco il nome del gruppo
-                        MapService.get(value).then(
+                        ThingsService.get(value).then(
                             function(response){
                                 if(response.entity_type == filter.entity_type){
                                     card.label2 = response.name;

@@ -163,22 +163,22 @@ gulp.task('setupenv',function(){
     var domain_name = (config.myConfig.domain_name && config.myConfig.domain_name != 'firstlife') ? config.myConfig.domain_name : null;
 
     // setup defaults
-    console.log('default env test');
+    console.log('default env prod');
     config.myConfig.api_base_domain = "api.firstlife.org/";
     config.myConfig.dev = false;
     config.myConfig.ssl = true;
 
     // override defaults
-    if(gutil.env.prod){
-        console.log('env prod');
-        config.myConfig.api_base_domain = "api.firstlife.org/";
-        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
-    }else if(gutil.env.dev){
+    if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.fldev.di.unito.it/";
         config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
         config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
         config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
+    }else{ // default
+        console.log('env prod');
+        config.myConfig.api_base_domain = "api.firstlife.org/";
+        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
     }
     if(gutil.env.logs){
         config.myConfig.dev = true;

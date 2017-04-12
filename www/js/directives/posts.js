@@ -1,7 +1,7 @@
 /**
  * Created by drpollo on 25/03/2017.
  */
-angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', 'entityFactory', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService, entityFactory) {
+angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', 'ThingsService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService, ThingsService) {
     return {
         restrict:'EG',
         scope: {
@@ -113,7 +113,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     message: ''
                 };
                 $log.debug('reporting post',id);
-                entityFactory.report(report).then(
+                ThingsService.report(report).then(
                     function (response) {
                         $log.log('ok delete post',response);
                         initList().then(
