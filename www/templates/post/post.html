@@ -14,7 +14,7 @@
             <span ng-repeat="entry in post.tags track by $index" class="tag ion-pricetag">{{entry.tag}}</span>
         </div>
         <div class="credits">
-            {{'CONTRIBUTE_OF'|translate}} <span class="username">{{post.owner_display_name}}</span>,  {{post.timestamp_insert | date : 'd/MM/yyyy'}}
+            {{'CONTRIBUTE_OF'|translate}} <span class="username">{{post.owner.display_name}}</span>,  {{post.timestamp_insert | date : 'd/MM/yyyy'}}
         </div>
     </div>
 </div>

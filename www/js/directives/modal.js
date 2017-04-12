@@ -887,7 +887,7 @@ angular.module('firstlife.directives').directive('simpleEntityList',function(){
             // numero di tab
             var tabs = 3;
             // parto con la prima tag
-            scope.toggle = 1;
+            scope.toggle = 0;
             // cambio di tab
             scope.setToggle = function(i){
                 scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
