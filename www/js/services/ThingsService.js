@@ -48,6 +48,12 @@ angular.module('firstlife.services')
                 // altrimenti chiedo la tile
                 return getTile(tile);
             },
+            filter: function () {
+
+                return makeMarkers(Object.keys(cache).reduce(function(features, key){
+                  return features.concat(cache[key]);
+              },[]));
+            },
             resetCache : function () {
                 return cache = {};
             },
