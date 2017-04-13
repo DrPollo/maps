@@ -24,6 +24,7 @@
         <div ng-controller="ModalEntityCtrl"></div>
         <leaflet id="mymap" ng-if="flmap.loaded" width="100%" height="100%"
                  center="flmap.center"
+                 url-hash-center="yes"
                  bounds="flmap.bounds"
                  defaults="flmap.defaults"
                  controls="flmap.controls"

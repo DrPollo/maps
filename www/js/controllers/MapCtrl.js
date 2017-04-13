@@ -98,6 +98,7 @@ angular.module('firstlife.controllers')
 
 
 
+
             $scope.isLoggedIn = AuthService.isAuth();
 
 
@@ -114,7 +115,7 @@ angular.module('firstlife.controllers')
 
                 case 'home':
                     // vengo dal login
-                    locate(params);
+                    // locate(params);
 
                     if(params.entity)
                         clickMarker(params.entity);
@@ -133,7 +134,7 @@ angular.module('firstlife.controllers')
                     if(params.entity)
                         clickMarker(params.entity);
                     // centro la mappa sullo stato corrente
-                    locate(params);
+                    // locate(params);
 
                     if(params)
                         check4customFilters(params,{});
@@ -218,14 +219,14 @@ angular.module('firstlife.controllers')
 
 
         // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
-        $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // aggiorno posizione parametro search
-            $timeout(updatePositionInSearch,50);
-        });
+        // $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //     // aggiorno posizione parametro search
+        //     $timeout(updatePositionInSearch,50);
+        // });
         $scope.$on('leafletDirectiveMap.mymap.tileload', function(event, args) {
             if(event.defaultPrevented)
                 return ;
@@ -273,6 +274,25 @@ angular.module('firstlife.controllers')
                 }
             );
         });
+
+        $scope.$on("centerUrlHash", function(event, centerHash) {
+            console.log("url", centerHash);
+            $location.search({ c: centerHash });
+        });
+        $scope.changeLocation = function(params) {
+            var center = {
+                lat : params.lat,
+                lng : params.lng
+            }
+            var hash = params.lat+':'+params.lon;
+            if(params.zoom){
+                hash = hash.concat(params.zoom);
+            }else{
+                //todo get from current
+            }
+            $location.search({ c: hash });
+        };
+
 
         //listner apertura e chiusura della modal del place
         $scope.$on('openPlaceModal', function(event, args){
@@ -597,23 +617,9 @@ angular.module('firstlife.controllers')
             $scope.$broadcast("markerClick", {markerId:markerId});
         }
 
-        function updatePositionInSearch(){
-            var center = {
-                lat : $scope.flmap.center.lat,
-                lng : $scope.flmap.center.lng,
-                zoom : $scope.flmap.center.zoom,
-            };
-            updateSearch(center);
-        }
         function updatePlaceInSearch(id){
-            var center = {
-                entity : id,
-                lat : $scope.flmap.center.lat,
-                lng : $scope.flmap.center.lng,
-                zoom : $scope.flmap.center.zoom,
-            };
             // aggiorno i parametri della mappa
-            updateSearch(center);
+            updateSearch({'entity':id});
         }
         function updateSearch(params){
             for(key in params){
@@ -645,7 +651,12 @@ angular.module('firstlife.controllers')
                 locateEntity(params.id);
             }else if(params.lat && params.lng){
                 // posiziono la mappa
-                updateSearch(params);
+                // updateSearch(params);
+
+                changeLocation(params);
+                // if(params.zoom)
+                //     center.zoom = params.zoom;
+                // $location.search(center);
             }
         };
 
@@ -834,14 +845,14 @@ angular.module('firstlife.controllers')
             if(marker){
                 var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
                 // $log.debug('locate entity cached',center);
-                updateSearch(center);
+                changeLocation(center);
             }else{
                 //altrimenti invoco una get
                 ThingsService.get(entityId).then(
                     function(marker){
                         var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
                         // $log.debug('remote entity',center);
-                        updateSearch(center);
+                        changeLocation(center);
                     },
                     function(err){$log.error("Location error: ",err);}
                 );
@@ -890,13 +901,12 @@ angular.module('firstlife.controllers')
 
         // controllo i parametri di posizione
         function check4Position(e){
-            $log.debug('check4Position')
+            $log.debug('check4Position',e)
             // se ho settati i parametri di posizione
             if(e.lat && e.lng && e.zoom){
-                if($scope.flmap.center.lat != e.lat || e.lng != $scope.flmap.center.lng || e.zoom != $scope.flmap.center.zoom){
-                    // locate(e);
-                    $scope.flmap.center = {lat:e.lat, lng:e.lng, zoom:e.zoom};
-                }
+                var center = {lat:e.lat, lng:e.lng, zoom:e.zoom};
+                $log.debug('set map center',center);
+                $scope.flmap.center = center;
             }
 
         }
