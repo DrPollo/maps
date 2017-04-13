@@ -258,7 +258,7 @@
                 "relations":{
                     "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
                     "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                    "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"article","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
+                    "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"articles","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
                     "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
                     "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                 }

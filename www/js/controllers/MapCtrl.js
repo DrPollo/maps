@@ -897,12 +897,12 @@ angular.module('firstlife.controllers')
 
         // controllo i parametri di posizione
         function check4Position(e){
-            $log.debug('check4Position',e)
+            // $log.debug('check4Position',e);
             // se ho settati i parametri di posizione
             if(e.lat && e.lng && e.zoom){
                 var center = {lat:e.lat, lng:e.lng, zoom:e.zoom};
-                $log.debug('set map center',center);
-                $scope.flmap.center = center;
+                // $log.debug('set map center',center);
+                changeLocation(center);
             }
 
         }
