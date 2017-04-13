@@ -276,22 +276,19 @@ angular.module('firstlife.controllers')
         });
 
         $scope.$on("centerUrlHash", function(event, centerHash) {
-            console.log("url", centerHash);
+            // $log.debug("url", centerHash);
             $location.search({ c: centerHash });
         });
-        $scope.changeLocation = function(params) {
-            var center = {
-                lat : params.lat,
-                lng : params.lng
-            }
-            var hash = params.lat+':'+params.lon;
+        function changeLocation(params) {
+            var hash = params.lat+':'+params.lng;
             if(params.zoom){
-                hash = hash.concat(params.zoom);
+                hash = hash.concat(':',params.zoom);
             }else{
-                //todo get from current
+                hash = hash.concat(':',$scope.flmap.center.zoom);
             }
+            // $log.debug('change location',hash);
             $location.search({ c: hash });
-        };
+        }
 
 
         //listner apertura e chiusura della modal del place
@@ -642,7 +639,7 @@ angular.module('firstlife.controllers')
         // centra la mappa
         // accetta paramentri per la locate: center, marker, coords
         function locate(params){
-            $log.debug("centro su luogo: ",params);
+            // $log.debug("centro su luogo: ",params);
             if(params.entity){
                 // ho una entita'
                 locateEntity(params.entity);
@@ -651,12 +648,7 @@ angular.module('firstlife.controllers')
                 locateEntity(params.id);
             }else if(params.lat && params.lng){
                 // posiziono la mappa
-                // updateSearch(params);
-
                 changeLocation(params);
-                // if(params.zoom)
-                //     center.zoom = params.zoom;
-                // $location.search(center);
             }
         };
 
@@ -843,14 +835,18 @@ angular.module('firstlife.controllers')
             var marker = $scope.flmap.markers[entityId];
             // se il marker esiste
             if(marker){
-                var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                var center = {lat:marker.lat,lng:marker.lng};
+                if(marker.zoom_level)
+                    center.zoom = marker.zoom_level;
                 // $log.debug('locate entity cached',center);
                 changeLocation(center);
             }else{
                 //altrimenti invoco una get
                 ThingsService.get(entityId).then(
                     function(marker){
-                        var center = {lat:marker.lat,lng:marker.lng,zoom:marker.zoom_level};
+                        var center = {lat:marker.lat,lng:marker.lng};
+                        if(marker.zoom_level)
+                            center.zoom = marker.zoom_level;
                         // $log.debug('remote entity',center);
                         changeLocation(center);
                     },
