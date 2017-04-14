@@ -70,7 +70,8 @@ angular.module('firstlife.services')
             },
             removeTile: function(params){
                 // rimuovo la tile
-                return delete cache[params.z+':'+params.x+':'+params.y];
+                delete cache[params.z+':'+params.x+':'+params.y];
+                return true;
             },
             tile: function (tile) {
                 return getTile(tile);

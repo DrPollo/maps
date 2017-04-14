@@ -28,7 +28,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                $log.log('filterMarkers!');
+                // $log.debug('filterMarkers!');
                 filterMarkers();
             })
             $scope.$on('updateMarkers',function (e) {
@@ -37,7 +37,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                $log.log('updateMarkers!');
+                // $log.debug('updateMarkers!');
                 // ThingsService.updateCache();
                 updateMarkers();
             });
@@ -57,7 +57,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 event.preventDefault();
 
-                $log.debug('map loaded');
+                // $log.debug('map loaded');
 
                 leafletData.getMap().then(
                     function (map) {
@@ -79,11 +79,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             // $log.debug('tile layer',$scope.tileLayer);
                             $scope.tileLayer.on('tileload',function (e) {
                                 // $log.debug('tileload',e);
-                                $scope.$broadcast('leafletDirectiveMap.mymap.tileload',{coords:e.coords});
+                                // al caricamento delle tile carico i marker relativi alle tile
+                                addTile(e.coords);
                             });
                             $scope.tileLayer.on('tileunload',function (e) {
-                                // $log.debug('tileunload',e);
-                                $scope.$broadcast('leafletDirectiveMap.mymap.tileunload',{coords:e.coords});
+                                // $log.debug('tileunload',e.coords);
+                                ThingsService.removeTile(e.coords);
                             });
                         }
                     }
@@ -91,26 +92,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
             });
 
 
-            // al caricamento delle tile carico i marker relativi alle tile
-            $scope.$on('leafletDirectiveMap.mymap.tileload', function(event, args) {
-                if(event.defaultPrevented)
-                    return ;
 
-                event.preventDefault();
-                // aggiorno posizione parametro search
-                // $log.debug('tileload',args)
-                addTile(args.coords);
-            });
-            // alla rimozione delle tile tolgo il riferimento alla tile
-            $scope.$on('leafletDirectiveMap.mymap.tileunload', function(event, args) {
-                if(event.defaultPrevented)
-                    return ;
 
-                event.preventDefault();
-                // aggiorno posizione parametro search
-                // $log.debug('tileunload',args)
-                ThingsService.removeTile(args.coords);
-            });
 
 
             /*
@@ -181,7 +164,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // chiamate alle tile attive
                 ThingsService.updateCache().then(
                     function (markers) {
-                        $log.log('updated markers',Object.keys(markers).length);
+                        // $log.debug('updated markers',Object.keys(markers).length);
                         $scope.markers = angular.extend({},markers);
                     }
                 );
@@ -190,7 +173,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function filterMarkers() {
                 // chiamate alle tile
                 var filtred = ThingsService.filter();
-                $log.log('filtred',Object.keys(filtred).length);
+                // $log.debug('filtred',Object.keys(filtred).length);
                 $scope.markers = angular.extend({},filtred);
             }
 
