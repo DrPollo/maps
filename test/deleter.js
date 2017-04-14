@@ -18,12 +18,12 @@ function clean(limit){
 
     var url = 'api.firstlife.org';
     // var url = 'api.fldev.di.unito.it';
-    var domain = 1;
+    var domain = 9;
     var ne_lat = bbox[1][1]+0.1;
     var ne_lon = bbox[1][0]+0.1;
     var sw_lat = bbox[0][1]-0.1;
     var sw_lon = bbox[0][0]-0.1;
-    var token = 'Bearer 6bbfa7990aa715ce0fb6ff66b7a808fc2c867cfe';
+    var token = 'Bearer 6285d60155b919501aa4e2d1c69c7152a490d27a';
     // var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
 
 
@@ -36,7 +36,7 @@ function clean(limit){
 
     var options = {
         hostname: url,
-        path: '/v5/fl/Things/boundingbox?domainId='+domain+'&ne_lat='+ne_lat+'&ne_lng='+ne_lon+'&sw_lat='+sw_lat+'&sw_lng='+sw_lon+'&limit=6000',
+        path: '/v5/fl/Things/boundingbox?domainId='+domain+'&ne_lat='+ne_lat+'&ne_lng='+ne_lon+'&sw_lat='+sw_lat+'&sw_lng='+sw_lon+'&limit=6000&from=2016-12-31T23:00:00.000Z&to=2017-12-31T22:59:59.999Z',
         method: 'GET',
         headers:{
             'Content-Type':'application/json',

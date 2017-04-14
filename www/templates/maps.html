@@ -21,11 +21,9 @@
         </div>
     </div>
     <ion-content class="has-bottom" data-tap-disabled="true">
-        <div ng-controller="ModalEntityCtrl"></div>
         <flmap map="flmap"></flmap>
     </ion-content >
 
-    <!--on-hold="showASEdit()" -->
     <div id="pointer" class="padding"  on-tap="showASEdit()" ng-show="editMode">
         <div class='pin'></div>
         <div class='pulse'></div>
@@ -59,9 +57,7 @@
                 </div>
             </div>
         </div>
-        <div id="timelines" class="fade-in ease-animation" ng-show="!editMode" ng-if="config.actions.time_filter && !viewer">
-            <timeline></timeline>
-        </div>
+        <timeline id="timelines" class="fade-in ease-animation"  ng-show="!editMode" ng-if="config.actions.time_filter && !viewer"></timeline>
     </div>
     <style id="pie-styles" type="text/css">{{flmap.css}}</style>
 </ion-view>

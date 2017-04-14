@@ -24,16 +24,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             $scope.$on('filterMarkers',function (e) {
                 if(e.defaultPrevented)
-                    return
+                    return;
 
                 e.preventDefault();
 
                 // $log.debug('filterMarkers!');
                 filterMarkers();
-            })
+            });
             $scope.$on('updateMarkers',function (e) {
                 if(e.defaultPrevented)
-                    return
+                    return;
 
                 e.preventDefault();
 
@@ -41,8 +41,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // ThingsService.updateCache();
                 updateMarkers();
             });
-
-
 
 
             /*
@@ -103,6 +101,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // al cambio del centro della mappa aggiorno il parametro search c
             $scope.$on("centerUrlHash", function(event, centerHash) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
                 // $log.debug("url", centerHash);
                 $location.search('c', centerHash);
             });
@@ -110,19 +111,28 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // al click del marker aggiorno il parametro entity
             // click su marker > propago evento
             $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-                //$log.debug("MARKER CLICK...controlla, args: ", args,event);
-                if(!event.preventMapMarkerClick){
-                    event.preventMapMarkerClick = true;
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
 
-                    if(!$scope.editMode){
-                        args.model.focus = false;
-                        //event.target.focus = false;
-                        $location.search('entity',args.model.id);
-                    }
-                }
+                args.model.focus = false;
+                //event.target.focus = false;
+                $location.search('entity',args.model.id);
+                $scope.$broadcast('markerClick',{id: args.model.id});
+
             });
 
+            $scope.$on('wallMarkerClick',function (event,args) {
+               if(event.defaultPrevented)
+                   return;
+               event.preventDefault();
 
+               if(args.id){
+                   locateEntity(args.id);
+                   $location.search('entity',args.id);
+                   $scope.$broadcast('markerClick',{id: args.id});
+               }
+            });
 
 
             /*
@@ -138,6 +148,31 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 }
                 // $log.debug('change location',hash);
                 $location.search({ c: hash });
+            }
+
+            function locateEntity(entityId){
+                // $log.debug('locate entity',entityId);
+                var marker = $scope.markers[entityId];
+                // se il marker esiste
+                if(marker){
+                    var center = {lat:marker.lat,lng:marker.lng};
+                    if(marker.zoom_level)
+                        center.zoom = marker.zoom_level;
+                    // $log.debug('locate entity cached',center);
+                    changeLocation(center);
+                }else{
+                    //altrimenti invoco una get
+                    ThingsService.get(entityId).then(
+                        function(marker){
+                            var center = {lat:marker.lat,lng:marker.lng};
+                            if(marker.zoom_level)
+                                center.zoom = marker.zoom_level;
+                            // $log.debug('remote entity',center);
+                            changeLocation(center);
+                        },
+                        function(err){$log.error("Location error: ",err);}
+                    );
+                }
             }
 
             // add tile alla lista delle tile attive e get dei marker
@@ -179,4 +214,58 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
         }]
     }
-});
+}).directive('wall',['$log','$ionicModal',function ($log,$ionicModal) {
+    return {
+        restrict:'EG',
+        scope:{},
+        link:function (scope,element,attr) {
+            scope.$on('$destroy',function (event) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                delete scope;
+            });
+
+
+            scope.$on('showWall',function (event) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                show();
+            });
+
+            // mostra il wall con il contenuto della mappa
+            function show(){
+                //$log.debug("MapCtrl, showWall!");
+                //$log.debug("check area: ",$scope.area);
+
+                $ionicModal.fromTemplateUrl('templates/modals/wall.html', {
+                    scope: scope,
+                    animation: 'fade-in'
+                }).then(function(modal) {
+                    scope.wall = modal;
+                    scope.wall.show();
+                });
+
+                scope.closeWall = function() {
+                    if(scope.wall)
+                        scope.wall.remove();
+                };
+                scope.$on('modal.hidden', function() {
+                    //$log.debug('closing wall');
+                    // setup della search card se la ricerca e' (q) non nulla
+                    delete scope.wall;
+                });
+                scope.$on('$destroy', function() {
+                    if(scope.wall) scope.wall.remove();
+                });
+
+                scope.clickWallItem = function(id){
+                    scope.closeWall();
+                    scope.$emit('wallMarkerClick',{id:id});
+                }
+            }
+        }
+    }
+}]);

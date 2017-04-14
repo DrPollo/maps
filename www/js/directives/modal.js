@@ -1,366 +1,354 @@
-angular.module('firstlife.directives').directive('simpleEntityList',function(){
-    return {
-        restrict: 'EG',
-        scope: {
-            id: '=id',
-            entityType:'=entityType',
-            owner: '=owner',
-            logged:'=',
-        },
-        templateUrl: '/templates/map-ui-template/simpleEntityList.html',
-        controller: ['$scope','$log','$filter','$ionicModal','$ionicPopup','$ionicActionSheet','$timeout','SimpleEntityFactory','myConfig','MemoryFactory','AuthService', function($scope,$log,$filter,$ionicModal,$ionicPopup,$ionicActionSheet, $timeout,SimpleEntityFactory,myConfig,MemoryFactory, AuthService){
+angular.module('firstlife.directives').directive('thingModal',function () {
+    return{
+        restrict:'EG',
+        scope:{},
+        controller:['$scope', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', function($scope,$location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService) {
 
             $scope.config = myConfig;
-            $scope.types = myConfig.types.simpleEntities;
-            $scope.groups = [];
-            $scope.user = AuthService.getUser();
+            $scope.infoPlace = {};
+            $scope.now = new Date();
 
-            var MODAL_RELOAD_TIME = myConfig.behaviour.modal_relaod_time;
-            // variabile dove inserisco il timer per il polling
-            var timer = false;
-            // funzione di polling
-            var polling = function(){
-                $log.log('simple entity polling ',$scope);
-                $timeout.cancel(timer);
-                updateGroups();
-                timer = $timeout(function(){
-                    // aggiorno i dettagli
-                    polling();
-                },MODAL_RELOAD_TIME);
-            };
+            var consoleCheck = false;
+            var hide = null;
+
+
+            // se all'apertura trovo il parametro entity nella search apro la modal
+            var initEntity = $location.search().entity;
+            if(initEntity)
+                openModal(initEntity);
+
+            // visualizzazione web o mobile?
+            $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
             $scope.$on('$destroy', function(e) {
-                if(!e.preventSimpleEntityList){
-                    e.preventSimpleEntityList = true;
-                    $timeout.cancel(timer);
-                    delete $scope;
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+
+                try{
+                    $scope.closeModal();
+                }catch(e){}
+
+                delete $scope;
+            });
+
+
+            $scope.$on('markerClick', function(event,args){
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                if(args.id){
+                    $log.debug('markerClick',args);
+                    $scope.showMCardPlace(args.id);
                 }
             });
 
-            $scope.$watch('id',function(e,old){
-                // cambia il marker
-                if(e != old){
-                    // stop polling
-                    $timeout.cancel(timer);
-                    // init delle simple entities
-                    initList();
-                }
-            });
-
-            $scope.toggle = 0;
-            $scope.setToggle = function(i){$scope.toggle = i;}
-
-            $scope.altro = $scope.owner;
-            $scope.$watch('owner',function(e,old){
-                // cambia il marker
-                if(e != old){
-                    $scope.altro = $scope.owner;
-                }
-            });
-
-            initList();
+            // $scope.$on("markerClickClose", function(event,args){
+            //     if (!event.markerClickClosePrevented) {
+            //         event.markerClickClose=true;
+            //         $scope.closeModal();
+            //     }
+            // });
 
 
-            function initList(){
-                $scope.groups = [];
-                for(var k in $scope.types){
-                    var type = $scope.types[k];
+            //modal info sul place
+            $scope.showMCardPlace = openModal;
 
-                    // se ci sono delle esclusioni da considerare e 
-                    // se non devo escludere il simple type
-                    if(!type.exclude || type.exclude.indexOf($scope.entityType) < 0){
-                        var group = angular.copy(type);
-                        group.list = [];
-                        // se non devo escludere il tipo dalla add
-                        if(!type.excludeAdd || type.excludeAdd.indexOf($scope.entityType) < 0){
-                            // altra logica se necessario va qui
-                            group.enable = true;
-                        }
-                        $scope.groups.push(group);
+
+            //action sheet init-info sul place
+            $scope.showASDeletedPlace = function(entityId){
+                var title="";
+                if(entityId === -1)
+                    title = $filter('translate')('ERROR_CANCEL');
+                else
+                    title = $filter('translate')('SUCCESS_CANCEL');
+
+                var hideSheet = $ionicActionSheet.show({
+                    titleText: title,
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                        //$log.debug("Deleted place cancelled: "+entityId);
                     }
-                }
-                polling();
-            }
-
-            function updateGroups(){
-                for(var i = 0; i < $scope.groups.length; i++){
-                    updateGroupOfEntities(i);
-                }
-            }
-
-            function updateGroupOfEntities(index){
-                SimpleEntityFactory.get($scope.id,$scope.groups[index].key).then(
-                    function(response){
-                        if(Array.isArray(response)){
-                            upadateGroupList(response,index);
-                        }
-                    },
-                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
-                );
-                function upadateGroupList(list,i){
-                    var group = $scope.groups[i];
-                    for(var j = 0; j < list.length; j++){
-                        var id = list[j]['id'];
-                        var index = group.list.map(function(e){return e.id}).indexOf(id);
-                        // se manca nella memoria locale aggiungo
-                        if(index < 0){group.list.push(list[j]);}
-                    }
-                    for(var q = 0; q < group.list.length; q++){
-                        var id = group.list[q]['id'];
-                        var index = list.map(function(e){return e.id}).indexOf(id);
-                        // se non c'e' tra i risultati online cancello dalla memoria locale
-                        if(index < 0){group.list.slice(q,1);}
-                    }
-                }
-            }
+                });
+                //$log.debug("actionSheet", hideSheet);
+                // to do serve per il routing, chiudo l'action sheet con il pulsante back
+            };
 
 
+            // menu popover della modals
+            $scope.showPopoverMenu = function (){
 
-            // cancella entita' semplice
-            $scope.delete = function(id,type,i){
-                // aggiungi check con alert
+                $ionicPopover.fromTemplateUrl('templates/popovers/ModalPopoverMenu.html', {
+                    scope: $scope,
+                }).then(function(popover) {
+                    $scope.popover = popover;
+                });
+
+                $scope.openPopover = function($event) {
+                    $scope.popover.show($event);
+                };
+                $scope.closePopover = function() {
+                    $scope.popover.hide();
+                };
+
+                $scope.removeButtonPopover = function (){
+                    var markerId = $scope.infoPlace.marker;
+                    //$log.debug("rimuovo il place ", markerId);
+                    $scope.closePopover();
+                    $scope.remove(markerId);
+                };
+                $scope.updateButtonPopover = function (){
+                    var marker = $scope.infoPlace.marker;
+                    $scope.closePopover();
+                    $scope.updateEntity(marker);
+                };
+
+
+                //Cleanup the popover when we're done with it!
+                $scope.$on('$destroy', function() {
+                    try{$scope.popover.remove();}catch(e){}
+                });
+            };
+
+            //action sheet per creazione place/evento
+            $scope.remove = function(marker){
+                if(consoleCheck)console.log("ModalPlaceController, showASRemove, id: ",marker.id);
 
                 $scope.showConfirm = function() {
                     var confirmPopup = $ionicPopup.confirm({
                         title: $filter('translate')('DELETE'),
                         template: $filter('translate')('DELETE_ASK')
                     });
-
                     confirmPopup.then(
                         function(res) {
                             if(res) {
-                                $log.debug('delete ',id,type,i)
-                                SimpleEntityFactory.delete($scope.id,id,type).then(
-                                    function(response){
-                                        // cancello l'elemento dalla memoria locale
-                                        var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf(id);
-                                        $log.debug('check delete',id,type,i,$scope.groups[i],$scope.groups[i].list,index);
-                                        if(index > -1){
-                                            $scope.groups[i].list.splice(index,1);
-                                        }
-                                        actionReport(true);
+                                ThingsService.remove(marker.id).then(
+                                    // success function
+                                    function(response) {
+                                        $scope.showASDeletedPlace(marker.id);
+                                        $scope.$emit("deleteMarker",{id:marker.id});
+                                        $scope.closeModal();
                                     },
-                                    function(response){$log.error('memers list, SimpleEntityFactory.delete, errore ',response);}
-                                );
+                                    // error function
+                                    function(error) {
+                                        $scope.showASDeletedPlace(-1);
+                                        $log.error("Failed to get required marker, result is " + error);
+                                        //$scope.closeModal();
+
+                                    });
                             } else {
-                                $log.log('cancellazione annullata');
+                                // $log.debug('cancellazione annullata');
                             }
                         });
                 };
 
                 $scope.showConfirm();
+
+            };
+
+            //action sheet init-info sul place
+            $scope.showASDeleted = function(entityId){
+                var title="";
+                if(entityId===-1 || entityId === -2)
+                    title = $filter('translate')('ERROR_CANCEL');
+                else
+                    title = $filter('translate')('SUCCESS_CANCEL');
+
+                var hideSheet = $ionicActionSheet.show({
+                    titleText: title,
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                    }
+                });
+            };
+
+            //Update marker in local/server
+            $scope.updateEntity = function(marker){
+                var params = {lat:marker.lat, lng:marker.lng, id:marker.id};
+                $scope.$emit("startEditing",params);
+
+                //fai uscire la wizardPlace con placeholder dati vecchi
+                $scope.closeModal();
+            }
+
+            /*
+             * Add child marker/place
+             */
+            $scope.addChildEntity = function(){
+                var marker = $scope.infoPlace.marker,
+                    params = {lat:marker.lat, lng:marker.lng, zoom_level:marker.zoom_level, rel: marker.id, parent_type:marker.entity_type};
+                // mando il messaggio
+                $scope.$emit("startEditing",params);
+
+                //fai uscire la wizardPlace con placeholder dati vecchi
+                $scope.closeModal();
             }
 
 
+            /*
+             * funzioni private
+             */
 
-            // aggiunge entita' semplice
-            $scope.edit = function(id,type,i){
-                var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf(id);
-                if(index > -1){
-                    $scope.publish = false;
-                    $scope.type = angular.copy($scope.types[type]);
-                    $scope.boxEntity = {};
-                    $scope.simpleEntity = angular.copy($scope.groups[i].list[index]);
-                    $scope.simpleEntity.type = $scope.type.key;
-                    $scope.simpleEntity.label = $scope.type.label;
-                    $scope.simpleEntity.contentKey = $scope.type.contentKey;
-                    $scope.simpleEntity.parent = $scope.id;
-                    openEditor();
-                }
-            }
-            $scope.update = function(){
-                var data = {};
-                for(var k in $scope.type.fields){
-                    data[k] = $scope.simpleEntity[k];
-                }
+            function openModal(markerId){
+                // $log.debug('opening modal for',markerId);
+                // inizio caricamento modal
+                $scope.loaded = false;
+                $scope.error = false;
+                // cancello il marker
+                $scope.infoPlace.marker = angular.extend({});
 
-                SimpleEntityFactory.update($scope.id, $scope.simpleEntity.id,data,$scope.simpleEntity.type).then(
-                    function(response){
-                        // cancello l'elemento dalla memoria locale
-                        var i = $scope.groups.map(function(e){return e.key}).indexOf($scope.simpleEntity.type);
-                        var index = $scope.groups[i].list.map(function(e){return e.id}).indexOf($scope.simpleEntity.id);
-                        if(index > -1){
-                            $scope.groups[i].list.splice(index,1);
+                // $log.debug('check hide!',hide,markerId);
+                if(!hide){
+                    //$log.debug('init hide');
+                    hide = $scope.$on('modal.hidden', function(e) {
+                        //segnalo la chiusura della modal
+                        if($scope.infoPlace.modal && !e.modalHiddenPrevented){
+                            e.modalHiddenPrevented = true;
+
+                            //deregistro il listner per la hide
+                            //$log.debug('check hide listner!',hide);
+                            hide();
+                            hide = null;
+                            chiudoModal();
                         }
-                        $scope.editor.hide();
-                        actionReport(true);
+                    });
+                }
+                // to do incapsulare il codice in una closeModal con then
+                if($scope.infoPlace.modal){
+                    // la modal esiste
+                    $scope.infoPlace.modal.show();
+                }else{
+                    // la modal non esiste, la creo
+                    $scope.infoPlace = {};
+                    $scope.infoPlace.modify = false;
+                    $scope.infoPlace.dataForm = {};
+
+                    $ionicModal.fromTemplateUrl('templates/modals/cardPlace.html', {
+                        scope: $scope,
+                        animation: 'fade-in',
+                        backdropClickToClose : true,
+                        hardwareBackButtonClose : true
+                    }).then(function(modal) {
+                        //$log.debug("infoPlace, apro modal modal: ", modal);
+                        $scope.infoPlace.modal = modal;
+                        $scope.openModalPlace();
+                    });
+                }
+                // carico il contenuto della modal
+                loadModal(markerId);
+
+                $scope.openModalPlace = function() {
+                    $scope.infoPlace.modal.show();
+                    // creo il menu per la modal
+                    $scope.showPopoverMenu();
+                };
+
+                $scope.closeModal = function() {
+                    chiudoModal();
+                };
+            };
+
+            function loadModal(markerId){
+                $scope.obs = ThingsService.get(markerId).then(
+                    function(marker){
+                        $scope.infoPlace.marker = angular.copy(marker);
+                        $log.debug('openPlaceModal',marker)
+                        $scope.$emit('openPlaceModal', {marker: marker.id});
+                        $scope.loaded = true;
+                        // inizializzo la maschera dei permessi per l'utente per il marker attuale
+                        initPerms(marker.owner.id);
+                        // recupero il tipo e lo metto dentro $scope.currentType
+                        initTypeChecks(marker.entity_type);
                     },
-                    function(response){$log.error('memers list, SimpleEntityFactory.update, errore ',response);}
+                    function(err){
+                        $log.error("changeModal, errore ",err);
+                        $scope.loaded = true;
+                        $scope.error = true;
+                        showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
+                        $scope.$emit("lostMarker",{id:markerId});
+                        $scope.closeModal();
+                    }
                 );
             }
 
-            function actionReport(success){
-                var text = 'SUCCESS';
-                if(!success){
-                    text = 'ERROR';
+            function chiudoModal(){
+                $location.search('entity',null);
+                // distruggo il menu popover
+                if($scope.popover){
+                    $scope.popover.hide();
+                    //$scope.popover.remove();
                 }
-                var hideSheet = $ionicActionSheet.show({
-                    titleText: $filter('translate')(text),
-                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
-                    cancel: function() {
-                        $log.log('CANCELLED');
-                    }
-                });
+                if($scope.infoPlace.modal)
+                    $scope.infoPlace.modal.remove();
+
+                $scope.$emit("closePlaceModal");
+                // $log.debug('check closePlaceModal');
+                delete $scope.infoPlace.modal;
+                //deregistro il listner per la hide
+                try{hide();}catch(e){}
             }
 
 
-            /*
-             * Gestione galleria foto
-             * openGallery: inizializza e apre la galleria
-             */
-            $scope.gallery = {};
-            $scope.slider = {};
-            $scope.slider.images = [];
-            $scope.slider.pointer = 0;
-
-            $scope.openGallery = function(index,gallery){
-
-                $scope.slider.images = gallery;
-                if(!isNaN(index)){
-                    $scope.slider.pointer = index;
+            function showLoadingScreen(text){
+                if(!text || text === 'undefined'){
+                    text = 'Operazione in corso...';
                 }
-                $ionicModal.fromTemplateUrl('templates/modals/gallery.html', {
-                    scope: $scope,
-                    animation: 'fade-in'
-                }).then(function(modal){
-                    console.log("gallery modal",modal);
-                    $scope.gallery = modal;
-                    if(index > 0){
-                        //$scope.galery.goToSlide(index);
-                    }
-                    $scope.gallery.show();
-                }, function(err){
-                    $log.error("gallery error",err);
+
+                $ionicLoading.show({
+                    template: text
                 });
 
-                $scope.gallery.close = function() {
-                    $scope.gallery.hide();
-                    $rootScope.galleryStatus = false;
-                };
-                // Cleanup the modal when we're done with it!
-                $scope.$on('$destroy', function() {
-                    $scope.gallery.remove();
-                });
-                // Execute action on hide modal
-                $scope.$on('gallery.hide', function() {
-                    // Execute action
-                });
-                // Execute action on remove modal
-                $scope.$on('gallery.removed', function() {
-                    // Execute action
-                });
-                $scope.$on('gallery.shown', function() {
-                    console.log('Gallery is shown!');
-                });
+            }
+            function hideLoadingScreen(){
+                $ionicLoading.hide();
+            }
 
-                // Called each time the slide changes
-                $scope.gallery.slideChanged = function(index) {
-                    $scope.gallery.slideIndex = index;
-                };
-
-                $scope.slider.next = function(){
-                    if($scope.slider.pointer < $scope.slider.images.length -1){
-                        $scope.slider.pointer++;
-                    }else{
-                        $scope.slider.pointer = 0;
-                    }
+            // An alert dialog
+            function showAlert (content) {
+                if(!content){
+                    content = {};
                 }
-                $scope.slider.prev = function(){
-                    if($scope.slider.pointer > 0){
-                        $scope.slider.pointer--;
-                    }else{
-                        $scope.slider.pointer =  $scope.slider.images.length -1;
-                    }
+                if(!content.title){
+                    content.title = 'ERROR';
                 }
-                $scope.slider.slideTo = function(index){
-                    if(index > -1 && index < $scope.slider.images.length-1){
-                        $scope.slider.pointer = index;
-                    }
+                if(!content.text){
+                    content.text = 'UNKNOWN_ERROR';
                 }
+                var alertPopup = $ionicPopup.alert({
+                    title: $filter('translate')(content.title),
+                    template: $filter('translate')(content.text)
+                });
             };
 
 
+            function initPerms (author){
+                if(!$scope.user)
+                    $scope.user = AuthService.getUser();
+                // se l'utente non e' definito
+                if(!$scope.user)
+                    return false;
+
+                var source = 'others';
+                if(author == $scope.user.id)
+                    source = 'self';
 
 
-            /*
-             * Add simpleEntity
-             * 0) add: evento pulsante add
-             * 1) initEntity: inizializzazione dell'entita'
-             * 2) openEditor: apertura della modal
-             * 3) addEntity: salvataggio dell'entita'
-             */
-
-            // aggiunge entita' semplice
-            $scope.add = AuthService.doAction(function(key){
-                $scope.publish = true;
-                $scope.type = angular.copy($scope.types[key]);
-                $log.debug('check type init simple entity ',$scope.type);
-                initEntity($scope.type);
-                openEditor();
-            });
-
-            function initEntity(type) {
-                $scope.boxEntity = {};
-                $scope.simpleEntity = {
-                    type: type.key,
-                    parent: $scope.id,
-                    label: type.label,
-                    contentKey: type.contentKey
-                };
-
-                for(var k in type.fields){
-                    $scope.simpleEntity[k] = type.fields[k].default;
-                }
-                $log.debug('check simple entity init ',$scope.simpleEntity,type.fields)
+                // $log.debug(author,'==',$scope.user.id);
+                $scope.checkPerms = AuthService.checkPerms(source);
+                return $scope.perms;
             }
 
 
-            function openEditor(){
-                $ionicModal.fromTemplateUrl('templates/modals/simpleEditor.html', {
-                    scope: $scope,
-                    animation: 'fade-in',//'slide-in-up',
-                    backdropClickToClose : true,
-                    hardwareBackButtonClose : true,
-                    focusFirstInput: true
-                }).then(function(modal) {
-                    $scope.editor = modal;
-                    $scope.editor.show();
-                },function(err){$log.error('open modal ',err);});
+            function initTypeChecks (entity_type){
+                var index = $scope.config.types.list.map(function(e){return e.key}).indexOf(entity_type);
+                // recupero il current type
+                $scope.currentType = $scope.config.types.list[index];
             }
-
-            $scope.addEntity = function(){
-                if(!Array.isArray($scope.simpleEntity[$scope.simpleEntity.contentKey])){
-                    sendEntity($scope.simpleEntity);
-                }else{
-                    // mando un'immagine alla volta
-                    for(i in $scope.simpleEntity[$scope.simpleEntity.contentKey]){
-                        var val = $scope.simpleEntity[$scope.simpleEntity.contentKey][i];
-                        var entity = angular.copy($scope.simpleEntity);
-                        entity[entity.contentKey] = val;
-                        sendEntity(entity);
-                    }
-                }
-
-                function sendEntity(entity){
-                    SimpleEntityFactory.add(entity.parent,entity,entity.type).then(
-                        function successCallback(response){
-                            $scope.editor.hide();
-                            actionReport(true);
-                        },
-                        function errorCallback(error){
-                            $log.error("SimpleEditorCtrl, addComment, error: ",error);
-                            actionReport(false);
-                        }
-                    );
-
-                }
-            }
-
 
         }]
     }
-
-}).directive('relationsActions', function() {
+    }).directive('relationsActions', function() {
 
     return {
         restrict: 'EG',

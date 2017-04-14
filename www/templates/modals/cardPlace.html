@@ -34,25 +34,15 @@
             <div class="tag-list content" ng-if="infoPlace.marker.tags.length > 0" >
                 <span class="tags">
                     <span ng-repeat="tag in infoPlace.marker.tags track by $index" class="tag" style="background-color:{{infoPlace.marker.icons[0].color}};color:white;">
-                        <!-- bug da sistemare causato dal modulo tag, stampo l'oggetto -->
                         <i class="ion-pricetag"></i>
-                        {{isString(tag) ? tag : tag.tag}}
-                        <span></span>
+                        {{tag}}
                     </span>
-
                 </span>
             </div>
-            <div ng-if="infoPlace.marker.text" class="content modal-content text-field">
-                {{infoPlace.marker.text}}
-            </div>
-            <div ng-if="infoPlace.marker.message_text" class="content modal-content text-field">
-                {{infoPlace.marker.message_text}}
-            </div>
-            <div ng-if="infoPlace.marker.thumbnail" class="content modal-content text-field">
-                {{infoPlace.marker.thumbnail}}
+            <div ng-if="infoPlace.marker.description" class="content modal-content text-field">
+                {{infoPlace.marker.description}}
             </div>
             <div id="modalPlaceLink" ng-if="infoPlace.marker.link_url" class="content modal-url">
-
                 <a href="{{infoPlace.marker.link_url}}" target="_blank">
                     <i class="ion-link"/>
                     <span>{{infoPlace.marker.link_url}}</span>

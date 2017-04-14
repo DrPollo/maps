@@ -56,8 +56,8 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
 
         // supporto al routing tra stati
-        $rootScope.previousState;
-        $rootScope.currentState;
+        // $rootScope.previousState;
+        // $rootScope.currentState;
         self.logoutHandler = false;
         // da cancellare cache stati da usare per recuperare il redirect al login
         //self.cache = {};
@@ -67,24 +67,15 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
             if(!event.preventRedirectState){
                 event.preventRedirectState = true;
 
-
                 var authenticate = toState.data.authenticate;
                 var search_params = $location.search();
-                // var params = getJsonFromUrl($location.url().split("?")[1]);
-                var params = $location.search();
                 var embed = search_params.embed ? true : false;
                 // tolgo i caricamenti
                 $ionicLoading.hide();
 
-
-
-                // aggiorno delle variabili sullo stato precendete e corrente
-                // $state non traccia lo stato precedente quindi risolviamo con le variabili locali
-                $rootScope.previousState = fromState.name;
-                $rootScope.currentState = toState.name;
-
-
                 $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+
+                $rootScope.previousState = fromState.name;
 
                 switch (toState.name){
                     case 'app.maps':
@@ -919,14 +910,18 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
             return {
                 request: function(config) {
-                    // inject del token nell'header se esiste
-                    var token = $localStorage[myConfig.authentication.token_mem_key];
+
+                    // per le chiamate non GET
                     // se il token esiste lo setto
                     if (token && config.method != 'GET')  {
+                        // inject del token nell'header se esiste
+                        var token = $localStorage[myConfig.authentication.token_mem_key];
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }
-                    //$log.debug('request headers',config);
+                    // imposto il timeout delle chiamate
+                    config.timeout = 1000;
+                    // $log.debug('request headers',config);
                     return config;
                 },
                 response: function(response) {

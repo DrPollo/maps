@@ -277,7 +277,7 @@ angular.module('firstlife.services')
                     deferred.resolve(markers);
                 },
                 function (error) {
-                    $log.error(error);
+                    // $log.error(error);
                     deferred.resolve({});
                 }
             );

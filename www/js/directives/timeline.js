@@ -14,18 +14,18 @@ angular.module('firstlife.timeline',[])
 
             $scope.data = {};
             //listner cambio dei parametri get
-            $rootScope.$on('timeline.refresh', function(event, args) {
-                if(!event.preventTimelineRefresh){
-                    event.preventTimelineRefresh = true;
-                    var params = $location.search();
-                    //$log.debug("timeline, timeline.refresh?", params.date, params.unit);
-                    // se i parametri sono impostati e sono cambiati
-                    if( (params.date && params.date != $scope.moment.toISOString()) || (params.unit && params.unit != defaultUnit) ){
-                        // inizializzo il buffer
-                        initBuffer();
-                    }
-                }
-            });
+            // $scope.$on('timeline.refresh', function(event, args) {
+            //     if(!event.preventTimelineRefresh){
+            //         event.preventTimelineRefresh = true;
+            //         var params = $location.search();
+            //         //$log.debug("timeline, timeline.refresh?", params.date, params.unit);
+            //         // se i parametri sono impostati e sono cambiati
+            //         if( (params.date && params.date != $scope.moment.toISOString()) || (params.unit && params.unit != defaultUnit) ){
+            //             // inizializzo il buffer
+            //             initBuffer();
+            //         }
+            //     }
+            // });
 
 
             // mobile o no?
@@ -59,11 +59,8 @@ angular.module('firstlife.timeline',[])
 
 
 
-            // imposto i nuovi parametri search
-            setSearchParams();
             // inizializzo il buffer
             initBuffer(true);
-            // applyTimeFilters(true);
 
 
 
@@ -82,8 +79,6 @@ angular.module('firstlife.timeline',[])
                 // $log.debug('forward to ',$scope.moment, moment().add(1,unit));
                 $scope.moment = $scope.moment.add(1,unit);
                 //$log.debug('forward to ',$scope.moment.toISOString());
-                // avviso del cambio di timeline
-                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -95,8 +90,6 @@ angular.module('firstlife.timeline',[])
                 // $log.debug('subtract a ',unit);
                 // sottraggo una unit
                 $scope.moment = $scope.moment.subtract(1,unit);
-                // avviso del cambio di timeline
-                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -108,8 +101,6 @@ angular.module('firstlife.timeline',[])
                 //$log.debug('scaleUp', $scope.indexDefaultUnit)
                 if($scope.indexDefaultUnit > 0){
                     $scope.indexDefaultUnit--;
-                    // avviso del cambio di timeline
-                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -124,8 +115,6 @@ angular.module('firstlife.timeline',[])
                     $scope.moment = angular.copy(slot.interval.start());
                     //$log.debug('scale down moment',$scope.moment);
                     $scope.indexDefaultUnit++;
-                    // avviso del cambio di timeline
-                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -138,8 +127,6 @@ angular.module('firstlife.timeline',[])
                 $scope.indexDefaultUnit = $scope.defaultUnit;
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
-                // avviso del cambio di timeline
-                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -148,8 +135,6 @@ angular.module('firstlife.timeline',[])
             $scope.resetNow = function(){
                 // ricalcolo il momento attuale
                 $scope.moment = moment();
-                // avviso del cambio di timeline
-                applyTimeFilters();
                 // ricalcolo il buffer
                 initBuffer();
             }
@@ -165,8 +150,6 @@ angular.module('firstlife.timeline',[])
 
                 if(index < $scope.indexDefaultUnit){
                     $scope.indexDefaultUnit = index;
-                    // avviso del cambio di timeline
-                    applyTimeFilters();
                     // ricalcolo il buffer
                     initBuffer();
                 }
@@ -235,7 +218,7 @@ angular.module('firstlife.timeline',[])
                 ThingsService.setTimeFilters(newInterval);
 
                 // evento di update per mapCtrl
-                $rootScope.$emit("timeUpdate",{time:newInterval});
+                $scope.$emit("timeUpdate",{time:newInterval});
             }
 
 
@@ -576,34 +559,6 @@ angular.module('firstlife.timeline',[])
                 return false;
             }
 
-
-            /*
-             * gestione eventi per la mappa
-             */
-
-            // salvo il nuovo intervallo e avviso la mappa
-            function applyTimeFilters(skip){
-                return
-
-                // imposto filtro temporale
-                var newInterval = getFullInterval();
-                //$log.debug('new interval ',newInterval);
-                ThingsService.setTimeFilters(newInterval);
-                // imposto i nuovi parametri search
-                setSearchParams();
-                // evento di update per mapCtrl
-                $rootScope.$emit("timeUpdate",{time:time});
-                //ThingsService.resetMarkersDistributed();
-                //$log.error('timeUpdate! ',time);
-            }
-
-            function setSearchParams(){
-                return
-
-                // setup dei parametri search
-                $location.search('date',$scope.moment.toISOString());
-                $location.search('unit', $scope.units[$scope.indexDefaultUnit].key);
-            }
 
         }]
     };

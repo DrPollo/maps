@@ -125,7 +125,7 @@ angular.module('firstlife.directives')
             scope.types = myConfig.types.list;
         }
     }
-}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer, ThingsService){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
@@ -139,10 +139,6 @@ angular.module('firstlife.directives')
                 $log.debug('searchBar, nuovo parametro q ',q)
                 // imposto il campo di ricerca
                 scope.query = params.q;
-                // // barra chiusa
-                // scope.visible = false;
-                // // imposto la card
-                // scope.card = true;
             })
 
             var dev = myConfig.dev;
@@ -202,6 +198,8 @@ angular.module('firstlife.directives')
                 setTimeout(function () {scope.$apply(function () {
                     scope.card = false;
                     $location.search('q', null);
+                    ThingsService.setQuery(null);
+                    scope.$emit('updateQ',{q:null});
                 })}, 0);
             }
 
@@ -231,6 +229,8 @@ angular.module('firstlife.directives')
                 setTimeout(function() {scope.$apply(function () {
                     scope.card = true;
                     $location.search('q', scope.query);
+                    ThingsService.setQuery(scope.query);
+                    scope.$emit('updateQ',{q:scope.query});
                 })}, 300);
             }
         }

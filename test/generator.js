@@ -14,12 +14,12 @@ function generate(){
     var url = 'api.firstlife.org';
     // var url = 'api.fldev.di.unito.it';
 
-    var token = 'Bearer 00c8b84cdd477472de120a181e9cf6b26d2bd397';
+    var token = 'Bearer 6285d60155b919501aa4e2d1c69c7152a490d27a';
     // var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
 
     console.log('connecting to ',url, 'with token ',token);
 
-    var ratio = 15;
+    var ratio = 100;
     //westlimit=7.577835; southlimit=45.00679; eastlimit=7.773339; northlimit=45.140221
     var bbox = [[7.577835,45.00679],[7.773339,45.140221]];
     var deltas = [
@@ -27,7 +27,7 @@ function generate(){
         (bbox[1][1]-bbox[0][1])/ratio
     ];
     // console.log('deltas',deltas);
-    var entry = JSON.parse('{"type":"Feature","properties":{"name":"News","valid_from":"2017-04-12T12:00:54.052Z","valid_to":"2017-04-12T21:59:59.999Z","link_url":null,"tags":["test"],"categories":[{"category_space":{"id":1},"categories":[{"id":-100}]},{"category_space":{"id":16},"categories":[{"id":-120}]},{"category_space":{"id":36},"categories":[{"id":-595}]}],"group_id":null,"user":"58e6433f4f1805d53fcd365d","id_wp":1,"id":null,"zoom_level":15,"level":null,"description":null,"location":null,"duration":0,"door_time":null,"parent_id":null,"attendees":[],"performer":-1,"organizer":-1,"entity_type":"FL_EVENTS","domain_id":9,"coordinates":[7.682232856750489,45.06586763568982]},"geometry":{"type":"Point","coordinates":[7.682232856750489,45.06586763568982]}}');
+    var entry = JSON.parse('{"type":"Feature","properties":{"name":"Luogo ","description":"entry di test generata automaticamente","valid_from":null,"valid_to":null,"link_url":null,"tags":["test"],"categories":[{"category_space":{"id":1},"categories":[{"id":-1}]},{"category_space":{"id":13},"categories":[{"id":-90}]}],"group_id":null,"zoom_level":13,"level":null,"parent_id":null,"type":1,"entity_type":"FL_PLACES","domain_id":9},"geometry":{"type":"Point","coordinates":[7.69094467163086,45.10557617099446]}}');
 // return
     var ancor = bbox[0];
     pushdata(0,ratio,ancor,entry,deltas,url,token);

@@ -74,29 +74,28 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            //$log.debug("sono in app.map e vengo per lo stato",toState);
+            $log.debug("sono in app.map e vengo per lo stato",toState);
 
             if(event.preventMapsEvent)
-                return
+                return;
             event.preventMapsEvent = true;
 
             // se non devo gestire questo evento
             if(toState.name != 'app.maps')
-                return
+                return;
 
 
-
-
-            // gestisco i parametri al cambio di stato disattivando il listner
-            self.watchSearchEnabled = false;
+            // controllo i parametri in arrivo
             var params = $location.search();
+
+            // controlla il parametro embed per il visualizzatore
             check4embed(params);
-            check4search(params);
+            // controllo il filtro per gruppo
             check4group(params);
+            // controllo il filtro per utente
             check4user(params);
+            // check initiative
             check4Initiative(params);
-
-
 
 
             $scope.isLoggedIn = AuthService.isAuth();
@@ -140,8 +139,6 @@ angular.module('firstlife.controllers')
                         check4customFilters(params,{});
             }
 
-            // riattivo il listner
-            //self.watchSearchEnabled = true;
         });
 
 
@@ -161,50 +158,6 @@ angular.module('firstlife.controllers')
          */
 
 
-        //listner cambio dei parametri search
-        $scope.$watch(
-            function(){ return $location.search(); },
-            function(e, old){
-
-                if($state.current.name != 'app.maps')
-                    return
-
-                // $log.debug("check paramentri search: ",$location.search(), " stato ", $state.current.name, " devo controllare ",self.watchSearchEnabled);
-
-                if(!self.watchSearchEnabled){
-                    self.watchSearchEnabled = true;
-                    return
-                }
-
-
-
-                // controllo i parametri di posizione
-                check4Position(e);
-                // controllo i parametri di entita'
-                check4entity(e,old);
-                // controllo i filtri custom
-                check4customFilters(e,old);
-                // controlla il parametro embed per il visualizzatore
-                check4embed(e);
-                // controllo il parametro di ricerca q
-                check4search(e,old);
-                // controllo il filtro per gruppo
-                check4group(e);
-                // controllo il filtro per utente
-                check4user(e);
-                // check timeline
-                check4timeline(e,old);
-                // check initiative
-                check4Initiative(e,old);
-
-                // abilito il listner (serve per gestire il pulsante back del browser)
-                // il listner si auto-abilita dopo ogni cambio di parametri
-                self.watchSearchEnabled = true;
-
-            },
-            true);
-
-
         function changeLocation(params) {
             var hash = params.lat+':'+params.lng;
             if(params.zoom){
@@ -217,75 +170,76 @@ angular.module('firstlife.controllers')
             // $log.debug('change location',hash);
             $location.search({ c: hash });
         }
-
-
-        //listner apertura e chiusura della modal del place
-        $scope.$on('openPlaceModal', function(event, args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-                // aggiorno il parametro place dalla search
-                updatePlaceInSearch(args.marker);
-
-        });
-        $scope.$on('closePlaceModal', function(event, args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-                // rimuovo il parametro place dalla search
-                deleteInSearch('entity');
-
-        });
-
-
-        $scope.$on("startEditing",function(event,args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-                $scope.updateEntity = args;
-                // se il luogo non e' bounded ad una posizione
-                if (!args.skip) {
-                    // centro la mappa sul luogo dei parametri
-                    locate(args);
-                    // entro in edit mode
-                    changeMode('edit');
-                } else {
-                    // se devo saltare il riposizionamento
-                    $scope.showASEdit();
-                }
-
-        });
-
-        $scope.$on("endEditing",function(event,args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // chiamo la funzione che gestisce l'editing
-            backFromEditor(args.marker.id);
-            // click del markers
-            //clickMarker(args.id);
-        });
-
-        $scope.$on("deleteMarker",function(event,args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-        });
-        $scope.$on("lostMarker",function(event,args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // cancello un marker
-            deleteMarker(args.id);
-        });
-
-        $rootScope.$on("timeUpdate",function(event,args){
+        //
+        //
+        // //listner apertura e chiusura della modal del place
+        // $scope.$on('openPlaceModal', function(event, args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //         // aggiorno il parametro place dalla search
+        //         updatePlaceInSearch(args.marker);
+        //
+        // });
+        // $scope.$on('closePlaceModal', function(event, args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //         // rimuovo il parametro place dalla search
+        //         deleteInSearch('entity');
+        //
+        // });
+        //
+        //
+        // $scope.$on("startEditing",function(event,args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //         $scope.updateEntity = args;
+        //         // se il luogo non e' bounded ad una posizione
+        //         if (!args.skip) {
+        //             // centro la mappa sul luogo dei parametri
+        //             locate(args);
+        //             // entro in edit mode
+        //             changeMode('edit');
+        //         } else {
+        //             // se devo saltare il riposizionamento
+        //             $scope.showASEdit();
+        //         }
+        //
+        // });
+        //
+        // $scope.$on("endEditing",function(event,args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //     // chiamo la funzione che gestisce l'editing
+        //     backFromEditor(args.marker.id);
+        //     // click del markers
+        //     //clickMarker(args.id);
+        // });
+        //
+        // $scope.$on("deleteMarker",function(event,args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        // });
+        // $scope.$on("lostMarker",function(event,args){
+        //     if(event.defaultPrevented)
+        //         return ;
+        //
+        //     event.preventDefault();
+        //     // cancello un marker
+        //     deleteMarker(args.id);
+        // });
+        //
+        $scope.$on("timeUpdate",function(event,args){
+            // $log.debug('timeUpdate');
             if(event.defaultPrevented)
                 return ;
 
@@ -294,16 +248,18 @@ angular.module('firstlife.controllers')
             updateMarkers();
         });
 
-        $scope.$on("clickMarker",function(event,args){
+        $scope.$on("updateQ",function(event,args){
+            // $log.debug('updateQ');
             if(event.defaultPrevented)
                 return ;
 
             event.preventDefault();
-            // click di un marker
-            clickMarker(args.id);
-            //$log.debug('clickMarker, locate ',args.id)
-            locate(args.id);
+            // al cambio filtro testuale
+            filterMarkers();
         });
+
+
+
 
 
         /*
@@ -350,6 +306,10 @@ angular.module('firstlife.controllers')
             }
         });
 
+
+        $scope.showWall = function(){
+            $scope.$broadcast('showWall');
+        }
 
         //Modal filtro categorie
         $scope.showMFilterCat = function() {
@@ -437,43 +397,12 @@ angular.module('firstlife.controllers')
             var icon = ThingsService.setIcon(id);
             $scope.closeFilterCat();
             // aggiorno i marker
-            $timeout(filterMarkers,400);
+            filterMarkers();
             return icon;
         };
 
 
-        // mostra il wall con il contenuto della mappa
-        $scope.showWall = function(){
-            //$log.debug("MapCtrl, showWall!");
-            //$log.debug("check area: ",$scope.area);
 
-            $ionicModal.fromTemplateUrl('templates/modals/wall.html', {
-                scope: $scope,
-                animation: 'fade-in'
-            }).then(function(modal) {
-                $scope.wall = modal;
-                $scope.wall.show();
-            });
-
-            $scope.closeWall = function() {
-                if($scope.wall)
-                    $scope.wall.remove();
-            };
-            $scope.$on('modal.hidden', function() {
-                //$log.debug('closing wall');
-                // setup della search card se la ricerca e' (q) non nulla
-                delete $scope.wall;
-            });
-            $scope.$on('$destroy', function() {
-                if($scope.wall) $scope.wall.remove();
-            });
-
-            $scope.clickWallItem = function(id){
-                $scope.closeWall();
-                clickMarker(id);
-                locate(id);
-            }
-        }
 
         // mostra il wall con il contenuto della mappa
         $scope.showSearchBox = function(){
@@ -767,17 +696,6 @@ angular.module('firstlife.controllers')
         }
 
         // controllo i parametri di posizione
-        function check4Position(e){
-            // $log.debug('check4Position',e);
-            // se ho settati i parametri di posizione
-            if(e.lat && e.lng && e.zoom){
-                var center = {lat:e.lat, lng:e.lng, zoom:e.zoom};
-                // $log.debug('set map center',center);
-                changeLocation(center);
-            }
-
-        }
-        // controllo i parametri di posizione
         // todo implementa soluzione possibilmente filtro
         function check4Initiative(e, old){
             // se ho settati i parametri di posizione
@@ -786,71 +704,6 @@ angular.module('firstlife.controllers')
                 // avviso del cambio di parametro
                 $scope.$broadcast('newInitiativeSearch',{id: e.initiative ? e.initiative : null});
             }
-        }
-
-        // controllo il parametro entity
-        function check4entity(e,old){
-            if(e.entity){
-                //if((!old.place && e.place) || (old && e.place != parseInt(old.place))){
-                // placeModal da aprire
-                //$log.debug("trovato parametro entity, devo aprire una modal: ",e.entity);
-                clickMarker(e.entity);
-                //localizzo perche' il marker potrebbe non essere nello scope
-                locate(e.entity);
-                //}
-            }else if(old.entity){
-                // chiudo la modal
-                $scope.$broadcast("markerClickClose");
-
-            }
-        };
-
-        $scope.query = null;
-        // controllo il parametro q di ricerca di stringhe
-        function check4search(e,old){
-            if(!e)
-                return false;
-            var q = e.q;
-            var o = old && old.q ? old.q : null;
-            if(q && o && q == o)
-                return false;
-
-            //$log.debug('check4search, param q', e.q, old);
-            // se il parametro e' settato
-            // logica
-            if(q && q != ''){
-                setQ(q);
-            }else if(q == ''){
-                // se parametro non valido lo rimuovo
-                $location.search('q',null);
-                setQ(null);
-            }else if(o && o != '' && !q){
-                setQ(null);
-            }
-
-            function setQ(q){
-                $scope.query = q;
-                // avviso del cambio di parametro
-                $scope.$broadcast('newSearchParam',{q: q ? q : null});
-                //$log.debug('change query ',q);
-                // setMapMarkers();
-                ThingsService.setQuery(q);
-                filterMarkers();
-            }
-        }
-
-        function check4timeline(e,old){
-            if(!e)
-                return false;
-            var q = e.date;
-            var o = old && old.date ? old.date : null;
-            var p = e.unit;
-            var f = old && old.unit ? old.unit : null;
-            if( (q && o && q == o) && (p && f && p == f) )
-                return false;
-            // se il parametro e' settato
-            // mando il segnale di aggiornamento degli eventi sulla timeline
-            $rootScope.$emit('timeline.refresh');
         }
 
         // groupCard
@@ -937,7 +790,7 @@ angular.module('firstlife.controllers')
                         disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
                         chunkDelay: 500,
                         chunkInterval: 200,
-                        iconCreateFunction: bakeThePie,
+                        // iconCreateFunction: bakeThePie,
                         zoomToBoundsOnClick: true,
                         removeOutsideVisibleBounds: true,
                         singleMarkerMode: false,
@@ -966,7 +819,7 @@ angular.module('firstlife.controllers')
         },
         markers: {},
         watch:{
-            doWatch:true,
+            doWatch:false,
             isDeep: false
         },
         controls: {
@@ -977,11 +830,12 @@ angular.module('firstlife.controllers')
         },
         events: {
             map: {
-                enable: ['click', 'moveend', 'focus','load', 'unload'],
+                enable: ['load'],
                 logic: 'emit'
             },
             marker: {
-                enable: ['click'],
+                enable: [],
+                // enable: ['click'],
                 logic: 'emit'
             }
         },

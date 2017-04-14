@@ -170,7 +170,7 @@ angular.module('firstlife.factories')
                         deferred.resolve(response.data.things.features);
                     },
                     function (err) {
-                        $log.error(err);
+                        // $log.error(err);
                         deferred.reject(err);
                     }
                 );
