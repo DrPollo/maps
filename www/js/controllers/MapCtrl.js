@@ -159,19 +159,6 @@ angular.module('firstlife.controllers')
          * 9) controlla l'avvio del'edit di una entita'
          * 10) fine editing delle simple entities
          */
-        // click su marker > propago evento
-        $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-            //$log.debug("MARKER CLICK...controlla, args: ", args,event);
-            if(!event.preventMapMarkerClick){
-                event.preventMapMarkerClick = true;
-
-                if(!$scope.editMode){
-                    args.model.focus = false;
-                    //event.target.focus = false;
-                    clickMarker(args.model.id);
-                }
-            }
-        });
 
 
         //listner cambio dei parametri search
@@ -218,73 +205,14 @@ angular.module('firstlife.controllers')
             true);
 
 
-        // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
-        // $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //     // aggiorno posizione parametro search
-        //     $timeout(updatePositionInSearch,50);
-        // });
-        $scope.$on('leafletDirectiveMap.mymap.tileload', function(event, args) {
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // aggiorno posizione parametro search
-            // $log.debug('tileload',args)
-            addTile(args.coords);
-        });
-        $scope.$on('leafletDirectiveMap.mymap.tileunload', function(event, args) {
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // aggiorno posizione parametro search
-            // $log.debug('tileunload',args)
-            removeTile(args.coords);
-        });
-        // mappa si muove, aggiorno la posizione nella search e partono le chiamate per l'update dei marker
-        $scope.$on('leafletDirectiveMap.mymap.load', function(event, args) {
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-
-            // $log.debug('map loaded');
-
-            // listners al livello tile
-            leafletData.getLayers().then(
-                function (layers) {
-                    // $log.debug(layers.baselayers.view);
-                    // $log.debug('init layer ref',!$scope.tileLayer);
-                    if(!$scope.tileLayer){
-                        $scope.tileLayer = layers.baselayers.view;
-                        // $log.debug('tile layer',$scope.tileLayer);
-                        $scope.tileLayer.on('tileload',function (e) {
-                            // $log.debug('tileload',e);
-                            $scope.$broadcast('leafletDirectiveMap.mymap.tileload',{coords:e.coords});
-                        });
-                        $scope.tileLayer.on('tileunload',function (e) {
-                            // $log.debug('tileunload',e);
-                            $scope.$broadcast('leafletDirectiveMap.mymap.tileunload',{coords:e.coords});
-                        });
-                    }
-                }
-            );
-        });
-
-        $scope.$on("centerUrlHash", function(event, centerHash) {
-            // $log.debug("url", centerHash);
-            $location.search({ c: centerHash });
-        });
         function changeLocation(params) {
             var hash = params.lat+':'+params.lng;
             if(params.zoom){
                 hash = hash.concat(':',params.zoom);
             }else{
-                hash = hash.concat(':',$scope.flmap.center.zoom);
+                var c = $location.search().c;
+                var z = c.split(':')[2];
+                hash = hash.concat(':',z);
             }
             // $log.debug('change location',hash);
             $location.search({ c: hash });
@@ -363,7 +291,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
             // al cambio filtro temporale ricalcolo i dati
-            updateMarkers(true);
+            updateMarkers();
         });
 
         $scope.$on("clickMarker",function(event,args){
@@ -377,17 +305,6 @@ angular.module('firstlife.controllers')
             locate(args.id);
         });
 
-        // richiesta di cambio di livello 
-        $scope.$on("switchMapLevel",function(event,args){
-            if(event.defaultPrevented)
-                return ;
-
-            event.preventDefault();
-            // click cambio il livello della mappa
-            if(levels.check)
-                selectGeoJSONLevel(args.level);
-
-        });
 
         /*
          * Funzioni pubbliche
@@ -512,7 +429,7 @@ angular.module('firstlife.controllers')
             // cerco l'indice della regola per le categorie
             ThingsService.toggleFilter(cat, key);
             // aggiorno i marker
-            updateMarkers();
+            filterMarkers();
         };
 
         // cambio il category space utilizzato per le icone
@@ -520,7 +437,7 @@ angular.module('firstlife.controllers')
             var icon = ThingsService.setIcon(id);
             $scope.closeFilterCat();
             // aggiorno i marker
-            $timeout(updateMarkers,400);
+            $timeout(filterMarkers,400);
             return icon;
         };
 
@@ -707,59 +624,13 @@ angular.module('firstlife.controllers')
         };
 
 
-        // add tile alla lista delle tile attive e get dei marker
-        var tiles = {};
-        function addTile(tile) {
-            // add tile to list of tiles
-            tiles[tile.z+':'+tile.x+':'+tile.y] = tile;
-            getTile(tile);
-        }
-        function removeTile(tile) {
-            delete tiles[tile.z+':'+tile.x+':'+tile.y];
-        }
-        function getTile(tile) {
-            ThingsService.tile(tile).then(
-                function (markers) {
-                    // aggiorno lista tile
-                    angular.extend($scope.flmap.markers,markers);
-                    // $log.log('markers',Object.keys($scope.flmap.markers).length);
-                    // $timeout(function(){
-                    //     $scope.flmap.markers = angular.extend({},$scope.flmap.markers,markers);
-                    //     $log.log('markers',Object.keys($scope.flmap.markers).length);
-                    //     },500);
 
-                },
-                function (err) {
-                    $log.error(err);
-                }
-            );
-        }
-        function filterTile(tile) {
-            $scope.flmap.markers = {};
-            ThingsService.filterTile(tile).then(
-                function (markers) {
-                    // aggiorno lista tile
-                    angular.extend($scope.flmap.markers,markers);
-                    // $log.log('markers',Object.keys($scope.flmap.markers).length);
-                },
-                function (err) {
-                    $log.error(err);
-                }
-            );
+        function filterMarkers() {
+            $scope.$broadcast('filterMarkers');
         }
 
-        // filtro i marker in cache
-        function updateMarkers(reset) {
-            // clear cache
-            if(reset){
-                ThingsService.resetCache();
-                $scope.flmap.markers = {};
-            }
-            // chiamate alle tile attive
-            angular.forEach(tiles,function (tile,id) {
-                if(reset) getTile(tile,reset);
-                else filterTile(tile);
-            })
+        function updateMarkers() {
+            $scope.$broadcast('updateMarkers');
         }
 
 
@@ -948,20 +819,24 @@ angular.module('firstlife.controllers')
             // se il parametro e' settato
             // logica
             if(q && q != ''){
-                $scope.query = q;
+                setQ(q);
             }else if(q == ''){
                 // se parametro non valido lo rimuovo
                 $location.search('q',null);
-                $scope.query = null;
+                setQ(null);
             }else if(o && o != '' && !q){
-                $scope.query = null;
+                setQ(null);
             }
-            // avviso del cambio di parametro
-            $scope.$broadcast('newSearchParam',{q: q ? q : null});
-            //$log.debug('change query ',q);
-            // setMapMarkers();
-            ThingsService.setQuery(q);
-            updateMarkers();
+
+            function setQ(q){
+                $scope.query = q;
+                // avviso del cambio di parametro
+                $scope.$broadcast('newSearchParam',{q: q ? q : null});
+                //$log.debug('change query ',q);
+                // setMapMarkers();
+                ThingsService.setQuery(q);
+                filterMarkers();
+            }
         }
 
         function check4timeline(e,old){
@@ -1103,11 +978,11 @@ angular.module('firstlife.controllers')
         events: {
             map: {
                 enable: ['click', 'moveend', 'focus','load', 'unload'],
-                logic: 'broadcast'
+                logic: 'emit'
             },
             marker: {
                 enable: ['click'],
-                logic: 'broadcast'
+                logic: 'emit'
             }
         },
         //maxBounds: config.map.bounds,

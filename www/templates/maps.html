@@ -22,17 +22,7 @@
     </div>
     <ion-content class="has-bottom" data-tap-disabled="true">
         <div ng-controller="ModalEntityCtrl"></div>
-        <leaflet id="mymap" ng-if="flmap.loaded" width="100%" height="100%"
-                 center="flmap.center"
-                 url-hash-center="yes"
-                 bounds="flmap.bounds"
-                 defaults="flmap.defaults"
-                 controls="flmap.controls"
-                 markers="flmap.markers"
-                 markers-watch-options="flmap.watch"
-                 layers="flmap.layers"
-                 event-broadcast="flmap.events"></leaflet>
-
+        <flmap map="flmap"></flmap>
     </ion-content >
 
     <!--on-hold="showASEdit()" -->

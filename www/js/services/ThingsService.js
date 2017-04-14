@@ -5,7 +5,6 @@ angular.module('firstlife.services')
     .service('ThingsService',['$q','$log', '$filter' ,'AuthService','myConfig', 'ThingsFact', function ($q, $log,$filter, AuthService, myConfig, ThingsFact){
 
         var config = myConfig;
-        var colors = config.design.colors;
         var types = config.types.keys;
         var defIcons = config.types.icons;
 
@@ -19,6 +18,7 @@ angular.module('firstlife.services')
                         deferred.resolve(marker);
                     },
                     function (err) {
+                        $log.error(err);
                         deferred.reject(err);
                     }
                 );
@@ -36,26 +36,41 @@ angular.module('firstlife.services')
             report: function(report){
                 return ThingsFact.report(report);
             },
-            filterTile: function (tile) {
-                var features = cache[tile.z+':'+tile.x+':'+tile.y];
-                // se la tile è in cache
-                if(features){
-                    var deferred = $q.defer();
-                    deferred.resolve(makeMarkers(features));
-                    return deferred.promise;
-                }
-
-                // altrimenti chiedo la tile
-                return getTile(tile);
-            },
             filter: function () {
-
                 return makeMarkers(Object.keys(cache).reduce(function(features, key){
                   return features.concat(cache[key]);
               },[]));
             },
+            updateCache: function() {
+                var deferred = $q.defer();
+                var queries = {};
+                // $log.debug('cache',Object.keys(cache));
+                Object.keys(cache).map(function (key) {
+                    var params = key.split(':');
+                    var center = {z:params[0],x:params[1],y:params[2]};
+                    // $log.log('updating ',center);
+                    queries[key] = getTile(center);
+                });
+                $q.all(queries).then(
+                    function (results) {
+                        var markers = Object.keys(results).reduce(function(markers, key){
+                            return angular.extend(markers,results[key]);
+                        },{});
+                        // $log.debug('got results from updateCache',markers);
+                        deferred.resolve(markers);
+                    }, function (err) {
+                        $log.error('q.all error',err);
+                        deferred.reject(err);
+                    });
+
+                return deferred.promise;
+            },
             resetCache : function () {
                 return cache = {};
+            },
+            removeTile: function(params){
+                // rimuovo la tile
+                return delete cache[params.z+':'+params.x+':'+params.y];
             },
             tile: function (tile) {
                 return getTile(tile);
@@ -162,6 +177,7 @@ angular.module('firstlife.services')
                         deferred.resolve(markers);
                     },
                     function (err) {
+                        $log.error(err);
                         deferred.reject(err);
                     }
                 );
@@ -189,7 +205,6 @@ angular.module('firstlife.services')
                 favCat = (favCat === id) ?  0 : id;
                 return favCat;
             },
-
             bbox: function(bounds){
                 var deferred = $q.defer();
                 if(!bounds.northEast.lat){
@@ -218,12 +233,13 @@ angular.module('firstlife.services')
                         deferred.resolve(markers);
                     },
                     function (err) {
+                        $log.error(err);
                         deferred.reject(err);
                     }
                 );
 
                 return deferred.promise;
-            },
+            }
         };
 
 
@@ -246,6 +262,9 @@ angular.module('firstlife.services')
                 to: filters.time.to
             };
             angular.extend(params,tile);
+            if(!cache[params.z+':'+params.x+':'+params.y])
+                cache[params.z+':'+params.x+':'+params.y] = [];
+
             ThingsFact.tile(params).then(
                 function (features) {
                     // $log.debug(features);
@@ -258,6 +277,7 @@ angular.module('firstlife.services')
                 },
                 function (error) {
                     $log.error(error);
+                    deferred.resolve({});
                 }
             );
 
