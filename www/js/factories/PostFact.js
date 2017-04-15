@@ -13,8 +13,7 @@ angular.module('firstlife.factories')
             var url = urlThings.concat("/",id,"/posts",format);
             var req = {
                 url: url,
-                method: 'get',
-                headers:{"Content-Type":"application/json"},
+                method: 'GET',
                 data: ''
             };
             $http(req).then(
@@ -32,8 +31,7 @@ angular.module('firstlife.factories')
             var url = urlPosts.concat("/",id,format);
             var req = {
                 url: url,
-                method: 'get',
-                headers:{"Content-Type":"application/json"},
+                method: 'GET',
                 data: ''
             };
             $http(req).then(
@@ -51,8 +49,7 @@ angular.module('firstlife.factories')
             var url = urlThings.concat("/",id,'/posts',format);
             var req = {
                 url: url,
-                method: 'post',
-                headers:{"Content-Type":"application/json"},
+                method: 'POST',
                 data: post
             };
             $http(req).then(
@@ -70,8 +67,7 @@ angular.module('firstlife.factories')
             var url = urlPosts.concat("/",id,format);
             var req = {
                 url: url,
-                method: 'put',
-                headers:{"Content-Type":"application/json"},
+                method: 'PUT',
                 data: post
             };
             $http(req).then(
@@ -91,8 +87,7 @@ angular.module('firstlife.factories')
             //$log.debug('url ',url)
             var req = {
                 url: url,
-                method: 'delete',
-                headers:{"Content-Type":"application/json"},
+                method: 'DELETE',
                 data: ''
             };
             $http(req).then(
@@ -112,8 +107,7 @@ angular.module('firstlife.factories')
             //$log.debug('url ',url)
             var req = {
                 url: url,
-                method: 'get',
-                headers:{"Content-Type":"application/json"},
+                method: 'GET',
                 data: ''
             };
             $http(req).then(
@@ -133,8 +127,7 @@ angular.module('firstlife.factories')
             //$log.debug('url ',url)
             var req = {
                 url: url,
-                method: 'post',
-                headers:{"Content-Type":"application/json"},
+                method: 'POST',
                 data: {message:message}
             };
             $http(req).then(
@@ -154,8 +147,7 @@ angular.module('firstlife.factories')
             //$log.debug('url ',url)
             var req = {
                 url: url,
-                method: 'put',
-                headers:{"Content-Type":"application/json"},
+                method: 'PUT',
                 data: {message:message}
             };
             $http(req).then(
@@ -174,8 +166,7 @@ angular.module('firstlife.factories')
             // $log.debug('delete url ',url)
             var req = {
                 url: url,
-                method: 'delete',
-                headers:{"Content-Type":"application/json"},
+                method: 'DELETE',
                 data: {}
             };
             $http(req).then(

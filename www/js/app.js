@@ -910,17 +910,20 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
             return {
                 request: function(config) {
-
+                    if(config.method === 'OPTIONS')
+                        console.log('option: ',config);
                     // per le chiamate non GET
                     // se il token esiste lo setto
-                    if (token && config.method != 'GET')  {
+                    if (token)  {
                         // inject del token nell'header se esiste
                         var token = $localStorage[myConfig.authentication.token_mem_key];
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }
                     // imposto il timeout delle chiamate
-                    config.timeout = 1000;
+                    // console.debug('method', config.method);
+                    if(config.method === 'GET')
+                        config.timeout = 1000;
                     // $log.debug('request headers',config);
                     return config;
                 },

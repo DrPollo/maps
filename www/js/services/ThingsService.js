@@ -66,6 +66,33 @@ angular.module('firstlife.services')
 
                 return deferred.promise;
             },
+            flush: function() {
+                var deferred = $q.defer();
+                var queries = {};
+                var localCache = angular.copy(Object.keys(cache));
+
+                nextTile(0, localCache, {}, deferred);
+
+                return deferred.promise;
+
+
+                function nextTile(index, tiles, total, deferred){
+                    if(index >= tiles.length){
+                        return deferred.resolve(total);
+                    }
+                    var tile = tiles[index].split(':');
+                    var center = {z:tile[0],x:tile[1],y:tile[2]};
+                    getTile(center).then(
+                        function (markers) {
+                            angular.extend(total,markers);
+                            nextTile(index+1,tiles,total,deferred);
+                        },
+                        function (err) {
+                            nextTile(index+1,tiles,total,deferred);
+                        }
+                    );
+                }
+            },
             resetCache : function () {
                 return cache = {};
             },

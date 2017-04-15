@@ -29,8 +29,7 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'GET',
-                        headers:{"Content-Type":"application/json"},
-                        data:true
+                        data:''
                     };
                     $http(req).then(
                         function(response){
@@ -62,7 +61,6 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json"},
                         data:{}
                     };
                     $http(req).then(
@@ -94,7 +92,6 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json"},
                         data:{}
                     };
                     $http(req).then(
@@ -120,7 +117,6 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'GET',
-                        headers:{"Content-Type":"application/json"},
                         data:true
                     };
                     $http(req).then(
@@ -143,7 +139,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    headers:{"Content-Type":"application/json"},
                     data:true
                 };
                 return rx.Observable.fromPromise($http(req))
@@ -164,7 +159,6 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'PUT',
-                        headers:{"Content-Type":"application/json"},
                         data:{}
                     };
                     $http(req).then(
@@ -195,7 +189,6 @@ angular.module('firstlife.factories')
                     var req = {
                         url: urlId,
                         method: 'DELETE',
-                        headers:{"Content-Type":"application/json"},
                         data:{user_id:user.id}
                     };
                     $http(req).then(

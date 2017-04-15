@@ -95,8 +95,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 event.preventDefault();
 
-                $log.log('moveend');
-                timer = $timeout(updateMarkers,5000);
+                // $log.debug('moveend');
+                timer = $timeout(flushMarkers,1000);
             });
             $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
                 if(event.defaultPrevented)
@@ -104,7 +104,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 event.preventDefault();
 
-                $log.log('movestart');
+                // $log.debug('movestart');
                 if(timer)
                     $timeout.cancel(timer);
             });
@@ -204,9 +204,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
 
             // filtro i marker in cache
-            function flushCache() {
+            function flushMarkers() {
                 // chiamate alle tile attive
-                ThingsService.updateCache().then(
+                ThingsService.flush().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         angular.extend($scope.markers,markers);
@@ -216,12 +216,18 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function updateMarkers() {
                 // chiamate alle tile attive
-                ThingsService.updateCache().then(
+                ThingsService.flush().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         $scope.markers = angular.extend({},markers);
                     }
                 );
+                // ThingsService.updateCache().then(
+                //     function (markers) {
+                //         // $log.debug('updated markers',Object.keys(markers).length);
+                //         $scope.markers = angular.extend({},markers);
+                //     }
+                // );
             }
             // filtro i marker in cache
             function filterMarkers() {
