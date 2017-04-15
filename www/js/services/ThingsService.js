@@ -44,8 +44,9 @@ angular.module('firstlife.services')
             updateCache: function() {
                 var deferred = $q.defer();
                 var queries = {};
-                // $log.debug('cache',Object.keys(cache));
-                Object.keys(cache).map(function (key) {
+                var localCache = angular.copy(Object.keys(cache));
+                // $log.debug('process tile in cache:',Object.keys(cache).length);
+                localCache.map(function (key) {
                     var params = key.split(':');
                     var center = {z:params[0],x:params[1],y:params[2]};
                     // $log.log('updating ',center);
@@ -73,7 +74,12 @@ angular.module('firstlife.services')
                 delete cache[params.z+':'+params.x+':'+params.y];
                 return true;
             },
-            tile: function (tile) {
+            addTile: function(params){
+                // rimuovo la tile
+                cache[params.z+':'+params.x+':'+params.y] = new Date().toISOString();
+                return true;
+            },
+            getTile: function (tile) {
                 return getTile(tile);
             },
             setTimeFilters: function(time){

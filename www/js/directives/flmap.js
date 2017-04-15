@@ -8,7 +8,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             map:'<'
         },
         templateUrl:'/templates/map/flmap.html',
-        controller: ['$scope','$log', '$location','myConfig','ThingsService', 'leafletData',function ($scope, $log, $location, myConfig, ThingsService, leafletData) {
+        controller: ['$scope','$log', '$location', '$timeout','myConfig','ThingsService', 'leafletData',function ($scope, $log, $location,$timeout, myConfig, ThingsService, leafletData) {
 
             // markers
             $scope.markers = {};
@@ -38,7 +38,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 e.preventDefault();
 
                 // $log.debug('updateMarkers!');
-                // ThingsService.updateCache();
                 updateMarkers();
             });
 
@@ -72,15 +71,15 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     function (layers) {
                         // $log.debug(layers.baselayers.view);
                         // $log.debug('init layer ref',!$scope.tileLayer);
-                        if(!$scope.tileLayer){
+                        if(!$scope.tileLayer) {
                             $scope.tileLayer = layers.baselayers.view;
                             // $log.debug('tile layer',$scope.tileLayer);
-                            $scope.tileLayer.on('tileload',function (e) {
+                            $scope.tileLayer.on('tileload', function (e) {
                                 // $log.debug('tileload',e);
                                 // al caricamento delle tile carico i marker relativi alle tile
-                                addTile(e.coords);
+                                ThingsService.addTile(e.coords);
                             });
-                            $scope.tileLayer.on('tileunload',function (e) {
+                            $scope.tileLayer.on('tileunload', function (e) {
                                 // $log.debug('tileunload',e.coords);
                                 ThingsService.removeTile(e.coords);
                             });
@@ -89,10 +88,26 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 );
             });
 
+            var timer = null;
+            $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
+                if(event.defaultPrevented)
+                    return ;
 
+                event.preventDefault();
 
+                $log.log('moveend');
+                timer = $timeout(updateMarkers,5000);
+            });
+            $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
+                if(event.defaultPrevented)
+                    return ;
 
+                event.preventDefault();
 
+                $log.log('movestart');
+                if(timer)
+                    $timeout.cancel(timer);
+            });
 
             /*
              * gestione stato parametri search
@@ -174,10 +189,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     );
                 }
             }
-
             // add tile alla lista delle tile attive e get dei marker
             function addTile(tile) {
-                ThingsService.tile(tile).then(
+                ThingsService.getTile(tile).then(
                     function (markers) {
                         // aggiorno lista tile
                         angular.extend($scope.markers,markers);
@@ -190,12 +204,17 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
 
             // filtro i marker in cache
-            function updateMarkers(reset) {
-                // clear cache
-                if(reset){
-                    ThingsService.resetCache();
-                    $scope.markers = {};
-                }
+            function flushCache() {
+                // chiamate alle tile attive
+                ThingsService.updateCache().then(
+                    function (markers) {
+                        // $log.debug('updated markers',Object.keys(markers).length);
+                        angular.extend($scope.markers,markers);
+                    }
+                );
+            }
+            // filtro i marker in cache
+            function updateMarkers() {
                 // chiamate alle tile attive
                 ThingsService.updateCache().then(
                     function (markers) {

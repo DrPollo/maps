@@ -112,31 +112,14 @@ angular.module('firstlife.controllers')
 
                     break;
 
-                case 'home':
-                    // vengo dal login
-                    // locate(params);
-
-                    if(params.entity)
-                        clickMarker(params.entity);
-
-                    if(params)
-                        check4customFilters(params,{});
-
-                    break;
-
                 default:
                     // 1) diretto per il viewer
                     $log.debug("MapCtrl, gestione stato, default",params);
                     // posiziono la mappa se ci solo le coordinate,
                     // altrimenti si lascia il centro della mappa
 
-                    if(params.entity)
-                        clickMarker(params.entity);
-                    // centro la mappa sullo stato corrente
-                    // locate(params);
-
-                    if(params)
-                        check4customFilters(params,{});
+                    // if(params)
+                    //     check4customFilters(params,{});
             }
 
         });
@@ -790,7 +773,7 @@ angular.module('firstlife.controllers')
                         disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
                         chunkDelay: 500,
                         chunkInterval: 200,
-                        // iconCreateFunction: bakeThePie,
+                        iconCreateFunction: bakeThePie,
                         zoomToBoundsOnClick: true,
                         removeOutsideVisibleBounds: true,
                         singleMarkerMode: false,
@@ -830,7 +813,7 @@ angular.module('firstlife.controllers')
         },
         events: {
             map: {
-                enable: ['load'],
+                enable: ['load','moveend','movestart'],
                 logic: 'emit'
             },
             marker: {
@@ -855,39 +838,32 @@ angular.module('firstlife.controllers')
     // calculate marker cluster icons
     function bakeThePie(cluster) {
         var markers = cluster.getAllChildMarkers();
-        //if(consoleCheck) console.log("bakeThePie, cluster: ",markers);
         var granularity = 5;
         var total = cluster.getChildCount();
         //if(consoleCheck) console.log("totale: ",total);
         var sum = 0,
             html = '';
 
-        var item = {};
-        for(i in markers){
-            // console.log("bakeThePie, check ",markers[i].options.icon);
-            var id = markers[i].options.icon.options.index;
-            if(item[id]){
-                item[id].count++;
-            }else{
-                item[id] = {index:markers[i].options.icon.options.index, color:markers[i].options.icon.options.color,
-                    count:1};
-            }
-            //if(consoleCheck) console.log("bakeThePie, check2 ",item[id]);
-        }
-        //if(consoleCheck) console.log("fette di torta: ", item);
-        for(i in item){
-            var value = Math.round(item[i].count*360/(granularity*total))*granularity;
-            item[i].degree = value;
-            //if(consoleCheck) console.log("bakeThePie, calcolo: ",i,item[i],value, item[i].degree);
-            if(value > 180){
-                html = html.concat('<div class="pie big pie'+(item[i].index)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
-            }else{
-                html = html.concat('<div class="pie pie'+(item[i].index)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
+        var sets = markers.reduce(function (sets,marker) {
+            var icon = marker.options.icon.options;
+            // init cluster
+            if(!sets[icon.index])
+                sets[icon.index] = {index:icon.index, color:icon.color,count:0};
+            // aggiorno contatore
+            sets[icon.index].count++;
+            return sets;
+        },{});
 
+        angular.forEach(sets,function(set,key){
+            var value = Math.round(set.count*360/(granularity*total))*granularity;
+            set.degree = value;
+            if(value > 180){
+                html = html.concat('<div class="pie big pie'+(key)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
+            }else{
+                html = html.concat('<div class="pie pie'+(key)+'" data-start="'+sum+'" data-value="'+value+'"></div>');
             }
             sum += value;
-
-        }
+        });
         var content = total;
         html = html.concat('<div class="inner"><span>',content,'</span></div>');
         //tieni per i test semplici return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });

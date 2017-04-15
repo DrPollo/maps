@@ -19,7 +19,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    headers: {"Content-Type": "application/json"},
                     data: {}
                 };
                 $http(req).then(
@@ -43,7 +42,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    headers: {"Content-Type": "application/json"},
                     data: thing
                 };
                 $http(req).then(
@@ -67,7 +65,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'PUT',
-                    headers: {"Content-Type": "application/json"},
                     data: thing
                 };
                 $http(req).then(
@@ -91,7 +88,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'DELETE',
-                    headers: {"Content-Type": "application/json"},
                     data: thing
                 };
                 $http(req).then(
@@ -112,7 +108,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    headers:{"Content-Type":"application/json"},
                     data:report
                 };
                 return $http(req);
@@ -129,7 +124,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    headers: {"Content-Type": "application/json"},
                     data: {}
                 };
                 $http(req).then(
@@ -161,7 +155,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    headers: {"Content-Type": "application/json"},
                     data: {}
                 };
                 $http(req).then(
@@ -185,7 +178,6 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    headers: {"Content-Type": "application/json"},
                     data: {}
                 };
                 $http(req).then(
