@@ -2,7 +2,7 @@
  * Created by drpollo on 10/04/2017.
  */
 angular.module('firstlife.services')
-    .service('ThingsService',['$q','$log', '$filter' ,'AuthService','myConfig', 'ThingsFact', function ($q, $log,$filter, AuthService, myConfig, ThingsFact){
+    .service('ThingsService',['$q','$log', '$filter','$timeout' ,'AuthService','myConfig', 'ThingsFact', function ($q, $log,$filter,$timeout, AuthService, myConfig, ThingsFact){
 
         var config = myConfig;
         var types = config.types.keys;
@@ -71,7 +71,7 @@ angular.module('firstlife.services')
                 var queries = {};
                 var localCache = angular.copy(Object.keys(cache));
 
-                nextTile(0, localCache, {}, deferred);
+                $timeout(nextTile(0, localCache, {}, deferred), 1);
 
                 return deferred.promise;
 
