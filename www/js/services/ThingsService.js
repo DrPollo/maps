@@ -103,7 +103,8 @@ angular.module('firstlife.services')
             },
             addTile: function(params){
                 // rimuovo la tile
-                cache[params.z+':'+params.x+':'+params.y] = new Date().toISOString();
+                if(!cache[params.z+':'+params.x+':'+params.y])
+                    cache[params.z+':'+params.x+':'+params.y] = [];
                 return true;
             },
             getTile: function (tile) {
@@ -318,8 +319,10 @@ angular.module('firstlife.services')
             return deferred.promise;
         }
         function makeMarkers(features) {
+
             var markers = features.reduce(function(markers,feature){
                 // if needs to be filtered
+                $log.log(feature);
                 var ok = check(feature);
                 // $log.debug('check',feature.properties.entity_type,ok);
                 if(!ok)

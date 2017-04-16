@@ -1,10 +1,4 @@
-angular.module('underscore', [])
-    .factory('_', function() {
-        return window._;
-    });
-
-
-angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication', 'underscore', 'nemLogging', 'ui-leaflet', 'ngResource', 'ngCordova', 'slugifier', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'angular-jwt', '720kb.tooltips', 'cbuffer','ct.ui.router.extras', 'pascalprecht.translate','angular-toArrayFilter','ngAnimate','rx', 'ngStorage'])
+angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'firstlife.entitylist', 'firstlife.searchbox','firstlife.authentication','ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'cbuffer', 'pascalprecht.translate','rx', 'ngStorage'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
@@ -910,13 +904,12 @@ angular.module('firstlife', ['ionic', 'angularMoment', 'firstlife.config', 'firs
 
             return {
                 request: function(config) {
-                    if(config.method === 'OPTIONS')
-                        console.log('option: ',config);
-                    // per le chiamate non GET
-                    // se il token esiste lo setto
-                    if (token)  {
+                    if(config.method !== 'GET'){
+                        config.headers['Content-Type'] = 'application/json';
                         // inject del token nell'header se esiste
                         var token = $localStorage[myConfig.authentication.token_mem_key];
+                        if(!token)
+                           return config;
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }
