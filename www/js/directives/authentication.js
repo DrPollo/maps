@@ -1,4 +1,4 @@
-angular.module('firstlife.authentication', [])
+angular.module('firstlife.directives')
     .directive('registration',['$log','$window','AuthService', function($log,$window,AuthService){
         return{
             strict:'EG',

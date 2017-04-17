@@ -13226,6 +13226,8 @@ ion-side-menu#side-menu {
     border: 0px solid;
     cursor: pointer;
     background: transparent; }
+    .popover-backdrop.active .popover-wrapper .popover .list .item i {
+      min-width: 20px; }
   .popover-backdrop.active .popover-wrapper .popover .list .delimited {
     box-shadow: inset 0px -1px 0px #ddd;
     display: block; }

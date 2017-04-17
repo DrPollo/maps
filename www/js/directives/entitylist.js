@@ -1,4 +1,4 @@
-angular.module('firstlife.entitylist',[])
+angular.module('firstlife.directives')
     .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','myConfig', 'MemoryFactory', 'ThingsService', function($rootScope,$location,$log,$filter,$timeout, myConfig,MemoryFactory,ThingsService) {
         return {
             restrict: 'E',
@@ -25,7 +25,8 @@ angular.module('firstlife.entitylist',[])
                 init();
 
                 function init(){
-                    var current =ThingsService.filter();
+                    $log.log('init wall');
+                    var current = ThingsService.filter();
                     scope.markers = Object.keys(ThingsService.filter()).map(function(e){return current[e];});
                     var params = $location.search();
                     if(params.q)

@@ -37,6 +37,7 @@ angular.module('firstlife.services')
                 return ThingsFact.report(report);
             },
             filter: function () {
+                $log.log('cache?', Object.keys(cache).length);
                 return makeMarkers(Object.keys(cache).reduce(function(features, key){
                   return features.concat(cache[key]);
               },[]));
@@ -97,6 +98,7 @@ angular.module('firstlife.services')
                 return cache = {};
             },
             removeTile: function(params){
+                // $log.debug('cache',Object.keys(cache).length -1);
                 // rimuovo la tile
                 delete cache[params.z+':'+params.x+':'+params.y];
                 return true;
@@ -291,14 +293,18 @@ angular.module('firstlife.services')
                 deferred.reject('no tile param');
                 return deferred.promise;
             }
+            // se tile non in lista scarto
+            if(!cache[tile.z+':'+tile.x+':'+tile.y]){
+                deferred.reject('no needed');
+                return deferred.promise;
+            }
+
 
             var params = {
                 from: filters.time.from,
                 to: filters.time.to
             };
             angular.extend(params,tile);
-            if(!cache[params.z+':'+params.x+':'+params.y])
-                cache[params.z+':'+params.x+':'+params.y] = [];
 
             ThingsFact.tile(params).then(
                 function (features) {

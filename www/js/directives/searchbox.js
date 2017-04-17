@@ -1,4 +1,4 @@
-angular.module('firstlife.searchbox',[])
+angular.module('firstlife.directives')
     .directive('searchBox', function() {
     return {
         restrict: 'E',
