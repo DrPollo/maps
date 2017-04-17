@@ -893,7 +893,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             close:'='
         },
         restrict: 'E',
-        template:'<ion-item class="item-icon-left" on-tap="report.open()"> <i class="icon ion-alert-circled"></i>{{"REPORT_CONTENT"|translate}}</ion-item>',
+        template:'<ion-item class="item item-button-right">{{"REPORT_CONTENT"|translate}}<button class="button button-positive"  on-tap="report.open()"><i class="icon ion-alert"></i></button></ion-item>',
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
