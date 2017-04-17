@@ -3,7 +3,7 @@
     <div id="mapHeader">
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
-                <user-handler check="$parent.checkNotifications"></user-handler>
+                <user-handler></user-handler>
                 <entity-filter ng-if="!editMode" toggle="toggleFilter"></entity-filter>
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
             </div>

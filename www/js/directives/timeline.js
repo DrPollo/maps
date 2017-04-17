@@ -219,6 +219,12 @@ angular.module('firstlife.timeline',[])
 
                 // evento di update per mapCtrl
                 $scope.$emit("timeUpdate",{time:newInterval});
+                if(skip) {
+                    // setup dei parametri search
+                    $location.search('date',$scope.moment.toISOString());
+                    // fix unit nei parametri search
+                    $location.search('unit', $scope.units[$scope.indexDefaultUnit].key);
+                }
             }
 
 

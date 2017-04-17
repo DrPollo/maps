@@ -45,6 +45,24 @@ angular.module('firstlife.controllers')
             
         });
 
+
+        $scope.$on('checkNotification',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            $scope.$broadcast('flagNotification');
+        });
+
+        $scope.$on('noNotification',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            $scope.$broadcast('noFlagNotification');
+        });
+
+
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login

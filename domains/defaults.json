@@ -393,7 +393,7 @@
         "moveend_delay": 1000,
         "searchend_delay": 1000,
         "marker_cache": true,
-        "bbox_reload_time":30000,
+        "bbox_reload_time":60000,
         "modal_relaod_time": 5000,
         "split_factor" : 1,
         "umask":744,

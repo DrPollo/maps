@@ -322,7 +322,7 @@ angular.module('firstlife.services')
 
             var markers = features.reduce(function(markers,feature){
                 // if needs to be filtered
-                $log.log(feature);
+                // $log.debug(feature);
                 var ok = check(feature);
                 // $log.debug('check',feature.properties.entity_type,ok);
                 if(!ok)

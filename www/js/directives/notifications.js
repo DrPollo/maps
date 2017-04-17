@@ -1,43 +1,45 @@
-angular.module('firstlife.directives').directive('userHandler',function(){
+angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicSideMenuDelegate', 'myConfig', function($log, $ionicSideMenuDelegate, myConfig){
     return {
-        restrict: 'E',
-        scope: {
-            check:'='
-        },
-        require: 'ngModel',
+        restrict: 'EG',
+        scope: {},
         templateUrl: '/templates/map-ui-template/userHandlerOmnibar.html',
-        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
-
+        link: function(scope, element, attr){
             
-            $scope.$on('$destroy', function(e) {
+            scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){
                     e.preventDestroyUserHandler = true;
-                    if($scope.notifications)
-                        $scope.notifications.unsubscribe();
-                    delete $scope;
+
+                    delete scope;
                 }
             });
 
-            $scope.$watch('check',function(e,old){
-                    if(e != old){
-                        //$log.debug('check!')
-                    }
-                })
-            $scope.config = myConfig;
+            scope.$on('flagNotification',function(e,args){
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    scope.check = true;
+                });
+            scope.$on('noFlagNotification',function(e,args){
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    scope.check = false;
+                });
+            scope.config = myConfig;
             // funzione togle per il menu laterale
-            $scope.toggleSideLeft = function() {
+            scope.toggleSideLeft = function() {
                 $ionicSideMenuDelegate.toggleLeft();
             };
 
-        }]
+        }
     }
 
-}).directive('notificationLink',function(){
+}]).directive('notificationLink',function(){
     return {
         restrict: 'E',
-        scope: {
-            check:'='
-        },
+        scope: {},
         templateUrl: '/templates/map-ui-template/notificationLink.html',
         controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
 
@@ -45,9 +47,11 @@ angular.module('firstlife.directives').directive('userHandler',function(){
             $scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyUserHandler){
                     e.preventDestroyUserHandler = true;
+
                     $timeout.cancel(timer);
                     if($scope.notifications)
                         $scope.notifications.unsubscribe();
+
                     delete $scope;
                 }
             });
