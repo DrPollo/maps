@@ -88,7 +88,7 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'DELETE',
-                    data: thing
+                    data: {}
                 };
                 $http(req).then(
                     function (response) {

@@ -176,35 +176,35 @@ angular.module('firstlife.controllers')
         // });
         //
         //
-        // $scope.$on("startEditing",function(event,args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //         $scope.updateEntity = args;
-        //         // se il luogo non e' bounded ad una posizione
-        //         if (!args.skip) {
-        //             // centro la mappa sul luogo dei parametri
-        //             locate(args);
-        //             // entro in edit mode
-        //             changeMode('edit');
-        //         } else {
-        //             // se devo saltare il riposizionamento
-        //             $scope.showASEdit();
-        //         }
-        //
-        // });
-        //
-        // $scope.$on("endEditing",function(event,args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //     // chiamo la funzione che gestisce l'editing
-        //     backFromEditor(args.marker.id);
-        //     // click del markers
-        //     //clickMarker(args.id);
-        // });
+        $scope.$on("startEditing",function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+                $scope.updateEntity = args;
+                // se il luogo non e' bounded ad una posizione
+                if (!args.skip) {
+                    // centro la mappa sul luogo dei parametri
+                    locate(args);
+                    // entro in edit mode
+                    changeMode('edit');
+                } else {
+                    // se devo saltare il riposizionamento
+                    $scope.showASEdit();
+                }
+
+        });
+
+        $scope.$on("endEditing",function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+            // chiamo la funzione che gestisce l'editing
+            backFromEditor(args.marker.id);
+            // click del markers
+            //clickMarker(args.id);
+        });
         //
         // $scope.$on("deleteMarker",function(event,args){
         //     if(event.defaultPrevented)
