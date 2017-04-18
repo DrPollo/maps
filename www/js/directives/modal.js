@@ -38,6 +38,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     return;
                 event.preventDefault();
 
+
                 if(args.id){
                     $log.debug('markerClick',args);
                     $scope.showMCardPlace(args.id);

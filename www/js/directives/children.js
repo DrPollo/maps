@@ -21,6 +21,9 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                 }
             });
 
+
+            // $log.debug('init children');
+
             var tries = 0;
             var maxTries = 2;
             var delay = 1500;
@@ -30,11 +33,14 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
             // caricamento
             scope.loading = true;
 
-            loadSibillings();
+            loadSiblings();
 
-            function loadSibillings (){
+            function loadSiblings (){
                 if(!scope.marker || !scope.marker.entity_type)
                     return
+
+
+                // $log.debug('load siblings');
 
                 scope.relations = {
                     children: [],
@@ -62,8 +68,8 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                                     scope.relations.children.push(entry);
                                     // qualcosa da leggere
                                     scope.ok = true;
-                                    scope.loading = false;
                                 }
+                                scope.loading = false;
                             },
                             function (err) {
                                 $log.error(err);
@@ -96,8 +102,8 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                                         scope.relations.parents.push(entry);
                                         // qualcosa da leggere
                                         scope.ok = true;
-                                        scope.loading = false;
                                     }
+                                    scope.loading = false;
                                 },
                                 function (err) {
                                     $log.error(err);
@@ -110,15 +116,15 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
 
 
                 // se non ho trovato nulla riprovo dopo x secondi una volta sola (per il caricamento diretto di entita')
-                if(!scope.ok && tries < maxTries){
-                    tries++;
-                    setTimeout(function(){ scope.$apply(function(){loadSibillings()})}, delay);
-                }
-
-                // se ho trovato qualcosa o se ho provato abbastanza
-                if(tries == maxTries || scope.ok){
-                    scope.loading = false;
-                }
+                // if(!scope.ok && tries < maxTries){
+                //     tries++;
+                //     setTimeout(function(){ scope.$apply(function(){loadSibillings()})}, delay);
+                // }
+                //
+                // // se ho trovato qualcosa o se ho provato abbastanza
+                // if(tries == maxTries || scope.ok){
+                //     scope.loading = false;
+                // }
 
                 scope.click = function (id) {
                     // $log.debug('show',id,scope.show);

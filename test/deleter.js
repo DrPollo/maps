@@ -18,12 +18,12 @@ function clean(limit){
 
     var url = 'api.firstlife.org';
     // var url = 'api.fldev.di.unito.it';
-    var domain = 9;
+    var domain = 9; // sandbox 9
     var ne_lat = bbox[1][1]+0.1;
     var ne_lon = bbox[1][0]+0.1;
     var sw_lat = bbox[0][1]-0.1;
     var sw_lon = bbox[0][0]-0.1;
-    var token = 'Bearer 6285d60155b919501aa4e2d1c69c7152a490d27a';
+    var token = 'Bearer 7ece4636e5a9519444c678d858e031d022037825';
     // var token = 'Bearer 2687d809a260b7b50ecbaaaa0ee43de69ec07a22';
 
 
