@@ -35,9 +35,10 @@
                 <span class="tags">
                     <span ng-repeat="tag in infoPlace.marker.tags track by $index"
                           class="tag"
-                          on-tap="filter(tag,'tag')"
-                          style="background-color:{{infoPlace.marker.icons[0].color}};color:white;">
-                        <i class="ion-pricetag"></i>
+                          on-tap="filter(tag,'tag')">
+                          <!--style="background-color:{{infoPlace.marker.icons[0].color}};color:white;"> -->
+
+                        <i class="ion-pricetag" style="color:{{infoPlace.marker.icons[0].color}};"></i>
                         {{tag}}
                     </span>
                 </span>

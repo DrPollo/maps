@@ -354,7 +354,9 @@ angular.module('firstlife.services')
 
             // set lista categorie
             var clist = marker.categories.reduce(function(cats,cat){
-                cats = cats.concat(cat.categories.map(function(c){return c.id}));
+                cats = cats.concat(cat.categories.map(function(c){
+                    return c.id
+                }));
                 return cats;
             },[]);
             angular.extend(marker,{category_list: clist });

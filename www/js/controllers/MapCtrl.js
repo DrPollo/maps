@@ -114,7 +114,7 @@ angular.module('firstlife.controllers')
 
                 default:
                     // 1) diretto per il viewer
-                    $log.debug("MapCtrl, gestione stato, default",params);
+                    // $log.debug("MapCtrl, gestione stato, default",params);
                     // posiziono la mappa se ci solo le coordinate,
                     // altrimenti si lascia il centro della mappa
 

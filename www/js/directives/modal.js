@@ -828,7 +828,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             angular.extend($scope.actionList[i], {check:true});
                     }
                 }
-                $log.debug('check actionList ',$scope.actionList);
+                // $log.debug('check actionList ',$scope.actionList);
             }
 
             function loading(){
