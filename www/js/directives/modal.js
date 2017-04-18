@@ -187,6 +187,26 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 $scope.closeModal();
             }
 
+            // click su tag o categoria per filtrare
+            $scope.filter = function(text,type){
+                switch (type){
+                    case 'user':
+                        break;
+                    case 'group':
+                        break;
+                    default:
+                        // aggiorno il parametro q
+                        $location.search('q',text);
+                        ThingsService.setQuery(text);
+                        $scope.$emit('handleUpdateQ',{q:text});
+                }
+                // chiudo la modal
+                if(text) {
+                    $scope.closeModal();
+                }
+            }
+
+
 
             /*
              * funzioni private

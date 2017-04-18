@@ -17,11 +17,13 @@ angular.module('firstlife.directives')
                 var firstLevel = [];
                 initFilter();
 
-                scope.$watch(function() {
-                    return element[0].clientWidth;
-                }, function(value,old){
-                    initTree(element[0].getBoundingClientRect());
-                });
+                initTree(element[0].getBoundingClientRect());
+
+                // scope.$watch(function() {
+                //     return element[0].clientWidth;
+                // }, function(value,old){
+                //     initTree(element[0].getBoundingClientRect());
+                // });
 
                 function initTree(rect){
                     scope.size = rect;
@@ -118,27 +120,41 @@ angular.module('firstlife.directives')
             toggle:"="
         },
         link: function (scope, element, attr) {
-            scope.$on('$destroy',function(){delete scope;});
+            scope.$on('$destroy',function(event){
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                delete scope;
+            });
             //$log.debug("check entityFilter ",scope.filter.list,scope.toggle);
             scope.filter = ThingsService.getFilter('entity_type');
             scope.colors = myConfig.design.colors;
             scope.types = myConfig.types.list;
         }
     }
-}]).directive('searchBar',['$log','$location', '$stateParams', '$window','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, myConfig, SearchService, CBuffer, ThingsService){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, myConfig, SearchService, CBuffer, ThingsService){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
         link: function (scope, element, attr) {
-            scope.$on('$destroy',function(){delete scope;});
+            scope.$on('$destroy',function(event){
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                delete scope;
+            });
 
             scope.$on('newSearchParam',function(e,params){
-                $log.debug('newSearchParam',e)
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
 
                 var q = params.q;
-                $log.debug('searchBar, nuovo parametro q ',q)
+                $log.debug('searchBar, nuovo parametro q ',q);
                 // imposto il campo di ricerca
                 scope.query = params.q;
+                scope.card = true;
             })
 
             var dev = myConfig.dev;
@@ -177,7 +193,7 @@ angular.module('firstlife.directives')
                     // search bar nascosta
                     scope.card = false;
                     // nascondo la card e apro la search bar
-                    setTimeout(function () {scope.$apply(function () {
+                    $timeout(function () {scope.$apply(function () {
                         // searchbar visibile
                         scope.visible = true;
                         // segnalo l'apertura della barra nello scope locale
@@ -195,7 +211,7 @@ angular.module('firstlife.directives')
             }
 
             scope.deleteCard = function(){
-                setTimeout(function () {scope.$apply(function () {
+                $timeout(function () {scope.$apply(function () {
                     scope.card = false;
                     $location.search('q', null);
                     ThingsService.setQuery(null);
@@ -226,7 +242,7 @@ angular.module('firstlife.directives')
                 // chiudo la barra
                 scope.visible = false;
                 // filtro
-                setTimeout(function() {scope.$apply(function () {
+                $timeout(function() {scope.$apply(function () {
                     scope.card = true;
                     $location.search('q', scope.query);
                     ThingsService.setQuery(scope.query);
