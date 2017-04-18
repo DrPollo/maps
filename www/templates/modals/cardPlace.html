@@ -9,9 +9,9 @@
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
         <div class="top-modal">
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
-                <!--<span ng-if="currentType.show_author" class="username modal-subheader-item">-->
-                    <!--{{infoPlace.marker.updater.display_name}}-->
-                <!--</span>-->
+                <span ng-if="currentType.show_author" class="username modal-subheader-item">
+                    {{infoPlace.marker.updater.display_name}}
+                </span>
                 <span class="valid-time modal-subheader-item">
                     <i class="icon ion-android-time"></i>
                     <span ng-if="infoPlace.marker.valid_from">
@@ -22,22 +22,19 @@
                         {{'TO'|translate}} {{infoPlace.marker.valid_to| date:'(HH:mm) dd/MM/yyyy'}}
                     </span>
                 </span>
+                <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
+                <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe"></subscribers-counter>
             </div>
-            <div class="modal-subheader categories">
+            <div class="modal-subheader tag-list">
                 <span ng-repeat="icon in infoPlace.marker.icons" class="modal-subheader-item">
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
                     <span ng-if="!isMobile">{{icon.name |translate}}</span>
                 </span>
-                <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
-                <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe"></subscribers-counter>
-            </div>
-            <div class="modal-subheader tag-list" ng-if="infoPlace.marker.tags.length > 0" >
                 <span class="tags">
                     <span ng-repeat="tag in infoPlace.marker.tags track by $index"
-                          class="tag"
+                          class="modal-subheader-item tag"
                           on-tap="filter(tag,'tag')">
                           <!--style="background-color:{{infoPlace.marker.icons[0].color}};color:white;"> -->
-
                         <i class="ion-pricetag" style="color:{{infoPlace.marker.icons[0].color}};"></i>
                         {{tag}}
                     </span>
