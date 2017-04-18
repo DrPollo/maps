@@ -18,5 +18,5 @@
     <!--lista delle iniziative-->
     <initiative-list ng-if="marker.id" ng-show="toggle === 1" id="marker.id" class="fast-ease-in-noout-animation fade-in" ></initiative-list>
     <!-- lista dei figli -->
-    <entity-children ng-if="marker" ng-show="toggle === 2" marker="marker" click="click(id)" add="add" class="fast-ease-in-noout-animation fade-in"></entity-children>
+    <entity-children ng-if="marker.id" ng-show="toggle === 2" marker="marker" click="click(id)" add="add()" class="fast-ease-in-noout-animation fade-in"></entity-children>
 </div>

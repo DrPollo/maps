@@ -10,7 +10,7 @@
     <div class="comment-editor-box">
         <form ng-if="user" name="commentEditor" class="comment-editor" novalidate>
             <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
-            <textarea ng-enter="publishComment(message)" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="comment.message" minlength="5" maxlength="500" autogrow required></textarea>
+            <textarea ng-enter="publishComment(message)" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="comment.message" minlength="1" maxlength="500" autogrow required></textarea>
         </form>
     </div>
 </div>
