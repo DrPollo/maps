@@ -77,6 +77,9 @@ angular.module('firstlife.controllers')
         $scope.profile = function(){
             $window.location.href = AuthService.profile_url();
         };
+        $scope.signature = function(){
+            $window.location.href = AuthService.signature_url();
+        };
         // funzione togle per il menu laterale
         $scope.toggleSideLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();

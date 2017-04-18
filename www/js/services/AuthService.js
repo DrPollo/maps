@@ -55,8 +55,12 @@ angular.module('firstlife.services')
                 return myConfig.authentication["logout_url"].concat('&token=',MemoryFactory.get(tokenKey).access_token);
             },
             profile_url: function(){
-                // mando lo user all'auth server per il logout
+                // mando lo user all'auth server per la modifica del profilo
                 return myConfig.authentication["profile_url"];
+            },
+            signature_url: function(){
+                // mando lo user all'auth server per la scelta della firma
+                return myConfig.authentication["signature_url"];
             },
             logout: function(){
                 return MemoryFactory.delete(tokenKey);

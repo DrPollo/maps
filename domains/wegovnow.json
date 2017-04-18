@@ -11,6 +11,8 @@
       "token_mem_key":"token",
       "identity_mem_key":"user",
       "state_name":"oauth_state",
+      "profile_url": null,
+      "signature_url": null,
       "auth_base_domain": "https://wegovnow.liquidfeedback.com/",
       "auth_url": "api/1/authorization",
       "api_session":"api/1/session",

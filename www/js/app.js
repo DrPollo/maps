@@ -34,6 +34,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         if(myConfig.authentication["profile_url"])
             myConfig.authentication["profile_url"] = myConfig.authentication.profile_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
 
+        if(myConfig.authentication["signature_url"])
+            myConfig.authentication["signature_url"] = myConfig.authentication.signature_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
+
         if(myConfig.authentication.registration_url)
             myConfig.authentication["registration_url"] = myConfig.authentication.registration_url.concat("?redirect_uri=",redirect_uri_auth);
         // fine fix callback
@@ -261,6 +264,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOGIN:'Entra',
         LOGOUT:'Esci',
         EDIT_PROFILE:'Modifica profilo',
+        EDIT_SIGNATURE:'Modifica firma',
         EXPLORE: 'Esplora',
         MAP:'Mappa',
         HELP: 'Supporto',
@@ -582,6 +586,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOGIN:'Login',
         LOGOUT:'Logout',
         EDIT_PROFILE:'Edit profile',
+        EDIT_SIGNATURE:'Edit signature',
         EXPLORE: 'Explore',
         MAP:'Map',
         HELP: 'Helpdesk',
