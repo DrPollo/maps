@@ -348,9 +348,15 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // myConfig entity properties
         DESCRIPTION:'Post',
         PLACE_NAME:'Luogo',
+        FL_PLACES:'Luogo',
         EVENT_NAME:'Evento',
+        FL_EVENTS:'Evento',
         POST_NAME:'Extra',
+        FL_ARTICLES:'Extra',
         GROUPS_NAME:'Gruppo',
+        FL_GROUPS:'Gruppo',
+        COMMENT_NAME: "News",
+        FL_NEWS: "News",
         CREATION_TEXT:'Cosa vuoi creare?',
         URL_LABEL:'Link esterno',
         URL_PLACEHOLDER:'URL esterno, es. http://www...',
@@ -389,7 +395,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ARTICLE_OF_PLACEHOLDER:"Argomento dell'articolo",
         TEXT_LABEL:'Approfondimento',
         TEXT_PLACEHOLDER:"Contenuto dell'articolo...",
-        COMMENT_NAME: "News",
         COMMENT_OF_LABEL: "COMMENT_OF_LABEL",
         COMMENT_OF_PLACEHOLDER:"COMMENT_OF_LABEL",
         LEVEL_LABEL:"Piano/Livello",
@@ -544,7 +549,10 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         INITIATIVE_FORM_PLACEHOLDER: "Trova o crea una nuova iniziativa...",
         CONNECTED_INITIATIVES: "Iniziative collegate",
         AVAILABLE_INITIATIVES:"Iniziative disponibili",
-        SORRY_UNEXPECTED_ERROR:"Ops :( qualcosa si è rotto ..."
+        SORRY_UNEXPECTED_ERROR:"Ops :( qualcosa si è rotto ...",
+        AUTHOR:"Autore",
+        LAST_AUTHOR:"Ultimo autore",
+        LAST_UPDATE:"Ultimo aggiornamento"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -670,9 +678,15 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // myConfig
         DESCRIPTION:'Description',
         PLACE_NAME:'Place',
+        FL_PLACES:'Place',
         EVENT_NAME:'Event',
+        FL_EVENTS:'Event',
         POST_NAME:'Extra',
+        FL_ARTICLES:'Extra',
         GROUPS_NAME:'Group',
+        FL_GROUPS:'Group',
+        COMMENT_NAME: "News",
+        FL_NEWS: "News",
         CREATION_TEXT:'What do you wish to create?',
         URL_LABEL:'External URL',
         URL_PLACEHOLDER:'URL link, ex. http://www...',
@@ -711,7 +725,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ARTICLE_OF_PLACEHOLDER:"Post topic",
         TEXT_LABEL:'Post',
         TEXT_PLACEHOLDER:"Post content...",
-        COMMENT_NAME: "News",
         COMMENT_OF_LABEL: "COMMENT_OF_LABEL",
         COMMENT_OF_PLACEHOLDER:"COMMENT_OF_LABEL",
         LEVEL_LABEL:"Level/Floor",
@@ -865,7 +878,10 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         INITIATIVE_FORM_PLACEHOLDER: "Find or start a new initiative...",
         CONNECTED_INITIATIVES: "Connected initiatives",
         AVAILABLE_INITIATIVES:"Available initiatives",
-        SORRY_UNEXPECTED_ERROR:"Sorry :( something broke up ..."
+        SORRY_UNEXPECTED_ERROR:"Sorry :( something broke up ...",
+        AUTHOR:"Author",
+        LAST_AUTHOR:"Last author",
+        LAST_UPDATE:"Last update"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
@@ -920,7 +936,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     }
                     // imposto il timeout delle chiamate
                     // console.debug('method', config.method);
-                    if(config.method === 'GET')
+                    if(config.method === 'GET'){}
                         config.timeout = 1000;
                     // $log.debug('request headers',config);
                     return config;

@@ -13087,6 +13087,12 @@ ion-side-menu#side-menu {
         vertical-align: middle; }
     .modal .modal-subheader modal-subheader-item:last-child {
       margin-right: 0px; }
+  .modal .modal-subheader.credits {
+    font-size: 1.2em; }
+    .modal .modal-subheader.credits .username {
+      font-size: inherit; }
+    .modal .modal-subheader.credits .time {
+      font-style: italic; }
   .modal .content {
     padding: 16px;
     margin: 0px;
@@ -13116,16 +13122,16 @@ ion-side-menu#side-menu {
       text-decoration: underline; }
   .modal .tag-list {
     padding: 16px 16px 8px; }
-    .modal .tag-list .tags .tag {
+    .modal .tag-list .tag {
       margin: 0 8px 8px 0;
       padding: 4px 8px;
       border-radius: 20px;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       display: inline-flex; }
-      .modal .tag-list .tags .tag i {
+      .modal .tag-list .tag i {
         margin-right: 5px; }
-    .modal .tag-list .tags .tag:hover {
+    .modal .tag-list .interactive:hover {
       text-decoration: underline; }
   .modal .foto-box .foto-mosaico {
     margin: 0px;

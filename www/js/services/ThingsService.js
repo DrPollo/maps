@@ -37,7 +37,7 @@ angular.module('firstlife.services')
                 return ThingsFact.report(report);
             },
             filter: function () {
-                $log.log('cache?', Object.keys(cache).length);
+                // $log.debug('cache?', Object.keys(cache).length);
                 return makeMarkers(Object.keys(cache).reduce(function(features, key){
                   return features.concat(cache[key]);
               },[]));
@@ -378,6 +378,8 @@ angular.module('firstlife.services')
             angular.extend(marker,{icons:icons});
             // icona di default
             angular.extend(marker, {icon:icons[favCat] ? icons[favCat] : icons[0]});
+            // nome tipo
+            angular.extend(marker,{type_name: $filter('translate')(marker.entity_type)});
 
             return marker;
         }
@@ -428,7 +430,9 @@ angular.module('firstlife.services')
             angular.extend(val,{category_list: clist });
 
             // filtro testuale
-            if(query && JSON.stringify(val).toLowerCase().indexOf(query) < 0){
+            // $log.debug('check full search ',query,JSON.stringify(val).toLowerCase().search(query));
+
+            if(query && JSON.stringify(val).toLowerCase().search(query) < 0){
                 return false;
             }
 

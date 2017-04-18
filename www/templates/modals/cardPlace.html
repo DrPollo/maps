@@ -2,16 +2,22 @@
     <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
-            <!-- todo fix permessi menu modal card -->
             <button class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
         <div class="top-modal">
-            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
-                <span ng-if="currentType.show_author" class="username modal-subheader-item">
+            <div class="modal-subheader credits">
+                {{'LAST_AUTHOR' | translate}}{{' '}}
+                <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
                     {{infoPlace.marker.updater.display_name}}
                 </span>
+                {{'LAST_UPDATE'|translate}}
+                <span ng-if="infoPlace.marker.last_update" class="time modal-subheader-item">
+                    {{infoPlace.marker.last_update | date:'(HH:mm) dd/MM/yyyy'}}
+                </span>
+            </div>
+            <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">
                     <i class="icon ion-android-time"></i>
                     <span ng-if="infoPlace.marker.valid_from">
@@ -25,14 +31,17 @@
                 <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
                 <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe"></subscribers-counter>
             </div>
-            <div class="modal-subheader tag-list">
-                <span ng-repeat="icon in infoPlace.marker.icons" class="modal-subheader-item">
-                    <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
-                    <span ng-if="!isMobile">{{icon.name |translate}}</span>
+            <div class="modal-subheader tag-list icon-list">
+                <span class="icons">
+                    <span ng-repeat="icon in infoPlace.marker.icons track by $index"
+                          class="modal-subheader-item tag">
+                        <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
+                        <span ng-if="!isMobile">{{icon.name |translate}}</span>
+                    </span>
                 </span>
                 <span class="tags">
                     <span ng-repeat="tag in infoPlace.marker.tags track by $index"
-                          class="modal-subheader-item tag"
+                          class="modal-subheader-item tag interactive"
                           on-tap="filter(tag,'tag')">
                           <!--style="background-color:{{infoPlace.marker.icons[0].color}};color:white;"> -->
                         <i class="ion-pricetag" style="color:{{infoPlace.marker.icons[0].color}};"></i>

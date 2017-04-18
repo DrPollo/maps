@@ -51,7 +51,7 @@ angular.module('firstlife.filters', [])
     return function (objects, searchText) {
         var q = searchText.toLowerCase();
         var filtered = {};
-        console.log('searching',q,'in',objects)
+        console.log('searching',q,'in',objects);
         angular.forEach(objects, function(item) {
             console.log(q);
             var index = JSON.stringify(item).toLowerCase().search(q);

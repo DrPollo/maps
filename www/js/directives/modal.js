@@ -189,16 +189,19 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
             // click su tag o categoria per filtrare
             $scope.filter = function(text,type){
+                var query = text;
                 switch (type){
                     case 'user':
                         break;
                     case 'group':
                         break;
+                    case 'icon':
+                        query = $filter('translate')(text);
                     default:
                         // aggiorno il parametro q
-                        $location.search('q',text);
-                        ThingsService.setQuery(text);
-                        $scope.$emit('handleUpdateQ',{q:text});
+                        $location.search('q',query);
+                        ThingsService.setQuery(query);
+                        $scope.$emit('handleUpdateQ',{q:query});
                 }
                 // chiudo la modal
                 if(text) {

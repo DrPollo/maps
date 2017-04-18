@@ -28,7 +28,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('filterMarkers!');
+                $log.debug('filterMarkers!');
                 filterMarkers();
             });
             $scope.$on('updateMarkers',function (e) {
@@ -37,7 +37,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('updateMarkers!');
+                $log.debug('updateMarkers!');
                 updateMarkers();
             });
 

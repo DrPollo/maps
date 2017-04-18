@@ -243,7 +243,7 @@ angular.module('firstlife.controllers')
 
 
         $scope.$on("handleUpdateQ",function(event,args){
-            $log.debug('handleUpdateQ',event,args);
+            // $log.debug('handleUpdateQ',event,args);
             if(event.defaultPrevented)
                 return ;
 
