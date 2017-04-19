@@ -98,10 +98,13 @@ angular.module('firstlife.services')
                 var deferred = $q.defer();
                 var tiles = angular.copy(Object.keys(cache));
                 var params = {tiles: tiles, time: filters.time};
+                // var z = params.tiles[0].split(":")[2];
                 ThingsFact.tiles(params).then(
                   function (results) {
-                      // todo update cache
                       deferred.resolve(makeMarkers(results));
+                      // results.map(function (e) {
+                      //     e.properties.tiles.filter()
+                      // });
                   },function (err) {
                       $log.error(err);
                       deferred.reject(err);
