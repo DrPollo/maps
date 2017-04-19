@@ -96,7 +96,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 event.preventDefault();
 
                 // $log.debug('moveend');
-                timer = $timeout(flushMarkers,1000);
+                timer = $timeout(flushMarkers,500);
             });
             $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
                 if(event.defaultPrevented)
