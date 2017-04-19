@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
     return{
         restrict:'EG',
         scope:{},
-        controller:['$scope', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', function($scope,$location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -40,17 +40,27 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
 
                 if(args.id){
-                    $log.debug('markerClick',args);
+                    // $log.debug('markerClick',args);
                     $scope.showMCardPlace(args.id);
                 }
             });
 
-            // $scope.$on("markerClickClose", function(event,args){
-            //     if (!event.markerClickClosePrevented) {
-            //         event.markerClickClose=true;
-            //         $scope.closeModal();
-            //     }
-            // });
+            $scope.$on('subscribersReset',function (event) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                // $log.debug('subscribersReset');
+                $timeout(initSubscribers,1);
+            });
+            $scope.$on('membersReset',function (event) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                // $log.debug('membersReset');
+                $scope.$broadcast('reloadMemberCounter');
+            });
 
 
             //modal info sul place
@@ -224,6 +234,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 // cancello il marker
                 $scope.infoPlace.marker = angular.extend({});
 
+
                 // $log.debug('check hide!',hide,markerId);
                 if(!hide){
                     //$log.debug('init hide');
@@ -250,7 +261,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     $scope.infoPlace.modify = false;
                     $scope.infoPlace.dataForm = {};
 
-                    $ionicModal.fromTemplateUrl('templates/modals/cardPlace.html', {
+                    $ionicModal.fromTemplateUrl('templates/modals/thing.html', {
                         scope: $scope,
                         animation: 'fade-in',
                         backdropClickToClose : true,
@@ -282,6 +293,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         $log.debug('openPlaceModal',marker)
                         $scope.$emit('openPlaceModal', {marker: marker.id});
                         $scope.loaded = true;
+                        // contatore sottoscrittori
+                        initSubscribers();
                         // inizializzo la maschera dei permessi per l'utente per il marker attuale
                         initPerms(marker.owner.id);
                         // recupero il tipo e lo metto dentro $scope.currentType
@@ -315,19 +328,15 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 try{hide();}catch(e){}
             }
 
-
-            function showLoadingScreen(text){
-                if(!text || text === 'undefined'){
-                    text = 'Operazione in corso...';
-                }
-
-                $ionicLoading.show({
-                    template: text
-                });
-
-            }
-            function hideLoadingScreen(){
-                $ionicLoading.hide();
+            function initSubscribers(){
+                notificationFactory.subscribers($scope.infoPlace.marker.id).then(
+                    function (result) {
+                        // $log.debug('new subscribers',result.length);
+                        $scope.subscribers = result.length;
+                    },function (err) {
+                        $log.error(err);
+                    }
+                );
             }
 
             // An alert dialog
@@ -453,115 +462,47 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             }
         }]
     }
-}).directive('subscribersCounter',function(){
+}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'AuthService', function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory, AuthService) {
     return {
         restrict: 'EG',
         scope: {
-            id: '=id',
-            details: '='
-        },
-        templateUrl: '/templates/map-ui-template/subscribersCounter.html',
-        controller: ['$rootScope','$scope','$log','$filter','notificationFactory', function($rootScope, $scope,$log,$filter,notificationFactory){
-
-
-            var subscribers = notificationFactory.subscribersRx($scope.id);
-            initCounter();
-
-
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventDestroyNotificationCounter){
-                    e.preventDestroyNotificationCounter = true;
-                    if(subscribers)
-                        try{subscribers.unsubscribe();}catch(e){}
-                    delete $scope;
-                }
-            });
-
-            $scope.$watch('id',function(e,old){
-                // cambia il marker
-                if(e != old){
-                    // init delle simple entities
-                    initCounter();
-                }
-            });
-
-            $rootScope.$on('subscribersReset',function(e,args){
-                if(!e.preventSubscribersResetCouter){
-                    e.preventSubscribersResetCouter = true;
-                    subscribers = args.observable;
-                    initCounter();
-                }
-            })
-
-
-            function initCounter(){
-                $scope.counter = 1;
-                subscribers.subscribe(
-                    function(response){
-                        if(Array.isArray(response)){
-                            $scope.counter = response.length;
-                        }
-                    },
-                    function(response){$log.error('groupsFactory, getMembers, error ',response);},
-                    function(){}
-                );
-            }
-
-        }]
-    }
-
-}).directive('entityActions', function() {
-
-    return {
-        restrict: 'EG',
-        scope: {
-            actions: '=actions',
-            marker: '=marker',
-            close:'=close',
-            label:'=label'
+            actions: '< actions',
+            marker: '< marker',
+            close:'&close',
+            label:'< label'
         },
         templateUrl: '/templates/map-ui-template/actionsModal.html',
-        controller: ['$rootScope','$scope','$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'AuthService', function($rootScope, $scope, $location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory, AuthService){
-            // visualizzazione web o mobile?
-            if(!$scope.isMobile) $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+        link: function(scope, element, attr){
+
+            scope.$on('$destroy',function (event) {
+                if(event.defautPrevented)
+                    return;
+                event.preventDefault();
+
+                delete scope;
+            });
+
+
             // controllo azioni
-            $scope.member = false;
-            $scope.owner = false;
-            $scope.subscriber = false;
-            $scope.markerOwner = $scope.marker.owner;
+            scope.member = false;
+            scope.owner = false;
+            scope.subscriber = false;
+            scope.markerOwner = scope.marker.owner.id;
 
-            if(!$scope.user)
-                $scope.user = AuthService.getUser();
+            scope.user = AuthService.getUser();
+            // visualizzazione web o mobile?
+            scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
 
-            $scope.$on('$destroy', function(e) {
-                if(!e.preventDestroyActions){
-                    e.preventDestroyActions = true;
-                    delete $scope;
-                }
-            });
-
-            $scope.$watch('marker',function(e,old){
-                // cambia il marker
-                if(e && e.id && (!old || e.id != old.id )){
-                    // init delle simple entities
-                    subscribers = notificationFactory.subscribersRx($scope.marker.id);
-                    init();
-                }
-            });
-
-
+            init();
             var subscribers = null;
-            if($scope.marker){
-                subscribers = notificationFactory.subscribersRx($scope.marker.id);
-                // $log.debug('debug modal',$scope.marker)
-                init();
-            }
+
+            $log.debug('actions ',scope.actions);
 
             function init(){
                 // lista di promise
                 var promises = [];
                 // se e' un gruppo inizializzo con i membri
-                if($scope.marker.entity_type === "FL_GROUPS"){
+                if(scope.marker.entity_type === "FL_GROUPS"){
                     //bug da sistemare
                     promises.push(initGroup());
                 }
@@ -572,7 +513,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 // quando le promise sono pronte
                 deferred.then(
                     function(){
-                        // $log.debug('ok, go to initActions')
+                        $log.debug('ok, go to initActions')
                         // init delle azioni
                         initActions();
                     },
@@ -584,73 +525,60 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             function initGroup(){
                 // $log.debug('init group!')
                 var deferred = $q.defer();
-                groupsFactory.getMembersRx($scope.marker.id).subscribe(
+                groupsFactory.getMembers(scope.marker.id).then(
                     function(response){
                         // $log.debug('groupFactory, getMembers: there are members')
-                        $scope.users = response;
-                        var index = response.map(function(e){return e.id}).indexOf($scope.user.id);
+                        scope.users = response;
+                        var index = response.map(function(e){return e.id}).indexOf(scope.user.id);
                         if(index > -1){
                             // se esiste allora membro
-                            $scope.member = true;
+                            scope.member = true;
                         }else{
-                            $scope.member = false;
-                            $scope.owner = false;
+                            scope.member = false;
+                            scope.owner = false;
                         }
-                        // $log.debug('check ownership', $scope.markerOwner, $scope.user.id, $scope.markerOwner == $scope.user.id)
-                        if($scope.markerOwner == $scope.user.id){
+                        if(scope.markerOwner == scope.user.id){
                             // se ha impostato il ruolo proprietario
-                            $scope.owner = true;
-                            $scope.member = true;
+                            scope.owner = true;
+                            scope.member = true;
                         }
                         deferred.resolve();
                     },
                     function(response){
                         // $log.debug('groupFactory, getMembers: the user is not a group member!');
                         // giusto per essere sicuro...
-                        $scope.member = false;
-                        $scope.owner = false;
+                        scope.member = false;
+                        scope.owner = false;
                         deferred.reject();
-                    },
-                    function(){deferred.resolve();}
+                    }
                 );
                 return deferred.promise;
             }
 
-            // [
-            //     {
-            //         "first_name": "Alessio",
-            //         "last_name": "Antonini",
-            //         "type": 1,
-            //         "banned": false,
-            //         "username": "alessio",
-            //         "email": "aleyho@gmail.com",
-            //         "created": "2017-02-18T11:19:30.483Z",
-            //         "id": "58a82dc2b5db431b4531fa41",
-            //         "modified": "2017-02-18T11:19:30.483Z"
-            //     }
-            // ]
             function initSubscribers(){
                 var deferred = $q.defer();
-                subscribers.subscribe(
+                notificationFactory.subscribers(scope.marker.id).then(
                     function(response){
                         // $log.debug('check subscribers',response);
-                        if($scope.user)
-                            var index = response.map(function(e){return e.id}).indexOf($scope.user.id);
-                        $scope.subscriber = index < 0 ? false : true;
+                        if(scope.user)
+                            var index = response.map(function(e){return e.id}).indexOf(scope.user.id);
+                        scope.subscriber = index < 0 ? false : true;
                         deferred.resolve();
                     },
-                    function(response){ $log.error('check subscribers ',response); deferred.reject(response);},
-                    function(){deferred.resolve();}
+                    function(response){
+                        $log.error('check subscribers ',response);
+                        deferred.reject(response);
+                    }
                 );
                 return deferred.promise;
             }
 
-            $scope.actionEntity = AuthService.doAction(function(action, param){
+            scope.actionEntity = AuthService.doAction(function(action, param){
                 // $log.debug('check action ',action,param);
                 switch(action){
                     case 'unsubscribe':
                         //parte richiesta di unsubscribe
-                        $scope.showConfirm = function() {
+                        scope.showConfirm = function() {
                             var confirmPopup = $ionicPopup.confirm({
                                 title: $filter('translate')('ENTITY_UNSUBSCRIBE'),
                                 template: $filter('translate')('ENTITY_UNSUBSCRIBE_ASK')
@@ -658,9 +586,9 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        notificationFactory.unsubscribe($scope.marker.id).then(
+                                        notificationFactory.unsubscribe(scope.marker.id).then(
                                             function(response){
-                                                $scope.subscriber = false;
+                                                scope.subscriber = false;
                                                 initActions();
                                                 reset('subscribers');
                                                 actionReport(true);
@@ -675,11 +603,11 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                     }
                                 });
                         };
-                        $scope.showConfirm();
+                        scope.showConfirm();
                         break;
                     case 'subscribe':
                         //parte richiesta di subscribe
-                        $scope.showConfirm = function() {
+                        scope.showConfirm = function() {
                             var confirmPopup = $ionicPopup.confirm({
                                 title: $filter('translate')('ENTITY_SUBSCRIBE'),
                                 template: $filter('translate')('ENTITY_SUBSCRIBE_ASK')
@@ -688,9 +616,9 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        notificationFactory.subscribe($scope.marker.id).then(
+                                        notificationFactory.subscribe(scope.marker.id).then(
                                             function(response){
-                                                $scope.subscriber = true;
+                                                scope.subscriber = true;
                                                 initActions();
                                                 reset('subscribers');
                                                 actionReport(true);
@@ -705,17 +633,17 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                     }
                                 });
                         };
-                        $scope.showConfirm();
+                        scope.showConfirm();
                         break;
                     case 'view':
                         //aggiorno i parametri search con il filtro
-                        $location.search(param,$scope.marker.id);
+                        $location.search(param,scope.marker.id);
                         //chiudo la modal
-                        $scope.close();
+                        scope.close();
                         break;
                     case 'join':
                         //parte richiesta di join
-                        $scope.showConfirm = function() {
+                        scope.showConfirm = function() {
                             var confirmPopup = $ionicPopup.confirm({
                                 title: $filter('translate')('GROUP_JOIN'),
                                 template: $filter('translate')('GROUP_JOIN_ASK')
@@ -724,12 +652,12 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        groupsFactory.joinGroup($scope.marker.id).then(
+                                        groupsFactory.joinGroup(scope.marker.id).then(
                                             function(response){
-                                                $scope.member = true;
+                                                scope.member = true;
                                                 if(response.role == 'owner'){
                                                     // se ha impostato il ruolo proprietario
-                                                    $scope.owner = true;
+                                                    scope.owner = true;
                                                 }
                                                 initActions();
                                                 reset('members');
@@ -746,12 +674,12 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                 });
                         };
 
-                        $scope.showConfirm();
+                        scope.showConfirm();
 
                         break;
                     case 'leave':
                         // conferma se uscire
-                        $scope.showConfirm = function() {
+                        scope.showConfirm = function() {
                             var confirmPopup = $ionicPopup.confirm({
                                 title: $filter('translate')('GROUP_LEAVE'),
                                 template: $filter('translate')('GROUP_LEAVE_ASK')
@@ -760,11 +688,11 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             confirmPopup.then(
                                 function(res) {
                                     if(res) {
-                                        groupsFactory.leaveGroup($scope.marker.id).then(
+                                        groupsFactory.leaveGroup(scope.marker.id).then(
                                             function(response){
                                                 // reset dei permessi
-                                                $scope.member = false;
-                                                $scope.owner = false;
+                                                scope.member = false;
+                                                scope.owner = false;
                                                 // reinizializzo i permessi
                                                 initActions();
                                                 reset('members');
@@ -783,7 +711,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                 });
                         };
 
-                        $scope.showConfirm();
+                        scope.showConfirm();
                         break;
                     case 'users':
                         // apri lista utenti in loco (modal?)
@@ -806,29 +734,29 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             // calcolo i permessi per le azioni
             function initActions(){
                 // copio le azioni per manipolarle
-                $scope.actionList = angular.copy($scope.actions);
-                for(var i in $scope.actionList){
-                    switch($scope.actionList[i].check){
+                scope.actionList = angular.copy(scope.actions);
+                for(var i in scope.actionList){
+                    switch(scope.actionList[i].check){
                         case 'membership':
-                            angular.extend($scope.actionList[i], {check:$scope.member});
+                            angular.extend(scope.actionList[i], {check:scope.member});
                             break;
                         case 'ownership':
-                            angular.extend($scope.actionList[i], {check:$scope.owner});
+                            angular.extend(scope.actionList[i], {check:scope.owner});
                             break;
                         case 'noOwnership':
-                            angular.extend($scope.actionList[i], {check:(!$scope.owner && $scope.member)});
+                            angular.extend(scope.actionList[i], {check:(!scope.owner && scope.member)});
                             break;
                         case 'noMembership':
-                            angular.extend($scope.actionList[i], {check:(!$scope.member && !$scope.owner)});
+                            angular.extend(scope.actionList[i], {check:(!scope.member && !scope.owner)});
                             break;
                         case 'subscriber':
-                            angular.extend($scope.actionList[i], {check:$scope.subscriber});
+                            angular.extend(scope.actionList[i], {check:scope.subscriber});
                             break;
                         case 'noSubscriber':
-                            angular.extend($scope.actionList[i], {check:!$scope.subscriber});
+                            angular.extend(scope.actionList[i], {check:!scope.subscriber});
                             break;
                         default: //se nessun check e' richiesto > true
-                            angular.extend($scope.actionList[i], {check:true});
+                            angular.extend(scope.actionList[i], {check:true});
                     }
                 }
                 // $log.debug('check actionList ',$scope.actionList);
@@ -855,7 +783,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     titleText: $filter('translate')(text),
                     cancelText: '<i class="icon ion-ios-arrow-down"></i>',
                     cancel: function() {
-                        $log.log('CANCELLED');
+                        // $log.debug('CANCELLED');
                     }
                 });
             }
@@ -864,17 +792,19 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 // lancio il reset
                 switch(action){
                     case 'members':
-                        $rootScope.$emit('groupReset',{observable: groupsFactory.getMembersRx($scope.marker.id) });
+                        scope.$emit('membersReset',{id: scope.marker.id });
                         break;
                     case 'subscribers':
-                        $rootScope.$emit('subscribersReset',{observable: notificationFactory.subscribersRx($scope.marker.id) });
+                        scope.$emit('subscribersReset',{id: scope.marker.id });
+                        break;
                     default:
+                        break;
                 }
             }
 
-        }]
+        }
     };
-}).directive('loader',function(){
+}]).directive('loader',function(){
     return {
         scope:{},
         restrict: 'E',

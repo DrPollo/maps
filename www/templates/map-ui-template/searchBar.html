@@ -2,7 +2,7 @@
     <button type="button" class="button button-icon ion-funnel" ng-click="toggleSearchBar()"></button>
     <input id="inputofsearchbar" ng-show="visible" type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}" focus-on="isOpen">
     <button type="submit" ng-show="visible" class="search button fixed-button button-icon ion-android-search" ng-click="setTagCard()" ng-disabled="(query.length == 0)"></button>
-    <button type="reset" ng-show="visible" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
+    <button type="reset" ng-show="visible" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()"></button>
 </form>
 <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="card && !visible && (query.length > 0)">
     <span class="tag-card-body" ng-click="toggleSearchBar()">{{query}}</span>

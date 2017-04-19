@@ -109,44 +109,27 @@ angular.module('firstlife.factories')
             },
             subscribers:function(markerId){
                 var deferred = $q.defer();
-                // cache
-                if(subscriptions[markerId]){
-                    deferred.resolve(subscriptions[markerId]);
-                }else{
-                    var urlId = url.concat('Things/',markerId,"/subscribers",format);
-                    var req = {
-                        url: urlId,
-                        method: 'GET',
-                        data:true
-                    };
-                    $http(req).then(
-                        function(response){
-                            //$log.debug('notificationFactory, subscribes, response ',response);
-                            //aggiungo alla cache
-                            subscriptions[markerId] = response.data.users;
-                            deferred.resolve(response.data.users);
-                        },
-                        function(response){
-                            $log.error('notificationFactory, subscribes, response ',response);
-                            deferred.reject(response);
-                        }
-                    );
-                }
-                return deferred.promise;
-            },
-            subscribersRx:function(markerId){
                 var urlId = url.concat('Things/',markerId,"/subscribers",format);
                 var req = {
                     url: urlId,
                     method: 'GET',
                     data:true
                 };
-                return rx.Observable.fromPromise($http(req))
-                .map(function(response){return response.data;})
-                .retry()
-                .share();
+                $http(req).then(
+                    function(response){
+                        //$log.debug('notificationFactory, subscribes, response ',response);
+                        //aggiungo alla cache
+                        subscriptions[markerId] = response.data;
+                        deferred.resolve(response.data);
+                    },
+                    function(response){
+                        $log.error('notificationFactory, subscribes, response ',response);
+                        deferred.reject(response);
+                    }
+                );
+
+                return deferred.promise;
             },
-            // PUT /v4/fl/domains/[id_dominio]/things/[id_thing]/subscribe
             subscribe:function(markerId){
                 var deferred = $q.defer();
                 var user = AuthService.getUser()

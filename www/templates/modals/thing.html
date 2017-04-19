@@ -17,6 +17,10 @@
                     {{infoPlace.marker.last_update | date:'(HH:mm) dd/MM/yyyy'}}
                 </span>
             </div>
+            <div class="modal-subheader">
+                <members-counter ng-if="infoPlace.marker.entity_type === 'FL_GROUPS' && infoPlace.marker.id" id="infoPlace.marker.id"></members-counter>
+                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
+            </div>
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">
                     <i class="icon ion-android-time"></i>
@@ -28,8 +32,6 @@
                         {{'TO'|translate}} {{infoPlace.marker.valid_to| date:'(HH:mm) dd/MM/yyyy'}}
                     </span>
                 </span>
-                <members-counter id="infoPlace.marker.id" details="infoPlace.marker.type_info.properties.members" ng-if="infoPlace.marker.type_info.properties.members"></members-counter>
-                <subscribers-counter ng-if="infoPlace.marker.type_info.acts.subscribe" id="infoPlace.marker.id" details="infoPlace.marker.type_info.acts.subscribe"></subscribers-counter>
             </div>
             <div class="modal-subheader tag-list icon-list">
                 <span class="icons">
@@ -75,7 +77,7 @@
 
     <ion-footer-bar >
         <div class="buttons right-buttons">
-            <entity-actions ng-if="infoPlace.marker" actions="currentType.actions" marker="infoPlace.marker" close="closeModal" label="currentType.name" ></entity-actions>
+            <entity-actions ng-if="infoPlace.marker.id" actions="currentType.actions" marker="infoPlace.marker" close="closeModal()" label="currentType.name" ></entity-actions>
         </div>
         <h1 class="title"></h1>
         <div class="buttons left-buttons">

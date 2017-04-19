@@ -2,7 +2,8 @@
     <button ng-repeat="category in filter.list track by $index"
         class="button {{category.shape}} entity-type" on-tap="toggle('entity_type',category.key)"
         ng-style="category.visible ? {'color':  '#fff', 'background' : colors[category.index]}:{'background': '#fff', 'color' : colors[category.index]}"
-        ng-class="[(category.visible) ? 'active' : 'inactive']">
+        ng-class="[(category.visible) ? 'active' : 'inactive']"
+        title="{{category.name | translate}}">
         <i class="icon {{category.icon}}"></i>
     </button>
 </div>

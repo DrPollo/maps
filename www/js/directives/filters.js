@@ -236,7 +236,10 @@ angular.module('firstlife.directives')
             // delete query
             scope.deleteSearch = function(){
                 // clear query
-                scope.query = '';
+                if(scope.query)
+                    scope.query = '';
+                else
+                    scope.visible = false;
             }
 
             // close the search bar

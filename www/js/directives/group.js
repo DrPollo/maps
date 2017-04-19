@@ -1,141 +1,108 @@
-angular.module('firstlife.directives').directive('membersCounter',function(){
+angular.module('firstlife.directives').directive('membersCounter',['$log','$filter','groupsFactory',function($log,$filter,groupsFactory){
     return {
         restrict: 'EG',
         scope: {
-            id: '=id',
-            details: '=details'
+            id: '< id'
         },
-        templateUrl: '/templates/modals/membersCounter.html',
-        controller: ['$rootScope','$scope','$log','$filter','groupsFactory', function($rootScope, $scope,$log,$filter,groupsFactory){
+        template: '<span class="modal-subheader-item">{{"MEMBERS"|translate}} {{counter}} <i class="icon ion-android-people"></i></span>',
+        link: function(scope, element, attr){
 
-            $scope.members = groupsFactory.getMembersRx($scope.id);
-            initCounter();
 
-            $scope.$on('$destroy', function(e) {
+            scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersCounter){
                     e.preventDestroyMembersCounter = true;
-                    if($scope.members)
-                        try{$scope.members.unsubscribe();}catch(e){}
-                    delete $scope;
+
+                    delete scope;
                 }
             });
 
-            $scope.$watch('id',function(e,old){
-                // cambia il marker
-                if(e != old){
-                    // init delle simple entities
-                    $scope.members = groupsFactory.getMembersRx($scope.id);
-                    initCounter();
-                }
+            initCounter();
+
+            scope.$on('resetGroupCounter',function(e,args){
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+
+
+                initCounter();
             });
 
-            $rootScope.$on('groupReset',function(e,args){
-                if(!e.preventGroupResetCounter){
-                    e.preventGroupResetCounter = true;
-                    $scope.members = args.observable;
-                    initCounter();
-                }
-            });
 
-//            function initCounter(){
-//                $scope.counter = 1;
-//                groupsFactory.getMembers($scope.id).then(
-//                    function(response){
-//                        if(Array.isArray(response)){
-//                            $scope.counter = response.length;
-//                        }
-//                    },
-//                    function(response){$log.error('groupsFactory, getMembers, error ',response);}
-//                );
-//            }
-//            
             function initCounter(){
-                $scope.counter = 1;
-                $scope.members.subscribe(
+                scope.counter = 1;
+                groupsFactory.getMembers(scope.id).then(
                     function(result){
-                        $scope.counter = result.length;
+                        scope.counter = result.length;
                     },
                     function (error){
                         $log.error('groupsFactory, getMembers, error ',error);
-                    },
-                    function (){
-                        $log.debug('groupsFactory, getMembers, complete ');
                     }
                 );
             }
-        }]
+        }
     }
 
-})
-    .directive('membersList',function(){
+}])
+    .directive('membersList',['$log','$filter','groupsFactory','MemoryFactory', 'AuthService', function($log,$filter,groupsFactory,MemoryFactory, AuthService){
     return {
         restrict: 'EG',
         scope: {
-            id: '=id',
-            details: '=details',
-            owner: '=owner'
+            id: '< id',
+            details: 'details',
+            owner: '< owner'
         },
         templateUrl: '/templates/modals/membersList.html',
-        controller: ['$rootScope','$scope','$log','$filter','groupsFactory','MemoryFactory', 'AuthService', function($rootScope,$scope,$log,$filter,groupsFactory,MemoryFactory, AuthService){
+        link: function(scope, element, attr){
 
-            //$scope.counter = [];
-            $scope.user = AuthService.getUser();
-            //$scope.role = false;
-
-            $scope.$on('$destroy', function(e) {
+            scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyMembersList){
                     e.preventDestroyMembersList = true;
-                    if($scope.members)
-                        try{$scope.members.unsubscribe();}catch(e){}
                     
-                    delete $scope;
+                    delete scope;
                 }
             });
 
-
-            $scope.$watch('id',function(e,old){
-                // cambia il marker
-                if(e != old){
-                    // init delle simple entities
-                    initList();
-                }
-            });
-
-            $rootScope.$on('groupReset',function(e,args){
-                if(!e.preventMembersResetCounter){
-                    e.preventMembersResetCounter = true;
-                    $scope.members = args.observable;
-                    initList();
-                }
-            });
-            
-            $scope.members = groupsFactory.getMembersRx($scope.id);
+            scope.user = AuthService.getUser();
             initList();
 
+
+
+
+            scope.$on('groupReset',function(e,args){
+                if(e.defaultPrevented)
+                    return;
+
+                e.preventDefault();
+
+                scope.members = null;
+                initList();
+            });
+
+
+
             function initList(){
-                $scope.role = false;
-                $scope.counter = [];
-                $scope.membersList = [];
+                scope.role = false;
+                scope.counter = [];
+                scope.membersList = [];
                 
-                $scope.members.subscribe(
+                groupsFactory.getMembers(scope.id).then(
                     function(results){
                         $log.debug('check members',results)
-                        $scope.membersList = results;
+                        scope.membersList = results;
                         $log.debug('member list',results)
-                        if($scope.user){
-                            var index = results.map(function(e){return e.id}).indexOf($scope.user.id);
+                        if(scope.user){
+                            var index = results.map(function(e){return e.id}).indexOf(scope.user.id);
                             if(index > -1){
-                                $scope.role = true;
+                                scope.role = true;
                             }
                         }
                     },
-                    function(error){$log.error('groupsFactory, getMembers, error ',error);},
-                    function(){}
+                    function(error){$log.error('groupsFactory, getMembers, error ',error);}
                 );
             }
 
-            $scope.deleteMember = function(memberId){
-                groupsFactory.removeUser($scope.id,memberId).then(
+            scope.deleteMember = function(memberId){
+                groupsFactory.removeUser(scope.id,memberId).then(
                     function(response){
                         // reinizializzo la lista
                         initList();
@@ -143,10 +110,10 @@ angular.module('firstlife.directives').directive('membersCounter',function(){
                     function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                 );
             }
-        }]
+        }
     }
 
-}).directive('membersButton',['$log','$ionicModal',function($log,$ionicModal){
+}]).directive('membersButton',['$log','$ionicModal',function($log,$ionicModal){
 
     return {
         restrict: 'EG',

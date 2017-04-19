@@ -552,7 +552,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SORRY_UNEXPECTED_ERROR:"Ops :( qualcosa si è rotto ...",
         AUTHOR:"Autore",
         LAST_AUTHOR:"Ultimo autore",
-        LAST_UPDATE:"Ultimo aggiornamento"
+        LAST_UPDATE:"Ultimo aggiornamento",
+        SUBSCRIBERS:"Seguono in"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -881,7 +882,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SORRY_UNEXPECTED_ERROR:"Sorry :( something broke up ...",
         AUTHOR:"Author",
         LAST_AUTHOR:"Last author",
-        LAST_UPDATE:"Last update"
+        LAST_UPDATE:"Last update",
+        SUBSCRIBERS:"Followers"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
