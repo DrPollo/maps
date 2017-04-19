@@ -182,6 +182,8 @@ angular.module('firstlife.directives')
                 scope.query = params.q;
                 // imposto la card
                 scope.card = true;
+                // imposto il parametro di ricerca
+                ThingsService.setQuery(params.q);
             }
             // toggle search bar and delete query
             scope.toggleSearchBar = function (){
