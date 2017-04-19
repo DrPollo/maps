@@ -49,7 +49,7 @@ angular.module('firstlife.services')
                 // $log.debug('process tile in cache:',Object.keys(cache).length);
                 localCache.map(function (key) {
                     var params = key.split(':');
-                    var center = {z:params[0],x:params[1],y:params[2]};
+                    var center = {x:params[0],y:params[1],z:params[2]};
                     // $log.log('updating ',center);
                     queries[key] = getTile(center);
                 });
@@ -82,7 +82,7 @@ angular.module('firstlife.services')
                         return deferred.resolve(total);
                     }
                     var tile = tiles[index].split(':');
-                    var center = {z:tile[0],x:tile[1],y:tile[2]};
+                    var center = {x:tile[0],y:tile[1],z:tile[2],};
                     getTile(center).then(
                         function (markers) {
                             angular.extend(total,markers);
@@ -94,19 +94,35 @@ angular.module('firstlife.services')
                     );
                 }
             },
+            flushTiles: function() {
+                var deferred = $q.defer();
+                var tiles = angular.copy(Object.keys(cache));
+                var params = {tiles: tiles, time: filters.time};
+                ThingsFact.tiles(params).then(
+                  function (results) {
+                      // todo update cache
+                      deferred.resolve(makeMarkers(results));
+                  },function (err) {
+                      $log.error(err);
+                      deferred.reject(err);
+                  }
+                );
+
+                return deferred.promise;
+            },
             resetCache : function () {
                 return cache = {};
             },
             removeTile: function(params){
                 // $log.debug('cache',Object.keys(cache).length -1);
                 // rimuovo la tile
-                delete cache[params.z+':'+params.x+':'+params.y];
+                delete cache[params.x+':'+params.y+':'+params.z];
                 return true;
             },
             addTile: function(params){
                 // rimuovo la tile
-                if(!cache[params.z+':'+params.x+':'+params.y])
-                    cache[params.z+':'+params.x+':'+params.y] = [];
+                if(!cache[params.x+':'+params.y+':'+params.z])
+                    cache[params.x+':'+params.y+':'+params.z] = [];
                 return true;
             },
             getTile: function (tile) {
@@ -294,7 +310,7 @@ angular.module('firstlife.services')
                 return deferred.promise;
             }
             // se tile non in lista scarto
-            if(!cache[tile.z+':'+tile.x+':'+tile.y]){
+            if(!cache[tile.x+':'+tile.y+':'+tile.z]){
                 deferred.reject('no needed');
                 return deferred.promise;
             }
@@ -311,7 +327,7 @@ angular.module('firstlife.services')
                     // $log.debug(features);
                     // aggiungo alla cache
                     // $log.log(params.z+':'+params.x+':'+params.y, features);
-                    cache[params.z+':'+params.x+':'+params.y] = features;
+                    cache[params.x+':'+params.y+':'+params.z] = features;
                     var markers = makeMarkers(features);
                     //$log.debug('tile result',features.length);
                     deferred.resolve(markers);

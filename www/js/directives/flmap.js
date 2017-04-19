@@ -206,7 +206,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function flushMarkers() {
                 // chiamate alle tile attive
-                ThingsService.flush().then(
+                ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         angular.extend($scope.markers,markers);
@@ -216,7 +216,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function updateMarkers() {
                 // chiamate alle tile attive
-                ThingsService.flush().then(
+                ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         $scope.markers = angular.extend({},markers);

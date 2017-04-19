@@ -170,6 +170,37 @@ angular.module('firstlife.factories')
 
                 return deferred.promise;
             },
+            tiles: function (params) {
+                var deferred = $q.defer();
+                // controllo i parametri
+                if(!params || !params.tiles || params.tiles.length < 1){
+                    deferred.reject('no tiles to check');
+                    return deferred.promise;
+                }
+
+                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&tiles=',params.tiles.join(','));
+                if(params.from)
+                    urlId = urlId.concat('&from=',params.time.from);
+                if(params.to)
+                    urlId = urlId.concat('&to=',params.time.to);
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    data: {}
+                };
+                $http(req).then(
+                    function (response) {
+                        $log.debug("tiles response",params,response.data.things.features);
+                        deferred.resolve(response.data.things.features);
+                    },
+                    function (err) {
+                        // $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+
+                return deferred.promise;
+            },
             children: function (id,relation) {
                 var deferred = $q.defer();
 
