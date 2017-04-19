@@ -939,7 +939,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     // imposto il timeout delle chiamate
                     // console.debug('method', config.method);
                     if(config.method === 'GET'){}
-                        config.timeout = 1000;
+                        config.timeout = 2000;
                     // $log.debug('request headers',config);
                     return config;
                 },
