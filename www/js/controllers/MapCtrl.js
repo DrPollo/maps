@@ -782,7 +782,7 @@ angular.module('firstlife.controllers')
                         showCoverageOnHover: false,
                         spiderfyDistanceMultiplier: 2,
                         maxClusterRadius: 60,
-                        disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
+                        // disableClusteringAtZoom: self.config.map.cluster_limit ? self.config.map.cluster_limit : 22,
                         chunkDelay: 500,
                         chunkInterval: 200,
                         iconCreateFunction: bakeThePie,
