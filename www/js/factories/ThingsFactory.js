@@ -177,12 +177,14 @@ angular.module('firstlife.factories')
                     deferred.reject('no tiles to check');
                     return deferred.promise;
                 }
-
+                $log.debug('tiles',params);
                 var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&tiles=',params.tiles.join(','));
-                if(params.from)
+                if(params.time.from)
                     urlId = urlId.concat('&from=',params.time.from);
-                if(params.to)
+                if(params.time.to)
                     urlId = urlId.concat('&to=',params.time.to);
+
+                $log.debug('tiles url',urlId);
                 var req = {
                     url: urlId,
                     method: 'GET',

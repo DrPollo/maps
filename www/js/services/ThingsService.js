@@ -98,6 +98,7 @@ angular.module('firstlife.services')
                 var deferred = $q.defer();
                 var tiles = angular.copy(Object.keys(cache));
                 var params = {tiles: tiles, time: filters.time};
+                $log.debug('fushTiles',params);
                 // var z = params.tiles[0].split(":")[2];
                 ThingsFact.tiles(params).then(
                   function (results) {
