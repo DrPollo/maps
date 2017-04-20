@@ -172,7 +172,7 @@ gulp.task('setupenv',function(){
     if(gutil.env.dev){
         console.log('env dev');
         config.myConfig.api_base_domain = "api.fldev.di.unito.it/";
-        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.di.unito.it/";
+        config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
         config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
         config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
     }else{ // default

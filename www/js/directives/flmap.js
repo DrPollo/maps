@@ -28,9 +28,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                $log.debug('filterMarkers!');
-                // filterMarkers();
-                updateMarkers();
+                // $log.debug('filterMarkers!');
+                filterMarkers();
             });
             $scope.$on('updateMarkers',function (e) {
                 if(e.defaultPrevented)
@@ -38,7 +37,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                $log.debug('updateMarkers!');
+                // $log.debug('updateMarkers!');
                 updateMarkers();
             });
 
@@ -236,8 +235,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function filterMarkers() {
                 // chiamate alle tile
-                var filtred = ThingsService.filter();
-                $log.debug('filtred',Object.keys(filtred).length);
+                var filtred = ThingsService.filterBuffer();
+                // $log.debug('filtred',Object.keys(filtred).length);
                 $scope.markers = angular.extend({},filtred);
             }
 

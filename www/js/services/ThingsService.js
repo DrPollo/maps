@@ -42,6 +42,10 @@ angular.module('firstlife.services')
                   return features.concat(cache[key]);
               },[]));
             },
+            filterBuffer: function () {
+                // $log.debug('cache?', Object.keys(cache).length);
+                return makeMarkers(buffer);
+            },
             updateCache: function() {
                 var deferred = $q.defer();
                 var queries = {};
@@ -98,14 +102,11 @@ angular.module('firstlife.services')
                 var deferred = $q.defer();
                 var tiles = angular.copy(Object.keys(cache));
                 var params = {tiles: tiles, time: filters.time};
-                $log.debug('fushTiles',params);
-                // var z = params.tiles[0].split(":")[2];
+                // $log.debug('fushTiles',params);
                 ThingsFact.tiles(params).then(
                   function (results) {
                       deferred.resolve(makeMarkers(results));
-                      // results.map(function (e) {
-                      //     e.properties.tiles.filter()
-                      // });
+                      buffer = results;
                   },function (err) {
                       $log.error(err);
                       deferred.reject(err);
@@ -115,7 +116,9 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             resetCache : function () {
-                return cache = {};
+                buffer = [];
+                cache = {};
+                return true;
             },
             removeTile: function(params){
                 // $log.debug('cache',Object.keys(cache).length -1);
@@ -557,7 +560,8 @@ angular.module('firstlife.services')
 
 
     }]).run(function(ThingsService, myConfig){
-    self.cache = [];
+    self.cache = {};
+    self.buffer = [];
     self.query = null;
     self.favCat = 0;
     self.filters = {

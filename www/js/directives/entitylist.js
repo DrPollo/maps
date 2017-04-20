@@ -25,9 +25,8 @@ angular.module('firstlife.directives')
                 init();
 
                 function init(){
-                    $log.log('init wall');
-                    var current = ThingsService.filter();
-                    scope.markers = Object.keys(ThingsService.filter()).map(function(e){return current[e];});
+                    var current = ThingsService.filterBuffer();
+                    scope.markers = Object.keys(current).map(function(e){return current[e];});
                     var params = $location.search();
                     if(params.q)
                         scope.query = params.q;

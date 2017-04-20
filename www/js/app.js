@@ -911,8 +911,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             //     $localStorage[myConfig.authentication.identity_mem_key] = devToken.member;
             // }
             // fine dev
-
-
+            if($localStorage[myConfig.authentication.token_mem_key]){
+                $log.debug('Token: ','Bearer '+$localStorage[myConfig.authentication.token_mem_key].access_token);
+            }
             var retries = 0,
                 waitBetweenErrors = 1000,
                 maxRetries = 3;

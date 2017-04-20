@@ -177,14 +177,14 @@ angular.module('firstlife.factories')
                     deferred.reject('no tiles to check');
                     return deferred.promise;
                 }
-                $log.debug('tiles',params);
+                // $log.debug('tiles',params);
                 var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&tiles=',params.tiles.join(','));
                 if(params.time.from)
                     urlId = urlId.concat('&from=',params.time.from);
                 if(params.time.to)
                     urlId = urlId.concat('&to=',params.time.to);
 
-                $log.debug('tiles url',urlId);
+                // $log.debug('tiles url',urlId);
                 var req = {
                     url: urlId,
                     method: 'GET',
@@ -192,7 +192,7 @@ angular.module('firstlife.factories')
                 };
                 $http(req).then(
                     function (response) {
-                        $log.debug("tiles response",params,response.data.things.features);
+                        // $log.debug("tiles response",params,response.data.things.features);
                         deferred.resolve(response.data.things.features);
                     },
                     function (err) {
