@@ -15810,7 +15810,7 @@ div.search-tag-card {
     margin: 0px auto; }
 
 #post-menu .button {
-  width: 41px; }
+  min-width: 41px; }
   #post-menu .button i.icon {
     margin: 0px auto; }
 

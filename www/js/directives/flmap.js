@@ -70,10 +70,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // listners al livello tile
                 leafletData.getLayers().then(
                     function (layers) {
-                        $log.debug('flmap layers',layers.overlays.pie);
-                        layers.overlays.pie.on('clusterclick',function (e) {
-                            $log.debug('clusterclick',e);
-                        })
+                        // $log.debug('flmap layers',layers.overlays.pie);
+                        // layers.overlays.pie.on('clusterclick',function (e) {
+                        //     $log.debug('clusterclick',e);
+                        // })
                         // $log.debug('init layer ref',!$scope.tileLayer);
                         if(!$scope.tileLayer) {
                             $scope.tileLayer = layers.baselayers.view;
