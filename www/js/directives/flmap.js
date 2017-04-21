@@ -74,11 +74,14 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // listners al livello tile
                 leafletData.getLayers().then(
                     function (layers) {
-                        $log.debug('flmap layers',layers.overlays.pie);
+                        // $log.debug('flmap layers',layers.overlays.pie);
+                        // salvo il riferimento all'overlay
                         pieRef = layers.overlays.pie;
-                        // layers.overlays.pie.on('clusterclick',function (e) {
-                        //     $log.debug('clusterclick',e);
-                        // })
+                        pieRef.on('click',function (e) {
+                            // $log.debug('click on marker',e.layer.options.id);
+                            $location.search('entity',e.layer.options.id);
+                            $scope.$broadcast('markerClick',{id: e.layer.options.id});
+                        })
                         // $log.debug('init layer ref',!$scope.tileLayer);
                         if(!$scope.tileLayer) {
                             $scope.tileLayer = layers.baselayers.view;
@@ -264,12 +267,13 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function addMarker(marker) {
 
                 var marker = L.marker(marker, {
-                    icon: marker.icon,
+                    icon: L.divIcon(marker.icon),
                     clickable:true,
                     draggable:false,
                     keyboard: true,
                     title: marker.name,
                     alt: marker.name,
+                    id: marker.id
                 });
                 marker.addTo(pieRef);
                 return marker;

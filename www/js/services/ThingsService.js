@@ -114,6 +114,7 @@ angular.module('firstlife.services')
                 // $log.debug('fushTiles',params);
                 ThingsFact.tiles(params).then(
                   function (results) {
+                      $log.debug('risultati',results.length);
                       deferred.resolve(makeMarkers(results));
                       buffer = results;
                   },function (err) {
@@ -396,13 +397,13 @@ angular.module('firstlife.services')
             // gestione icona di tipo
             var type = types[marker.entity_type];
             // icona di tipo
-            var icon = L.divIcon(defIcons[type.key]);
+            var icon = defIcons[type.key];
             // gestione icone di categoria
             var icons = {
                 0 : icon
             };
             var catIcons = marker.categories.reduce(function(icons, cat){
-                var icon = L.divIcon(defIcons[cat.category_space.id][cat.categories[0].id]);
+                var icon = defIcons[cat.category_space.id][cat.categories[0].id];
                 icons[cat.category_space.id] = icon;
                 return icons;
             },{});
