@@ -652,6 +652,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     case 'view':
                         //aggiorno i parametri search con il filtro
                         $location.search(param,scope.marker.id);
+                        scope.$emit('setGroupCard',{group: scope.marker});
                         //chiudo la modal
                         scope.close();
                         break;

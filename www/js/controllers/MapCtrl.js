@@ -229,7 +229,7 @@ angular.module('firstlife.controllers')
             // al cambio filtro temporale ricalcolo i dati
             updateMarkers();
         });
-
+        // cattura q
         $scope.$on("updateQ",function(event,args){
             // $log.debug('updateQ');
             if(event.defaultPrevented)
@@ -239,8 +239,7 @@ angular.module('firstlife.controllers')
             // al cambio filtro testuale
             filterMarkers();
         });
-
-
+        // cattura e gestisce q
         $scope.$on("handleUpdateQ",function(event,args){
             // $log.debug('handleUpdateQ',event,args);
             if(event.defaultPrevented)
@@ -253,17 +252,19 @@ angular.module('firstlife.controllers')
         });
 
         $scope.$on("setGroupCard", function (event,args) {
-            $log.debug('setGroupCard',event,args);
+            // $log.debug('setGroupCard',event,args);
             if(event.defaultPrevented)
                 return;
 
             event.preventDefault();
 
-            check4customFilters({group: args.group.id});
+            check4customFilters({groups: args.group.id});
             $scope.groupCard = args.group.name;
+            filterMarkers();
         });
+
         $scope.$on("showInitiative", function (event,args) {
-            $log.debug('showInitiative',event,args);
+            // $log.debug('showInitiative',event,args);
             if(event.defaultPrevented)
                 return;
 
@@ -271,10 +272,11 @@ angular.module('firstlife.controllers')
 
             check4customFilters({initiative: args.initiative.id});
             $scope.initiativeCard = args.initiative.name;
+            filterMarkers();
         });
 
         $scope.$on("setUserCard", function (event,args) {
-            $log.debug('setUserCard',event,args);
+            // $log.debug('setUserCard',event,args);
             if(event.defaultPrevented)
                 return;
 
@@ -282,6 +284,7 @@ angular.module('firstlife.controllers')
 
             check4customFilters({initiative: args.user.id});
             $scope.userCard = args.user.fullname;
+            filterMarkers();
         });
 
 
@@ -691,6 +694,7 @@ angular.module('firstlife.controllers')
         // imposto o rimuovo i filtri
         function check4customFilters(e,old){
             var filters = config.map.filters;
+            $log.debug('check4customFilters',e,filters);
             for(var i = 0 ; i < filters.length; i ++){
                 var param = filters[i].search_param;
                 var filter = filters[i];
@@ -762,7 +766,8 @@ angular.module('firstlife.controllers')
             $location.search('groups',null);
             // gestisco il cambio parametri
             check4customFilters($location.search());
-        }
+            filterMarkers();
+        };
 
         // userCard
         function check4user(e){
@@ -778,6 +783,7 @@ angular.module('firstlife.controllers')
             $location.search('users',null);
             // gestisco il cambio parametri
             check4customFilters($location.search());
+            filterMarkers();
         };
 
 
@@ -805,6 +811,7 @@ angular.module('firstlife.controllers')
             $location.search('initiative',null);
             // gestisco il cambio parametri
             check4customFilters($location.search());
+            filterMarkers();
         };
 
     }]).run(function( myConfig, $timeout, $log){
