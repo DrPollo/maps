@@ -12,11 +12,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // markers
             $scope.markers = {};
+            $scope.currentMarkers = {};
             // referenza diretta alla mappa
             var mapRef = null;
+            // referenza diretta all'overlay clustermarker
+            var pieRef = null;
             // se non e' presente c in $location.search() c lo imposto al centro della mappa
             if(!$location.search().c)
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
+
+
 
             /*
              * Listner esterni
@@ -69,7 +74,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // listners al livello tile
                 leafletData.getLayers().then(
                     function (layers) {
-                        // $log.debug('flmap layers',layers.overlays.pie);
+                        $log.debug('flmap layers',layers.overlays.pie);
+                        pieRef = layers.overlays.pie;
                         // layers.overlays.pie.on('clusterclick',function (e) {
                         //     $log.debug('clusterclick',e);
                         // })
@@ -199,7 +205,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 ThingsService.getTile(tile).then(
                     function (markers) {
                         // aggiorno lista tile
-                        angular.extend($scope.markers,markers);
+                        //angular.extend($scope.markers,markers);
+                        addMarkers(markers);
                         // $log.log('markers',Object.keys($scope.markers).length);
                     },
                     function (err) {
@@ -210,36 +217,73 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // filtro i marker in cache
             function flushMarkers() {
+                if(!pieRef)
+                    return
                 // chiamate alle tile attive
                 ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
-                        angular.extend($scope.markers,markers);
+                        // angular.extend($scope.markers,markers);
+                        addMarkers(markers);
                     }
                 );
             }
             // filtro i marker in cache
             function updateMarkers() {
+                if(!pieRef)
+                    return
                 // chiamate alle tile attive
                 ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
-                        $scope.markers = angular.extend({},markers);
+                        // $scope.markers = angular.extend({},markers);
+                        addMarkers(markers);
                     }
                 );
-                // ThingsService.updateCache().then(
-                //     function (markers) {
-                //         // $log.debug('updated markers',Object.keys(markers).length);
-                //         $scope.markers = angular.extend({},markers);
-                //     }
-                // );
             }
             // filtro i marker in cache
             function filterMarkers() {
-                // chiamate alle tile
-                var filtred = ThingsService.filterBuffer();
-                // $log.debug('filtred',Object.keys(filtred).length);
-                $scope.markers = angular.extend({},filtred);
+                // chiedo cosa devo eliminare
+                var markers = ThingsService.filter();
+                removeMarkers(markers.remove);
+                addMarkers(markers.add);
+            }
+
+
+            // add the markers keeping the reference
+            function addMarkers(markers) {
+                // $log.debug('to be added',Object.keys(markers).length);
+                angular.extend($scope.currentMarkers, Object.keys(markers).reduce(function(currentMarkers,markerId){
+                    if(!$scope.currentMarkers[markerId])
+                        currentMarkers[markerId] = addMarker(markers[markerId]);
+                    return currentMarkers;
+                },{}));
+            }
+            // add marker creates a maker and adds it to the map returning the reference
+
+            function addMarker(marker) {
+
+                var marker = L.marker(marker, {
+                    icon: marker.icon,
+                    clickable:true,
+                    draggable:false,
+                    keyboard: true,
+                    title: marker.name,
+                    alt: marker.name,
+                });
+                marker.addTo(pieRef);
+                return marker;
+            }
+            // remove each marker from a list of id
+            function removeMarkers(ids){
+                // $log.debug('to be removed',ids.length);
+                ids.map(function (id) {
+                    // $log.debug('remove', id, $scope.currentMarkers[id]);
+                    if(id && $scope.currentMarkers[id]){
+                        pieRef.removeLayer($scope.currentMarkers[id]);
+                        delete $scope.currentMarkers[id];
+                    }
+                });
             }
 
         }]

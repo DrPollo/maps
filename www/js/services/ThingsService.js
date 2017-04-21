@@ -37,10 +37,19 @@ angular.module('firstlife.services')
                 return ThingsFact.report(report);
             },
             filter: function () {
-                // $log.debug('cache?', Object.keys(cache).length);
-                return makeMarkers(Object.keys(cache).reduce(function(features, key){
-                  return features.concat(cache[key]);
-              },[]));
+                // restituisce i marker da eliminare
+                // $log.debug('buffer to check');
+                return buffer.reduce(function (result,feature){
+                    // $log.debug('check ',feature);
+                    var id = feature.properties.id ? feature.properties.id: feature._id;
+                    if(!check(feature)){
+                        // $log.debug('to be removed',feature._id);
+                        result.remove.push(id);
+                    }else{
+                        result.add[id] = makeMarker(feature);
+                    }
+                    return result;
+                },{add:{},remove:[]});
             },
             filterBuffer: function () {
                 // $log.debug('cache?', Object.keys(cache).length);
@@ -387,13 +396,13 @@ angular.module('firstlife.services')
             // gestione icona di tipo
             var type = types[marker.entity_type];
             // icona di tipo
-            var icon = angular.copy(defIcons[type.key]);
+            var icon = L.divIcon(defIcons[type.key]);
             // gestione icone di categoria
             var icons = {
                 0 : icon
             };
             var catIcons = marker.categories.reduce(function(icons, cat){
-                var icon = defIcons[cat.category_space.id][cat.categories[0].id];
+                var icon = L.divIcon(defIcons[cat.category_space.id][cat.categories[0].id]);
                 icons[cat.category_space.id] = icon;
                 return icons;
             },{});

@@ -812,11 +812,6 @@ angular.module('firstlife.controllers')
             zoomControlPosition: config.map.zoom_position,
             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         },
-        markers: {},
-        watch:{
-            doWatch:false,
-            isDeep: false
-        },
         controls: {
             zoomControl: (config.map.zoom),
             zoomControlPosition: config.map.zoom_position,
@@ -829,8 +824,7 @@ angular.module('firstlife.controllers')
                 logic: 'emit'
             },
             marker: {
-                enable: [],
-                // enable: ['click'],
+                enable: ['click'],
                 logic: 'emit'
             }
         },
