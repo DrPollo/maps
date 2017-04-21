@@ -403,6 +403,10 @@ angular.module('firstlife.services')
             angular.extend(marker, {icon:icons[favCat] ? icons[favCat] : icons[0]});
             // nome tipo
             angular.extend(marker,{type_name: $filter('translate')(marker.entity_type)});
+            // se id non presente
+            if(!marker.id)
+                marker.id = feature._id;
+
 
             return marker;
         }

@@ -133,6 +133,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     return;
                 event.preventDefault();
 
+                // $log.debug('marker click',args.model.id);
+
                 args.model.focus = false;
                 //event.target.focus = false;
                 $location.search('entity',args.model.id);

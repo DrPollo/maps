@@ -6,7 +6,7 @@ angular.module('firstlife.factories')
         var urlThings= myConfig.backend_things;
         var urlBbox= myConfig.backend_bbox;
         var urlTile= myConfig.backend_tilesearch;
-        var fields = 'fields=valid_from,valid_to,parent_id,location,comment_of,article_of,group_of,group_id,categories,geometry,name,user,tags';
+        var fields = 'fields=valid_from,valid_to,categories,geometry,name,id,tags';
         var domains = [self.config.domain_id].concat(self.config.read_domains).join(',');
         var limit= 99999;
 
@@ -178,7 +178,7 @@ angular.module('firstlife.factories')
                     return deferred.promise;
                 }
                 // $log.debug('tiles',params);
-                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&tiles=',params.tiles.join(','));
+                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tiles.join(','));
                 if(params.time.from)
                     urlId = urlId.concat('&from=',params.time.from);
                 if(params.time.to)

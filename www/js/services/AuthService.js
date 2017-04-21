@@ -12,7 +12,7 @@ angular.module('firstlife.services')
             checkSession: function(){
                 // chiedo all'oauth server se c'e' un utente attivo nell'agent
                 var deferred = $q.defer();
-                $log.debug('session url ',myConfig.authentication.api_session);
+                // $log.debug('session url ',myConfig.authentication.api_session);
                 if(!myConfig.authentication.api_session){
                     deferred.reject('undefined api_session');
                 } else {
@@ -25,7 +25,7 @@ angular.module('firstlife.services')
                         },
                         data: {}
                     };
-                    $log.debug('check session ',req);
+                    // $log.debug('check session ',req);
                     $http(req).then(function (response) {
                         $log.debug('check session', response.data);
                         if(response.data.member_id)
