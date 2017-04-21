@@ -13,7 +13,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 if(!e.preventPostListEvent){
                     e.preventPostListEvent = true;
                     // rimuovo il menu
-                    scope.popover.remove();
+                    if(scope.popover)
+                        scope.popover.remove();
                     delete scope;
                 }
             });

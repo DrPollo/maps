@@ -1,4 +1,4 @@
-angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage'])
+angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
@@ -203,18 +203,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             data: {
                 authenticate: true
             }
-        }).state('app.manager', {
-        url: '/manager/?entity',
-        views: {
-            'menuContent': {
-                templateUrl: '/templates/manager.html',
-                controller: 'ManagerCtrl'
-            }
-        },
-        data: {
-            authenticate: true
-        }
-    });
+        });
 
 
 
