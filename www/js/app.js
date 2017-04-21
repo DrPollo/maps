@@ -31,6 +31,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         if(myConfig.authentication["logout_url"])
             myConfig.authentication["logout_url"] = myConfig.authentication.logout_url.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
 
+        if(myConfig.authentication["api_session"])
+            myConfig.authentication["api_session"] = myConfig.authentication.api_session.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
+
         if(myConfig.authentication["profile_url"])
             myConfig.authentication["profile_url"] = myConfig.authentication.profile_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
 
@@ -59,7 +62,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // da cancellare cache stati da usare per recuperare il redirect al login
         //self.cache = {};
         //self.cache.isStateCached = false;
-
+        // semaforo per autoLogin();
+        // se non loggato provo una volta
+        var tryAutoLogin = !AuthService.isAuth();
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
             if(!event.preventRedirectState){
                 event.preventRedirectState = true;
@@ -74,6 +79,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
                 $rootScope.previousState = fromState.name;
 
+                if(tryAutoLogin){
+                    tryAutoLogin = false;
+                    autoLogin();
+                }
+
                 switch (toState.name){
                     case 'app.maps':
                         if(embed){
@@ -83,8 +93,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
                             $state.go('home',search_params);
-                        }else if(!AuthService.isAuth()){
-                            autoLogin();
                         }
                         break;
                     case 'home':
@@ -114,7 +122,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             $state.go('app.maps',search_params);
                         }
                 }
-
 
                 function autoLogin(){
                     // se l'utente non e' loggato

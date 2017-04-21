@@ -49,6 +49,8 @@ angular.module('firstlife.config')
         myConfig.authentication.logout_url = url.concat(params.logout_url);
         if(params.profile_url)
             myConfig.authentication.profile_url = url.concat(params.profile_url);
+        if(params.api_session)
+            myConfig.authentication.api_session = url.concat(params.api_session);
         if(params.signature_url)
             myConfig.authentication.signature_url = url.concat(params.signature_url);
         myConfig.authentication.registration_url = url.concat(params.registration_url);
