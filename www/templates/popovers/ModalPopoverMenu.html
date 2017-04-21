@@ -1,7 +1,7 @@
 <ion-popover-view>
     <ion-content>
         <ion-list>
-            <members-button class="delimited" marker="infoPlace.marker" close="closePopover"  ng-if="infoPlace.marker.type_info.properties.members && config.actions.can_delete && checkPerms['d']"></members-button>
+            <members-button class="delimited" marker="infoPlace.marker" close="closePopover()"  ng-if="infoPlace.marker.entity_type==='FL_GROUPS' && config.actions.can_delete && checkPerms['d']"></members-button>
             <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="delimited item item-button-right">
                 {{'EDIT'|translate}}
                 <button class="button button-positive" on-tap="updateButtonPopover()">

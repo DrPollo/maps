@@ -18,8 +18,8 @@
                 </span>
             </div>
             <div class="modal-subheader">
-                <members-counter ng-if="infoPlace.marker.entity_type === 'FL_GROUPS' && infoPlace.marker.id" id="infoPlace.marker.id"></members-counter>
                 <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
+                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i class="icon ion-android-people"></i></span></span>
             </div>
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">

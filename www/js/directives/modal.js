@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
     return{
         restrict:'EG',
         scope:{},
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -58,8 +58,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     return;
                 event.preventDefault();
 
-                // $log.debug('membersReset');
-                $scope.$broadcast('reloadMemberCounter');
+                $log.debug('membersReset');
+                $timeout(initMembers,1);
             });
 
 
@@ -295,6 +295,9 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         $scope.loaded = true;
                         // contatore sottoscrittori
                         initSubscribers();
+                        // se un gruppo
+                        if($scope.infoPlace.marker.entity_type === 'FL_GROUPS')
+                            initMembers();
                         // inizializzo la maschera dei permessi per l'utente per il marker attuale
                         initPerms(marker.owner.id);
                         // recupero il tipo e lo metto dentro $scope.currentType
@@ -335,6 +338,16 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         $scope.subscribers = result.length;
                     },function (err) {
                         $log.error(err);
+                    }
+                );
+            }
+            function initMembers(){
+                groupsFactory.getMembers($scope.infoPlace.marker.id).then(
+                    function(result){
+                        $scope.members = result.length ? result.length : 0;
+                    },
+                    function (error){
+                        $log.error('groupsFactory, getMembers, error ',error);
                     }
                 );
             }
@@ -572,6 +585,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 );
                 return deferred.promise;
             }
+
 
             scope.actionEntity = AuthService.doAction(function(action, param){
                 // $log.debug('check action ',action,param);
