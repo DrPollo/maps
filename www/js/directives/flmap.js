@@ -135,21 +135,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $location.search('c', centerHash);
             });
 
-            // al click del marker aggiorno il parametro entity
-            // click su marker > propago evento
-            $scope.$on('leafletDirectiveMarker.mymap.click', function(event, args) {
-                if(event.defaultPrevented)
-                    return;
-                event.preventDefault();
-
-                // $log.debug('marker click',args.model.id);
-
-                args.model.focus = false;
-                //event.target.focus = false;
-                $location.search('entity',args.model.id);
-                $scope.$broadcast('markerClick',{id: args.model.id});
-
-            });
 
             $scope.$on('wallMarkerClick',function (event,args) {
                if(event.defaultPrevented)
@@ -203,20 +188,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     );
                 }
             }
-            // add tile alla lista delle tile attive e get dei marker
-            function addTile(tile) {
-                ThingsService.getTile(tile).then(
-                    function (markers) {
-                        // aggiorno lista tile
-                        //angular.extend($scope.markers,markers);
-                        addMarkers(markers);
-                        // $log.log('markers',Object.keys($scope.markers).length);
-                    },
-                    function (err) {
-                        $log.error(err);
-                    }
-                );
-            }
 
             // filtro i marker in cache
             function flushMarkers() {
@@ -251,8 +222,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 removeMarkers(markers.remove);
                 addMarkers(markers.add);
             }
-
-
             // add the markers keeping the reference
             function addMarkers(markers) {
                 $log.debug('to be added',Object.keys(markers).length);
@@ -271,13 +240,13 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function addMarker(marker) {
 
                 var marker = L.marker(marker, {
+                    id: marker.id,
                     icon: L.divIcon(marker.icon),
                     clickable:true,
                     draggable:false,
                     keyboard: true,
                     title: marker.name,
-                    alt: marker.name,
-                    id: marker.id
+                    alt: marker.name
                 });
                 marker.addTo(pieRef);
                 return marker;
@@ -295,7 +264,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 });
                 console.timeEnd('remove markers');
             }
-
         }]
     }
 }).directive('wall',['$log','$ionicModal',function ($log,$ionicModal) {

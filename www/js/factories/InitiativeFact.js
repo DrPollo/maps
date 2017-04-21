@@ -105,6 +105,31 @@ angular.module('firstlife.factories')
             );
             return deferred.promise;
         },
+        get : function (initiativeId,initiative) {
+            var deferred = $q.defer();
+            if(!AuthService.isAuth()){
+                deferred.reject('no authenticated');
+                return deferred.promise;
+            }
+
+            var urlId = myConfig.initiatives.concat('/',initiativeId);
+            var req = {
+                url: urlId,
+                method: 'GET',
+                data: {}
+            };
+            $http(req).then(
+                function(res){
+                    $log.debug('Get initiative',res);
+                    deferred.resolve(res.data);
+                },
+                function(err){
+                    $log.error(err);
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        },
         update : function (initiativeId,initiative) {
             var deferred = $q.defer();
             if(!AuthService.isAuth()){

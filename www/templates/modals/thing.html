@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <modal-lists ng-if="infoPlace.marker" marker="infoPlace.marker" show="showMCardPlace(id)" add="addChildEntity()"></modal-lists>
+        <modal-lists ng-if="infoPlace.marker" marker="infoPlace.marker" show="showMCardPlace(id)" add="addChildEntity()" close="closeModal()"></modal-lists>
 
         <loader ng-if="!infoPlace.marker"></loader>
 

@@ -114,6 +114,7 @@ angular.module('firstlife.controllers')
         $scope.myMap = function(){
             if($scope.user && $scope.user.id)
                 $location.search('users',$scope.user.id);
+                $scope.$broadcast('setUserCard',{user:$scope.user});
         }
         
         $scope.makeEmbed = function(){

@@ -2,11 +2,12 @@
  * Created by drpollo on 07/04/2017.
  */
 angular.module('firstlife.directives')
-    .directive('initiativeList',['$log','AuthService','InitiativeFactory',function ($log,AuthService,InitiativeFactory) {
+    .directive('initiativeList',['$log', '$location','AuthService','InitiativeFactory',function ($log,$location, AuthService,InitiativeFactory) {
         return {
             restrict: 'EG',
             scope: {
-                thingId: '=id'
+                thingId: '< id',
+                close: '&'
             },
             templateUrl:'/templates/initiative/initiative-list.html',
             link: function (scope,element,attr) {
@@ -36,8 +37,10 @@ angular.module('firstlife.directives')
 
                 // show select initiative
                 scope.show = function (initiative) {
-                    $log.debug('show initiative',initiative.id);
-                  scope.$emit('showInitiative',{initiative:initiative});
+                    // $log.debug('show initiative',initiative.id);
+                    $location.search('initiative',initiative.id);
+                    scope.$emit('showInitiative',{initiative:initiative});
+                    scope.close();
                 };
 
 

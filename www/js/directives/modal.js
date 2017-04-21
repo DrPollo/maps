@@ -830,7 +830,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
         scope: {
             marker: '=',
             show: '&show',
-            add:'&'
+            add:'&',
+            close:'&'
         },
         templateUrl: '/templates/modals/modalLists.html',
         link: function(scope, element, attrs){

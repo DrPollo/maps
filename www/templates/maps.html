@@ -8,15 +8,20 @@
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
             </div>
             <search-bar ng-if="!editMode"></search-bar>
-            <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(userCard)">
+            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
                 <i class="icon ion-android-person"></i>
                 <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>
                 <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
             </div>
-            <div class="search-tag-card fast-ease-out-animation fade-in" ng-show="(groupCard)">
+            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(groupCard)">
                 <i class="icon ion-android-people"></i>
                 <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
                 <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
+            </div>
+            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(initiativeCard)">
+                <i class="icon ion-android-share-alt"></i>
+                <span class="tag-card-body"  style="padding:0px 12px;">{{initiativeCard}}</span>
+                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteInitiativeCard()"></button>
             </div>
         </div>
     </div>

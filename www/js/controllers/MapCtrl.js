@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'myConfig', 'AuthService', 'leafletData', function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService, myConfig, AuthService, leafletData) {
+    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'InitiativeFactory','myConfig', 'AuthService', 'leafletData', function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService,InitiativeFactory, myConfig, AuthService, leafletData) {
 
 
 
@@ -90,13 +90,12 @@ angular.module('firstlife.controllers')
 
             // controlla il parametro embed per il visualizzatore
             check4embed(params);
-            // controllo il filtro per gruppo
-            check4group(params);
-            // controllo il filtro per utente
+            // controllo i parametri custom
+            check4customFilters(params);
+            // controllo per le cards
+            check4initiative(params);
             check4user(params);
-            // check initiative
-            check4Initiative(params);
-
+            check4group(params);
 
             $scope.isLoggedIn = AuthService.isAuth();
 
@@ -245,7 +244,7 @@ angular.module('firstlife.controllers')
         $scope.$on("handleUpdateQ",function(event,args){
             // $log.debug('handleUpdateQ',event,args);
             if(event.defaultPrevented)
-                return ;
+                return;
 
             event.preventDefault();
             $scope.$broadcast('newSearchParam',{q:args.q});
@@ -253,7 +252,37 @@ angular.module('firstlife.controllers')
             filterMarkers();
         });
 
+        $scope.$on("setGroupCard", function (event,args) {
+            $log.debug('setGroupCard',event,args);
+            if(event.defaultPrevented)
+                return;
 
+            event.preventDefault();
+
+            check4customFilters({group: args.group.id});
+            $scope.groupCard = args.group.name;
+        });
+        $scope.$on("showInitiative", function (event,args) {
+            $log.debug('showInitiative',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            check4customFilters({initiative: args.initiative.id});
+            $scope.initiativeCard = args.initiative.name;
+        });
+
+        $scope.$on("setUserCard", function (event,args) {
+            $log.debug('setUserCard',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            check4customFilters({initiative: args.user.id});
+            $scope.userCard = args.user.fullname;
+        });
 
 
 
@@ -304,7 +333,7 @@ angular.module('firstlife.controllers')
 
         $scope.showWall = function(){
             $scope.$broadcast('showWall');
-        }
+        };
 
         //Modal filtro categorie
         $scope.showMFilterCat = function() {
@@ -372,7 +401,7 @@ angular.module('firstlife.controllers')
                 // e non ho paramentri gia' stabiliti
                 clickToAdd();
             }
-        }
+        };
 
 
 
@@ -491,7 +520,7 @@ angular.module('firstlife.controllers')
                 // posiziono la mappa
                 changeLocation(params);
             }
-        };
+        }
 
 
         // An alert dialog
@@ -504,13 +533,13 @@ angular.module('firstlife.controllers')
             alertPopup.then(function(res) {
                 //$log.debug('Allert con contenuto: ',content);
             });
-        };
+        }
 
         // action sheet di ritorno dall'editor
         function backFromEditor(entityId){
             //$log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
-            if(entityId == -1){
+            if(entityId === -1){
                 content.title = $filter('translate')('ERROR');
                 content.text = $filter('translate')('UNKNOWN_ERROR');
 
@@ -526,7 +555,7 @@ angular.module('firstlife.controllers')
                 // serve per il routing, chiudo l'action sheet con il pulsante back
                 $rootScope.actionSheet = hideSheet;
                 $rootScope.actionStatus = true;
-            }if(entityId == -2){
+            }if(entityId === -2){
                 content.title = $filter('translate')('ERROR');
                 content.text = $filter('translate')('ERROR_LOGIN');
 
@@ -603,7 +632,7 @@ angular.module('firstlife.controllers')
             else {
                 $scope.flmap.layers.overlays[clickedItem].visible = true;
             }
-        };
+        }
 
 
         // funzione di cambio di modalita' della mappa
@@ -650,7 +679,16 @@ angular.module('firstlife.controllers')
             }
         }
 
+
+
+
+        /*
+         * Gestione parametri search
+         */
+
+
         // toggle dei parametri search custom
+        // imposto o rimuovo i filtri
         function check4customFilters(e,old){
             var filters = config.map.filters;
             for(var i = 0 ; i < filters.length; i ++){
@@ -669,7 +707,6 @@ angular.module('firstlife.controllers')
                 }
             }
         }
-
 
         // controllo parametro embed per setup del viewer
         function check4embed(e){
@@ -690,16 +727,14 @@ angular.module('firstlife.controllers')
             }
         }
 
-        // controllo i parametri di posizione
-        // todo implementa soluzione possibilmente filtro
-        function check4Initiative(e, old){
-            // se ho settati i parametri di posizione
-            if(old && old.initiative && old.initiative !== e.initiative || e.initiative){
-                //$log.debug('cambio parametro iniziativa',e.initiative);
-                // avviso del cambio di parametro
-                $scope.$broadcast('newInitiativeSearch',{id: e.initiative ? e.initiative : null});
-            }
-        }
+
+
+
+
+        /*
+         * Gestione search cards
+         */
+
 
         // groupCard
         function check4group(e){
@@ -725,6 +760,8 @@ angular.module('firstlife.controllers')
         $scope.deleteGroupCard = function(){
             $scope.groupCard = null;
             $location.search('groups',null);
+            // gestisco il cambio parametri
+            check4customFilters($location.search());
         }
 
         // userCard
@@ -733,17 +770,41 @@ angular.module('firstlife.controllers')
 
                 return false;
             }
-            $scope.userCard = AuthService.getUser().username;
+            var user = AuthService.getUser();
+            $scope.userCard = user.fullname;
         }
         $scope.deleteUserCard = function(){
             $scope.userCard = null;
             $location.search('users',null);
+            // gestisco il cambio parametri
+            check4customFilters($location.search());
         };
 
+
         // initiative card
+        function check4initiative(e) {
+            if(!e){
+                return false;
+            }
+            if(!e.initiative){
+                $location.search('initiative',null);
+                return false;
+            }
+            InitiativeFactory.get(e.initiative).then(
+                function (result) {
+                    // $log.debug('check4initiative',result);
+                    $scope.initiativeCard = result.name;
+                },
+                function (err) {
+                    $log.error(err);
+                }
+            );
+        }
         $scope.deleteInitiativeCard = function () {
             $scope.initiativeCard = null;
             $location.search('initiative',null);
+            // gestisco il cambio parametri
+            check4customFilters($location.search());
         };
 
     }]).run(function( myConfig, $timeout, $log){

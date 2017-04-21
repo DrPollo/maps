@@ -1,4 +1,4 @@
-angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage'])
+angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage','naif.base64'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
@@ -180,7 +180,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         templateUrl: "templates/side-menu.html",
         controller: 'AppCtrl as app'
     }).state('app.maps', {
-        url: "/maps?c&entity&embed&date&unit&initiative&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+        url: "/maps?c&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false,
         views: {
             'menuContent': {

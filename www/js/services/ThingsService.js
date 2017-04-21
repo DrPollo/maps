@@ -40,7 +40,7 @@ angular.module('firstlife.services')
                 // restituisce i marker da eliminare
                 // $log.debug('buffer to check');
                 return buffer.reduce(function (result,feature){
-                    // $log.debug('check ',feature);
+                    $log.debug('check ',feature);
                     var id = feature.properties.id ? feature.properties.id: feature._id;
                     if(!check(feature)){
                         // $log.debug('to be removed',feature._id);
@@ -477,7 +477,7 @@ angular.module('firstlife.services')
             // per ogni condizione
             var testCondition = false;
 
-            for(key in filterConditions){
+            for(var key in filterConditions){
                 // se non devo escludere la regola
 
                 // $log.debug("il tipo e' da includere? ", filterConditions[key].includeTypes.indexOf(val.entity_type) > -1);
@@ -639,6 +639,6 @@ angular.module('firstlife.services')
             }
         }
         //console.log('filters',self.filters);
-        //console.log('filterConditions',self.filterConditions);
+        console.debug('filterConditions',self.filterConditions);
     }
 });
