@@ -255,15 +255,19 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // add the markers keeping the reference
             function addMarkers(markers) {
-                // $log.debug('to be added',Object.keys(markers).length);
+                $log.debug('to be added',Object.keys(markers).length);
+                console.time('add markers');
                 angular.extend($scope.currentMarkers, Object.keys(markers).reduce(function(currentMarkers,markerId){
-                    if(!$scope.currentMarkers[markerId])
+                    if(!$scope.currentMarkers[markerId]){
                         currentMarkers[markerId] = addMarker(markers[markerId]);
+                    } else {
+                        $scope.currentMarkers[markerId].setIcon(L.divIcon(markers[markerId].icon));
+                    }
                     return currentMarkers;
                 },{}));
+                console.timeEnd('add markers');
             }
             // add marker creates a maker and adds it to the map returning the reference
-
             function addMarker(marker) {
 
                 var marker = L.marker(marker, {
@@ -280,7 +284,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
             // remove each marker from a list of id
             function removeMarkers(ids){
-                // $log.debug('to be removed',ids.length);
+                $log.debug('to be removed',ids.length);
+                console.time('remove markers');
                 ids.map(function (id) {
                     // $log.debug('remove', id, $scope.currentMarkers[id]);
                     if(id && $scope.currentMarkers[id]){
@@ -288,6 +293,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         delete $scope.currentMarkers[id];
                     }
                 });
+                console.timeEnd('remove markers');
             }
 
         }]
