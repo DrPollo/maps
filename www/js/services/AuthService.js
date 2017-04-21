@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['$log','$http','$q','$ionicPopup','$filter','$window','myConfig','MemoryFactory','rx', function($log, $http, $q,$ionicPopup, $filter,$window, myConfig, MemoryFactory,rx) {
+    .factory('AuthService', ['$log','$http','$q','$ionicPopup','$filter','$window','myConfig','MemoryFactory',function($log, $http, $q,$ionicPopup, $filter,$window, myConfig, MemoryFactory) {
 
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;

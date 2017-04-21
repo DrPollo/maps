@@ -1,5 +1,5 @@
 angular.module('firstlife.factories')
-    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'rx', 'AuthService', function($http, $q,  $log, myConfig, rx, AuthService) {
+    .factory('groupsFactory', ['$http', '$q', '$log', 'myConfig', 'AuthService', function($http, $q,  $log, myConfig, AuthService) {
 
         var config = myConfig;
         var format = config.format;
@@ -114,35 +114,8 @@ angular.module('firstlife.factories')
                         deferred.reject(response);
                     });
                 return deferred.promise;
-            },// get members
-            getMembersRx: function(entityId){
-                var urlId = url.concat('Things/').concat(entityId).concat('/members').concat(format);
-                var req = {
-                    url: urlId,
-                    method: 'get',
-                    headers:{"Content-Type":"application/json"},
-                    data: {}
-                };
-                
-                return members = rx.Observable.fromPromise($http(req))
-                .map(function(val){
-                    console.debug('getMembersRx, response ',val)
-                    return val.data;
-                })
-                .do(
-                    function(data){
-                        //console.debug('do ',data)
-                        if(!groupsUsers[entityId])
-                                groupsUsers[entityId] = {};
-                            for(var i in data){
-                                groupsUsers[entityId][data[i].memberId] = data[i];
-                            }
-                    }
-                ).retry()
-                .share();       
-                    
             }
-        }
+        };
 
 
         function removeUser (entityId,userId){

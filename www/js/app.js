@@ -1,4 +1,4 @@
-angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'cbuffer', 'pascalprecht.translate','rx', 'ngStorage'])
+angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'naif.base64', 'base64', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
