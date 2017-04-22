@@ -12,20 +12,15 @@ angular.module('firstlife.timeline',[])
                 delete $scope;
             });
 
+            // todo gestione dati nella timeline
             $scope.data = {};
             //listner cambio dei parametri get
-            // $scope.$on('timeline.refresh', function(event, args) {
-            //     if(!event.preventTimelineRefresh){
-            //         event.preventTimelineRefresh = true;
-            //         var params = $location.search();
-            //         //$log.debug("timeline, timeline.refresh?", params.date, params.unit);
-            //         // se i parametri sono impostati e sono cambiati
-            //         if( (params.date && params.date != $scope.moment.toISOString()) || (params.unit && params.unit != defaultUnit) ){
-            //             // inizializzo il buffer
-            //             initBuffer();
-            //         }
-            //     }
-            // });
+            $scope.$on('timelineDataRefresh', function(event, args) {
+                if(event.defaultPrevented)
+                    event.preventDefault();
+
+                // todo calcolo dati da visualizzare nella timeline
+            });
 
 
             // mobile o no?

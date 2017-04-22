@@ -112,13 +112,13 @@ angular.module('firstlife.controllers')
                     break;
 
                 default:
-                    // 1) diretto per il viewer
-                    // $log.debug("MapCtrl, gestione stato, default",params);
-                    // posiziono la mappa se ci solo le coordinate,
-                    // altrimenti si lascia il centro della mappa
+                // 1) diretto per il viewer
+                // $log.debug("MapCtrl, gestione stato, default",params);
+                // posiziono la mappa se ci solo le coordinate,
+                // altrimenti si lascia il centro della mappa
 
-                    // if(params)
-                    //     check4customFilters(params,{});
+                // if(params)
+                //     check4customFilters(params,{});
             }
 
         });
@@ -180,17 +180,17 @@ angular.module('firstlife.controllers')
                 return ;
 
             event.preventDefault();
-                $scope.updateEntity = args;
-                // se il luogo non e' bounded ad una posizione
-                if (!args.skip) {
-                    // centro la mappa sul luogo dei parametri
-                    locate(args);
-                    // entro in edit mode
-                    changeMode('edit');
-                } else {
-                    // se devo saltare il riposizionamento
-                    $scope.showASEdit();
-                }
+            $scope.updateEntity = args;
+            // se il luogo non e' bounded ad una posizione
+            if (!args.skip) {
+                // centro la mappa sul luogo dei parametri
+                locate(args);
+                // entro in edit mode
+                changeMode('edit');
+            } else {
+                // se devo saltare il riposizionamento
+                $scope.showASEdit();
+            }
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -289,7 +289,19 @@ angular.module('firstlife.controllers')
             filterMarkers();
         });
 
+        $scope.$on('createEntity',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
 
+            // $log.debug('going to editor',args);
+            // go to editor
+            var params = args;
+            if($scope.updateEntity && $scope.updateEntity.id)
+                params.id = $scope.updateEntity.id;
+            $state.go('app.editor',params);
+            $timeout(changeMode,200);
+        });
 
         /*
          * Funzioni pubbliche
@@ -381,7 +393,7 @@ angular.module('firstlife.controllers')
                 changeMode('view');
 
                 // parametri per l'editor
-                var params = {lat: $scope.flmap.center.lat, lng:$scope.flmap.center.lng,zoom_level:$scope.flmap.center.zoom,id:$scope.updateEntity.id,};
+                var params = {lat: $scope.flmap.center.lat, lng:$scope.flmap.center.lng,zoom_level:$scope.flmap.center.zoom,id:$scope.updateEntity.id};
                 $state.go('app.editor', params);
 
             }if($scope.updateEntity){
@@ -648,14 +660,12 @@ angular.module('firstlife.controllers')
                 case 'edit':
                     $scope.editMode = true;
                     changeVisibility(false);
-                    $scope.flmap.layers.baselayers.edit.visible = true;
-                    $scope.flmap.layers.baselayers.view.visible = false;
+                    $scope.$broadcast('enterEditMode');
                     break;
                 default:
                     $scope.editMode = false;
                     changeVisibility(true);
-                    $scope.flmap.layers.baselayers.view.visible = true;
-                    $scope.flmap.layers.baselayers.edit.visible = false;
+                    $scope.$broadcast('exitEditMode');
             }
         }
 

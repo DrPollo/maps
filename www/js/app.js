@@ -193,7 +193,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         }
     }).state('app.editor', {
             // aggiunta dinamica di parametri presi dalle relazioni
-            url: '/editor/?lat&lng&zoom_level&id&entity_type&group&rel&parent_type',
+            url: '/editor/?lat&lng&zoom_level&area_id&id&entity_type&group&rel&parent_type',
             views: {
                 'menuContent': {
                     templateUrl: '/templates/form/wizard.html',

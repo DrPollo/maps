@@ -22,6 +22,99 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
 
 
+            // defaults vectorGrid
+            var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
+            // reset styles
+            var resetStyle = {
+                color: 'transparent',
+                weight:0,
+                fillColor: 'transparent'
+            };
+            L.Path.mergeOptions(resetStyle);
+            L.Polyline.mergeOptions(resetStyle);
+            L.Polygon.mergeOptions(resetStyle);
+            L.Rectangle.mergeOptions(resetStyle);
+            L.Circle.mergeOptions(resetStyle);
+            L.CircleMarker.mergeOptions(resetStyle);
+            // config del layer
+            var vectorMapStyling = {
+                interactive:{
+                    fill: true,
+                    weight: 2,
+                    // fillColor: '#06cccc',
+                    color: 'orange',
+                    opacity: 1
+                }
+
+            };
+            function interactiveStyle(properties, z){
+                $log.debug(properties);
+                var style = {
+                    fill: true,
+                    weight: 2,
+                    // fillColor: '#06cccc',
+                    color: '#06cccc',
+                    fillOpacity: 0.2,
+                    opacity: 1
+                };
+                switch(properties.type){
+                    case 'administrative':
+                        style.weight = 4;
+                        style.color = 'white';
+                        style.fillColor = 'orange';
+                        style.fillOpacity = 0.5;
+                        break;
+                    case 'highway':
+                        style = {};
+                        break;
+                    case 'landuse':
+                        style.fillColor = 'green';
+                        style.opacity = 1;
+                        style.weight = 0;
+                        break;
+                    case 'leisure':
+                        style.fillColor = 'green';
+                        style.opacity = 1;
+                        style.weight = 0;
+                        style.fillOpacity = 0.5;
+                        break;
+                    case 'site':
+                        style.weight = 0;
+                        style.color = 'white';
+                        style.fillColor = 'green';
+                        break;
+                    case 'indoor':
+                        style.weight = 1;
+                        style.fillOpacity = 0.75;
+                        style.color = 'white';
+                        style.fillColor = 'orange';
+                        break;
+                    case 'city_block':
+                        style.color = 'white';
+                        style.fillColor = 'green';
+                        style.weight = z == 16 ? 4 : 2;
+                        style.fillOpacity = 0.5;
+                        style.opacity = 1;
+                        break;
+                    case 'building':
+                        style.weight = 2;
+                        style.fillOpacity = 0.5;
+                        style.color = 'white';
+                        style.fillColor = 'orange';
+                        break;
+                    default:
+                }
+                return  style;
+            }
+            var vectormapConfig = {
+                rendererFactory: L.svg.tile,
+                attribution: false,
+                vectorTileLayerStyles: vectorMapStyling,
+                // token: 'pk.eyJ1IjoiaXZhbnNhbmNoZXoiLCJhIjoiY2l6ZTJmd3FnMDA0dzMzbzFtaW10cXh2MSJ9.VsWCS9-EAX4_4W1K-nXnsA',
+                interactive: true
+            };
+            // vector grid
+            var vGrid = L.vectorGrid.protobuf(vectormapUrl, vectormapConfig);
 
             /*
              * Listner esterni
@@ -279,7 +372,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 var marker = L.marker(marker, {
                     id: marker.id,
                     icon: L.divIcon(marker.icon),
-                    clickable:true,
+                    clickable:false,
                     draggable:false,
                     keyboard: true,
                     title: marker.name,
@@ -305,6 +398,120 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     pieRef.removeLayer($scope.currentMarkers[markerId]);
                     delete $scope.currentMarkers[markerId];
                 }
+            }
+
+
+
+
+            /*
+             * gestione edit mode
+             */
+            // todo gestire l'update dei marker
+            $scope.$on('enterEditMode',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
+
+                e.preventDefault();
+
+                // $log.debug('deleteMarkers!',args);
+                // enterEditMode();
+            });
+            $scope.$on('exitEditMode',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
+
+                e.preventDefault();
+
+                // $log.debug('deleteMarkers!',args);
+                // exitEditMode();
+            });
+
+            var iconHtml = '<div id="pointer" class="padding"><div class="pin"></div><div class="pulse"></div></div>';
+            var pointer = null;
+            function enterEditMode(){
+                // add the vectory grid layer
+                vGrid.addTo(mapRef);
+                vGrid.on('click',function(e){
+                    $log.debug('vGrid click handler',e);
+                    if(e.originalEvent.defaultPrevented)
+                        return;
+
+                    e.originalEvent.preventDefault();
+                    L.DomEvent.stopPropagation(e);
+                    var params = e.layer.properties;
+                    params['zoom_level'] = mapRef.getZoom();
+                    params['latlng'] = e.latlng;
+                    params['tile'] = pointToTile(params['latlng'].lng, params['latlng'].lat, params['zoom_level']);
+                    params['tile_id'] = params['tile'][0]+':'+params['tile'][1]+':'+params['tile'][2];
+                    // $log.debug('clicke area id',params);
+                    addPointer(params);
+                });
+                mapRef.on('click',function (e) {
+                    $log.debug('map click handler',e);
+                    if(e.originalEvent.defaultPrevented)
+                        return;
+                    e.originalEvent.preventDefault();
+
+                    var params = {};
+                    params['zoom_level'] = mapRef.getZoom();
+                    params['latlng'] = e.latlng;
+                    params['tile'] = pointToTile(params['latlng'].lng, params['latlng'].lat, params['zoom_level']);
+                    params['tile_id'] = params['tile'][0]+':'+params['tile'][1]+':'+params['tile'][2];
+                    params['id'] = params['tile_id'];
+                    addPointer(params);
+                });
+            }
+            function addPointer(params) {
+                var options = angular.extend(params,{
+                    clickable:true,
+                    draggable:false,
+                    keyboard: true
+                });
+                if(pointer){
+                    mapRef.removeLayer(pointer);
+                }
+                pointer = L.marker(params.latlng, options).addTo(mapRef);
+                pointer.on('click',function (e) {
+                    if(e.originalEvent.defaultPrevented)
+                        return;
+                    e.originalEvent.preventDefault();
+                    $log.debug('marker click handler',e);
+                    // notify about the creation request
+                    $scope.$emit('createEntity',{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null});
+                })
+            }
+            function exitEditMode(){
+                // remove listners
+                vGrid.off('click');
+                mapRef.off('move');
+                // gestione pointer
+                if(pointer){
+                    pointer.off('click');
+                    mapRef.removeLayer(pointer);
+                }
+                // remove the vectory grid layer
+                mapRef.removeLayer(vGrid);
+
+            };
+
+
+
+            // code from @mapbox/tilebelt
+            var d2r = Math.PI / 180,
+                r2d = 180 / Math.PI;
+            function pointToTile(lon, lat, z) {
+                var tile = pointToTileFraction(lon, lat, z);
+                tile[0] = Math.floor(tile[0]);
+                tile[1] = Math.floor(tile[1]);
+                return tile;
+            }
+
+            function pointToTileFraction(lon, lat, z) {
+                var sin = Math.sin(lat * d2r),
+                    z2 = Math.pow(2, z),
+                    x = z2 * (lon / 360 + 0.5),
+                    y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
+                return [x, y, z];
             }
         }]
     }
