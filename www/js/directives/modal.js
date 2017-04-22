@@ -138,6 +138,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                     // success function
                                     function(response) {
                                         $scope.showASDeletedPlace(marker.id);
+                                        // notifico la mappa
                                         $scope.$emit("deleteMarker",{id:marker.id});
                                         $scope.closeModal();
                                     },
@@ -176,7 +177,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
             //Update marker in local/server
             $scope.updateEntity = function(marker){
-                var params = {lat:marker.lat, lng:marker.lng, id:marker.id};
+                var params = {lat:marker.lat, lng:marker.lng, zoom:marker.zoom_level, id:marker.id};
                 $scope.$emit("startEditing",params);
 
                 //fai uscire la wizardPlace con placeholder dati vecchi

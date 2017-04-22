@@ -5,6 +5,7 @@ angular.module('firstlife.services')
     .service('ThingsService',['$q','$log', '$filter','$timeout' ,'AuthService','myConfig', 'ThingsFact', function ($q, $log,$filter,$timeout, AuthService, myConfig, ThingsFact){
 
         var config = myConfig;
+        var dev = myConfig.dev;
         var types = config.types.keys;
         var defIcons = config.types.icons;
 
@@ -31,7 +32,28 @@ angular.module('firstlife.services')
                 return ThingsFact.update(marker.id,markerConverter(marker));
             },
             remove: function (id) {
-                return ThingsFact.remove(id);
+                var deferred = $q.defer();
+                ThingsFact.remove(id).then(
+                    function (result) {
+                        // $log.debug('removed',result);
+                        deferred.resolve(result);
+                        var index = buffer.map(function (e) {
+                            return e.properties.id || e._id
+                        }).indexOf(id);
+                        var len = buffer.length;
+                        // $log.debug('index in buffer',index);
+                        // rimuovo dal buffer
+                        if(index > -1){
+                            if(dev) console.time('splice');
+                            buffer.splice(index,1);
+                            if(dev) console.timeEnd('splice');
+                        }
+                    },function (err) {
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
             },
             report: function(report){
                 return ThingsFact.report(report);
@@ -143,6 +165,7 @@ angular.module('firstlife.services')
                 return true;
             },
             getTile: function (tile) {
+                cache[tile.x+':'+tile.y+':'+tile.z] = [];
                 return getTile(tile);
             },
             setTimeFilters: function(time){

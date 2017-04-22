@@ -191,7 +191,6 @@ angular.module('firstlife.controllers')
                     // se devo saltare il riposizionamento
                     $scope.showASEdit();
                 }
-
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -203,23 +202,26 @@ angular.module('firstlife.controllers')
             backFromEditor(args.marker.id);
             // click del markers
             //clickMarker(args.id);
+            updateMarkers();
         });
         //
-        // $scope.$on("deleteMarker",function(event,args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        // });
-        // $scope.$on("lostMarker",function(event,args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //     // cancello un marker
-        //     deleteMarker(args.id);
-        // });
-        //
+        $scope.$on("deleteMarker",function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+            // reload markers
+            deleteMarker(args.id);
+        });
+        $scope.$on("lostMarker",function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+            // reload markers
+            updateMarkers();
+        });
+
         $scope.$on("timeUpdate",function(event,args){
             // $log.debug('timeUpdate');
             if(event.defaultPrevented)
@@ -513,15 +515,13 @@ angular.module('firstlife.controllers')
         // accetta paramentri per la locate: center, marker, coords
         function locate(params){
             // $log.debug("centro su luogo: ",params);
-            if(params.entity){
-                // ho una entita'
-                locateEntity(params.entity);
-            }else if(params.id){
-                // ho una entita'
-                locateEntity(params.id);
-            }else if(params.lat && params.lng){
+            // se ho i parametri centro
+            if(params.lat && params.lng){
                 // posiziono la mappa
                 changeLocation(params);
+            } else if(params.entity || params.id){
+                // ho una entita'
+                locateEntity(params.entity || params.id);
             }
         }
 
@@ -589,6 +589,10 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('updateMarkers');
         }
 
+        function deleteMarker(id){
+            ThingsService.removeFromBuffer([id]);
+            $scope.$broadcast('resetMarkers',{id:id});
+        }
 
         // passa il centro della mappa all'editor
         function clickToAdd(){
@@ -659,27 +663,17 @@ angular.module('firstlife.controllers')
         // centra su entita'
         function locateEntity(entityId){
             // $log.debug('locate entity',entityId);
-            var marker = $scope.flmap.markers[entityId];
-            // se il marker esiste
-            if(marker){
-                var center = {lat:marker.lat,lng:marker.lng};
-                if(marker.zoom_level)
-                    center.zoom = marker.zoom_level;
-                // $log.debug('locate entity cached',center);
-                changeLocation(center);
-            }else{
-                //altrimenti invoco una get
-                ThingsService.get(entityId).then(
-                    function(marker){
-                        var center = {lat:marker.lat,lng:marker.lng};
-                        if(marker.zoom_level)
-                            center.zoom = marker.zoom_level;
-                        // $log.debug('remote entity',center);
-                        changeLocation(center);
-                    },
-                    function(err){$log.error("Location error: ",err);}
-                );
-            }
+            //invoco una get
+            ThingsService.get(entityId).then(
+                function(marker){
+                    var center = {lat:marker.lat,lng:marker.lng};
+                    if(marker.zoom_level)
+                        center.zoom = marker.zoom_level;
+                    // $log.debug('remote entity',center);
+                    changeLocation(center);
+                },
+                function(err){$log.error("Location error: ",err);}
+            );
         }
 
 

@@ -147,7 +147,7 @@ angular.module('firstlife.factories')
                     return deferred.promise;
                 }
 
-                var urlId = urlTile.concat('/',params.z,'/',params.x,'/',params.y,format,'?domainId=',domains,'&limit=',limit,'&',fields);
+                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tile);
                 if(params.from)
                     urlId = urlId.concat('&from=',params.from);
                 if(params.to)

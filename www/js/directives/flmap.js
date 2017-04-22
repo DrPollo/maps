@@ -45,6 +45,15 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // $log.debug('updateMarkers!');
                 updateMarkers();
             });
+            $scope.$on('deleteMarker',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
+
+                e.preventDefault();
+
+                // $log.debug('deleteMarkers!',args);
+                removeMarker(args.id);
+            });
 
 
             /*
@@ -89,11 +98,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             $scope.tileLayer.on('tileload', function (e) {
                                 // $log.debug('tileload',e);
                                 // al caricamento delle tile carico i marker relativi alle tile
-                                ThingsService.addTile(e.coords);
+                                addTile(e.coords);
                             });
                             $scope.tileLayer.on('tileunload', function (e) {
                                 // $log.debug('tileunload',e.coords);
-                                ThingsService.removeTile(e.coords);
+                                removeTile(e.coords);
                             });
                         }
                     }
@@ -199,6 +208,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         // angular.extend($scope.markers,markers);
                         addMarkers(markers);
+                    },
+                    function (err) {
+                        $log.error(err);
                     }
                 );
             }
@@ -212,9 +224,34 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         // $scope.markers = angular.extend({},markers);
                         addMarkers(markers);
+                    },
+                    function(err){
+                        $log.error(err);
                     }
                 );
             }
+
+            // query for a tile
+            function addTile(tile){
+                ThingsService.addTile(tile);
+                // todo grid based query
+                // ThingsService.getTile(tile).then(
+                //     function (markers) {
+                //         addMarkers(markers);
+                //     },
+                //     function (err) {
+                //         $log.error(err);
+                //     }
+                // );
+            }
+            // remove a tile
+            function removeTile(tile){
+                ThingsService.removeTile(tile);
+                // todo rimuovi i contenuti localmente
+            }
+
+
+
             // filtro i marker in cache
             function filterMarkers() {
                 // chiedo cosa devo eliminare
@@ -257,12 +294,17 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 console.time('remove markers');
                 ids.map(function (id) {
                     // $log.debug('remove', id, $scope.currentMarkers[id]);
-                    if(id && $scope.currentMarkers[id]){
-                        pieRef.removeLayer($scope.currentMarkers[id]);
-                        delete $scope.currentMarkers[id];
-                    }
+                    removeMarker(id);
                 });
                 console.timeEnd('remove markers');
+            }
+
+
+            function removeMarker(markerId) {
+                if(markerId && $scope.currentMarkers[markerId]){
+                    pieRef.removeLayer($scope.currentMarkers[markerId]);
+                    delete $scope.currentMarkers[markerId];
+                }
             }
         }]
     }
