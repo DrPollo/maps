@@ -21,7 +21,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
             if(!$location.search().c)
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
 
-            var orange = myConfig.design.colors[0];
+            var orange = '#FC4A00';
+            var red = '#ef473a';
+            var green = '#33cd5f';
+            var blue = '#6C93B3';
+            var yellow = '#ffc900';
+            var white = '#fafafa';
             // defaults vectorGrid
             var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
             // reset styles
@@ -60,60 +65,41 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 weight:1,
                 color:orange
             };
-            function interactiveStyle(properties, z){
-                $log.debug(properties);
+            function interactiveStyle(type){
                 var style = {
                     fill: true,
-                    weight: 2,
-                    // fillColor: '#06cccc',
-                    color: '#06cccc',
-                    fillOpacity: 0.2,
+                    weight: 1,
+                    fillColor: '#fafafa',
+                    color: orange,
+                    fillOpacity: 0.85,
                     opacity: 1
                 };
-                switch(properties.type){
+                switch(type){
                     case 'administrative':
-                        style.weight = 4;
-                        style.color = 'white';
-                        style.fillColor = 'orange';
-                        style.fillOpacity = 0.5;
+                        style.weight = 2;
+                        style.fillColor = red;
+                        style.fillOpacity = 0.65;
                         break;
                     case 'highway':
                         style = {};
                         break;
                     case 'landuse':
-                        style.fillColor = 'green';
-                        style.opacity = 1;
-                        style.weight = 0;
+                        style.fillColor = green;
                         break;
                     case 'leisure':
-                        style.fillColor = 'green';
-                        style.opacity = 1;
-                        style.weight = 0;
-                        style.fillOpacity = 0.5;
+                        style.fillColor = yellow;
                         break;
                     case 'site':
-                        style.weight = 0;
-                        style.color = 'white';
-                        style.fillColor = 'green';
+                        style.fillColor = green;
                         break;
                     case 'indoor':
-                        style.weight = 1;
-                        style.fillOpacity = 0.75;
-                        style.color = 'white';
-                        style.fillColor = 'orange';
+                        style.fillColor = white;
                         break;
                     case 'city_block':
-                        style.color = 'white';
-                        style.fillColor = 'green';
-                        style.weight = z == 16 ? 4 : 2;
-                        style.fillOpacity = 0.5;
-                        style.opacity = 1;
+                        style.fillColor = yellow;
                         break;
                     case 'building':
-                        style.weight = 2;
-                        style.fillOpacity = 0.5;
-                        style.color = 'white';
-                        style.fillColor = 'orange';
+                        style.fillColor = blue;
                         break;
                     default:
                 }
@@ -433,7 +419,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 addEditLayers();
                 $timeout(updateGridStyle,450);
                 mapRef.on('moveend',function (e) {
-                    $log.debug(e);
+                    // $log.debug(e);
                     updateGridStyle();
                 })
             });
@@ -473,7 +459,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var editLayer = null;
             function addEditLayers(){
                 editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url,$scope.map.layers.baselayers.edit.layerOptions);
-                $log.debug(editLayer);
+                // $log.debug(editLayer);
                 // add tile layer
                 editLayer.addTo(mapRef);
 
@@ -506,7 +492,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     if(currentFeature)
                         vGrid.resetFeatureStyle(currentFeature);
                     currentFeature = target.properties.id;
-                    vGrid.setFeatureStyle(currentFeature,highlightStyle);
+                    var style = interactiveStyle(target.properties.type);
+                    // $log.debug('type',target.properties);
+                    vGrid.setFeatureStyle(currentFeature,style);
+                    // vGrid.setFeatureStyle(currentFeature,highlightStyle);
                     $scope.$broadcast('setInfo',{info:target.properties});
                     }catch(e){}
                 }
@@ -605,6 +594,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 if(args.info){
                     scope.info = angular.extend({},args.info);
+                    $log.debug('info',args.info);
                 }
             })
         }
