@@ -550,7 +550,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LAST_AUTHOR:"Ultimo autore",
         LAST_UPDATE:"Ultimo aggiornamento",
         SUBSCRIBERS:"Seguono in",
-        CURRENTLY_SEEYING: "Selezionato",
+        CURRENTLY_SEEYING: "In evidenza",
         city_block: "Isolato",
         site:"Area"
     });
@@ -883,7 +883,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LAST_AUTHOR:"Last author",
         LAST_UPDATE:"Last update",
         SUBSCRIBERS:"Followers",
-        CURRENTLY_SEEYING: "Selected",
+        CURRENTLY_SEEYING: "Lights on",
         city_block: "City Block",
         site:"Area"
     });
