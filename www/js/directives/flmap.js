@@ -26,7 +26,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var green = '#33cd5f';
             var blue = '#6C93B3';
             var yellow = '#ffc900';
-            var white = '#fafafa';
+            var white = '#fff';
             // defaults vectorGrid
             var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
             // reset styles
@@ -94,12 +94,14 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         break;
                     case 'indoor':
                         style.fillColor = white;
+                        style.fillOpacity = 0.95;
                         break;
                     case 'city_block':
                         style.fillColor = yellow;
                         break;
                     case 'building':
                         style.fillColor = blue;
+                        style.fillOpacity = 0.95;
                         break;
                     default:
                 }
