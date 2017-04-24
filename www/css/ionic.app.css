@@ -13444,18 +13444,20 @@ ion-side-menu#side-menu {
       box-shadow: inset 0px 0px 3px #999; }
   .maps-view #pointer {
     z-index: 11;
-    margin: -15px 0 0 -15px;
+    margin: -31px 0 0 -15px;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 30px;
-    height: 30px; }
+    height: 30px;
+    padding: 0px; }
     .maps-view #pointer .pin {
       width: 30px;
       height: 30px;
       -webkit-border-radius: 50% 50% 50% 0;
       border-radius: 50% 50% 50% 0;
-      background: #FC4A00;
+      background: #fafafa;
+      border: 2px solid #333;
       position: absolute;
       -webkit-transform: rotate(-45deg);
       -moz-transform: rotate(-45deg);
@@ -13463,7 +13465,7 @@ ion-side-menu#side-menu {
       -ms-transform: rotate(-45deg);
       transform: rotate(-45deg);
       left: 50%;
-      top: 50%;
+      top: 100%;
       margin: -36px 0 0 -15px;
       -webkit-animation-name: bounce;
       -moz-animation-name: bounce;
@@ -13484,8 +13486,8 @@ ion-side-menu#side-menu {
       content: '';
       width: 14px;
       height: 14px;
-      margin: 8px 0 0 8px;
-      background: white;
+      margin: 6px 0 0 6px;
+      background: #FC4A00;
       position: absolute;
       -webkit-border-radius: 50%;
       border-radius: 50%; }
@@ -15805,7 +15807,7 @@ div.search-tag-card {
     float: right; }
 
 #comment-menu .button {
-  width: 41px; }
+  min-width: 41px; }
   #comment-menu .button i.icon {
     margin: 0px auto; }
 

@@ -291,18 +291,19 @@
 
     #pointer {
         z-index: 11;
-        margin: -15px 0 0 -15px;
+        margin: -31px 0 0 -15px;
         position: absolute;
         top: 50%; left: 50%;
         width: 30px;
         height: 30px;
-
+        padding:0px;
         .pin{
             width: 30px;
             height: 30px;
             -webkit-border-radius: 50% 50% 50% 0;
             border-radius: 50% 50% 50% 0;
-            background: $positive;
+            background: #fafafa;
+            border:2px solid $dark;
             position: absolute;
             -webkit-transform: rotate(-45deg);
             -moz-transform: rotate(-45deg);
@@ -310,7 +311,7 @@
             -ms-transform: rotate(-45deg);
             transform: rotate(-45deg);
             left: 50%;
-            top: 50%;
+            top: 100%;
             margin: -36px 0 0 -15px;
             -webkit-animation-name: bounce;
             -moz-animation-name: bounce;
@@ -332,8 +333,8 @@
             content: '';
             width: 14px;
             height: 14px;
-            margin: 8px 0 0 8px;
-            background: white;
+            margin: 6px 0 0 6px;
+            background: $positive;
             position: absolute;
             -webkit-border-radius: 50%;
             border-radius: 50%;

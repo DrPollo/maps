@@ -21,7 +21,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             if(!$location.search().c)
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
 
-
+            var orange = myConfig.design.colors[0];
             // defaults vectorGrid
             var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
             // reset styles
@@ -39,13 +39,19 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // config del layer
             var vectorMapStyling = {
                 interactive:{
-                    fill: true,
-                    weight: 2,
-                    // fillColor: '#06cccc',
-                    color: 'orange',
-                    opacity: 1
+                    weight: 1,
+                    color: orange,
+                    opacity: 1,
+                    fill: true
                 }
 
+            };
+            var highlightStyle = {
+                fillColor:orange,
+                fill:true,
+                fillOpacity:0.5,
+                weight:1,
+                color:orange
             };
             function interactiveStyle(properties, z){
                 $log.debug(properties);
@@ -107,6 +113,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 return  style;
             }
             var vectormapConfig = {
+                getFeatureId:function (e) {
+                    return e.properties.id;
+                },
                 rendererFactory: L.svg.tile,
                 attribution: false,
                 vectorTileLayerStyles: vectorMapStyling,
@@ -416,6 +425,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $scope.editMode = true;
                 // add the vectory grid layer
                 vGrid.addTo(mapRef);
+                mapRef.on('moveend',function (e) {
+                    $log.debug(e);
+                    updateGridStyle();
+                })
             });
             $scope.$on('exitEditMode',function (e,args) {
                 if(e.defaultPrevented)
@@ -430,7 +443,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             });
 
             $scope.getLocation = function(){
-
+                // get geo feature
                 var size = mapRef.getSize();
                 var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
                 var center = mapRef.getCenter();
@@ -452,6 +465,24 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 },200);
             };
 
+            var currentFeature = null;
+            function updateGridStyle() {
+                var size = mapRef.getSize();
+                var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
+                var el = document.elementFromPoint(point.x,point.y);
+                // $log.debug('el',el);
+                var id = L.stamp(el);
+                var target = mapRef._targets[id];
+                $log.debug('target',target);
+                if(target && target.properties && target.properties.id){
+                    try{
+                    if(currentFeature)
+                        vGrid.resetFeatureStyle(currentFeature);
+                    currentFeature = target.properties.id;
+                    vGrid.setFeatureStyle(currentFeature,highlightStyle);
+                    }catch(e){}
+                }
+            }
 
             // code from @mapbox/tilebelt
             var d2r = Math.PI / 180,
