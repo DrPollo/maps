@@ -179,15 +179,18 @@ angular.module('firstlife.services')
                 return filters.time;
             },
             setFilter: function (rule) {
-                var index = filterConditions.map(function(e){return e.name}).indexOf(rule.name);
+                // $log.debug('new filter',rule);
+                var index = filterConditions.map(function(e){return e.key}).indexOf(rule.key);
                 if(index > -1){
                     filterConditions[index] = rule;
                 }else{
                     filterConditions.push(rule);
                 }
             },
-            removeFilter: function (name) {
-                var index = filterConditions.map(function(e){return e.name}).indexOf(name);
+            removeFilter: function (key) {
+                // $log.debug('removing ',key, 'from ',filterConditions);
+                var index = filterConditions.map(function(e){return e.key}).indexOf(key);
+                // $log.debug('found?',index);
                 if(index > -1 ){
                     filterConditions.splice(index,1);
                 }
@@ -537,7 +540,7 @@ angular.module('firstlife.services')
                     var check           = checkValues;
                     // per ogni condizione
                     // $log.debug("Condizione: ", filterConditions[key]);
-                    for ( i = 0; i < filterConditions[key].values.length; i++ ){
+                    for ( var i = 0; i < filterConditions[key].values.length; i++ ){
                         //$log.debug("valore i = ",i, " valore valutato ",val, " per chiave ",filterConditions[key].key);
 
                         if( comparison(val[filterConditions[key].key], filterConditions[key].values[i], equal) ){
@@ -575,20 +578,25 @@ angular.module('firstlife.services')
 
             // comparatore
             function comparison(a,b,equal){
-                //$log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
+                // $log.debug("markerFilter, comparison, a, b, equal ",a,b,equal);
                 if(Array.isArray(a)){
                     if(equal){
                         //$log.debug(a,"==",b,"? ",(a == b));
                         return (a.indexOf(b) >= 0);
                     }
                     return (a.indexOf(b) < 0);
+                }if(typeof a === 'object'){
+                    var test = angular.equals(a,b);
+                    if(equal)
+                        return test;
+                    return !test;
                 }else{
                     if(equal){
                         //$log.debug(a,"==",b,"? ",(a == b));
-                        return a == b;
+                        return a === b;
                     }
                     //$log.debug(a,"!=",b,"? ",(a != b));
-                    return a != b;
+                    return a !== b;
                 }
             }
         }
@@ -662,6 +670,6 @@ angular.module('firstlife.services')
             }
         }
         //console.log('filters',self.filters);
-        console.debug('filterConditions',self.filterConditions);
+        // console.debug('filterConditions',self.filterConditions);
     }
 });

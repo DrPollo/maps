@@ -284,7 +284,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
-            check4customFilters({initiative: args.user.id});
+            check4customFilters({users: args.user.id});
             $scope.userCard = args.user.fullname;
             filterMarkers();
         });
@@ -698,20 +698,57 @@ angular.module('firstlife.controllers')
         // imposto o rimuovo i filtri
         function check4customFilters(e,old){
             var filters = config.map.filters;
-            $log.debug('check4customFilters',e,filters);
+            // $log.debug('check4customFilters',e,filters);
             for(var i = 0 ; i < filters.length; i ++){
                 var param = filters[i].search_param;
                 var filter = filters[i];
+                var value = e[param];
                 if(!filter.skip){
-                    if(e[param]){//trovato un parametro
-                        // filtro per per la property
-                        var rule = {key:filter.property,name:filter.key,values:[e[param]],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
-                        // imposto il filtro nel service
-                        ThingsService.setFilter(rule);
-                    }else{
-                        // rimuovo filtro per la property
-                        ThingsService.removeFilter(filter.key);
+                    if(value){//trovato un parametro
+                        setRule(value, filter);
+                    }else{ // cancello la regola
+                        removeRule(filter)
                     }
+                }
+            }
+            function setRule(value, filter){
+                // se ho un array di proprieta'
+                if(Array.isArray(filter.property)){
+                    // $log.debug('adding ',filter.property.length,' rules');
+                    // aggiungo una regola per ogni valore
+                    var properties = filter.property;
+                    properties.map(function (property) {
+                        // patch per user/owner > strutture annidate e valore in id
+                        addRule({id:value},property,filter.key);
+                    });
+                } else {
+                    addRule(value,filter.property,filter.key);
+                }
+                function addRule(value,key,name){
+                    // $log.debug('adding',key);
+                    // filtro per per la property
+                    var rule = {key:key,name:name,values:[value],mandatory:{condition:true,values:false},equal:false,excludeRule:false,excludeProperty:false,includeTypes:config.types.list.map(function(e){return e.key;})};
+                    // imposto il filtro nel service
+                    ThingsService.setFilter(rule);
+                }
+            }
+            function removeRule(filter) {
+                // rimuovo filtro per la property
+                // se ho un array di proprieta'
+                if(Array.isArray(filter.property)){
+                    // $log.debug('removing ',filter.property.length,' rules');
+                    // rimuovo la regola per ogni valore
+                    var properties = filter.property;
+                    properties.map(function (property) {
+                        deleteRule(property);
+                    });
+                } else {
+                    deleteRule(filter.property);
+                }
+                function deleteRule(key){
+                    // rimuovo la regola per la property
+                    // $log.debug('removing',key);
+                    ThingsService.removeFilter(key);
                 }
             }
         }
