@@ -499,7 +499,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     vGrid.setFeatureStyle(currentFeature,style);
                     // vGrid.setFeatureStyle(currentFeature,highlightStyle);
                     $scope.$broadcast('setInfo',{info:target.properties});
-                    }catch(e){}
+                    }catch(e){
+                        $scope.$broadcast('setInfo');
+                    }
+                }else{
+                    $scope.$broadcast('setInfo');
                 }
             }
 
@@ -580,7 +584,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
     return{
         restrict:'EG',
         scope:{},
-        template:'<div id="infobar" ng-if="info" class="fade-in ease-animation">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div>',
+        template:'<div id="infobar" ng-if="info" class="fade-in fast-ease-animation">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div>',
         link:function (scope,element,attr) {
             scope.$on('$destroy',function (e) {
                 if(e.defaultPrevented)
@@ -594,9 +598,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     return;
                 e.preventDefault();
 
-                if(args.info){
+                if(args && args.info){
                     scope.info = angular.extend({name:'site'},args.info);
                     $log.debug('info',args.info);
+                }else{
+                    // reset
+                    delete scope.info;
                 }
             })
         }

@@ -189,7 +189,9 @@ gulp.task('setupenv',function(){
     // evitiamo di pagare
     // config.myConfig.map.tile_view = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicDBsbDBwMGxsMCIsImEiOiJjajF3azJhYjkwMDR0MndtY3p1c3d0ZWZ4In0.g9Uod3QEzx0VxVK5i6qwOA';
     config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+    config.myConfig.map.tile_view_attribution = '<a target="_blank" href="https://carto.com/">Carto</a> | OpenStreetMap contributors';
     config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
+    config.myConfig.map.tile_edit_attribution = '<a target="_blank" href="https://carto.com/">Carto</a> | OpenStreetMap contributors';
     // config.myConfig.map.tile_edit = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicDBsbDBwMGxsMCIsImEiOiJjajF3azJhYjkwMDR0MndtY3p1c3d0ZWZ4In0.g9Uod3QEzx0VxVK5i6qwOA';
 
     console.log('setup env host: ',config.myConfig.api_base_domain);
