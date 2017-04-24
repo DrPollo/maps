@@ -354,7 +354,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
             // add the markers keeping the reference
             function addMarkers(markers) {
-                $log.debug('to be added',Object.keys(markers).length);
+                // $log.debug('to be added',Object.keys(markers).length);
                 console.time('add markers');
                 angular.extend($scope.currentMarkers, Object.keys(markers).reduce(function(currentMarkers,markerId){
                     if(!$scope.currentMarkers[markerId]){
@@ -383,7 +383,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
             // remove each marker from a list of id
             function removeMarkers(ids){
-                $log.debug('to be removed',ids.length);
+                // $log.debug('to be removed',ids.length);
                 console.time('remove markers');
                 ids.map(function (id) {
                     // $log.debug('remove', id, $scope.currentMarkers[id]);
@@ -406,7 +406,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
             /*
              * gestione edit mode
              */
-            // todo gestire l'update dei marker
             $scope.$on('enterEditMode',function (e,args) {
                 if(e.defaultPrevented)
                     return;
@@ -414,7 +413,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 e.preventDefault();
 
                 // $log.debug('deleteMarkers!',args);
-                // enterEditMode();
+                $scope.editMode = true;
+                // add the vectory grid layer
+                vGrid.addTo(mapRef);
             });
             $scope.$on('exitEditMode',function (e,args) {
                 if(e.defaultPrevented)
@@ -422,78 +423,34 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('deleteMarkers!',args);
-                // exitEditMode();
+                // remove grid layer
+                mapRef.removeLayer(vGrid);
+                // hide pointer
+                $scope.editMode = false;
             });
 
-            var iconHtml = '<div id="pointer" class="padding"><div class="pin"></div><div class="pulse"></div></div>';
-            var pointer = null;
-            function enterEditMode(){
-                // add the vectory grid layer
-                vGrid.addTo(mapRef);
-                vGrid.on('click',function(e){
-                    $log.debug('vGrid click handler',e);
-                    if(e.originalEvent.defaultPrevented)
-                        return;
+            $scope.getLocation = function(){
 
-                    e.originalEvent.preventDefault();
-                    L.DomEvent.stopPropagation(e);
-                    var params = e.layer.properties;
-                    params['zoom_level'] = mapRef.getZoom();
-                    params['latlng'] = e.latlng;
-                    params['tile'] = pointToTile(params['latlng'].lng, params['latlng'].lat, params['zoom_level']);
-                    params['tile_id'] = params['tile'][0]+':'+params['tile'][1]+':'+params['tile'][2];
-                    // $log.debug('clicke area id',params);
-                    addPointer(params);
-                });
-                mapRef.on('click',function (e) {
-                    $log.debug('map click handler',e);
-                    if(e.originalEvent.defaultPrevented)
-                        return;
-                    e.originalEvent.preventDefault();
-
-                    var params = {};
-                    params['zoom_level'] = mapRef.getZoom();
-                    params['latlng'] = e.latlng;
-                    params['tile'] = pointToTile(params['latlng'].lng, params['latlng'].lat, params['zoom_level']);
-                    params['tile_id'] = params['tile'][0]+':'+params['tile'][1]+':'+params['tile'][2];
-                    params['id'] = params['tile_id'];
-                    addPointer(params);
-                });
-            }
-            function addPointer(params) {
-                var options = angular.extend(params,{
-                    clickable:true,
-                    draggable:false,
-                    keyboard: true
-                });
-                if(pointer){
-                    mapRef.removeLayer(pointer);
-                }
-                pointer = L.marker(params.latlng, options).addTo(mapRef);
-                pointer.on('click',function (e) {
-                    if(e.originalEvent.defaultPrevented)
-                        return;
-                    e.originalEvent.preventDefault();
-                    $log.debug('marker click handler',e);
-                    // notify about the creation request
-                    $scope.$emit('createEntity',{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null});
-                })
-            }
-            function exitEditMode(){
-                // remove listners
-                vGrid.off('click');
-                mapRef.off('move');
-                // gestione pointer
-                if(pointer){
-                    pointer.off('click');
-                    mapRef.removeLayer(pointer);
-                }
-                // remove the vectory grid layer
-                mapRef.removeLayer(vGrid);
-
+                var size = mapRef.getSize();
+                var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
+                var center = mapRef.getCenter();
+                var z = mapRef.getZoom();
+                var tile = pointToTile(center.lat,center.lng,z);
+                var tileid = tile[0]+':'+tile[1]+':'+tile[2];
+                $scope.editMode = false;
+                $timeout(function () {
+                    var el = document.elementFromPoint(point.x,point.y);
+                    var id = L.stamp(el);
+                    var properties = mapRef._targets[id].properties;
+                    // $log.debug('got',mapRef._targets[id].properties);
+                    var info = angular.extend({id:null, tile: tile, zoom_level:z, tile_id:tileid, areaid:properties.id,type:properties.type},center);
+                    //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
+                    // $log.debug('createEntity',properties,info);
+                    $scope.$emit('createEntity',info);
+                    // remove of gridlayer
+                    mapRef.removeLayer(vGrid);
+                },200);
             };
-
 
 
             // code from @mapbox/tilebelt
