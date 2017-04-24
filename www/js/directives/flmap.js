@@ -314,12 +314,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function updateMarkers() {
                 if(!pieRef)
-                    return
+                    return;
+
+                // reset markers
+
                 // chiamate alle tile attive
                 ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         // $scope.markers = angular.extend({},markers);
+                        removeMarkers(Object.keys($scope.currentMarkers));
                         addMarkers(markers);
                     },
                     function(err){
