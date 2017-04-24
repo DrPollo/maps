@@ -595,7 +595,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 e.preventDefault();
 
                 if(args.info){
-                    scope.info = angular.extend({},args.info);
+                    scope.info = angular.extend({name:'site'},args.info);
                     $log.debug('info',args.info);
                 }
             })
