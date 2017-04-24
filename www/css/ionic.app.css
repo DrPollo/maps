@@ -13477,11 +13477,11 @@ ion-side-menu#side-menu {
       -o-animation-fill-mode: both;
       -ms-animation-fill-mode: both;
       animation-fill-mode: both;
-      -webkit-animation-duration: 1s;
-      -moz-animation-duration: 1s;
-      -o-animation-duration: 1s;
-      -ms-animation-duration: 1s;
-      animation-duration: 1s; }
+      -webkit-animation-duration: 0.4s;
+      -moz-animation-duration: 0.4s;
+      -o-animation-duration: 0.4s;
+      -ms-animation-duration: 0.4s;
+      animation-duration: 0.4s; }
     .maps-view #pointer .pin:after {
       content: '';
       width: 14px;

@@ -37,19 +37,26 @@ angular.module('firstlife.directives').directive('flmap',function () {
             L.Circle.mergeOptions(resetStyle);
             L.CircleMarker.mergeOptions(resetStyle);
             // config del layer
-            var vectorMapStyling = {
-                interactive:{
-                    weight: 1,
-                    color: orange,
-                    opacity: 1,
-                    fill: true
-                }
 
+            var vectorMapStyling = {
+                interactive:function(properties,z) {
+                    var style = {
+                        weight: 1,
+                        color: orange,
+                        opacity: 1,
+                        fill: true
+                    };
+                    if (properties.type === 'indoor') {
+                        style.fillColor = orange;
+                        style.fillOpacity = 0.5;
+                    }
+                    return style;
+                }
             };
             var highlightStyle = {
-                fillColor:orange,
+                fillColor:'#fafafa',
                 fill:true,
-                fillOpacity:0.5,
+                fillOpacity:0.85,
                 weight:1,
                 color:orange
             };
@@ -119,7 +126,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 rendererFactory: L.svg.tile,
                 attribution: false,
                 vectorTileLayerStyles: vectorMapStyling,
-                // token: 'pk.eyJ1IjoiaXZhbnNhbmNoZXoiLCJhIjoiY2l6ZTJmd3FnMDA0dzMzbzFtaW10cXh2MSJ9.VsWCS9-EAX4_4W1K-nXnsA',
+                // vectorTileLayerStyles: vectorMapStyling,
                 interactive: true
             };
             // vector grid
@@ -423,8 +430,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 // $log.debug('deleteMarkers!',args);
                 $scope.editMode = true;
-                // add the vectory grid layer
-                vGrid.addTo(mapRef);
+                addEditLayers();
+                $timeout(updateGridStyle,450);
                 mapRef.on('moveend',function (e) {
                     $log.debug(e);
                     updateGridStyle();
@@ -436,8 +443,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // remove grid layer
-                mapRef.removeLayer(vGrid);
+                removeEditLayers();
                 // hide pointer
                 $scope.editMode = false;
             });
@@ -460,10 +466,31 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
                     // $log.debug('createEntity',properties,info);
                     $scope.$emit('createEntity',info);
-                    // remove of gridlayer
-                    mapRef.removeLayer(vGrid);
+                    removeEditLayers();
                 },200);
             };
+
+            var editLayer = null;
+            function addEditLayers(){
+                editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url,$scope.map.layers.baselayers.edit.layerOptions);
+                $log.debug(editLayer);
+                // add tile layer
+                editLayer.addTo(mapRef);
+
+                // add the vectory grid layer
+                vGrid.addTo(mapRef);
+            }
+            function removeEditLayers(){
+                if(currentFeature)
+                    vGrid.resetFeatureStyle(currentFeature);
+                mapRef.off('moveend');
+                // remove vectory grid layer
+                mapRef.removeLayer(vGrid);
+                // remove tile layer
+                mapRef.removeLayer(editLayer);
+                if(currentFeature)
+                    vGrid.resetFeatureStyle(currentFeature);
+            }
 
             var currentFeature = null;
             function updateGridStyle() {
@@ -473,7 +500,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // $log.debug('el',el);
                 var id = L.stamp(el);
                 var target = mapRef._targets[id];
-                $log.debug('target',target);
+                // $log.debug('target',target);
                 if(target && target.properties && target.properties.id){
                     try{
                     if(currentFeature)
