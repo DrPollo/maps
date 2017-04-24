@@ -507,6 +507,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         vGrid.resetFeatureStyle(currentFeature);
                     currentFeature = target.properties.id;
                     vGrid.setFeatureStyle(currentFeature,highlightStyle);
+                    $scope.$broadcast('setInfo',{info:target.properties});
                     }catch(e){}
                 }
             }
@@ -582,6 +583,30 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     scope.$emit('wallMarkerClick',{id:id});
                 }
             }
+        }
+    }
+}]).directive('infoBar',['$log',function ($log) {
+    return{
+        restrict:'EG',
+        scope:{},
+        template:'<div id="infobar" ng-if="info" class="fade-in ease-animation">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div>',
+        link:function (scope,element,attr) {
+            scope.$on('$destroy',function (e) {
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+                delete scope;
+            });
+
+            scope.$on('setInfo',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+
+                if(args.info){
+                    scope.info = angular.extend({},args.info);
+                }
+            })
         }
     }
 }]);

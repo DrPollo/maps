@@ -13547,6 +13547,18 @@ ion-side-menu#side-menu {
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
       min-width: 46px; }
 
+#infobar {
+  max-width: 322px;
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 64px;
+  left: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #fafafa;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
+
 #notifications button {
   color: #999; }
 

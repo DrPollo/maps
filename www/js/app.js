@@ -549,7 +549,10 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         AUTHOR:"Autore",
         LAST_AUTHOR:"Ultimo autore",
         LAST_UPDATE:"Ultimo aggiornamento",
-        SUBSCRIBERS:"Seguono in"
+        SUBSCRIBERS:"Seguono in",
+        CURRENTLY_SEEYING: "Selezionato",
+        city_block: "Isolato",
+        site:"Area"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -879,7 +882,10 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         AUTHOR:"Author",
         LAST_AUTHOR:"Last author",
         LAST_UPDATE:"Last update",
-        SUBSCRIBERS:"Followers"
+        SUBSCRIBERS:"Followers",
+        CURRENTLY_SEEYING: "Selected",
+        city_block: "City Block",
+        site:"Area"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
