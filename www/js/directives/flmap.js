@@ -58,13 +58,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     return style;
                 }
             };
-            var highlightStyle = {
-                fillColor:'#fafafa',
-                fill:true,
-                fillOpacity:0.85,
-                weight:1,
-                color:orange
-            };
             function interactiveStyle(type){
                 var style = {
                     fill: true,
@@ -114,7 +107,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 rendererFactory: L.svg.tile,
                 attribution: false,
                 vectorTileLayerStyles: vectorMapStyling,
-                // vectorTileLayerStyles: vectorMapStyling,
                 interactive: true
             };
             // vector grid
@@ -411,8 +403,19 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
 
 
+
+
+
+
             /*
-             * gestione edit mode
+             * Gestione edit mode
+             *
+             * Listners:
+             * <enterEditMode> attiva la modalita' edit, setup flags e modifica layers
+             * <exitEditMode> reset mappa e disiscrizione listners
+             *
+             * Funzioni pubbliche:
+             * [getLocation] al click utente invia le informazioni per l'edit/creazione di un entita'
              */
             $scope.$on('enterEditMode',function (e,args) {
                 if(e.defaultPrevented)
@@ -471,11 +474,27 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 // add the vectory grid layer
                 vGrid.addTo(mapRef);
+                // add mouse events
+                // vGrid.on('mouseover',function (e) {
+                //     $log.debug('mouseover',e);
+                // });
+                // vGrid.on('mouseout',function (e) {
+                //     $log.debug('mouseout',e);
+                // });
+                vGrid.on('click',function (e) {
+                    $log.debug('click',e);
+                    // vGrid.setFeatureStyle(currentFeature,style);
+                    mapRef.setView(e.latlng);
+                });
+
             }
             function removeEditLayers(){
                 if(currentFeature)
                     vGrid.resetFeatureStyle(currentFeature);
                 mapRef.off('moveend');
+                vGrid.off('mouseover');
+                // vGrid.off('mouseout');
+                vGrid.off('click');
                 // remove vectory grid layer
                 mapRef.removeLayer(vGrid);
                 // remove tile layer
