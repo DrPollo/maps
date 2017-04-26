@@ -24,6 +24,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             var zoomControl = L.control.zoom({position:'bottomleft'});
 
+
+            // todo sposta configurazione in un provider
+            var scales = myConfig.map.scales;
+
             var orange = '#FC4A00';
             var red = '#ef473a';
             var green = '#33cd5f';
@@ -439,7 +443,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $timeout(updateGridStyle,450);
                 mapRef.on('moveend',function (e) {
                     // $log.debug(e);
-                    updateGridStyle();
+                    $timeout(updateGridStyle,200);
                 })
             });
             $scope.$on('exitEditMode',function (e,args) {
@@ -477,21 +481,18 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             $scope.maxZoom = myConfig.map.max_zoom;
             $scope.minZoom = myConfig.map.min_zoom;
+
             $scope.zoomIn = function(){
                 // zoom in
-                var z = mapRef.getZoom();
-                if(z < $scope.maxZoom) {
-                    $scope.z = z + 1;
-                    mapRef.zoomIn(1);
-                }
+                $scope.z = scales[mapRef.getZoom()].zoomin;
+                $log.debug('go to zoom ',$scope.z);
+                mapRef.setZoom($scope.z);
             };
             $scope.zoomOut = function(){
                 // zoom
-                var z = mapRef.getZoom();
-                if(z > $scope.minZoom) {
-                    $scope.z = z - 1;
-                    mapRef.zoomOut(1);
-                }
+                $scope.z = scales[mapRef.getZoom()].zoomout;
+                $log.debug('go to zoom ',$scope.z);
+                mapRef.setZoom($scope.z);
             };
 
 
@@ -518,6 +519,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     mapRef.setView(e.latlng);
                 });
                 mapRef.removeControl(zoomControl);
+
+                // snap to scale
+                var scale = scales[mapRef.getZoom()];
+                // $log.debug('scale?',scales, scale, mapRef.getZoom());
+                mapRef.setZoom(scale.z);
             }
             function removeEditLayers(){
                 if(currentFeature)
@@ -561,6 +567,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 }else{
                     $scope.$broadcast('setInfo');
                 }
+                // $log.debug('setting scale',scales[mapRef.getZoom()]);
+                $scope.$broadcast('setScale',{scale:scales[mapRef.getZoom()]});
             }
 
             // code from @mapbox/tilebelt
@@ -640,7 +648,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
     return{
         restrict:'EG',
         scope:{},
-        template:'<div id="infobar" ng-if="info" class="fade-in fast-ease-animation">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div>',
+        template:'<div id="infobar" ng-if="info || scale" class="fade-in fast-ease-animation"><div ng-if="scale.label">{{"SCALE"|translate}}{{": "}}{{scale.label|translate}}</div><div ng-if="info.name">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div></div>',
         link:function (scope,element,attr) {
             scope.$on('$destroy',function (e) {
                 if(e.defaultPrevented)
@@ -661,7 +669,20 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     // reset
                     delete scope.info;
                 }
-            })
+            });
+            scope.$on('setScale',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+
+                if(args && args.scale){
+                    scope.scale = angular.extend({},args.scale);
+                    $log.debug('scale',args.scale);
+                }else{
+                    // reset
+                    delete scope.scale;
+                }
+            });
         }
     }
 }]);

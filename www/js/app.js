@@ -552,7 +552,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SUBSCRIBERS:"Seguono in",
         CURRENTLY_SEEYING: "In evidenza",
         city_block: "Isolato",
-        site:"Area"
+        site:"Area",
+        ADMIN18:"Interni",
+        ADMIN16:"Strada",
+        ADMIN14:"Isolati",
+        ADMIN13:"Quartieri",
+        ADMIN10:"Distretti",
+        ADMIN8:"Comuni",
+        ADMIN6:"Province",
+        ADMIN4:"Regioni",
+        SCALE:"Scala"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -885,7 +894,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SUBSCRIBERS:"Followers",
         CURRENTLY_SEEYING: "Lights on",
         city_block: "City Block",
-        site:"Area"
+        site:"Area",
+        ADMIN18:"Indoor",
+        ADMIN16:"Street",
+        ADMIN14:"Blocks",
+        ADMIN13:"Neighborhoods",
+        ADMIN10:"Sectors",
+        ADMIN8:"Towns",
+        ADMIN6:"Districts",
+        ADMIN4:"Regions",
+        SCALE:"Scale"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

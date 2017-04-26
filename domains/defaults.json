@@ -387,7 +387,126 @@
             {"key":"user","property":["owner","updater"],"search_param":"users","icon":"ion-android-person","type":"strict","label":"USER_FILTERING"},
             {"key":"initiative_list","property":"initiative_list","search_param":"initiative","icon":"ion-android-share-alt","type":"","label":"INITIATIVE_FILTERING"},
             {"key":"q","property":"","search_param":"q","icon":"ion-ios-search-strong","type":"","label":"SEARCH_FILTERING","skip":true}
-        ]
+        ],"scales": {
+            "22": {
+                "z": 20,
+                "zoomin": null,
+                "zoomout": 18
+            },
+            "21": {
+                "z": 20,
+                "zoomin": null,
+                "zoomout": 18
+            },
+            "20": {
+                "z": 20,
+                "label": "ADMIN18",
+                "zoomin": null,
+                "zoomout": 18
+            },
+            "19": {
+                "z": 20,
+                "zoomin": null,
+                "zoomout": 18
+            },
+            "18": {
+                "z": 18,
+                "label": "ADMIN16",
+                "zoomin": 20,
+                "zoomout": 16
+            },
+            "17": {
+                "z": 18,
+                "zoomin": 20,
+                "zoomout": 16
+            },
+            "16": {
+                "z": 16,
+                "label": "ADMIN14",
+                "zoomin": 18,
+                "zoomout": 14
+            },
+            "15": {
+                "z": 16,
+                "zoomin": 18,
+                "zoomout": 14
+            },
+            "14": {
+                "z": 14,
+                "label": "ADMIN13",
+                "zoomin": 16,
+                "zoomout": 12
+            },
+            "13": {
+                "z": 14,
+                "zoomin": 16,
+                "zoomout": 12
+            },
+            "12": {
+                "z": 12,
+                "label": "ADMIN10",
+                "zoomin": 14,
+                "zoomout": 10
+            },
+            "11": {
+                "z": 11,
+                "zoomin": 14,
+                "zoomout": 10
+            },
+            "10": {
+                "z": 10,
+                "label": "ADMIN8",
+                "zoomin": 12,
+                "zoomout": 8
+            },
+            "9": {
+                "z": 10,
+                "zoomin": 12,
+                "zoomout": 8
+            },
+            "8": {
+                "z": 8,
+                "label": "ADMIN6",
+                "zoomin": 10,
+                "zoomout": 6
+            },
+            "7": {
+                "z": 8,
+                "zoomin": 10,
+                "zoomout": 6
+            },
+            "6": {
+                "z": 6,
+                "label": "ADMIN4",
+                "zoomin": 8,
+                "zoomout": null
+            },
+            "5": {
+                "z": 6,
+                "zoomin": 8,
+                "zoomout": null
+            },
+            "4": {
+                "z": 6,
+                "zoomin": 8,
+                "zoomout": null
+            },
+            "3": {
+                "z": 6,
+                "zoomin": 8,
+                "zoomout": null
+            },
+            "2": {
+                "z": 6,
+                "zoomin": 8,
+                "zoomout": null
+            },
+            "1": {
+                "z": 6,
+                "zoomin": 8,
+                "zoomout": null
+            }
+        }
     },
     "behaviour":{
         "is_login_required" : false,
