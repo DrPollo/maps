@@ -1,39 +1,55 @@
 #wall{
-    .modal-header{
-        
-    }
-    .modal-content{
-        color:green;
-        .list{
-            color:green;
-            .item{
-                i:before {width: 14px;text-align: center;}
-                .sublist{
-                    margin-top: 8px;
-                    .sublist-block{
-                        padding-left: 32px;
-                        .sublist-title{
-                            font-weight: 400;
-                            color:#999;
-                            font-style: italic;
-                            margin-bottom: 8px;
-                        }
-                        
-                    }
+    .container {
+        height: 204px;
+        overflow: hidden;
+        .card {
+            .main {
+                height: 133px;
+                overflow: hidden;
+                .title {
+                    margin-bottom: 16px;
+                    font-size: 20px;
                 }
-                .tag-list{
-                    //display:flex;
-                    padding: 1em 0px 0px 2em;
+                .title:hover {
+                    text-decoration: underline;
+                }
+                .subheader {
+                    margin-bottom: 10px;
+                    .type-icon, .tag {
+                        display: inline-block;
+                        margin-right: 8px;
+                    }
                     .tag {
-                        //color: white;
-                        padding: 4px 6px;
-                        //border-radius: 20px;
-                        font-size: 1em;
-                        margin: 0px 4px 3px 0px;
-                        display: inline-flex;
+                        cursor: pointer;
+                    }
+                    .tag:hover {
+                        text-decoration: underline;
                     }
                 }
             }
+            .actions {
+                text-align: right;
+                background: #f2f2f2;
+                .button {
+                    color: $dark;
+                    font-size: 16px;
+                }
+                .button:hover {
+                    color: $positive;
+                }
+            }
+        }
+    }
+}
+.container:focus, .container:hover, .container:active{
+    height: auto !important;
+    z-index: 999;
+    overflow-y: visible;
+    .card {
+        height: auto !important;
+        overflow-y: visible;
+        .main {
+            height: auto !important;
         }
     }
 }

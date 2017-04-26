@@ -1,0 +1,19 @@
+<div class="card" ng-class="{'focus' : highlight === marker.id}">
+    <button ng-if="highlight === marker.id" on-tap="close()"></button>
+    <div class="item item-text-wrap main fast-ease-in-out-animation">
+        <h2 class="title" on-tap="show({id:marker.id})">{{marker.name}}</h2>
+        <div class="subheader meta">
+                <span ng-repeat="icon in marker.icons" class="type-icon">
+                    <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
+                    {{icon.name |translate}}
+                </span>
+        </div>
+        <div class="subheader tags">
+                <span ng-repeat="tag in marker.tags track by $index" class="tag" on-tap="filter(tag)">
+                    <i class="icon ion-pricetag positive"></i>
+                    {{tag |translate}}
+                </span>
+        </div>
+    </div>
+    <wall-actions ng-if="marker.id" marker="marker"></wall-actions>
+</div>

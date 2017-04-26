@@ -264,7 +264,7 @@
                     "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                 }
             },
-            {"name":"GROUPS_NAME","id":5,"icon":"ion-person-stalker","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
+            {"name":"GROUPS_NAME","id":5,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
                 "show_author":false, "shape":"octagon",
                 "properties":{
                     "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
@@ -383,7 +383,7 @@
             ]
         },
         "filters":[
-            {"key":"group","property":"group_id","search_param":"groups","icon":"ion-person-stalker","type":"strict","label":"GROUP_FILTERING","entity_type":"FL_GROUPS"},
+            {"key":"group","property":"group_id","search_param":"groups","icon":"ion-android-people","type":"strict","label":"GROUP_FILTERING","entity_type":"FL_GROUPS"},
             {"key":"user","property":["owner","updater"],"search_param":"users","icon":"ion-android-person","type":"strict","label":"USER_FILTERING"},
             {"key":"initiative_list","property":"initiative_list","search_param":"initiative","icon":"ion-android-share-alt","type":"","label":"INITIATIVE_FILTERING"},
             {"key":"q","property":"","search_param":"q","icon":"ion-ios-search-strong","type":"","label":"SEARCH_FILTERING","skip":true}

@@ -13783,29 +13783,44 @@ ion-side-menu#side-menu {
   .gallery-view .slider-close:before {
     color: rgba(255, 255, 255, 0.8); }
 
-#wall .modal-content {
-  color: green; }
-  #wall .modal-content .list {
-    color: green; }
-    #wall .modal-content .list .item i:before {
-      width: 14px;
-      text-align: center; }
-    #wall .modal-content .list .item .sublist {
-      margin-top: 8px; }
-      #wall .modal-content .list .item .sublist .sublist-block {
-        padding-left: 32px; }
-        #wall .modal-content .list .item .sublist .sublist-block .sublist-title {
-          font-weight: 400;
-          color: #999;
-          font-style: italic;
-          margin-bottom: 8px; }
-    #wall .modal-content .list .item .tag-list {
-      padding: 1em 0px 0px 2em; }
-      #wall .modal-content .list .item .tag-list .tag {
-        padding: 4px 6px;
-        font-size: 1em;
-        margin: 0px 4px 3px 0px;
-        display: inline-flex; }
+#wall .container {
+  height: 204px;
+  overflow: hidden; }
+  #wall .container .card .main {
+    height: 133px;
+    overflow: hidden; }
+    #wall .container .card .main .title {
+      margin-bottom: 16px;
+      font-size: 20px; }
+    #wall .container .card .main .title:hover {
+      text-decoration: underline; }
+    #wall .container .card .main .subheader {
+      margin-bottom: 10px; }
+      #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
+        display: inline-block;
+        margin-right: 8px; }
+      #wall .container .card .main .subheader .tag {
+        cursor: pointer; }
+      #wall .container .card .main .subheader .tag:hover {
+        text-decoration: underline; }
+  #wall .container .card .actions {
+    text-align: right;
+    background: #f2f2f2; }
+    #wall .container .card .actions .button {
+      color: #333;
+      font-size: 16px; }
+    #wall .container .card .actions .button:hover {
+      color: #FC4A00; }
+
+.container:focus, .container:hover, .container:active {
+  height: auto !important;
+  z-index: 999;
+  overflow-y: visible; }
+  .container:focus .card, .container:hover .card, .container:active .card {
+    height: auto !important;
+    overflow-y: visible; }
+    .container:focus .card .main, .container:hover .card .main, .container:active .card .main {
+      height: auto !important; }
 
 .pie-cluster {
   border-radius: 30px;

@@ -65,7 +65,7 @@ angular.module('firstlife.directives')
             close:'&',
             marker:'<'
         },
-        template:' <ion-item class="item item-button-right">{{"MEMBERS"|translate}}<button class="button button-positive" on-tap="membersButtonPopover()"><i class="icon ion-person-stalker"></i></button></ion-item>',
+        template:' <ion-item class="item item-button-right">{{"MEMBERS"|translate}}<button class="button button-positive" on-tap="membersButtonPopover()"><i class="icon ion-android-people"></i></button></ion-item>',
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {

@@ -9,17 +9,11 @@
 </ion-header-bar>
 <ion-content class="modal-content" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
-    <div class="item item-divider">
-        {{'CURRENTLY_ON_MAP'|translate}} {{dataArray.length}} {{'ENTRIES'|translate}}
-    </div>
-    <div ng-show="markers.length > 0">
-        <div class="item" ng-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by $index" ng-show="!loading">
-            <div on-tap="show(marker.id)" class="item-text-wrap item">
-                <i class="icon {{marker.icon.icon}}"  style="color:{{marker.icon.color}}">
-                </i>
-                {{marker.name}}
-            </div>
-        </div>
+    <div class="cover" ng-show="focus"></div>
+    <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by $index"
+         class="container"
+         ng-show="!loading">
+        <wall-card ng-if="marker.id" marker="marker" query="query" close="close()"></wall-card>
     </div>
     <nothing-to-read ng-if="!loading && markers.length < 1"></nothing-to-read>
 </ion-content>
