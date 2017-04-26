@@ -23,12 +23,17 @@ angular.module('firstlife.timeline',[])
             });
 
 
+
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
 
             //setup lingua di moment js
             moment.locale($translate.use());
             moment().isoWeek(1);
+
+            // gestione del viewer
+            $scope.viewer = $location.search().embed === 'viewer';
+            $log.debug('timeline viewer?',$scope.viewer);
 
             var localeData = moment.localeData();
             // $log.debug('check localeData ',localeData, localeData._monthsShort);

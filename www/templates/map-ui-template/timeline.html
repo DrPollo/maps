@@ -1,4 +1,4 @@
-<div id="time-controls" ng-class="isMobile ? 'mobile' : 'nomobile' ">
+<div id="time-controls" ng-class="isMobile ? 'mobile' : 'nomobile' " ng-if="!viewer">
     <button class="button-icon ion-arrow-left-b time-control" ng-class="isMobile ? 'button-float button-float-small' : '' " ng-click="rewind()"></button>
     <button class="button-icon ion-android-refresh reset time-control" ng-class="isMobile ? 'button-float button-float-small' : '' " ng-click="reset()"></button>
     <button class="button-icon ion-arrow-right-b time-control" ng-class="isMobile ? 'button-float button-float-small' : '' " ng-click="forward()"></button>
@@ -9,7 +9,8 @@
                 direction="x"  scrollbar-x="false"
                 ng-swipe-right="forward()" 
                 ng-swipe-left="rewind()" 
-                on-scroll="scrolling()">
+                on-scroll="scrolling()"
+                ng-if="!viewer">
         <div ng-repeat="slot in timewindow track by $index"
              class="repeated-item col-md-4 {{slot.class}}"
              style="position:relative;"
@@ -28,8 +29,8 @@
         <button class="button button-outline " 
                 ng-repeat="unit in units track by $index" 
                 ng-show="$index <= indexDefaultUnit"
-                ng-disabled="$index == indexDefaultUnit"
-                ng-class="indexDefaultUnit == $index ? 'current-button button-light' : 'button-stable'"
+                ng-disabled="$index == indexDefaultUnit || viewer"
+                ng-class="indexDefaultUnit == $index || viewer ? 'current-button button-light' : 'button-stable'"
                 ng-click="scaleUpTo($index)">
             <span>{{unit.label| translate}}</span>
         </button>
