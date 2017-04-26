@@ -328,17 +328,33 @@
             -o-animation-duration: 0.4s;
             -ms-animation-duration: 0.4s;
             animation-duration: 0.4s;
+            .icon{
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+                position: absolute;
+                margin: 1px 0 0 3px;
+                width: 21px;
+                height: 23px;
+                font-size: 24px;
+                color:$positive;
+            }
+            .icon:hover,.icon:active,.icon:focus{
+                color:$valid;
+            }
         }
-        .pin:after {
-            content: '';
-            width: 14px;
-            height: 14px;
-            margin: 6px 0 0 6px;
-            background: $positive;
-            position: absolute;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-        }
+        //.pin:after {
+        //    content: '';
+        //    width: 14px;
+        //    height: 14px;
+        //    margin: 6px 0 0 6px;
+        //    background: $valid;
+        //    position: absolute;
+        //    -webkit-border-radius: 50%;
+        //    border-radius: 50%;
+        //}
         .pulse{
             background: rgba(0,0,0,0.2);
             -webkit-border-radius: 50%;
