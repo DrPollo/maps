@@ -13785,9 +13785,11 @@ ion-side-menu#side-menu {
 
 #wall .container {
   height: 204px;
+  min-height: 204px;
   overflow: hidden; }
   #wall .container .card .main {
     height: 133px;
+    min-height: 133px;
     overflow: hidden; }
     #wall .container .card .main .title {
       margin-bottom: 16px;
@@ -13805,12 +13807,15 @@ ion-side-menu#side-menu {
         text-decoration: underline; }
   #wall .container .card .actions {
     text-align: right;
-    background: #f8f8f8; }
-    #wall .container .card .actions .button {
+    background: #f8f8f8;
+    height: 34px;
+    padding: 7px 8px; }
+    #wall .container .card .actions .action {
       color: #333;
-      font-size: 16px; }
-    #wall .container .card .actions .button:hover {
-      color: #FC4A00; }
+      height: 18px;
+      min-width: 30px;
+      margin-left: 12px;
+      font-size: 18px; }
 
 .container:focus, .container:hover, .container:active {
   height: auto !important;

@@ -1,10 +1,12 @@
 #wall{
     .container {
         height: 204px;
+        min-height: 204px;
         overflow: hidden;
         .card {
             .main {
                 height: 133px;
+                min-height: 133px;
                 overflow: hidden;
                 .title {
                     margin-bottom: 16px;
@@ -30,12 +32,14 @@
             .actions {
                 text-align: right;
                 background: #f8f8f8;
-                .button {
+                height: 34px;
+                padding: 7px 8px;
+                .action {
                     color: $dark;
-                    font-size: 16px;
-                }
-                .button:hover {
-                    color: $positive;
+                    height: 18px;
+                    min-width:30px;
+                    margin-left: 12px;
+                    font-size: 18px;
                 }
             }
         }

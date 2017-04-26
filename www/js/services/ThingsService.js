@@ -62,7 +62,7 @@ angular.module('firstlife.services')
                 // restituisce i marker da eliminare
                 // $log.debug('buffer to check');
                 return buffer.reduce(function (result,feature){
-                    $log.debug('check ',feature);
+                    // $log.debug('check ',feature);
                     var id = feature.properties.id ? feature.properties.id: feature._id;
                     if(!check(feature)){
                         // $log.debug('to be removed',feature._id);

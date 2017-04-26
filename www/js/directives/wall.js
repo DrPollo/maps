@@ -16,11 +16,9 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    // aggiorno il parametro prima di uscire
-                    $location.search('q',scope.query);
+                    scope.exit();
 
                     delete scope;
-
                 });
 
                 scope.$on('wallQuery',function (e,args) {
@@ -42,8 +40,6 @@ angular.module('firstlife.directives')
                 function init(){
                     var current = ThingsService.filterBuffer();
                     scope.markers = Object.keys(current).map(function(e){return current[e];});
-                    // buffer = Object.keys(current).map(function(e){return current[e];});
-                    // scope.markers = buffer.slice(0, Math.min(10,buffer.length));
                     var params = $location.search();
                     if(params.q)
                         scope.query = params.q;
@@ -54,13 +50,20 @@ angular.module('firstlife.directives')
                 // click cambio di parametro search e chiudo modal
                 scope.show = function(entityId){
                     // cambio paramentro search
-                    // $location.search('entity',entityId);
+                    $location.search('entity',entityId);
                     scope.click({id: entityId});
                     //chiudo la modal
                     scope.close();
                 };
 
-
+                // aggiorno il parametro prima di uscire
+                scope.exit =function(){
+                    var q = scope.query ? scope.query : null;
+                    $location.search('q',scope.query);
+                    ThingsService.setQuery(scope.query);
+                    scope.$emit('handleUpdateQ',{q:scope.query});
+                    scope.close();
+                };
 
                 /*
                  * todo gestione del focus su singla card
