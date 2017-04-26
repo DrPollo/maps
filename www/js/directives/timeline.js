@@ -22,7 +22,7 @@ angular.module('firstlife.timeline',[])
                 // todo calcolo dati da visualizzare nella timeline
             });
 
-
+            $scope.config = myConfig;
 
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();

@@ -88,6 +88,15 @@ timeline{
                 margin: 0px 0px 0px 4px;
             }
         }
+        .applogo{
+            height: 40px;
+            margin-top: -2px;
+            img {
+                max-height: 40px;
+                display: inline-block;
+                width: auto;
+            }
+        }
     }
     #timeline{
         margin: 0px;

@@ -41,6 +41,7 @@
         },
         "logo_bar" : "img/firstlife-logo-soloscritta.svg",
         "logo_menu" : "img/firstlife-logo-solologo.svg",
+        "logo_viewer" : "img/firstlife-logo-orizzontale.svg",
         "logo_width" : 160,
         "logo_height" : 160,
         "default_thumb" : "img/thumb.jpg",

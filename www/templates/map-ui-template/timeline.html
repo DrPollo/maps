@@ -34,5 +34,6 @@
                 ng-click="scaleUpTo($index)">
             <span>{{unit.label| translate}}</span>
         </button>
+        <span ng-if="viewer" class="applogo right"><img height="40" src="{{config.design.logo_viewer}}" alt="{{config.app_name}}"></span>
     </div>
 </div>

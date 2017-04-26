@@ -15063,6 +15063,13 @@ timeline {
       margin: 0px 0px 0px 16px; }
       timeline #buttons .right button {
         margin: 0px 0px 0px 4px; }
+    timeline #buttons .applogo {
+      height: 40px;
+      margin-top: -2px; }
+      timeline #buttons .applogo img {
+        max-height: 40px;
+        display: inline-block;
+        width: auto; }
   timeline #timeline {
     margin: 0px;
     padding: 0px 0px;
