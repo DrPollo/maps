@@ -31,7 +31,7 @@
     },
     "design":{
         "logo" : {
-            "url": "img/firstlife-logo-solologo.svg",
+            "url": "img/loghi/firstlife-logo-solologo.svg",
             "title": "FirstLife",
             "alt":"FirstLife",
             "label":{
@@ -39,9 +39,9 @@
                 "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
             }
         },
-        "logo_bar" : "img/firstlife-logo-soloscritta.svg",
-        "logo_menu" : "img/firstlife-logo-solologo.svg",
-        "logo_viewer" : "img/firstlife-logo-orizzontale.svg",
+        "logo_bar" : "img/loghi/firstlife-logo-soloscritta.svg",
+        "logo_menu" : "img/loghi/firstlife-logo-solologo.svg",
+        "logo_viewer" : "img/loghi/firstlife-logo-orizzontale.svg",
         "logo_width" : 160,
         "logo_height" : 160,
         "default_thumb" : "img/thumb.jpg",
@@ -76,7 +76,7 @@
         "landingpage":{
             "css":"",
             "logo":{
-                "url":"img/firstlife-logo-soloscritta.svg",
+                "url":"img/loghi/firstlife-logo-orizzontale.svg",
                 "title":"FirstLife",
                 "style":""
             },

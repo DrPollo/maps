@@ -15046,6 +15046,7 @@ timeline {
     overflow: hidden; }
     timeline #buttons button {
       margin: 0px 4px 0px 0px;
+      padding: 0px 4px;
       height: 25px;
       min-height: 25px;
       max-height: 25px;
