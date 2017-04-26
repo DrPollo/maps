@@ -13444,16 +13444,16 @@ ion-side-menu#side-menu {
       box-shadow: inset 0px 0px 3px #999; }
   .maps-view #pointer {
     z-index: 11;
-    margin: -31px 0 0 -15px;
+    margin: -43px 0 0 -20px;
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     padding: 0px; }
     .maps-view #pointer .pin {
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       -webkit-border-radius: 50% 50% 50% 0;
       border-radius: 50% 50% 50% 0;
       background: #fafafa;
@@ -13466,7 +13466,7 @@ ion-side-menu#side-menu {
       transform: rotate(-45deg);
       left: 50%;
       top: 100%;
-      margin: -36px 0 0 -15px;
+      margin: -46px 0 0 -20px;
       -webkit-animation-name: bounce;
       -moz-animation-name: bounce;
       -o-animation-name: bounce;
@@ -13489,10 +13489,10 @@ ion-side-menu#side-menu {
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
-        margin: 1px 0 0 3px;
-        width: 21px;
-        height: 23px;
-        font-size: 24px;
+        margin: 2px 0 0 1px;
+        width: 36px;
+        height: 36px;
+        font-size: 36px;
         color: #FC4A00; }
       .maps-view #pointer .pin .icon:hover, .maps-view #pointer .pin .icon:active, .maps-view #pointer .pin .icon:focus {
         color: #33cd5f; }
