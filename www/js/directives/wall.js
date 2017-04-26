@@ -60,8 +60,23 @@ angular.module('firstlife.directives')
                     scope.close();
                 };
 
-                scope.visible = {};
 
+
+                /*
+                 * todo gestione del focus su singla card
+                 */
+                scope.visible = {};
+                scope.$on('focusOnWallItem',function (e,args) {
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    if(args.id){
+                        scope.focus = args.id;
+                    }else{
+                        scope.focus = null;
+                    }
+                })
             }
         }
     }]).directive('wallCard',['$log',function ($log) {
@@ -81,7 +96,6 @@ angular.module('firstlife.directives')
                 delete scope;
             });
 
-
             scope.filter = function(tag){
                 // aggiorno il parametro q
                 scope.$emit('wallQuery',{query: tag});
@@ -89,11 +103,15 @@ angular.module('firstlife.directives')
 
             scope.focus = function(){
                 scope.highlight = scope.marker.id;
+                $log.debug('focus');
                 scope.$emit('focusOnWallItem',{id:scope.marker.id});
+                scope.$apply();
             };
             scope.close = function () {
                 delete scope.highlight;
+                $log.debug('blur');
                 scope.$emit('focusOnWallItem');
+                scope.$apply();
             };
         }
     }

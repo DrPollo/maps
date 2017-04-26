@@ -6,12 +6,14 @@
             <i ng-show="query.length > 0" ng-click="query = '' " class="icon ion-close"></i>
         </form>
     </div>
+    <!--todo filtri tipi di entita'-->
 </ion-header-bar>
 <ion-content class="modal-content" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
     <div class="cover" ng-show="focus"></div>
     <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by $index"
          class="container"
+         ng-class="{'focus' : focus === marker.id}"
          ng-show="!loading">
         <wall-card ng-if="marker.id" marker="marker" query="query" close="close()"></wall-card>
     </div>
