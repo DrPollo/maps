@@ -160,7 +160,7 @@ angular.module('firstlife.config')
             };
         }
         myConfig.types.perms = perms;
-        //if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);
+        if(myConfig.dev)console.log("myConfig, config, init delle maschere di permessi per i tipi: ", perms);
     }).config(
     function setRelations(myConfig){
         //if(myConfig.dev)console.log("myConfig, config, init delle relazioni tra tipi: ", myConfig.types.list);

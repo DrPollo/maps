@@ -178,7 +178,7 @@ angular.module('firstlife.controllers')
 
             //imposto i permessi
             _this.checkList = _this.config.types.perms[type];
-            //$log.debug("EditorCtrl, checkList: ", _this.checkList);
+            // $log.debug("EditorCtrl, checkList: ", _this.checkList);
 
             // recupero i default per l'init dell'entita'
             angular.extend(_this.wizard.dataForm,EntityService.getDefaults(entity_type));
@@ -452,8 +452,8 @@ angular.module('firstlife.controllers')
             //imposto i permessi
             _this.checkList = angular.copy(_this.types.perms[type]);
 
-            // $log.debug("EditorCtrl, setToEdit, checkList: ", _this.checkList);
-            // $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
+            $log.debug("EditorCtrl, setToEdit, checkList: ", _this.checkList);
+            $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
             _this.wizard.dataForm = angular.copy(mark);
             _this.wizard.title = _this.labels.edit;

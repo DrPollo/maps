@@ -54,41 +54,15 @@
                     </div>
                 </div>
             </div>
-            <div class="list card" ng-if="editor.checkList.message_text">
-                <div class="item item-divider" id="message_text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.message_text.$invalid, 'no-error' : !editor.form.wizardform.message_text.$invalid}">
-                    {{editor.checkList.message_text.label|translate}}
-                </div>
-                <div class="item item-input item-text-wrap">
-                    <textarea name="message_text" ng-model="editor.wizard.dataForm.message_text" placeholder="{{editor.checkList.message_text.placeholder |translate}}" ng-minlength="150" ng-maxlength="1000" rows="6" ng-required="editor.checkList.message_text.required"></textarea>
-                    <div class="form-errors" ng-messages="editor.form.wizardform.message_text.$error">  
-                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 1000 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                    </div> 
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.text">
-                <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.text.$invalid, 'no-error' : !editor.form.wizardform.text.$invalid}">
-                    {{editor.checkList.text.label|translate}}
+            <div class="list card" ng-if="editor.checkList.description">
+                <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
+                    {{editor.checkList.description.label|translate}}
                 </div>
                 <div class="item item-text-wrap">
-                    <textarea name="text" ng-model="editor.wizard.dataForm.text" placeholder="{{editor.checkList.text.placeholder |translate}}" ng-minlength="500" ng-maxlength="8000" rows="10" ng-required="editor.checkList.text.required"></textarea>
-                    <div class="form-errors" ng-messages="editor.form.wizardform.text.$error">  
-                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{editor.checkList.description.placeholder |translate}}" ng-minlength="150" ng-maxlength="8000" rows="10" ng-required="editor.checkList.description.required"></textarea>
+                    <div class="form-errors" ng-messages="editor.form.wizardform.description.$error">
+                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
                         <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 8000 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                    </div> 
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.thumbnail">
-                <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.thumbnail.$invalid, 'no-error' : !editor.form.wizardform.thumbnail.$invalid}">
-                    {{editor.checkList.thumbnail.label|translate}}
-                </div>
-                <div class="item item-text-wrap">
-                    <textarea name="thumbnail" ng-model="editor.wizard.dataForm.thumbnail" placeholder="{{editor.checkList.thumbnail.placeholder |translate}}" ng-minlength="150" ng-maxlength="1000" rows="6" ng-required="editor.checkList.info.required"></textarea>
-                    <div class="form-errors" ng-messages="editor.form.wizardform.thumbnail.$error">  
-                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 1000 {{'CHARACTERS'|translate}}</div>
                         <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
                     </div> 
                 </div>
