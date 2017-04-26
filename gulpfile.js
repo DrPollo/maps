@@ -121,6 +121,8 @@ gulp.task('move',function(){
     var dir = '../firstlife'
     if(gutil.env.domain)
         dir = '../firstlife-'+gutil.env.domain;
+    if(gutil.env.dev)
+        dir = '../firstlife-dev';
 
     fse.copySync('www', dir, {mkdirp: true,clobber:true}, function(err) {console.log('move clent ',err ? err : 'ok!');});
     console.log("move file ok!");
