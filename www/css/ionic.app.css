@@ -15472,6 +15472,9 @@ timeline {
   border: 0px solid #ccc; }
   #searchbar .togglebar:hover {
     color: #FC4A00; }
+  #searchbar .togglebar.open, #searchbar .togglebar.active {
+    background: #FC4A00;
+    color: white; }
   #searchbar button.button {
     border: 0 solid;
     background: #fff;

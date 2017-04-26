@@ -14,6 +14,10 @@
     .togglebar:hover{
         color:$positive;
     }
+    .togglebar.open, .togglebar.active{
+        background: $positive;
+        color: white;
+    }
     button.button {
         border: 0 solid;
         background: #fff;
