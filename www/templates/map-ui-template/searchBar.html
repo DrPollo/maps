@@ -1,5 +1,7 @@
 <form id="searchbar" class="fast-ease-out-animation" ng-class="visible ? 'full-size' : '' " ng-submit="setTagCard()">
-    <button type="button" class="button button-icon ion-funnel" ng-click="toggleSearchBar()"></button>
+    <button type="button" class="button togglebar" ng-class="{'positive':visible}" ng-click="toggleSearchBar()">
+        <i class="icon ion-map"></i>
+    </button>
     <input id="inputofsearchbar" ng-show="visible" type="text" ng-model="query" placeholder="{{ 'SEARCH_HINTS' |translate}}" focus-on="isOpen">
     <button type="submit" ng-show="visible" class="search button fixed-button button-icon ion-android-search" ng-click="setTagCard()" ng-disabled="(query.length == 0)"></button>
     <button type="reset" ng-show="visible" class="close fixed-button button button-icon ion-android-close" ng-click="deleteSearch()"></button>

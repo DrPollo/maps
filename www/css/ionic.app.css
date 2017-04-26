@@ -15470,6 +15470,8 @@ timeline {
   position: relative;
   left: 3px;
   border: 0px solid #ccc; }
+  #searchbar .togglebar:hover {
+    color: #FC4A00; }
   #searchbar button.button {
     border: 0 solid;
     background: #fff;

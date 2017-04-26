@@ -11,6 +11,9 @@
     position: relative;
     left: 3px;
     border: 0px solid #ccc;
+    .togglebar:hover{
+        color:$positive;
+    }
     button.button {
         border: 0 solid;
         background: #fff;
