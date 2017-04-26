@@ -13451,6 +13451,21 @@ ion-side-menu#side-menu {
     width: 40px;
     height: 40px;
     padding: 0px; }
+    .maps-view #pointer .floating-button {
+      position: absolute;
+      font-size: 1.5em;
+      border: 2px solid #333;
+      background: #fff;
+      color: #FC4A00;
+      width: 30px;
+      height: 30px;
+      border-radius: 15px; }
+    .maps-view #pointer .zoomin {
+      top: -34px;
+      right: -10px; }
+    .maps-view #pointer .zoomout {
+      top: -11px;
+      right: -31px; }
     .maps-view #pointer .pin {
       width: 40px;
       height: 40px;

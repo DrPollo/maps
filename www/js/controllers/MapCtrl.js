@@ -917,13 +917,10 @@ angular.module('firstlife.controllers')
         defaults: {
             maxZoom: config.map.max_zoom,
             minZoom: config.map.min_zoom,
-            zoomControl: (config.map.zoom),
-            zoomControlPosition: config.map.zoom_position,
+            zoomControl: false,
             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         },
         controls: {
-            zoomControl: (config.map.zoom),
-            zoomControlPosition: config.map.zoom_position,
             attributionControl: config.map.attribution,
             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         },

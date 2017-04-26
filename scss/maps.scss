@@ -297,6 +297,24 @@
         width: 40px;
         height: 40px;
         padding:0px;
+        .floating-button{
+            position: absolute;
+            font-size: 1.5em;
+            border: 2px solid $dark;
+            background: #fff;
+            color: $positive;
+            width: 30px;
+            height: 30px;
+            border-radius:15px;
+        }
+        .zoomin{
+            top:-34px;
+            right: -10px;
+        }
+        .zoomout{
+            top:-11px;
+            right: -31px;
+        }
         .pin{
             width: 40px;
             height: 40px;

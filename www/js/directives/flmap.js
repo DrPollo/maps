@@ -21,6 +21,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
             if(!$location.search().c)
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
 
+
+            var zoomControl = L.control.zoom({position:'bottomleft'});
+
             var orange = '#FC4A00';
             var red = '#ef473a';
             var green = '#33cd5f';
@@ -163,6 +166,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     function (map) {
                         // $log.debug('save map reference');
                         mapRef = map;
+                        mapRef.addControl(zoomControl);
                     },
                     function (err) {
                         $log.error(err);
@@ -206,7 +210,14 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 event.preventDefault();
 
                 // $log.debug('moveend');
-                timer = $timeout(flushMarkers,500);
+                if(!$scope.editMode)
+                    timer = $timeout(flushMarkers,500);
+                else{
+                    var center = mapRef.getCenter();
+                    var z = mapRef.getZoom();
+                    var hash =
+                    $location.search("c",center.lat+':'+center.lng+':'+z);
+                }
             });
             $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
                 if(event.defaultPrevented)
@@ -465,6 +476,27 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 },200);
             };
 
+            $scope.maxZoom = myConfig.map.max_zoom;
+            $scope.minZoom = myConfig.map.min_zoom;
+            $scope.zoomIn = function(){
+                // zoom in
+                var z = mapRef.getZoom();
+                if(z < $scope.maxZoom) {
+                    $scope.z = z + 1;
+                    mapRef.zoomIn(1);
+                }
+            };
+            $scope.zoomOut = function(){
+                // zoom
+                var z = mapRef.getZoom();
+                if(z > $scope.minZoom) {
+                    $scope.z = z - 1;
+                    mapRef.zoomOut(1);
+                }
+            };
+
+
+
             var editLayer = null;
             function addEditLayers(){
                 editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url,$scope.map.layers.baselayers.edit.layerOptions);
@@ -486,7 +518,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     // vGrid.setFeatureStyle(currentFeature,style);
                     mapRef.setView(e.latlng);
                 });
-
+                mapRef.removeControl(zoomControl);
             }
             function removeEditLayers(){
                 if(currentFeature)
@@ -501,6 +533,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 mapRef.removeLayer(editLayer);
                 if(currentFeature)
                     vGrid.resetFeatureStyle(currentFeature);
+
+                mapRef.addControl(zoomControl);
             }
 
             var currentFeature = null;
