@@ -299,13 +299,14 @@
         padding:0px;
         .floating-button{
             position: absolute;
-            font-size: 1.5em;
+            font-size: 17px;
             border: 2px solid $dark;
             background: #fff;
             color: $positive;
             width: 30px;
             height: 30px;
             border-radius:15px;
+            overflow: hidden;
         }
         .zoomin{
             top:-34px;

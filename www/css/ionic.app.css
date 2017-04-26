@@ -13453,13 +13453,14 @@ ion-side-menu#side-menu {
     padding: 0px; }
     .maps-view #pointer .floating-button {
       position: absolute;
-      font-size: 1.5em;
+      font-size: 17px;
       border: 2px solid #333;
       background: #fff;
       color: #FC4A00;
       width: 30px;
       height: 30px;
-      border-radius: 15px; }
+      border-radius: 15px;
+      overflow: hidden; }
     .maps-view #pointer .zoomin {
       top: -34px;
       right: -10px; }

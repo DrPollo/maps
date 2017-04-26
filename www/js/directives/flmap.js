@@ -210,9 +210,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 event.preventDefault();
 
                 // $log.debug('moveend');
-                if(!$scope.editMode)
-                    timer = $timeout(flushMarkers,500);
-                else{
+                timer = $timeout(flushMarkers,500);
+                if($scope.editMode){
                     var center = mapRef.getCenter();
                     var z = mapRef.getZoom();
                     var hash =
