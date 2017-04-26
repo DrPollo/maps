@@ -63,6 +63,11 @@ gulp.task('golive', function(){
 })
 
 gulp.task('deploy-all', function(){
+
+    // deploy of dev
+    console.log('Deploy of dev environment: firstlife-dev',' result: ',sh.exec('gulp deploy --norebuild --dev --logs').code == 0 ? 'ok!' : 'error :(' );
+
+
     var setup = null;
     if(gutil.env.prod)
         setup = 'prod';
@@ -111,6 +116,7 @@ gulp.task('deploy-all', function(){
             console.log('deploy of ',domain ? domain: 'firstlife',' result: ',sh.exec(cmd).code == 0 ? 'ok!' : 'error :(' );
         }
     }
+
     console.log('fine deploy-all');
     sh.exit(0);
 });
