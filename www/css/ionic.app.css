@@ -13784,46 +13784,48 @@ ion-side-menu#side-menu {
     color: rgba(255, 255, 255, 0.8); }
 
 #wall .container {
-  height: 204px;
-  min-height: 204px;
+  height: 180px;
+  min-height: 180px;
   overflow: hidden; }
-  #wall .container .card .main {
-    height: 133px;
-    min-height: 133px;
-    overflow: hidden; }
-    #wall .container .card .main .title {
-      margin-bottom: 16px;
-      font-size: 20px; }
-    #wall .container .card .main .title:hover {
-      text-decoration: underline; }
-    #wall .container .card .main .subheader {
-      margin-bottom: 10px; }
-      #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
-        display: inline-block;
-        margin-right: 8px; }
-      #wall .container .card .main .subheader .tag {
-        cursor: pointer; }
-      #wall .container .card .main .subheader .tag:hover {
+  #wall .container .card {
+    margin: 10px 20px; }
+    #wall .container .card .main {
+      height: 133px;
+      min-height: 133px;
+      overflow: hidden; }
+      #wall .container .card .main .title {
+        margin-bottom: 16px;
+        font-size: 20px;
+        font-weight: 400; }
+      #wall .container .card .main .title:hover {
         text-decoration: underline; }
-  #wall .container .card .actions {
-    text-align: right;
-    background: #f8f8f8;
-    height: 34px;
-    padding: 7px 8px; }
-    #wall .container .card .actions .action {
-      color: #333;
-      height: 18px;
-      min-width: 30px;
-      margin-left: 12px;
-      font-size: 18px; }
+      #wall .container .card .main .subheader {
+        margin-bottom: 10px; }
+        #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
+          display: inline-block;
+          margin-right: 8px; }
+        #wall .container .card .main .subheader .tag {
+          cursor: pointer; }
+        #wall .container .card .main .subheader .tag:hover {
+          text-decoration: underline; }
+    #wall .container .card .actions {
+      text-align: right;
+      background: #fafafa;
+      height: 32px;
+      padding: 7px 8px; }
+      #wall .container .card .actions .action {
+        color: #444;
+        height: 16px;
+        min-width: 30px;
+        margin-left: 12px;
+        font-size: 18px; }
 
 .container:focus, .container:hover, .container:active {
   height: auto !important;
   z-index: 999;
   overflow-y: visible; }
   .container:focus .card, .container:hover .card, .container:active .card {
-    height: auto !important;
-    overflow-y: visible; }
+    height: auto !important; }
     .container:focus .card .main, .container:hover .card .main, .container:active .card .main {
       height: auto !important; }
 

@@ -1,9 +1,10 @@
 #wall{
     .container {
-        height: 204px;
-        min-height: 204px;
+        height: 180px;
+        min-height: 180px;
         overflow: hidden;
         .card {
+            margin: 10px 20px;
             .main {
                 height: 133px;
                 min-height: 133px;
@@ -11,6 +12,7 @@
                 .title {
                     margin-bottom: 16px;
                     font-size: 20px;
+                    font-weight: 400;
                 }
                 .title:hover {
                     text-decoration: underline;
@@ -31,12 +33,12 @@
             }
             .actions {
                 text-align: right;
-                background: #f8f8f8;
-                height: 34px;
+                background: #fafafa;
+                height: 32px;
                 padding: 7px 8px;
                 .action {
-                    color: $dark;
-                    height: 18px;
+                    color: #444;
+                    height: 16px;
                     min-width:30px;
                     margin-left: 12px;
                     font-size: 18px;
@@ -51,7 +53,6 @@
     overflow-y: visible;
     .card {
         height: auto !important;
-        overflow-y: visible;
         .main {
             height: auto !important;
         }
