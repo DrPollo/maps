@@ -8,9 +8,10 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             }
 
-            var urlId = myConfig.initiatives.concat('?domainId=',myConfig.domain_id);
+            var urlId = myConfig.initiatives;
+
             var req = {
-                url: urlId,
+                url: urlId.concat('?domainId=',myConfig.domain_id),
                 method: 'GET',
                 headers:{"Content-Type":"application/json"},
                 data: false
@@ -85,7 +86,7 @@ angular.module('firstlife.factories')
                 deferred.reject('no authenticated');
                 return deferred.promise;
             }
-
+            initiative.domain_id = myConfig.domain_id;
             var urlId = myConfig.initiatives;
             var req = {
                 url: urlId,
