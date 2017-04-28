@@ -23,7 +23,7 @@
         "auth_url": "oauth/login",
         "logout_url": "oauth/logout",
         "profile_url": "profile",
-        "signature_url": "profile",
+        "signature_url": "organization",
         "registration_url": "registration",
         "api_session":"session",
         "client_id": "eB1GG6Ik",
