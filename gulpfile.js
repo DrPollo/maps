@@ -20,6 +20,7 @@ var paths = {
     templatecache: ['./www/templates/ng-templates/**/*.html']
 };
 
+// tast per il deploy di tutti i domini
 gulp.task('golive', function(){
     var defaultBranch = 'master';
 
