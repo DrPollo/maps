@@ -15,7 +15,6 @@ var run = require('sync-exec');
 var sequence = require('run-sequence');
 var env = require('gulp-env');
 
-
 var paths = {
     sass: ['./scss/*.scss'],
     templatecache: ['./www/templates/ng-templates/**/*.html']
