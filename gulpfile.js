@@ -161,6 +161,8 @@ gulp.task('rebuild',function(){
         console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
         var c2 = sh.exec('git checkout dev').code;
         console.log('checkout dev result', (c2 === 0) ? 'ok' : 'error '+c2);
+        var c3 = sh.exec('git pull').code;
+        console.log('pull dev result', (c3 === 0) ? 'ok' : 'error '+c3);
     }
 
     if(gutil.env.norebuild)
