@@ -28,6 +28,8 @@ gulp.task('golive', function(){
     // reset delle modifiche locali
     var c1 = sh.exec('git reset --hard').code;
     console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
+
+    // gestisco errore
     if(c1 !== 0)
         throw new gutil.PluginError({
             plugin: 'git reset',
