@@ -22,6 +22,7 @@ var paths = {
 
 // tast per il deploy di tutti i domini
 gulp.task('golive', function(){
+    // branch di default
     var defaultBranch = 'master';
 
     // reset delle modifiche locali
