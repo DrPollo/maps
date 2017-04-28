@@ -156,8 +156,15 @@ gulp.task('move',function(){
 gulp.task('config',['rebuild','mergeconfig','setupenv','buildconfig']);
 
 gulp.task('rebuild',function(){
+    if(gutil.env.dev){
+        var c1 = sh.exec('git reset --hard').code;
+        console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
+        var c2 = sh.exec('git checkout dev').code;
+        console.log('checkout dev result', (c2 === 0) ? 'ok' : 'error '+c2);
+    }
+
     if(gutil.env.norebuild)
-        return
+        return;
 
     try{
         run('npm build .');
