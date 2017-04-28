@@ -48,6 +48,7 @@ gulp.task('golive', function(){
     // pull del progetto
     var c2 = sh.exec('git pull').code;
     console.log('pull remote repo result',c2 === 0 ? 'ok' : 'error '+c2);
+    // gestisco errore
     if(c2 !== 0)
         throw new gutil.PluginError({
             plugin: 'git pull',
