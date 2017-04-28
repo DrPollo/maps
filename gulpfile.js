@@ -60,7 +60,7 @@ gulp.task('golive', function(){
     env({
         user: 'apache',
         group: 'apache'
-    })
+    });
     // deploy all domains
     gulp.start('deploy-all');
 
