@@ -1004,9 +1004,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     if(rejection.status === 404){
                         var $rootScope = $injector.get('$rootScope');
                         // $log.debug('reject because invalid token');
-                        // cancello i token esistenti
+                        // cancello il token
                         $localStorage[myConfig.authentication.token_mem_key] = null;
-                        $localStorage[myConfig.authentication.identity_mem_key] = null;
                         // notifico al client l'errore
                         $location.search('error','expired_token');
                         $rootScope.$broadcast('expiredToken');

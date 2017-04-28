@@ -88,6 +88,12 @@ angular.module('firstlife.controllers')
         
         // A confirm dialog
         $scope.showConfirmLogout = function() {
+            // se l'utente non e' loggato
+            if(!AuthService.isAuth()){
+                AuthService.logout();
+                $state.go('home');
+                return;
+            }
             var message = '';
             var title ='';
             message = message.concat('<center>').concat($filter('translate')('EXIT_MESSAGE')).concat('</center>');

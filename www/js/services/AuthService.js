@@ -55,7 +55,9 @@ angular.module('firstlife.services')
             },
             logout_url: function(){
                 // mando lo user all'auth server per il logout
-                return myConfig.authentication["logout_url"].concat('&token=',MemoryFactory.get(tokenKey).access_token);
+                if(myConfig.authentication["logout_url"])
+                    return myConfig.authentication["logout_url"].concat('&token=',MemoryFactory.get(tokenKey).access_token);
+                return myConfig.base_callback+'?error=expiredtoken';
             },
             profile_url: function(){
                 // mando lo user all'auth server per la modifica del profilo
