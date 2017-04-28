@@ -21,7 +21,7 @@ angular.module('firstlife.services')
                         method: 'POST',
                         withCredentials: true,
                         headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
+                            // "Content-Type": "application/x-www-form-urlencoded"
                         },
                         data: {}
                     };
