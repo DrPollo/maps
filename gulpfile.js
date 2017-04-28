@@ -61,6 +61,7 @@ gulp.task('golive', function(){
         user: 'apache',
         group: 'apache'
     })
+    // deploy all domains
     gulp.start('deploy-all');
 
     console.log('golive ok!');
