@@ -31,9 +31,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         if(myConfig.authentication["logout_url"])
             myConfig.authentication["logout_url"] = myConfig.authentication.logout_url.concat("?redirect_uri=",redirect_uri_logout,"&client_id=",client_id);
 
-        if(myConfig.authentication["api_session"])
-            myConfig.authentication["api_session"] = myConfig.authentication.api_session.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
-
         if(myConfig.authentication["profile_url"])
             myConfig.authentication["profile_url"] = myConfig.authentication.profile_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
 
