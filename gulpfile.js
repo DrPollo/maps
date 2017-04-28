@@ -22,7 +22,7 @@ var paths = {
 };
 
 gulp.task('golive', function(){
-    var defaultBranch = 'dev';
+    var defaultBranch = 'master';
 
     // reset delle modifiche locali
     var c1 = sh.exec('git reset --hard').code;
