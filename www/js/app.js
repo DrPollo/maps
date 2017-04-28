@@ -975,7 +975,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     return response;
                 },
                 responseError: function(rejection) {
-//                    $log.debug('check $http error',rejection.status)
+                    // $log.debug('check $http error',rejection.status);
 
                     // gestione del token scaduto
                     if(rejection.status === 401 && rejection.data.token){
@@ -988,9 +988,31 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         $localStorage[myConfig.authentication.identity_mem_key] = null;
                     }
 
-                    if(rejection.status === 400 || rejection.status === 404){
-//                        $log.debug('reject because missing auth_token')
+
+                    // auth required
+                    if(rejection.status === 400){
+                        var $rootScope = $injector.get('$rootScope');
+                        // $log.debug('reject because missing auth_token');
                         retries = 0;
+                        // notifico al client l'errore
+                        $location.search('error','auth_required');
+                        $rootScope.$broadcast('authRequired');
+                        return $q.reject(rejection);
+                    }
+
+                    // invalid token
+                    if(rejection.status === 404){
+                        var $rootScope = $injector.get('$rootScope');
+                        // $log.debug('reject because invalid token');
+                        // cancello i token esistenti
+                        $localStorage[myConfig.authentication.token_mem_key] = null;
+                        $localStorage[myConfig.authentication.identity_mem_key] = null;
+                        // notifico al client l'errore
+                        $location.search('error','expired_token');
+                        $rootScope.$broadcast('expiredToken');
+                        // reset delle try
+                        retries = 0;
+                        // reject
                         return $q.reject(rejection);
                     }
 

@@ -401,6 +401,7 @@ angular.module('firstlife.services')
         }
 
         function makeMarker(feature) {
+            // $log.debug('feature',feature);
             var marker = {
                 focus: false,
                 draggable: false,
@@ -429,8 +430,11 @@ angular.module('firstlife.services')
                 0 : icon
             };
             var catIcons = marker.categories.reduce(function(icons, cat){
-                var icon = defIcons[cat.category_space.id][cat.categories[0].id];
-                icons[cat.category_space.id] = icon;
+                // patch per categorie sporche
+                if(defIcons[cat.category_space.id]) {
+                    var icon = defIcons[cat.category_space.id][cat.categories[0].id];
+                    icons[cat.category_space.id] = icon;
+                }
                 return icons;
             },{});
             angular.extend(icons, catIcons);
