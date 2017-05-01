@@ -27,7 +27,7 @@ angular.module('firstlife.services')
                 return editPreProcessing(data);
             }
             
-        }
+        };
 
 
 

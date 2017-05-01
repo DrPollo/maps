@@ -86,7 +86,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         if(embed){
                             // ok vado avanti
                         } else if(authenticate && !AuthService.isAuth()){
-                            //$log.debug('login obbligatorio, redirect a home');
+                            $log.debug('login obbligatorio, redirect a home');
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
                             $state.go('home',search_params);
@@ -96,14 +96,14 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         // if it is a viewer and it is not already going to the map
                         if(embed){
                             // go directly to the map
-                            //$log.debug('embed, redirect a app.maps');
+                            $log.debug('embed, redirect a app.maps');
                             event.preventDefault();
                             $state.go('app.maps',search_params);
                         }
                         break;
                     case 'app.editor':
                         if(authenticate && !AuthService.isAuth()){
-                            //$log.debug('login obbligatorio, redirect a home');
+                            $log.debug('login obbligatorio, redirect a home');
                             // vai a login per effettuare l'autenticazione
                             event.preventDefault();
                             $state.go('home',search_params);
@@ -114,7 +114,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         // if it is a viewer and it is not already going to the map
                         if(embed){
                             // go directly to the map
-                            //$log.debug('embed, redirect a app.maps');
+                            $log.debug('embed, redirect a app.maps');
                             event.preventDefault();
                             $state.go('app.maps',search_params);
                         }
@@ -126,7 +126,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     AuthService.checkSession().then(
                         function (result) {
                             // l'utente e' attualmente loggato nell'auth server
-                            // $log.log('checkSession',result, 'go to ',AuthService.auth_url());
+                            $log.log('checkSession',result, 'go to ',AuthService.auth_url());
                             // redirect all'auth server
                             $timeout(function(){
                                 $window.location.href = AuthService.auth_url();
@@ -160,6 +160,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         url: "/callback?code&state&profile&error",
         controller: 'CallbackCtrl',
         templateUrl: "/templates/callback-page.html",
+        reloadOnSearch: false,
         data: {
             authenticate: false
         }

@@ -8,27 +8,31 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
-            $log.log('sono in callback, continuo?',!event.preventCallbackEvent)
-            if(event.preventCallbackEvent)
+
+            if(event.defaultPrevented)
                 return;
-            event.preventCallbackEvent = true;
+            event.preventDefault();
+
+
             // se non devo gestire l'evento
             if(toState.name !== 'callback')
                 return;
-            $log.debug("sono in login, questi i parametri ",toState);
+            // $log.debug("sono in login, questi i parametri ",toState);
 
             // controllo parametro code
             var params = $location.search();
-            $log.debug("check $location",params);
+            // $log.debug("check $location",params);
             if(params.error){
+                // $log.debug('errore');
                 // gestisco l'errore
                 loginError();
+                return;
             }else if(params.code){
-                $log.debug('trovato code',params.code);
+                // $log.debug('trovato code',params.code);
                 // controllo dello stato
                 if(params.state){
                     var currentState = MemoryFactory.get(stateKey);
-                    $log.debug('ho trovato state',params.state, currentState);
+                    // $log.debug('ho trovato state',params.state, currentState);
                     if(params.state === currentState){
                         generateToken(params.code)
                     }else{// errore stato non coincide
@@ -38,15 +42,21 @@ angular.module('firstlife.controllers')
                 }else{
                     // $log.debug('non ho trovato state');
                     generateToken(params.code);
-                }   
+
+                }
+                return;
             }else if(params.profile && params.profile === 'true'){
+                // $log.debug('update profilo');
                 // profilo modificato
                 $scope.message = 'UPDATE_PROFILE_SUCCESS';
                 // redirect alla landingpage
                 $state.go('app.maps');
+                return;
             }else{
+                // $log.debug('default');
                 // altrimenti torno alla landing
                 $state.go('home');
+                return;
             }
         });
 
@@ -61,15 +71,15 @@ angular.module('firstlife.controllers')
             // elimino il code dai parametri search
             $location.search('code',null);
             // genero token
-            $log.debug('richiedo token per code',code);
+            // $log.debug('richiedo token per code',code);
             AuthService.generateToken(code).then(
                 function(result){
-                    $log.debug('tutto ok con il token',result);
+                    // $log.debug('tutto ok con il token',result);
                     // se ho il token
                     $state.go('app.maps');
                 },
                 function(err){
-                    $log.debug('getToken, error',err);
+                    // $log.debug('getToken, error',err);
                     // se non riesco a generare il token
                     // gestione errori
                     loginError();
@@ -78,9 +88,8 @@ angular.module('firstlife.controllers')
         }
 
         function loginError(){
+            // $log.debug('loginError');
             $location.search('error','login')
             $state.go('home', {error: 'login'});
         }
-
-
     }]);

@@ -19,13 +19,14 @@ angular.module('firstlife.services')
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
-                        withCredentials: true,
-                        headers: {
-                            // "Content-Type": "application/x-www-form-urlencoded"
-                        },
+                        // todo debug
+                        // withCredentials: true,
+                        // headers: {
+                        //     // "Content-Type": "application/x-www-form-urlencoded"
+                        // },
                         data: {}
                     };
-                    // $log.debug('check session ',req);
+                    $log.debug('check session ',req);
                     $http(req).then(function (response) {
                         $log.debug('check session', response.data);
                         if(response.data.member_id)
@@ -89,13 +90,16 @@ angular.module('firstlife.services')
                     }
                 };
                 $http(req).then(function(response) {
+                    $log.debug('getToken, response',response);
+
                     var token = response.data.token;
                     token.member.member_id = token.member_id;
                     MemoryFactory.save(tokenKey,token);
                     MemoryFactory.save(identityKey,token.member);
-//                    $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
+                    // $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
                     deferred.resolve(response);
                 },function(err){
+                    $log.debug(err);
                     deferred.reject(err);
                 });
                 return deferred.promise;
