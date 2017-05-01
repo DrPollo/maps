@@ -5,18 +5,20 @@
         overflow: hidden;
         .card {
             margin: 10px 20px;
+            .title {
+                font-size: 20px;
+                font-weight: 400;
+                cursor: pointer;
+                background: #fafafa;
+            }
+            .title:hover,.title:active,.title:focus {
+                //text-decoration: underline;
+                background: #f8f8f8;
+            }
             .main {
                 height: 133px;
                 min-height: 133px;
                 overflow: hidden;
-                .title {
-                    margin-bottom: 16px;
-                    font-size: 20px;
-                    font-weight: 400;
-                }
-                .title:hover {
-                    text-decoration: underline;
-                }
                 .subheader {
                     margin-bottom: 10px;
                     .type-icon, .tag {

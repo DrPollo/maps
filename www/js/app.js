@@ -559,7 +559,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADMIN8:"Comuni",
         ADMIN6:"Province",
         ADMIN4:"Regioni",
-        SCALE:"Scala"
+        SCALE:"Scala",
+        OPEN_THING:"Apri"
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -901,7 +902,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADMIN8:"Towns",
         ADMIN6:"Districts",
         ADMIN4:"Regions",
-        SCALE:"Scale"
+        SCALE:"Scale",
+        OPEN_THING:"Open"
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);

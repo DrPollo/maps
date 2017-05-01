@@ -13779,16 +13779,17 @@ ion-side-menu#side-menu {
   overflow: hidden; }
   #wall .container .card {
     margin: 10px 20px; }
+    #wall .container .card .title {
+      font-size: 20px;
+      font-weight: 400;
+      cursor: pointer;
+      background: #fafafa; }
+    #wall .container .card .title:hover, #wall .container .card .title:active, #wall .container .card .title:focus {
+      background: #f8f8f8; }
     #wall .container .card .main {
       height: 133px;
       min-height: 133px;
       overflow: hidden; }
-      #wall .container .card .main .title {
-        margin-bottom: 16px;
-        font-size: 20px;
-        font-weight: 400; }
-      #wall .container .card .main .title:hover {
-        text-decoration: underline; }
       #wall .container .card .main .subheader {
         margin-bottom: 10px; }
         #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
