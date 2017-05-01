@@ -40,7 +40,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
 
                 if(args.id){
-                    // $log.debug('markerClick',args);
+                    $log.debug('markerClick',args);
                     $scope.showMCardPlace(args.id);
                 }
             });

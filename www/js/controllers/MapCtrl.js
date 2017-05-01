@@ -498,7 +498,7 @@ angular.module('firstlife.controllers')
 
         function clickMarker(markerId){
             //$log.debug("markerClick! ",markerId);
-            $scope.$broadcast("markerClick", {markerId:markerId});
+            $scope.$broadcast("markerClick", {id:markerId});
         }
 
         function updatePlaceInSearch(id){

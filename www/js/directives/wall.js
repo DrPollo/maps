@@ -1,4 +1,69 @@
 angular.module('firstlife.directives')
+    .directive('wallToggler',['$log', '$ionicSideMenuDelegate', function ($log, $ionicSideMenuDelegate) {
+        return{
+            restrict:'E',
+            scope:{},
+            template:'<button class="button" on-tap="toggle()"><i class="icon ion-android-list"></i></button>',
+            link:function (scope,element,attr) {
+                scope.$on('$destroy', function(e) {
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    delete scope;
+                });
+
+                scope.toggle = function () {
+                    // $log.debug('toggle left');
+                    $ionicSideMenuDelegate.toggleLeft();
+                    // scope.$emit('wallToggle');
+                }
+
+            }
+        }
+    }])
+    .directive('sideWall',['$log', '$ionicSideMenuDelegate', function ($log, $ionicSideMenuDelegate) {
+        return {
+            restrict: 'E',
+            scope: {
+                filters:'&'
+            },
+            templateUrl: '/templates/wall/side-wall.html',
+            link: function (scope, element, attr) {
+                scope.$on('$destroy', function(e) {
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    delete scope;
+                });
+
+                var open = false;
+
+                scope.$on('checkWallToggle',function (event,args) {
+                    if(event.defaultPrevented)
+                        return;
+                    event.preventDefault();
+
+                    open = !open;
+
+                    if(open){
+                        scope.$broadcast('wallInit');
+                    }
+
+                });
+
+                scope.closeWall = function () {
+                    $ionicSideMenuDelegate.toggleLeft();
+                };
+
+                scope.clickWallItem = function(id){
+                    scope.closeWall();
+                    scope.$emit('wallClick',{id:id});
+                }
+            }
+        }
+    }])
     .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','myConfig', 'MemoryFactory', 'ThingsService',  function($rootScope,$location,$log,$filter,$timeout, myConfig,MemoryFactory,ThingsService) {
         return {
             restrict: 'E',
@@ -33,12 +98,20 @@ angular.module('firstlife.directives')
                     }
                 });
 
+                scope.$on('wallInit',function (e,args) {
+                    if(e.defaultPrevented)
+                        return;
+                    e.preventDefault();
+
+                    init();
+                });
 
                 init();
                 var buffer = [];
                 var index = 0;
                 function init(){
-                    var current = ThingsService.filterBuffer();
+                    $log.debug('init entity list');
+                    var current = ThingsService.filter();
                     scope.markers = Object.keys(current).map(function(e){return current[e];});
                     var params = $location.search();
                     if(params.q)

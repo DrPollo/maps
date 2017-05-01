@@ -312,6 +312,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         // angular.extend($scope.markers,markers);
                         addMarkers(markers);
+                        $scope.$emit('markerUpdated');
                     },
                     function (err) {
                         $log.error(err);
@@ -332,6 +333,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $scope.markers = angular.extend({},markers);
                         removeMarkers();
                         addMarkers(markers);
+                        $scope.$emit('markerUpdated');
                     },
                     function(err){
                         $log.error(err);

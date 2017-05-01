@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'ThingsService',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, ThingsService ) {
         
         
         $scope.config = myConfig;
@@ -9,6 +9,8 @@ angular.module('firstlife.controllers')
         
         $scope.apiVersion = 'API: ' + myConfig.api_version;
         $scope.clientVersion = 'Client: v' + myConfig.version;
+        $scope.sideWidth = Math.min($window.innerWidth,500);
+
 
         // flag per le notifiche
         $scope.checkNotifications = false;
@@ -62,6 +64,28 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('noFlagNotification');
         });
 
+        $scope.$on('markerUpdated',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            $log.debug('markerUpdated');
+            $scope.$broadcast('wallInit');
+        });
+        $scope.$on('wallToggle',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            $scope.$broadcast('checkWallToggle');
+        });
+        $scope.$on('wallClick',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            $scope.$broadcast('markerClick',args);
+        });
 
         /*
          * Funzioni pubbliche
@@ -83,6 +107,17 @@ angular.module('firstlife.controllers')
         // funzione togle per il menu laterale
         $scope.toggleSideLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
+        };
+        $scope.toggleSideRight = function() {
+            $ionicSideMenuDelegate.toggleRight();
+        };
+
+        $scope.toggleFilter = function(cat, key){
+            //$log.debug('toggleFilter',cat,key)
+            // cerco l'indice della regola per le categorie
+            ThingsService.toggleFilter(cat, key);
+            // chiedo di aggiornare i marker
+            $scope.$broadcast('filterMarkers');
         };
         
         

@@ -1,16 +1,28 @@
 <ion-side-menus enable-menu-with-back-views="true" >
-    <ion-side-menu-content class="post-size-14px" drag-content="false">        
-
-        <ion-nav-view name="menuContent"></ion-nav-view>  
-
+    <ion-side-menu-content class="post-size-14px" drag-content="false">
+        <ion-nav-view name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
-    <ion-side-menu side="left" id="side-menu" drag-content="false">
+    <ion-side-menu
+            side="left"
+            width = "{{sideWidth}}"
+            id="side-menu"
+            drag-content="false">
+        <ion-content drag-content="false">
+            <side-wall filters="toggleFilter()"></side-wall>
+        </ion-content>
+        <div class="bar bar-footer">
+          <div>{{apiVersion}} - {{clientVersion}}</div>
+        </div>
+    </ion-side-menu>
+    <ion-side-menu side="right">
         <ion-content drag-content="false">
             <ion-list>
                 <ion-item class="logo">
+                    <button style="float:right;" ng-if="config.actions.show_menu" class="sideMenuToggler button button-clear button-dark button-small" ng-click="toggleSideRight()">
+                        <i class="icon ion-ios-arrow-left"></i><i class="icon ion-ios-arrow-left"></i>
+                    </button>
                     <img ng-if=" (config.design.logo_bar != '') " alt="config.app_name" ng-src="{{config.design.logo_bar}}"/>
                     <span ng-if=" !(config.design.logo_bar != '') ">{{config.app_name}}</span>
-                    <button style="float:right;" ng-if="config.actions.show_menu" id="sideMenuToggler" class="button button-clear button-dark button-small" ng-click="toggleSideLeft()"><i class="icon ion-ios-arrow-left"></i><i class="icon ion-ios-arrow-left"></i></button>
                 </ion-item>
                 <ion-item class="heading-item item item-avatar">
                     <img ng-src="{{config.design.logo_menu}}">
@@ -68,8 +80,5 @@
                 </ion-item>
             </ion-list>
         </ion-content>
-        <div class="bar bar-footer">
-          <div>{{apiVersion}} - {{clientVersion}}</div>
-        </div>
     </ion-side-menu>
 </ion-side-menus>

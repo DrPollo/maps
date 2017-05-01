@@ -12858,41 +12858,41 @@ a.button {
 .action-sheet .button:hover {
   color: #ff6d30; }
 
-ion-side-menu#side-menu {
+ion-side-menu {
   background-color: #f8f8f8; }
-  ion-side-menu#side-menu .bar-footer {
+  ion-side-menu .bar-footer {
     height: 20px;
     background: rgba(255, 255, 255, 0.8);
     z-index: 9999;
     font-size: 0.8em;
     padding: 0px 10px 0px; }
-  ion-side-menu#side-menu ion-item.item {
+  ion-side-menu ion-item.item {
     border: none;
     background-color: transparent;
     color: #666666; }
-    ion-side-menu#side-menu ion-item.item .icon:before, ion-side-menu#side-menu ion-item.item .menu-text, ion-side-menu#side-menu ion-item.item .greeting, ion-side-menu#side-menu ion-item.item .message {
+    ion-side-menu ion-item.item .icon:before, ion-side-menu ion-item.item .menu-text, ion-side-menu ion-item.item .greeting, ion-side-menu ion-item.item .message {
       color: #666666; }
-    ion-side-menu#side-menu ion-item.item .item-content, ion-side-menu#side-menu ion-item.item .item-content.activated {
+    ion-side-menu ion-item.item .item-content, ion-side-menu ion-item.item .item-content.activated {
       background: transparent; }
-  ion-side-menu#side-menu ion-item.item-button {
+  ion-side-menu ion-item.item-button {
     cursor: pointer; }
-  ion-side-menu#side-menu ion-item.item-button:hover .menu-text, ion-side-menu#side-menu ion-item.item-button:hover i:before, ion-side-menu#side-menu ion-item.item-button:active .menu-text, ion-side-menu#side-menu ion-item.item-button:active i:before, ion-side-menu#side-menu ion-item.item-button:focus .menu-text, ion-side-menu#side-menu ion-item.item-button:focus i:before {
+  ion-side-menu ion-item.item-button:hover .menu-text, ion-side-menu ion-item.item-button:hover i:before, ion-side-menu ion-item.item-button:active .menu-text, ion-side-menu ion-item.item-button:active i:before, ion-side-menu ion-item.item-button:focus .menu-text, ion-side-menu ion-item.item-button:focus i:before {
     color: #FC4A00; }
-  ion-side-menu#side-menu ion-item.item-divider {
+  ion-side-menu ion-item.item-divider {
     border-bottom: 1px solid #666666;
     margin-top: 32px; }
-  ion-side-menu#side-menu ion-item.item:first-child {
+  ion-side-menu ion-item.item:first-child {
     border-top: none; }
-  ion-side-menu#side-menu ion-item.logo {
+  ion-side-menu ion-item.logo {
     border-bottom: 1px solid #666666; }
-    ion-side-menu#side-menu ion-item.logo img {
+    ion-side-menu ion-item.logo img {
       max-width: 100px; }
-    ion-side-menu#side-menu ion-item.logo * {
+    ion-side-menu ion-item.logo * {
       vertical-align: top; }
-  ion-side-menu#side-menu ion-item.heading-item {
+  ion-side-menu ion-item.heading-item {
     padding-top: 30px;
     padding-left: 100px; }
-    ion-side-menu#side-menu ion-item.heading-item img {
+    ion-side-menu ion-item.heading-item img {
       max-width: 60px !important;
       max-height: 60px !important;
       border: 1px solid #666666; }
@@ -13262,6 +13262,24 @@ ion-side-menu#side-menu {
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important; }
 
+#menu-switch {
+  background: #fafafa;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  border-radius: 0px 0px 0px 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  z-index: 12;
+  overflow: hidden; }
+  #menu-switch .badge {
+    position: absolute;
+    bottom: -2px;
+    top: initial;
+    left: -2px;
+    border-radius: 0px 12px 0px 4px; }
+
 .maps-view {
   background-color: #EBEBEB !important; }
   .maps-view search-cards {
@@ -13307,8 +13325,6 @@ ion-side-menu#side-menu {
         width: 100%;
         position: relative;
         z-index: 1; }
-        .maps-view #mapHeader #headerControllers #omnibox #menu-switch {
-          background: #fff; }
         .maps-view #mapHeader #headerControllers #omnibox button {
           min-height: 48px;
           height: 48px;

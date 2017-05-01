@@ -3,8 +3,8 @@
     <div id="mapHeader">
         <div id="headerControllers">
             <div id="omnibox" ng-if="!viewer">
-                <user-handler></user-handler>
-                <entity-filter ng-if="!editMode" toggle="toggleFilter"></entity-filter>
+                <wall-toggler></wall-toggler>
+                <!--<entity-filter ng-if="!editMode" toggle="toggleFilter()"></entity-filter>-->
                 <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
             </div>
             <search-bar ng-if="!editMode"></search-bar>
@@ -28,9 +28,8 @@
     <ion-content class="has-bottom" data-tap-disabled="true">
         <flmap map="flmap"></flmap>
     </ion-content >
-
     <!-- barra filtri -->
-
+    <user-handler></user-handler>
     <div id="bottom-bar">
         <!-- action buttons -->
         <div id="map-action-menu">

@@ -34,8 +34,8 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
                 });
             scope.config = myConfig;
             // funzione togle per il menu laterale
-            scope.toggleSideLeft = function() {
-                $ionicSideMenuDelegate.toggleLeft();
+            scope.toggleMenu = function() {
+                $ionicSideMenuDelegate.toggleRight();
             };
 
         }

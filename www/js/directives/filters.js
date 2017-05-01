@@ -117,7 +117,7 @@ angular.module('firstlife.directives')
         restrict: 'EG',
         templateUrl: '/templates/map-ui-template/entityTypeFilter.html',
         scope: {
-            toggle:"="
+            toggle:"&"
         },
         link: function (scope, element, attr) {
             scope.$on('$destroy',function(event){
