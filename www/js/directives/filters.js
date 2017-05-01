@@ -238,8 +238,10 @@ angular.module('firstlife.directives')
                 // clear query
                 if(scope.query)
                     scope.query = '';
-                else
+                else{
                     scope.visible = false;
+                    $location.search('q',null);
+                }
             }
 
             // close the search bar
