@@ -19,6 +19,10 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
                     e.preventDefault();
 
                     scope.check = true;
+                    if(args.counter){
+                        // $log.debug('notifications',args);
+                        scope.notifications = args.counter;
+                    }
                 });
             scope.$on('noFlagNotification',function(e,args){
                     if(e.defaultPrevented)
@@ -26,6 +30,7 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
                     e.preventDefault();
 
                     scope.check = false;
+                    scope.notifications = false;
                 });
             scope.config = myConfig;
             // funzione togle per il menu laterale
@@ -64,9 +69,9 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
             // })
             //$log.debug('check?',$scope.check)
             // cambio del check notifiche
-            function toCheck(){
+            function toCheck(counter){
                 if($scope.check)
-                    $scope.$emit('checkNotification');
+                    $scope.$emit('checkNotification',{counter:counter});
                 else
                     $scope.$emit('noNotification');
             }
@@ -112,7 +117,7 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
 
             function initNotifications(){
                 $scope.check = false;
-                toCheck()
+                toCheck();
                 $scope.news =[];
                 polling();
             }
@@ -127,7 +132,7 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
                         if(response.length > 0){
                             //$log.debug('check = true');
                             $scope.check = true;
-                            toCheck();
+                            toCheck(response.length);
                         }
                         //segno da leggere!
                         for(var i = 0; i < response.length; i++){

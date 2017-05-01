@@ -12,7 +12,7 @@ angular.module('firstlife.controllers')
 
         // flag per le notifiche
         $scope.checkNotifications = false;
-        $scope.$on('checkNotification',function(){
+        $scope.$on('checkNotification',function(e,args){
             $scope.checkNotifications = true;
         });
         $scope.$on('noNotification',function(){
@@ -51,7 +51,7 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-            $scope.$broadcast('flagNotification');
+            $scope.$broadcast('flagNotification',args);
         });
 
         $scope.$on('noNotification',function (event,args) {
