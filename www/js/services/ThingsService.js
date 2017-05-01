@@ -64,14 +64,11 @@ angular.module('firstlife.services')
                 return buffer.reduce(function (result,feature){
                     // $log.debug('check ',feature);
                     var id = feature.properties.id ? feature.properties.id: feature._id;
-                    if(!check(feature)){
-                        // $log.debug('to be removed',feature._id);
-                        result.remove.push(id);
-                    }else{
-                        result.add[id] = makeMarker(feature);
+                    if(check(feature)){
+                        result[id] = makeMarker(feature);
                     }
                     return result;
-                },{add:{},remove:[]});
+                },{});
             },
             filterBuffer: function () {
                 // $log.debug('cache?', Object.keys(cache).length);

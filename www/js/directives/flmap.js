@@ -183,6 +183,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('flmap layers',layers.overlays.pie);
                         // salvo il riferimento all'overlay
                         pieRef = layers.overlays.pie;
+
                         pieRef.on('click',function (e) {
                             // $log.debug('click on marker',e.layer.options.id);
                             $location.search('entity',e.layer.options.id);
@@ -329,7 +330,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
                         // $scope.markers = angular.extend({},markers);
-                        removeMarkers(Object.keys($scope.currentMarkers));
+                        removeMarkers();
                         addMarkers(markers);
                     },
                     function(err){
@@ -363,8 +364,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function filterMarkers() {
                 // chiedo cosa devo eliminare
                 var markers = ThingsService.filter();
-                removeMarkers(markers.remove);
-                addMarkers(markers.add);
+                removeMarkers();
+                addMarkers(markers);
             }
             // add the markers keeping the reference
             function addMarkers(markers) {
@@ -396,16 +397,22 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 return marker;
             }
             // remove each marker from a list of id
-            function removeMarkers(ids){
-                // $log.debug('to be removed',ids.length);
-                console.time('remove markers');
-                ids.map(function (id) {
-                    // $log.debug('remove', id, $scope.currentMarkers[id]);
-                    removeMarker(id);
-                });
-                console.timeEnd('remove markers');
+            function removeMarkers(){
+                // reset indice marker
+                $scope.currentMarkers = {};
+                // reset layer marker clusters
+                return pieRef.clearLayers();
             }
 
+
+            function resetMarkers() {
+
+                pieRef.clearLayers();
+            }
+
+            function cleanMarkers(ids){
+                ids.map()
+            }
 
             function removeMarker(markerId) {
                 if(markerId && $scope.currentMarkers[markerId]){
