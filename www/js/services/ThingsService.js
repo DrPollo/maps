@@ -496,7 +496,7 @@ angular.module('firstlife.services')
             // filtro testuale
             // $log.debug('check full search ',query,JSON.stringify(val).toLowerCase().search(query));
 
-            if(query && JSON.stringify(val).toLowerCase().search(query) < 0){
+            if(query && JSON.stringify(val).toLowerCase().search(query.toLowerCase()) < 0){
                 return false;
             }
 
