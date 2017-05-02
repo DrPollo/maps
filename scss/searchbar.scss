@@ -1,5 +1,5 @@
 #searchbar{
-    margin:6px 6px 10px 0px;
+    margin:6px 6px 10px 4px;
     display: inline-flex;
     width: auto;
     background: #fff;
@@ -8,24 +8,28 @@
     overflow: hidden;
     box-shadow:0 1px 5px rgba(0,0,0,0.65);
     width: 40px;
+    max-height: 40px;
     position: relative;
-    left: 3px;
+    left: 0px;
     border: 0px solid #ccc;
     .togglebar:hover{
         color:$positive;
     }
     .togglebar.open, .togglebar.active{
         background: $positive;
-        color: white;
+        color: white !important;
     }
     button.button {
         border: 0 solid;
         background: #fff;
+        box-shadow: none !important;
         border-radius: 20px;
         padding: 0px;
-        height: 40px;
+        height: 40px !important;
+        max-height: 40px;
         min-height: 40px;
-        width: 40px;
+        width: 40px !important;;
+        max-width: 40px;
         min-width: 40px;
         i{
             padding:0px;
@@ -38,6 +42,8 @@
         padding: 5px 5px 5px 14px;
         line-height: 30px;
         height: 40px;
+        min-height: 40px;
+        max-height: 40px;
         width: 100%;
         border-radius: 20px;
     }

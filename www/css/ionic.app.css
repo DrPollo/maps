@@ -13304,16 +13304,16 @@ ion-side-menu {
     top: 8px;
     left: 8px;
     z-index: 12; }
-    .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
+    .maps-view #mapHeader .sideMenuToggler, .maps-view #mapHeader #floating-logo, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #omnibox {
       display: inline-block;
       vertical-align: top; }
-    .maps-view #mapHeader #sideMenuToggler {
+    .maps-view #mapHeader .sideMenuToggler {
       background-color: white;
       vertical-align: top;
       margin-right: 8px; }
-    .maps-view #mapHeader #sideMenuToggler:before {
+    .maps-view #mapHeader .sideMenuToggler:before {
       font-size: 30px; }
-    .maps-view #mapHeader #sideMenuToggler, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #results-box, .maps-view #mapHeader #cronologia-box {
+    .maps-view #mapHeader .sideMenuToggler, .maps-view #mapHeader #floating-search-bar, .maps-view #mapHeader #results-box, .maps-view #mapHeader #cronologia-box {
       background-color: white;
       border-radius: 0px;
       box-shadow: 1px 1px 3px #666; }
@@ -13326,9 +13326,7 @@ ion-side-menu {
         position: relative;
         z-index: 1; }
         .maps-view #mapHeader #headerControllers #omnibox button {
-          min-height: 48px;
           height: 48px;
-          min-width: 48px;
           width: 48px;
           position: relative;
           box-shadow: 1px 1px 3px #666;
@@ -15468,7 +15466,7 @@ timeline {
         margin: 0px 10px; }
 
 #searchbar {
-  margin: 6px 6px 10px 0px;
+  margin: 6px 6px 10px 4px;
   display: inline-flex;
   width: auto;
   background: #fff;
@@ -15477,22 +15475,26 @@ timeline {
   overflow: hidden;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
   width: 40px;
+  max-height: 40px;
   position: relative;
-  left: 3px;
+  left: 0px;
   border: 0px solid #ccc; }
   #searchbar .togglebar:hover {
     color: #FC4A00; }
   #searchbar .togglebar.open, #searchbar .togglebar.active {
     background: #FC4A00;
-    color: white; }
+    color: white !important; }
   #searchbar button.button {
     border: 0 solid;
     background: #fff;
+    box-shadow: none !important;
     border-radius: 20px;
     padding: 0px;
-    height: 40px;
+    height: 40px !important;
+    max-height: 40px;
     min-height: 40px;
-    width: 40px;
+    width: 40px !important;
+    max-width: 40px;
     min-width: 40px; }
     #searchbar button.button i {
       padding: 0px; }
@@ -15502,6 +15504,8 @@ timeline {
     padding: 5px 5px 5px 14px;
     line-height: 30px;
     height: 40px;
+    min-height: 40px;
+    max-height: 40px;
     width: 100%;
     border-radius: 20px; }
   #searchbar button.fixed-button {
