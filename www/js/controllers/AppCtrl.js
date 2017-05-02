@@ -87,6 +87,15 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('markerClick',args);
         });
 
+        $scope.$on('toggleFilter',function(event,args){
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+            // $log.debug('toggleFilter');
+            // chiedo di aggiornare i marker
+            $scope.$broadcast('filterMarkers');
+        });
+
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login
@@ -112,13 +121,7 @@ angular.module('firstlife.controllers')
             $ionicSideMenuDelegate.toggleRight();
         };
 
-        $scope.toggleFilter = function(cat, key){
-            //$log.debug('toggleFilter',cat,key)
-            // cerco l'indice della regola per le categorie
-            ThingsService.toggleFilter(cat, key);
-            // chiedo di aggiornare i marker
-            $scope.$broadcast('filterMarkers');
-        };
+
         
         
         // A confirm dialog

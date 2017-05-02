@@ -13823,15 +13823,18 @@ ion-side-menu {
     width: auto;
     padding: 0px 10px;
     text-align: center;
-    margin-right: 4px; }
+    margin-right: 4px;
+    cursor: pointer; }
   #wall #typeFilter button:last-child {
     margin: 0px; }
   #wall #typeFilter .button.activated, #wall #typeFilter .button.active {
     border: 0px; }
+  #wall #typeFilter button.inactive:hover, #wall #typeFilter button.inactive:active {
+    box-shadow: 0px 1px 1px #666; }
   #wall #typeFilter button.active:focus, #wall #typeFilter button.active:hover, #wall #typeFilter button.active:active {
-    box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #fafafa; }
+    box-shadow: 0px 1px 1px #666; }
   #wall #typeFilter button.inactive:focus {
-    box-shadow: 0px 1px 1px #666, inset 0px 0px 10px #afafaf; }
+    box-shadow: 0px 1px 1px #666; }
   #wall #typeFilter button.disabled {
     opacity: 1; }
   #wall #typeFilter button.disabled:hover, #wall #typeFilter button.disabled:focus, #wall #typeFilter button.disabled:active {

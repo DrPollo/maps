@@ -194,7 +194,7 @@ angular.module('firstlife.services')
             },
             toggleFilter: function (cat, key) {
                 var index = filterConditions.map(function(e){return e.name}).indexOf(cat);
-                //$log.debug("Indice regola filtro: ",index,cat,key);
+                // $log.debug("Indice regola filtro: ",index,cat,key);
                 // se non c'e' lo creo
                 if(index < 0){
                     // default tutti i valori

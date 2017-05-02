@@ -26,7 +26,7 @@ angular.module('firstlife.directives')
         return {
             restrict: 'E',
             scope: {
-                filters:'&'
+                filter:'&'
             },
             templateUrl: '/templates/wall/side-wall.html',
             link: function (scope, element, attr) {
@@ -69,8 +69,7 @@ angular.module('firstlife.directives')
             restrict: 'E',
             scope: {
                 close: '&',
-                click: '&',
-                filter:'&'
+                click: '&'
             },
             templateUrl: '/templates/wall/entitylist.html',
             link: function(scope, element, attr){

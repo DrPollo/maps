@@ -112,13 +112,11 @@ angular.module('firstlife.directives')
 
             }
         };
-    }]).directive('entityFilter',['$log','myConfig','ThingsService', function ($log,myConfig,ThingsService) {
+    }]).directive('entityFilter',['$log','myConfig','ThingsService', 'PlatformService', function ($log,myConfig,ThingsService, PlatformService) {
     return {
         restrict: 'EG',
         templateUrl: '/templates/wall/entityTypeFilter.html',
-        scope: {
-            toggle:"&"
-        },
+        scope: {},
         link: function (scope, element, attr) {
             scope.$on('$destroy',function(event){
                 if(event.defaultPrevented)
@@ -133,6 +131,11 @@ angular.module('firstlife.directives')
             scope.types = myConfig.types.list;
 
             scope.isMobile = PlatformService.isMobile();
+            scope.toggle = function (key) {
+                // $log.debug('toggle filter entity_type',key);
+                ThingsService.toggleFilter('entity_type',key);
+                scope.$emit('toggleFilter');
+            }
         }
     }
 }]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, myConfig, SearchService, CBuffer, ThingsService){
