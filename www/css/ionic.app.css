@@ -13816,12 +13816,12 @@ ion-side-menu {
   #wall #typeFilter button {
     margin: 0px auto;
     background: #f1f1f1;
-    border-radius: 20px;
+    border-radius: 4px;
     min-height: 34px;
     height: 34px;
     min-width: 40px;
     width: auto;
-    padding: 0px 10px;
+    padding: 0px 4px;
     text-align: center;
     margin-right: 4px;
     cursor: pointer; }
@@ -15482,7 +15482,7 @@ timeline {
         margin: 0px 10px; }
 
 #searchbar {
-  margin: 6px 6px 10px 4px;
+  margin: 6px 4px 10px 4px;
   display: inline-flex;
   background: #fff;
   border-radius: 20px;
@@ -15530,7 +15530,7 @@ timeline {
 
 div.search-tag-card {
   color: #333;
-  margin: 0px 10px 6px 0px;
+  margin: 0px 10px 4px 0px;
   display: inline-flex;
   background: #fff;
   border-radius: 20px;
@@ -15545,10 +15545,11 @@ div.search-tag-card {
     line-height: 40px;
     cursor: pointer; }
   div.search-tag-card button.button {
-    height: 40px;
-    width: 40px;
-    min-height: 20px;
-    min-width: 20px; }
+    height: 40px !important;
+    width: 40px !important;
+    min-height: 20px !important;
+    min-width: 20px !important;
+    box-shadow: none !important; }
 
 .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar {
   max-height: 40px;

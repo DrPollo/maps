@@ -8,5 +8,6 @@
             on-tap="toggle(category.key)">
         <i class="icon {{category.icon}}"></i>
         <span ng-if="!isMobile">{{category.name |translate}}</span>
+        <i class="icon" ng-class="{'ion-ios-close-empty':category.visible, 'ion-ios-plus-empty': !category.visible}"></i>
     </button>
 </div>

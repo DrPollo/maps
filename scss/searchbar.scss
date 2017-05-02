@@ -1,5 +1,5 @@
 #searchbar{
-    margin:6px 6px 10px 4px;
+    margin:6px 4px 10px 4px;
     display: inline-flex;
     background: #fff;
     border-radius: 20px;
@@ -55,7 +55,7 @@
 }
 div.search-tag-card {
     color: #333;
-    margin: 0px 10px 6px 0px;
+    margin: 0px 10px 4px 0px;
     display: inline-flex;
     background: #fff;
     border-radius: 20px;
@@ -71,9 +71,10 @@ div.search-tag-card {
         cursor: pointer;
     }
     button.button {
-        height: 40px;
-        width: 40px;
-        min-height: 20px;
-        min-width: 20px;
+        height: 40px !important;
+        width: 40px !important;
+        min-height: 20px !important;
+        min-width: 20px !important;
+        box-shadow: none !important;
     }
 }

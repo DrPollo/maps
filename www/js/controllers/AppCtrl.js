@@ -96,6 +96,17 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('filterMarkers');
         });
 
+        $scope.$on("handleUpdateQ",function(event,args){
+            // $log.debug('handleUpdateQ',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+            $scope.$broadcast('newSearchParam',{q:args.q});
+            // al cambio filtro testuale
+            $scope.$broadcast('filterMarkers');
+        });
+
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login
