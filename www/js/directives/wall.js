@@ -69,7 +69,8 @@ angular.module('firstlife.directives')
             restrict: 'E',
             scope: {
                 close: '&',
-                click: '&'
+                click: '&',
+                filter:'&'
             },
             templateUrl: '/templates/wall/entitylist.html',
             link: function(scope, element, attr){

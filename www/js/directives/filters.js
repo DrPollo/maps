@@ -115,7 +115,7 @@ angular.module('firstlife.directives')
     }]).directive('entityFilter',['$log','myConfig','ThingsService', function ($log,myConfig,ThingsService) {
     return {
         restrict: 'EG',
-        templateUrl: '/templates/map-ui-template/entityTypeFilter.html',
+        templateUrl: '/templates/wall/entityTypeFilter.html',
         scope: {
             toggle:"&"
         },
@@ -131,6 +131,8 @@ angular.module('firstlife.directives')
             scope.filter = ThingsService.getFilter('entity_type');
             scope.colors = myConfig.design.colors;
             scope.types = myConfig.types.list;
+
+            scope.isMobile = PlatformService.isMobile();
         }
     }
 }]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, myConfig, SearchService, CBuffer, ThingsService){

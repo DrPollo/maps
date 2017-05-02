@@ -1,4 +1,4 @@
-<ion-header-bar class="modal-header" >
+<ion-header-bar>
     <div class="bar bar-header">
         <form id="ricerca" name="ricerca" class="item-input-wrapper" ng-submit="exit()">
             <i class="icon ion-android-search"></i>
@@ -6,9 +6,11 @@
             <i ng-show="query.length > 0" ng-click="query = '' " class="icon ion-close"></i>
         </form>
     </div>
-    <!--todo filtri tipi di entita'-->
+    <div class="bar bar-subheader">
+        <entity-filter toggle="filter()"></entity-filter>
+    </div>
 </ion-header-bar>
-<ion-content style="height: calc(100% - 88px);" class="modal-content" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
+<ion-content style="top:88px;" class="modal-content" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
     <div class="cover" ng-show="focus"></div>
     <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by marker.id"

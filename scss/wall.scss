@@ -1,5 +1,13 @@
 #wall{
     //position: relative;
+    #ricerca{
+        width: 100%;
+        input{
+            width: 100%;
+            display: inline-block;
+            background:transparent;
+        }
+    }
     .container {
         height: 180px;
         min-height: 180px;
@@ -47,6 +55,56 @@
                     font-size: 18px;
                 }
             }
+        }
+    }
+    entity-filter,#typeFilter{
+        width: 100%;
+        display: block;
+    }
+    #typeFilter{
+        position: relative;
+        text-align: center;
+        //padding: 0px 15px;
+        button{
+            margin:0px auto;
+            background: #f1f1f1;
+            border-radius: 20px;
+            min-height: 34px;
+            height: 34px;
+            min-width: 40px;
+            width: auto;
+            padding: 0px 10px;
+            text-align: center;
+            margin-right: 4px;
+        }
+        button:last-child{
+            margin:0px;
+        }
+        .button.activated, .button.active {
+            border:0px;
+        }
+        button.active:hover, button.active:active{
+            //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+        }
+        button.inactive:hover, button.inactive:active{
+            //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+        }
+        button.active:focus, button.active:hover, button.active:active{
+            box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
+        }
+        button.inactive:focus{
+            box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
+        }
+        button.inactive{
+        }
+        button.active{
+        }
+        button.disabled{
+            opacity: 1;
+        }
+        button.disabled:hover, button.disabled:focus, button.disabled:active{
+            box-shadow:0px 1px 1px #666;
+            top:0px;
         }
     }
 }

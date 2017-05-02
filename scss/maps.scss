@@ -122,57 +122,7 @@
                 button:before{
                     font-size: 1.2em;
                 }
-                #typeFilter{
-                    position: relative;
-                    z-index: 0;
-                    margin-left: 6px;
-                    button{
-                        margin:4px 6px 0px 0px;
-                        background: #f1f1f1;
-                        border-radius: 50px;
-                        min-height: 40px;
-                        height: 40px;
-                        min-width: 40px;
-                        width: 40px;
-                        padding: 0px 10px;
-                    }
-                    button:last-child{
-                        margin-right:0px;
-                    }
-                    .button.activated, .button.active {
-                        border:0px;
-                    }
-                    button.active:hover, button.active:active{
-                        //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
-                    }
-                    button.inactive:hover, button.inactive:active{
-                        //box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
-                    }
-                    button.active:focus, button.active:hover, button.active:active{
-                        box-shadow:0px 1px 1px #666, inset 0px 0px 10px #fafafa;
-                    }
-                    button.inactive:focus{
-                        box-shadow:0px 1px 1px #666, inset 0px 0px 10px #afafaf;
-                    }
-                    button.inactive{
-                    }
-                    button.active{
-                    }
-                    button.disabled{
-                        opacity: 1;
-                    }
-                    button.disabled:hover, button.disabled:focus, button.disabled:active{
-                        box-shadow:0px 1px 1px #666;
-                        top:0px;
-                    }
-                }
-//                * {
-//                    display: inline-block;
-//                    margin: 0px;
-//                    padding: 0px;
-//                    max-height: 48px;
-//                    vertical-align: middle;
-//                }
+
                 #floating-logo{
                     img{
                         max-height: 35px;
