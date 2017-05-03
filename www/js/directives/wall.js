@@ -86,6 +86,7 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
+
                     scope.exit();
 
                     delete scope;
@@ -144,7 +145,8 @@ angular.module('firstlife.directives')
                 // aggiorno il parametro prima di uscire
                 scope.exit =function(){
                     var q = scope.query ? scope.query : null;
-                    scope.$emit('handleUpdateQ',{q:scope.query});
+                    // $log.debug('exit from entity-list with',q);
+                    scope.$emit('handleUpdateQ',{q:q});
                     scope.close();
                 };
 

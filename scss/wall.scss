@@ -2,11 +2,16 @@
     //position: relative;
     #ricerca{
         width: 100%;
+        padding-right: 0px;
         input{
             width: 100%;
             padding-left: 10px;
             display: inline-block;
             background:transparent;
+        }
+        .button {
+            margin-left: 6px;
+            //border-radius: 20px;
         }
     }
     .container {

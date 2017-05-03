@@ -4,6 +4,7 @@
             <i class="icon ion-android-search"></i>
             <input type="search" placeholder="{{'FILTER_HINTS'| translate}}" ng-model="query">
             <i ng-show="query.length > 0" on-tap="clearQuery()" class="icon ion-close"></i>
+            <button type="submit" on-tap="exit()" class="button button-positive icon ion-checkmark-round"></button>
         </form>
     </div>
     <div class="bar bar-subheader">

@@ -13758,12 +13758,15 @@ ion-side-menu {
     color: rgba(255, 255, 255, 0.8); }
 
 #wall #ricerca {
-  width: 100%; }
+  width: 100%;
+  padding-right: 0px; }
   #wall #ricerca input {
     width: 100%;
     padding-left: 10px;
     display: inline-block;
     background: transparent; }
+  #wall #ricerca .button {
+    margin-left: 6px; }
 
 #wall .container {
   height: 180px;
