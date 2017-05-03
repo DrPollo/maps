@@ -201,7 +201,7 @@
             ]
         },
         "list":[
-            {"name":"PLACE_NAME","id":1,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
+            {"name":"PLACE_NAME","id":5,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
                 "show_author":false, "shape":"triangle",
                 "properties":{
                     "parent_id":{ "key": "parent_id", "label": "PARENT_PLACE_LABEL", "placeholder":"PARENT_PLACE_PLACEHOLDER", "default":null},
@@ -265,7 +265,7 @@
                     "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                 }
             },
-            {"name":"GROUPS_NAME","id":5,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
+            {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
                 "show_author":false, "shape":"octagon",
                 "properties":{
                     "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
