@@ -224,7 +224,13 @@
                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
-                },"relations":{}
+                },"relations":{
+                    "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
+                    "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
+                    "description":{"key":"description","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":""},
+                    "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"advanced":true,"is_editable":true},
+                    "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
+                }
             },
             {"name":"POST_NAME","id":4,"icon":"ion-document-text","slug":"article","url":"articles","key":"FL_ARTICLES","index":3,
                 "show_author":true, "shape":"pentagon",
