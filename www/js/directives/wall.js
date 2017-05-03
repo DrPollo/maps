@@ -116,7 +116,10 @@ angular.module('firstlife.directives')
                 init();
                 var buffer = [];
                 var index = 0;
+                scope.markers = [];
                 function init(){
+                    delete scope.markers;
+
                     $log.debug('init entity list');
                     var current = ThingsService.filter();
                     scope.markers = Object.keys(current).map(function(e){return current[e];});
@@ -173,7 +176,7 @@ angular.module('firstlife.directives')
         scope:{
             marker:'<',
             show:'&',
-            query:'='
+            query:'<'
         },
         templateUrl:'/templates/wall/card.html',
         link:function (scope,element,attr) {
@@ -184,24 +187,15 @@ angular.module('firstlife.directives')
                 delete scope;
             });
 
+
+            // scope.$broadcast('initActions',{id:scope.marker.id});
+            $log.debug(scope.marker.name);
+
             scope.filter = function(tag){
                 // aggiorno il parametro q
                 scope.$emit('wallQuery',{query: tag});
                 // avviso la mappa
                 scope.$emit('handleUpdateQ',{q:tag});
-            };
-
-            scope.focus = function(){
-                scope.highlight = scope.marker.id;
-                $log.debug('focus');
-                scope.$emit('focusOnWallItem',{id:scope.marker.id});
-                scope.$apply();
-            };
-            scope.close = function () {
-                delete scope.highlight;
-                $log.debug('blur');
-                scope.$emit('focusOnWallItem');
-                scope.$apply();
             };
         }
     }
@@ -216,18 +210,22 @@ angular.module('firstlife.directives')
                 scope.$on('$destroy',function (e) {
                     if(e.defaultPrevented)
                         return;
-                    e.preventDefault;
+                    e.preventDefault();
                     delete scope;
                 });
+
 
                 init();
 
                 function init() {
-                    scope.subscribers = null;
-                    scope.posts = 0;
-                    scope.initiatives = 0;
-                    scope.contents = 0;
-                    scope.members = null;
+                    if(scope.subscribers)
+                        delete scope.subscribers;
+                    if(scope.posts)
+                        delete scope.posts;
+                    if(scope.members)
+                        delete scope.members;
+
+
                     switch (scope.marker.entity_type){
                         case 'FL_GROUPS':
                             // init counter members
@@ -246,6 +244,7 @@ angular.module('firstlife.directives')
                                 }
                             );
                             // init counter posts
+                            scope.posts = 0;
                             postFactory.getPosts(scope.marker.id).then(
                                 function (results) {
                                     scope.posts = results.length;
@@ -255,6 +254,7 @@ angular.module('firstlife.directives')
                             scope.initiatives = scope.marker.initiative_list ? scope.marker.initiative_list.length : 0;
                             // todo init counter contents
                     }
+
                 }
 
 

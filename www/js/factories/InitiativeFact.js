@@ -30,11 +30,6 @@ angular.module('firstlife.factories')
         },
         getAllInitiatives : function (thingId) {
             var deferred = $q.defer();
-            if(!AuthService.isAuth()){
-                deferred.reject('no authenticated');
-                return deferred.promise;
-            }
-
             var urlId = myConfig.backend_things.concat("/",thingId,'/initiatives');
             var req = {
                 url: urlId,
