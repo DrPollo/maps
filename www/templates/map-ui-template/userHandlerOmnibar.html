@@ -1,6 +1,6 @@
 <button ng-if="config.actions.show_menu" id="menu-switch" class="button button-clear button-dark"
-        on-tap="toggleMenu()">
-     <i class="icon" ng-class="{'ion-navicon-round': !check, 'ion-ios-bell': check}"></i>
+        on-tap="toggleMenu()" title="{{'USER_MENU_TOGGLE'|translate}}">
+     <i class="icon" ng-class="{'ion-android-person': !check, 'ion-ios-bell': check}"></i>
      <span class="badge badge-positive linear-animation" ng-show="check">
           {{notifications}}
      </span>

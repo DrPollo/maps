@@ -38,7 +38,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             myConfig.authentication["signature_url"] = myConfig.authentication.signature_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
 
         if(myConfig.authentication.registration_url)
-            myConfig.authentication["registration_url"] = myConfig.authentication.registration_url.concat("?redirect_uri=",redirect_uri_auth);
+            myConfig.authentication["registration_url"] = myConfig.authentication.registration_url.concat("?redirect_uri=",redirect_uri_auth,"&client_id=",client_id);
         // fine fix callback
 
 
@@ -565,9 +565,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         CURRENT_SIGNATURE:"Firma in uso",
         SHARE_ALERT_TITLE:"Link a ",
         SHARE_ALERT_SUBTITLE: "Copia e condividi il seguente url",
-        COPY:'Copia'
+        COPY:'Copia',
+        USER_MENU_TOGGLE:'Apri/Chiudi menu utente'
     });
     $translateProvider.translations('en', {
+        USER_MENU_TOGGLE:'Toggle user menu',
         LOGIN_REQUIRED:"Login reuired",
         LOGIN_REQUIRED_MESSAGE:"Logging in is required to proceed",
         SEACH_NO_RESULTS:'No results...',
