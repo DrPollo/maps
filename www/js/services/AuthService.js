@@ -21,9 +21,9 @@ angular.module('firstlife.services')
                         method: 'POST',
                         // todo debug
                         // withCredentials: true,
-                        // headers: {
-                        //     // "Content-Type": "application/x-www-form-urlencoded"
-                        // },
+                        headers: {
+                            // "Content-Type": "application/x-www-form-urlencoded"
+                        },
                         data: {}
                     };
                     $log.debug('check session ',req);
