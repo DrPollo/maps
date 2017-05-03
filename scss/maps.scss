@@ -64,7 +64,7 @@
     }
     #mapHeader{
         position: relative;
-        display: block;
+        display: inline-flex;
         max-width: 322px;
         top: 8px;
         left: 8px;
@@ -90,10 +90,11 @@
 
         #headerControllers{
             position: relative;
-            width :100%;
+            width :auto;
+            display: inline-flex;
             #omnibox{
-                display: flex;
-                width: 100%;
+                display: inline-flex;
+                width: auto;
                 position: relative;
                 z-index: 1;
                 button {
