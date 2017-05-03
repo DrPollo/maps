@@ -74,7 +74,7 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            $log.debug("sono in app.map e vengo per lo stato",toState);
+            $log.debug("vengo da ",fromState.name," sono in app.map e vengo per lo stato",toState);
 
             if(event.preventMapsEvent)
                 return;
@@ -101,10 +101,11 @@ angular.module('firstlife.controllers')
 
 
             // valuto lo stato da dove arrivo e decido cosa fare
-            switch($rootScope.previousState){
+            switch(fromState.name){
                 //$log.debug("MapCtrl, cambio stato da intro: ",params);
                 case 'app.editor':
                     // se vengo dalla creazione/modifica di posti
+                    $log.debug('vengo da app.editor',params);
                     if(params.entity){
                         backFromEditor(params.entity);
                     }
@@ -152,45 +153,31 @@ angular.module('firstlife.controllers')
             // $log.debug('change location',hash);
             $location.search({ c: hash });
         }
-        //
-        //
-        // //listner apertura e chiusura della modal del place
-        // $scope.$on('openPlaceModal', function(event, args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //         // aggiorno il parametro place dalla search
-        //         updatePlaceInSearch(args.marker);
-        //
-        // });
-        // $scope.$on('closePlaceModal', function(event, args){
-        //     if(event.defaultPrevented)
-        //         return ;
-        //
-        //     event.preventDefault();
-        //         // rimuovo il parametro place dalla search
-        //         deleteInSearch('entity');
-        //
-        // });
-        //
-        //
+
+
+        $scope.$on("startUpdating",function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+
+            $scope.updateEntity = args;
+            // centro la mappa sul luogo dei parametri
+            changeLocation(args);
+            // entro in edit mode
+            changeMode('edit');
+        });
         $scope.$on("startEditing",function(event,args){
             if(event.defaultPrevented)
                 return ;
 
             event.preventDefault();
+
             $scope.updateEntity = args;
-            // se il luogo non e' bounded ad una posizione
-            if (!args.skip) {
-                // centro la mappa sul luogo dei parametri
-                locate(args);
-                // entro in edit mode
-                changeMode('edit');
-            } else {
-                // se devo saltare il riposizionamento
-                $scope.showASEdit();
-            }
+            // centro la mappa sul luogo dei parametri
+            locate(args);
+            // entro in edit mode
+            changeMode('edit');
         });
 
         $scope.$on("endEditing",function(event,args){
@@ -198,6 +185,7 @@ angular.module('firstlife.controllers')
                 return ;
 
             event.preventDefault();
+
             // chiamo la funzione che gestisce l'editing
             backFromEditor(args.marker.id);
             // click del markers
@@ -542,7 +530,8 @@ angular.module('firstlife.controllers')
 
         // action sheet di ritorno dall'editor
         function backFromEditor(entityId){
-            //$log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
+
+            $log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
             if(entityId === -1){
                 content.title = $filter('translate')('ERROR');
@@ -579,6 +568,8 @@ angular.module('firstlife.controllers')
             }else if(entityId){
                 clickMarker(entityId);
             }
+            //update markers
+            updateMarkers();
         };
 
 

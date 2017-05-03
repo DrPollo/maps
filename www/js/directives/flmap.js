@@ -142,7 +142,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('updateMarkers!');
+                $log.debug('updateMarkers');
                 updateMarkers();
             });
             $scope.$on('deleteMarker',function (e,args) {
@@ -485,9 +485,18 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $timeout(function () {
                     var el = document.elementFromPoint(point.x,point.y);
                     var id = L.stamp(el);
-                    var properties = mapRef._targets[id].properties;
+                    try{
+                        var properties = mapRef._targets[id].properties;
+                    } catch (e){
+                        $log.debug('no properties');
+                    };
+                    var args = {id:null, tile: tile, zoom_level:z, tile_id:tileid};
+                    if(properties){
+                        args.areaid = properties.id;
+                        args.type = properties.type;
+                    }
                     // $log.debug('got',mapRef._targets[id].properties);
-                    var info = angular.extend({id:null, tile: tile, zoom_level:z, tile_id:tileid, areaid:properties.id,type:properties.type},center);
+                    var info = angular.extend(args,center);
                     //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
                     // $log.debug('createEntity',properties,info);
                     $scope.$emit('createEntity',info);

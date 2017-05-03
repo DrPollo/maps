@@ -178,7 +178,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             //Update marker in local/server
             $scope.updateEntity = function(marker){
                 var params = {lat:marker.lat, lng:marker.lng, zoom:marker.zoom_level, id:marker.id};
-                $scope.$emit("startEditing",params);
+                $scope.$emit("startUpdating",params);
 
                 //fai uscire la wizardPlace con placeholder dati vecchi
                 $scope.closeModal();
