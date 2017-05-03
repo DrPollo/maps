@@ -210,8 +210,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         query = $filter('translate')(text);
                     default:
                         // aggiorno il parametro q
-                        $location.search('q',query);
-                        ThingsService.setQuery(query);
                         $scope.$emit('handleUpdateQ',{q:query});
                 }
                 // chiudo la modal

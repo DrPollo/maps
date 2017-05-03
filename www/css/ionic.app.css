@@ -13761,6 +13761,7 @@ ion-side-menu {
   width: 100%; }
   #wall #ricerca input {
     width: 100%;
+    padding-left: 10px;
     display: inline-block;
     background: transparent; }
 
@@ -15526,7 +15527,7 @@ timeline {
 
 div.search-tag-card {
   color: #333;
-  margin: 0px 10px 4px 0px;
+  margin: 0px 0px 0px 6px;
   display: inline-flex;
   background: #fff;
   border-radius: 20px;
@@ -15535,8 +15536,7 @@ div.search-tag-card {
   height: 40px;
   line-height: 40px;
   padding: 0px 0px 0px 16px;
-  position: relative;
-  top: -4px; }
+  vertical-align: middle; }
   div.search-tag-card .tag-card-body {
     line-height: 40px;
     cursor: pointer; }

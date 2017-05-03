@@ -138,7 +138,7 @@ angular.module('firstlife.directives')
             }
         }
     }
-}]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, myConfig, SearchService, CBuffer, ThingsService){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout', '$ionicSideMenuDelegate','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, $ionicSideMenuDelegate, myConfig, SearchService, CBuffer, ThingsService){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
@@ -156,7 +156,7 @@ angular.module('firstlife.directives')
                 e.preventDefault();
 
                 var q = params.q;
-                $log.debug('searchBar, nuovo parametro q ',q);
+                // $log.debug('searchBar, nuovo parametro q ',q);
                 // imposto il campo di ricerca
                 scope.query = params.q;
                 scope.card = true;
@@ -165,10 +165,6 @@ angular.module('firstlife.directives')
             var dev = myConfig.dev;
             // visualizzazione web o mobile?
             if(!scope.isMobile) scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
-
-            var searchendSetTimeout;
-            var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
-            var text_limit = 3;
 
             // gestione buffer cache di ricerca
             var buffer_size = 20;
@@ -190,77 +186,19 @@ angular.module('firstlife.directives')
                 // imposto il parametro di ricerca
                 ThingsService.setQuery(params.q);
             }
-            // toggle search bar and delete query
-            scope.toggleSearchBar = function (){
-                // if closing
-                if(scope.visible){
-                    // chiudo la barra
-                    scope.visible = false;
-                }else if(!scope.visible && scope.card) { // se la card e' aperta
-                    // search bar nascosta
-                    scope.card = false;
-                    // nascondo la card e apro la search bar
-                    $timeout(function () {scope.$apply(function () {
-                        // searchbar visibile
-                        scope.visible = true;
-                        // segnalo l'apertura della barra nello scope locale
-                        // usata per l'autofocus del campo input di ricerca
-                        scope.$broadcast('isOpen');
-                    })}, 750);
-                }else{
-                    // searchbar visibile
-                    scope.visible = true;
-                    // segnalo l'apertura della barra nello scope locale
-                    // usata per l'autofocus del campo input di ricerca
-                    scope.$broadcast('isOpen');
-                }
-                $log.debug('visible?',scope.visible)
-            }
+
+            // apro il wall per la modifica del testo
+            scope.toggleWall =function(){
+                $ionicSideMenuDelegate.toggleLeft();
+            };
 
             scope.deleteCard = function(){
-                $timeout(function () {scope.$apply(function () {
-                    scope.card = false;
-                    $location.search('q', null);
-                    ThingsService.setQuery(null);
-                    scope.$emit('updateQ',{q:null});
-                })}, 0);
-            }
-
-            // check to close
-            scope.checkToClose = function(){
-                if (scope.query.length == 0)
-                    scope.visible = false;
-            }
-
-            // reset della barra
-            function resetBar(){
-                scope.visible = false;
-                scope.deleteSearch();
-            }
-
-            // delete query
-            scope.deleteSearch = function(){
-                // clear query
-                if(scope.query)
-                    scope.query = '';
-                else{
-                    scope.visible = false;
-                    $location.search('q',null);
-                }
-            }
-
-            // close the search bar
-            scope.setTagCard = function() {
-                // chiudo la barra
-                scope.visible = false;
-                // filtro
-                $timeout(function() {scope.$apply(function () {
-                    scope.card = true;
-                    $location.search('q', scope.query);
-                    ThingsService.setQuery(scope.query);
-                    scope.$emit('updateQ',{q:scope.query});
-                })}, 300);
-            }
+                scope.card = false;
+                // richiedo update mappa
+                scope.$emit('handleUpdateQ',{q:null});
+                // avviso chiusura card
+                scope.$emit('closeSearchCard');
+            };
         }
     }
 }])
@@ -338,12 +276,13 @@ angular.module('firstlife.directives')
                 // listner sul campo input
                 scope.search = function(){
                     checkQuery(scope.query);
-                }
+                };
+
 
                 // lancio la funzione definita di localizzazione
                 scope.clickOnResult = function (entry){
-                    scope.locate({'location': entry.position})
-                }
+                    scope.locate({'location': entry.position});
+                };
 
                 // lancio la ricerca
                 function checkQuery(e){

@@ -76,6 +76,11 @@ angular.module('firstlife.directives')
 
                 scope.loading = true;
 
+                var searchendSetTimeout;
+                var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
+                var text_limit = 3;
+
+
                 scope.$on('$destroy', function(e) {
                     if(e.defaultPrevented)
                         return;
@@ -91,10 +96,10 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    if(args.query){
+                    if(args && args.query){
                         scope.query = args.query;
                     }else{
-                        scope.quer = '';
+                        scope.query = '';
                     }
                 });
 
@@ -130,11 +135,15 @@ angular.module('firstlife.directives')
                     scope.close();
                 };
 
+                scope.clearQuery = function () {
+                    scope.query = '';
+                    // avviso la mappa
+                    scope.$emit('handleUpdateQ');
+                };
+
                 // aggiorno il parametro prima di uscire
                 scope.exit =function(){
                     var q = scope.query ? scope.query : null;
-                    $location.search('q',scope.query);
-                    ThingsService.setQuery(scope.query);
                     scope.$emit('handleUpdateQ',{q:scope.query});
                     scope.close();
                 };
@@ -176,6 +185,8 @@ angular.module('firstlife.directives')
             scope.filter = function(tag){
                 // aggiorno il parametro q
                 scope.$emit('wallQuery',{query: tag});
+                // avviso la mappa
+                scope.$emit('handleUpdateQ',{q:tag});
             };
 
             scope.focus = function(){

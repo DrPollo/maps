@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, clipboard ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
         
         
         $scope.config = myConfig;
@@ -102,9 +102,22 @@ angular.module('firstlife.controllers')
                 return;
 
             event.preventDefault();
-            $scope.$broadcast('newSearchParam',{q:args.q});
+            var q = (args && args.q) ? args.q : null;
+            ThingsService.setQuery( q);
+            $location.search('q',q);
+            $scope.$broadcast('newSearchParam',{q:q});
             // al cambio filtro testuale
             $scope.$broadcast('filterMarkers');
+        });
+
+        $scope.$on('closeSearchCard',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $log.debug('closeSearchCard calling wallQuery');
+            $scope.$broadcast('wallQuery');
         });
 
         /*

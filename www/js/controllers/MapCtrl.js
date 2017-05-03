@@ -241,17 +241,7 @@ angular.module('firstlife.controllers')
             // al cambio filtro testuale
             filterMarkers();
         });
-        // cattura e gestisce q
-        // $scope.$on("handleUpdateQ",function(event,args){
-        //     // $log.debug('handleUpdateQ',event,args);
-        //     if(event.defaultPrevented)
-        //         return;
-        //
-        //     event.preventDefault();
-        //     $scope.$broadcast('newSearchParam',{q:args.q});
-        //     // al cambio filtro testuale
-        //     filterMarkers();
-        // });
+
 
         $scope.$on("setGroupCard", function (event,args) {
             // $log.debug('setGroupCard',event,args);
