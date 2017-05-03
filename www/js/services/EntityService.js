@@ -67,6 +67,8 @@ angular.module('firstlife.services')
             defaults.entity_type = typeKey;
             // $log.debug('check entity_type', typeKey);
             // regole specifiche per tipi
+            if(self.config.dev) defaults.description = devContent;
+            if(self.config.dev) defaults.tags = ['test'];
             switch(typeKey){
                 case 'FL_PLACES' :
                     defaults.valid_from = null;
@@ -75,17 +77,13 @@ angular.module('firstlife.services')
                 case 'FL_EVENTS' :
                     defaults.valid_to = now;
                     defaults.valid_from = now;
-                    if(self.config.dev) defaults.description = devContent;
-                    if(self.config.dev) defaults.thumbnail = devContent;
                     break;
                 case 'FL_ARTICLES' :
                     defaults.valid_from = now;
-                    if(self.config.dev) defaults.text = devContent.concat(' Mauris id venenatis arcu. Curabitur a blandit orci. Mauris eu erat turpis. Donec eget aliquam nunc. Proin nec risus quis ipsum tempus varius sed eu lorem. Ut lacus elit, semper in lobortis eget, dictum id tellus. Donec dictum auctor diam, eu sollicitudin nibh viverra sed. Etiam ut tellus eu nunc auctor porttitor. Donec metus sapien, commodo eget magna vel, maximus tristique odio. Proin aliquet in leo sit amet elementum. Vivamus dolor lacus, fermentum eu facilisis ac, gravida id augue.');
                     break;
                 case 'FL_GROUPS' :
                     defaults.valid_from = now;
                     defaults.valid_to = null;
-                    if(self.config.dev) defaults.thumbnail = devContent;
                     break;
                 case 'FL_IMAGES' :
                     defaults.valid_from = now;
@@ -94,7 +92,6 @@ angular.module('firstlife.services')
                 case 'FL_NEWS' :
                     defaults.valid_from = now;
                     //defaults.valid_to = now;
-                    if(self.config.dev) defaults.message_text = devContent;
                     if(self.config.dev) defaults.name = defaultName;
                     break;
                 case 'comment' :
@@ -184,7 +181,7 @@ angular.module('firstlife.services')
             var typeProperties = typeInfo.perms;
             // check campi del tipo
             for(var key in typeProperties){
-                $log.debug("check perm ", key, data[key], data[key] ? true : false );
+                // $log.debug("check perm ", key, data[key], data[key] ? true : false );
                 // se c'e' setto altrimento metto null
                 dataForServer[key] = data[key] ? data[key] : null;
                 
@@ -251,17 +248,43 @@ angular.module('firstlife.services')
             dataForServer.tags = data.tags.map(function(e){return e.tag});
 
 
+
+
+
             // geometrie
             // gestisco la geometria
             if(data.coordinates){ // se e' un punto
                 //todo dataForServer.geometry = {type:"Points", coordinates:data.coordinates};
                 dataForServer.coordinates = [parseFloat(data.coordinates[0]),parseFloat(data.coordinates[1])];
+                dataForServer.zoom_level = parseInt(data.zoom_level);
+                // set tile_id
+                var tile = pointToTile(dataForServer.coordinates[0], dataForServer.coordinates[1], dataForServer.zoom_level);
+                // $log.debug(tile,dataForServer.coordinates[0],dataForServer.coordinates[1],dataForServer.zoom_level,tile[0]+':'+tile[1]+':'+tile[2]);
+                dataForServer['tile_id'] = tile[0]+':'+tile[1]+':'+tile[2];
             }
             // todo geometrie diverse
 
             // $log.debug('check data for server',dataForServer);
             return dataForServer;
         }
+
+
+        // code from @mapbox/tilebelt
+        function pointToTile(lon, lat, z) {
+            var tile = pointToTileFraction(lon, lat, z);
+            tile[0] = Math.floor(tile[0]);
+            tile[1] = Math.floor(tile[1]);
+            return tile;
+
+            function pointToTileFraction(lon, lat, z) {
+                var sin = Math.sin(lat * Math.PI / 180);
+                var z2 = Math.pow(2, z);
+                var x = z2 * (lon / 360 + 0.5);
+                var y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
+                return [x, y, z];
+            }
+        }
+
 
 
 
