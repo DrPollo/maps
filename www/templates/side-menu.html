@@ -11,7 +11,9 @@
             <side-wall filter="toggleFilter(cat,key)"></side-wall>
         </ion-content>
         <div class="bar bar-footer">
-          <div>{{apiVersion}} - {{clientVersion}}</div>
+            <button ng-if="config.actions.map_tab" class="button button-outline button-positive item-button ion-link" menu-close on-tap="makeEmbed()">
+                {{'EMBED_MAP'|translate}}
+            </button>
         </div>
     </ion-side-menu>
     <ion-side-menu side="right">
@@ -29,21 +31,14 @@
                     <h2 class="greeting">{{'WELCOME'|translate}} {{displayName}}</h2>
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
-                <ion-item class="item-divider">{{'EXPLORE'|translate}}</ion-item>
+                <ion-item class="item-divider">{{'CURRENT_SIGNATURE'|translate}}</ion-item>
+                <ion-item>{{user.signature || user.fullname}}</ion-item>
+                <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <notification-link check="checkNotifications"></notification-link>
                 <ion-item ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close on-tap="myMap()">
                     <i class="icon ion-map"></i>
                     <h3 class="menu-text">{{'MY_MAP'|translate}}</h3>
                 </ion-item>
-                <ion-item ng-if="config.actions.map_tab" class="item-icon-left item-button" nav-clear menu-close ng-href="#/app/maps/">
-                    <i class="icon ion-android-map"></i>
-                    <h3 class="menu-text">{{'GENERAL_MAP'|translate}}</h3>
-                </ion-item>
-                <ion-item ng-if="config.actions.map_tab" class="item-icon-left item-button" nav-clear menu-close on-tap="makeEmbed()">
-                    <i class="icon ion-link"></i>
-                    <h3 class="menu-text">{{'EMBED_MAP'|translate}}</h3>
-                </ion-item>
-                <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <ion-item ng-if="config.authentication.profile_url" ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close ng-click="profile()">
                     <i class="icon ion-android-person"></i>
                     <h3 class="menu-text">{{'EDIT_PROFILE'|translate}}</h3>
@@ -59,6 +54,15 @@
                 <ion-item ng-show="isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng-click="showConfirmLogout()">
                     <i class="icon ion-log-out"></i>
                     <h3 class="menu-text">{{'LOGOUT'|translate}}</h3>
+                </ion-item>
+                <ion-item class="item-divider">{{'EXPLORE'|translate}}</ion-item>
+                <ion-item ng-if="config.actions.map_tab" class="item-icon-left item-button" nav-clear menu-close ng-href="#/app/maps/">
+                    <i class="icon ion-android-map"></i>
+                    <h3 class="menu-text">{{'GENERAL_MAP'|translate}}</h3>
+                </ion-item>
+                <ion-item ng-if="config.actions.map_tab" class="item-icon-left item-button" nav-clear menu-close on-tap="makeEmbed()">
+                    <i class="icon ion-link"></i>
+                    <h3 class="menu-text">{{'EMBED_MAP'|translate}}</h3>
                 </ion-item>
                 <ion-item ng-if="config.actions.switch_language" class="item-divider">{{'LANG'|translate}}</ion-item>
                 <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('it')" nav-clear menu-close>

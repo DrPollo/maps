@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'ThingsService',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, ThingsService ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, clipboard ) {
         
         
         $scope.config = myConfig;
@@ -39,7 +39,7 @@ angular.module('firstlife.controllers')
             // setup utente se presente
             if($scope.user){
                 $scope.displayName = $scope.user.fullname;
-                $log.debug("Benvenuto", $scope.user.fullname);
+                $log.debug("Benvenuto", $scope.user);
             } else {
                 $scope.username = "Guest";
                 $log.info("Non loggato");
@@ -173,7 +173,32 @@ angular.module('firstlife.controllers')
         }
         
         $scope.makeEmbed = function(){
-            $location.search('embed','viewer');
+            // creo link per lo share
+            var url = $window.location.href+'&embed=viewer';
+            // $log.debug('embed url ',url);
+            var buttons = [{text:$filter('translate')('OK')}];
+            if(clipboard.supported){
+                var copy = {
+                    text:$filter('translate')('COPY'),
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        clipboard.copyText(url);
+                        e.preventDefault();
+                        alertPopup.close();
+                    }
+                };
+                buttons.push(copy);
+            }
+            var alertPopup = $ionicPopup.alert({
+                title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
+                subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
+                template: url,
+                buttons: buttons
+            });
+
+            alertPopup.then(function(res) {
+                // $log.debug('embed url ',url);
+            });
         }
         
        

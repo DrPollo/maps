@@ -1,4 +1,4 @@
-angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage','naif.base64'])
+angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage','naif.base64','angular-clipboard'])
 
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
 
@@ -491,7 +491,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 2 MB.",
         IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif",
         ADVANCED_TIME:"Gestione avanzata del tempo",
-        EMBED_MAP: "Esporta",
+        EMBED_MAP: "Condividi",
         INFO_LABEL:"Info",
         INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc...",
         CLOSE:"Chiudi",
@@ -560,7 +560,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADMIN6:"Province",
         ADMIN4:"Regioni",
         SCALE:"Scala",
-        OPEN_THING:"Apri"
+        OPEN_THING:"Apri",
+        CURRENT_SIGNATURE:"Firma in uso",
+        SHARE_ALERT_TITLE:"Link a ",
+        SHARE_ALERT_SUBTITLE: "Copia e condividi il seguente url",
+        COPY:'Copia'
     });
     $translateProvider.translations('en', {
         LOGIN_REQUIRED:"Login reuired",
@@ -834,7 +838,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         PICTURE_DISCLAIMER:"Picture size must not be greater than 2 MB.",
         IMAGE_FORMATS:"Supported formats: .jpg, .png and .gif",
         ADVANCED_TIME:"Advanced time setup",
-        EMBED_MAP: "Export embed url",
+        EMBED_MAP: "Share",
         INFO_LABEL:"Info",
         INFO_PLACEHOLDER:"Useful information, instructions, rules, etc.",
         CLOSE:"Close",
@@ -903,7 +907,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADMIN6:"Districts",
         ADMIN4:"Regions",
         SCALE:"Scale",
-        OPEN_THING:"Open"
+        OPEN_THING:"Open",
+        CURRENT_SIGNATURE:"Current signature",
+        SHARE_ALERT_TITLE:"Link at ",
+        SHARE_ALERT_SUBTITLE: "Copy and share the following url",
+        COPY:'Copy'
     });
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
