@@ -28,8 +28,8 @@ wall-toggler {
         .card {
             margin: 10px 20px;
             .title {
-                font-size: 20px;
-                font-weight: 400;
+                font-size: 1.3em;
+                font-weight: 500;
                 cursor: pointer;
                 background: #fafafa;
             }
@@ -41,6 +41,7 @@ wall-toggler {
                 height: 133px;
                 min-height: 133px;
                 overflow: hidden;
+                font-size: 1em;
                 .subheader {
                     margin-bottom: 10px;
                     .type-icon, .tag {
