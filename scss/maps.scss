@@ -44,32 +44,18 @@
     }
 }
 .maps-view{
-    search-cards{
-        display: block;
-        width: 260px;
-        button {
-            color: white;
-            text-align: left;
-            background: $dark;
-            display: block;
-            min-width: 100%;
-            overflow: hidden;
-            height: 47px;
-            span {
-                display: inline;
-                padding-right: 10px;
-                font-size: 1em;
-            }
-        }
-    }
     #mapHeader{
         position: relative;
         display: inline-flex;
         max-width: 322px;
-        top: 8px;
-        left: 8px;
+        top: 0px;
+        left: 0px;
         z-index: 12;
-
+        search-bar {
+            top: 8px;
+            left: 8px;
+            position: relative;
+        }
         .sideMenuToggler, #floating-logo, #floating-search-bar, #omnibox{
             display: inline-block;
             vertical-align: top;

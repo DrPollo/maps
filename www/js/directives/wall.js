@@ -3,7 +3,7 @@ angular.module('firstlife.directives')
         return{
             restrict:'E',
             scope:{},
-            template:'<button class="button" on-tap="toggle()"><i class="icon ion-android-list"></i></button>',
+            templateUrl:'/templates/wall/toggler.html',
             link:function (scope,element,attr) {
                 scope.$on('$destroy', function(e) {
                     if(e.defaultPrevented)

@@ -566,9 +566,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SHARE_ALERT_TITLE:"Link a ",
         SHARE_ALERT_SUBTITLE: "Copia e condividi il seguente url",
         COPY:'Copia',
-        USER_MENU_TOGGLE:'Apri/Chiudi menu utente'
+        USER_MENU_TOGGLE:'Apri/Chiudi menu utente',
+        TOGGLE_WALL_TITLE:'Apri/Chiudi bacheca contenuti'
     });
     $translateProvider.translations('en', {
+        TOGGLE_WALL_TITLE:'Toggle content wall',
         USER_MENU_TOGGLE:'Toggle user menu',
         LOGIN_REQUIRED:"Login reuired",
         LOGIN_REQUIRED_MESSAGE:"Logging in is required to proceed",
