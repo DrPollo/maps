@@ -105,7 +105,7 @@ angular.module('firstlife.controllers')
                 //$log.debug("MapCtrl, cambio stato da intro: ",params);
                 case 'app.editor':
                     // se vengo dalla creazione/modifica di posti
-                    $log.debug('vengo da app.editor',params);
+                    // $log.debug('vengo da app.editor',params);
                     if(params.entity){
                         backFromEditor(params.entity);
                     }
@@ -161,6 +161,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
+            // $log.debug('startUpdating',args);
             $scope.updateEntity = args;
             // centro la mappa sul luogo dei parametri
             changeLocation(args);
@@ -173,6 +174,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
+            // $log.debug('startEditing',args);
             $scope.updateEntity = args;
             // centro la mappa sul luogo dei parametri
             locate(args);
@@ -272,11 +274,13 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-            // $log.debug('going to editor',args);
+
             // go to editor
-            var params = args;
+            var params = angular.extend($scope.updateEntity,args);
             if($scope.updateEntity && $scope.updateEntity.id)
                 params.id = $scope.updateEntity.id;
+
+            // $log.debug('going to editor',params);
             $state.go('app.editor',params);
             $timeout(changeMode,200);
         });

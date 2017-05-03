@@ -501,7 +501,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     // $log.debug('createEntity',properties,info);
                     $scope.$emit('createEntity',info);
                     removeEditLayers();
-                },200);
+                },300);
             };
 
             $scope.maxZoom = myConfig.map.max_zoom;

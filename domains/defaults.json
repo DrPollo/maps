@@ -219,7 +219,7 @@
             {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_NEWS","index":2,
                 "show_author":true, "shape":"diamond",
                 "properties":{
-                    "comment_of":{ "key": "comment_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
+                    "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
                     "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},

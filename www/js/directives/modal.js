@@ -188,9 +188,11 @@ angular.module('firstlife.directives').directive('thingModal',function () {
              * Add child marker/place
              */
             $scope.addChildEntity = function(){
-                // $log.debug('addChildEntity');
+
                 var marker = $scope.infoPlace.marker,
                     params = {lat:marker.lat, lng:marker.lng, zoom_level:marker.zoom_level, rel: marker.id, parent_type:marker.entity_type};
+
+                $log.debug('addChildEntity',params);
                 // mando il messaggio
                 $scope.$emit("startEditing",params);
 

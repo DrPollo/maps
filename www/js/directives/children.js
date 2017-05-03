@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
     return {
         restrict: 'EG',
         scope: {
-            marker: '=marker',
+            marker: '<marker',
             show: '&click',
             add: '&'
         },
@@ -86,20 +86,21 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                 // $log.debug('parentsRElations', parentsRelations);
                 for(key in parentsRelations) {
                     var parentRel = parentsRelations[key];
-                    // $log.debug('parent rel',parentRel, ban)
+                    // $log.debug('parent rel',parentRel, ban);
                     // evito i duplicati
                     if(!ban[parentRel.field]){
                         ban[parentRel.field] = true;
 
                         var id = scope.marker[parentRel.field];
-                        // $log.debug('id', parentRel.field, scope.marker[parentRel.field], id);
+                        // $log.debug('id', parentRel.field, scope.marker, scope.marker[parentRel.field], id);
                         if(id){
                             ThingsService.get(id).then(
-                                function (marker) {
-                                    if(marker){
-                                        var type = marker.entity_type;
+                                function (parent) {
+                                    // $log.debug('got parent',parent);
+                                    if(parent){
+                                        var type = parent.entity_type;
                                         var entry = angular.extend({},parentsRelations[type]);
-                                        angular.extend(entry,{marker:marker});
+                                        angular.extend(entry,{marker:parent});
                                         scope.relations.parents.push(entry);
                                         // qualcosa da leggere
                                         scope.ok = true;

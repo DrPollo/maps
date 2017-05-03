@@ -212,7 +212,7 @@ angular.module('firstlife.controllers')
                 var field = types[index].relations[entity_type].field ? types[index].relations[entity_type].field : 'generic_rel';
                 _this.wizard.dataForm[field] = parentId;
             }
-
+            $log.debug('check rel',parentId,parentType,_this.wizard.dataForm);
 
             // template timepicker door_time
             if(_this.checkList.door_time){
@@ -364,9 +364,9 @@ angular.module('firstlife.controllers')
             if(dataForServer.title)
                 delete dataForServer.title;
 
-            $log.debug("dataForServer", dataForServer);
+            $log.debug("dataForServer pre", dataForServer);
             dataForServer = EntityService.processData(dataForServer);
-            $log.debug("dataForServer", dataForServer);
+            $log.debug("dataForServer post", dataForServer);
             //update a place
             if(params.id && params.id !=""){
 
