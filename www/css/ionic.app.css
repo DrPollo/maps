@@ -13770,8 +13770,8 @@ wall-toggler #wall-toggler {
   #wall .container .card {
     margin: 10px 20px; }
     #wall .container .card .title {
-      font-size: 20px;
-      font-weight: 400;
+      font-size: 1.3em;
+      font-weight: 500;
       cursor: pointer;
       background: #fafafa; }
     #wall .container .card .title:hover, #wall .container .card .title:active, #wall .container .card .title:focus {
@@ -13779,7 +13779,8 @@ wall-toggler #wall-toggler {
     #wall .container .card .main {
       height: 133px;
       min-height: 133px;
-      overflow: hidden; }
+      overflow: hidden;
+      font-size: 1em; }
       #wall .container .card .main .subheader {
         margin-bottom: 10px; }
         #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
