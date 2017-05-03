@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
     return{
         restrict:'EG',
         scope:{},
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', '$ionicSideMenuDelegate', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, $ionicSideMenuDelegate, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -210,6 +210,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         query = $filter('translate')(text);
                     default:
                         // aggiorno il parametro q
+                        $ionicSideMenuDelegate.toggleLeft()
                         $scope.$emit('handleUpdateQ',{q:query});
                 }
                 // chiudo la modal
@@ -298,7 +299,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         if($scope.infoPlace.marker.entity_type === 'FL_GROUPS')
                             initMembers();
                         // inizializzo la maschera dei permessi per l'utente per il marker attuale
-                        initPerms(marker.owner.id);
+                        if(marker.owner && marker.owner.id)
+                            initPerms(marker.owner.id);
                         // recupero il tipo e lo metto dentro $scope.currentType
                         initTypeChecks(marker.entity_type);
                     },
@@ -499,7 +501,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             scope.member = false;
             scope.owner = false;
             scope.subscriber = false;
-            scope.markerOwner = scope.marker.owner.id;
+            scope.markerOwner = scope.marker.owner ? scope.marker.owner.id : null;
 
             scope.user = AuthService.getUser();
             // visualizzazione web o mobile?
