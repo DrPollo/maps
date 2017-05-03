@@ -103,6 +103,7 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
+                    // $log.debug('wall init');
                     init();
                 });
 

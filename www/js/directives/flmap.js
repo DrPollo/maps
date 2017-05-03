@@ -368,6 +368,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 var markers = ThingsService.filter();
                 removeMarkers();
                 addMarkers(markers);
+                $scope.$emit('markerUpdated');
             }
             // add the markers keeping the reference
             function addMarkers(markers) {
