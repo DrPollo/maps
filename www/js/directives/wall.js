@@ -120,7 +120,7 @@ angular.module('firstlife.directives')
                 function init(){
                     delete scope.markers;
 
-                    $log.debug('init entity list');
+                    // $log.debug('init entity list');
                     var current = ThingsService.filter();
                     scope.markers = Object.keys(current).map(function(e){return current[e];});
                     var params = $location.search();
@@ -189,7 +189,7 @@ angular.module('firstlife.directives')
 
 
             // scope.$broadcast('initActions',{id:scope.marker.id});
-            $log.debug(scope.marker.name);
+            // $log.debug(scope.marker.name);
 
             scope.filter = function(tag){
                 // aggiorno il parametro q

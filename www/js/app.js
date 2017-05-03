@@ -76,7 +76,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
                 $rootScope.previousState = fromState.name;
 
-                if(tryAutoLogin){
+                // $log.debug('is auth?',AuthService.isAuth());
+                if(tryAutoLogin && toState.name !== 'callback' && !search_params.code ){
                     tryAutoLogin = false;
                     autoLogin();
                 }
