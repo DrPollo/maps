@@ -7,20 +7,6 @@
     </ion-header-bar>
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
         <div class="top-modal">
-            <div class="modal-subheader credits">
-                {{'LAST_AUTHOR' | translate}}{{' '}}
-                <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
-                    {{infoPlace.marker.updater.display_name}}
-                </span>
-                {{'LAST_UPDATE'|translate}}
-                <span ng-if="infoPlace.marker.last_update" class="time modal-subheader-item">
-                    {{infoPlace.marker.last_update | date:'(HH:mm) dd/MM/yyyy'}}
-                </span>
-            </div>
-            <div class="modal-subheader">
-                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
-                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i class="icon ion-android-people"></i></span></span>
-            </div>
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">
                     <i class="icon ion-android-time"></i>
@@ -38,7 +24,7 @@
                     <span ng-repeat="icon in infoPlace.marker.icons track by $index"
                           class="modal-subheader-item tag">
                         <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
-                        <span ng-if="!isMobile">{{icon.name |translate}}</span>
+                        <span>{{icon.name |translate}}</span>
                     </span>
                 </span>
                 <span class="tags">
@@ -50,6 +36,20 @@
                         {{tag}}
                     </span>
                 </span>
+            </div>
+            <div class="modal-subheader credits" ng-if="config.dev">
+                {{'LAST_AUTHOR' | translate}}{{' '}}
+                <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
+                        {{infoPlace.marker.updater.display_name}}
+                    </span>
+                {{'LAST_UPDATE'|translate}}
+                <span ng-if="infoPlace.marker.last_update" class="time modal-subheader-item">
+                        {{infoPlace.marker.last_update | date:'(HH:mm) dd/MM/yyyy'}}
+                    </span>
+            </div>
+            <div class="modal-subheader">
+                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
+                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i class="icon ion-android-people"></i></span></span>
             </div>
             <div ng-if="infoPlace.marker.description" class="content modal-content text-field">
                 {{infoPlace.marker.description}}
