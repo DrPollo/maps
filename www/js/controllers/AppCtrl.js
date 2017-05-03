@@ -69,7 +69,7 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-            $log.debug('markerUpdated');
+            // $log.debug('markerUpdated');
             $scope.$broadcast('wallInit');
         });
         $scope.$on('wallToggle',function (event,args) {

@@ -46,11 +46,11 @@ angular.module('firstlife.directives')
 
                 // init initiative list
                 function initList (){
-                    $log.debug('init initiative list',scope.thingId);
+                    // $log.debug('init initiative list',scope.thingId);
                     InitiativeFactory.getAllInitiatives(scope.thingId).then(
                         function (results) {
                             scope.initiatives = angular.copy(results);
-                            $log.debug('list of initiatives',results);
+                            // $log.debug('list of initiatives',results);
                         },
                         function (error) {
                             $log.error(error);
@@ -94,7 +94,7 @@ angular.module('firstlife.directives')
                     return resetForm(form);
                 }
                 var res = $filter('filter')(scope.list,q);
-                $log.debug('check result',res);
+                // $log.debug('check result',res);
                 // exactly one choice
                 if(res.length === 1 && res[0].name === q.name){
                     scope.setChoice(form,res[0]);
@@ -134,11 +134,11 @@ angular.module('firstlife.directives')
                     link(scope.choice.id);
                 }else if(scope.q.name){
                     // if a new initiative was defined
-                    $log.debug('creating intiative',scope.q.name);
+                    // $log.debug('creating intiative',scope.q.name);
                     createInitiative(scope.q).then(
                         function (results) {
                             // then link to the new initiative
-                            $log.debug('create intiative',results);
+                            // $log.debug('create intiative',results);
                             link(results.id);
                         },
                         function (error) {
@@ -168,12 +168,12 @@ angular.module('firstlife.directives')
 
             // link an initiative
             function link(id) {
-                $log.debug('link to ',id)
+                // $log.debug('link to ',id);
                 InitiativeFactory.link(scope.thingId,id).then(
                     function (result) {
-                        $log.debug('link result',result);
+                        // $log.debug('link result',result);
                         scope.loading = false;
-                        $log.debug('link ',id,' to ',scope.thingId);
+                        // $log.debug('link ',id,' to ',scope.thingId);
                         scope.close();
                     },
                     function (error) {

@@ -142,7 +142,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                $log.debug('updateMarkers');
+                // $log.debug('updateMarkers');
                 updateMarkers();
             });
             $scope.$on('deleteMarker',function (e,args) {
