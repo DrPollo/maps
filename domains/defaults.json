@@ -225,11 +225,11 @@
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
                 },"relations":{
-                    "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
-                    "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
-                    "description":{"key":"description","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":""},
-                    "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"advanced":true,"is_editable":true},
-                    "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
+                    "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                    "FL_EVENTS":{"slug":"location","field":"location","relation":"located","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
+                    "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL","bounded":true},
+                    "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
+                    "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
                 }
             },
             {"name":"POST_NAME","id":4,"icon":"ion-document-text","slug":"article","url":"articles","key":"FL_ARTICLES","index":3,

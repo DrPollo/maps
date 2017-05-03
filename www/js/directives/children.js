@@ -36,9 +36,10 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
             loadSiblings();
 
             function loadSiblings (){
-                if(!scope.marker || !scope.marker.entity_type)
-                    return
-
+                if(!scope.marker || !scope.marker.entity_type){
+                    scope.loading = false;
+                    return;
+                }
 
                 // $log.debug('load siblings');
 
