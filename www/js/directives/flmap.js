@@ -8,7 +8,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             map:'<'
         },
         templateUrl:'/templates/map/flmap.html',
-        controller: ['$scope','$log', '$location', '$timeout','myConfig','ThingsService', 'leafletData',function ($scope, $log, $location,$timeout, myConfig, ThingsService, leafletData) {
+        controller: ['$scope','$log', '$location', '$timeout','myConfig','ThingsService', 'leafletData', 'PlatformService', function ($scope, $log, $location,$timeout, myConfig, ThingsService, leafletData, PlatformService) {
 
             // markers
             $scope.markers = {};
@@ -22,7 +22,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
 
 
-            var zoomControl = L.control.zoom({position:'bottomleft'});
+            var isMobile = PlatformService.isMobile();
+
+            // disabilito i comandi zoom in caso di mobile
+            if(!isMobile)
+                var zoomControl = L.control.zoom({position:'bottomleft'});
 
 
             // todo sposta configurazione in un provider
@@ -170,7 +174,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     function (map) {
                         // $log.debug('save map reference');
                         mapRef = map;
-                        mapRef.addControl(zoomControl);
+                        // se definito
+                        if(zoomControl)
+                            mapRef.addControl(zoomControl);
                     },
                     function (err) {
                         $log.error(err);
@@ -528,7 +534,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     // vGrid.setFeatureStyle(currentFeature,style);
                     mapRef.setView(e.latlng);
                 });
-                mapRef.removeControl(zoomControl);
+
+                // se definito
+                if(zoomControl)
+                    mapRef.removeControl(zoomControl);
 
                 // snap to scale
                 var scale = scales[mapRef.getZoom()];
@@ -549,7 +558,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 if(currentFeature)
                     vGrid.resetFeatureStyle(currentFeature);
 
-                mapRef.addControl(zoomControl);
+                // se definito
+                if(zoomControl)
+                    mapRef.addControl(zoomControl);
             }
 
             var currentFeature = null;
