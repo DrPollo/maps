@@ -149,6 +149,12 @@ angular.module('firstlife.controllers')
                     },function(error) {
                         $log.error(error);
                     });
+
+                // valori per update (salto step tipo)
+                $timeout(function(){
+                    $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
+                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount() - 1;
+                },100);
             }
             //create place: init empty dataForm
             else{
@@ -159,7 +165,11 @@ angular.module('firstlife.controllers')
                 $scope.chooseType = true;
 
                 // fine regole gestione campi speciali
-                $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
+                // $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
+                $timeout(function(){
+                    $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
+                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
+                },100);
             }
             // gestione di stati di arrivo diversi non necessaria
             // } else {
@@ -169,10 +179,7 @@ angular.module('firstlife.controllers')
             //     else
             //         $state.go('app.maps');
             // }
-            $timeout(function(){
-                $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
-                $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
-            },100);
+
         });
 
         // $timeout(function(){

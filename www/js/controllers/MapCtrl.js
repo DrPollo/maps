@@ -158,7 +158,7 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
-            // $log.debug('startUpdating',args);
+            $log.debug('startUpdating',args);
             $scope.updateEntity = args;
             // centro la mappa sul luogo dei parametri
             changeLocation(args);
@@ -271,9 +271,14 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-
             // go to editor
-            var params = angular.extend($scope.updateEntity,args);
+            // $log.debug('createEntity',$scope.updateEntity);
+            try {
+                var params = angular.extend(args,$scope.updateEntity);
+            }catch(e){
+                $log.error(e,'$scope.updateEntity',$scope.updateEntity);
+                var params = angular.extend({}, args);
+            }
             // reset buffer
             $scope.updateEntity = {};
             // $log.debug('going to editor',params);
@@ -319,7 +324,7 @@ angular.module('firstlife.controllers')
         $scope.switchEditMode = AuthService.doAction(function(){
             if($scope.editMode){
                 changeMode('view');
-                $scope.updateEntity = null;
+                $scope.updateEntity = {};
             }else{
                 changeMode('edit');
             }
@@ -372,6 +377,7 @@ angular.module('firstlife.controllers')
 
                 // parametri per l'editor
                 var params = {lat: $scope.flmap.center.lat, lng:$scope.flmap.center.lng,zoom_level:$scope.flmap.center.zoom,id:$scope.updateEntity.id};
+                // $log.debug('going to editor',params);
                 $state.go('app.editor', params);
 
             }if($scope.updateEntity){
@@ -387,7 +393,7 @@ angular.module('firstlife.controllers')
                 params.lat = $scope.flmap.center.lat;
                 params.lng = $scope.flmap.center.lng;
                 params.zoom_level = $scope.flmap.center.zoom;
-
+                // $log.debug('going to editor2',params);
                 $state.go('app.editor', params);
             }else{
                 // back to view
