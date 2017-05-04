@@ -145,16 +145,19 @@ angular.module('firstlife.controllers')
 
 
         function changeLocation(params) {
-            var hash = params.lat+':'+params.lng;
-            if(params.zoom){
-                hash = hash.concat(':',params.zoom);
-            }else{
-                var c = $location.search().c;
-                var z = c.split(':')[2];
-                hash = hash.concat(':',z);
-            }
-            // $log.debug('change location',hash);
-            $location.search({ c: hash });
+            //todo delete
+            // var hash = params.lat+':'+params.lng;
+            // if(params.zoom){
+            //     hash = hash.concat(':',params.zoom);
+            // }else{
+            //     var c = $location.search().c;
+            //     var z = c.split(':')[2];
+            //     hash = hash.concat(':',z);
+            // }
+            $log.debug('change location',params);
+            // $location.search({ c: hash });
+            // todo richiedi cambio di posizione a flmap
+            $scope.$broadcast('goToLocation',params);
         }
 
 

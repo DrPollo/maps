@@ -154,7 +154,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // $log.debug('deleteMarkers!',args);
                 removeMarker(args.id);
             });
+            $scope.$on('goToLocation',function (e,args) {
+                if(e.defaultPrevented)
+                    return;
 
+                e.preventDefault();
+
+                // $log.debug('goToLocation!',args);
+
+                changeLocation(args);
+            });
 
             /*
              * Listner interni
@@ -274,12 +283,13 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             function changeLocation(params) {
                 var hash = params.lat+':'+params.lng;
-                if(params.zoom){
-                    hash = hash.concat(':',params.zoom);
-                }else{
-                    hash = hash.concat(':',$scope.flmap.center.zoom);
+                hash = hash.concat(':',params.zoom || mapRef.getZoom());
+
+                $log.debug('change location',hash);
+                if(mapRef){
+                    var z = params.zoom || mapRef.getZoom();
+                    mapRef.setView(L.latLng(params.lat, params.lng),z);
                 }
-                // $log.debug('change location',hash);
                 $location.search({ c: hash });
             }
 
