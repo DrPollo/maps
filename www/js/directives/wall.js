@@ -1,5 +1,5 @@
 angular.module('firstlife.directives')
-    .directive('wallToggler',['$log', '$ionicSideMenuDelegate', function ($log, $ionicSideMenuDelegate) {
+    .directive('wallToggler',['$log', function ($log) {
         return{
             restrict:'E',
             scope:{},
@@ -14,15 +14,14 @@ angular.module('firstlife.directives')
                 });
 
                 scope.toggle = function () {
-                    // $log.debug('toggle left');
-                    $ionicSideMenuDelegate.toggleLeft();
-                    // scope.$emit('wallToggle');
+                    // $log.debug('toggle wall');
+                    scope.$emit('toggleSideLeft');
                 }
 
             }
         }
     }])
-    .directive('sideWall',['$log', '$ionicSideMenuDelegate', function ($log, $ionicSideMenuDelegate) {
+    .directive('sideWall',['$log', function ($log) {
         return {
             restrict: 'E',
             scope: {
@@ -54,7 +53,7 @@ angular.module('firstlife.directives')
                 });
 
                 scope.closeWall = function () {
-                    $ionicSideMenuDelegate.toggleLeft();
+                    scope.$emit('closeSideLeft');
                 };
 
                 scope.clickWallItem = function(id){
