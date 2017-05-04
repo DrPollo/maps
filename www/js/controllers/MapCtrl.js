@@ -70,6 +70,9 @@ angular.module('firstlife.controllers')
         var RELOAD_TIME = config.behaviour.bbox_reload_time;
 
 
+        // buffer dati per edit e inserimento con relazioni
+        $scope.updateEntity = {};
+
 
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
@@ -277,12 +280,11 @@ angular.module('firstlife.controllers')
 
             // go to editor
             var params = angular.extend($scope.updateEntity,args);
-            if($scope.updateEntity && $scope.updateEntity.id)
-                params.id = $scope.updateEntity.id;
-
+            // reset buffer
+            $scope.updateEntity = {};
             // $log.debug('going to editor',params);
             $state.go('app.editor',params);
-            $timeout(changeMode,200);
+            $timeout(changeMode,400);
         });
 
         /*
