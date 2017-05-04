@@ -1,4 +1,4 @@
-angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicSideMenuDelegate', 'myConfig', function($log, $ionicSideMenuDelegate, myConfig){
+angular.module('firstlife.directives').directive('userHandler',['$log', 'myConfig', function($log, myConfig){
     return {
         restrict: 'EG',
         scope: {},
@@ -35,7 +35,7 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
             scope.config = myConfig;
             // funzione togle per il menu laterale
             scope.toggleMenu = function() {
-                $ionicSideMenuDelegate.toggleRight();
+                scope.$emit('toggleSideRight');
             };
 
         }
@@ -46,7 +46,7 @@ angular.module('firstlife.directives').directive('userHandler',['$log', '$ionicS
         restrict: 'E',
         scope: {},
         templateUrl: '/templates/map-ui-template/notificationLink.html',
-        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', '$ionicSideMenuDelegate', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, $ionicSideMenuDelegate, notificationFactory,MemoryFactory,myConfig,AuthService){
+        controller: ['$scope','$log','$filter','$timeout','$state', '$ionicModal', '$location', '$window', 'notificationFactory', 'MemoryFactory','myConfig', 'AuthService', function($scope,$log,$filter,$timeout,$state,$ionicModal,$location, $window, notificationFactory,MemoryFactory,myConfig,AuthService){
 
 
             $scope.$on('$destroy', function(e) {
