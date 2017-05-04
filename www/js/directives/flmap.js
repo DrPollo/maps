@@ -17,6 +17,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var mapRef = null;
             // referenza diretta all'overlay clustermarker
             var pieRef = null;
+            // gestione inputmap
+            var currentFeature = null;
+            var triesLimit = 5;
+            var tries = 0;
+
+
             // se non e' presente c in $location.search() c lo imposto al centro della mappa
             if(!$location.search().c)
                 $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
@@ -235,7 +241,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     var center = mapRef.getCenter();
                     var z = mapRef.getZoom();
                     var hash =
-                    $location.search("c",center.lat+':'+center.lng+':'+z);
+                        $location.search("c",center.lat+':'+center.lng+':'+z);
                 }
             });
             $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
@@ -265,15 +271,15 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
 
             $scope.$on('wallMarkerClick',function (event,args) {
-               if(event.defaultPrevented)
-                   return;
-               event.preventDefault();
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
 
-               if(args.id){
-                   locateEntity(args.id);
-                   $location.search('entity',args.id);
-                   $scope.$broadcast('markerClick',{id: args.id});
-               }
+                if(args.id){
+                    locateEntity(args.id);
+                    $location.search('entity',args.id);
+                    $scope.$broadcast('markerClick',{id: args.id});
+                }
             });
 
 
@@ -466,10 +472,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // $log.debug('deleteMarkers!',args);
                 $scope.editMode = true;
                 addEditLayers();
-                $timeout(updateGridStyle,450);
+                tries = 0;
+                $timeout(updateGridStyle,500);
                 mapRef.on('moveend',function (e) {
                     // $log.debug(e);
-                    $timeout(updateGridStyle,200);
+                    tries = 0;
+                    $timeout(updateGridStyle,500);
                 })
             });
             $scope.$on('exitEditMode',function (e,args) {
@@ -582,7 +590,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     mapRef.addControl(zoomControl);
             }
 
-            var currentFeature = null;
+
             function updateGridStyle() {
                 var size = mapRef.getSize();
                 var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
@@ -591,21 +599,34 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 var id = L.stamp(el);
                 var target = mapRef._targets[id];
                 // $log.debug('target',target);
+                // todo controlla che il target sia alla scala attuale
                 if(target && target.properties && target.properties.id){
-                    try{
-                    if(currentFeature)
-                        vGrid.resetFeatureStyle(currentFeature);
-                    currentFeature = target.properties.id;
-                    var style = interactiveStyle(target.properties.type);
-                    // $log.debug('type',target.properties);
-                    vGrid.setFeatureStyle(currentFeature,style);
-                    // vGrid.setFeatureStyle(currentFeature,highlightStyle);
-                    $scope.$broadcast('setInfo',{info:target.properties});
-                    }catch(e){
-                        $scope.$broadcast('setInfo');
+                    if(currentFeature !== target.properties.id){
+                        try{
+                            if(currentFeature)
+                                vGrid.resetFeatureStyle(currentFeature);
+                            currentFeature = target.properties.id;
+                            var style = interactiveStyle(target.properties.type);
+                            // $log.debug('type',target.properties);
+                            vGrid.setFeatureStyle(currentFeature,style);
+                            // vGrid.setFeatureStyle(currentFeature,highlightStyle);
+                            $scope.$broadcast('setInfo',{info:target.properties});
+                        }catch(e){
+                            $scope.$broadcast('setInfo');
+                        }
+                        tries = 0;
+                    }else if(tries < triesLimit){
+                        tries++;
+                        // $log.debug('tries2',tries);
+                        $timeout(updateGridStyle,200);
                     }
-                }else{
+                }else if(tries >= triesLimit){
                     $scope.$broadcast('setInfo');
+                    tries = 0;
+                }else if(tries < triesLimit){
+                    tries++;
+                    // $log.debug('tries1',tries);
+                    $timeout(updateGridStyle,200);
                 }
                 // $log.debug('setting scale',scales[mapRef.getZoom()]);
                 $scope.$broadcast('setScale',{scale:scales[mapRef.getZoom()]});
