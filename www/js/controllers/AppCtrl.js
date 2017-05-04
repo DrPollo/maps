@@ -1,12 +1,12 @@
 angular.module('firstlife.controllers')
 
     .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
-        
-        
+
+
         $scope.config = myConfig;
-        
+
         $rootScope.currentLang = $translate.use();
-        
+
         $scope.apiVersion = 'API: ' + myConfig.api_version;
         $scope.clientVersion = 'Client: v' + myConfig.version;
         $scope.sideWidth = Math.min($window.innerWidth,500);
@@ -23,7 +23,7 @@ angular.module('firstlife.controllers')
 
 
         var consoleCheck = false;
-        
+
         // gestore del cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
             if(event.preventAppSideEvent && toState.name != 'app')
@@ -32,9 +32,9 @@ angular.module('firstlife.controllers')
             event.preventAppSideEvent = true;
 
             if(consoleCheck) console.log("sono in AppCtrl e vengo da ", $rootScope.previousState);
-            
+
             $scope.isLoggedIn = AuthService.isAuth();
-            
+
             $scope.user = AuthService.getUser();
             // setup utente se presente
             if($scope.user){
@@ -44,7 +44,7 @@ angular.module('firstlife.controllers')
                 $scope.username = "Guest";
                 $log.info("Non loggato");
             }
-            
+
         });
 
 
@@ -146,8 +146,8 @@ angular.module('firstlife.controllers')
         };
 
 
-        
-        
+
+
         // A confirm dialog
         $scope.showConfirmLogout = function() {
             // se l'utente non e' loggato
@@ -173,18 +173,18 @@ angular.module('firstlife.controllers')
                 }
             });
         };
-        
+
         $scope.langSelector = function(key){
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
-          };
-        
+        };
+
         $scope.myMap = function(){
             if($scope.user && $scope.user.id)
                 $location.search('users',$scope.user.id);
-                $scope.$broadcast('setUserCard',{user:$scope.user});
+            $scope.$broadcast('setUserCard',{user:$scope.user});
         }
-        
+
         $scope.makeEmbed = function(){
             // creo link per lo share
             var url = $window.location.href+'&embed=viewer';
@@ -212,7 +212,57 @@ angular.module('firstlife.controllers')
             alertPopup.then(function(res) {
                 // $log.debug('embed url ',url);
             });
+        };
+
+        /*
+         * Gestione controllata side menu
+         * serve ad ottimizzare l'aggiornamento del wall
+         */
+
+
+        // left side (wall)
+        $scope.openSideLeft = function () {
+            if(!isOpenLeft()){
+                $ionicSideMenuDelegate.toggleSideLeft();
+                wallInit();
+            }
+        };
+        $scope.closeSideLeft = function () {
+            if(isOpenLeft()){
+                $ionicSideMenuDelegate.toggleSideLeft();
+            }
+        };
+        $scope.toggleSideLeft = function () {
+            $ionicSideMenuDelegate.toggleSideLeft();
+            if(isOpenLeft()){
+                wallInit();
+            }
+        };
+        // right side (user menu
+        $scope.openSideRight = function () {
+            if(!isOpenRight()){
+                $ionicSideMenuDelegate.toggleSideRight();
+            }
+        };
+        $scope.closeSideRight = function () {
+            if(isOpenRight()){
+                $ionicSideMenuDelegate.toggleSideRight();
+            }
+        };
+        $scope.toggleSideRight = function () {
+            $ionicSideMenuDelegate.toggleSideRight();
+        };
+
+
+        function wallInit() {
+            $scope.$broadcast('wallInit');
         }
-        
-       
+        function isOpenLeft(){
+            return $ionicSideMenuDelegate.isOpenLeft();
+        }
+        function isOpenRight(){
+            return $ionicSideMenuDelegate.isOpenRight();
+        }
+
+
     }]);

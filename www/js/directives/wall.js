@@ -64,7 +64,7 @@ angular.module('firstlife.directives')
             }
         }
     }])
-    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','myConfig', 'MemoryFactory', 'ThingsService',  function($rootScope,$location,$log,$filter,$timeout, myConfig,MemoryFactory,ThingsService) {
+    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','$ionicSideMenuDelegate','myConfig', 'MemoryFactory', 'ThingsService',  function($rootScope,$location,$log,$filter,$timeout,$ionicSideMenuDelegate, myConfig,MemoryFactory,ThingsService) {
         return {
             restrict: 'E',
             scope: {
@@ -109,8 +109,10 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    // $log.debug('wall init');
-                    init();
+                    $log.debug('wall init?',$ionicSideMenuDelegate.isOpenRight());
+                    if($ionicSideMenuDelegate.isOpenRight()){
+                        init();
+                    }
                 });
 
                 init();
