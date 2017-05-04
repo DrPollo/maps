@@ -16,7 +16,7 @@
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
     <div class="cover" ng-show="focus"></div>
     <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by marker.id"
-         collection-item-height="210"
+         collection-item-height="240"
          collection-item-width="'100%'"
          class="container"
          ng-class="{'focus' : focus === marker.id}"
