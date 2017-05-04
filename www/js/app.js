@@ -62,6 +62,25 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // semaforo per autoLogin();
         // se non loggato provo una volta
         var tryAutoLogin = !AuthService.isAuth();
+
+        // gestione errori http
+        $rootScope.$on('expiredToken',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+
+            $location.search('error',null);
+            alertAuth('expired_token');
+        });
+        $rootScope.$on('authRequired',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+
+            $location.search('error',null);
+            alertAuth('auth_required');
+        });
+
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
 
             if(!event.preventRedirectState){
@@ -72,19 +91,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 var embed = search_params.embed ? true : false;
                 // tolgo i caricamenti
                 $ionicLoading.hide();
-
-                // gestione errori
-                switch(search_params.error){
-                    case 'expired_token': //todo gestione token scaduto
-                        alertAuth('expired_token');
-                        $location.search('error',null);
-                        break;
-                    case 'auth_required': //todo gestione auth necessaria scaduto
-                        alertAuth('auth_required');
-                        $location.search('error',null);
-                        break;
-                    default:
-                }
 
 
                 $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
@@ -155,76 +161,77 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     );
                 }
 
-                function alertAuth(type) {
-                    var title = '',
-                        text = '',
-                        buttons = [];
-                    switch (type){
-                        case 'expired_token':
-                            title = 'EXPIRED_ERROR';
-                            text = 'EXPIRED_ERROR_TEXT';
-                            buttons = [
-                                { text: $filter('translate')('GUEST') },
-                                {
-                                    text: '<b>Login</b>',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                        confirmPopup.close();
-                                        $timeout(function(){
-                                            $window.location.href = AuthService.auth_url();
-                                        },1);
-                                    }
-                                }
-                            ];
-                            break;
-                        case 'auth_required':
-                            title = 'AUTH_REQ_ERROR';
-                            text = 'AUTH_REQ_ERROR_TEXT';
-                            buttons = [
-                                { text: $filter('translate')('ABORT') },
-                                {
-                                    text: '<b>Login</b>',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                        confirmPopup.close();
-                                        $timeout(function(){
-                                            $window.location.href = AuthService.auth_url();
-                                        },1);
-                                    }
-                                }
-                            ];
-                            break;
-                        default:
-                            title = 'ERROR';
-                            text = 'SORRY_UNEXPECTED_ERROR';
-                            buttons = [
-                                {
-                                    text: $filter('translate')('Ok'),
-                                    type: 'button-positive'
-                                }
-                            ];
-                            break;
-                    }
 
-                    $log.debug('alert errore',title,text);
-                    var confirmPopup = $ionicPopup.show({
-                        title: $filter('translate')(title),
-                        template: $filter('translate')(text),
-                        buttons: buttons
-                    });
-                    //
-                    confirmPopup.then(function(res) {
-                        if(res) {
-                            // console.log('You are sure');
-
-                        } else {
-                            // console.log('You are not sure');
-                        }
-                    });
-                }
 
             }
         });
+        function alertAuth(type) {
+            var title = '',
+                text = '',
+                buttons = [];
+            switch (type){
+                case 'expired_token':
+                    title = 'EXPIRED_ERROR';
+                    text = 'EXPIRED_ERROR_TEXT';
+                    buttons = [
+                        { text: $filter('translate')('GUEST') },
+                        {
+                            text: '<b>Login</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                confirmPopup.close();
+                                $timeout(function(){
+                                    $window.location.href = AuthService.auth_url();
+                                },1);
+                            }
+                        }
+                    ];
+                    break;
+                case 'auth_required':
+                    title = 'AUTH_REQ_ERROR';
+                    text = 'AUTH_REQ_ERROR_TEXT';
+                    buttons = [
+                        { text: $filter('translate')('ABORT') },
+                        {
+                            text: '<b>Login</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                confirmPopup.close();
+                                $timeout(function(){
+                                    $window.location.href = AuthService.auth_url();
+                                },1);
+                            }
+                        }
+                    ];
+                    break;
+                default:
+                    title = 'ERROR';
+                    text = 'SORRY_UNEXPECTED_ERROR';
+                    buttons = [
+                        {
+                            text: $filter('translate')('Ok'),
+                            type: 'button-positive'
+                        }
+                    ];
+                    break;
+            }
+
+            $log.debug('alert errore',title,text);
+            var confirmPopup = $ionicPopup.show({
+                title: $filter('translate')(title),
+                template: $filter('translate')(text),
+                buttons: buttons
+            });
+            //
+            confirmPopup.then(function(res) {
+                if(res) {
+                    // console.log('You are sure');
+
+                } else {
+                    // console.log('You are not sure');
+                }
+            });
+        }
 
     }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
