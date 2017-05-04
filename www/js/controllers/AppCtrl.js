@@ -70,15 +70,12 @@ angular.module('firstlife.controllers')
             event.preventDefault();
 
             // $log.debug('markerUpdated');
-            $scope.$broadcast('wallInit');
+            // se wall aperto aggiorno
+            if(isOpenLeft())
+                $scope.$broadcast('wallInit');
         });
-        $scope.$on('wallToggle',function (event,args) {
-            if(event.defaultPrevented)
-                return;
-            event.preventDefault();
 
-            $scope.$broadcast('checkWallToggle');
-        });
+
         $scope.$on('wallClick',function (event,args) {
             if(event.defaultPrevented)
                 return;
@@ -247,10 +244,11 @@ angular.module('firstlife.controllers')
 
         });
         $scope.toggleSideLeft = function () {
-            $ionicSideMenuDelegate.toggleLeft();
-            if(isOpenLeft()){
+            $log.debug('toggleSideLeft');
+            if(!isOpenLeft()){
                 wallInit();
             }
+            $ionicSideMenuDelegate.toggleLeft();
         };
         $scope.$on('toggleSideLeft',function (e) {
             if(e.defaultPrevented)
@@ -297,6 +295,7 @@ angular.module('firstlife.controllers')
 
 
         function wallInit() {
+            $log.debug('request init wall');
             $scope.$broadcast('wallInit');
         }
         function isOpenLeft(){

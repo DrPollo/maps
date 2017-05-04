@@ -37,20 +37,6 @@ angular.module('firstlife.directives')
                     delete scope;
                 });
 
-                var open = false;
-
-                scope.$on('checkWallToggle',function (event,args) {
-                    if(event.defaultPrevented)
-                        return;
-                    event.preventDefault();
-
-                    open = !open;
-
-                    if(open){
-                        scope.$broadcast('wallInit');
-                    }
-
-                });
 
                 scope.closeWall = function () {
                     scope.$emit('closeSideLeft');
@@ -108,10 +94,8 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    $log.debug('wall init?',$ionicSideMenuDelegate.isOpenRight());
-                    if($ionicSideMenuDelegate.isOpenRight()){
-                        init();
-                    }
+                    $log.debug('wall init');
+                    init();
                 });
 
                 init();
