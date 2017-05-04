@@ -225,7 +225,7 @@ angular.module('firstlife.controllers')
             // sistemo le coordinate
             if(params.lat && params.lng){
                 _this.wizard.dataForm.coordinates = [parseFloat(params.lng),parseFloat(params.lat)];
-                $log.debug('fix coordinates',parseFloat(params.lng),parseFloat(params.lat),_this.wizard.dataForm.coordinates )
+                // $log.debug('fix coordinates',parseFloat(params.lng),parseFloat(params.lat),_this.wizard.dataForm.coordinates )
             }
             // sistemo zoom_level
             if(params.zoom_level){
