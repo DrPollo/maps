@@ -6,8 +6,8 @@
             title="{{category.name | translate}}"
             style="border : {{'1px solid' + colors[category.index]}}"
             on-tap="toggle(category.key)">
-        <i class="icon {{category.icon}}"></i>
-        <span ng-if="!isMobile">{{category.name |translate}}</span>
-        <i class="icon" ng-class="{'ion-ios-close-empty':category.visible, 'ion-ios-plus-empty': !category.visible}"></i>
+        <i ng-if="!isMobile" class="icon {{category.icon}}"></i>
+        <span>{{category.name |translate}}</span>
+        <i ng-if="!isMobile" class="icon" ng-class="{'ion-ios-close-empty':category.visible, 'ion-ios-plus-empty': !category.visible}"></i>
     </button>
 </div>
