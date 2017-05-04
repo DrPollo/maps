@@ -1,6 +1,6 @@
 angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage','naif.base64','angular-clipboard'])
 
-    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, myConfig, AuthService) {
+    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, $filter, myConfig, AuthService) {
 
         self.config = myConfig;
         // init utente
@@ -63,6 +63,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // se non loggato provo una volta
         var tryAutoLogin = !AuthService.isAuth();
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+
             if(!event.preventRedirectState){
                 event.preventRedirectState = true;
 
@@ -71,6 +72,20 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 var embed = search_params.embed ? true : false;
                 // tolgo i caricamenti
                 $ionicLoading.hide();
+
+                // gestione errori
+                switch(search_params.error){
+                    case 'expired_token': //todo gestione token scaduto
+                        alertAuth('expired_token');
+                        $location.search('error',null);
+                        break;
+                    case 'auth_required': //todo gestione auth necessaria scaduto
+                        alertAuth('auth_required');
+                        $location.search('error',null);
+                        break;
+                    default:
+                }
+
 
                 $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
 
@@ -140,8 +155,73 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     );
                 }
 
+                function alertAuth(type) {
+                    var title = '',
+                        text = '',
+                        buttons = [];
+                    switch (type){
+                        case 'expired_token':
+                            title = 'EXPIRED_ERROR';
+                            text = 'EXPIRED_ERROR_TEXT';
+                            buttons = [
+                                { text: $filter('translate')('GUEST') },
+                                {
+                                    text: '<b>Login</b>',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                        confirmPopup.close();
+                                        $timeout(function(){
+                                            $window.location.href = AuthService.auth_url();
+                                        },1);
+                                    }
+                                }
+                            ];
+                            break;
+                        case 'auth_required':
+                            title = 'AUTH_REQ_ERROR';
+                            text = 'AUTH_REQ_ERROR_TEXT';
+                            buttons = [
+                                { text: $filter('translate')('ABORT') },
+                                {
+                                    text: '<b>Login</b>',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                        confirmPopup.close();
+                                        $timeout(function(){
+                                            $window.location.href = AuthService.auth_url();
+                                        },1);
+                                    }
+                                }
+                            ];
+                            break;
+                        default:
+                            title = 'ERROR';
+                            text = 'SORRY_UNEXPECTED_ERROR';
+                            buttons = [
+                                {
+                                    text: $filter('translate')('Ok'),
+                                    type: 'button-positive'
+                                }
+                            ];
+                            break;
+                    }
 
+                    $log.debug('alert errore',title,text);
+                    var confirmPopup = $ionicPopup.show({
+                        title: $filter('translate')(title),
+                        template: $filter('translate')(text),
+                        buttons: buttons
+                    });
+                    //
+                    confirmPopup.then(function(res) {
+                        if(res) {
+                            // console.log('You are sure');
 
+                        } else {
+                            // console.log('You are not sure');
+                        }
+                    });
+                }
 
             }
         });
@@ -569,9 +649,19 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         USER_MENU_TOGGLE:'Apri/Chiudi menu utente',
         TOGGLE_WALL_TITLE:'Apri/Chiudi bacheca contenuti',
         POSTCOMMENTS_ADDED:'ha aggiunto un commento a',
-        STEPS_OF: 'Passo'
+        STEPS_OF: 'Passo',
+        AUTH_REQ_ERROR:'Richiesta Autenticazione',
+        AUTH_REQ_ERROR_TEXT:"Per continuare è richiesto il login",
+        EXPIRED_ERROR:'Sessione scaduta',
+        EXPIRED_ERROR_TEXT:'Continuare come Ospite o effettuare nuovamente il login?',
+        GUEST:'Ospite'
     });
     $translateProvider.translations('en', {
+        AUTH_REQ_ERROR:'Authentication Error',
+        AUTH_REQ_ERROR_TEXT:"To continue please log in",
+        EXPIRED_ERROR:'Session Expired',
+        EXPIRED_ERROR_TEXT:'Do you wish to continue as Guest ore login?',
+        GUEST:'Guest',
         STEPS_OF: 'Step',
         POSTCOMMENTS_ADDED:'added a comment to',
         TOGGLE_WALL_TITLE:'Toggle content wall',
