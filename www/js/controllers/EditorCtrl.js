@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', 'myConfig', 'EntityService', 'ThingsService',  'AuthService', function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, myConfig, EntityService, ThingsService,  AuthService) {
+    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', '$ionicSlideBoxDelegate', '$timeout','myConfig', 'EntityService', 'ThingsService',  'AuthService', 'PlatformService',function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, $ionicSlideBoxDelegate,$timeout, myConfig, EntityService, ThingsService,  AuthService, PlatformService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -66,6 +66,17 @@ angular.module('firstlife.controllers')
             delete _this.wizard.dataForm.thumbnail;
             return false;
         }
+
+
+        $scope.isMobile = PlatformService.isMobile();
+
+        // steps wizard
+        $scope.wizardOptions = {
+            loop: false,
+            effect: 'fade',
+            speed: 500
+        };
+        $scope.wizardSlider;
 
 
 
@@ -158,12 +169,32 @@ angular.module('firstlife.controllers')
             //     else
             //         $state.go('app.maps');
             // }
+            $timeout(function(){
+                $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
+                $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
+            },100);
         });
 
+        // $timeout(function(){
+        //     $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
+        //     $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
+        // },100);
 
+        $scope.changeWizardStep = function (index) {
+          $scope.wizardIndex = index+1;
+        };
+        $scope.nextStep = function(){
+            // passo allo step 2
+            $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
+            $ionicSlideBoxDelegate.next();
+        };
+        $scope.prevStep = function(){
+            // passo allo step 2
+            $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
+            $ionicSlideBoxDelegate.previous();
+        };
 
-
-
+        // aggiorno lo stato del wizard dato il tipo
         $scope.initEntity = function(entity_type){
             var params = $location.search();
 
@@ -224,7 +255,7 @@ angular.module('firstlife.controllers')
             }
 
             // fine gesione relazioni
-        }
+        };
 
 
         // filtro maggiore di per l'editor del place

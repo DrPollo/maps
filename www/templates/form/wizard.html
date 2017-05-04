@@ -12,193 +12,224 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content class="content" id="wizardEntity" >
-
-        <form name="editor.typeform" ng-if="chooseType">
-            <div class="list card">
-                <div class="item item-divider" ng-class="{ 'has-error' : editor.typeform.entity_type.$invalid, 'no-error' : !editor.typeform.entity_type.$invalid }">
-                    {{ 'CREATION_TEXT' | translate}}
-                </div>
-                <ion-list>
-                    <ion-radio name="entity_type" 
-                               ng-repeat="type in editor.listOfTypes track by $index" 
-                               value="{{type.key}}" class="item" 
-                               ng-model="editor.wizard.dataForm.entity_type"
-                               on-tap="initEntity(type.key)"
-                               ng-required="true">
-                        <div class="item-icon-left">
-                            <i class="icon {{type.icon}}" style="color:{{config.design.colors[type.index]}}"></i>
-                            {{type.name |translate}}
+    <ion-content class="content" id="wizardEntity">
+        <ion-slide-box on-slide-changed="changeWizardStep($index)">
+                <!--page 1-->
+                <ion-slide>
+                    <form name="editor.typeform" ng-if="chooseType">
+                        <div class="list card">
+                            <div class="item item-divider" ng-class="{ 'has-error' : editor.typeform.entity_type.$invalid, 'no-error' : !editor.typeform.entity_type.$invalid }">
+                                {{ 'CREATION_TEXT' | translate}}
+                            </div>
+                            <ion-list>
+                                <ion-radio name="entity_type"
+                                           ng-repeat="type in editor.listOfTypes track by $index"
+                                           value="{{type.key}}" class="item"
+                                           ng-model="editor.wizard.dataForm.entity_type"
+                                           on-tap="initEntity(type.key)"
+                                           ng-required="true">
+                                    <div class="item-icon-left">
+                                        <i class="icon {{type.icon}}" style="color:{{config.design.colors[type.index]}}"></i>
+                                        {{type.name |translate}}
+                                    </div>
+                                </ion-radio>
+                            </ion-list>
                         </div>
-                    </ion-radio>
-                </ion-list>
-            </div>
-            <div class="form-errors" ng-messages="editor.typeform.$error"> 
-                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>  
-            </div>
-        </form>
-
-
-        <form name="editor.form.wizardform" ng-if="editor.wizard.dataForm.entity_type" novalidate> 
-
-            <div class="list card" ng-if="editor.checkList.name">
-                <div class="item item-divider" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.name.$invalid, 'no-error' : !editor.form.wizardform.name.$invalid }">
-                    {{editor.checkList.name.label|translate}}
-                </div>
-                <div class="item item-text-wrap" class="item item-input">
-                    <input type="text" name="name" ng-model="editor.wizard.dataForm.name" placeholder="{{editor.checkList.name.placeholder |translate}}" ng-minlength="3" ng-maxlength="100" ng-required="editor.checkList.name.required">
-                    <div class="form-errors" ng-messages="form.wizardform.name.$error"> 
-                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 3 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 100 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>  
-                    </div>
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.description">
-                <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
-                    {{editor.checkList.description.label|translate}}
-                </div>
-                <div class="item item-text-wrap">
-                    <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{editor.checkList.description.placeholder |translate}}" ng-minlength="150" ng-maxlength="8000" rows="10" ng-required="editor.checkList.description.required"></textarea>
-                    <div class="form-errors" ng-messages="editor.form.wizardform.description.$error">
-                        <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 8000 {{'CHARACTERS'|translate}}</div>
-                        <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                    </div> 
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.tags">
-                <div class="item item-divider">
-                    {{editor.checkList.tags.label|translate}}
-                </div>
-                <div class="item item-iput autocompletetags">
-                    <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.link_url">
-                <div class="item item-divider">
-                    {{editor.checkList.link_url.label|translate}}
-                </div>
-                <div class="item item-input">
-                    <input type="url" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{editor.checkList.link_url.placeholder |translate}}" ng-required="editor.checkList.link_url.required">
-                    <div class="form-errors" ng-messages="editor.form.wizardform.link_url.$error">  
-                        <div class="form-error" ng-message="url">{{'NOT_VALID_URL'|translate}}</div>
-                        <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                    </div>
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
-                <div id="date-form" class="row responsive-sm">
-                    <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.valid_from.label|translate}}
+                        <div class="form-errors" ng-messages="editor.typeform.$error">
+                            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
                         </div>
-                        <ionic-datepicker title="editor.checkList.valid_from.label"
-                                          translator="editor.translator"
-                                          disableafter="editor.wizard.dataForm.valid_to" disableafterenabled="editor.valid_to"
-                                          idate="editor.wizard.dataForm.valid_from" mondayfirst="true" 
-                                          callback="editor.datePickerFrom" title="Inizio" 
-                                          ng-required="checkList.valid_from.required">
-                            <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_from || !editor.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_from && editor.valid_from">
+                    </form>
+                </ion-slide>
+                <!--page 2-->
+                <ion-slide>
+                    <form name="editor.form.wizardform" ng-if="editor.wizard.dataForm.entity_type" novalidate>
+
+                        <div class="list card" ng-if="editor.checkList.name">
+                            <div class="item item-divider" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.name.$invalid, 'no-error' : !editor.form.wizardform.name.$invalid }">
+                                {{editor.checkList.name.label|translate}}
+                            </div>
+                            <div class="item item-text-wrap" class="item item-input">
+                                <input type="text" name="name" ng-model="editor.wizard.dataForm.name" placeholder="{{editor.checkList.name.placeholder |translate}}" ng-minlength="3" ng-maxlength="100" ng-required="editor.checkList.name.required">
+                                <div class="form-errors" ng-messages="form.wizardform.name.$error">
+                                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 3 {{'CHARACTERS'|translate}}</div>
+                                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 100 {{'CHARACTERS'|translate}}</div>
+                                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list card" ng-if="editor.checkList.description">
+                            <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
+                                {{editor.checkList.description.label|translate}}
+                            </div>
+                            <div class="item item-text-wrap">
+                                <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{editor.checkList.description.placeholder |translate}}" ng-minlength="150" ng-maxlength="8000" rows="10" ng-required="editor.checkList.description.required"></textarea>
+                                <div class="form-errors" ng-messages="editor.form.wizardform.description.$error">
+                                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
+                                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 8000 {{'CHARACTERS'|translate}}</div>
+                                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list card" ng-if="editor.checkList.tags">
+                            <div class="item item-divider">
+                                {{editor.checkList.tags.label|translate}}
+                            </div>
+                            <div class="item item-iput autocompletetags">
+                                <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
+                            </div>
+                        </div>
+                        <div class="list card" ng-if="editor.checkList.link_url">
+                            <div class="item item-divider">
+                                {{editor.checkList.link_url.label|translate}}
+                            </div>
+                            <div class="item item-input">
+                                <input type="url" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{editor.checkList.link_url.placeholder |translate}}" ng-required="editor.checkList.link_url.required">
+                                <div class="form-errors" ng-messages="editor.form.wizardform.link_url.$error">
+                                    <div class="form-error" ng-message="url">{{'NOT_VALID_URL'|translate}}</div>
+                                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list card" ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
+                            <div id="date-form" class="row responsive-sm">
+                                <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
+                                    <div class="input-label">
+                                        {{editor.checkList.valid_from.label|translate}}
+                                    </div>
+                                    <ionic-datepicker title="editor.checkList.valid_from.label"
+                                                      translator="editor.translator"
+                                                      disableafter="editor.wizard.dataForm.valid_to" disableafterenabled="editor.valid_to"
+                                                      idate="editor.wizard.dataForm.valid_from" mondayfirst="true"
+                                                      callback="editor.datePickerFrom" title="Inizio"
+                                                      ng-required="checkList.valid_from.required">
+                                        <button class="button button-block button-positive button-outline ng-binding">
+                                            <span ng-show="!editor.wizard.dataForm.valid_from || !editor.valid_from">{{editor.checkList.valid_from.placeholder |translate}}</span>
+                                            <span ng-show="editor.wizard.dataForm.valid_from && editor.valid_from">
                                     {{ editor.wizard.dataForm.valid_from | date:'dd/MM/yyyy' }}
                                 </span>
-                            </button>
-                        </ionic-datepicker>
-                    </label>
-                    <label ng-if="editor.checkList.door_time" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.door_time.label|translate}} 
+                                        </button>
+                                    </ionic-datepicker>
+                                </label>
+                                <label ng-if="editor.checkList.door_time" class="item item-input col">
+                                    <div class="input-label">
+                                        {{editor.checkList.door_time.label|translate}}
+                                    </div>
+                                    <ionic-timepicker input-obj="editor.checkList.door_time.template" ng-required="editor.checkList.door_time.required">
+                                        <button class="button button-block button-positive button-outline overflowShow">
+                                            <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
+                                        </button>
+                                    </ionic-timepicker>
+                                </label>
+                            </div>
                         </div>
-                        <ionic-timepicker input-obj="editor.checkList.door_time.template" ng-required="editor.checkList.door_time.required">
-                            <button class="button button-block button-positive button-outline overflowShow">
-                                <standard-time-no-meridian etime='editor.wizard.dataForm.door_time' placeholder="{{editor.checkList.door_time.placeholder |translate}}"></standard-time-no-meridian>
-                            </button>
-                        </ionic-timepicker>
-                    </label>
-                </div>
-            </div>
-            <div class="list card" ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
-                <div id="date-form" class="row responsive-sm">
-                    <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.valid_to.label|translate}} 
-                        </div>
-                        <ionic-datepicker title="editor.checkList.valid_to.label"
-                                          translator="editor.translator"
-                                          disablebefore="editor.wizard.dataForm.valid_from" disablebeforeenabled="editor.valid_from"
-                                          idate="editor.wizard.dataForm.valid_to" 
-                                          mondayfirst="true" 
-                                          callback="editor.datePickerTo" title="Fine"
-                                          ng-required="editor.checkList.valid_to.required">
-                            <button class="button button-block button-positive button-outline ng-binding">
-                                <span ng-show="!editor.wizard.dataForm.valid_to || !editor.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
-                                <span ng-show="editor.wizard.dataForm.valid_to && editor.valid_to">
+                        <div class="list card" ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
+                            <div id="date-form" class="row responsive-sm">
+                                <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
+                                    <div class="input-label">
+                                        {{editor.checkList.valid_to.label|translate}}
+                                    </div>
+                                    <ionic-datepicker title="editor.checkList.valid_to.label"
+                                                      translator="editor.translator"
+                                                      disablebefore="editor.wizard.dataForm.valid_from" disablebeforeenabled="editor.valid_from"
+                                                      idate="editor.wizard.dataForm.valid_to"
+                                                      mondayfirst="true"
+                                                      callback="editor.datePickerTo" title="Fine"
+                                                      ng-required="editor.checkList.valid_to.required">
+                                        <button class="button button-block button-positive button-outline ng-binding">
+                                            <span ng-show="!editor.wizard.dataForm.valid_to || !editor.valid_to">{{editor.checkList.valid_to.placeholder |translate}}</span>
+                                            <span ng-show="editor.wizard.dataForm.valid_to && editor.valid_to">
                                     {{ editor.wizard.dataForm.valid_to | date:'dd/MM/yyyy' }}
-                                </span> 
-                            </button>
-                        </ionic-datepicker>
-                    </label>
-                    <label ng-if="editor.checkList.close_time" class="item item-input col">
-                        <div class="input-label">
-                            {{editor.checkList.close_time.label|translate}}  
+                                </span>
+                                        </button>
+                                    </ionic-datepicker>
+                                </label>
+                                <label ng-if="editor.checkList.close_time" class="item item-input col">
+                                    <div class="input-label">
+                                        {{editor.checkList.close_time.label|translate}}
+                                    </div>
+                                    <ionic-timepicker input-obj="editor.checkList.close_time.template" ng-required="editor.checkList.close_time.required">
+                                        <button class="button button-block button-positive button-outline overflowShow">
+                                            <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
+                                        </button>
+                                    </ionic-timepicker>
+                                </label>
+                            </div>
                         </div>
-                        <ionic-timepicker input-obj="editor.checkList.close_time.template" ng-required="editor.checkList.close_time.required">
-                            <button class="button button-block button-positive button-outline overflowShow">
-                                <standard-time-no-meridian etime='editor.wizard.dataForm.close_time' placeholder="{{editor.checkList.close_time.placeholder |translate}}"></standard-time-no-meridian>
-                            </button>
-                        </ionic-timepicker>
-                    </label>
-                </div>
-            </div>
-            <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>
-                <div class="list card">
-                    <div class="item item-divider" ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">
-                        {{space.name}}
-                    </div>
-                    <ion-radio name="cat{{category.id}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
-                               ng-value="{{category.id}}"
-                               ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
-                               class="item"
-                               ng-required="true">
-                        <div class="item-icon-left" >
-                            <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
-                            {{ category.name }}
-                            <span class="item-note" ng-if="category.description">
+                        <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>
+                            <div class="list card">
+                                <div class="item item-divider" ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">
+                                    {{space.name}}
+                                </div>
+                                <ion-radio name="cat{{category.id}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
+                                           ng-value="{{category.id}}"
+                                           ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
+                                           class="item"
+                                           ng-required="true">
+                                    <div class="item-icon-left" >
+                                        <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
+                                        {{ category.name }}
+                                        <span class="item-note" ng-if="category.description">
                                 {{category.description}}
                             </span>
-                        </div>
+                                    </div>
 
-                    </ion-radio>
-                </div>
-                <div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">  
-                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div> 
-                </div> 
-            </ng-form>
-        </form>
-
+                                </ion-radio>
+                            </div>
+                            <div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">
+                                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                            </div>
+                        </ng-form>
+                    </form>
+                </ion-slide>
+            </ion-slide>
+        </ion-slide-box>
         <div ng-if="config.dev">
             <p>
                 {{ editor.wizard.dataForm | json }}
             </p>
-            <p></p>
-            <p></p>
-            <p></p>
             <p></p>
         </div>
 
     </ion-content>
 
     <ion-footer-bar class="bar-light">
-        <button class="button button-clear no-animation"
-                ng-click="editor.close()" ng-if="!editor.slideIndex">
-            <i class="icon ion-close-round"></i>
+        <button class="button button-outline button-dark"
+                ng-click="editor.close()"
+                ng-if="!editor.slideIndex"
+                title="{{'ABORT'|translate}}"
+                style="margin-right: 6px;">
+            <i class="icon ion-android-close"></i>
             {{'ABORT'|translate}}
         </button>
-        <h1 class="title"></h1>
+        <button ng-if="editor.wizard.dataForm.entity_type && wizardIndex > 1"
+                ng-show="wizardIndex > 1"
+                class="button button-outline button-dark"
+                title="{{'BACK'|translate}}"
+                ng-click="prevStep()">
+            <i class="icon ion-android-arrow-dropleft"></i>
+            {{'BACK'|translate}}
+        </button>
+        <h3 class="title">
+            <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
+        </h3>
         <div class="buttons">
-            <button ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid" class="button button-clear icon ion-checkmark-round" ng-click="editor.wizard.save()">{{'SAVE'|translate}}</button>
+            <button ng-if="wizardIndex < wizardSteps"
+                    ng-disabled="!editor.wizard.dataForm.entity_type"
+                    class="button button-positive"
+                    title="{{'NEXT'|translate}}"
+                    ng-click="nextStep()">
+                {{'NEXT'|translate}}
+                <i class="icon ion-android-arrow-dropright"></i>
+            </button>
+            <button ng-if="wizardIndex === wizardSteps"
+                    ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid"
+                    class="button button-positive"
+                    title="{{'SAVE'|translate}}"
+                    style="margin-left:6px;"
+                    ng-click="editor.wizard.save()">
+                {{'SAVE'|translate}}
+                <i class="icon ion-android-done"></i>
+            </button>
         </div>
     </ion-footer-bar>
 </ion-view>

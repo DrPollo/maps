@@ -568,9 +568,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         COPY:'Copia',
         USER_MENU_TOGGLE:'Apri/Chiudi menu utente',
         TOGGLE_WALL_TITLE:'Apri/Chiudi bacheca contenuti',
-        POSTCOMMENTS_ADDED:'ha aggiunto un commento a'
+        POSTCOMMENTS_ADDED:'ha aggiunto un commento a',
+        STEPS_OF: 'Passo'
     });
     $translateProvider.translations('en', {
+        STEPS_OF: 'Step',
         POSTCOMMENTS_ADDED:'added a comment to',
         TOGGLE_WALL_TITLE:'Toggle content wall',
         USER_MENU_TOGGLE:'Toggle user menu',
