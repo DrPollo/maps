@@ -126,7 +126,7 @@ gulp.task('deploy-all', function(){
     sh.exit(0);
 });
 
-gulp.task('deploy',['config','move']);
+gulp.task('deploy',['rebuild','config','move']);
 
 gulp.task('move',function(){
     var dir = '../firstlife'
@@ -153,7 +153,7 @@ gulp.task('move',function(){
     }
 });
 
-gulp.task('config',['rebuild','mergeconfig','setupenv','buildconfig']);
+gulp.task('config',['mergeconfig','setupenv','buildconfig']);
 
 gulp.task('rebuild',function(){
     if(gutil.env.dev){
