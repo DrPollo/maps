@@ -137,6 +137,7 @@ angular.module('firstlife.controllers')
                         mark.lat = params.lat ? parseFloat(params.lat) : mark.lat;
                         mark.lng = params.lng ? parseFloat(params.lng) : mark.lng;
                         mark.zoom_level = params.zoom_level ? parseInt(params.zoom_level) : mark.zoom_level;
+                        mark.area_id = params.area_id ? params.area_id.toString() : mark.area_id;
                         // init dell'edit
                         setToEdit(mark);
                         //bug datapicker che non modifica la data a cacchio
@@ -229,6 +230,9 @@ angular.module('firstlife.controllers')
             // sistemo zoom_level
             if(params.zoom_level){
                 _this.wizard.dataForm.zoom_level = parseInt(params.zoom_level);
+            }
+            if(params.area_id){
+                _this.wizard.dataForm.area_id = params.area_id.toString();
             }
 
             // bug datapicker che non modifica la data a cacchio

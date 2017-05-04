@@ -510,7 +510,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     };
                     var args = {id:null, tile: tile, zoom_level:z, tile_id:tileid};
                     if(properties){
-                        args.areaid = properties.id;
+                        args.area_id = properties.id;
                         args.type = properties.type;
                     }
                     // $log.debug('got',mapRef._targets[id].properties);

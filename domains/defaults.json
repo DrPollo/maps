@@ -190,7 +190,8 @@
                 "categories":{ "key": "categories", "label":"CATEGORIES", "default":[]},
                 "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
                 "user":{ "key": "user", "label":"USER","placeholder":"USER" , "default":-1},
-                "wp_id":{ "key": "id_wp", "required":true, "default":1},
+                "area_id":{ "key": "area_id", "required":true, "default":null},
+                "tile_id":{ "key": "tile_id", "required":true, "default":null},
                 "id":{ "key": "id", "default":null},
                 "zoom_level":{ "key": "zoom_level", "default":null},
                 "level":{"key":"level", "default":0, "label":"LEVEL_LABEL","placeholder":"LEVEL_PLACEHOLDER"}

@@ -272,7 +272,7 @@ angular.module('firstlife.controllers')
             event.preventDefault();
 
             // go to editor
-            // $log.debug('createEntity',$scope.updateEntity);
+            $log.debug('createEntity',args,$scope.updateEntity);
             try {
                 var params = angular.extend(args,$scope.updateEntity);
             }catch(e){
@@ -281,7 +281,7 @@ angular.module('firstlife.controllers')
             }
             // reset buffer
             $scope.updateEntity = {};
-            // $log.debug('going to editor',params);
+            $log.debug('going to editor',params);
             $state.go('app.editor',params);
             $timeout(changeMode,400);
         });
