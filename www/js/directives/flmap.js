@@ -633,8 +633,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
 
             // code from @mapbox/tilebelt
-            var d2r = Math.PI / 180,
-                r2d = 180 / Math.PI;
             function pointToTile(lon, lat, z) {
                 var tile = pointToTileFraction(lon, lat, z);
                 tile[0] = Math.floor(tile[0]);
@@ -643,7 +641,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
 
             function pointToTileFraction(lon, lat, z) {
-                var sin = Math.sin(lat * d2r),
+                var sin = Math.sin(lat * Math.PI / 180),
                     z2 = Math.pow(2, z),
                     x = z2 * (lon / 360 + 0.5),
                     y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
