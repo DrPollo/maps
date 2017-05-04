@@ -227,31 +227,73 @@ angular.module('firstlife.controllers')
                 wallInit();
             }
         };
+        $scope.$on('openSideLeft',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.openSideLeft();
+
+        });
         $scope.closeSideLeft = function () {
             if(isOpenLeft()){
                 $ionicSideMenuDelegate.toggleSideLeft();
             }
         };
+        $scope.$on('closeSideLeft',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.closeSideLeft();
+
+        });
         $scope.toggleSideLeft = function () {
             $ionicSideMenuDelegate.toggleSideLeft();
             if(isOpenLeft()){
                 wallInit();
             }
         };
+        $scope.$on('toggleSideLeft',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.toggleSideLeft();
+
+        });
         // right side (user menu
         $scope.openSideRight = function () {
             if(!isOpenRight()){
                 $ionicSideMenuDelegate.toggleSideRight();
             }
         };
+        $scope.$on('openSideRight',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.openSideRight();
+
+        });
         $scope.closeSideRight = function () {
             if(isOpenRight()){
                 $ionicSideMenuDelegate.toggleSideRight();
             }
         };
+        $scope.$on('closeSideRight',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.closeSideRight();
+
+        });
         $scope.toggleSideRight = function () {
             $ionicSideMenuDelegate.toggleSideRight();
         };
+        $scope.$on('toggleSideRight',function (e) {
+            if(e.defaultPrevented)
+                return;
+            e.preventDefault();
+            $scope.toggleSideRight();
+
+        });
 
 
         function wallInit() {
