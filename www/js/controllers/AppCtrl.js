@@ -223,7 +223,7 @@ angular.module('firstlife.controllers')
         // left side (wall)
         $scope.openSideLeft = function () {
             if(!isOpenLeft()){
-                $ionicSideMenuDelegate.toggleSideLeft();
+                $ionicSideMenuDelegate.toggleLeft();
                 wallInit();
             }
         };
@@ -236,7 +236,7 @@ angular.module('firstlife.controllers')
         });
         $scope.closeSideLeft = function () {
             if(isOpenLeft()){
-                $ionicSideMenuDelegate.toggleSideLeft();
+                $ionicSideMenuDelegate.toggleLeft();
             }
         };
         $scope.$on('closeSideLeft',function (e) {
@@ -247,7 +247,7 @@ angular.module('firstlife.controllers')
 
         });
         $scope.toggleSideLeft = function () {
-            $ionicSideMenuDelegate.toggleSideLeft();
+            $ionicSideMenuDelegate.toggleLeft();
             if(isOpenLeft()){
                 wallInit();
             }
@@ -262,7 +262,7 @@ angular.module('firstlife.controllers')
         // right side (user menu
         $scope.openSideRight = function () {
             if(!isOpenRight()){
-                $ionicSideMenuDelegate.toggleSideRight();
+                $ionicSideMenuDelegate.toggleRight();
             }
         };
         $scope.$on('openSideRight',function (e) {
@@ -274,7 +274,7 @@ angular.module('firstlife.controllers')
         });
         $scope.closeSideRight = function () {
             if(isOpenRight()){
-                $ionicSideMenuDelegate.toggleSideRight();
+                $ionicSideMenuDelegate.toggleRight();
             }
         };
         $scope.$on('closeSideRight',function (e) {
@@ -285,7 +285,7 @@ angular.module('firstlife.controllers')
 
         });
         $scope.toggleSideRight = function () {
-            $ionicSideMenuDelegate.toggleSideRight();
+            $ionicSideMenuDelegate.toggleRight();
         };
         $scope.$on('toggleSideRight',function (e) {
             if(e.defaultPrevented)

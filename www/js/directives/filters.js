@@ -138,7 +138,7 @@ angular.module('firstlife.directives')
             }
         }
     }
-}]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout', '$ionicSideMenuDelegate','myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, $ionicSideMenuDelegate, myConfig, SearchService, CBuffer, ThingsService){
+}]).directive('searchBar',['$log','$location', '$stateParams', '$window', '$timeout', 'myConfig', 'SearchService', 'CBuffer', 'ThingsService',function ($log, $location, $stateParams, $window, $timeout, myConfig, SearchService, CBuffer, ThingsService){
     return {
         restrinct:'EG',
         templateUrl:'/templates/map-ui-template/searchBar.html',
@@ -189,7 +189,7 @@ angular.module('firstlife.directives')
 
             // apro il wall per la modifica del testo
             scope.toggleWall =function(){
-                $ionicSideMenuDelegate.toggleLeft();
+                scope.$emit('openSideLeft');
             };
 
             scope.deleteCard = function(){
