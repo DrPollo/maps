@@ -185,11 +185,17 @@ angular.module('firstlife.controllers')
         $scope.changeWizardStep = function (index) {
           $scope.wizardIndex = index+1;
         };
+
+        $scope.initType = function (type) {
+            initEntity(type);
+            $scope.nextStep();
+            $ionicSlideBoxDelegate.update();
+        }
+
         $scope.nextStep = function(){
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.next();
-            $ionicSlideBoxDelegate.update();
         };
         $scope.prevStep = function(){
             // passo allo step 2
@@ -198,7 +204,7 @@ angular.module('firstlife.controllers')
         };
 
         // aggiorno lo stato del wizard dato il tipo
-        $scope.initEntity = function(entity_type){
+        function initEntity(entity_type){
             var params = $location.search();
 
             $log.debug('entity_type',entity_type,_this.types.list.map(function(e){return e.key;}))

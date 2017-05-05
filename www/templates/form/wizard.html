@@ -26,7 +26,6 @@
                                        ng-repeat="type in editor.listOfTypes track by $index"
                                        value="{{type.key}}" class="item"
                                        ng-model="editor.wizard.dataForm.entity_type"
-                                       on-tap="initEntity(type.key)"
                                        ng-required="true">
                                 <div class="item-icon-left">
                                     <i class="icon {{type.icon}}" style="color:{{config.design.colors[type.index]}}"></i>
@@ -212,20 +211,19 @@
             <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
         </h3>
         <div class="buttons">
-            <button ng-if="wizardIndex < wizardSteps"
-                    ng-disabled="!editor.wizard.dataForm.entity_type"
+            <button type="submit" ng-if="wizardIndex === 1"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
-                    ng-click="nextStep()">
+                    on-tap="initType(editor.wizard.dataForm.entity_type);">
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button ng-if="wizardIndex === wizardSteps"
+            <button type="submit" ng-if="wizardIndex === wizardSteps"
                     ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid"
                     class="button button-positive"
                     title="{{'SAVE'|translate}}"
                     style="margin-left:6px;"
-                    ng-click="editor.wizard.save()">
+                    on-tap="editor.wizard.save()">
                 {{'SAVE'|translate}}
                 <i class="icon ion-android-done"></i>
             </button>
