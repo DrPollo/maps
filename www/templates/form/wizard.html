@@ -12,7 +12,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content class="content" id="wizardEntity">
+    <ion-content class="content" id="wizardEntity" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
         <ion-slide-box on-slide-changed="changeWizardStep($index)">
                 <!--page 1-->
                 <ion-slide>
@@ -42,9 +42,9 @@
                 </ion-slide>
                 <!--page 2-->
                 <ion-slide>
-                    <form name="editor.form.wizardform" ng-if="editor.wizard.dataForm.entity_type" novalidate>
+                    <form name="editor.form.wizardform" ng-show="editor.wizard.dataForm.entity_type" novalidate>
 
-                        <div class="list card" ng-if="editor.checkList.name">
+                        <div class="list card" ng-show="editor.checkList.name">
                             <div class="item item-divider" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.name.$invalid, 'no-error' : !editor.form.wizardform.name.$invalid }">
                                 {{editor.checkList.name.label|translate}}
                             </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list card" ng-if="editor.checkList.description">
+                        <div class="list card" ng-show="editor.checkList.description">
                             <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
                                 {{editor.checkList.description.label|translate}}
                             </div>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list card" ng-if="editor.checkList.tags">
+                        <div class="list card" ng-show="editor.checkList.tags">
                             <div class="item item-divider">
                                 {{editor.checkList.tags.label|translate}}
                             </div>
@@ -78,7 +78,7 @@
                                 <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{editor.checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
                             </div>
                         </div>
-                        <div class="list card" ng-if="editor.checkList.link_url">
+                        <div class="list card" ng-show="editor.checkList.link_url">
                             <div class="item item-divider">
                                 {{editor.checkList.link_url.label|translate}}
                             </div>
@@ -90,9 +90,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list card" ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
+                        <div class="list card" ng-show="editor.checkList.valid_from && editor.checkList.valid_from.is_editable || editor.checkList.door_time">
                             <div id="date-form" class="row responsive-sm">
-                                <label ng-if="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
+                                <label ng-show="editor.checkList.valid_from && editor.checkList.valid_from.is_editable" class="item item-input col">
                                     <div class="input-label">
                                         {{editor.checkList.valid_from.label|translate}}
                                     </div>
@@ -110,7 +110,7 @@
                                         </button>
                                     </ionic-datepicker>
                                 </label>
-                                <label ng-if="editor.checkList.door_time" class="item item-input col">
+                                <label ng-show="editor.checkList.door_time" class="item item-input col">
                                     <div class="input-label">
                                         {{editor.checkList.door_time.label|translate}}
                                     </div>
@@ -122,9 +122,9 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="list card" ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
+                        <div class="list card" ng-show="editor.checkList.valid_to && editor.checkList.valid_to.is_editable || editor.checkList.close_time">
                             <div id="date-form" class="row responsive-sm">
-                                <label ng-if="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
+                                <label ng-show="editor.checkList.valid_to && editor.checkList.valid_to.is_editable" class="item item-input col">
                                     <div class="input-label">
                                         {{editor.checkList.valid_to.label|translate}}
                                     </div>
@@ -143,7 +143,7 @@
                                         </button>
                                     </ionic-datepicker>
                                 </label>
-                                <label ng-if="editor.checkList.close_time" class="item item-input col">
+                                <label ng-show="editor.checkList.close_time" class="item item-input col">
                                     <div class="input-label">
                                         {{editor.checkList.close_time.label|translate}}
                                     </div>
