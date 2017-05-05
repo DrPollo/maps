@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="list card">
+                    <div class="list card" ng-if="checkList.description">
                         <div class="item item-divider" id="text-textarea" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.description.$invalid, 'no-error' : !editor.form.wizardform.description.$invalid}">
                             {{checkList.description.label|translate}}
                         </div>
