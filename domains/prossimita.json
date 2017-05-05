@@ -3,7 +3,7 @@
      "app_name" : "Prossimità",
      "domain_name" : "prossimita",
      "domain_id" : 13,
-   "read_domains":[],
+   "read_domains":false,
      "design":{
        "logo" : {
          "title": "FirstLife Biennale della Prossimità",

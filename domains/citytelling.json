@@ -3,7 +3,7 @@
   "app_name" : "CityTelling",
   "domain_name" : "citytelling",
   "domain_id" : 11,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife CityTelling",

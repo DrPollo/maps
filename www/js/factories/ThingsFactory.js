@@ -7,7 +7,7 @@ angular.module('firstlife.factories')
         var urlBbox= myConfig.backend_bbox;
         var urlTile= myConfig.backend_tilesearch;
         var fields = 'fields=valid_from,valid_to,categories,geometry,name,id,tags';
-        var domains = [self.config.domain_id].concat(self.config.read_domains).join(',');
+        var domains = self.config.read_domains ? [self.config.domain_id].concat(self.config.read_domains).join(',') : self.config.domain_id;
         var limit= 99999;
 
         return {

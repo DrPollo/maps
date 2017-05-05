@@ -3,7 +3,7 @@
   "app_name" : "Transformation",
   "domain_name" : "transformation",
   "domain_id" : 16,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife CityTelling",

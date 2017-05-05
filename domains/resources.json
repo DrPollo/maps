@@ -3,7 +3,7 @@
   "app_name" : "Resources",
   "domain_name" : "resources",
   "domain_id" : 12,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife Resources",

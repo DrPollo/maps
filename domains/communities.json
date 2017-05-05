@@ -3,7 +3,7 @@
   "app_name" : "Communities",
   "domain_name" : "communities",
   "domain_id" : 13,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife Communities",

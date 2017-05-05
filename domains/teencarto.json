@@ -2,7 +2,7 @@
   "app_name" : "Teen-CarTo",
   "domain_name" : "teencarto",
   "domain_id" : 4,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "TeenCarTo",

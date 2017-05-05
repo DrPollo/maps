@@ -3,7 +3,7 @@
   "app_name" : "EduLife",
   "domain_name" : "edulife",
   "domain_id" : 14,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife EduLife",

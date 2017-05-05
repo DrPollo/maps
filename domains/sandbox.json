@@ -2,7 +2,7 @@
     "app_name" : "Sandbox",
     "domain_name" : "sandbox",
     "domain_id" : 9,
-    "read_domains":[],
+    "read_domains":false,
     "design":{
       "logo" : {
       "title": "FirstLife Sandbox",

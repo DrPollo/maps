@@ -3,7 +3,7 @@
   "app_name" : "CO-City",
   "domain_name" : "cocity",
   "domain_id" : 17,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {"url": "img/firstlife-logo-orizzontale.svg", "title": "CO-City", "alt":"CO-City", "label":{"text": "CO-City", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
     "landingpage":{

@@ -3,7 +3,7 @@
   "app_name" : "Regeneration",
   "domain_name" : "regeneration",
   "domain_id" : 10,
-  "read_domains":[],
+  "read_domains":false,
   "design":{
     "logo" : {
       "title": "FirstLife Regeneration",
