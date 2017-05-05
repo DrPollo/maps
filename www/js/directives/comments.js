@@ -8,7 +8,7 @@ angular.module('firstlife.directives').directive('commentsList',function(){
             id:'='
         },
         templateUrl:'/templates/post/commentsList.html',
-        controller:[ '$scope', '$log', '$q','$ionicPopover','postFactory', 'AuthService', 'ThingsService', 'myConfig',function($scope, $log,$q, $ionicPopover, postFactory, AuthService, ThingsService, myConfig) {
+        controller:[ '$scope', '$log', '$q','$ionicPopover','$location','postFactory', 'AuthService', 'ThingsService', 'myConfig',function($scope, $log,$q, $ionicPopover, $location, postFactory, AuthService, ThingsService, myConfig) {
 
             $scope.$on('$destroy', function (e) {
                 if (!e.preventEventCommentsLists) {
@@ -55,6 +55,8 @@ angular.module('firstlife.directives').directive('commentsList',function(){
 
             $scope.config = myConfig;
             $scope.user = AuthService.getUser();
+            var searchParams = $location.search();
+            $scope.embed = searchParams.embed || false;
 
             // inizializzo aggiorno il commento con id
             $scope.updateComment = function(id){

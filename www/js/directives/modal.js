@@ -10,7 +10,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
             var consoleCheck = false;
             var hide = null;
-
+            var searchParams = $location.search();
+            $scope.embed = searchParams.embed || false;
 
             // se all'apertura trovo il parametro entity nella search apro la modal
             var initEntity = $location.search().entity;

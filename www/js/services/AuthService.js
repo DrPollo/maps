@@ -1,10 +1,15 @@
 angular.module('firstlife.services')
-    .factory('AuthService', ['$log','$http','$q','$ionicPopup','$filter','$window','myConfig','MemoryFactory',function($log, $http, $q,$ionicPopup, $filter,$window, myConfig, MemoryFactory) {
+    .factory('AuthService', ['$log','$http','$q','$ionicPopup','$filter','$window','$location','myConfig','MemoryFactory',function($log, $http, $q,$ionicPopup, $filter,$window, $location, myConfig, MemoryFactory) {
 
         var dev = myConfig.dev;
         var stateKey = myConfig.authentication.state_name;
         var tokenKey = myConfig.authentication.token_mem_key;
         var identityKey = myConfig.authentication.identity_mem_key;
+
+
+        var searchParams = $location.search();
+        var embed = searchParams.embed || false;
+        // $log.debug('embed?',embed);
 
 
         //C: (P&(~Q))
@@ -105,7 +110,9 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             isAuth: function (){
-                return (MemoryFactory.get(tokenKey)) ? true : false;
+                // $log.debug('isAuth?',(MemoryFactory.get(tokenKey) && !embed) ? true : false);
+
+                return (MemoryFactory.get(tokenKey) && !embed) ? true : false;
             },
             getUser: function (){
 //                $log.debug('getUser',MemoryFactory.get(tokenKey));

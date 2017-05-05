@@ -20,6 +20,9 @@ angular.module('firstlife.directives')
 
                 // editor status
                 scope.edit = false;
+                var searchParams = $location.search();
+                scope.embed = searchParams.embed || false;
+
 
                 // init initiative list
                 initList();

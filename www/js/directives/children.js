@@ -1,7 +1,7 @@
 /**
  * Created by drpollo on 27/03/2017.
  */
-angular.module('firstlife.directives').directive('entityChildren',['$log','$filter','myConfig','ThingsService', function($log,$filter,myConfig,ThingsService){
+angular.module('firstlife.directives').directive('entityChildren',['$log','$filter','$location','myConfig','ThingsService', function($log,$filter,$location,myConfig,ThingsService){
     return {
         restrict: 'EG',
         scope: {
@@ -13,6 +13,9 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
         link: function(scope,element,attr){
 
             scope.config = myConfig;
+            var searchParams = $location.search();
+            scope.embed = searchParams.embed || false;
+
 
             scope.$on('$destroy', function(e) {
                 if(!e.preventDestroyEntityRelations){

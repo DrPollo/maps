@@ -1,7 +1,7 @@
 /**
  * Created by drpollo on 25/03/2017.
  */
-angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', 'myConfig', 'postFactory', 'AuthService', 'ThingsService', function ($log, $q, $ionicPopover, myConfig, postFactory, AuthService, ThingsService) {
+angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicPopover', '$location', 'myConfig', 'postFactory', 'AuthService', 'ThingsService', function ($log, $q, $ionicPopover,$location, myConfig, postFactory, AuthService, ThingsService) {
     return {
         restrict:'EG',
         scope: {
@@ -25,6 +25,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             scope.dev = myConfig.dev;
             scope.config = myConfig;
 
+            var searchParams = $location.search();
+            scope.embed = searchParams.embed || false;
             //reset della lista
             scope.reset = function () {
                 $log.log('reset di ', scope.id)

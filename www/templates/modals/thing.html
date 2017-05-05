@@ -2,7 +2,7 @@
     <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
         <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
-            <button class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
+            <button ng-if="!embed" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
