@@ -8,7 +8,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var templateCache = require('gulp-angular-templatecache');
 var gulpNgConfig = require('gulp-ng-config');
-var override = require('json-override');
+// var override = require('json-override');
 var merge = require('deepmerge')
 var fs = require('fs');
 var fse = require('fs-extra');
@@ -270,7 +270,7 @@ gulp.task('mergeconfig', function(){
     }catch (err) {
         console.log('nothing to delete');
     }
-    console.log(config);
+    // console.log(config);
     fs.writeFileSync(path,JSON.stringify(config),'utf-8');
 });
 
