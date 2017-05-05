@@ -15372,10 +15372,7 @@ timeline {
     #landingpage .main-content .box {
       max-width: 800px;
       margin: 0px auto;
-      padding: 0px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35); }
+      padding: 0px; }
       #landingpage .main-content .box .central-content {
         margin: 0px 0px 20px;
         padding: 0px 16px 0px; }

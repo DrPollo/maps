@@ -189,6 +189,7 @@ angular.module('firstlife.controllers')
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.next();
+            $ionicSlideBoxDelegate.update();
         };
         $scope.prevStep = function(){
             // passo allo step 2
