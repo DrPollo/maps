@@ -141,30 +141,26 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             $state.go('app.maps',search_params);
                         }
                 }
-
-                function autoLogin(){
-                    // se l'utente non e' loggato
-                    // controllo se posso fare l'autologin con l'auth server
-                    AuthService.checkSession().then(
-                        function (result) {
-                            // l'utente e' attualmente loggato nell'auth server
-                            $log.log('checkSession',result, 'go to ',AuthService.auth_url());
-                            // redirect all'auth server
-                            $timeout(function(){
-                                $window.location.href = AuthService.auth_url();
-                            },1);
-                        },
-                        function (err) {
-                            // l'utente non e' loggato
-                            // resta nella landing page
-                        }
-                    );
-                }
-
-
-
             }
         });
+        function autoLogin(){
+            // se l'utente non e' loggato
+            // controllo se posso fare l'autologin con l'auth server
+            AuthService.checkSession().then(
+                function (result) {
+                    // l'utente e' attualmente loggato nell'auth server
+                    $log.log('checkSession',result, 'go to ',AuthService.auth_url());
+                    // redirect all'auth server
+                    $timeout(function(){
+                        $window.location.href = AuthService.auth_url();
+                    },1);
+                },
+                function (err) {
+                    // l'utente non e' loggato
+                    // resta nella landing page
+                }
+            );
+        }
         function alertAuth(type) {
             var title = '',
                 text = '',

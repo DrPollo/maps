@@ -110,7 +110,7 @@
                                     </button>
                                 </ionic-datepicker>
                             </label>
-                            <label ng-show="checkList.door_time" class="item item-input col">
+                            <label ng-if="checkList.door_time" class="item item-input col">
                                 <div class="input-label">
                                     {{checkList.door_time.label|translate}}
                                 </div>
@@ -143,7 +143,7 @@
                                     </button>
                                 </ionic-datepicker>
                             </label>
-                            <label ng-show="checkList.close_time" class="item item-input col">
+                            <label ng-if="checkList.close_time" class="item item-input col">
                                 <div class="input-label">
                                     {{checkList.close_time.label|translate}}
                                 </div>
