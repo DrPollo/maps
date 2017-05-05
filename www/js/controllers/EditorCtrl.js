@@ -40,7 +40,7 @@ angular.module('firstlife.controllers')
         // prendo il form di default
         _this.perms = _this.types.perms;
         // checklist
-        _this.checkList = {};
+        $scope.checkList = {};
 
 
 
@@ -211,8 +211,8 @@ angular.module('firstlife.controllers')
 
 
             //imposto i permessi
-            _this.checkList = _this.config.types.perms[type];
-            // $log.debug("EditorCtrl, checkList: ", _this.checkList);
+            $scope.checkList = _this.config.types.perms[type];
+            // $log.debug("EditorCtrl, checkList: ", $scope.checkList);
 
             // recupero i default per l'init dell'entita'
             angular.extend(_this.wizard.dataForm,EntityService.getDefaults(entity_type));
@@ -252,11 +252,11 @@ angular.module('firstlife.controllers')
             $log.debug('check rel',parentId,parentType,_this.wizard.dataForm);
 
             // template timepicker door_time
-            if(_this.checkList.door_time){
+            if($scope.checkList.door_time){
                 initDoorTime();
             }
             // template timepicker duration
-            if(_this.checkList.duration){
+            if($scope.checkList.duration){
                 initDuration();
             }
 
@@ -487,9 +487,9 @@ angular.module('firstlife.controllers')
             }
 
             //imposto i permessi
-            _this.checkList = angular.copy(_this.types.perms[type]);
+            $scope.checkList = angular.copy(_this.types.perms[type]);
 
-            $log.debug("EditorCtrl, setToEdit, checkList: ", _this.checkList);
+            $log.debug("EditorCtrl, setToEdit, checkList: ", $scope.checkList);
             $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
             _this.wizard.dataForm = angular.copy(mark);
@@ -511,12 +511,12 @@ angular.module('firstlife.controllers')
                 setParent(mark.parent_id);
             }
             // se door_time e' richiesto e non e' nel marker
-            if(_this.checkList.door_time && !_this.wizard.dataForm.door_time){
+            if($scope.checkList.door_time && !_this.wizard.dataForm.door_time){
                 $log.debug("Entro in initDoorTime");
                 initDoorTime();
             }
             // se duration e' richiesto e non e' nel marker
-            if(_this.checkList.duration && !_this.wizard.dataForm.duration){
+            if($scope.checkList.duration && !_this.wizard.dataForm.duration){
                 $log.debug("Entro in initDuration");
                 initDuration();
             }
@@ -554,17 +554,17 @@ angular.module('firstlife.controllers')
             $ionicLoading.hide();
         }
         function initDoorTime(){
-            // $log.debug("EditorCtrl, initDoorTime, c'e' door_time? ",_this.checkList.door_time,_this.wizard.dataForm.door_time);
+            // $log.debug("EditorCtrl, initDoorTime, c'e' door_time? ",$scope.checkList.door_time,_this.wizard.dataForm.door_time);
             var inputEpochTime = null;
 
             if(_this.wizard.dataForm.door_time)
                 inputEpochTime = angular.copy(_this.wizard.dataForm.door_time);
 
-            angular.extend(_this.checkList.door_time, {template:{
+            angular.extend($scope.checkList.door_time, {template:{
                 inputEpochTime: inputEpochTime,//((new Date()).getHours() * 60 * 60),  //Optional
                 step: 15,  //Optional
                 format: 24,  //Optional
-                titleLabel: $filter('translate')(_this.checkList.door_time.label),  //Optional
+                titleLabel: $filter('translate')($scope.checkList.door_time.label),  //Optional
                 setLabel: '<i class="icon ion-checkmark-round"></i>',  //Optional
                 closeLabel: '<i class="icon ion-close-round"></i>',  //Optional
                 setButtonType: 'button-positive',  //Optional
@@ -573,9 +573,9 @@ angular.module('firstlife.controllers')
                     doorTimeCallback(val)
                 }
             }});
-            //_this.checkList.door_time["template"] = template;
-            _this.wizard.dataForm.door_time = angular.copy(_this.checkList.door_time.template.inputEpochTime);
-            // $log.debug("EditorCtrl, initDoorTime, aggiunta durata ", _this.checkList.door_time.template," a ",_this.wizard.dataForm.door_time);
+            //$scope.checkList.door_time["template"] = template;
+            _this.wizard.dataForm.door_time = angular.copy($scope.checkList.door_time.template.inputEpochTime);
+            // $log.debug("EditorCtrl, initDoorTime, aggiunta durata ", $scope.checkList.door_time.template," a ",_this.wizard.dataForm.door_time);
         }
         function doorTimeCallback(val) {
             if(val){
@@ -616,18 +616,18 @@ angular.module('firstlife.controllers')
             }else{_this.wizard.dataForm.door_time = null;}
         }
         function initDuration(){
-            _this.checkList.close_time = angular.copy(_this.checkList.duration);
+            $scope.checkList.close_time = angular.copy($scope.checkList.duration);
             _this.wizard.dataForm.close_time = null;
 
             var inputEpochTime = null;
             if(_this.wizard.dataForm.close_time)
                 inputEpochTime = angular.copy(_this.wizard.dataForm.close_time);
 
-            angular.extend(_this.checkList.close_time,{template : {
+            angular.extend($scope.checkList.close_time,{template : {
                 inputEpochTime: inputEpochTime,// ((new Date()).getHours() * 60 * 60),  //Optional
                 step: 15,  //Optional
                 format: 24,  //Optional
-                titleLabel: $filter('translate')(_this.checkList.close_time.label),  //Optional
+                titleLabel: $filter('translate')($scope.checkList.close_time.label),  //Optional
                 setLabel: '<i class="icon ion-checkmark-round"></i>',  //Optional
                 closeLabel: '<i class="icon ion-close-round"></i>',  //Optional
                 setButtonType: 'button-positive',  //Optional
@@ -637,8 +637,8 @@ angular.module('firstlife.controllers')
                 }
             }});
 
-            _this.wizard.dataForm.close_time = angular.copy(_this.checkList.close_time.template.inputEpochTime);
-            // $log.debug("EditorCtrl, initDuration, aggiunta durata ",_this.checkList.close_time.template," a ",_this.wizard.dataForm.close_time);
+            _this.wizard.dataForm.close_time = angular.copy($scope.checkList.close_time.template.inputEpochTime);
+            // $log.debug("EditorCtrl, initDuration, aggiunta durata ",$scope.checkList.close_time.template," a ",_this.wizard.dataForm.close_time);
         }
         function durationCallback(val){
             if(val){
