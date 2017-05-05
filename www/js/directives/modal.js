@@ -2,7 +2,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
     return{
         restrict:'EG',
         scope:{},
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', '$ionicSideMenuDelegate', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, $ionicSideMenuDelegate, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -212,7 +212,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         query = $filter('translate')(text);
                     default:
                         // aggiorno il parametro q
-                        $ionicSideMenuDelegate.toggleLeft()
+                        $scope.$emit('openSideLeft');
                         $scope.$emit('handleUpdateQ',{q:query});
                 }
                 // chiudo la modal

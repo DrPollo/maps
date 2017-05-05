@@ -82,8 +82,8 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    if(args && args.query){
-                        scope.query = args.query;
+                    if(args && (args.query || args.q)){
+                        scope.query = args.query || args.q;
                     }else{
                         scope.query = '';
                     }

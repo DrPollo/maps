@@ -102,7 +102,7 @@ angular.module('firstlife.controllers')
             var q = (args && args.q) ? args.q : null;
             ThingsService.setQuery( q);
             $location.search('q',q);
-            $scope.$broadcast('newSearchParam',{q:q});
+            $scope.$broadcast('wallQuery',{q:q});
             // al cambio filtro testuale
             $scope.$broadcast('filterMarkers');
         });
