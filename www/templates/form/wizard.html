@@ -169,7 +169,7 @@
                                         <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
                                         {{ category.name }}
                                         <span class="item-note" ng-if="category.description">
-                                {{category.description}}
+                                            <span ng-if="!isMobile">{{category.description}}</span>
                             </span>
                                     </div>
 

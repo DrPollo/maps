@@ -172,15 +172,9 @@ angular.module('firstlife.controllers')
                     $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
                 },100);
             }
-            // gestione di stati di arrivo diversi non necessaria
-            // } else {
-            //     $log.debug("Ignoro perche' vengo da un altro stato o via link diretto, faccio redirect a app.maps");
-            //     if(params && params.lat && params.lng)
-            //         $state.go('app.maps',{lat:params.lat,lng:params.lng});
-            //     else
-            //         $state.go('app.maps');
-            // }
 
+            // disabilito swipe da mobile
+            $ionicSlideBoxDelegate.enableSlide(false);
         });
 
         // $timeout(function(){

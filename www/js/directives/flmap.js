@@ -736,7 +736,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 if(args && args.scale){
                     scope.scale = angular.extend({},args.scale);
-                    $log.debug('scale',args.scale);
+                    // $log.debug('scale',args.scale);
                 }else{
                     // reset
                     delete scope.scale;
