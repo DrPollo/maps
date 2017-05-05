@@ -2,6 +2,9 @@
     $images-path: "../img";
     //background:rgb(252,74,0);
     background:#fafafa;//radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));
+    .bar-header {
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.35);
+    }
     .bar-header, .bar {
         .title {
             img {
@@ -45,12 +48,15 @@
     .main-content {
         min-height:90%;
         margin: 0px;
-        padding: 50px 0px 0px;
+        padding: 44px 0px 0px;
         text-align: center;
         .box {
             max-width: 800px;
             margin: 0px auto;
             padding: 0px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.35);
             .central-content{
                 margin: 0px 0px 20px;
                 padding: 0px 16px 0px;
@@ -83,15 +89,15 @@
                             text-align: right;
                         }
                         .button {
-                            padding:0px;
-                            font-size:14px;
-                            margin: 20px 0px 40px auto;
-                            border-radius:14px;
-                            width: 300px;
-                            font-weight: bold;
+                            padding: 0;
+                            font-size: 14px;
+                            margin: 20px 0 0px auto;
+                            border-radius: 4px;
+                            width: 250px;
+                            font-weight: 700;
                             font-size: 1.2em;
-                            padding: 10px 0px;
-
+                            padding: 6px 0;
+                            box-shadow: 1px 1px 5px rgba(0,0,0,0.35);
                         }
                         .button.disabled, .button[disabled] {
                             opacity: 0.9;
@@ -150,7 +156,7 @@
         margin: 0px;
         padding: 0px;
         text-align: center;
-
+        box-shadow: 0px -1px 5px rgba(0,0,0,0.35);
         span{
             margin: 0 10px;
             display: inline-block;

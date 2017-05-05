@@ -45,7 +45,7 @@
         "logo_width" : 160,
         "logo_height" : 160,
         "default_thumb" : "img/thumb.jpg",
-        "default_background" : "background:radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));",
+        "default_background" : "img/bg/modulo-bg-bianco.svg",
         "colors": ["#FC4A00",
             "#f44336","#823256","#FFB310","#88BA5C","#3f7f91",
             "#FF7027",
@@ -74,7 +74,7 @@
             {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
         ],
         "landingpage":{
-            "css":"",
+            "css":"background-image:url('img/bg/modulo-bg-grigio.svg');background-repeat:repeat;background-size:200px;",
             "logo":{
                 "url":"img/loghi/firstlife-logo-orizzontale.svg",
                 "title":"FirstLife",
