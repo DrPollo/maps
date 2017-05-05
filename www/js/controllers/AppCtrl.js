@@ -99,12 +99,14 @@ angular.module('firstlife.controllers')
                 return;
 
             event.preventDefault();
-            var q = (args && args.q) ? args.q : null;
-            ThingsService.setQuery( q);
+            var q = args.q || args.query || null;
+            ThingsService.setQuery(q);
             $location.search('q',q);
             $scope.$broadcast('wallQuery',{q:q});
             // al cambio filtro testuale
             $scope.$broadcast('filterMarkers');
+            // avverto le searchcard
+            $scope.$broadcast('newSearchParam',{q:q});
         });
 
         $scope.$on('closeSearchCard',function (event,args) {
@@ -228,8 +230,8 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('openSideLeft');
             $scope.openSideLeft();
-
         });
         $scope.closeSideLeft = function () {
             if(isOpenLeft()){
@@ -240,8 +242,8 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('closeSideLeft');
             $scope.closeSideLeft();
-
         });
         $scope.toggleSideLeft = function () {
             $log.debug('toggleSideLeft');
@@ -254,6 +256,7 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('toggleSideLeft');
             $scope.toggleSideLeft();
 
         });
@@ -267,8 +270,8 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('openSideRight');
             $scope.openSideRight();
-
         });
         $scope.closeSideRight = function () {
             if(isOpenRight()){
@@ -279,8 +282,8 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('closeSideRight');
             $scope.closeSideRight();
-
         });
         $scope.toggleSideRight = function () {
             $ionicSideMenuDelegate.toggleRight();
@@ -289,8 +292,8 @@ angular.module('firstlife.controllers')
             if(e.defaultPrevented)
                 return;
             e.preventDefault();
+            $log.debug('toggleSideRight');
             $scope.toggleSideRight();
-
         });
 
 

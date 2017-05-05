@@ -133,7 +133,7 @@ angular.module('firstlife.directives')
                 // aggiorno il parametro prima di uscire
                 scope.exit =function(){
                     var q = scope.query ? scope.query : null;
-                    // $log.debug('exit from entity-list with',q);
+                    $log.debug('exit from entity-list with',q);
                     scope.$emit('handleUpdateQ',{q:q});
                     scope.close();
                 };
