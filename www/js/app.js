@@ -15,7 +15,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         var redirect_uri_auth = myConfig.base_callback.concat("callback");
         var redirect_uri_logout = myConfig.base_callback.concat("logout");
 
-        // $log.debug('auth server check',myConfig.authentication);
+        $log.debug('auth server check',myConfig.authentication);
 
         myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
         myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;

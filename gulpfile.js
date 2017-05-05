@@ -9,6 +9,7 @@ var sh = require('shelljs');
 var templateCache = require('gulp-angular-templatecache');
 var gulpNgConfig = require('gulp-ng-config');
 var override = require('json-override');
+var merge = require('deepmerge')
 var fs = require('fs');
 var fse = require('fs-extra');
 var run = require('sync-exec');
@@ -199,8 +200,8 @@ gulp.task('setupenv',function(){
         config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
     }else{ // default
         console.log('env prod');
-        config.myConfig.api_base_domain = "api.firstlife.org/";
-        config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
+        // config.myConfig.api_base_domain = "api.firstlife.org/";
+        // config.myConfig.authentication.auth_base_domain = "https://secure.firstlife.org/";
     }
     if(gutil.env.logs){
         config.myConfig.dev = true;
@@ -256,8 +257,11 @@ gulp.task('mergeconfig', function(){
                 message: domain+".json JSON.parse error"
             });
         }
-        if(extras)
-            config = override(defaults,extras,true);
+        if(extras){
+            // console.log(extras);
+            config = merge(defaults,extras,{clone:true});
+            // console.log(config);
+        }
 
     }
     // cancello il file
@@ -266,6 +270,7 @@ gulp.task('mergeconfig', function(){
     }catch (err) {
         console.log('nothing to delete');
     }
+    console.log(config);
     fs.writeFileSync(path,JSON.stringify(config),'utf-8');
 });
 
