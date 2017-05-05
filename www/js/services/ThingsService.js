@@ -443,7 +443,9 @@ angular.module('firstlife.services')
             // se id non presente
             if(!marker.id)
                 marker.id = feature._id;
-
+            // fix url senza protocollo
+            if(marker.link_url && (marker.link_url.search('http') < 0 || marker.link_url.search('//') < 0) )
+                marker.link_url = '//'+marker.link_url;
 
             return marker;
         }
