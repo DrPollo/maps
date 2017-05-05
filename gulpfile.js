@@ -9,7 +9,8 @@ var sh = require('shelljs');
 var templateCache = require('gulp-angular-templatecache');
 var gulpNgConfig = require('gulp-ng-config');
 // var override = require('json-override');
-var merge = require('deepmerge')
+var override = require('json-override');
+var merge = require('deepmerge');
 var fs = require('fs');
 var fse = require('fs-extra');
 var run = require('sync-exec');
@@ -259,7 +260,7 @@ gulp.task('mergeconfig', function(){
         }
         if(extras){
             // console.log(extras);
-            config = merge(defaults,extras,{clone:true});
+            config = override(defaults,extras,true);
             // console.log(config);
         }
 
