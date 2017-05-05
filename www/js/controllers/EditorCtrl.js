@@ -520,7 +520,7 @@ angular.module('firstlife.controllers')
                 $log.debug("Entro in initDuration");
                 initDuration();
             }
-            $log.debug('fine setToEdit')
+            $log.debug('fine setToEdit', $scope.checkList);
         }
 
         function setParent(parent_id){
