@@ -71,8 +71,10 @@ angular.module('firstlife.controllers')
 
             // $log.debug('markerUpdated');
             // se wall aperto aggiorno
-            if(isOpenLeft())
-                $scope.$broadcast('wallInit');
+            // if(isOpenLeft()){
+            $log.debug('request wallInit');
+            $scope.$broadcast('wallInit');
+            // }
         });
 
 
