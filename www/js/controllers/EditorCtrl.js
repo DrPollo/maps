@@ -193,11 +193,15 @@ angular.module('firstlife.controllers')
         }
 
         $scope.nextStep = function(){
+            // enables type form
+            $scope.chooseType = false;
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.next();
         };
         $scope.prevStep = function(){
+            // enables type form
+            $scope.chooseType = true;
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.previous();
@@ -221,7 +225,7 @@ angular.module('firstlife.controllers')
             // $log.debug("EditorCtrl, checkList: ", $scope.checkList);
 
             // recupero i default per l'init dell'entita'
-            angular.extend(_this.wizard.dataForm,EntityService.getDefaults(entity_type));
+            _this.wizard.dataForm = angular.extend({},EntityService.getDefaults(entity_type));
 
             // sistemo le coordinate
             if(params.lat && params.lng){
