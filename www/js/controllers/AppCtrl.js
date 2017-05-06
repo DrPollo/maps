@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', 'myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window,myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', '$timeout','myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window, $timeout, myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
 
 
         $scope.config = myConfig;
@@ -10,6 +10,8 @@ angular.module('firstlife.controllers')
         $scope.apiVersion = 'API: ' + myConfig.api_version;
         $scope.clientVersion = 'Client: v' + myConfig.version;
         $scope.sideWidth = Math.min($window.innerWidth,500);
+
+        $scope.wallOpen = false;
 
 
         // flag per le notifiche
@@ -223,6 +225,7 @@ angular.module('firstlife.controllers')
 
         // left side (wall)
         $scope.openSideLeft = function () {
+            $scope.wallOpen = true;
             if(!isOpenLeft()){
                 $ionicSideMenuDelegate.toggleLeft();
                 wallInit();
@@ -239,6 +242,9 @@ angular.module('firstlife.controllers')
             if(isOpenLeft()){
                 $ionicSideMenuDelegate.toggleLeft();
             }
+            $timeout(function () {
+                $scope.wallOpen = false;
+            },400);
         };
         $scope.$on('closeSideLeft',function (e) {
             if(e.defaultPrevented)
@@ -253,6 +259,10 @@ angular.module('firstlife.controllers')
                 wallInit();
             }
             $ionicSideMenuDelegate.toggleLeft();
+            // aggiorno dopo le animazioni
+            $timeout(function () {
+                $scope.wallOpen = $ionicSideMenuDelegate.isOpenLeft();
+            },500);
         };
         $scope.$on('toggleSideLeft',function (e) {
             if(e.defaultPrevented)
@@ -304,7 +314,8 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('wallInit');
         }
         function isOpenLeft(){
-            return $ionicSideMenuDelegate.isOpenLeft();
+            // patch per gestire il delay delle animazioni di ionic
+            return ($scope.wallOpen || $ionicSideMenuDelegate.isOpenLeft());
         }
         function isOpenRight(){
             return $ionicSideMenuDelegate.isOpenRight();
