@@ -387,10 +387,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function filterMarkers() {
                 // chiedo cosa devo eliminare
-                var markers = ThingsService.filter();
-                removeMarkers();
-                addMarkers(markers);
-                $scope.$emit('markerUpdated');
+                ThingsService.filter().then(
+                    function (markers) {
+                        removeMarkers();
+                        addMarkers(markers);
+                        $scope.$emit('markerUpdated');
+                    },
+                    function (err) {
+                        $log.error(err);
+                    }
+                );
             }
             // add the markers keeping the reference
             function addMarkers(markers) {

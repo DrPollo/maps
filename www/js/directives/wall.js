@@ -94,7 +94,7 @@ angular.module('firstlife.directives')
                         return;
                     e.preventDefault();
 
-                    $log.debug('wall init');
+                    // $log.debug('wall init');
                     init();
                 });
 
@@ -105,14 +105,23 @@ angular.module('firstlife.directives')
                 function init(){
                     delete scope.markers;
 
-                    // $log.debug('init entity list');
-                    var current = ThingsService.filter();
-                    scope.markers = Object.keys(current).map(function(e){return current[e];});
                     var params = $location.search();
                     if(params.q)
                         scope.query = params.q;
 
-                    scope.loading = false;
+                    // $log.debug('init entity list');
+                    ThingsService.filter().then(
+                        function (current) {
+                            delete scope.markers;
+                            scope.markers = Object.keys(current).map(function(e){return current[e];});
+                            // $log.debug('markers',scope.markers.length);
+                            scope.loading = false;
+                        },
+                        function (err) {
+                            scope.loading = false;
+                            $log.error(err);
+                        }
+                    );
                 }
 
                 // click cambio di parametro search e chiudo modal
@@ -133,7 +142,7 @@ angular.module('firstlife.directives')
                 // aggiorno il parametro prima di uscire
                 scope.exit =function(){
                     var q = scope.query ? scope.query : null;
-                    $log.debug('exit from entity-list with',q);
+                    // $log.debug('exit from entity-list with',q);
                     scope.$emit('handleUpdateQ',{q:q});
                     scope.close();
                 };

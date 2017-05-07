@@ -854,7 +854,8 @@ angular.module('firstlife.controllers')
                     visible: true,
                     url: config.map.tile_view,
                     layerOptions: {
-                        attribution: config.map.tile_view_attribution
+                        attribution: config.map.tile_view_attribution,
+                        keepBuffer: 0
                     }
                 },
                 edit: {

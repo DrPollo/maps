@@ -9,6 +9,14 @@ angular.module('firstlife.services')
         var types = config.types.keys;
         var defIcons = config.types.icons;
 
+        /*
+         * semaforo correttezza del buffer
+         * 1) true posso filtrare senza ricaricare
+         * 2) false le tile sono cambiate e devo ricalcolare
+         */
+        var isBufferValid = false;
+
+
         return {
             get: function(id){
                 var deferred = $q.defer();
@@ -59,16 +67,26 @@ angular.module('firstlife.services')
                 return ThingsFact.report(report);
             },
             filter: function () {
-                // restituisce i marker da eliminare
-                // $log.debug('buffer to check');
-                return buffer.reduce(function (result,feature){
-                    // $log.debug('check ',feature);
-                    var id = feature.properties.id ? feature.properties.id: feature._id;
-                    if(check(feature)){
-                        result[id] = makeMarker(feature);
-                    }
-                    return result;
-                },{});
+
+                // se il buffer e' valido
+                if(isBufferValid){
+                    var deferred = $q.defer();
+                    // restituisce le feature del buffer da visualizzare
+                    // $log.debug('buffer to check');
+                    var markers = buffer.reduce(function (result,feature){
+                        // $log.debug('check ',feature);
+                        var id = feature.properties.id ? feature.properties.id: feature._id;
+                        if(check(feature)){
+                            result[id] = makeMarker(feature);
+                        }
+                        return result;
+                    },{})
+                    deferred.resolve(markers);
+                    return deferred.promise;
+                }
+
+                // se il buffer non e' valido restituisco il nuovo risultato
+                return flushTiles();
             },
             filterBuffer: function () {
                 // $log.debug('cache?', Object.keys(cache).length);
@@ -126,39 +144,26 @@ angular.module('firstlife.services')
                     );
                 }
             },
-            flushTiles: function() {
-                var deferred = $q.defer();
-                var tiles = angular.copy(Object.keys(cache));
-                var params = {tiles: tiles, time: filters.time};
-                // $log.debug('fushTiles',params);
-                ThingsFact.tiles(params).then(
-                  function (results) {
-                      $log.debug('risultati',results.length);
-                      deferred.resolve(makeMarkers(results));
-                      buffer = results;
-                  },function (err) {
-                      $log.error(err);
-                      deferred.reject(err);
-                  }
-                );
-
-                return deferred.promise;
-            },
+            flushTiles: flushTiles,
             resetCache : function () {
                 buffer = [];
                 cache = {};
                 return true;
             },
             removeTile: function(params){
-                // $log.debug('cache',Object.keys(cache).length -1);
+                // $log.debug('remove tile', params ,'from cache',Object.keys(cache).length -1);
                 // rimuovo la tile
                 delete cache[params.x+':'+params.y+':'+params.z];
+                // invalido il buffer
+                isBufferValid = false;
                 return true;
             },
             addTile: function(params){
                 // rimuovo la tile
                 if(!cache[params.x+':'+params.y+':'+params.z])
                     cache[params.x+':'+params.y+':'+params.z] = [];
+                // invalido il buffer
+                isBufferValid = false;
                 return true;
             },
             getTile: function (tile) {
@@ -342,6 +347,26 @@ angular.module('firstlife.services')
          * 2) makeMarker: conversion of a single feature in a marker
          * 3) checkFilters: filters check
          */
+
+        function flushTiles() {
+            var deferred = $q.defer();
+            var tiles = angular.copy(Object.keys(cache));
+            var params = {tiles: tiles, time: filters.time};
+            // $log.debug('fushTiles',tiles.length);
+            ThingsFact.tiles(params).then(
+                function (results) {
+                    // $log.debug('risultati',results.length);
+                    deferred.resolve(makeMarkers(results));
+                    buffer = results;
+                    isBufferValid = true;
+                },function (err) {
+                    $log.error(err);
+                    deferred.reject(err);
+                }
+            );
+
+            return deferred.promise;
+        }
 
         function getTile(tile) {
             var deferred = $q.defer();
