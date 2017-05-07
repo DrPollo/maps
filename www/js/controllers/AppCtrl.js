@@ -103,7 +103,10 @@ angular.module('firstlife.controllers')
                 return;
 
             event.preventDefault();
-            var q = args.q || args.query || null;
+            var q = null;
+            if(args)
+                q = args.q || args.query;
+
             ThingsService.setQuery(q);
             $location.search('q',q);
             $scope.$broadcast('wallQuery',{q:q});
