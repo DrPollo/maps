@@ -1111,7 +1111,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     }
 
                     // invalid token
-                    if(rejection.status === 404){
+                    if(rejection.status === 401){
                         var $rootScope = $injector.get('$rootScope');
                         // $log.debug('reject because invalid token');
                         // cancello il token

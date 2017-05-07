@@ -21,7 +21,7 @@ angular.module('firstlife.controllers')
         });
         $scope.$on('noNotification',function(){
             $scope.checkNotifications = false;
-        })
+        });
 
 
         var consoleCheck = false;
