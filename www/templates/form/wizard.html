@@ -1,7 +1,7 @@
 <ion-view>
     <ion-nav-bar>
         <!--<ion-nav-buttons side="left">-->
-            <!--<button ng-if="editor.config.actions.show_menu" id="sideMenuToggler" class="button button-positive button-clear icon ion-navicon" ng-click="editor.toggleSideLeft()"></button>-->
+        <!--<button ng-if="editor.config.actions.show_menu" id="sideMenuToggler" class="button button-positive button-clear icon ion-navicon" ng-click="editor.toggleSideLeft()"></button>-->
         <!--</ion-nav-buttons>-->
 
         <ion-nav-title>
@@ -154,8 +154,8 @@
                             </label>
                         </div>
                     </div>
-                    <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>
-                        <div class="list card">
+                    <div class="list card">
+                        <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>
                             <div class="item item-divider" ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">
                                 {{space.name}}
                             </div>
@@ -172,11 +172,11 @@
                                     </span>
                                 </div>
                             </ion-radio>
-                        </div>
-                        <div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">
-                            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
-                        </div>
-                    </ng-form>
+                            <div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">
+                                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                            </div>
+                        </ng-form>
+                    </div>
                 </form>
             </ion-slide>
             </ion-slide>

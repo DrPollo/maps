@@ -1,11 +1,14 @@
 <ion-modal-view>
     <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
-        <h1 class="title title-modal">{{infoPlace.marker.name}}</h1>
+        <h1 class="title title-modal" title="{{infoPlace.marker.name}}">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
             <button ng-if="!embed" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
+        <!--<div class="top-modal">-->
+            <!--<h1 class="title title-modal item item-text-wrap" title="{{infoPlace.marker.name}}">{{infoPlace.marker.name}}</h1>-->
+        <!--</div>-->
         <div class="top-modal">
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">
