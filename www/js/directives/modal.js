@@ -609,7 +609,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                                 scope.subscriber = false;
                                                 initActions();
                                                 reset('subscribers');
-                                                actionReport(true);
                                             },
                                             function(response){
                                                 $log.error("notificationFactory, unsubscribe, errore",response);
@@ -639,7 +638,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                                 scope.subscriber = true;
                                                 initActions();
                                                 reset('subscribers');
-                                                actionReport(true);
                                             },
                                             function(response){
                                                 $log.error("notificationFactory, subscribe, errore",response);
@@ -680,7 +678,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                                 }
                                                 initActions();
                                                 reset('members');
-                                                actionReport(true);
                                             },
                                             function(response){
                                                 $log.error("actionEntity, join, errore",response);
@@ -715,7 +712,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                                                 // reinizializzo i permessi
                                                 initActions();
                                                 reset('members');
-                                                actionReport(true);
                                             },
                                             function(response){
                                                 $log.error("actionEntity, leave, errore",response);
