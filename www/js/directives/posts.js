@@ -232,9 +232,9 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
 
             // raccolgo l'evento focus
             scope.focus = false;
-            scope.setFocus = function(value){
+            scope.setFocus = AuthService.doAction(function(value){
                 scope.focus = value;
-            }
+            });
 
             // reset dei campi
             scope.clear = function(){
