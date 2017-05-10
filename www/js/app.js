@@ -229,17 +229,18 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             });
         }
 
-    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $location, $log) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
         url: "/?embed&error",
         controller: 'LandingCtrl as landing',
-        templateUrl: function() {
+        templateUrl: function(stateParams) {
             var page = "templates/landing-page.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
+            // console.log('page',window.location.protocol.concat( "//" ,window.location.host,'/')+ page);
             if (useHTTPS) {
-                return $location.protocol().concat( "://" ,$location.host(),'/')+ page;
+                return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
             } else {
                 return page;
             }
@@ -256,8 +257,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             var page = "templates/callback-page.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
             if (useHTTPS) {
-                $log.debug('callback template url',$location.protocol().concat( "://" ,$location.host(),'/') + page);
-                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
             } else {
                 return page;
             }
@@ -274,7 +274,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             var page = "templates/logout-page.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
             if (useHTTPS) {
-                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
             } else {
                 return page;
             }
@@ -291,7 +291,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             var page = "templates/side-menu.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
             if (useHTTPS) {
-                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
             } else {
                 return page;
             }
@@ -308,7 +308,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     var page = "templates/maps.html";
                     var useHTTPS = window.location.href.indexOf('https') > -1;
                     if (useHTTPS) {
-                        return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                        return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
                     } else {
                         return page;
                     }
@@ -329,7 +329,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         var page = 'templates/form/wizard.html';
                         var useHTTPS = window.location.href.indexOf('https') > -1;
                         if (useHTTPS) {
-                            return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                            return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
                         } else {
                             return page;
                         }
