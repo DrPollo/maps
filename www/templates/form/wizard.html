@@ -15,7 +15,7 @@
     <ion-content class="content" id="wizardEntity" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
         <ion-slide-box on-slide-changed="changeWizardStep($index)">
             <!--page 1-->
-            <ion-slide>
+            <ion-slide ng-if="chooseType">
                 <form name="editor.typeform">
                     <div class="list card">
                         <div class="item item-divider" ng-class="{ 'has-error' : editor.typeform.entity_type.$invalid, 'no-error' : !editor.typeform.entity_type.$invalid }">

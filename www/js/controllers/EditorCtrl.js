@@ -91,7 +91,11 @@ angular.module('firstlife.controllers')
             event.preventEditorEvent = true;
             // se non devo gestire l'evento
             if(toState.name != 'app.editor')
-                return
+                return;
+
+            // disabilito swipe da mobile
+            $ionicSlideBoxDelegate.enableSlide(false);
+
             //recupero lo stato precedente!
             // var previousState = $previousState.get();
             // if( previousState && previousState.state && previousState.state.name == 'app.editor' )
@@ -126,7 +130,7 @@ angular.module('firstlife.controllers')
             // update place: init dataForm con dati del place...
             if(params.id && params.id != ""){
                 $log.debug('update',params.id);
-
+                _this.wizard.title = _this.labels.edit;
                 $scope.chooseType = false;
                 //get place(id)
                 ThingsService.get(params.id)
@@ -154,7 +158,7 @@ angular.module('firstlife.controllers')
                 // valori per update (salto step tipo)
                 $timeout(function(){
                     $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
-                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount() - 1;
+                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
                 },100);
             }
             //create place: init empty dataForm
@@ -173,8 +177,7 @@ angular.module('firstlife.controllers')
                 },100);
             }
 
-            // disabilito swipe da mobile
-            $ionicSlideBoxDelegate.enableSlide(false);
+
         });
 
         // $timeout(function(){
@@ -488,7 +491,7 @@ angular.module('firstlife.controllers')
 
         // imposto il form con i dati del marker da modificare
         function setToEdit(data){
-            $log.debug('setToEdit')
+            $log.debug('setToEdit');
             var mark = EntityService.preprocessMarker(data);
             // se il type e' settato
             if(mark.entity_type){
