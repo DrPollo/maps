@@ -342,7 +342,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOGIN:'Entra',
         LOGOUT:'Esci',
         EDIT_PROFILE:'Gestione profilo',
-        EDIT_SIGNATURE:'Gestione organizzazioni',
+        EDIT_SIGNATURE:'Gestione Reti',
         EXPLORE: 'Esplora',
         MAP:'Mappa',
         HELP: 'Supporto',
@@ -709,7 +709,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOGIN:'Login',
         LOGOUT:'Logout',
         EDIT_PROFILE:'Edit profile',
-        EDIT_SIGNATURE:'Edit organizations',
+        EDIT_SIGNATURE:'Edit Networks',
         EXPLORE: 'Explore',
         MAP:'Map',
         HELP: 'Helpdesk',
@@ -1071,8 +1071,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     }
                     // imposto il timeout delle chiamate
                     // console.debug('method', config.method);
-                    if(config.method === 'GET'){}
+                    if(config.method === 'GET'){
                         config.timeout = 2000;
+                    }else{
+                        config.timeout = 10000;
+                    }
                     // $log.debug('request headers',config);
                     return config;
                 },
