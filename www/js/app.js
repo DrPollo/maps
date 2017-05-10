@@ -235,7 +235,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     $stateProvider.state('home', {
         url: "/?embed&error",
         controller: 'LandingCtrl as landing',
-        templateUrl: "templates/landing-page.html",
+        templateUrl: function() {
+            var page = "templates/landing-page.html";
+            var useHTTPS = window.location.href.indexOf('https') > -1;
+            if (useHTTPS) {
+                return $location.protocol().concat( "://" ,$location.host(),'/')+ page;
+            } else {
+                return page;
+            }
+        },
+        // templateUrl: "templates/landing-page.html",
         reloadOnSearch: true,
         data: {
             authenticate: false
@@ -243,7 +252,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('callback', {
         url: "/callback?code&state&profile&error",
         controller: 'CallbackCtrl',
-        templateUrl: "templates/callback-page.html",
+        templateUrl: function() {
+            var page = "templates/callback-page.html";
+            var useHTTPS = window.location.href.indexOf('https') > -1;
+            if (useHTTPS) {
+                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+            } else {
+                return page;
+            }
+        },
+        // templateUrl: "templates/callback-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -251,7 +269,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('logout', {
         url: "/logout",
         controller: 'LogoutCtrl',
-        templateUrl: "templates/logout-page.html",
+        templateUrl: function() {
+            var page = "templates/logout-page.html";
+            var useHTTPS = window.location.href.indexOf('https') > -1;
+            if (useHTTPS) {
+                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+            } else {
+                return page;
+            }
+        },
+        // templateUrl: "templates/logout-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -259,14 +286,32 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('app', {
         url: "/app",
         abstract: true,
-        templateUrl: "templates/side-menu.html",
+        templateUrl: function() {
+            var page = "templates/side-menu.html";
+            var useHTTPS = window.location.href.indexOf('https') > -1;
+            if (useHTTPS) {
+                return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+            } else {
+                return page;
+            }
+        },
+        // templateUrl: "templates/side-menu.html",
         controller: 'AppCtrl as app'
     }).state('app.maps', {
         url: "/maps?c&entity&embed&date&unit&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false,
         views: {
             'menuContent': {
-                templateUrl: "templates/maps.html",
+                // templateUrl: "templates/maps.html",
+                templateUrl: function() {
+                    var page = "templates/maps.html";
+                    var useHTTPS = window.location.href.indexOf('https') > -1;
+                    if (useHTTPS) {
+                        return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                    } else {
+                        return page;
+                    }
+                },
                 controller: 'MapCtrl as map'
             }
         },
@@ -278,7 +323,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             url: '/editor/?lat&lng&zoom_level&area_id&id&entity_type&group&rel&parent_type',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/form/wizard.html',
+                    // templateUrl: 'templates/form/wizard.html',
+                    templateUrl: function() {
+                        var page = 'templates/form/wizard.html';
+                        var useHTTPS = window.location.href.indexOf('https') > -1;
+                        if (useHTTPS) {
+                            return $location.protocol().concat( "://" ,$location.host(),'/') + page;
+                        } else {
+                            return page;
+                        }
+                    },
                     controller: 'EditorCtrl as editor'
                 }
             },
