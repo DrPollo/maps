@@ -235,7 +235,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     $stateProvider.state('home', {
         url: "/?embed&error",
         controller: 'LandingCtrl as landing',
-        templateUrl: "/templates/landing-page.html",
+        templateUrl: "templates/landing-page.html",
         reloadOnSearch: true,
         data: {
             authenticate: false
@@ -243,7 +243,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('callback', {
         url: "/callback?code&state&profile&error",
         controller: 'CallbackCtrl',
-        templateUrl: "/templates/callback-page.html",
+        templateUrl: "templates/callback-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -251,7 +251,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('logout', {
         url: "/logout",
         controller: 'LogoutCtrl',
-        templateUrl: "/templates/logout-page.html",
+        templateUrl: "templates/logout-page.html",
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -266,7 +266,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         reloadOnSearch: false,
         views: {
             'menuContent': {
-                templateUrl: "/templates/maps.html",
+                templateUrl: "templates/maps.html",
                 controller: 'MapCtrl as map'
             }
         },
@@ -278,7 +278,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             url: '/editor/?lat&lng&zoom_level&area_id&id&entity_type&group&rel&parent_type',
             views: {
                 'menuContent': {
-                    templateUrl: '/templates/form/wizard.html',
+                    templateUrl: 'templates/form/wizard.html',
                     controller: 'EditorCtrl as editor'
                 }
             },
