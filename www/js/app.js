@@ -229,7 +229,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             });
         }
 
-    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $location) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
@@ -256,6 +256,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             var page = "templates/callback-page.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
             if (useHTTPS) {
+                $log.debug('callback template url',$location.protocol().concat( "://" ,$location.host(),'/') + page);
                 return $location.protocol().concat( "://" ,$location.host(),'/') + page;
             } else {
                 return page;
