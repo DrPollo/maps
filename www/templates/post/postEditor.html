@@ -1,8 +1,14 @@
 <error-with-something flag="error" ng-if="error"></error-with-something>
-<div id="posteditor" class="item">
+<div id="add-child" class="item item-button-right" ng-show="!focus">
+    {{'ADDPOST'|translate}}
+    <button class="button button-positive" ng-click="setFocus()">
+        <i class="icon ion-plus-round"></i>
+    </button>
+</div>
+<div id="posteditor" class="item fade-in ease-in-out-animation" ng-show="focus">
     <div class="title">
         {{'CREATE_POST'|translate}}
-        <button ng-show="focus" type="reset" class="right button button-dark button-clear button-small button-float-small icon ion-android-close linear-fastanimation fade-in" on-tap="clear()" ></button>
+        <button type="reset" class="right button button-dark button-clear button-small button-float-small icon ion-android-close linear-fastanimation fade-in" on-tap="clear()" ></button>
     </div>
     <form name="form.post" novalidate>
         <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
@@ -19,7 +25,7 @@
                 </label>
             </div>
         </div>
-        <div class="linear-fastanimation fade-in"ng-show="focus" class="extrafields">
+        <div class="linear-fastanimation fade-in" class="extrafields">
             <div class="extrafield">
                 <input type="text" name="ext_ref" ng-model="post.ext_ref" placeholder="{{'POSTEDITOR_EX_REF_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
             </div>

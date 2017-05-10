@@ -1,7 +1,7 @@
 /**
  * Created by drpollo on 27/03/2017.
  */
-angular.module('firstlife.directives').directive('entityChildren',['$log','$filter','$location','myConfig','ThingsService', function($log,$filter,$location,myConfig,ThingsService){
+angular.module('firstlife.directives').directive('entityChildren',['$log','$filter','$location','myConfig','ThingsService','AuthService', function($log,$filter,$location,myConfig,ThingsService,AuthService){
     return {
         restrict: 'EG',
         scope: {
@@ -130,6 +130,10 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                 // if(tries == maxTries || scope.ok){
                 //     scope.loading = false;
                 // }
+
+                scope.addEntity = AuthService.doAction(function(){
+                    scope.add();
+                });
 
                 scope.click = function (id) {
                     // $log.debug('show',id,scope.show);

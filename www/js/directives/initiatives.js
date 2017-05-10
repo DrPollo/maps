@@ -29,9 +29,9 @@ angular.module('firstlife.directives')
 
 
                 // open and close editor
-                scope.openEditor = function () {
+                scope.openEditor = AuthService.doAction(function () {
                     scope.edit = true;
-                };
+                });
                 scope.closeEditor = function () {
                     scope.edit = false;
                     initList ();

@@ -216,24 +216,25 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 }
             });
 
-            element.on('click', function (e) {
-                if(!e.preventEventPostEditorFocus){
-                    e.preventEventPostEditorFocus = true;
-                    scope.$apply(function(){scope.focus = true;});
-                }
-            });
+            // element.on('click', function (e) {
+            //     if(!e.preventEventPostEditorFocus){
+            //         e.preventEventPostEditorFocus = true;
+            //         scope.$apply(function(){scope.focus = true;});
+            //     }
+            // });
 
             scope.user = AuthService.getUser();
             scope.loading = false;
             scope.error = false;
 
-            // init del form
-            initPost();
+
 
             // raccolgo l'evento focus
             scope.focus = false;
-            scope.setFocus = AuthService.doAction(function(value){
-                scope.focus = value;
+            scope.setFocus = AuthService.doAction(function(){
+                scope.focus = true;
+                // init del form
+                initPost();
             });
 
             // reset dei campi
