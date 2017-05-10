@@ -1074,7 +1074,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     if(config.method === 'GET'){
                         config.timeout = 2000;
                     }else{
-                        config.timeout = 10000;
+                        config.timeout = 20000;
                     }
                     // $log.debug('request headers',config);
                     return config;
