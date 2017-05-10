@@ -49,6 +49,7 @@
     "https": "^1.0.0",
     "jshint": "^2.7.0",
     "shelljs": "^0.3.0",
+    "slack-node": "^0.1.8",
     "ui-router-extras": "^0.1.0"
   },
   "scripts": {

@@ -16,6 +16,8 @@ var fse = require('fs-extra');
 var run = require('sync-exec');
 var sequence = require('run-sequence');
 var env = require('gulp-env');
+var Slack = require('slack-node');
+
 
 var paths = {
     sass: ['./scss/*.scss'],
@@ -128,7 +130,7 @@ gulp.task('deploy-all', function(){
     sh.exit(0);
 });
 
-gulp.task('deploy',['rebuild','config','move']);
+gulp.task('deploy',['rebuild','config','move','notify']);
 
 gulp.task('move',function(){
     var dir = '../firstlife'
@@ -153,6 +155,30 @@ gulp.task('move',function(){
             console.log('fix owner ',user,':',group, 'of dir',dir);
         }
     }
+});
+
+gulp.task('notify',function () {
+    var webhookUri = "https://hooks.slack.com/services/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";
+
+    var slack = new Slack();
+    slack.setWebhook(webhookUri);
+
+    var url = '';
+    // console.log(gutil.env.domain);
+    if(gutil.env.domain){
+        url = gutil.env.domain+'.firstlife.org';
+    }else if(gutil.env.dev){
+        url = 'dev.firstlife.org';
+    }else{
+        url = 'app.firstlife.org';
+    }
+    slack.webhook({
+        channel: "#vm-e-servizi",
+        username: "Gulp",
+        text: "Nuova versione di FirstLife "+url
+    }, function(err, response) {
+        if(err)console.log(err);
+    });
 });
 
 gulp.task('config',['mergeconfig','setupenv','buildconfig']);
