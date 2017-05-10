@@ -229,7 +229,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             });
         }
 
-    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $location) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $location, $log) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
