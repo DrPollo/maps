@@ -196,15 +196,11 @@ angular.module('firstlife.controllers')
         }
 
         $scope.nextStep = function(){
-            // enables type form
-            $scope.chooseType = false;
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.next();
         };
         $scope.prevStep = function(){
-            // enables type form
-            $scope.chooseType = true;
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.previous();

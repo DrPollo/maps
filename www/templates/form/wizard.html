@@ -211,7 +211,8 @@
             <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
         </h3>
         <div class="buttons">
-            <button type="submit" ng-if="wizardIndex === 1"
+            <button type="submit" ng-if="wizardIndex < wizardSteps"
+                    ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
                     on-tap="initType(editor.wizard.dataForm.entity_type);">
