@@ -75,8 +75,8 @@ angular.module('firstlife.services')
                     defaults.valid_to = null;
                     break;
                 case 'FL_EVENTS' :
-                    defaults.valid_to = now;
                     defaults.valid_from = now;
+                    defaults.valid_to = null;
                     break;
                 case 'FL_ARTICLES' :
                     defaults.valid_from = now;
@@ -292,7 +292,6 @@ angular.module('firstlife.services')
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
             // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
-            
             
             // se per qualche ragione le date sono invertite faccio il fix
             if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
