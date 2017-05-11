@@ -26,13 +26,24 @@
                    accept=".gif, .jpg, .jpeg, .png"
                    onload="onLoad"
                    onerror="errorHandler" >
+            <!--<input id="input-fileUpload"-->
+                   <!--type="file"-->
+                   <!--accept="image/*"-->
+                   <!--ng-model="file"-->
+                   <!--image="file"-->
+                   <!--resize-max-height="800"-->
+                   <!--resize-max-width="800"-->
+                   <!--resize-quality="0.7"-->
+                   <!--resize-type="image/jpg"-->
+                   <!--ng-image-compress-->
+                   <!--base-sixty-four-input-->
+                   <!--onload="onLoad"/>-->
+            <!--<img ng-src="{{image1.compressed.dataURL}}" />-->
         </form>
     </div>
 </div>
-<div id="foto-box" ng-if="images">
+<div id="foto-box" ng-show="images">
     <img data-ng-src="{{images}}" width="100%" />
     <i class="icon ion-close-round" on-tap="resetimages()"></i>
 </div>
-
-
 <!--<span ng-show="loader.box.file.$error.maxsize" class="content assertive fast-linear-animation">{{'ERROR'|translate}}: {{'PICTURE_DISCLAIMER'|translate}}</span>-->

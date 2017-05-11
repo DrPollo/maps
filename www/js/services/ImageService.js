@@ -1,5 +1,5 @@
 angular.module('firstlife.services')
-    .service('ImageService',['$http', '$q', 'myConfig', 'PlatformService', function($http, $q, myConfig, PlatformService) {
+    .service('ImageService',['$http', '$q', '$log', 'myConfig', 'PlatformService', function($http, $q, $log, myConfig, PlatformService) {
         var config  = myConfig;
         var urlThings     = myConfig.backend_things;//myConfig.backend_images;
         var format = config.format;
@@ -13,7 +13,13 @@ angular.module('firstlife.services')
         var isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
         
         var consoleCheck = false;
-        
+
+        // resize
+        var width = myConfig.behaviour.uploads.max_width,
+            heigth = myConfig.behaviour.uploads.max_heigth,
+            quality = myConfig.behaviour.uploads.quality,
+            mimeFormat = myConfig.behaviour.uploads.mime_format;
+
         
         self.imageList = [];
 
@@ -30,6 +36,9 @@ angular.module('firstlife.services')
         }
 
         return{
+            process: function(imgObj) {
+                return jicResizeCompress(imgObj);
+            },
             getImages : function(idEntity, params, entity_type){ 
                 // devo fare un refresh delle immagini prendendole dal server?
                 // disabilita la cache interna
@@ -87,4 +96,155 @@ angular.module('firstlife.services')
 
         }
 
+        /*
+         * Resize and compress image
+         * Options:
+         *  resizeType: mime format
+         *  resizeQuality: e.g. 0.7
+         *  resizeMaxHeight: px
+         *  resizeMaxWidth: px
+         */
+
+        function jicResizeCompress(data, options) {
+            var deferred = $q.defer();
+
+
+            var quality = 70;
+            var mimeType = 'image/jpeg';
+            var maxHeight = 800;
+            var maxWidth = 800;
+
+            if(options){
+                var outputFormat = options.resizeType;
+                var quality = options.resizeQuality * 100 || 70;
+                maxHeight = options.resizeMaxHeight || 800;
+                maxWidth = options.resizeMaxWidth || 800;
+            }
+            if (outputFormat !== undefined && outputFormat === 'png') {
+                mimeType = 'image/png';
+            }
+
+
+            var i = new Image();
+
+            i.onload = function(){
+                var width = i.width;
+                var height =i.height;
+                deferred.resolve(resize(data,{mimeType:mimeType,maxHeight:maxHeight,maxWidth:maxWidth,quality:quality}));
+            };
+
+            i.src = data;
+
+            return deferred.promise;
+        }
+
+        function getSize(data) {
+            var deferred = $q.defer();
+
+            var i = new Image();
+
+            i.onload = function(){
+                var width = i.width;
+                var height =i.height;
+                deferred.resolve({width:width,height:height});
+            };
+
+            i.src = data;
+
+            return deferred.promise;
+        }
+
+        function resize (data,options) {
+            var deferred = $q.defer();
+            getSize(data).then(
+                function (size) {
+                    var height = size.height;
+                    var width = size.width;
+                    // calculate the width and height, constraining the proportions
+                    if (width > height) {
+                        if (width > options.maxWidth) {
+                            height = Math.round(height *= options.maxWidth / width);
+                            width = options.maxWidth;
+                        }
+                    } else {
+                        if (height > options.maxHeight) {
+                            width = Math.round(width *= options.maxHeight / height);
+                            height = options.maxHeight;
+                        }
+                    }
+
+                    var cvs = document.createElement('canvas');
+                    cvs.width = width;
+                    cvs.height = height;
+
+                    // $log.debug('check', options,size);
+
+                    var i = new Image();
+                    i.onload = function () {
+                        var ctx = cvs.getContext('2d').drawImage(this, 0, 0, width, height);
+                        var newImageData = cvs.toDataURL(options.mimeType, options.quality / 100);
+                        // $log.debug('check new image',newImageData);
+                        deferred.resolve(newImageData);
+                    };
+                    i.src = data;
+
+                }
+            );
+            return deferred.promise;
+        }
+
+
+        //
+        // var resizeImage = function(origImage, options) {
+        //     var maxHeight = options.resizeMaxHeight || 300;
+        //     var maxWidth = options.resizeMaxWidth || 250;
+        //     var quality = options.resizeQuality || 0.7;
+        //     var type = options.resizeType || 'image/jpg';
+        //
+        //     var canvas = getResizeArea();
+        //
+        //     var height = origImage.height;
+        //     var width = origImage.width;
+        //
+        //     // calculate the width and height, constraining the proportions
+        //     if (width > height) {
+        //         if (width > maxWidth) {
+        //             height = Math.round(height *= maxWidth / width);
+        //             width = maxWidth;
+        //         }
+        //     } else {
+        //         if (height > maxHeight) {
+        //             width = Math.round(width *= maxHeight / height);
+        //             height = maxHeight;
+        //         }
+        //     }
+        //
+        //     canvas.width = width;
+        //     canvas.height = height;
+        //
+        //     //draw image on canvas
+        //     var ctx = canvas.getContext('2d');
+        //     ctx.drawImage(origImage, 0, 0, width, height);
+        //
+        //     // get the data from canvas as 70% jpg (or specified type).
+        //     return canvas.toDataURL(type, quality);
+        // };
+        //
+        // var createImage = function(url, callback) {
+        //     var image = new Image();
+        //     image.onload = function() {
+        //         callback(image);
+        //     };
+        //     image.src = url;
+        // };
+        //
+        // var fileToDataURL = function(file) {
+        //     var deferred = $q.defer();
+        //     var reader = new FileReader();
+        //     reader.onload = function(e) {
+        //         deferred.resolve(e.target.result);
+        //     };
+        //     reader.readAsDataURL(file);
+        //     return deferred.promise;
+        // };
     }]);

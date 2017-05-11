@@ -909,7 +909,13 @@
         "umask":744,
         "viewer":false,
         "query_limit":3,
-        "search_results_limit": 5
+        "search_results_limit": 5,
+        "uploads":{
+            "max_height":800,
+            "max_width":800,
+            "mime_type":"image/jpg",
+            "quality":0.7
+        }
     }
 
 }
