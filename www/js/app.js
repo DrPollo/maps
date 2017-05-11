@@ -102,7 +102,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 if(tryAutoLogin && toState.name !== 'callback' && !search_params.code ){
                     tryAutoLogin = false;
                     // todo debug
-                    // autoLogin();
+                    autoLogin();
                 }
 
                 switch (toState.name){
