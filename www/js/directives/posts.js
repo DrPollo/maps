@@ -255,6 +255,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         reset();
                         // reset del form
                         scope.loading = false;
+                        scope.focus = false;
                     },
                     function (err){
                         $log.error('errore salvataggio post',err);

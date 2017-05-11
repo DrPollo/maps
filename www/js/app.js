@@ -725,6 +725,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!"
     });
     $translateProvider.translations('en', {
+        NOCONTENTS_MESSAGE:"nothing to see... :( ",
         SORRY_NETWORK_ERROR:"Ready for to queue? The Internet is overcrowded :D",
         OVERSIZE_ERROR:"Image oversize, maximum size 10Mb",
         AUTH_REQ_ERROR:'Authentication Error',
