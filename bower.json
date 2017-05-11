@@ -51,6 +51,7 @@
     "ngstorage": "^0.3.10",
     "angular-simple-logger": "^0.1.7",
     "ui-leaflet": "^2.0.0",
-    "angular-clipboard": "^1.5.0"
+    "angular-clipboard": "^1.5.0",
+    "JIC": "^2.0.2"
   }
 }

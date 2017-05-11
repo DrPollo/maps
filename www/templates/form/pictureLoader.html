@@ -17,7 +17,15 @@
             <div title="{{'LOAD_FOTO'|translate}}"><i class="icon ion-images"></i></div>
         </div>
         <form name="loader.box" style="padding:0px;">
-            <input id="input-fileUpload" type="file" maxsize="5000" ng-model="file" name="file" base-sixty-four-input accept=".gif, .jpg, .jpeg, .png" onload="onLoad" >
+            <input id="input-fileUpload" type="file"
+                   maxsize="5000"
+                   ng-model="file"
+                   name="file"
+                   base-sixty-four-input
+                   do-not-parse-if-oversize
+                   accept=".gif, .jpg, .jpeg, .png"
+                   onload="onLoad"
+                   onerror="errorHandler" >
         </form>
     </div>
 </div>

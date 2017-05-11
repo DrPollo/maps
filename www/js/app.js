@@ -92,6 +92,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 // tolgo i caricamenti
                 $ionicLoading.hide();
 
+                $log.debug('state ',$state);
 
                 $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
 
@@ -165,8 +166,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             var title = '',
                 text = '',
                 buttons = [];
+            var state = $state.current;
             switch (type){
                 case 'expired_token':
+                    // non notifico se sono gia' in landing page, callback, logout
+                    if(state.name === 'home' || state.name === 'callback' || state.name === 'logout')
+                        return;
+
                     title = 'EXPIRED_ERROR';
                     text = 'EXPIRED_ERROR_TEXT';
                     buttons = [
@@ -1147,43 +1153,94 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 responseError: function(rejection) {
                     // $log.debug('check $http error',rejection.status);
 
-                    // gestione del token scaduto
-                    if(rejection.status === 401 && rejection.data.token){
-                        //                    $log.debug('nuovo token!', rejection)
-                        var token = rejection.data.token;
-                        // salvo il nuovo token
-                        $localStorage[myConfig.authentication.token_mem_key] = token;
-                    }else if(rejection.status === 401){
-                        $localStorage[myConfig.authentication.token_mem_key] = null;
-                        $localStorage[myConfig.authentication.identity_mem_key] = null;
+
+                    switch(rejection.status){
+                        // auth required
+                        case 400:
+                            var $rootScope = $injector.get('$rootScope');
+                            // $log.debug('reject because missing auth_token');
+                            retries = 0;
+                            // notifico al client l'errore
+                            $location.search('error','auth_required');
+                            $rootScope.$broadcast('authRequired');
+                            return $q.reject(rejection);
+
+                            break;
+
+                        // gestione del token scaduto
+                        // sessione scaduta
+                        case 401:
+                            // rinnovo del token
+                            if(rejection.data.token){
+                                //                    $log.debug('nuovo token!', rejection)
+                                var token = rejection.data.token;
+                                // salvo il nuovo token
+                                $localStorage[myConfig.authentication.token_mem_key] = token;
+
+                                retries = 0;
+                                // reject
+                                return $q.reject(rejection);
+                            }else{
+                                // token non rinnovabile
+                                $localStorage[myConfig.authentication.token_mem_key] = null;
+                                $localStorage[myConfig.authentication.identity_mem_key] = null;
+                                // notifico al client l'errore
+                                $location.search('error','expired_token');
+                                var $rootScope = $injector.get('$rootScope');
+                                $rootScope.$broadcast('expiredToken');
+                                // reset delle try
+                                retries = 0;
+                                // reject
+                                return $q.reject(rejection);
+                            }
+                            break;
+
+
                     }
 
+
+                    //
+                    // // gestione del token scaduto
+                    // if(rejection.status === 401 && rejection.data.token){
+                    //     //                    $log.debug('nuovo token!', rejection)
+                    //     var token = rejection.data.token;
+                    //     // salvo il nuovo token
+                    //     $localStorage[myConfig.authentication.token_mem_key] = token;
+                    //
+                    //     retries = 0;
+                    //     // reject
+                    //     return $q.reject(rejection);
+                    // }else if(rejection.status === 401){
+                    //     $localStorage[myConfig.authentication.token_mem_key] = null;
+                    //     $localStorage[myConfig.authentication.identity_mem_key] = null;
+                    // }
+                    //
 
                     // auth required
-                    if(rejection.status === 400){
-                        var $rootScope = $injector.get('$rootScope');
-                        // $log.debug('reject because missing auth_token');
-                        retries = 0;
-                        // notifico al client l'errore
-                        $location.search('error','auth_required');
-                        $rootScope.$broadcast('authRequired');
-                        return $q.reject(rejection);
-                    }
+                    // if(rejection.status === 400){
+                    //     var $rootScope = $injector.get('$rootScope');
+                    //     // $log.debug('reject because missing auth_token');
+                    //     retries = 0;
+                    //     // notifico al client l'errore
+                    //     $location.search('error','auth_required');
+                    //     $rootScope.$broadcast('authRequired');
+                    //     return $q.reject(rejection);
+                    // }
 
                     // invalid token
-                    if(rejection.status === 401){
-                        var $rootScope = $injector.get('$rootScope');
-                        // $log.debug('reject because invalid token');
-                        // cancello il token
-                        $localStorage[myConfig.authentication.token_mem_key] = null;
-                        // notifico al client l'errore
-                        $location.search('error','expired_token');
-                        $rootScope.$broadcast('expiredToken');
-                        // reset delle try
-                        retries = 0;
-                        // reject
-                        return $q.reject(rejection);
-                    }
+                    // if(rejection.status === 401){
+                    //     var $rootScope = $injector.get('$rootScope');
+                    //     // $log.debug('reject because invalid token');
+                    //     // cancello il token
+                    //     $localStorage[myConfig.authentication.token_mem_key] = null;
+                    //     // notifico al client l'errore
+                    //     $location.search('error','expired_token');
+                    //     $rootScope.$broadcast('expiredToken');
+                    //     // reset delle try
+                    //     retries = 0;
+                    //     // reject
+                    //     return $q.reject(rejection);
+                    // }
 
 
                     // gestione errori: in caso di errore ritento maxRetries volte

@@ -338,7 +338,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             images:'=images'
         },
         templateUrl: '/templates/form/pictureLoader.html',
-        controller:['$scope','$log','$filter','$ionicLoading', 'myConfig',function($scope,$log,$filter,$ionicloading, myConfig){
+        controller:['$scope','$log','$filter','$ionicLoading', '$q','myConfig',function($scope,$log,$filter,$ionicloading,$q, myConfig){
 
 
             $scope.$on('$destroy', function(e) {
@@ -369,9 +369,75 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 // se non supera la dimensione massima di 5Mb
                 if(fileObj.filesize <= limit){
                     addToimages(fileObj);
+                }else{
+                    $log.error('oversize');
+                    reader.abort();
                 }
-            }
+            };
+            $scope.parseAndLoad =function(file){
+                $log.debug(file);
+                file.deferredObj.promise.then(
+                    function (res) {
+                        $log.debug(res);
+                    }
+                )
+                // resizeImage(file).then(
+                //     function (res) {
+                //         $log.debug(res);
+                //         addToimages(res);
+                //     },
+                //     function (err) {
+                //         $log.error(err);
+                //     }
+                // )
+            };
+            function resizeImage( file ) {
 
+                var resized = {};
+
+                var deferred = $q.defer();
+
+                var img = document.createElement("img");
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // resize the picture
+                    img.src = e.target.result;
+
+                    var canvas = document.createElement("canvas");
+
+                    var MAX_WIDTH = 800;
+                    var MAX_HEIGHT = 800;
+                    var width = img.width;
+                    var height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    resized.base64 = canvas.toDataURL("image/png");
+                    deferred.resolve(resized);
+                };
+                reader.readAsDataURL(file, "UTF-8");
+
+                return deferred.promise;
+
+            }
+            $scope.errorHandler = function (event, reader, file, fileList, fileObjs, object) {
+                $log.error("An error occurred while reading file: "+file.name," ",event);
+                reader.abort();
+            };
 
             $scope.removeImage = function(index) {
                 $scope.images.splice(index, 1);
