@@ -292,7 +292,7 @@ angular.module('firstlife.services')
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
             // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
-            
+
             // se per qualche ragione le date sono invertite faccio il fix
             if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
                 data.valid_to = angular.copy(data.valid_from);
@@ -302,11 +302,20 @@ angular.module('firstlife.services')
             if(!data.valid_to){
                 dataForServer.valid_to = moment(Date.now());
                 dataForServer.valid_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
+                // se per qualche ragione le date si incrociano
+                if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+                    data.valid_to = angular.copy(data.valid_from);
+                }
             }
             if(!data.valid_from){
                 dataForServer.valid_from = moment(Date.now());
                 dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+                // se per qualche ragione le date si incrociano
+                if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+                    data.valid_from = angular.copy(data.valid_to);
+                }
             }
+
 
 
             if(data.valid_from){
