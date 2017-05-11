@@ -29,7 +29,7 @@
         "client_id": "eB1GG6Ik",
         "scopes":["userinfo.profile"],
         "session_check": false,
-        "session_params":{}
+        "session_params":false
     },
     "design":{
         "logo" : {
