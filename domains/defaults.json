@@ -27,7 +27,8 @@
         "registration_url": "registration",
         "api_session":"session",
         "client_id": "eB1GG6Ik",
-        "scopes":["userinfo.profile"]
+        "scopes":["userinfo.profile"],
+        "session_check": false
     },
     "design":{
         "logo" : {

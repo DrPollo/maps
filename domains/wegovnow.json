@@ -17,7 +17,8 @@
       "auth_url": "api/1/authorization",
       "api_session":"api/1/session",
       "client_id": "wegovnow.firstlife.di.unito.it",
-      "scopes":["identification", "profile"]
+      "scopes":["identification", "profile"],
+      "session_check": "member_id"
     },
     "design":{
       "logo" : {

@@ -25,19 +25,24 @@ angular.module('firstlife.services')
                         url: myConfig.authentication.api_session,
                         method: 'POST',
                         // todo debug
-                        // withCredentials: true,
+                        withCredentials: true,
                         headers: {
-                            // "Content-Type": "application/x-www-form-urlencoded"
+                            "Content-Type": "application/x-www-form-urlencoded"
                         },
                         data: {}
                     };
                     $log.debug('check session ',req);
                     $http(req).then(function (response) {
                         $log.debug('check session', response.data);
-                        if(response.data.member_id)
-                            deferred.resolve(response.data.member_id);
-                        else
-                            deferred.reject('no user logged in');
+                        // se devo controllare un parametro
+                        if(myConfig.authentication.session_check){
+                            if(response.data[myConfig.authentication.session_check]){
+                                deferred.resolve(response.data[myConfig.authentication.session_check]);
+                            }else
+                                deferred.reject('no user logged in');
+                        }else{
+                            deferred.resolve(response.data);
+                        }
                     }, function (err) {
                         $log.error(err);
                         deferred.reject(err);
