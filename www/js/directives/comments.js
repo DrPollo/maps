@@ -195,8 +195,9 @@ angular.module('firstlife.directives').directive('commentsList',function(){
                 if(!$scope.user)
                     return false;
 
+                $log.log('initPerms',$scope.user.id, author);
                 var source = 'others';
-                if(author == $scope.user.id)
+                if(author.id === $scope.user.id)
                     source = 'self';
 
                 $scope.checkPerms = AuthService.checkPerms(source);

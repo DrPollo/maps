@@ -13,7 +13,7 @@
                     <i class="icon ion-android-create"></i>
                 </button>
             </div>
-            <div class="item item-button-right" ng-if="config.actions.can_delete && checkPerms['d']">
+            <div class="item item-button-right" ng-if="config.actions.can_modify && checkPerms['d']">
                 {{"DELETE_COMMENT"|translate}}
                 <button class="button button-positive" ng-click="deleteComment(current)">
                     <i class="icon ion-android-delete"></i>
