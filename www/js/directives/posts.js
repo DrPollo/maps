@@ -276,7 +276,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     filedata: null,
                     tags:[]
                 };
-                scope.form.post.$setPristine();
+                if(scope.form && scope.form.post)
+                    scope.form.post.$setPristine();
             }
             // restore del form
             function restorePost(post){
