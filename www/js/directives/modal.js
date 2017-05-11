@@ -888,7 +888,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             scope.report = {
                 content:{
                     thing_id: scope.id,
-                    message: !dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
+                    message: dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
                 },
                 form:{}
             };
@@ -952,7 +952,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
         scope:{
             flag:'='
         },
-        'template':'<div class="error-box row"><button on-tap="close()" class="button button-icon button-clear button-small button-dark ion-close"></button><div class="col col-center"><img src="/img/errors/errore-imprevisto.svg"><div>{{"SORRY_UNEXPECTED_ERROR"|translate}}</div></div></div>',
+        'template':'<div class="error-box row"><button on-tap="close()" class="button button-icon button-clear button-small button-dark ion-close"></button><div class="col col-center"><img src="/img/errors/rete-sovraffollata.svg"><div>{{"SORRY_NETWORK_ERROR"|translate}}</div></div></div>',
         link: function (scope, element, attr) {
             scope.$on('$destroy', function (e) {
                 if (!e.defaultPrevented)

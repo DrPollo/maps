@@ -30,7 +30,7 @@
         </div>
         <h1 class="title"></h1>
         <div class="buttons">
-            <button type="submit" class="button button-stable button-clear icon ion-checkmark-round" on-tap="submit()" >{{'REPORT'|translate}}</button>
+            <button type="submit" class="button button-stable button-clear icon ion-checkmark-round" on-tap="submit()" ng-disabled="report.form.message.$invalid">{{'REPORT'|translate}}</button>
         </div>
     </ion-footer-bar>
 </ion-modal-view>

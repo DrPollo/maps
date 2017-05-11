@@ -656,9 +656,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         REPORT_SUCCESS_FEEDBACK:"La tua segnalazione è stata ricevuta.",
         REPORT_CONTENT:"Segnala",
         REPORT_CONTENT_MESSAGE:"Motivazione della segnalazione",
-        REPORT_DISCLAIMER:"segnalando questo contenuto renderai publico che viola le <a href='http://firstlife.org/regole-comunita' target='_blank'>regole di comunità</a>, le <a href='http://firstlife.org/norme-privacy' target='_blank'>norme sulla privacy</a> o i <a href='http://firstlife.org/termini-uso' target='_blank'>termini d'uso</a>",
+        REPORT_DISCLAIMER:"Segnalando questo contenuto renderai publico che viola le <a href='http://firstlife.org/regole-comunita' target='_blank'>regole di comunità</a>, le <a href='http://firstlife.org/norme-privacy' target='_blank'>norme sulla privacy</a> o i <a href='http://firstlife.org/termini-uso' target='_blank'>termini d'uso</a>.",
         REPORT:"Segnala",
-        REPORT_MESSAGE:"il cotenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?",
+        REPORT_MESSAGE:"Il contenuto contiene offese, minacce, messaggi violenti o riferimenti sessuali espliciti? Il contenuto è considerabile come spam o pubblicità? Il contenuto viola le norme di copyright?",
         DO_YOU_SIGNUP: "Non hai un account?",
         DO_YOU_LOGIN: "Hai già un account?",
         CALLBACK_TITLE: "Successo",
@@ -721,9 +721,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EXPIRED_ERROR:'Sessione scaduta',
         EXPIRED_ERROR_TEXT:'Continuare come Ospite o effettuare nuovamente il login?',
         GUEST:'Ospite',
-        OVERSIZE_ERROR:"Immagine troppo grande, dimensione massima 10Mb"
+        OVERSIZE_ERROR:"Immagine troppo grande, dimensione massima 10Mb",
+        SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!"
     });
     $translateProvider.translations('en', {
+        SORRY_NETWORK_ERROR:"Ready for to queue? The Internet is overcrowded :D",
         OVERSIZE_ERROR:"Image oversize, maximum size 10Mb",
         AUTH_REQ_ERROR:'Authentication Error',
         AUTH_REQ_ERROR_TEXT:"To continue please log in",
