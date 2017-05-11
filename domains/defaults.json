@@ -28,7 +28,8 @@
         "api_session":"session",
         "client_id": "eB1GG6Ik",
         "scopes":["userinfo.profile"],
-        "session_check": false
+        "session_check": false,
+        "session_params":{}
     },
     "design":{
         "logo" : {

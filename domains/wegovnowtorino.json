@@ -18,7 +18,13 @@
     "api_session":"api/1/session",
     "client_id": "wegovnow.firstlife.di.unito.it",
     "scopes":["identification", "profile"],
-    "session_check": "member_id"
+    "session_check": "member_id",
+    "session_params":{
+      "headers":{
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "withCredentials": true
+    }
   },
   "design":{
     "logo" : {

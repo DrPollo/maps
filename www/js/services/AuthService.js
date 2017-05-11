@@ -24,13 +24,13 @@ angular.module('firstlife.services')
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
-                        // todo debug
-                        withCredentials: true,
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
                         data: {}
                     };
+
+                    // setup dei parametri specifici dell'oauth
+                    if(myConfig.authentication.session_params)
+                        angular.extend(req, myConfig.authentication.session_params);
+
                     $log.debug('check session ',req);
                     $http(req).then(function (response) {
                         $log.debug('check session', response.data);
