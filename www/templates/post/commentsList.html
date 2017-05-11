@@ -7,7 +7,7 @@
             <button type="reset" class="button button-small button-dark button-clear icon ion-android-close linear-fastanimation fade-in" on-tap="abortEdit()"></button>
         </form>
     </div>
-    <div class="comment-editor-box" ng-if="user && !embed">
+    <div class="comment-editor-box" ng-if="user && !embed && !edit">
         <form name="commentEditor" class="comment-editor" novalidate>
             <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
             <textarea ng-enter="publishComment(message)" class="comment-box" name="text" placeholder="{{'COMMENTEDITOR_PLACEHOLDER' | translate}}" rows="1" ng-model="comment.message" minlength="1" maxlength="500" autogrow required></textarea>

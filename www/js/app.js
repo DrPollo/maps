@@ -720,9 +720,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         AUTH_REQ_ERROR_TEXT:"Per continuare è richiesto il login",
         EXPIRED_ERROR:'Sessione scaduta',
         EXPIRED_ERROR_TEXT:'Continuare come Ospite o effettuare nuovamente il login?',
-        GUEST:'Ospite'
+        GUEST:'Ospite',
+        OVERSIZE_ERROR:"Immagine troppo grande, dimensione massima 10Mb"
     });
     $translateProvider.translations('en', {
+        OVERSIZE_ERROR:"Image oversize, maximum size 10Mb",
         AUTH_REQ_ERROR:'Authentication Error',
         AUTH_REQ_ERROR_TEXT:"To continue please log in",
         EXPIRED_ERROR:'Session Expired',

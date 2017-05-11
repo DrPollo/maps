@@ -18,7 +18,7 @@
         </div>
         <form name="loader.box" style="padding:0px;">
             <input id="input-fileUpload" type="file"
-                   maxsize="5000"
+                   maxsize="10000"
                    ng-model="file"
                    name="file"
                    base-sixty-four-input
@@ -26,19 +26,6 @@
                    accept=".gif, .jpg, .jpeg, .png"
                    onload="onLoad"
                    onerror="errorHandler" >
-            <!--<input id="input-fileUpload"-->
-                   <!--type="file"-->
-                   <!--accept="image/*"-->
-                   <!--ng-model="file"-->
-                   <!--image="file"-->
-                   <!--resize-max-height="800"-->
-                   <!--resize-max-width="800"-->
-                   <!--resize-quality="0.7"-->
-                   <!--resize-type="image/jpg"-->
-                   <!--ng-image-compress-->
-                   <!--base-sixty-four-input-->
-                   <!--onload="onLoad"/>-->
-            <!--<img ng-src="{{image1.compressed.dataURL}}" />-->
         </form>
     </div>
 </div>
