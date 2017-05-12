@@ -409,27 +409,6 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     );
                 };
             },1);
-            //
-            // $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
-            //     $log.debug('check onLoad, da scartare? ',e,reader,file,fileObj);
-            //     // se non supera la dimensione massima di 10Mb
-            //     if(fileObj.filesize <= limit){
-            //         // secondo parametro compressione
-            //         addToimages(fileObj);
-            //     }else{
-            //         $log.error('oversize');
-            //         reader.abort();
-            //         var alertPopup = $ionicPopup.alert({
-            //             title: $filter('translate')('ERROR'),
-            //             template: $filter('translate')('OVERSIZE_ERROR')
-            //         });
-            //     }
-            // };
-
-            $scope.errorHandler = function (event, reader, file, fileList, fileObjs, object) {
-                $log.error("An error occurred while reading file: "+file.name," ",event);
-                reader.abort();
-            };
 
             $scope.removeImage = function(index) {
                 $scope.images.splice(index, 1);

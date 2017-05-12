@@ -10,8 +10,8 @@
         {{'CREATE_POST'|translate}}
         <button type="reset" class="right button button-dark button-clear button-small button-float-small icon ion-android-close linear-fastanimation fade-in" on-tap="clear()" ></button>
     </div>
-    <form name="form.post" novalidate>
-        <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
+    <form name="form.post" novalidate>{{loading}}
+        <div class="cover" ng-if="loading"><ion-spinner icon="android"></ion-spinner></div>
         <div class="row">
             <div class="col col-25">
                 <picture-loader images="post.filedata" class="focus"></picture-loader>
