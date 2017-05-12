@@ -352,17 +352,18 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
 
             $scope.config = myConfig;
 
-            var imageOptions = {
-                maxWidth: myConfig.behaviour.uploads.width,
-                maxHeight: myConfig.behaviour.uploads.height,
-                canvas: true,
-                orientation: true,
-                meta: true
-            };
             var defaultMaxWidth = myConfig.behaviour.uploads.max_width,
                 defaultMaxHeight = myConfig.behaviour.uploads.max_height,
                 defaultQuality = myConfig.behaviour.uploads.quality,
                 defaultMimeFormat = myConfig.behaviour.uploads.mime_format;
+
+
+            var imageOptions = {
+                maxWidth: defaultMaxWidth,
+                maxHeight: defaultMaxHeight,
+                canvas: true,
+                orientation: true
+            };
 
 
             // init form
@@ -380,7 +381,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             $timeout(function() {
                 // listner caricamento immagine
                 document.getElementById('input-fileUpload').onchange = function (e) {
-                    $log.debug('carico',e.target.files[0],loadImage);
+                    $log.debug('carico',e.target.files[0]);
                     // 10mb
                     if(e.target.files[0].size > 10000000){
                         $log.error('oversize');
@@ -394,12 +395,11 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     var loadingImage = loadImage(
                         e.target.files[0],
                         function (img) {
-                            $log.debug('caricata',img);
+                            // $log.debug('caricata',img);
                             if (img.type === "error") {
-                                $log.error('errore caricamento immagine');
+                                $log.error('errore caricamento immagine',img);
                             } else {
                                 var newImageData = img.toDataURL(defaultMimeFormat, defaultQuality);
-                                $log.debug('nuova immagine', newImageData);
                                 $scope.images = newImageData;
                                 $scope.$apply();
                                 // addToimages(img);
@@ -407,28 +407,24 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         },
                         imageOptions
                     );
-                    //loadingImage.onload = loadingImage.onerror = null;
-                    // loadingImage.onload = function () {
-                    //     $log.debug('onload',this);
-                    // }
                 };
             },1);
-
-            $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
-                $log.debug('check onLoad, da scartare? ',e,reader,file,fileObj);
-                // se non supera la dimensione massima di 10Mb
-                if(fileObj.filesize <= limit){
-                    // secondo parametro compressione
-                    addToimages(fileObj);
-                }else{
-                    $log.error('oversize');
-                    reader.abort();
-                    var alertPopup = $ionicPopup.alert({
-                        title: $filter('translate')('ERROR'),
-                        template: $filter('translate')('OVERSIZE_ERROR')
-                    });
-                }
-            };
+            //
+            // $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
+            //     $log.debug('check onLoad, da scartare? ',e,reader,file,fileObj);
+            //     // se non supera la dimensione massima di 10Mb
+            //     if(fileObj.filesize <= limit){
+            //         // secondo parametro compressione
+            //         addToimages(fileObj);
+            //     }else{
+            //         $log.error('oversize');
+            //         reader.abort();
+            //         var alertPopup = $ionicPopup.alert({
+            //             title: $filter('translate')('ERROR'),
+            //             template: $filter('translate')('OVERSIZE_ERROR')
+            //         });
+            //     }
+            // };
 
             $scope.errorHandler = function (event, reader, file, fileList, fileObjs, object) {
                 $log.error("An error occurred while reading file: "+file.name," ",event);
