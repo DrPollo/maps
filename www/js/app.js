@@ -263,6 +263,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         templateUrl: function() {
             var page = "templates/callback-page.html";
             var useHTTPS = window.location.href.indexOf('https') > -1;
+            console.log('page',window.location.protocol.concat( "//" ,window.location.host,'/')+ page, 'https?',useHTTPS);
             if (useHTTPS) {
                 return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
             } else {
