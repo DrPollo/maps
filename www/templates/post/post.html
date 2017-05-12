@@ -1,5 +1,5 @@
 <div class="post item" ng-class="{'inappropriate' : post.inappropriate, 'highlight' : highlight, 'item-thumbnail-left': post.image_thumbnail}">
-    <img ng-if="post.image_thumbnail" src="{{ !highlight ? post.image_thumbnail : post.image_url}}" width="100%" class="fast-ease-in-out-animation"  on-tap="togglePicture()"/>
+    <img ng-if="post.image_thumbnail" ng-src="{{ highlight ? post.image_url: post.image_thumbnail }}" width="100%" class="fast-ease-in-out-animation"  on-tap="togglePicture()"/>
     <div class="postbody">
         <div class="title" ng-if="post.title">{{post.title}}</div>
         <div class="text item-text-wrap" ng-if="post.message">{{post.message}}</div>
