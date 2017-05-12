@@ -36,8 +36,8 @@ angular.module('firstlife.services')
         }
 
         return{
-            process: function(imgObj) {
-                return jicResizeCompress(imgObj);
+            process: function(img, imgData) {
+                return jicResizeCompress(img, imgData);
             },
             getImages : function(idEntity, params, entity_type){ 
                 // devo fare un refresh delle immagini prendendole dal server?
@@ -105,7 +105,7 @@ angular.module('firstlife.services')
          *  resizeMaxWidth: px
          */
 
-        function jicResizeCompress(data, options) {
+        function jicResizeCompress(img, data, options) {
             var deferred = $q.defer();
 
 
@@ -125,38 +125,54 @@ angular.module('firstlife.services')
             }
 
 
-            var i = new Image();
+            var sized = resize(img, data,{mimeType:mimeType,maxHeight:maxHeight,maxWidth:maxWidth,quality:quality});
+            deferred.resolve(sized);
 
-            i.onload = function(){
-                var width = i.width;
-                var height =i.height;
-                deferred.resolve(resize(data,{mimeType:mimeType,maxHeight:maxHeight,maxWidth:maxWidth,quality:quality}));
-            };
-
-            i.src = data;
 
             return deferred.promise;
         }
 
-        function getSize(data) {
+        function getSize(img,data) {
             var deferred = $q.defer();
 
             var i = new Image();
 
             i.onload = function(){
                 var width = i.width;
-                var height =i.height;
+                var height = i.height;
+
+                $log.debug('check for img meta exif',img);
+
+                EXIF.getData(img, function() {
+                    var allMetaData = EXIF.getTag(this,"Orientation");
+                    $log.debug('image metadata',allMetaData);
+                    // deferred.resolve(allMetaData);
+                });
+
                 deferred.resolve({width:width,height:height});
             };
 
             i.src = data;
 
+
             return deferred.promise;
         }
 
-        function resize (data,options) {
+
+        function getExif(img) {
             var deferred = $q.defer();
-            getSize(data).then(
+
+            EXIF.getData(img, function() {
+                var allMetaData = EXIF.getAllTags(this);
+                $log.debug('image metadata',allMetaData);
+                deferred.resolve(allMetaData);
+            });
+            return deferred.promise;
+        }
+
+        function resize (img,data,options) {
+            var deferred = $q.defer();
+            getSize(img,data).then(
                 function (size) {
                     var height = size.height;
                     var width = size.width;
