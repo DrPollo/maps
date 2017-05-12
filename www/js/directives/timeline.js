@@ -22,6 +22,15 @@ angular.module('firstlife.timeline',[])
                 // todo calcolo dati da visualizzare nella timeline
             });
 
+            $scope.$on('changeLanguage',function (event,args) {
+               $log.debug('changeLanguage',args);
+               if(args.id){
+                   localeData = moment.localeData(args.id);
+                   initBuffer(true);
+               }
+            });
+
+
             $scope.config = myConfig;
 
             // mobile o no?
@@ -281,10 +290,12 @@ angular.module('firstlife.timeline',[])
                         var days = [];
                         for(var i = 0; i < 7; i++){
                             // genero l'intervallo giornaliero
+
                             var start = angular.copy(now).weekday(i).set(initStart);
                             var end = angular.copy(now).weekday(i).set(initEnd);
                             var interval = moment.interval(start,end);
-                            var obj = {label:start.format(format),
+                            var weekday = $scope.isMobile ? localeData.weekdaysShort(start):localeData.weekdays(start);
+                            var obj = {label:weekday,//start.format(format),
                                        interval:interval,
                                       upLabel:interval.start().format('DD')};
                             
@@ -311,8 +322,14 @@ angular.module('firstlife.timeline',[])
                             current.date(j);
                             //                            $log.debug(j,' current ',current.format('DD/MM/YYYY'));
                             // calcolo l'intervallo della settimana (puo' uscire dal mese)
-                            var start = angular.copy(current).weekday(0);
-                            var end = angular.copy(current).weekday(6);
+                            var startIndex = 0,
+                                endIndex = 6;
+                            // if($translate.use() === 'en'){
+                            //     startIndex = 1;
+                            //     endIndex = 7;
+                            // }
+                            var start = angular.copy(current).weekday(startIndex);
+                            var end = angular.copy(current).weekday(endIndex);
                             var interval = angular.copy(moment.interval(start,end));
                             // creo l'etichetta per la settimana
                             var label = "";
@@ -336,7 +353,8 @@ angular.module('firstlife.timeline',[])
                                 break;
                             }
 
-                            weeks.push({interval:interval,upLabel:interval.start().format('DD MMMM')}); 
+                            var monthLabel = $scope.isMobile ? localeData.monthsShort(interval.start()) : localeData.months(interval.start());
+                            weeks.push({interval:interval,upLabel:interval.start().format('DD').concat(" ",monthLabel)});
 //                            weeks.push({label:label,interval:interval,upLabel:interval.start().format('DD MMMM')}); 
                             //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
@@ -370,8 +388,9 @@ angular.module('firstlife.timeline',[])
                             var end = angular.copy(month).date(month.daysInMonth()).set(initEnd);
                             var interval = moment.interval(start,end);
                             var e = {label:start.format('M'),interval:interval}
-                            if(i%3 == 0 && !$scope.isMobile)
-                                e.upLabel = interval.start().format('MMMM')
+
+                            var monthLabel = $scope.isMobile ? localeData.monthsShort(interval.start()) : localeData.months(interval.start());
+                            e.upLabel = monthLabel;//interval.start().format('MMMM');
                             months.push(e);
                             //$log.debug('check interval year ',interval.start(),interval.end());
                         }
@@ -413,8 +432,12 @@ angular.module('firstlife.timeline',[])
                         r = parseInt(r.hour()/6);
                         break;
                     case 'day':
-                        // restituisce giorno corrente della settimana
+                        // fix italiano
                         r = angular.copy(r.isoWeekday())-1;
+                        // restituisce giorno corrente della settimana
+                        // if($translate.use() === "en"){
+                        //     r = angular.copy(r.isoWeekday());
+                        // }
                         break;
                     case 'date':
                         // restituisce settimana corrente del mese corrente
@@ -451,7 +474,7 @@ angular.module('firstlife.timeline',[])
             function setContextButtons(now){
                 var keys = $scope.units.map(function(e){return e.key});
                 $scope.units[keys.indexOf('hour')].label = (now.format('dddd')).concat(" ").concat(now.format('D'));
-                $scope.units[keys.indexOf('day')].label = ("dal ").concat(now.isoWeekday(1).format('D')).concat(" al ").concat(now.isoWeekday(7).format('D'));
+                $scope.units[keys.indexOf('day')].label = ($filter('translate')("FROM_LABEL")).concat(now.isoWeekday(1).format('D')).concat($filter('translate')("TO_LABEL")).concat(now.isoWeekday(7).format('D'));
                 $scope.units[keys.indexOf('date')].label = localeData._months[now.month()];
                 $scope.units[keys.indexOf('year')].label = now.year();
             }

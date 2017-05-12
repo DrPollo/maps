@@ -15,6 +15,7 @@
              class="repeated-item col-md-4 {{slot.class}}"
              style="position:relative;"
              ng-class="now == $index ? 'current' : ''"
+             title="{{slot.upLabel}}"
              ng-click="scaleDown(slot)">
             <div class="divider-label">{{slot.upLabel}}</div>
             <div class="label">{{slot.label | translate}}</div>

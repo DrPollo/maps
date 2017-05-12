@@ -722,9 +722,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EXPIRED_ERROR_TEXT:'Continuare come Ospite o effettuare nuovamente il login?',
         GUEST:'Ospite',
         OVERSIZE_ERROR:"Immagine troppo grande, dimensione massima 10Mb",
-        SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!"
+        SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!",
+        FROM_LABEL:"dal ",
+        TO_LABEL:" al "
     });
     $translateProvider.translations('en', {
+        FROM_LABEL:"from ",
+        TO_LABEL:" to ",
         NOCONTENTS_MESSAGE:"nothing to see... :( ",
         SORRY_NETWORK_ERROR:"Ready for to queue? The Internet is overcrowded :D",
         OVERSIZE_ERROR:"Image oversize, maximum size 10Mb",

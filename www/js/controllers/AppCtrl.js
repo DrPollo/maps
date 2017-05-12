@@ -183,6 +183,7 @@ angular.module('firstlife.controllers')
         $scope.langSelector = function(key){
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
+            $scope.$broadcast('changeLanguage',{id:$translate.use()});
         };
 
         $scope.myMap = function(){
