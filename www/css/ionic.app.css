@@ -15167,6 +15167,8 @@ timeline {
       timeline #timeline .current .badge, timeline #timeline .current:hover .badge {
         background: white;
         color: #FC4A00; }
+    timeline #timeline .red {
+      background: #FDC581 !important; }
     timeline #timeline .noclick {
       background: #fafafa !important;
       cursor: inherit !important;
