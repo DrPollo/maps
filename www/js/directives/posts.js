@@ -396,12 +396,13 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 Cameras.getPicture({
                     destinationType : Camera.DestinationType.DATA_URL,
                     sourceType : Camera.PictureSourceType.CAMERA,
-                    quality: 70,
-                    targetWidth: 800,
-                    targetHeight: 800,
-                    saveToPhotoAlbum: false
+                    quality: myConfig.behaviour.uploads.quality,
+                    targetWidth: myConfig.behaviour.uploads.width,
+                    targetHeight: myConfig.behaviour.uploads.height,
+                    saveToPhotoAlbum: false,
+                    correctOrientation: true
                 }).then(function(imageURI) {
-                    //  alert(imageURI);
+                    // $log.debug(imageURI);
                     addToimages(imageURI);
                 }, function(err) {
                     $log.error(err);
@@ -414,6 +415,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 if(myConfig.behaviour.uploads.mime_type === 'image/png')
                     mimeType = Camera.EncodingType.PNG;
 
+                // $log.debug(imageURI);
                 var options = {
                     quality: myConfig.behaviour.uploads.quality,
                     destinationType: Camera.DestinationType.DATA_URL,
