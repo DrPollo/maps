@@ -36,8 +36,8 @@ angular.module('firstlife.services')
         }
 
         return{
-            process: function(img, imgData) {
-                return jicResizeCompress(img, imgData);
+            getSize: function(imgData) {
+                return getSize(imgData);
             },
             getImages : function(idEntity, params, entity_type){ 
                 // devo fare un refresh delle immagini prendendole dal server?
@@ -94,45 +94,10 @@ angular.module('firstlife.services')
             }
 
 
-        }
-
-        /*
-         * Resize and compress image
-         * Options:
-         *  resizeType: mime format
-         *  resizeQuality: e.g. 0.7
-         *  resizeMaxHeight: px
-         *  resizeMaxWidth: px
-         */
-
-        function jicResizeCompress(img, data, options) {
-            var deferred = $q.defer();
+        };
 
 
-            var quality = defaultQuality;
-            var mimeType = defaultMimeFormat;
-            var maxHeight = defaultMaxHeight;
-            var maxWidth = defaultMaxWidth;
-
-            if(options){
-                var outputFormat = options.resizeType;
-                quality = options.resizeQuality * 100 || 70;
-                maxHeight = options.resizeMaxHeight || 800;
-                maxWidth = options.resizeMaxWidth || 800;
-            }
-            if (outputFormat !== undefined && outputFormat === 'png') {
-                mimeType = 'image/png';
-            }
-
-
-            var sized = resize(img, data,{mimeType:mimeType,maxHeight:maxHeight,maxWidth:maxWidth,quality:quality});
-            deferred.resolve(sized);
-
-
-            return deferred.promise;
-        }
-
-        function getSize(img,data) {
+        function getSize(data) {
             var deferred = $q.defer();
 
             var i = new Image();
@@ -153,48 +118,4 @@ angular.module('firstlife.services')
         }
 
 
-        function resize (img,data,options) {
-            var deferred = $q.defer();
-            getSize(img,data).then(
-                function (size) {
-                    var height = size.height;
-                    var width = size.width;
-                    // calculate the width and height, constraining the proportions
-                    if (width > height) {
-                        if (width > options.maxWidth) {
-                            height = Math.round(height *= options.maxWidth / width);
-                            width = options.maxWidth;
-                        }
-                    } else {
-                        if (height > options.maxHeight) {
-                            width = Math.round(width *= options.maxHeight / height);
-                            height = options.maxHeight;
-                        }
-                    }
-
-                    var cvs = document.createElement('canvas');
-                    cvs.width = width;
-                    cvs.height = height;
-
-                    // $log.debug('check', options,size);
-
-                    var i = new Image();
-                    i.onload = function () {
-                        try{
-                            var ctx = cvs.getContext('2d').drawImage(this, 0, 0, width, height);
-                            var newImageData = cvs.toDataURL(options.mimeType, options.quality / 100);
-                            // $log.debug('check new image',newImageData);
-                            deferred.resolve(newImageData);
-                        }catch (e){
-                            // se non riesco mando indietro l'immagine originale
-                            $log.error(e);
-                            deferred.resolve(data);
-                        }
-                    };
-                    i.src = data;
-
-                }
-            );
-            return deferred.promise;
-        }
     }]);
