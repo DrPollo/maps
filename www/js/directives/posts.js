@@ -372,7 +372,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 // se non supera la dimensione massima di 10Mb
                 if(fileObj.filesize <= limit){
                     // secondo parametro compressione
-                    addToimages(fileObj,true);
+                    addToimages(fileObj,false);
                 }else{
                     $log.error('oversize');
                     reader.abort();
