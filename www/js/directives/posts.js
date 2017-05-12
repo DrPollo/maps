@@ -410,17 +410,22 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
 
             //action to choose images
             $scope.imagePicker = function(){
+                var mimeType = Camera.EncodingType.JPG;
+                if(myConfig.behaviour.uploads.mime_type === 'image/png')
+                    mimeType = Camera.EncodingType.PNG;
 
                 var options = {
-                    quality: 70,
+                    quality: myConfig.behaviour.uploads.quality,
                     destinationType: Camera.DestinationType.DATA_URL,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    targetWidth: 800,
-                    targetHeight: 800
+                    encodingType: mimeType,
+                    targetWidth: myConfig.behaviour.uploads.width,
+                    targetHeight: myConfig.behaviour.uploads.height,
+                    correctOrientation: true
                 };
 
                 $cordovaCamera.getPicture(options).then(function(imageUri) {
-                    //  alert('img' + imageUri);
+                    $log.debug('cordovaCamera',imageUri);
                     addToimages(imageUri);
                 }, function(err) {
                     console.log('error', err);
