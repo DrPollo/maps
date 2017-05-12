@@ -279,15 +279,15 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('logout', {
         url: "/logout",
         controller: 'LogoutCtrl',
-        templateUrl: function() {
-            var page = "templates/logout-page.html";
-            var useHTTPS = window.location.href.indexOf('https') > -1;
-            if (useHTTPS) {
-                return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
-            } else {
-                return page;
-            }
-        },
+        // templateUrl: function() {
+        //     var page = "templates/logout-page.html";
+        //     var useHTTPS = window.location.href.indexOf('https') > -1;
+        //     if (useHTTPS) {
+        //         return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
+        //     } else {
+        //         return page;
+        //     }
+        // },
         // templateUrl: "templates/logout-page.html",
         reloadOnSearch: false,
         data: {
