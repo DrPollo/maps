@@ -143,12 +143,6 @@ angular.module('firstlife.services')
 
                 $log.debug('check for img meta exif',img);
 
-                EXIF.getData(img, function() {
-                    var allMetaData = EXIF.getTag(this,"Orientation");
-                    $log.debug('image metadata',allMetaData);
-                    // deferred.resolve(allMetaData);
-                });
-
                 deferred.resolve({width:width,height:height});
             };
 
@@ -158,17 +152,6 @@ angular.module('firstlife.services')
             return deferred.promise;
         }
 
-
-        function getExif(img) {
-            var deferred = $q.defer();
-
-            EXIF.getData(img, function() {
-                var allMetaData = EXIF.getAllTags(this);
-                $log.debug('image metadata',allMetaData);
-                deferred.resolve(allMetaData);
-            });
-            return deferred.promise;
-        }
 
         function resize (img,data,options) {
             var deferred = $q.defer();

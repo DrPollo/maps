@@ -340,7 +340,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             images:'=images'
         },
         templateUrl: '/templates/form/pictureLoader.html',
-        controller:['$scope','$log','$filter','$ionicLoading', '$q','$ionicPopup','$filter','myConfig', function($scope,$log,$filter,$ionicloading,$q,$ionicPopup, $filter, myConfig){
+        controller:['$scope','$log','$filter','$ionicLoading', '$q','$ionicPopup','$filter','$timeout','myConfig', function($scope,$log,$filter,$ionicloading,$q,$ionicPopup, $filter, $timeout,myConfig){
 
 
             $scope.$on('$destroy', function(e) {
@@ -351,6 +351,18 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             });
 
             $scope.config = myConfig;
+
+            var imageOptions = {
+                maxWidth: myConfig.behaviour.uploads.width,
+                maxHeight: myConfig.behaviour.uploads.height,
+                canvas: true,
+                orientation: true,
+                meta: true
+            };
+            var defaultMaxWidth = myConfig.behaviour.uploads.max_width,
+                defaultMaxHeight = myConfig.behaviour.uploads.max_height,
+                defaultQuality = myConfig.behaviour.uploads.quality,
+                defaultMimeFormat = myConfig.behaviour.uploads.mime_format;
 
 
             // init form
@@ -365,15 +377,45 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             initLoader();
 
 
+            $timeout(function() {
+                // listner caricamento immagine
+                document.getElementById('input-fileUpload').onchange = function (e) {
+                    $log.debug('carico',e.target.files[0],loadImage);
+                    // 10mb
+                    if(e.target.files[0].size > 10000000){
+                        $log.error('oversize');
+                        reader.abort();
+                        var alertPopup = $ionicPopup.alert({
+                            title: $filter('translate')('ERROR'),
+                            template: $filter('translate')('OVERSIZE_ERROR')
+                        });
+                        return;
+                    }
 
+                    var loadingImage = loadImage(
+                        e.target.files[0],
+                        function (img) {
+                            $log.debug('caricata',img);
+                            if (img.type === "error") {
+
+                            } else {
+                                var newImageData = img.toDataURL(defaultMimeFormat, defaultQuality);
+                                // $log.debug('nuova immagine', newImageData);
+                                $scope.images = newImageData;
+                                $scope.$apply();
+                                // addToimages(img);
+                            }
+                        },
+                        imageOptions
+                    );
+                    //loadingImage.onload = loadingImage.onerror = null;
+                };
+            },1);
 
             $scope.onLoad = function( e, reader, file, fileList, fileOjects, fileObj){
                 $log.debug('check onLoad, da scartare? ',e,reader,file,fileObj);
                 // se non supera la dimensione massima di 10Mb
                 if(fileObj.filesize <= limit){
-                    EXIF.getData(file, function () {
-                        $log.debug('orientation',EXIF.getTag(this,"Orientation") );
-                    });
                     // secondo parametro compressione
                     addToimages(fileObj);
                 }else{
