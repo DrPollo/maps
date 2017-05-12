@@ -371,7 +371,8 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 $log.debug('check onLoad, da scartare? ',e,reader,file,fileObj);
                 // se non supera la dimensione massima di 10Mb
                 if(fileObj.filesize <= limit){
-                    addToimages(fileObj);
+                    // secondo parametro compressione
+                    addToimages(fileObj,true);
                 }else{
                     $log.error('oversize');
                     reader.abort();
@@ -435,17 +436,20 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             };
 
 
-            function addToimages(image){
+            function addToimages(image,compression){
                 // aggiungo l'immagine
                 var data = 'data:';
                 data = data.concat(image.filetype).concat(';base64,').concat(image.base64);
                 // $log.debug('image',image);
-                ImageService.process(data).then(
-                    function (newData) {
-                        // $log.debug('newData',newData);
-                        $scope.images = newData;
-                    }
-                );
+                if(compression){
+                    ImageService.process(data).then(
+                        function (newData) {
+                            // $log.debug('newData',newData);
+                            $scope.images = newData;
+                        });
+                }else{
+                    $scope.images = data;
+                }
             }
 
             // // send photo to api
