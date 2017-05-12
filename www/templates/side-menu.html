@@ -29,7 +29,7 @@
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
                 <ion-item class="item-divider">{{'CURRENT_SIGNATURE'|translate}}</ion-item>
-                <ion-item>{{ (user.signature && user.signature !== '') ? user.signature : user.fullname}}</ion-item>
+                <ion-item class="item-text-wrap">{{ (user.signature && user.signature !== '') ? user.signature : user.fullname}}</ion-item>
                 <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <notification-link check="checkNotifications"></notification-link>
                 <ion-item ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close on-tap="myMap()">
