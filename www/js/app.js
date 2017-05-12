@@ -260,17 +260,17 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('callback', {
         url: "/callback?code&state&profile&error",
         controller: 'CallbackCtrl',
-        templateUrl: function() {
-            var page = "templates/callback-page.html";
-            var useHTTPS = window.location.href.indexOf('https') > -1;
-            console.log('page',window.location.protocol.concat( "//" ,window.location.host,'/')+ page, 'https?',useHTTPS);
-            // if (useHTTPS) {
-                return 'https:'.concat( "//" ,window.location.host,'/')+ page;
-                // return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
-            // } else {
-            //     return page;
-            // }
-        },
+        // templateUrl: function() {
+        //     var page = "templates/callback-page.html";
+        //     var useHTTPS = window.location.href.indexOf('https') > -1;
+        //     console.log('page',window.location.protocol.concat( "//" ,window.location.host,'/')+ page, 'https?',useHTTPS);
+        //     // if (useHTTPS) {
+        //         return 'https:'.concat( "//" ,window.location.host,'/')+ page;
+        //         // return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
+        //     // } else {
+        //     //     return page;
+        //     // }
+        // },
         // templateUrl: "templates/callback-page.html",
         reloadOnSearch: false,
         data: {
