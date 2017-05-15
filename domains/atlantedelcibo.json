@@ -34,6 +34,16 @@
     },
     "behaviour":{
       "is_login_required" : false
+    },
+    "custom_labels":{
+      "it":{
+        "PLACE_NAME":"Attività",
+        "FL_PLACES":"Attività"
+      },
+      "en":{
+        "PLACE_NAME":"Activity",
+        "FL_PLACES":"Activity"
+      }
     }
   }
 }

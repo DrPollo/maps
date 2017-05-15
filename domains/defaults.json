@@ -228,12 +228,12 @@
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
                 },"relations":{
-                    "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                    "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"located","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                    "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-                    "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL"},
-                    "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL"}
-                }
+                "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"located","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+                "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL"},
+                "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL"}
+            }
             },
             {"name":"POST_NAME","id":4,"icon":"ion-document-text","slug":"article","url":"articles","key":"FL_ARTICLES","index":3,
                 "show_author":true, "shape":"pentagon",
@@ -916,7 +916,7 @@
             "mime_type":"image/jpg",
             "quality":0.7
         }
-    }
-
+    },
+    "custom_labels":false
 }
 }

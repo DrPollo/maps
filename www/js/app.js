@@ -366,7 +366,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }]);
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
-    $translateProvider.translations('it', {
+    var itLabels = {
         LOGIN_REQUIRED:"Accesso necessario",
         LOGIN_REQUIRED_MESSAGE:"Per procedere è necessario effettuare l'accesso",
         SEACH_NO_RESULTS:'Nessun risultato...',
@@ -727,8 +727,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!",
         FROM_LABEL:"dal ",
         TO_LABEL:" al "
-    });
-    $translateProvider.translations('en', {
+    };
+    var enLabels = {
         FROM_LABEL:"from ",
         TO_LABEL:" to ",
         NOCONTENTS_MESSAGE:"nothing to see... :( ",
@@ -1089,7 +1089,20 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SHARE_ALERT_TITLE:"Link at ",
         SHARE_ALERT_SUBTITLE: "Copy and share the following url",
         COPY:'Copy'
-    });
+    };
+
+    if(myConfig.custom_labels){
+        // console.log('custom_labels',myConfig.custom_labels);
+        if(myConfig.custom_labels.it){
+            angular.extend(itLabels,myConfig.custom_labels.it);
+        }
+        if(myConfig.custom_labels.en){
+            angular.extend(enLabels,myConfig.custom_labels.en);
+        }
+    }
+
+    $translateProvider.translations('it', itLabels);
+    $translateProvider.translations('en', enLabels);
     //$translateProvider.preferredLanguage('en');
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
