@@ -212,7 +212,7 @@ angular.module('firstlife.controllers')
             var alertPopup = $ionicPopup.alert({
                 title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
                 subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
-                template: url,
+                template: '<input type="text" value="'+url+'" readonly>',
                 buttons: buttons
             });
 

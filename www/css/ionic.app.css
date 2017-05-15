@@ -15139,7 +15139,7 @@ timeline {
         z-index: 1;
         overflow: hidden;
         width: 100%;
-        padding: 0px 4px;
+        padding: 0px 4px 0px 2px;
         text-transform: capitalize; }
       timeline #timeline .repeated-item .label {
         position: relative;
@@ -15149,32 +15149,31 @@ timeline {
         display: block;
         text-transform: capitalize; }
     timeline #timeline .repeated-item:nth-child(even) {
-      background: #f3f3f3;
-      border-bottom: 3px solid #f3f3f3; }
+      background: #f3f3f3; }
     timeline #timeline .repeated-item:nth-child(odd) {
-      background: #fafafa;
-      border-bottom: 3px solid #fafafa; }
+      background: #fafafa; }
     timeline #timeline .repeated-item:hover {
-      border-bottom: 3px solid #FC4A00 !important;
+      box-shadow: inset 0px -3px 0px #fc4a00 !important;
       cursor: pointer; }
     timeline #timeline .repeated-item:last-child {
       border-left: 0px solid; }
     timeline #timeline .repeated-item:hover .entities span, timeline #timeline .repeated-item:focus .entities span, timeline #timeline .repeated-item:active .entities span {
       opacity: 0.6; }
     timeline #timeline .current, timeline #timeline .current:hover {
-      cursor: inherit;
-      border-bottom: 3px solid #FC4A00 !important; }
+      cursor: pointer; }
       timeline #timeline .current .badge, timeline #timeline .current:hover .badge {
         background: white;
         color: #FC4A00; }
+      timeline #timeline .current .divider-label, timeline #timeline .current:hover .divider-label {
+        color: #FC4A00;
+        font-weight: 500; }
     timeline #timeline .red {
-      background: #FDC581 !important; }
+      background: #cccccc !important; }
     timeline #timeline .noclick {
       background: #fafafa !important;
-      cursor: inherit !important;
-      border-bottom: 3px solid white !important; }
+      cursor: inherit !important; }
     timeline #timeline .noclick:hover {
-      border-bottom: 3px solid white !important; }
+      box-shadow: none !important; }
 
 .linear-animation.ng-hide-add, .linear-animation.ng-hide-remove {
   transition: all linear 0.5s; }

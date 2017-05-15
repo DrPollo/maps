@@ -145,7 +145,7 @@ timeline{
                 z-index:1;
                 overflow: hidden;
                 width: 100%;
-                padding: 0px 4px;
+                padding: 0px 4px 0px 2px;
                 text-transform:capitalize;
             }
 
@@ -161,14 +161,12 @@ timeline{
 
         .repeated-item:nth-child(even){
             background: #f3f3f3;
-            border-bottom:3px solid #f3f3f3;
         }
         .repeated-item:nth-child(odd){
             background: #fafafa;
-            border-bottom:3px solid #fafafa;
         }
         .repeated-item:hover{
-            border-bottom:3px solid $positive !important;
+            box-shadow:inset 0px -3px 0px #fc4a00 !important;
             cursor: pointer;
         }
         .repeated-item:last-child{
@@ -185,8 +183,7 @@ timeline{
             }
         }
         .current,.current:hover{
-            cursor: inherit;
-            border-bottom:3px solid $positive !important;
+            cursor: pointer;
             .label{
 
             }
@@ -194,18 +191,20 @@ timeline{
                 background: white;
                 color:$positive;
             }
-
+            .divider-label {
+                color: $positive;
+                font-weight: 500;
+            }
         }
         .red {
-            background:#FDC581 !important;
+            background:#cccccc !important;
         }
         .noclick{
             background: #fafafa !important;
             cursor: inherit !important;
-            border-bottom:3px solid white !important;
         }
         .noclick:hover {
-            border-bottom:3px solid white !important;
+            box-shadow: none !important;
         }
     }
 }

@@ -726,9 +726,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         OVERSIZE_ERROR:"Immagine troppo grande, dimensione massima 10Mb",
         SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!",
         FROM_LABEL:"dal ",
-        TO_LABEL:" al "
+        TO_LABEL:" al ",
+        OK:"Ok"
     };
     var enLabels = {
+        OK:"Ok",
         FROM_LABEL:"from ",
         TO_LABEL:" to ",
         NOCONTENTS_MESSAGE:"nothing to see... :( ",
