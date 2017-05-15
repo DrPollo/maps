@@ -1,0 +1,39 @@
+{"myConfig":
+  {
+    "app_name" : "Atlante del Cibo",
+    "domain_name" : "atlantedelcibo",
+    "domain_id" : 18,
+    "read_domains":false,
+    "design":{
+      "logo" : {
+        "title": "Atlante del Cibo",
+        "alt":"Atlante del Cibo",
+        "label":{
+          "text": "Atlante del Cibo"
+        }
+      },
+      "default_language" : "it",
+      "landingpage":{
+        "center":{
+          "image":"img/landing/Icon2_resources_sfondo.svg",
+          "alt": {
+            "it":"Logo Atlante del Cibo",
+            "en":"Logo of the Atlante del Cibo"
+          },
+          "message":{
+            "it":"l'atlante del cibo del Piemonte",
+            "en":"Piedmont Food Atlas"
+          }
+        }
+      }
+    },
+    "map":{
+      "map_default_lat" : 45.070312,
+      "map_default_lng" : 7.686856,
+      "zoom_level" : 14
+    },
+    "behaviour":{
+      "is_login_required" : false
+    }
+  }
+}
