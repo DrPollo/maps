@@ -13612,7 +13612,7 @@ ion-side-menu {
 
 #wizardEntity.content {
   background: #fafafa;
-  padding: 6px 16px 40px; }
+  padding: 6px 16px 50px; }
   #wizardEntity.content form {
     margin: 0px auto;
     max-width: 1024px; }
@@ -13680,6 +13680,8 @@ ion-side-menu {
       height: 30px;
       padding-top: 5px;
       cursor: pointer; }
+  #wizardEntity.content .slider-pager {
+    display: none; }
 
 #user_profile #user_header {
   position: fixed;

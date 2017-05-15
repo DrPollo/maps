@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', '$ionicSlideBoxDelegate', '$timeout','myConfig', 'EntityService', 'ThingsService',  'AuthService', 'PlatformService',function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, $ionicSlideBoxDelegate,$timeout, myConfig, EntityService, ThingsService,  AuthService, PlatformService) {
+    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate','myConfig', 'EntityService', 'ThingsService',  'AuthService', 'PlatformService',function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, $ionicSlideBoxDelegate,$timeout, $ionicScrollDelegate, myConfig, EntityService, ThingsService,  AuthService, PlatformService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -199,11 +199,13 @@ angular.module('firstlife.controllers')
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.next();
+            $ionicScrollDelegate.scrollTop();
         };
         $scope.prevStep = function(){
             // passo allo step 2
             $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
             $ionicSlideBoxDelegate.previous();
+            $ionicScrollDelegate.scrollTop();
         };
 
         // aggiorno lo stato del wizard dato il tipo

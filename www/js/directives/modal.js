@@ -825,7 +825,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
         restrict: 'E',
         template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
     }
-}).directive('modalLists',  ['$log', 'AuthService',function($log, AuthService){
+}).directive('modalLists',  ['$log', '$ionicScrollDelegate', '$location','AuthService',function($log, $ionicScrollDelegate,$location, AuthService){
     return{
         restrict: 'E',
         scope: {
@@ -851,6 +851,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             // cambio di tab
             scope.setToggle = function(i){
                 scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
+                $location.hash('modalLists');
+                $ionicScrollDelegate.anchorScroll(true);
             }
             scope.click = function (id) {
                 // $log.debug('modal.js',id);
