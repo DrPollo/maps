@@ -229,10 +229,10 @@ angular.module('firstlife.controllers')
 
         // left side (wall)
         $scope.openSideLeft = function () {
-            $scope.wallOpen = true;
             if(!isOpenLeft()){
                 $ionicSideMenuDelegate.toggleLeft();
                 wallInit();
+                $scope.wallOpen = true;
             }
         };
         $scope.$on('openSideLeft',function (e) {
@@ -245,10 +245,11 @@ angular.module('firstlife.controllers')
         $scope.closeSideLeft = function () {
             if(isOpenLeft()){
                 $ionicSideMenuDelegate.toggleLeft();
-            }
-            $timeout(function () {
                 $scope.wallOpen = false;
-            },400);
+            }
+            // $timeout(function () {
+            //     $scope.wallOpen = false;
+            // },400);
         };
         $scope.$on('closeSideLeft',function (e) {
             if(e.defaultPrevented)
@@ -318,6 +319,7 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('wallInit');
         }
         function isOpenLeft(){
+            $log.debug('is open',$scope.wallOpen || $ionicSideMenuDelegate.isOpenLeft());
             // patch per gestire il delay delle animazioni di ionic
             return ($scope.wallOpen || $ionicSideMenuDelegate.isOpenLeft());
         }

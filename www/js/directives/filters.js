@@ -189,7 +189,7 @@ angular.module('firstlife.directives')
 
             // apro il wall per la modifica del testo
             scope.toggleWall =function(){
-                scope.$emit('openSideLeft');
+                scope.$emit('toggleSideLeft');
             };
 
             scope.deleteCard = function(){

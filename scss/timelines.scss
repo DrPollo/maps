@@ -67,12 +67,14 @@ timeline{
             line-height: 25px;
             min-width: 60px;
             color:$lightDark;
+            background: #fafafa;
             .icon:before{
                 line-height:25px;
             }
         }
         .button.disabled, .button[disabled]{
             opacity:1;
+            background: transparent;
         }
         .current-button {
         }

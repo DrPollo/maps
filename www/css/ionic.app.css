@@ -15077,11 +15077,13 @@ timeline {
       max-height: 25px;
       line-height: 25px;
       min-width: 60px;
-      color: #444; }
+      color: #444;
+      background: #fafafa; }
       timeline #buttons button .icon:before {
         line-height: 25px; }
     timeline #buttons .button.disabled, timeline #buttons .button[disabled] {
-      opacity: 1; }
+      opacity: 1;
+      background: transparent; }
     timeline #buttons .group {
       margin: 0px 16px 0px 0px; }
     timeline #buttons .right {
