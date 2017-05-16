@@ -36,10 +36,10 @@
 .fast-linear-animation.ng-hide-add, .fast-linear-animation.ng-hide-remove {
     transition: all linear 0.25s;
 }
-.fast-ease-in-animation.ng-hide-add, .fast-ease-in-animation.ng-hide-remove {
+.fast-ease-in-animation.ng-hide-add {
     transition: all ease-in 0.25s;
 }
-.fast-ease-out-animation.ng-hide-add, .fast-ease-out-animation.ng-hide-remove {
+.fast-ease-out-animation.ng-hide-remove {
     transition: all ease-out 0.25s;
 }
 .fast-ease-animation.ng-hide-add, .fast-ease-animation.ng-hide-remove {

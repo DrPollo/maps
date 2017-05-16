@@ -47,7 +47,8 @@
     #mapHeader{
         position: relative;
         display: inline-flex;
-        max-width: 322px;
+        max-width: 400px;
+        width: 100%;
         top: 0px;
         left: 0px;
         z-index: 12;
@@ -76,22 +77,23 @@
 
         #headerControllers{
             position: relative;
-            width :auto;
+            width :100%;
             display: inline-flex;
             #omnibox{
                 display: inline-flex;
-                width: auto;
+                width: 100%;
                 position: relative;
                 z-index: 1;
                 button {
-                    //min-height: 48px;
-                    height: 48px;
+                    min-height: 45px;
+                    height: 45px;
                     //min-width: 48px;
                     width: 48px;
                     position: relative;
                     box-shadow: 1px 1px 3px #666;
                     overflow: hidden;
                     border: none;
+                    background: #fff;
                     .badge{
                         position:absolute;
                         top:initial;
@@ -390,16 +392,22 @@
 }
 
 #infobar {
-    max-width: 322px;
-    width: 100%;
+    max-width: 400px;
+    width: auto;
     position: absolute;
     z-index: 999;
-    top:64px;
-    left: 8px;
-    padding: 6px 10px;
-    border-radius: 6px;
+    top: 38px;
+    left: 0px;
+    padding: 16px 10px 6px;
+    border-radius: 0px 0px 4px 0px;
     background: #fafafa;
     box-shadow: 0 1px 5px rgba(0,0,0,.65);
+    .scaleinfo{
+        //margin-right: 8px;
+    }
+    .areainfo{
+        font-weight: italic;
+    }
 }
 
 #notifications {

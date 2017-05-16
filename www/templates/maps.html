@@ -3,10 +3,8 @@
     <div id="mapHeader">
         <div id="headerControllers">
             <div id="omnibox">
-                <wall-toggler ng-if="!editMode"></wall-toggler>
-                <search-bar ng-if="!editMode"></search-bar>
-                <!--todo delete <entity-filter ng-if="!editMode" toggle="toggleFilter()"></entity-filter>-->
-                <geocoding-bar ng-if="editMode" locate="locate(location)"></geocoding-bar>
+                <wall-toggler></wall-toggler>
+                <geocoding-bar locate="locate(location)"></geocoding-bar>
             </div>
             <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
                 <i class="icon ion-android-person"></i>

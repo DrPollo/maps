@@ -713,7 +713,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
     return{
         restrict:'EG',
         scope:{},
-        template:'<div id="infobar" ng-if="info || scale" class="fade-in fast-ease-animation"><div ng-if="scale.label">{{"SCALE"|translate}}{{": "}}{{scale.label|translate}}</div><div ng-if="info.name">{{"CURRENTLY_SEEYING"|translate}}{{": "}}{{info.name|translate}}</div></div>',
+        template:'<div id="infobar" ng-if="info || scale" class="fade-in fast-ease-animation"><span class="scaleinfo" ng-if="scale.label">{{"SCALE"|translate}}{{" "}}{{scale.label |translate}}</span><span ng-if="scale.label && info">{{": "}}</span><span class="areainfo" ng-if="info.name">{{info.name|translate}}</span></div>',
         link:function (scope,element,attr) {
             scope.$on('$destroy',function (e) {
                 if(e.defaultPrevented)

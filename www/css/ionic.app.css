@@ -13281,7 +13281,8 @@ ion-side-menu {
   .maps-view #mapHeader {
     position: relative;
     display: inline-flex;
-    max-width: 322px;
+    max-width: 400px;
+    width: 100%;
     top: 0px;
     left: 0px;
     z-index: 12; }
@@ -13304,20 +13305,22 @@ ion-side-menu {
       box-shadow: 1px 1px 3px #666; }
     .maps-view #mapHeader #headerControllers {
       position: relative;
-      width: auto;
+      width: 100%;
       display: inline-flex; }
       .maps-view #mapHeader #headerControllers #omnibox {
         display: inline-flex;
-        width: auto;
+        width: 100%;
         position: relative;
         z-index: 1; }
         .maps-view #mapHeader #headerControllers #omnibox button {
-          height: 48px;
+          min-height: 45px;
+          height: 45px;
           width: 48px;
           position: relative;
           box-shadow: 1px 1px 3px #666;
           overflow: hidden;
-          border: none; }
+          border: none;
+          background: #fff; }
           .maps-view #mapHeader #headerControllers #omnibox button .badge {
             position: absolute;
             top: initial;
@@ -13533,16 +13536,18 @@ ion-side-menu {
       min-width: 46px; }
 
 #infobar {
-  max-width: 322px;
+  max-width: 400px;
   width: 100%;
   position: absolute;
   z-index: 999;
-  top: 64px;
-  left: 8px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: #fafafa;
+  top: 38px;
+  left: 0px;
+  padding: 16px 10px 6px;
+  border-radius: 0px 0px 4px 0px;
+  background: white;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
+  #infobar .areainfo {
+    font-weight: italic; }
 
 #notifications button {
   color: #999; }
@@ -15212,10 +15217,10 @@ timeline {
 .fast-linear-animation.ng-hide-add, .fast-linear-animation.ng-hide-remove {
   transition: all linear 0.25s; }
 
-.fast-ease-in-animation.ng-hide-add, .fast-ease-in-animation.ng-hide-remove {
+.fast-ease-in-animation.ng-hide-add {
   transition: all ease-in 0.25s; }
 
-.fast-ease-out-animation.ng-hide-add, .fast-ease-out-animation.ng-hide-remove {
+.fast-ease-out-animation.ng-hide-remove {
   transition: all ease-out 0.25s; }
 
 .fast-ease-animation.ng-hide-add, .fast-ease-animation.ng-hide-remove {
@@ -15559,60 +15564,62 @@ div.search-tag-card {
     min-width: 20px !important;
     box-shadow: none !important; }
 
-.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar {
-  max-height: 40px;
-  height: 40px;
-  margin: 4px 0px 4px;
-  border-radius: 0px 4px 4px 0px;
-  background: #fff;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar input {
-    min-height: 40px;
+#mapHeader #headerControllers #omnibox geocoding-bar {
+  width: 100%; }
+  #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar {
+    max-height: 40px;
     height: 40px;
-    padding: 4px 12px;
-    display: inline-block;
-    width: 186px; }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar button.button-geocoding {
-    min-height: 40px;
-    height: 40px;
-    min-width: 40px;
-    width: 40px;
-    display: inline-block;
-    box-shadow: none;
-    border: 0px solid;
-    padding: 0px;
-    border-radius: 4px; }
-
-.maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults {
-  margin: -4px 0px 0px;
-  display: block;
-  width: auto;
-  background: #fff;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-  width: 100%;
-  left: 0px;
-  position: absolute;
-  z-index: -1; }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry {
-    width: 100%;
-    min-width: 100%;
-    height: 40px;
-    line-height: 40px;
-    min-height: 40px;
     margin: 0px;
-    color: #333;
+    border-radius: 0px 0px 4px 0px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    width: 100%; }
+    #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar input {
+      min-height: 40px;
+      height: 40px;
+      padding: 4px 0px 4px 12px;
+      display: inline-block;
+      width: calc(100% - 84px); }
+    #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar button.button-geocoding {
+      min-height: 40px;
+      height: 40px;
+      min-width: 38px;
+      width: 38px;
+      display: inline-block;
+      box-shadow: none;
+      border: 0px solid;
+      padding: 0px;
+      border-radius: 4px; }
+  #mapHeader #headerControllers #omnibox geocoding-bar #searchresults {
+    margin: -4px 0px 0px;
+    display: block;
+    width: auto;
+    background: #fff;
+    border-radius: 4px;
     overflow: hidden;
-    text-align: left;
-    box-shadow: none;
-    border-bottom: 1px solid #ccc; }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry:last-children {
-    border-bottom: none; }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry::before {
-    padding-left: 6px; }
-  .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:focus, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:hover, .maps-view #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:active {
-    background: #f0f0f0; }
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    width: 100%;
+    left: 0px;
+    position: absolute;
+    z-index: -1; }
+    #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry {
+      width: 100%;
+      min-width: 100%;
+      height: 40px;
+      line-height: 40px;
+      min-height: 40px;
+      margin: 0px;
+      color: #333;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: none;
+      border-bottom: 1px solid #ccc; }
+    #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry:last-children {
+      border-bottom: none; }
+    #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry::before {
+      padding-left: 6px; }
+    #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:focus, #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:hover, #mapHeader #headerControllers #omnibox geocoding-bar #searchresults .entry:active {
+      background: #f0f0f0; }
 
 #posteditor input, #posteditor tags-input .tags {
   border: none;
