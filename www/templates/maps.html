@@ -3,7 +3,7 @@
     <div id="mapHeader">
         <div id="headerControllers">
             <div id="omnibox">
-                <wall-toggler></wall-toggler>
+                <wall-toggler ng-if="!editMode"></wall-toggler>
                 <geocoding-bar locate="locate(location)"></geocoding-bar>
             </div>
             <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
@@ -27,7 +27,7 @@
         <flmap map="flmap"></flmap>
     </ion-content >
     <!-- barra filtri -->
-    <user-handler ng-if="!viewer"></user-handler>
+    <user-handler ng-if="!viewer && !editMode"></user-handler>
     <div id="bottom-bar">
         <!-- action buttons -->
         <div id="map-action-menu">
