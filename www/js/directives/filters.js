@@ -201,8 +201,7 @@ angular.module('firstlife.directives')
             };
         }
     }
-}])
-    .directive('geocodingBar',['$log','$location', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $window, myConfig, SearchService, CBuffer){
+}]).directive('geocodingBar',['$log','$location', '$window','myConfig', 'SearchService', 'CBuffer', function ($log, $location, $window, myConfig, SearchService, CBuffer){
         return {
             restrinct:'EG',
             templateUrl:'/templates/map-ui-template/geocodingbar.html',
