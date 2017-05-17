@@ -462,6 +462,26 @@ angular.module('firstlife.controllers')
 
 
 
+        $scope.getUserLocation = function () {
+
+            var options = {
+                timeout:5000,
+                maximumAge: 15000,
+                enableHighAccuracy: true
+            };
+            $ionicLoading.show({hideOnStateChange:true});
+            $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+                $log.debug('user position',position);
+                $ionicLoading.hide();
+                changeLocation({lat:position.coords.latitude,lng:position.coords.longitude});
+            },function (err) {
+                $log.error(err);
+                $ionicLoading.hide();
+                showAlert({title:'ERROR',text:"GEOLOCATION_ERROR"});
+                //todo avvisa utente
+            });
+        };
+
 
 
         /* 
@@ -524,9 +544,13 @@ angular.module('firstlife.controllers')
 
         // An alert dialog
         function showAlert (content) {
+
+            var title = content.title || 'ERROR';
+            var template = content.text || 'SORRY_UNEXPECTED_ERROR';
+
             var alertPopup = $ionicPopup.alert({
-                title: content.title,
-                template: content.text
+                title: $filter('translate')(content.title),
+                template: $filter('translate')(content.text)
             });
 
             alertPopup.then(function(res) {

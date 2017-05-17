@@ -707,9 +707,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SORRY_NETWORK_ERROR:"C'è da mettersi in coda... La rete è sovraffollata!",
         FROM_LABEL:"dal ",
         TO_LABEL:" al ",
-        OK:"Ok"
+        OK:"Ok",
+        GEOLOCATION_ERROR:"Spiacenti, non risciamo a trovare la tua posizione"
     };
     var enLabels = {
+        GEOLOCATION_ERROR:"Sorry, cannot find your location",
         OK:"Ok",
         FROM_LABEL:"from ",
         TO_LABEL:" to ",

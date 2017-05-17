@@ -47,6 +47,13 @@
                 <!--</div>-->
             <!--</div>-->
             <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
+                <div class="flex-item">
+                    <button class="button button-float button-float-small" ng-click="getUserLocation()">
+                        <i class="icon ion-android-locate"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item"  ng-if="config.actions.edit_mode" >
                     <button class="button button-float" ng-click="switchEditMode()">
                         <i class="icon ease-animation" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
