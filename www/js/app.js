@@ -63,6 +63,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // se non loggato provo una volta
         var tryAutoLogin = !AuthService.isAuth();
 
+        // check validita' token al caricamento
+        // $log.debug('check token init');
+        AuthService.checkToken().then(function (response) {
+            // $log.debug('check token response',response);
+        });
+
+
         // gestione errori http
         $rootScope.$on('expiredToken',function (e) {
             if(e.defaultPrevented)

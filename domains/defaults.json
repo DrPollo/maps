@@ -29,7 +29,8 @@
         "client_id": "eB1GG6Ik",
         "scopes":["userinfo.profile"],
         "session_check": false,
-        "session_params":false
+        "session_params":false,
+        "token_check":"tokens/check"
     },
     "design":{
         "logo" : {

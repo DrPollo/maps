@@ -31,6 +31,9 @@ angular.module('firstlife.config')
         myConfig.report_thing = url.concat("inappropriates");
         myConfig.initiatives = url.concat("initiatives");
 
+        if(myConfig.authentication.token_check)
+            myConfig.authentication.token_check = url.concat(myConfig.authentication.token_check);
+
         for(k in myConfig.types.list){
             if(myConfig.types.list[k].url){
                 myConfig.types.list[k].url = url.concat(myConfig.types.list[k].url);

@@ -14,6 +14,37 @@ angular.module('firstlife.services')
 
         //C: (P&(~Q))
         return {
+            checkToken: function () {
+                var deferred = $q.defer();
+                // $log.debug('check token validity',!MemoryFactory.get(tokenKey),!myConfig.authentication.token_check);
+                // se non ho token da controllare
+                if(!MemoryFactory.get(tokenKey)){
+                    deferred.resolve('no token to check');
+                    return deferred.promise;
+                }
+                // se il servizio non e' definito
+                if(!myConfig.authentication.token_check){
+                    deferred.reject('no check service');
+                    return deferred.promise;
+                }
+
+                // $log.debug('check token validity');
+                var token = MemoryFactory.get(tokenKey).access_token;
+                var req = {
+                    url: myConfig.authentication.token_check+"?access_token="+token,
+                    method: 'GET',
+                    data: false
+                };
+                $http(req).then(function(response) {
+                    // $log.debug('check token, response',response);
+                    deferred.resolve(response);
+                },function(err){
+                    // $log.debug("check token",err);
+                    deferred.reject(err);
+                });
+
+                return deferred.promise;
+            },
             checkSession: function(){
                 // chiedo all'oauth server se c'e' un utente attivo nell'agent
                 var deferred = $q.defer();
