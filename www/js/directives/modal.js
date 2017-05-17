@@ -93,7 +93,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
 
 
             // menu popover della modals
-            $scope.showPopoverMenu = function (){
+            function initPopoverMenu(){
 
                 $ionicPopover.fromTemplateUrl('templates/popovers/ModalPopoverMenu.html', {
                     scope: $scope,
@@ -145,7 +145,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                                         $scope.showASDeletedPlace(marker.id);
                                         // notifico la mappa
                                         $scope.$emit("deleteMarker",{id:marker.id});
-                                        $scope.closeModal();
+                                        $scope.exit();
                                     },
                                     // error function
                                     function(error) {
@@ -183,10 +183,10 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             //Update marker in local/server
             $scope.updateEntity = function(marker){
                 var params = {lat:marker.lat, lng:marker.lng, zoom:marker.zoom_level, id:marker.id};
-                $scope.$emit("startUpdating",params);
+                $scope.$emit("updateThing",params);
 
                 //fai uscire la wizardPlace con placeholder dati vecchi
-                $scope.closeModal();
+                $scope.exit();
             };
 
             /*
@@ -222,7 +222,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 }
                 // chiudo la modal
                 if(text) {
-                    $scope.closeModal();
+                    $scope.exit();
                 }
             };
 
@@ -248,7 +248,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 // carico il contenuto della modal
                 loadModal(markerId);
                 // creo il menu per la modal
-                $scope.showPopoverMenu();
+                initPopoverMenu();
             };
 
             function loadModal(markerId){
@@ -281,16 +281,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             }
 
             $scope.exit = function (){
-                $location.search('entity',null);
-                // distruggo il menu popover
-                if($scope.popover){
-                    $scope.popover.hide();
-                    //$scope.popover.remove();
-                }
-
-                $scope.$emit("closePlaceModal");
-                // $log.debug('check closePlaceModal');
-                delete $scope.infoPlace.modal;
+                $scope.$emit('exitThingCard');
             };
 
             function initSubscribers(){

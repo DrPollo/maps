@@ -163,6 +163,15 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('wallQuery');
         });
 
+        $scope.$on('updateThing',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('startUpdating',args);
+        });
+
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login
@@ -366,6 +375,10 @@ angular.module('firstlife.controllers')
             $location.hash();
             currentEntity = null;
         };
+        $scope.$on('exitThingCard',function () {
+            $scope.backToStart();
+            $scope.closeSideLeft();
+        });
         $scope.$on('openTreeMap',function () {
             $ionicSlideBoxDelegate.slide(1);
             $scope.wallIndex = 1;
