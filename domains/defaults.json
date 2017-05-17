@@ -225,7 +225,7 @@
                     "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
                     "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
-                    "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
+                    "valid_from":{ "key": "valid_from", "label": "STARTDATE_NEWS_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
                 },"relations":{
                 "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},

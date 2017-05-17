@@ -709,9 +709,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         TO_LABEL:" al ",
         OK:"Ok",
         GEOLOCATION_ERROR:"Spiacenti, non risciamo a trovare la tua posizione",
-        SHARE_THING:"Condividi"
+        SHARE_THING:"Condividi",
+        STARTDATE_NEWS_LABEL:"Data"
     };
     var enLabels = {
+        STARTDATE_NEWS_LABEL:"Date",
         SHARE_THING:"Share",
         GEOLOCATION_ERROR:"Sorry, cannot find your location",
         OK:"Ok",
