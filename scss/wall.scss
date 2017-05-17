@@ -7,6 +7,10 @@ wall-toggler {
 }
 #wall{
     //position: relative;
+    ion-slide{
+        margin:0px 0px 50px;
+        height: calc(100% - 50px)!important;
+    }
     #ricerca{
         width: 100%;
         padding-right: 0px;
@@ -26,7 +30,7 @@ wall-toggler {
         min-height: 180px;
         overflow: hidden;
         .card {
-            margin: 10px 20px;
+            margin: 6px 6px 0px;
             .title {
                 font-size: 1.3em;
                 font-weight: 500;
@@ -38,8 +42,8 @@ wall-toggler {
                 background: #f8f8f8;
             }
             .main {
-                height: 133px;
-                min-height: 133px;
+                height: 148px;
+                min-height: 148px;
                 overflow: hidden;
                 font-size: 1em;
                 .subheader {
@@ -77,8 +81,9 @@ wall-toggler {
     }
     #typeFilter{
         position: relative;
-        text-align: center;
+        //text-align: center;
         //padding: 0px 15px;
+        margin-left: 4px;
         button{
             margin:0px auto;
             background: #f1f1f1;

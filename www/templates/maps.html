@@ -31,21 +31,6 @@
     <div id="bottom-bar">
         <!-- action buttons -->
         <div id="map-action-menu">
-            <div class="flex-container flex-container-style fixed-height fade-in ease-animation" ng-show="!editMode">
-                <div class="flex-item">
-                    <button class="button button-float button-float-small  " ng-click="showMFilterCat()">
-                        <i class="icon ion-android-checkmark-circle"></i>
-                    </button>
-                </div>
-            </div>
-            <!--todo delete-->
-            <!--<div class="flex-container flex-container-style fixed-height fade-in ease-animation" ng-show="!editMode">-->
-                <!--<div class="flex-item">-->
-                    <!--<button class="button button-float button-float-small" ng-click="showWall()">-->
-                        <!--<i class="icon ease-animation" ng-class="{'ion-android-list': !openWall, 'ion-close-round': openWall}"></i>-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item">
                     <button class="button button-float button-float-small" ng-click="getUserLocation()">

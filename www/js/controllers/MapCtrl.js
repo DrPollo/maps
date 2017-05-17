@@ -466,7 +466,7 @@ angular.module('firstlife.controllers')
 
             var options = {
                 timeout:5000,
-                maximumAge: 15000,
+                maximumAge: 0,
                 enableHighAccuracy: true
             };
             $ionicLoading.show({hideOnStateChange:true});

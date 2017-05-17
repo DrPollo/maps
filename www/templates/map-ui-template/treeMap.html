@@ -18,7 +18,7 @@
                 <div class="childblock"
                      ng-repeat="cat in space.list track by $index"
                      ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],color: toggled[space.name][cat[space.check]] ? 'white' : cat.color,background:toggled[space.name][cat[space.check]]?cat.color:'#fff'}"
-                     on-tap="catToggle(space.name,cat[space.check])">
+                     on-tap="toggleCat(space.name,cat[space.check])">
                     <i class="checker icon medium-dark" 
                        ng-class="{ 'ion-close-circled': !toggled[space.name][cat[space.check]], 'ion-checkmark-circled': toggled[space.name][cat[space.check]]}"
                        style="color:{{ toggled[space.name][cat[space.check]] ? 'white' : cat.color }};"></i>

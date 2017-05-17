@@ -3,10 +3,7 @@ angular.module('firstlife.directives')
         return {
             restrict: 'E',
             templateUrl: '/templates/map-ui-template/treeMap.html',
-            scope: {
-                toggleCat:"&toggle",
-                changeFavCat:"&"
-            },
+            scope: {},
             link: function (scope, element) {
 
                 var backHeight = 47; //pixels
@@ -24,6 +21,10 @@ angular.module('firstlife.directives')
                 // }, function(value,old){
                 //     initTree(element[0].getBoundingClientRect());
                 // });
+
+
+
+
 
                 function initTree(rect){
                     scope.size = rect;
@@ -60,16 +61,19 @@ angular.module('firstlife.directives')
                     return false;
                 };
                 // toggle categoria
-                scope.catToggle = function(cat,key){
+                scope.toggleCat = function(cat,key){
                     // toggle della categoria
                     scope.toggled[cat][key] = !scope.toggled[cat][key];
                     // toggle del filtro
-                    scope.toggleCat({cat:cat,key:key});
+                    ThingsService.toggleFilter(cat, key);
+                    scope.$emit('toggleFilter');
                 };
                 //
                 scope.iconToggle = function(id){
-                    // toggle dell'icona e assegno il nuovo valor
-                    scope.favCat = scope.changeFavCat({id:id});
+                    // toggle dell'icona e assegno il nuovo valore
+                    scope.favCat = ThingsService.setIcon(id);
+                    // aggiorno i marker
+                    scope.$emit('toggleFilter');
                 }
 
                 function toPer(rect){

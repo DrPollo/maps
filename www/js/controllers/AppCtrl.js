@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$translate', '$filter', '$location', '$log', '$window', '$timeout','myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $translate, $filter, $location, $log, $window, $timeout, myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$ionicSlideBoxDelegate', '$translate', '$filter', '$location', '$log', '$window', '$timeout','myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, $translate, $filter, $location, $log, $window, $timeout, myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
 
 
         $scope.config = myConfig;
@@ -46,7 +46,6 @@ angular.module('firstlife.controllers')
                 $scope.username = "Guest";
                 $log.info("Non loggato");
             }
-
         });
 
 
@@ -143,10 +142,7 @@ angular.module('firstlife.controllers')
         $scope.signature = function(){
             $window.location.href = AuthService.signature_url();
         };
-        // funzione togle per il menu laterale
-        $scope.toggleSideLeft = function() {
-            $ionicSideMenuDelegate.toggleLeft();
-        };
+        // funzione togle per il menu laterale utente
         $scope.toggleSideRight = function() {
             $ionicSideMenuDelegate.toggleRight();
         };
@@ -230,7 +226,7 @@ angular.module('firstlife.controllers')
         // left side (wall)
         $scope.openSideLeft = function () {
             if(!isOpenLeft()){
-                $ionicSideMenuDelegate.toggleLeft();
+                $scope.toggleSideLeft();
                 wallInit();
                 $scope.wallOpen = true;
             }
@@ -244,7 +240,7 @@ angular.module('firstlife.controllers')
         });
         $scope.closeSideLeft = function () {
             if(isOpenLeft()){
-                $ionicSideMenuDelegate.toggleLeft();
+                $scope.toggleSideLeft();
                 $scope.wallOpen = false;
             }
             // $timeout(function () {
@@ -259,11 +255,17 @@ angular.module('firstlife.controllers')
             $scope.closeSideLeft();
         });
         $scope.toggleSideLeft = function () {
+            // default posizione wall
+            $ionicSlideBoxDelegate.slide(0,0);
+            $ionicSlideBoxDelegate.enableSlide(false);
+
             $log.debug('toggleSideLeft');
             if(!isOpenLeft()){
                 wallInit();
             }
+
             $ionicSideMenuDelegate.toggleLeft();
+
             // aggiorno dopo le animazioni
             $timeout(function () {
                 $scope.wallOpen = $ionicSideMenuDelegate.isOpenLeft();
@@ -312,6 +314,21 @@ angular.module('firstlife.controllers')
             $log.debug('toggleSideRight');
             $scope.toggleSideRight();
         });
+
+
+
+        /*gestione slidebox wall*/
+        $scope.wallIndex = 0;
+        $scope.backToStart = function () {
+          $ionicSlideBoxDelegate.slide(0);
+          $scope.wallIndex = 0;
+        };
+        $scope.$on('openTreeMap',function () {
+            $ionicSlideBoxDelegate.slide(1);
+            $scope.wallIndex = 1;
+        });
+
+
 
 
         function wallInit() {

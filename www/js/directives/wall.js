@@ -147,6 +147,13 @@ angular.module('firstlife.directives')
                     scope.close();
                 };
 
+
+                // gestione filtri categoria
+                scope.openTreeMap = function () {
+                  scope.$emit('openTreeMap');
+                };
+
+
                 /*
                  * todo gestione del focus su singla card
                  */

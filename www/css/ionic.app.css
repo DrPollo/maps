@@ -13759,6 +13759,10 @@ wall-toggler #wall-toggler {
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px; }
 
+#wall ion-slide {
+  margin: 0px 0px 50px;
+  height: calc(100% - 50px) !important; }
+
 #wall #ricerca {
   width: 100%;
   padding-right: 0px; }
@@ -13775,7 +13779,7 @@ wall-toggler #wall-toggler {
   min-height: 180px;
   overflow: hidden; }
   #wall .container .card {
-    margin: 10px 20px; }
+    margin: 6px 6px 0px; }
     #wall .container .card .title {
       font-size: 1.3em;
       font-weight: 500;
@@ -13784,8 +13788,8 @@ wall-toggler #wall-toggler {
     #wall .container .card .title:hover, #wall .container .card .title:active, #wall .container .card .title:focus {
       background: #f8f8f8; }
     #wall .container .card .main {
-      height: 133px;
-      min-height: 133px;
+      height: 148px;
+      min-height: 148px;
       overflow: hidden;
       font-size: 1em; }
       #wall .container .card .main .subheader {
@@ -13815,7 +13819,7 @@ wall-toggler #wall-toggler {
 
 #wall #typeFilter {
   position: relative;
-  text-align: center; }
+  margin-left: 4px; }
   #wall #typeFilter button {
     margin: 0px auto;
     background: #f1f1f1;
@@ -15072,7 +15076,7 @@ timeline {
     width: 100%;
     height: 34px;
     background-color: #f3f3f3;
-    padding: 4px 8px 0px;
+    padding: 4px 4px 0px;
     overflow: hidden; }
     timeline #buttons button {
       margin: 0px 4px 0px 0px;
@@ -15081,9 +15085,9 @@ timeline {
       min-height: 25px;
       max-height: 25px;
       line-height: 25px;
-      min-width: 60px;
       color: #444;
-      background: #fafafa; }
+      background: #fafafa;
+      text-transform: capitalize; }
       timeline #buttons button .icon:before {
         line-height: 25px; }
     timeline #buttons .button.disabled, timeline #buttons .button[disabled] {
@@ -15573,7 +15577,7 @@ div.search-tag-card {
     border-radius: 0px 0px 4px 0px;
     background: #fff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-    width: calc(100% - 45px); }
+    width: 100%; }
     #mapHeader #headerControllers #omnibox geocoding-bar #geocodingbar input {
       min-height: 40px;
       height: 40px;

@@ -1,6 +1,13 @@
 <div id="wall" style="height: 100%">
-    <button class="button" on-tap="closeWall()">
-        <i class="icon ion-ios-arrow-left"></i><i class="icon ion-ios-arrow-left"></i>
-    </button>
-    <entity-list style="" close="closeWall()" click="clickWallItem(id)" filter="toggleFilter(cat,key)"></entity-list>
+    <ion-slide-box style="height: 100%">
+        <ion-slide style="height: 100%">
+            <entity-list style="" close="closeWall()" click="clickWallItem(id)" filter="toggleFilter(cat,key)"></entity-list>
+        </ion-slide>
+        <ion-slide style="height: 100%">
+            <category-filters style="position:absolute;height:100%;width:100%;" array="filtred" toggle="toggleFilter(cat,key)" filters="filters" change-fav-cat="changeFavCat(id)"></category-filters>
+        </ion-slide>
+        <ion-slide style="height: 100%">
+            <!--todo modal-->
+        </ion-slide>
+    </ion-slide-box>
 </div>
