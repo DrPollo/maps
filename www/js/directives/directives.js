@@ -26,7 +26,8 @@ angular.module('firstlife.directives', [])
                         return
                     }
                     var token = AuthService.token();
-                    var url = token ? attrs.url.concat('&access_token=',token.access_token) : attrs.url;
+                    var url = attrs.url.concat('&client_id=',myConfig.authentication.client_id);
+                    url = token ? url.concat('&access_token=',token.access_token) : url;
                     $http.get(url).then(
                         function(response){
                             $log.debug('navbar, response',response);
