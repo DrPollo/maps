@@ -6,7 +6,11 @@ angular.module('firstlife.controllers')
         var stateKey = myConfig.authentication.state_name;
         $scope.currentLang = $translate.use();
 
-        
+
+        $scope.itCode = 'it';
+        $scope.enCode = 'en';
+        $scope.selected = 'button-positive';
+        $scope.noSelected = 'button-stable';
         $scope.error = null;
 
         // check cambio di stato

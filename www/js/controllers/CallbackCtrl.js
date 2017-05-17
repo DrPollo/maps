@@ -6,6 +6,12 @@ angular.module('firstlife.controllers')
         $scope.currentLang = $translate.use();
 
 
+        $scope.itCode = 'it';
+        $scope.enCode = 'en';
+        $scope.selected = 'button-positive';
+        $scope.noSelected = 'button-stable';
+
+
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
 

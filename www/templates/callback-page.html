@@ -3,15 +3,15 @@
         <div class="left">
         </div>
         <div class="title">
-            <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}' title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
+            <img ng-if="defaults.design.landingpage.logo.url" src="{{defaults.design.landingpage.logo.url}}" title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
 
-            <ion-title id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">
+            <ion-title id="text-logo" ng-if="defaults.design.logo.url" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">
                 {{defaults.design.landingpage.logo.title}}
             </ion-title>
         </div>
         <div class="right">
-            <div class="button button-outline" ng-class="(currentLang == 'it') ? 'button-positive' : 'button-stable'" ng-click="langSelector('it')">It</div>
-            <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'" ng-click="langSelector('en')">En</div>
+            <div class="button button-outline" ng-class="(currentLang === itCode) ? selected: noSelected" ng-click="langSelector(itCode)">It</div>
+            <div class="button button-outline" ng-class="(currentLang === enCode) ? selected: noSelected" ng-click="langSelector(enCode)">En</div>
         </div>
     </div>
     <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
@@ -19,7 +19,7 @@
             <div class="col col-center box">
                 <div class="row responsive-sm central-content ">
                     <div class="col col-center">
-                        <h3>{{'CALLBACK_TITLE'|translate}}</h3>
+                        <h3>{{"CALLBACK_TITLE"|translate}}</h3>
                         <h4 class="positive-message" ng-if="message">{{message | translate}}</h4>
                         <h4 class="error-message" ng-if="error">{{error | translate}}</h4>
                     </div>

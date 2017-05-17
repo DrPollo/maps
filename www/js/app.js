@@ -260,18 +260,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('callback', {
         url: "/callback?code&state&profile&error",
         controller: 'CallbackCtrl',
-        // templateUrl: function() {
-        //     var page = "templates/callback-page.html";
-        //     var useHTTPS = window.location.href.indexOf('https') > -1;
-        //     console.log('page',window.location.protocol.concat( "//" ,window.location.host,'/')+ page, 'https?',useHTTPS);
-        //     // if (useHTTPS) {
-        //         return 'https:'.concat( "//" ,window.location.host,'/')+ page;
-        //         // return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
-        //     // } else {
-        //     //     return page;
-        //     // }
-        // },
-        // templateUrl: "templates/callback-page.html",
+        template: '<ion-view id="landingpage"> <div class="bar bar-header" style="position:relative;"> <div class="left"> </div><div class="title"> <img ng-if="defaults.design.landingpage.logo.url" src="{{defaults.design.landingpage.logo.url}}" title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/> <ion-title id="text-logo" ng-if="!defaults.design.logo.url" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">{{defaults.design.landingpage.logo.title}}</ion-title> </div><div class="right"> <div class="button button-outline" ng-class="(currentLang===itCode) ? selected: noSelected" ng-click="langSelector(itCode)">It</div><div class="button button-outline" ng-class="(currentLang===enCode) ? selected: noSelected" ng-click="langSelector(enCode)">En</div></div></div><ion-content scroll="true" style="{{defaults.design.landingpage.css}}"> <div class="row main-content"> <div class="col col-center box"> <div class="row responsive-sm central-content "> <div class="col col-center"> <h3>{{"CALLBACK_TITLE"|translate}}</h3> <h4 class="positive-message" ng-if="message">{{message | translate}}</h4> <h4 class="error-message" ng-if="error">{{error | translate}}</h4> </div></div></div></div><div class="row footer-content"> <div class="col col-bottom"> <div id="partners" class="row"> <div class="col col-bottom" ng-repeat="logo in defaults.design.logo_partners"> <img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/> <label>{{logo.label}}</label> </div></div><div class="row"> <div id="credits" class="col col-bottom"> <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span> </div></div></div></div></ion-content></ion-view>',
         reloadOnSearch: false,
         data: {
             authenticate: false
@@ -279,16 +268,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     }).state('logout', {
         url: "/logout",
         controller: 'LogoutCtrl',
-        // templateUrl: function() {
-        //     var page = "templates/logout-page.html";
-        //     var useHTTPS = window.location.href.indexOf('https') > -1;
-        //     if (useHTTPS) {
-        //         return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
-        //     } else {
-        //         return page;
-        //     }
-        // },
-        // templateUrl: "templates/logout-page.html",
+        templateUrl: '<ion-view id="landingpage"> <div class="bar bar-header" style="position:relative;"> <div class="left"> </div><div class="title"> <img ng-if="(defaults.design.landingpage.logo.url)" src="{{defaults.design.landingpage.logo.url}}" title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/> <ion-title id="text-logo" ng-if="!defaults.design.logo.url" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">{{defaults.design.landingpage.logo.title}}</ion-title> </div><div class="right"> <div class="button button-outline" ng-class="(currentLang===itCode) ? selected : noSelected" ng-click="langSelector(itCode)">It</div><div class="button button-outline" ng-class="(currentLang===enCode) ? selected : noSelected" ng-click="langSelector(enCode)">En</div></div></div><ion-content scroll="true" style="{{defaults.design.landingpage.css}}"> <div class="row main-content"> <div class="col col-center box"> <div class="row responsive-sm central-content "> <div class="col col-center"> <h3>{{"LOGOUT_MESSAGE"|translate}}</h3> <h4 class="positive-message" ng-if="message">{{message | translate}}</h4> <h4 class="error-message" ng-if="error">{{error | translate}}</h4> </div></div></div></div><div class="row footer-content"> <div class="col col-bottom"> <div id="partners" class="row"> <div class="col col-bottom" ng-repeat="logo in defaults.design.logo_partners"> <img width="{{logo.width}}" height="{{logo.height}}" title="{{logo.title}}" alt="{{logo.alt}}" ng-src="{{logo.url}}"/> <label>{{logo.label}}</label> </div></div><div class="row"> <div id="credits" class="col col-bottom"> <span ng-repeat="credit in defaults.design.landingpage.credits | filter:{lang:currentLang}">{{credit.text}}</span> </div></div></div></div></ion-content></ion-view>',
         reloadOnSearch: false,
         data: {
             authenticate: false
