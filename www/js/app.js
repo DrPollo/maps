@@ -708,9 +708,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         FROM_LABEL:"dal ",
         TO_LABEL:" al ",
         OK:"Ok",
-        GEOLOCATION_ERROR:"Spiacenti, non risciamo a trovare la tua posizione"
+        GEOLOCATION_ERROR:"Spiacenti, non risciamo a trovare la tua posizione",
+        SHARE_THING:"Condividi"
     };
     var enLabels = {
+        SHARE_THING:"Share",
         GEOLOCATION_ERROR:"Sorry, cannot find your location",
         OK:"Ok",
         FROM_LABEL:"from ",

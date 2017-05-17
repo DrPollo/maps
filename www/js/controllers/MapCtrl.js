@@ -478,7 +478,6 @@ angular.module('firstlife.controllers')
                 $log.error(err);
                 $ionicLoading.hide();
                 showAlert({title:'ERROR',text:"GEOLOCATION_ERROR"});
-                //todo avvisa utente
             });
         };
 

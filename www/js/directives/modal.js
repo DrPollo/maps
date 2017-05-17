@@ -479,7 +479,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             }
         }]
     }
-}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'AuthService', function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,AuthService,groupsFactory,MemoryFactory,notificationFactory, AuthService) {
+}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','$window','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'clipboard','myConfig',function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,$window,AuthService,groupsFactory,MemoryFactory,notificationFactory, clipboard,myConfig) {
     return {
         restrict: 'EG',
         scope: {
@@ -488,7 +488,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
             close:'&close',
             label:'< label'
         },
-        templateUrl: '/templates/map-ui-template/actionsModal.html',
+        templateUrl: '/templates/modals/actionsModal.html',
         link: function(scope, element, attr){
 
             scope.$on('$destroy',function (event) {
@@ -554,7 +554,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                             scope.member = false;
                             scope.owner = false;
                         }
-                        if(scope.markerOwner == scope.user.id){
+                        if(scope.markerOwner === scope.user.id){
                             // se ha impostato il ruolo proprietario
                             scope.owner = true;
                             scope.member = true;
@@ -579,7 +579,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         // $log.debug('check subscribers',response);
                         if(scope.user)
                             var index = response.map(function(e){return e.id}).indexOf(scope.user.id);
-                        scope.subscriber = index < 0 ? false : true;
+                        scope.subscriber = (index < 0);
                         deferred.resolve();
                     },
                     function(response){
@@ -745,6 +745,37 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 }
 
             });
+
+
+            scope.makeSharable = function(){
+                // creo link per lo share
+                var url = $window.location.href+'&embed=viewer';
+                // $log.debug('embed url ',url);
+                var buttons = [{text:$filter('translate')('OK')}];
+                if(clipboard.supported){
+                    var copy = {
+                        text:$filter('translate')('COPY'),
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            clipboard.copyText(url);
+                            e.preventDefault();
+                            alertPopup.close();
+                        }
+                    };
+                    buttons.push(copy);
+                }
+                var alertPopup = $ionicPopup.alert({
+                    title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
+                    subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
+                    template: '<input type="text" value="'+url+'" readonly>',
+                    buttons: buttons
+                });
+
+                alertPopup.then(function(res) {
+                    // $log.debug('embed url ',url);
+                });
+            };
+
 
             // calcolo i permessi per le azioni
             function initActions(){
