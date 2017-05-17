@@ -254,6 +254,13 @@ angular.module('firstlife.directives')
                 scope.locations = [];
                 scope.query = '';
                 scope.card = false;
+                scope.editMode = false;
+                scope.$on('enterEditMode',function () {
+                    scope.editMode = true;
+                });
+                scope.$on('exitEditMode',function () {
+                    scope.editMode = false;
+                });
 
                 // reset della barra
                 function resetBar(){
