@@ -474,7 +474,7 @@ angular.module('firstlife.timeline',[])
             function setContextButtons(now){
                 var keys = $scope.units.map(function(e){return e.key});
                 $scope.units[keys.indexOf('hour')].label = (now.format('dddd')).concat(" ").concat(now.format('D'));
-                $scope.units[keys.indexOf('day')].label = ($filter('translate')("FROM_LABEL")).concat(now.isoWeekday(1).format('D')).concat($filter('translate')("TO_LABEL")).concat(now.isoWeekday(7).format('D'));
+                $scope.units[keys.indexOf('day')].label = (now.isoWeekday(1).format('D')).concat(" - ",now.isoWeekday(7).format('D'));
                 $scope.units[keys.indexOf('date')].label = localeData._months[now.month()];
                 $scope.units[keys.indexOf('year')].label = now.year();
             }
