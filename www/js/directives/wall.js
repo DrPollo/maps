@@ -43,9 +43,11 @@ angular.module('firstlife.directives')
                 };
 
                 scope.clickWallItem = function(id){
-                    scope.closeWall();
+                    // scope.closeWall();
+                    // scope.markerId = id;
+                    // $log.debug('wallClick',id);
                     scope.$emit('wallClick',{id:id});
-                }
+                };
             }
         }
     }])
@@ -129,8 +131,6 @@ angular.module('firstlife.directives')
                     // cambio paramentro search
                     $location.search('entity',entityId);
                     scope.click({id: entityId});
-                    //chiudo la modal
-                    scope.close();
                 };
 
                 scope.clearQuery = function () {

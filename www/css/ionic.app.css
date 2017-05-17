@@ -15982,3 +15982,202 @@ div.search-tag-card {
     padding: 2px 6px;
     border-bottom: 1px solid #d1d3d6;
     margin-bottom: 10px; }
+
+#thingcard {
+  padding: 0px;
+  margin: 0px; }
+  #thingcard .modal-header, #thingcard .bar-footer {
+    box-shadow: 0px 0px 6px #ddd; }
+  #thingcard .modal-header {
+    padding: 24px 16px 16px;
+    position: relative;
+    background-color: #f5f5f5;
+    color: white; }
+    #thingcard .modal-header form input {
+      width: 100%;
+      background-color: transparent;
+      padding: 0px 8px; }
+    #thingcard .modal-header form .icon:before {
+      color: #333; }
+    #thingcard .modal-header h1 {
+      color: black;
+      margin: 0px;
+      padding: 0px 16px 0px 0px;
+      left: 16px !important;
+      font-size: 2em;
+      text-align: left;
+      letter-spacing: 1px;
+      font-weight: 400; }
+    #thingcard .modal-header h1:first-letter {
+      text-transform: uppercase; }
+    #thingcard .modal-header .buttons {
+      color: black;
+      top: 0px;
+      right: 0px;
+      margin: 0px; }
+      #thingcard .modal-header .buttons .button {
+        color: black;
+        width: 40px;
+        height: 45px; }
+  #thingcard .modal-header.inappropriate::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-top: 30px solid #ef473a;
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid transparent; }
+  #thingcard .modal-subheader {
+    color: #555;
+    padding: 8px 16px;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5); }
+    #thingcard .modal-subheader .modal-subheader-item {
+      margin-right: 10px;
+      font-size: 0.8em; }
+      #thingcard .modal-subheader .modal-subheader-item i {
+        font-size: 20px;
+        margin-right: 6px;
+        vertical-align: middle; }
+    #thingcard .modal-subheader modal-subheader-item:last-child {
+      margin-right: 0px; }
+  #thingcard .modal-subheader.credits {
+    font-size: 1.2em; }
+    #thingcard .modal-subheader.credits .username {
+      font-size: inherit; }
+    #thingcard .modal-subheader.credits .time {
+      font-style: italic; }
+  #thingcard .content {
+    padding: 16px;
+    margin: 0px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1;
+    color: #333; }
+    #thingcard .content form {
+      padding: 20px 0; }
+      #thingcard .content form textarea {
+        width: 100%; }
+  #thingcard .description-field:first-letter {
+    text-transform: uppercase; }
+  #thingcard .description-field {
+    white-space: pre-line;
+    margin-top: -24px; }
+  #thingcard .modal-url {
+    color: #FC4A00; }
+    #thingcard .modal-url a {
+      color: #FC4A00;
+      text-decoration: none; }
+      #thingcard .modal-url a span {
+        margin-left: 10px;
+        color: black; }
+    #thingcard .modal-url a:hover span {
+      color: #FC4A00;
+      text-decoration: underline; }
+  #thingcard .tag-list {
+    padding: 16px 16px 8px; }
+    #thingcard .tag-list .tag {
+      margin: 0 8px 8px 0;
+      padding: 4px 8px;
+      border-radius: 20px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      display: inline-flex; }
+      #thingcard .tag-list .tag i {
+        margin-right: 5px; }
+    #thingcard .tag-list .interactive:hover {
+      text-decoration: underline; }
+  #thingcard .foto-box .foto-mosaico {
+    margin: 0px;
+    padding: 0px;
+    border-left: 5px solid white; }
+    #thingcard .foto-box .foto-mosaico div {
+      overflow: hidden;
+      position: relative;
+      padding: 0px;
+      margin: 0px;
+      border-right: white solid 5px;
+      border-bottom: white solid 5px; }
+      #thingcard .foto-box .foto-mosaico div img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        padding: 0px;
+        border: 0px;
+        display: inline-flex; }
+      #thingcard .foto-box .foto-mosaico div i.icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: #FC4A00;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 30px; }
+      #thingcard .foto-box .foto-mosaico div .didascalia {
+        line-height: 1em; }
+    #thingcard .foto-box .foto-mosaico div:before {
+      content: "";
+      display: block;
+      padding-top: 100%;
+      /* initial ratio of 1:1*/ }
+  #thingcard .item-divider {
+    letter-spacing: 1px;
+    font-weight: 400; }
+  #thingcard .has-error {
+    border-bottom: #ef473a 2px solid !important; }
+  #thingcard .no-error {
+    border-bottom: #33cd5f 2px solid !important; }
+  #thingcard .bar-footer .button {
+    color: #333;
+    font-weight: 400; }
+  #thingcard .bar-footer .button:before {
+    color: #444; }
+  #thingcard .bar-footer .left-buttons .button {
+    margin-left: 6px; }
+  #thingcard .bar-footer .right-buttons .button {
+    margin-right: 6px; }
+  #thingcard .username {
+    font-weight: 700; }
+  #thingcard .message {
+    font-size: .9em;
+    color: #666; }
+  #thingcard .button-bar-striped {
+    background: #f5f5f5;
+    box-shadow: 0 2px 2px #ddd; }
+    #thingcard .button-bar-striped .button {
+      padding-bottom: 4px; }
+    #thingcard .button-bar-striped .button.selected {
+      border-bottom: 4px solid; }
+
+.no-content-box {
+  height: 146px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 1.4em;
+  color: #999; }
+
+.error-box {
+  height: 146px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 1.4em;
+  color: #999;
+  position: relative; }
+  .error-box img {
+    max-height: 70px;
+    max-width: 200px;
+    margin-bottom: 10px; }
+  .error-box .button {
+    position: absolute;
+    top: 0;
+    right: 0; }

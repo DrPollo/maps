@@ -1,4 +1,4 @@
-<ion-modal-view>
+<div id="thingcard">
     <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
         <h1 class="title title-modal" title="{{infoPlace.marker.name}}">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
@@ -6,9 +6,6 @@
         </div>
     </ion-header-bar>
     <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
-        <!--<div class="top-modal">-->
-            <!--<h1 class="title title-modal item item-text-wrap" title="{{infoPlace.marker.name}}">{{infoPlace.marker.name}}</h1>-->
-        <!--</div>-->
         <div class="top-modal">
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">
@@ -54,21 +51,23 @@
                 <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
                 <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i class="icon ion-android-people"></i></span></span>
             </div>
+            <div ng-if="infoPlace.marker.link_url" class="modal-subheader">
+                <span class="modal-subheader-item">
+                    <a href="{{infoPlace.marker.link_url}}" target="_blank" class="modal-url">
+                        <i class="icon ion-link"></i>
+                        <span>{{infoPlace.marker.link_url}}</span>
+                    </a>
+                </span>
+            </div>
             <div ng-if="infoPlace.marker.description" class="content modal-content text-field">
                 {{infoPlace.marker.description}}
             </div>
-            <div id="modalPlaceLink" ng-if="infoPlace.marker.link_url" class="content modal-url">
-                <a href="{{infoPlace.marker.link_url}}" target="_blank">
-                    <i class="ion-link"/>
-                    <span>{{infoPlace.marker.link_url}}</span>
-                </a>
-            </div>
-            <div ng-if="config.design.can_permalink && infoPlace.marker.self" id="modalPlacePermalink" class="content modal-url">
-                <a href="{{infoPlace.marker.self}}" target="_blank">
-                    <i class="ion-link"/>
-                    <span>{{'PERMALINK'|translate}}</span>
-                </a>
-            </div>
+            <!--<div ng-if="config.design.can_permalink && infoPlace.marker.self" id="modalPlacePermalink" class="content modal-url">-->
+            <!--<a href="{{infoPlace.marker.self}}" target="_blank">-->
+            <!--<i class="icon ion-link"/>-->
+            <!--<span>{{'PERMALINK'|translate}}</span>-->
+            <!--</a>-->
+            <!--</div>-->
         </div>
 
         <modal-lists ng-if="infoPlace.marker" marker="infoPlace.marker" show="showMCardPlace(id)" add="addChildEntity()" close="closeModal()"></modal-lists>
@@ -83,8 +82,8 @@
             <entity-actions ng-if="infoPlace.marker.id" actions="currentType.actions" marker="infoPlace.marker" close="closeModal()" label="currentType.name" ></entity-actions>
         </div>
         <h1 class="title"></h1>
-        <div class="buttons left-buttons">
-            <button class="button button-stable button-clear icon ion-close-round" on-tap="closeModal()" ></button>
-        </div>
+        <!--<div class="buttons left-buttons">-->
+        <!--<button class="button button-stable button-clear icon ion-close-round" on-tap="closeModal()" ></button>-->
+        <!--</div>-->
     </ion-footer-bar>
-</ion-modal-view>
+</div>

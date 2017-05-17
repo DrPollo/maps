@@ -23,7 +23,7 @@
          class="container"
          ng-class="{'focus' : focus === marker.id}"
          ng-show="!loading">
-        <wall-card ng-if="marker.id" marker="marker" query="query" close="close()" show="show(id)"></wall-card>
+        <wall-card ng-if="marker.id" marker="marker" query="query" show="show(id)"></wall-card>
     </div>
     <nothing-to-read ng-if="!loading && markers.length < 1"></nothing-to-read>
 </ion-content>

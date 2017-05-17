@@ -1,7 +1,10 @@
-angular.module('firstlife.directives').directive('thingModal',function () {
+angular.module('firstlife.directives').directive('thingCard',function () {
     return{
         restrict:'EG',
-        scope:{},
+        scope:{
+            id:"<"
+        },
+        templateUrl:"/templates/thing/card.html",
         controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
 
             $scope.config = myConfig;
@@ -15,8 +18,12 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
             // se all'apertura trovo il parametro entity nella search apro la modal
             var initEntity = $location.search().entity;
-            if(initEntity)
-                openModal(initEntity);
+            if(initEntity) {
+                // init(initEntity);
+                $scope.$emit('wallClick',{id:initEntity})
+            }
+
+
 
             // visualizzazione web o mobile?
             $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
@@ -25,10 +32,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 if(e.defaultPrevented)
                     return;
                 e.preventDefault();
-
-                try{
-                    $scope.closeModal();
-                }catch(e){}
 
                 delete $scope;
             });
@@ -39,12 +42,13 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                     return;
                 event.preventDefault();
 
-
                 if(args.id){
                     $log.debug('markerClick',args);
-                    $scope.showMCardPlace(args.id);
+                    init(args.id);
                 }
             });
+
+
 
             $scope.$on('subscribersReset',function (event) {
                 if(event.defaultPrevented)
@@ -62,10 +66,6 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 $log.debug('membersReset');
                 $timeout(initMembers,1);
             });
-
-
-            //modal info sul place
-            $scope.showMCardPlace = openModal;
 
 
             //action sheet init-info sul place
@@ -183,7 +183,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
                 //fai uscire la wizardPlace con placeholder dati vecchi
                 $scope.closeModal();
-            }
+            };
 
             /*
              * Add child marker/place
@@ -199,7 +199,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
 
                 //fai uscire la wizardPlace con placeholder dati vecchi
                 $scope.closeModal();
-            }
+            };
 
             // click su tag o categoria per filtrare
             $scope.filter = function(text,type){
@@ -220,7 +220,7 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 if(text) {
                     $scope.closeModal();
                 }
-            }
+            };
 
 
 
@@ -228,8 +228,8 @@ angular.module('firstlife.directives').directive('thingModal',function () {
              * funzioni private
              */
 
-            function openModal(markerId){
-                // $log.debug('opening modal for',markerId);
+            function init(markerId){
+                $log.debug('opening thing card',markerId);
                 $location.search('entity',markerId);
                 // inizio caricamento modal
                 $scope.loaded = false;
@@ -238,55 +238,13 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                 $scope.infoPlace.marker = angular.extend({});
 
 
-                // $log.debug('check hide!',hide,markerId);
-                if(!hide){
-                    //$log.debug('init hide');
-                    hide = $scope.$on('modal.hidden', function(e) {
-                        //segnalo la chiusura della modal
-                        if($scope.infoPlace.modal && !e.modalHiddenPrevented){
-                            e.modalHiddenPrevented = true;
-
-                            //deregistro il listner per la hide
-                            //$log.debug('check hide listner!',hide);
-                            hide();
-                            hide = null;
-                            chiudoModal();
-                        }
-                    });
-                }
-                // to do incapsulare il codice in una closeModal con then
-                if($scope.infoPlace.modal){
-                    // la modal esiste
-                    $scope.infoPlace.modal.show();
-                }else{
-                    // la modal non esiste, la creo
-                    $scope.infoPlace = {};
-                    $scope.infoPlace.modify = false;
-                    $scope.infoPlace.dataForm = {};
-
-                    $ionicModal.fromTemplateUrl('templates/modals/thing.html', {
-                        scope: $scope,
-                        animation: 'fade-in',
-                        backdropClickToClose : true,
-                        hardwareBackButtonClose : true
-                    }).then(function(modal) {
-                        //$log.debug("infoPlace, apro modal modal: ", modal);
-                        $scope.infoPlace.modal = modal;
-                        $scope.openModalPlace();
-                    });
-                }
+                $scope.infoPlace = {};
+                $scope.infoPlace.modify = false;
+                $scope.infoPlace.dataForm = {};
                 // carico il contenuto della modal
                 loadModal(markerId);
-
-                $scope.openModalPlace = function() {
-                    $scope.infoPlace.modal.show();
-                    // creo il menu per la modal
-                    $scope.showPopoverMenu();
-                };
-
-                $scope.closeModal = function() {
-                    chiudoModal();
-                };
+                // creo il menu per la modal
+                // $scope.showPopoverMenu();
             };
 
             function loadModal(markerId){
@@ -313,27 +271,23 @@ angular.module('firstlife.directives').directive('thingModal',function () {
                         $scope.error = true;
                         showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
                         $scope.$emit("lostMarker",{id:markerId});
-                        $scope.closeModal();
+                        $scope.exit();
                     }
                 );
             }
 
-            function chiudoModal(){
+            $scope.exit = function (){
                 $location.search('entity',null);
                 // distruggo il menu popover
                 if($scope.popover){
                     $scope.popover.hide();
                     //$scope.popover.remove();
                 }
-                if($scope.infoPlace.modal)
-                    $scope.infoPlace.modal.remove();
 
                 $scope.$emit("closePlaceModal");
                 // $log.debug('check closePlaceModal');
                 delete $scope.infoPlace.modal;
-                //deregistro il listner per la hide
-                try{hide();}catch(e){}
-            }
+            };
 
             function initSubscribers(){
                 notificationFactory.subscribers($scope.infoPlace.marker.id).then(
@@ -869,10 +823,12 @@ angular.module('firstlife.directives').directive('thingModal',function () {
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
-                if(!e.preventEventModalLists){
-                    e.preventEventModalLists = true;
-                    delete scope;
-                }
+                if(e.defaultPrevented)
+                    return;
+
+                $location.hash();
+                e.preventDefault();
+                delete scope;
             });
 
             // numero di tab

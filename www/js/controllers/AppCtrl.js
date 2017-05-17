@@ -84,7 +84,12 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
+            $log.debug('wallClick',args);
             $scope.$broadcast('markerClick',args);
+            // apro la card
+            $scope.openSideLeft();
+            $ionicSlideBoxDelegate.slide(2,0);
+            $scope.wallIndex = 2;
         });
 
         $scope.$on('toggleFilter',function(event,args){
@@ -242,10 +247,9 @@ angular.module('firstlife.controllers')
             if(isOpenLeft()){
                 $scope.toggleSideLeft();
                 $scope.wallOpen = false;
+                $location.hash();
+                $location.search('entity',null);
             }
-            // $timeout(function () {
-            //     $scope.wallOpen = false;
-            // },400);
         };
         $scope.$on('closeSideLeft',function (e) {
             if(e.defaultPrevented)
@@ -260,8 +264,13 @@ angular.module('firstlife.controllers')
             $ionicSlideBoxDelegate.enableSlide(false);
 
             $log.debug('toggleSideLeft');
+            // $log.debug('chiudo?',isOpenLeft());
             if(!isOpenLeft()){
                 wallInit();
+            }else{
+                $log.debug('chiudo');
+                $location.hash();
+                $location.search('entity',null);
             }
 
             $ionicSideMenuDelegate.toggleLeft();
@@ -322,6 +331,8 @@ angular.module('firstlife.controllers')
         $scope.backToStart = function () {
           $ionicSlideBoxDelegate.slide(0);
           $scope.wallIndex = 0;
+          $location.search('entity',null);
+          $location.hash();
         };
         $scope.$on('openTreeMap',function () {
             $ionicSlideBoxDelegate.slide(1);
@@ -336,9 +347,9 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('wallInit');
         }
         function isOpenLeft(){
-            $log.debug('is open',$scope.wallOpen || $ionicSideMenuDelegate.isOpenLeft());
+            $log.debug('is open',$scope.wallOpen && $ionicSideMenuDelegate.isOpenLeft());
             // patch per gestire il delay delle animazioni di ionic
-            return ($scope.wallOpen || $ionicSideMenuDelegate.isOpenLeft());
+            return ($scope.wallOpen && $ionicSideMenuDelegate.isOpenLeft());
         }
         function isOpenRight(){
             return $ionicSideMenuDelegate.isOpenRight();

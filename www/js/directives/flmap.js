@@ -208,7 +208,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         pieRef.on('click',function (e) {
                             // $log.debug('click on marker',e.layer.options.id);
                             $location.search('entity',e.layer.options.id);
-                            $scope.$broadcast('markerClick',{id: e.layer.options.id});
+                            $scope.$emit('wallClick',{id: e.layer.options.id});
                         })
                         // $log.debug('init layer ref',!$scope.tileLayer);
                         if(!$scope.tileLayer) {
@@ -278,7 +278,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 if(args.id){
                     locateEntity(args.id);
                     $location.search('entity',args.id);
-                    $scope.$broadcast('markerClick',{id: args.id});
+                    $scope.$emit('wallClick',{id: args.id});
                 }
             });
 
