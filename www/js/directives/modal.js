@@ -16,12 +16,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             var searchParams = $location.search();
             $scope.embed = searchParams.embed || false;
 
-            // se all'apertura trovo il parametro entity nella search apro la modal
-            var initEntity = $location.search().entity;
-            if(initEntity) {
-                // init(initEntity);
-                $scope.$emit('wallClick',{id:initEntity})
-            }
+
 
 
 
@@ -38,12 +33,13 @@ angular.module('firstlife.directives').directive('thingCard',function () {
 
 
             $scope.$on('markerClick', function(event,args){
+                // $log.debug('markerClick?',args);
                 if (event.defaultPrevented)
                     return;
                 event.preventDefault();
-
+                // $log.debug('markerClick?',args);
                 if(args.id){
-                    $log.debug('markerClick',args);
+                    // $log.debug('markerClick',args);
                     init(args.id);
                 }
             });
@@ -67,6 +63,14 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 $timeout(initMembers,1);
             });
 
+
+            // se all'apertura trovo il parametro entity nella search apro la modal
+            var initEntity = $location.search().entity;
+            if(initEntity) {
+                // $log.debug('init entity?',initEntity);
+                // init(initEntity);
+                $scope.$emit('wallClick',{id:initEntity})
+            }
 
             //action sheet init-info sul place
             $scope.showASDeletedPlace = function(entityId){
@@ -105,10 +109,10 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 };
 
                 $scope.removeButtonPopover = function (){
-                    var markerId = $scope.infoPlace.marker;
+                    var marker = $scope.infoPlace.marker;
                     //$log.debug("rimuovo il place ", markerId);
                     $scope.closePopover();
-                    $scope.remove(markerId);
+                    $scope.remove(marker);
                 };
                 $scope.updateButtonPopover = function (){
                     var marker = $scope.infoPlace.marker;
@@ -244,7 +248,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 // carico il contenuto della modal
                 loadModal(markerId);
                 // creo il menu per la modal
-                // $scope.showPopoverMenu();
+                $scope.showPopoverMenu();
             };
 
             function loadModal(markerId){

@@ -49,6 +49,39 @@ angular.module('firstlife.controllers')
         });
 
 
+        var initWatchWall = null;
+        var currentEntity = null;
+        $scope.$watch(function () {
+            return $ionicSideMenuDelegate.isOpenLeft();
+        },function (isOpen, prev) {
+            if(prev && isOpen === prev)
+                return;
+
+            var entity = $location.search().entity;
+
+            // $log.debug('is left open?',isOpen);
+            $scope.wallOpen = isOpen;
+            if(!isOpen && initWatchWall){
+                if($ionicSlideBoxDelegate.currentIndex() === 2 && entity){
+                    currentEntity = entity;
+                }
+                $location.search('entity',null);
+                $location.hash();
+                // $ionicSlideBoxDelegate.slide(0);
+                // $scope.wallIndex = 0;
+            }else if(entity){
+                currentEntity = entity;
+                $ionicSlideBoxDelegate.slide(2);
+                // $scope.wallIndex = 0;
+            }else if($ionicSlideBoxDelegate.currentIndex() === 2 && currentEntity){
+                    $ionicSlideBoxDelegate.slide(2);
+                    $location.search('entity',currentEntity);
+
+            }
+            $scope.wallIndex = $ionicSlideBoxDelegate.currentIndex();
+            initWatchWall = true;
+        });
+
         $scope.$on('checkNotification',function (event,args) {
             if(event.defaultPrevented)
                 return;
@@ -84,7 +117,7 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-            $log.debug('wallClick',args);
+            // $log.debug('wallClick',args);
             $scope.$broadcast('markerClick',args);
             // apro la card
             $scope.openSideLeft();
@@ -259,8 +292,6 @@ angular.module('firstlife.controllers')
             $scope.closeSideLeft();
         });
         $scope.toggleSideLeft = function () {
-            // default posizione wall
-            $ionicSlideBoxDelegate.slide(0,0);
             $ionicSlideBoxDelegate.enableSlide(false);
 
             $log.debug('toggleSideLeft');
@@ -327,12 +358,13 @@ angular.module('firstlife.controllers')
 
 
         /*gestione slidebox wall*/
-        $scope.wallIndex = 0;
+        // $scope.wallIndex = 0;
         $scope.backToStart = function () {
-          $ionicSlideBoxDelegate.slide(0);
-          $scope.wallIndex = 0;
-          $location.search('entity',null);
-          $location.hash();
+            $ionicSlideBoxDelegate.slide(0);
+            $scope.wallIndex = 0;
+            $location.search('entity',null);
+            $location.hash();
+            currentEntity = null;
         };
         $scope.$on('openTreeMap',function () {
             $ionicSlideBoxDelegate.slide(1);
