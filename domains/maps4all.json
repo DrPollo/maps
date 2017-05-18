@@ -1,0 +1,426 @@
+{"myConfig":
+{
+  "dev": false,
+  "project": 20,
+  "app_name" : "Maps4All",
+  "domain_name" : "maps4all",
+  "domain_id" : 20,
+  "read_domains":false,
+  "design":{
+    "logo" : {
+      "url": "img/loghi/firstlife-logo-solologo.svg",
+      "title": "Maps4All",
+      "alt":"Maps4All",
+      "label":{
+        "text": "Maps4All",
+        "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
+      }
+    },
+    "colors": ["#FC4A00",
+      "#f44336","#823256","#FFB310","#88BA5C","#3f7f91",
+      "#FF7027",
+      "#800000","#b30000", "#E60000", "#E63900", "#FF8000", "#FF7027", "#DD312A", "#f3a46a", "#FF6666", "#ef9a9a", "#c64028","#a31c1c",
+      "#c64028",
+      "#790f2d","#a30f2d","#ee4466","#dc143c","#f48aa0",
+      "#11a265", "#0a5c3a","#11a265","#5deeb2","#18c291",
+      "#00e676",
+      "#00c853","#00e676",
+      "#96ca68",
+      "#007a27","#92d395","#689f38","#388e3c","#3e5e21","#7bbd42","#49b64e","#56842e","#96ca68",
+      "#FFDB4D",
+      "#FFDB4D","#FFB310","#FF8C10",
+      "#2F5D6A",
+      "#263B59","#3f7f91","#2F5D6A",
+      "#ccc"],
+    "landingpage":{
+      "css":"",
+      "logo":{
+        "url":"img/loghi/firstlife-logo-orizzontale.svg",
+        "title":"FirstLife",
+        "style":""
+      },
+      "center":{
+        "image":"img/infografica-landingpage3.svg",
+        "alt": {
+          "it":"Logo FirstLife",
+          "en":"FirstLife logo"
+        },
+        "message":{
+          "it":"FirstLife - Maps4All",
+          "en":"FirstLife - Maps4All"
+        }
+      },
+      "credits":[
+        {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino - P.I. 02099550010 C.F. 80088230018","lang":"it"},
+        {"text":"Social Computing, Dept. of Computer Science, University of Turin - P.I. 02099550010 C.F. 80088230018","lang":"en"}
+      ],
+      "logo_partners" : []
+    }
+  },
+  "types" : {
+    "default": {"slug":"place","id":1,"icon":"ion-location",
+      "properties":{
+        "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE", "required":true, "default":"" },
+        "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"is_editable":false},
+        "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"is_editable":false},
+        "link_url":{ "key": "link_url", "label": "URL_LABEL", "placeholder": "URL_PLACEHOLDER", "default":""},
+        "tags":{ "key": "tags", "label":"TAGS_LABEL", "placeholder":"TAGS_PLACEHOLDER", "default":[] },
+        "categories":{ "key": "categories", "label":"CATEGORIES", "default":[]},
+        "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
+        "user":{ "key": "user", "label":"USER","placeholder":"USER" , "default":-1},
+        "area_id":{ "key": "area_id", "required":true, "default":null},
+        "tile_id":{ "key": "tile_id", "required":true, "default":null},
+        "id":{ "key": "id", "default":null},
+        "zoom_level":{ "key": "zoom_level", "default":null},
+        "level":{"key":"level", "default":0, "label":"LEVEL_LABEL","placeholder":"LEVEL_PLACEHOLDER"}
+      },
+      "actions":[
+        {"label":"SUBSCRIBE","key":"subscribe","icon":"ion-android-bookmark","icon2":"ion-android-add-circle","search":false, "check":"noSubscriber"},
+        {"label":"UNSUBSCRIBE","key":"unsubscribe","icon":"ion-android-bookmark","icon2":"ion-android-remove-circle","search":false, "check":"subscriber"}
+      ]
+    },
+    "list":[
+      {"name":"PLACE_NAME","id":5,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
+        "show_author":false, "shape":"triangle",
+        "properties":{
+          "parent_id":{ "key": "parent_id", "label": "PARENT_PLACE_LABEL", "placeholder":"PARENT_PLACE_PLACEHOLDER", "default":null},
+          "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true},
+          "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true}
+        },
+        "relations":{
+          "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_EVENTS":{"slug":"location","field":"location","relation":"located","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
+          "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"articles","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
+          "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
+          "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
+        }
+      },
+      {"name":"COMMENT_NAME","id":4,"icon":"ion-quote","slug":"news","url":"news","key":"FL_NEWS","index":3,
+        "show_author":true, "shape":"diamond",
+        "properties":{
+          "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
+          "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
+          "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
+          "valid_from":{ "key": "valid_from", "label": "STARTDATE_NEWS_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
+          "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
+        },
+        "relations":{
+          "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"located","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL"},
+          "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL"}
+        }
+      },
+      {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":4,
+        "show_author":false, "shape":"exagon",
+        "properties":{
+          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true},
+          "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
+          "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
+          "location":{ "key": "location", "label": "LOCATION_LABEL", "placeholder":"LOCATION_PLACEHOLDER", "default":null},
+          "duration":{ "key": "duration", "label": "DURATION_LABEL", "placeholder":"DURATION_PLACEHOLDER", "default":null},
+          "door_time":{ "key": "door_time", "label": "DOORTIME_LABEL", "placeholder":"DOORTIME_PLACEHOLDER", "default":null},
+          "parent_id":{ "key": "parent_id", "label": "PARENT_EVENT_LABEL", "placeholder":"PARENT_EVENT_PLACEHOLDER", "default":null},
+          "attendees":{ "key": "attendees", "label": "ATTENDEES_LABEL", "placeholder":"ATTENDEES_PLACEHOLDER", "default":[],"advanced":true},
+          "performer":{ "key": "performer", "label": "PERFORMER_LABEL", "placeholder":"PERFORMER_PLACEHOLDER", "default":-1,"advanced":true},
+          "organizer":{ "key": "organizer", "label": "ORGANIZER_LABEL", "placeholder":"ORGANIZER_PLACEHOLDER", "default":-1,"advanced":true}
+        },
+        "relations":{
+          "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
+          "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"articles","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
+          "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
+          "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
+        }
+      },
+      {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
+        "show_author":false, "shape":"octagon",
+        "properties":{
+          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
+          "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
+          "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},
+          "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
+          "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
+          "members":{"key":"members", "label": "GROUP_MEMBERS", "placeholder": "", "default":1,"icon":"ion-android-people"}
+
+        },
+        "relations":{
+          "FL_GROUPS":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_BY_GROUP_GROUP_CHILD_LABEL","exclude":true,"check":"membership"},
+          "FL_PLACES":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_PLACE_CHILD_LABEL","exclude":true,"check":"membership"},
+          "FL_EVENTS":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_EVENT_CHILD_LABEL","exclude":true,"check":"membership"},
+          "FL_ARTICLES":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_POST_CHILD_LABEL","exclude":true,"check":"membership"},
+          "FL_NEWS":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_COMMENT_CHILD_LABEL","exclude":true,"check":"membership"}
+        },
+        "actions":[
+          {"label":"JOIN_GROUP","key":"join","icon":"ion-android-person-add","search":false, "check":"noMembership"},
+          {"label":"LEAVE_GROUP","key":"leave","icon":"ion-android-exit","search":false, "check":"noOwnership"},
+          {"label":"VIEW_GROUP","key":"view","icon":"ion-map","icon2":"ion-android-arrow-dropright-circle","search":"groups", "check":false}
+        ]
+      }
+    ],
+    "categories": [
+      {
+        "category_space":44,
+        "name": "Qualità dei luoghi",
+        "slug": "Qualità dei luoghi",
+        "description":"",
+        "is_editable":true,
+        "is_mandatory":false,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":6,
+        "categories": [
+          {
+            "id": 1000,
+            "name": "Affollati",
+            "description":"",
+            "category_index": 1,
+            "icon_name": "ion-radio-waves"
+          },
+          {
+            "id": 1001,
+            "name": "Trafficati",
+            "description":"",
+            "category_index": 2,
+            "icon_name": "ion-android-car"
+          },
+          {
+            "id": 1002,
+            "name": "Isolati",
+            "description":"",
+            "category_index": 3,
+            "icon_name": "ion-qr-scanner"
+          },
+          {
+            "id": 1003,
+            "name": "Silenziosi",
+            "description":"",
+            "category_index": 4,
+            "icon_name": "ion-volume-mute"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space": 42,
+        "name": "Tipo di Luogo",
+        "slug": "Tipo di Luogo",
+        "description": "categorie per maps4all",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":19,
+        "categories": [
+          {
+            "id": 1020,
+            "name": "Parchi e natura",
+            "category_index": 1,
+            "description":"",
+            "icon_name": "ion-bonfire"
+          },
+          {
+            "id": 1021,
+            "name": "Sport e attività fisica",
+            "category_index": 2,
+            "description":"",
+            "icon_name": "ion-ios-football"
+          },
+          {
+            "id": 1022,
+            "name": "Cultura e musei",
+            "category_index": 3,
+            "description":"",
+            "icon_name": "ion-easel"
+          },
+          {
+            "id": 1023,
+            "name": "Mercati e negozi",
+            "category_index": 4,
+            "description":"",
+            "icon_name": "ion-ios-cart"
+          },
+          {
+            "id": 1024,
+            "name": "Aggregazione e community",
+            "category_index": 5,
+            "description":"",
+            "icon_name": "ion-ios-people"
+          },
+          {
+            "id": 1025,
+            "name": "Servizi per la persona",
+            "category_index": 6,
+            "description":"",
+            "icon_name": "ion-person-add"
+          },
+          {
+            "id": 1026,
+            "name": "Ristorazione",
+            "category_index": 7,
+            "description":"",
+            "icon_name": "ion-pizza"
+          },
+          {
+            "id": 1027,
+            "name": "Altro",
+            "category_index": 8,
+            "description":"",
+            "icon_name": "ion-wand"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space": 41,
+        "name": "Qualità degli eventi",
+        "slug": "Qualità degli eventi",
+        "description":"",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":30,
+        "categories": [
+          {
+            "id": 1010,
+            "name": "Affollati",
+            "category_index": 1,
+            "description":"",
+            "icon_name": "ion-radio-waves"
+          },
+          {
+            "id": 1011,
+            "name": "Al chiuso",
+            "category_index": 2,
+            "description":"",
+            "icon_name": "ion-ios-home"
+          },
+          {
+            "id": 1012,
+            "name": "All'aperto",
+            "category_index": 3,
+            "description":"",
+            "icon_name": "ion-ios-partlysunny"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space": 43,
+        "name": "Tipo di evento",
+        "slug": "Tipo di evento",
+        "description": "Tipo di evento per maps4all",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":25,
+        "categories": [
+          {
+            "id": 1030,
+            "name": "Eventi culturali",
+            "category_index": 1,
+            "description":"",
+            "icon_name": "ion-easel"
+          },
+          {
+            "id": 1031,
+            "name": "Musica",
+            "category_index": 2,
+            "description":"",
+            "icon_name": "ion-music-note"
+          },
+          {
+            "id": 1032,
+            "name": "Eventi sportivi",
+            "category_index": 3,
+            "description":"",
+            "icon_name": "ion-ios-football"
+          },
+          {
+            "id": 1033,
+            "name": "Attività di intrattenimento",
+            "category_index": 4,
+            "description":"",
+            "icon_name": "ion-film-marker"
+          },
+          {
+            "id": 1034,
+            "name": "incontri di approfondimento",
+            "category_index": 5,
+            "description":"",
+            "icon_name": "ion-chatbubbles"
+          },
+          {
+            "id": 1035,
+            "name": "Altro",
+            "category_index": 6,
+            "description":"",
+            "icon_name": "ion-wand"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space": 44,
+        "name": "Tipo di news",
+        "slug": "Tipo di news",
+        "description": "Tipo di news per maps4all",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":43,
+        "categories": [
+          {
+            "id": 1040,
+            "name": "Trasporti",
+            "description":"",
+            "category_index": 1,
+            "icon_name": "ion-android-train"
+          },
+          {
+            "id": 1041,
+            "name": "Uffici pubblici",
+            "description":"",
+            "category_index": 2,
+            "icon_name": "ion-briefcase"
+          },
+          {
+            "id": 1042,
+            "name": "Altro",
+            "description":"",
+            "category_index": 3,
+            "icon_name": "ion-wand"
+          }
+        ],
+        "entities":[
+          "FL_ARTICLES"
+        ]
+      }
+    ]
+  },
+  "map":{
+    "tile_view" : "https://api.mapbox.com/styles/v1/drp0ll0/cizl1thgs000u2ro17h1cv4y2/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_view_attribution" : "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
+    "tile_edit": "https://api.mapbox.com/styles/v1/drp0ll0/cizl1sb0l000t2ro16uptawtf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
+    "map_default_lat" : 45.070312,
+    "map_default_lng" : 7.686856,
+    "map_autocenter" : false,
+    "zoom_level" : 16,
+    "zoom_create" : 18
+  },
+  "custom_labels":false
+}
+}
