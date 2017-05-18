@@ -10,14 +10,14 @@ angular.module('firstlife.directives', [])
               });
            };
         })
-    .directive('navbar',['$http','$log','$compile', 'AuthService', function($http,$log,$compile, AuthService){
+    .directive('navbar',['$http','$log','$compile', 'myConfig','AuthService', function($http,$log,$compile,myConfig, AuthService){
         return{
             strict:'EG',
             replace: true,
             link: function(scope,ele,attrs,c){
                 $log.debug('navbar',scope,ele,attrs,c);
 
-                var errors = 0
+                var errors = 0;
 
                 getNavBar();
 
@@ -28,6 +28,7 @@ angular.module('firstlife.directives', [])
                     var token = AuthService.token();
                     var url = attrs.url.concat('&client_id=',myConfig.authentication.client_id);
                     url = token ? url.concat('&access_token=',token.access_token) : url;
+                    $log.debug('navbar request', url);
                     $http.get(url).then(
                         function(response){
                             $log.debug('navbar, response',response);
