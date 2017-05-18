@@ -61,9 +61,9 @@
                             {{checkList.description.label|translate}}
                         </div>
                         <div class="item item-text-wrap">
-                            <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{checkList.description.placeholder |translate}}" ng-minlength="150" ng-maxlength="8000" rows="10" ng-required="checkList.description.required"></textarea>
+                            <textarea name="description" ng-model="editor.wizard.dataForm.description" placeholder="{{checkList.description.placeholder |translate}}" ng-minlength="{{checkList.description.min_length}}" ng-maxlength="8000" rows="10" ng-required="checkList.description.required"></textarea>
                             <div class="form-errors" ng-messages="editor.form.wizardform.description.$error">
-                                <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 150 {{'CHARACTERS'|translate}}</div>
+                                <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} {{checkList.description.min_length}} {{'CHARACTERS'|translate}}</div>
                                 <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 8000 {{'CHARACTERS'|translate}}</div>
                                 <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
                             </div>

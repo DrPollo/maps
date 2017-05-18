@@ -185,7 +185,7 @@
     "types" : {
         "default": {"slug":"place","id":1,"icon":"ion-location",
             "properties":{
-                "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE", "required":true, "default":"" },
+                "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE", "required":true, "default":"" ,"min_length":3},
                 "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"is_editable":false},
                 "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"is_editable":false},
                 "link_url":{ "key": "link_url", "label": "URL_LABEL", "placeholder": "URL_PLACEHOLDER", "default":""},
@@ -911,6 +911,7 @@
         "viewer":false,
         "query_limit":3,
         "search_results_limit": 5,
+        "min_text_length":50,
         "uploads":{
             "max_height":800,
             "max_width":800,

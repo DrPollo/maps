@@ -285,9 +285,17 @@ gulp.task('mergeconfig', function(){
             });
         }
         if(extras){
-            // console.log(extras);
+            // console.log('domain configs',extras);
+            try{
             config = override(defaults,extras,true);
-            // console.log(config);
+            // console.log(config.myConfig);
+            }catch (e){
+                throw new gutil.PluginError({
+                    plugin: 'json-override',
+                    message: domain+".json override error"
+                });
+                console.log(e);
+            }
         }
 
     }

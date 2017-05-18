@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <label class="item item-input">
-                    <input type="text" name="title" ng-model="post.title" placeholder="{{'POSTEDITOR_TITLE_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
+                    <input type="text" name="title" ng-model="post.title" placeholder="{{'POSTEDITOR_TITLE_PLACEHOLDER'|translate}}" ng-minlength="1" ng-maxlength="50">
                 </label>
                 <label class="item item-input item-floating-label">
                     <textarea name="message" placeholder="{{'POSTEDITOR_PLACEHOLDER' |translate}}" rows="4" ng-model="post.message" ng-minlength="5" maxlength="1000" autogrow></textarea>
@@ -27,7 +27,7 @@
         </div>
         <div class="linear-fastanimation fade-in" class="extrafields">
             <div class="extrafield">
-                <input type="text" name="ext_ref" ng-model="post.ext_ref" placeholder="{{'POSTEDITOR_EX_REF_PLACEHOLDER'|translate}}" ng-minlength="3" ng-maxlength="50">
+                <input type="text" name="ext_ref" ng-model="post.ext_ref" placeholder="{{'POSTEDITOR_EX_REF_PLACEHOLDER'|translate}}" ng-minlength="1" ng-maxlength="50">
             </div>
             <div class="extrafield">
                 <tags-input ng-model="post.tags" display-property="tag" placeholder="{{'POSTEDITOR_TAGS_PLACEHOLDER' |translate}}" replace-spaces-with-dashes="false"></tags-input>

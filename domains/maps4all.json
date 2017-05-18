@@ -58,27 +58,6 @@
     }
   },
   "types" : {
-    "default": {"slug":"place","id":1,"icon":"ion-location",
-      "properties":{
-        "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE", "required":true, "default":"" },
-        "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"is_editable":false},
-        "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"is_editable":false},
-        "link_url":{ "key": "link_url", "label": "URL_LABEL", "placeholder": "URL_PLACEHOLDER", "default":""},
-        "tags":{ "key": "tags", "label":"TAGS_LABEL", "placeholder":"TAGS_PLACEHOLDER", "default":[] },
-        "categories":{ "key": "categories", "label":"CATEGORIES", "default":[]},
-        "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
-        "user":{ "key": "user", "label":"USER","placeholder":"USER" , "default":-1},
-        "area_id":{ "key": "area_id", "required":true, "default":null},
-        "tile_id":{ "key": "tile_id", "required":true, "default":null},
-        "id":{ "key": "id", "default":null},
-        "zoom_level":{ "key": "zoom_level", "default":null},
-        "level":{"key":"level", "default":0, "label":"LEVEL_LABEL","placeholder":"LEVEL_PLACEHOLDER"}
-      },
-      "actions":[
-        {"label":"SUBSCRIBE","key":"subscribe","icon":"ion-android-bookmark","icon2":"ion-android-add-circle","search":false, "check":"noSubscriber"},
-        {"label":"UNSUBSCRIBE","key":"unsubscribe","icon":"ion-android-bookmark","icon2":"ion-android-remove-circle","search":false, "check":"subscriber"}
-      ]
-    },
     "list":[
       {"name":"PLACE_NAME","id":5,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
         "show_author":false, "shape":"triangle",
@@ -90,16 +69,15 @@
         "relations":{
           "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
           "FL_EVENTS":{"slug":"location","field":"location","relation":"located","label":"REL_LOCATION_LABEL","childrenLabel":"REL_LOCATION_CHILD_LABEL","bounded":true},
-          "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"articles","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
           "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
           "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
         }
       },
-      {"name":"COMMENT_NAME","id":4,"icon":"ion-quote","slug":"news","url":"news","key":"FL_NEWS","index":3,
+      {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_NEWS","index":5,
         "show_author":true, "shape":"diamond",
         "properties":{
           "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
-          "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
+          "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true,"min_length":3},
           "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
           "valid_from":{ "key": "valid_from", "label": "STARTDATE_NEWS_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
           "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
@@ -107,7 +85,6 @@
         "relations":{
           "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
           "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"located","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-          "FL_ARTICLES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
           "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL"},
           "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL"}
         }
@@ -115,7 +92,7 @@
       {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":4,
         "show_author":false, "shape":"exagon",
         "properties":{
-          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true},
+          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"min_length":3},
           "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
           "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
           "location":{ "key": "location", "label": "LOCATION_LABEL", "placeholder":"LOCATION_PLACEHOLDER", "default":null},
@@ -129,15 +106,14 @@
         "relations":{
           "FL_PLACES":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
           "FL_EVENTS":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_PARENT_ID_CHILD_LABEL"},
-          "FL_ARTICLES":{"slug":"article_of","field":"article_of","relation":"articles","label":"REL_ARTICLE_OF_LABEL","childrenLabel":"REL_ARTICLE_OF_CHILD_LABEL","bounded":true},
           "FL_NEWS":{"slug":"news_of","field":"news_of","relation":"news","label":"REL_COMMENT_OF_LABEL","childrenLabel":"REL_COMMENT_OF_CHILD_LABEL","bounded":true},
           "FL_GROUPS":{"slug":"group_of","field":"group_of","relation":"groupsof","label":"REL_GROUP_OF_LABEL","childrenLabel":"REL_GROUP_OF_CHILD_LABEL","bounded":true}
         }
       },
-      {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
+      {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":2,
         "show_author":false, "shape":"octagon",
         "properties":{
-          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
+          "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true,"min_length":3},
           "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
           "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},
           "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
@@ -149,7 +125,6 @@
           "FL_GROUPS":{"slug":"parent_id","field":"parent_id","relation":"children","label":"REL_PARENT_ID_LABEL","childrenLabel":"REL_BY_GROUP_GROUP_CHILD_LABEL","exclude":true,"check":"membership"},
           "FL_PLACES":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_PLACE_CHILD_LABEL","exclude":true,"check":"membership"},
           "FL_EVENTS":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_EVENT_CHILD_LABEL","exclude":true,"check":"membership"},
-          "FL_ARTICLES":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_POST_CHILD_LABEL","exclude":true,"check":"membership"},
           "FL_NEWS":{"slug":"group_id","field":"group_id","relation":"groupentities","label":"REL_BY_GROUP_LABEL","childrenLabel":"REL_BY_GROUP_COMMENT_CHILD_LABEL","exclude":true,"check":"membership"}
         },
         "actions":[
@@ -161,7 +136,7 @@
     ],
     "categories": [
       {
-        "category_space":44,
+        "category_space":40,
         "name": "Qualità dei luoghi",
         "slug": "Qualità dei luoghi",
         "description":"",
@@ -169,7 +144,7 @@
         "is_mandatory":false,
         "multiple_categories_allowed":false,
         "is_visible":true,
-        "color_index":6,
+        "color_index":19,
         "categories": [
           {
             "id": 1000,
@@ -213,7 +188,7 @@
         "is_mandatory":true,
         "multiple_categories_allowed":false,
         "is_visible":true,
-        "color_index":19,
+        "color_index":6,
         "categories": [
           {
             "id": 1020,
@@ -380,7 +355,7 @@
         "is_mandatory":true,
         "multiple_categories_allowed":false,
         "is_visible":true,
-        "color_index":43,
+        "color_index":47,
         "categories": [
           {
             "id": 1040,
@@ -405,7 +380,7 @@
           }
         ],
         "entities":[
-          "FL_ARTICLES"
+          "FL_NEWS"
         ]
       }
     ]
@@ -417,9 +392,11 @@
     "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
     "map_default_lat" : 45.070312,
     "map_default_lng" : 7.686856,
-    "map_autocenter" : false,
     "zoom_level" : 16,
     "zoom_create" : 18
+  },
+  "behaviour":{
+    "min_text_length":3
   },
   "custom_labels":false
 }
