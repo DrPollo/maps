@@ -12,8 +12,13 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content class="content" id="wizardEntity" scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
-        <ion-slide-box on-slide-changed="changeWizardStep($index)">
+    <ion-content class="content" id="wizardEntity"
+                 scroll-event-interval="10"
+                 overflow-scroll="true"
+                 scrollbar-x="false"
+                 direction="y"
+                 data-tap-disabled="false">
+        <ion-slide-box on-slide-changed="changeWizardStep($index)" delegate-handle="wizard">
             <!--page 1-->
             <ion-slide ng-if="chooseType">
                 <form name="editor.typeform">

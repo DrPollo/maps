@@ -78,7 +78,22 @@ angular.module('firstlife.controllers')
         };
         $scope.wizardSlider;
 
-
+        $scope.getSlideBoxDelegateHandle = function(delegateIndex) {
+            //get all the instances that ionic scroll delegate is handling
+            var instances = $ionicSlideBoxDelegate["_instances"];
+            //Create Instance you want to get
+            var instance = null;
+            for (var index in instances) {
+                //set DelegateHandle value with your index
+                //Ex) instances[index].$$delegateHandle = "slidebox"+index;
+                //or just instances[index].$$delegateHandle = index;
+                instances[index].$$delegateHandle = index;
+                if (index == delegateIndex) {
+                    instance = instances[index];
+                }
+            }
+            return instance; //return the instance
+        }
 
         /*
          * Listner
@@ -94,7 +109,7 @@ angular.module('firstlife.controllers')
                 return;
 
             // disabilito swipe da mobile
-            $ionicSlideBoxDelegate.enableSlide(false);
+            $ionicSlideBoxDelegate.$getByHandle('wizard').enableSlide(false);
 
             //recupero lo stato precedente!
             // var previousState = $previousState.get();
@@ -157,8 +172,9 @@ angular.module('firstlife.controllers')
 
                 // valori per update (salto step tipo)
                 $timeout(function(){
-                    $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
-                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
+                    $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+                    $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
+                    $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
                 },100);
             }
             //create place: init empty dataForm
@@ -172,8 +188,10 @@ angular.module('firstlife.controllers')
                 // fine regole gestione campi speciali
                 // $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
                 $timeout(function(){
-                    $scope.wizardIndex = $ionicSlideBoxDelegate.currentIndex() || 1;
-                    $scope.wizardSteps = $ionicSlideBoxDelegate.slidesCount();
+                    $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+                    $log.debug('handler',$scope.wizardHandler);
+                    $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
+                    $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
                 },100);
             }
 
@@ -192,19 +210,19 @@ angular.module('firstlife.controllers')
         $scope.initType = function (type) {
             initEntity(type);
             $scope.nextStep();
-            $ionicSlideBoxDelegate.update();
+            $scope.wizardHandler.update();
         }
 
         $scope.nextStep = function(){
             // passo allo step 2
-            $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
-            $ionicSlideBoxDelegate.next();
+            $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+            $scope.wizardHandler.next();
             $ionicScrollDelegate.scrollTop();
         };
         $scope.prevStep = function(){
             // passo allo step 2
-            $log.debug('slide to next',$ionicSlideBoxDelegate.currentIndex());
-            $ionicSlideBoxDelegate.previous();
+            $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+            $scope.wizardHandler.previous();
             $ionicScrollDelegate.scrollTop();
         };
 
