@@ -44,6 +44,11 @@
     }
 }
 .maps-view{
+    #mapHeader.mobile {
+        geocoding-bar{
+            width: calc(100% - 100px);
+        }
+    }
     #mapHeader{
         position: relative;
         display: inline-flex;
@@ -78,9 +83,9 @@
         #headerControllers{
             position: relative;
             width :100%;
-            display: inline-flex;
+            display: block;
             #omnibox{
-                display: inline-flex;
+                display: block;
                 width: 100%;
                 position: relative;
                 z-index: 1;
@@ -118,6 +123,10 @@
                     }
                 }
 
+            }
+            #seachcards {
+                display: block;
+                width: 100%;
             }
         }
     }
@@ -449,6 +458,8 @@
         font-weight: 700;
     }
 }
+
+
 
 
 @-webkit-keyframes glow {

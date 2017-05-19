@@ -1,25 +1,27 @@
 <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="config.design.navbar && !viewer"  url="{{config.design.navbar}}"></navbar>
 <ion-view class="maps-view" ng-style="config.design.navbar ? {height: 'calc(100% - 42px)', top:'42px'} : {}">
-    <div id="mapHeader">
+    <div id="mapHeader" ng-class="{'mobile':isMobile}">
         <div id="headerControllers">
             <div id="omnibox">
                 <wall-toggler ng-if="!editMode"></wall-toggler>
                 <geocoding-bar locate="locate(location)"></geocoding-bar>
             </div>
-            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
-                <i class="icon ion-android-person"></i>
-                <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>
-                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
-            </div>
-            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(groupCard)">
-                <i class="icon ion-android-people"></i>
-                <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
-                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
-            </div>
-            <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(initiativeCard)">
-                <i class="icon ion-cube"></i>
-                <span class="tag-card-body"  style="padding:0px 12px;">{{initiativeCard}}</span>
-                <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteInitiativeCard()"></button>
+            <div id="searchcards">
+                <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
+                    <i class="icon ion-android-person"></i>
+                    <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>
+                    <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
+                </div>
+                <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(groupCard)">
+                    <i class="icon ion-android-people"></i>
+                    <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
+                    <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
+                </div>
+                <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(initiativeCard)">
+                    <i class="icon ion-cube"></i>
+                    <span class="tag-card-body"  style="padding:0px 12px;">{{initiativeCard}}</span>
+                    <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteInitiativeCard()"></button>
+                </div>
             </div>
         </div>
     </div>

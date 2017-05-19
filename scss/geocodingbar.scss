@@ -2,7 +2,9 @@
     #headerControllers{
         #omnibox {
             geocoding-bar {
-                width: 100%;
+                width: calc(100% - 52px);
+                display: inline-block;
+                margin-left: -4px;
                 #geocodingbar {
                     max-height: 40px;
                     height: 40px;
@@ -65,6 +67,15 @@
                         background: #f0f0f0;
                     }
                 }
+            }
+        }
+    }
+}
+#mapHeader.mobile {
+    #headerControllers {
+        #omnibox {
+            geocoding-bar {
+                width: calc(100% - 100px);
             }
         }
     }

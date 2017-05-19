@@ -1,4 +1,4 @@
-<form id="geocodingbar" class="fast-ease-out-animation" ng-submit="search()" style="width: {{ (isMobile && !editMode ? 'calc(100% - 45px)' : '100%')}};">
+<form id="geocodingbar" class="fast-ease-out-animation" ng-submit="search()" style="width: 100%;">
     <input id="inputofsearchbar" type="text" ng-model="query" placeholder="{{ 'GEOLOCATION_HINTS' |translate}}" ng-focus="loadCache();">
     <button type="submit" class="button-geocoding button fixed-button button-icon ion-android-search" ng-click="search()" ng-disabled="(query.length == 0)"></button>
     <button type="reset" class="button-geocoding fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
