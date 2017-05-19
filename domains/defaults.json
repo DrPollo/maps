@@ -200,8 +200,8 @@
                 "level":{"key":"level", "default":0, "label":"LEVEL_LABEL","placeholder":"LEVEL_PLACEHOLDER"}
             },
             "actions":[
-                {"label":"SUBSCRIBE","key":"subscribe","icon":"ion-android-bookmark","icon2":"ion-android-add-circle","search":false, "check":"noSubscriber"},
-                {"label":"UNSUBSCRIBE","key":"unsubscribe","icon":"ion-android-bookmark","icon2":"ion-android-remove-circle","search":false, "check":"subscriber"}
+                {"label":"SUBSCRIBE","key":"subscribe","icon":"ion-android-bookmark","search":false, "check":"noSubscriber"},
+                {"label":"UNSUBSCRIBE","key":"unsubscribe","icon":"ion-android-share","search":false, "check":"subscriber"}
             ]
         },
         "list":[

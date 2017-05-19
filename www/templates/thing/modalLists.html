@@ -12,6 +12,10 @@
             <i class="icon ion-social-buffer"></i>
             <span ng-if="!isMobile">{{ 'CONTENTS' |translate}}</span>
         </button>
+        <button ng-if="marker.entity_type === 'FL_GROUPS'" class="button button-positive button-clear icon-left" on-tap="setToggle(3)" ng-class="toggle === 3 ? 'selected' : '' ">
+            <i class="icon ion-android-people"></i>
+            <span ng-if="!isMobile">{{ 'MEMBERS' |translate}}</span>
+        </button>
     </div>
     <!-- lista dei post -->
     <posts ng-if="marker.id " ng-show="toggle === 0" class="fast-ease-in-noout-animation fade-in" id="marker.id"></posts>
@@ -19,4 +23,6 @@
     <initiative-list ng-if="marker.id" ng-show="toggle === 1" id="marker.id" close="close()" class="fast-ease-in-noout-animation fade-in" ></initiative-list>
     <!-- lista dei figli -->
     <entity-children ng-if="marker.id" ng-show="toggle === 2" marker="marker" click="click(id)" add="add()" class="fast-ease-in-noout-animation fade-in"></entity-children>
+    <!--list dei membri del gruppo-->
+    <members ng-if="marker.entity_type === 'FL_GROUPS' && marker.id" ng-show="toggle === 3" marker="marker"></members>
 </div>

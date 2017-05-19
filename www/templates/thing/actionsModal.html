@@ -1,8 +1,14 @@
-<button title="{{'SHARE_THING' |translate}}"
-        class="button button-outline button-icon ion-link"
-        on-tap="makeSharable()">
-    <span ng-if="!isMobile">{{"SHARE_THING" |translate}}</span>
-</button>
-<button title="{{action.label |translate}}" class="button button-outline button-icon {{action.icon}}" ng-repeat="action in actionList track by $index" on-tap="actionEntity(action.key,action.search);" ng-if="action.check" class="fade-in fast-ease-in-animation">
-    <span ng-if="!isMobile">{{action.label |translate}}</span>
-</button>
+<ion-item class="delimited item item-button-right" title="{{'SHARE_THING' |translate}}">
+    {{"SHARE_THING" |translate}}
+    <button class="button button-positive" on-tap="makeSharable()">
+        <i class="icon ion-android-share-alt"></i>
+    </button>
+</ion-item>
+<ion-item title="{{action.label |translate}}"
+          class="delimited item item-button-right"
+          ng-repeat="action in actionList track by $index"  ng-if="action.check">
+    {{action.label |translate}}
+    <button class="button button-positive" on-tap="actionEntity(action.key,action.search);">
+        <i class="icon {{action.icon}}"></i>
+    </button>
+</ion-item>

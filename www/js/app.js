@@ -547,7 +547,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         USER_FILTERING:'Contenuti di ',
         SEARCH_FILTERING:'Ricerca:',
         MY_MAP:'La mia mappa',
-        VIEW_GROUP:'Mappa',
+        VIEW_GROUP:'Mappa del gruppo',
         GENERAL_MAP:'Mappa generale',
         JOIN_GROUP:'Entra',
         LEAVE_GROUP:'Abbandona',
@@ -717,9 +717,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         OK:"Ok",
         GEOLOCATION_ERROR:"Spiacenti, non risciamo a trovare la tua posizione",
         SHARE_THING:"Condividi",
-        STARTDATE_NEWS_LABEL:"Data"
+        STARTDATE_NEWS_LABEL:"Data",
+        LINK_JOIN:"Entra nel gruppo",
+        LINK_LEAVE:"Esci dal gruppo"
     };
     var enLabels = {
+        LINK_JOIN:"Joind the group",
+        LINK_LEAVE:"Leave the group",
         STARTDATE_NEWS_LABEL:"Date",
         SHARE_THING:"Share",
         GEOLOCATION_ERROR:"Sorry, cannot find your location",
@@ -930,7 +934,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         USER_FILTERING:'Contents of ',
         SEARCH_FILTERING:'Search:',
         MY_MAP:'My map',
-        VIEW_GROUP:'Map',
+        VIEW_GROUP:'Group Map',
         GENERAL_MAP:'General map',
         JOIN_GROUP:'Join',
         LEAVE_GROUP:'Leave',

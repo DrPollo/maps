@@ -1,0 +1,21 @@
+<div ng-if="!embed && !role" id="add-initiative" class="item item-button-right" title="{{'LINK_JOIN' | translate}}">
+    {{'LINK_JOIN' | translate}}
+    <button class="button button-positive" on-tap="join()">
+        <i class="icon ion-plus-round"></i>
+    </button>
+</div>
+<div ng-if="!embed && role" id="add-initiative" class="item item-button-right" title="{{'LINK_LEAVE' | translate}}">
+    {{'LINK_LEAVE' | translate}}
+    <button class="button button-positive" on-tap="leave()">
+        <i class="icon ion-android-exit"></i>
+    </button>
+</div>
+<div id="member-list" ng-if="membersList.length > 0" class="linear-fastanimation fade-in">
+    <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
+    <!--<div class="item-divider">{{'POSTS' | translate}}</div>-->
+    <div ng-repeat="user in membersList track by $index" class="item item-button-right">
+        {{user.fullname}}
+        <button ng-if="canDelete" class="button button-positive item-icon ion-android-delete" on-tap="deleteMember(user.id)"></button>
+    </div>
+</div>
+<nothing-to-read ng-if="!loading && membersList.length < 1"></nothing-to-read>

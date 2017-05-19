@@ -469,9 +469,13 @@ angular.module('firstlife.services')
             if(!marker.id)
                 marker.id = feature._id;
             // fix url senza protocollo
-            if(marker.link_url && (marker.link_url.search('http') < 0 || marker.link_url.search('//') < 0) )
-                marker.link_url = '//'+marker.link_url;
-
+            if(marker.link_url && marker.link_url.search('http') < 0 && marker.link_url.search('//') < 0 && marker.link_url.search('@') >= 0){
+                // email
+                marker.link_url = 'mailto:'+marker.link_url;
+            }else if(marker.link_url && marker.link_url.search('http') < 0 && marker.link_url.search('//') < 0 ){
+                // url
+                marker.link_url = 'http://'+marker.link_url;
+            }
             return marker;
         }
 

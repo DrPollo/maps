@@ -827,7 +827,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             });
 
             // numero di tab
-            var tabs = 3;
+            var tabs = 4;
             // parto con la prima tag
             scope.toggle = 0;
             // cambio di tab
