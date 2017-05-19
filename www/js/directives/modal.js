@@ -437,7 +437,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             close:'&close',
             label:'< label'
         },
-        templateUrl: '/templates/modals/actionsModal.html',
+        templateUrl: '/templates/thing/actionsModal.html',
         link: function(scope, element, attr){
 
             scope.$on('$destroy',function (event) {

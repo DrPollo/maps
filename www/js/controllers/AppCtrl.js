@@ -172,6 +172,55 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('startUpdating',args);
         });
 
+
+
+
+
+        /*
+         * Gestione card
+         */
+
+
+        $scope.$on("setGroupCard", function (event,args) {
+            // $log.debug('setGroupCard',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('initGroupCard',args);
+            // chiudo wall
+            $scope.closeSideLeft();
+        });
+
+        $scope.$on("showInitiative", function (event,args) {
+            // $log.debug('showInitiative',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('initInitiative',args);
+            // chiudo wall
+            $scope.closeSideLeft();
+        });
+
+        $scope.$on("setUserCard", function (event,args) {
+            // $log.debug('setUserCard',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('initUserCard',args);
+            // chiudo wall
+            $scope.closeSideRight();
+        });
+
+
+
+
+
         /*
          * Funzioni pubbliche
          * 1) login: va nello stato login con azione = login

@@ -229,8 +229,11 @@ angular.module('firstlife.controllers')
             filterMarkers();
         });
 
+        /*
+         * gestione card utente
+         */
 
-        $scope.$on("setGroupCard", function (event,args) {
+        $scope.$on("initGroupCard", function (event,args) {
             // $log.debug('setGroupCard',event,args);
             if(event.defaultPrevented)
                 return;
@@ -242,7 +245,7 @@ angular.module('firstlife.controllers')
             filterMarkers();
         });
 
-        $scope.$on("showInitiative", function (event,args) {
+        $scope.$on("initInitiative", function (event,args) {
             // $log.debug('showInitiative',event,args);
             if(event.defaultPrevented)
                 return;
@@ -254,7 +257,7 @@ angular.module('firstlife.controllers')
             filterMarkers();
         });
 
-        $scope.$on("setUserCard", function (event,args) {
+        $scope.$on("initUserCard", function (event,args) {
             // $log.debug('setUserCard',event,args);
             if(event.defaultPrevented)
                 return;
