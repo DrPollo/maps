@@ -389,7 +389,7 @@ angular.module('firstlife.controllers')
             // se devo aggionare una entita'
             if($scope.updateEntity && $scope.updateEntity.id){
                 // back to view
-                changeMode('view');
+                // changeMode('view');
 
                 // parametri per l'editor
                 var params = {lat: $scope.flmap.center.lat, lng:$scope.flmap.center.lng,zoom_level:$scope.flmap.center.zoom,id:$scope.updateEntity.id};
@@ -398,7 +398,7 @@ angular.module('firstlife.controllers')
 
             }if($scope.updateEntity){
                 // back to view
-                changeMode('view');
+                // changeMode('view');
 
                 // se ho gia' dei parametri per la insert
                 var params = {};
@@ -413,7 +413,7 @@ angular.module('firstlife.controllers')
                 $state.go('app.editor', params);
             }else{
                 // back to view
-                changeMode('view');
+                // changeMode('view');
                 // se non devo aggiornare nessuna entita'
                 // e non ho paramentri gia' stabiliti
                 clickToAdd();
@@ -516,8 +516,8 @@ angular.module('firstlife.controllers')
          */
 
         function clickMarker(markerId){
-            //$log.debug("markerClick! ",markerId);
-            $scope.$broadcast("markerClick", {id:markerId});
+            $log.debug("wallClick",markerId);
+            $scope.$emit("wallClick", {id:markerId});
         }
 
         function updatePlaceInSearch(id){
@@ -613,6 +613,7 @@ angular.module('firstlife.controllers')
             }else if(entityId){
                 clickMarker(entityId);
             }
+            changeMode('view');
             //update markers
             updateMarkers();
         };

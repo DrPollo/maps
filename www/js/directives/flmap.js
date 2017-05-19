@@ -524,7 +524,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
                     // $log.debug('createEntity',properties,info);
                     $scope.$emit('createEntity',info);
-                    removeEditLayers();
+                    // removeEditLayers();
                 },300);
             };
 
