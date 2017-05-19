@@ -9,22 +9,22 @@
             <div id="searchcards">
                 <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(queryCard)">
                     <i class="icon ion-android-person"></i>
-                    <span class="tag-card-body" style="padding:0px 12px;">{{queryCard}}</span>
+                    <span class="tag-card-body">{{queryCard}}</span>
                     <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteQueryCard()"></button>
                 </div>
                 <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
                     <i class="icon ion-android-person"></i>
-                    <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>
+                    <span class="tag-card-body">{{userCard}}</span>
                     <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteUserCard()"></button>
                 </div>
                 <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(groupCard)">
                     <i class="icon ion-android-people"></i>
-                    <span class="tag-card-body"  style="padding:0px 12px;">{{groupCard}}</span>
+                    <span class="tag-card-body">{{groupCard}}</span>
                     <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteGroupCard()"></button>
                 </div>
                 <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(initiativeCard)">
                     <i class="icon ion-cube"></i>
-                    <span class="tag-card-body"  style="padding:0px 12px;">{{initiativeCard}}</span>
+                    <span class="tag-card-body">{{initiativeCard}}</span>
                     <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteInitiativeCard()"></button>
                 </div>
             </div>

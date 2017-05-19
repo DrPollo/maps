@@ -15553,25 +15553,28 @@ timeline {
 
 div.search-tag-card {
   color: #333;
-  margin: 0px 0px 0px 6px;
+  margin: 3px;
   display: inline-flex;
   background: #fff;
-  border-radius: 20px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-  height: 40px;
-  line-height: 40px;
-  padding: 0px 0px 0px 16px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 0px 0px 8px;
   vertical-align: middle; }
   div.search-tag-card .tag-card-body {
-    line-height: 40px;
-    cursor: pointer; }
+    line-height: 30px;
+    cursor: pointer;
+    padding: 0px;
+    margin-left: 8px; }
   div.search-tag-card button.button {
-    height: 40px !important;
+    height: 30px !important;
     width: 40px !important;
     min-height: 20px !important;
     min-width: 20px !important;
-    box-shadow: none !important; }
+    box-shadow: none !important;
+    line-height: 30px !important; }
 
 #mapHeader #headerControllers #omnibox geocoding-bar {
   width: calc(100% - 52px);
