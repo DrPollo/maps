@@ -29,7 +29,7 @@ angular.module('firstlife.controllers')
             var params = $location.search();
             // $log.debug("check $location",params);
             if(params.error){
-                // $log.debug('errore');
+                $log.debug('errore login');
                 // gestisco l'errore
                 loginError();
                 return;
@@ -94,7 +94,7 @@ angular.module('firstlife.controllers')
         }
 
         function loginError(){
-            // $log.debug('loginError');
+            $log.debug('go to home');
             $location.search('error','login')
             $state.go('home', {error: 'login'});
         }
