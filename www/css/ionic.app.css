@@ -15637,6 +15637,10 @@ div.search-tag-card {
 #mapHeader.mobile #headerControllers #omnibox geocoding-bar {
   width: calc(100% - 100px); }
 
+#mapHeader.mobile #headerControllers #omnibox geocoding-bar #searchresults {
+  max-height: 180px;
+  overflow-y: scroll; }
+
 #posteditor input, #posteditor tags-input .tags {
   border: none;
   box-shadow: none; }

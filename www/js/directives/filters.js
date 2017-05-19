@@ -289,8 +289,13 @@ angular.module('firstlife.directives')
                 };
 
 
+                scope.loadCache = function () {
+                  scope.results = true;
+                };
+
                 // lancio la funzione definita di localizzazione
                 scope.clickOnResult = function (entry){
+                    scope.results = false;
                     scope.locate({'location': entry.position});
                 };
 
