@@ -1,15 +1,15 @@
 {"myConfig":
   {
-    "app_name" : "Atlante del Cibo",
+    "app_name" : "Atlante del Cibo di Torino Metropolitana",
     "domain_name" : "atlantedelcibo",
     "domain_id" : 18,
     "read_domains":false,
     "design":{
       "logo" : {
-        "title": "Atlante del Cibo",
-        "alt":"Atlante del Cibo",
+        "title": "Atlante del Cibo di Torino Metropolitana",
+        "alt":"Atlante del Cibo di Torino Metropolitana",
         "label":{
-          "text": "Atlante del Cibo"
+          "text": "Atlante del Cibo di Torino Metropolitana"
         }
       },
       "default_language" : "it",
@@ -21,8 +21,8 @@
             "en":"Logo of the Atlante del Cibo"
           },
           "message":{
-            "it":"L'atlante del cibo del Piemonte",
-            "en":"Piedmont Food Atlas"
+            "it":"L'Atlante del Cibo di Torino Metropolitana",
+            "en":"Torino City's Food Atlas"
           }
         }
       }
