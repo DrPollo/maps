@@ -26,7 +26,9 @@
     <ion-footer-bar class="bar-light">
         <h1 class="title"></h1>
         <div class="buttons">
-            <button class="button button-stable button-outline icon ion-arrow-down-b" on-tap="close()" ></button>
+            <button class="button button-dark button-outline item-button ion-close-round" on-tap="close()" >
+                <span ng-if="!isMobile">{{'CLOSE'|translate}}</span>
+            </button>
         </div>
     </ion-footer-bar>
 </ion-modal-view>

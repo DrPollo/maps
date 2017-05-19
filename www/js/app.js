@@ -792,7 +792,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         PASSWORD:'Password',
         CONTROLL_PASSWORD:'Password confirmation',
         EDIT:'Edit',
-        ABORT:'Abort',
+        ABORT:'Cancel',
         RESET:'Reset',
         SAVE:'Save',
         // commentBox

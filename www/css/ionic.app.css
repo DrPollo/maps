@@ -15565,7 +15565,6 @@ div.search-tag-card {
   vertical-align: middle; }
   div.search-tag-card .tag-card-body {
     line-height: 30px;
-    cursor: pointer;
     padding: 0px;
     margin-left: 8px; }
   div.search-tag-card button.button {

@@ -814,7 +814,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             add:'&',
             close:'&'
         },
-        templateUrl: '/templates/modals/modalLists.html',
+        templateUrl: '/templates/thing/modalLists.html',
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
