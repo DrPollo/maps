@@ -261,8 +261,12 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                         // contatore sottoscrittori
                         initSubscribers();
                         // se un gruppo
-                        if($scope.infoPlace.marker.entity_type === 'FL_GROUPS')
+                        if($scope.infoPlace.marker.entity_type === 'FL_GROUPS'){
                             initMembers();
+                        }else{
+                            $scope.members = 0;
+                        }
+
                         // inizializzo la maschera dei permessi per l'utente per il marker attuale
                         if(marker.owner && marker.owner.id)
                             initPerms(marker.owner.id);
