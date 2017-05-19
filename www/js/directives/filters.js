@@ -155,16 +155,16 @@ angular.module('firstlife.directives')
             });
 
             scope.$on('newSearchParam',function(e,params){
-                if(e.defaultPrevented)
-                    return;
-                e.preventDefault();
+                // if(e.defaultPrevented)
+                //     return;
+                // e.preventDefault();
 
                 var q = params.q;
-                // $log.debug('searchBar, nuovo parametro q ',q);
+                $log.debug('searchBar, nuovo parametro q ',q);
                 // imposto il campo di ricerca
                 scope.query = params.q;
                 scope.card = true;
-            })
+            });
 
             var dev = myConfig.dev;
             // visualizzazione web o mobile?

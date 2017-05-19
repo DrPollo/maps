@@ -25,12 +25,15 @@ angular.module('firstlife.directives').directive('searchCards', function() {
             //
             $scope.$on('newSearchParam',
                 function(e, old){
-                    if(e.defaultPrevented)
-                        return
-                    e.preventDefault();
+                    // $log.debug('checkParams',e);
+                    // if(e.defaultPrevented)
+                    //     return
+                    // e.preventDefault();
+
+                    $log.debug('checkParams',e);
                     // se cambiati controllo
                     checkParams(e);
-                },true);
+                });
 
             $scope.closeCard = function(k,value){
                 // rimuovo il parametro

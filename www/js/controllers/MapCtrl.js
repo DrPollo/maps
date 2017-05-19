@@ -99,6 +99,7 @@ angular.module('firstlife.controllers')
             check4initiative(params);
             check4user(params);
             check4group(params);
+            check4query(params);
 
             $scope.isLoggedIn = AuthService.isAuth();
 
@@ -267,6 +268,18 @@ angular.module('firstlife.controllers')
             check4customFilters({users: args.user.id});
             $scope.userCard = args.user.fullname;
             filterMarkers();
+        });
+
+        $scope.$on("initQueryCard", function (event,args) {
+            // $log.debug('setUserCard',event,args);
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            // check4customFilters({q: args.q});
+            $scope.queryCard = args.q;
+            // filterMarkers();
         });
 
         $scope.$on('createEntity',function (event,args) {
@@ -821,6 +834,18 @@ angular.module('firstlife.controllers')
             // gestisco il cambio parametri
             check4customFilters($location.search());
             filterMarkers();
+        };
+        function check4query(e){
+            if(!e || !e.q){
+                return false;
+            }
+            $scope.$emit('handleUpdateQ',{q:e.q});
+        }
+        $scope.deleteQueryCard = function(){
+            $scope.queryCard = null;
+            $location.search('q',null);
+            // gestisco il cambio parametri
+            $scope.$emit('handleUpdateQ',{q:null});
         };
 
         // userCard

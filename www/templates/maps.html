@@ -7,6 +7,11 @@
                 <geocoding-bar locate="locate(location)"></geocoding-bar>
             </div>
             <div id="searchcards">
+                <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(queryCard)">
+                    <i class="icon ion-android-person"></i>
+                    <span class="tag-card-body" style="padding:0px 12px;">{{queryCard}}</span>
+                    <button ng-if="!viewer" class="button button-clear button-stable button-icon ion-android-close" ng-click="deleteQueryCard()"></button>
+                </div>
                 <div class="search-tag-card fast-ease-out-animation fade-in" ng-if="(userCard)">
                     <i class="icon ion-android-person"></i>
                     <span class="tag-card-body" style="padding:0px 12px;">{{userCard}}</span>

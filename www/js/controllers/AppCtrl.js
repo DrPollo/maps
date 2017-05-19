@@ -140,6 +140,9 @@ angular.module('firstlife.controllers')
                 return;
 
             event.preventDefault();
+
+            $log.debug('handleUpdateQ',args);
+
             var q = null;
             if(args)
                 q = args.q || args.query;
@@ -150,7 +153,7 @@ angular.module('firstlife.controllers')
             // al cambio filtro testuale
             $scope.$broadcast('filterMarkers');
             // avverto le searchcard
-            $scope.$broadcast('newSearchParam',{q:q});
+            $scope.$broadcast('initQueryCard',{q:q});
         });
 
         $scope.$on('closeSearchCard',function (event,args) {
