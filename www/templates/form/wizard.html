@@ -168,7 +168,7 @@
                                        ng-value="{{category.id}}"
                                        ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
                                        class="item"
-                                       ng-required="true">
+                                       ng-required="space.is_mandatory">
                                 <div class="item-icon-left" >
                                     <i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>
                                     {{ category.name }}

@@ -453,7 +453,7 @@ angular.module('firstlife.services')
             };
             var catIcons = marker.categories.reduce(function(icons, cat){
                 // patch per categorie sporche
-                if(defIcons[cat.category_space.id]) {
+                if(defIcons[cat.category_space.id] && cat.categories[0]) {
                     var icon = defIcons[cat.category_space.id][cat.categories[0].id];
                     icons[cat.category_space.id] = icon;
                 }

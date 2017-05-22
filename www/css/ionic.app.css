@@ -15389,7 +15389,8 @@ timeline {
           height: auto;
           border-radius: 0px;
           background: transparent;
-          color: #666; }
+          color: #666;
+          font-size: 1em; }
         #treemapfilter .root .child .childblock .checker {
           position: absolute;
           z-index: 1;
