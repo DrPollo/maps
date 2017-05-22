@@ -274,6 +274,7 @@ angular.module('firstlife.timeline',[])
                             end.add((i+1)*duration,'hour').subtract(1,'millisecond');
                             var interval = moment.interval(start,end);
                             var e = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm'),class:'noclick'};
+                            e.class = "six";
                             array.push(e);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
@@ -298,10 +299,10 @@ angular.module('firstlife.timeline',[])
                             var obj = {label:weekday,//start.format(format),
                                        interval:interval,
                                       upLabel:interval.start().format('DD')};
-                            
+                            obj.class = 'four';
                             //$log.debug('is sunday?',interval.start().format('dddd'),interval.start().format('dddd') === 'Sunday')
                             if(interval.start().format('dddd') === 'Sunday' || interval.start().format('dddd') === 'Domenica')
-                                obj.class = 'red';
+                                obj.class = obj.class+' red';
                             days.push(obj);
                             // $log.debug('check interval weekdays ',interval.start(),interval.end());
                         }
@@ -354,7 +355,10 @@ angular.module('firstlife.timeline',[])
                             }
 
                             var monthLabel = $scope.isMobile ? localeData.monthsShort(interval.start()) : localeData.months(interval.start());
-                            weeks.push({interval:interval,upLabel:interval.start().format('DD').concat(" ",monthLabel)});
+                            weeks.push({
+                                interval:interval,
+                                upLabel:interval.start().format('DD').concat(" ",monthLabel),
+                                class:'seven'});
 //                            weeks.push({label:label,interval:interval,upLabel:interval.start().format('DD MMMM')}); 
                             //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
