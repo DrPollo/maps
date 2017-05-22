@@ -13263,10 +13263,13 @@ ion-side-menu {
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  min-width: 45px;
+  height: 45px;
+  min-height: 45px;
   border-radius: 0px 0px 0px 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border: none;
   z-index: 12;
   overflow: hidden; }
   #menu-switch .badge {
@@ -13317,11 +13320,12 @@ ion-side-menu {
         .maps-view #mapHeader #headerControllers #omnibox button {
           min-height: 45px;
           height: 45px;
-          width: 48px;
+          min-width: 45px;
+          width: 45px;
+          border: none;
           position: relative;
           box-shadow: 1px 1px 3px #666;
           overflow: hidden;
-          border: none;
           background: #fff; }
           .maps-view #mapHeader #headerControllers #omnibox button .badge {
             position: absolute;
