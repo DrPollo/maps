@@ -24,7 +24,7 @@
                      ng-repeat="cat in space.list track by $index"
                      ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],'box-shadow':'inset 4px 4px 0px '+cat.color+',inset -4px -4px 0px '+cat.color}"
                      on-tap="toggleCat(space.name,cat[space.check])"
-                     ng-class="{'selected': toggled[space.name][cat[space.check]] }">
+                     ng-class="{'disabled': !toggled[space.name][cat[space.check]] }">
                     <i class="checker icon medium-dark fast-ease-in-out-animation"
                        ng-class="{ 'ion-ios-close-empty': !toggled[space.name][cat[space.check]], 'ion-ios-checkmark-empty': toggled[space.name][cat[space.check]]}"
                        style="{{toggled[space.name][cat[space.check]] ? 'color:'+cat.color+';':''}}"></i>

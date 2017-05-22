@@ -15389,15 +15389,19 @@ timeline {
           height: auto;
           border-radius: 0px;
           background: transparent;
-          color: #666;
+          color: #999;
           font-size: 1em; }
+          #treemapfilter .root .child .childblock .label .text {
+            color: #333; }
         #treemapfilter .root .child .childblock .checker {
           position: absolute;
           z-index: 1;
           padding: 10px;
-          color: #666; }
-      #treemapfilter .root .child .childblock.selected .label .text {
-        color: #333; }
+          color: #999; }
+      #treemapfilter .root .child .childblock.disabled {
+        box-shadow: inset 4px 4px 0px #999, inset -4px -4px 0px #999 !important; }
+        #treemapfilter .root .child .childblock.disabled .label .text {
+          color: #999; }
 
 #landingpage {
   background: #fafafa; }

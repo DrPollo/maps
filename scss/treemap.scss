@@ -97,20 +97,25 @@
                     height:auto;
                     border-radius:0px;
                     background: transparent;
-                    color: $mediumDark;
+                    color: $lighterDark;
                     font-size: 1em;
+                    .text {
+                        color:$dark;
+                    }
                 }
-
                 .checker {
                     position:absolute;
                     z-index:1;  
                     padding:10px;
-                    color: $mediumDark;
+                    color: $lighterDark;
                 }
             }
-            .childblock.selected {
-                .label .text {
-                    color: $dark;
+            .childblock.disabled {
+                box-shadow: inset 4px 4px 0px $lighterDark, inset -4px -4px 0px $lighterDark !important;
+                .label {
+                    .text {
+                        color: $lighterDark;
+                    }
                 }
             }
         }
