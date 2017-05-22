@@ -15307,11 +15307,12 @@ timeline {
   #treemapfilter i {
     font-size: 2em; }
   #treemapfilter .label {
-    font-size: 1.5em; }
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #333; }
   #treemapfilter .root {
-    border: 1px solid #fff;
-    border-color: #fff;
-    position: absolute; }
+    position: absolute;
+    background-color: white; }
     #treemapfilter .root .backtoroot {
       background-color: #fff;
       color: #333;
@@ -15330,12 +15331,25 @@ timeline {
       width: 100%; }
     #treemapfilter .root .legend {
       position: absolute;
+      top: 0px;
+      left: 0px;
       z-index: 1;
       color: #fff;
-      padding: 10px; }
+      padding: 10px;
+      height: 34px;
+      width: 34px;
+      line-height: 34px;
+      border-style: solid;
+      border-width: 0px; }
+    #treemapfilter .root .legend:before {
+      margin: 0px;
+      text-align: center; }
+    #treemapfilter .root .legend:hover {
+      color: #FC4A00 !important; }
+    #treemapfilter .root .legend.selected {
+      color: white !important; }
     #treemapfilter .root .rootlabel {
       position: absolute;
-      color: white;
       width: 100%;
       min-height: 100%;
       height: 100%;
@@ -15344,7 +15358,8 @@ timeline {
         display: table-cell;
         vertical-align: middle;
         border: none;
-        text-align: center; }
+        text-align: center;
+        border-radius: 4px; }
     #treemapfilter .root .child {
       background: #fff;
       border-color: #f8f8f8;

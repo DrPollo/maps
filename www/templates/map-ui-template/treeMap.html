@@ -1,16 +1,21 @@
 <div id="treemapfilter" style="height:{{size.height}}px;width:{{size.width}}px;">
         <div class="ease-animation root" ng-repeat="space in cats track by $index" 
-         style="left:{{space.rect[0]}};top:{{space.rect[1]}};width:{{space.rect[2]}};height:{{space.rect[3]}};background-color:{{space.color}};" 
+         style="left:{{space.rect[0]}};top:{{space.rect[1]}};width:{{space.rect[2]}};height:{{space.rect[3]}};"
          ng-style="back && (back == space.category_space) ? {height: '100%',width: '100%',top: '0px',left:'0px','z-index': '1'}:{height: space.rect[3],width: space.rect[2],top: space.rect[1],left:space.rect[0],'z-index': '0'}">
             <button class="backtoroot button button-light button-block button-clear" 
-                    ng-if="back && (back == space.category_space)" 
+                    ng-if="back && (back == space.category_space)"
                     on-tap="close()">
                 <i class="icon ion-android-arrow-dropleft-circle"></i>
                 {{space.name}}
             </button>
-            <i class="legend" ng-if="!back" on-tap="iconToggle(space.category_space)" class="icon medium-dark" ng-class="{'ion-android-star-outline': favCat != space.category_space, 'ion-android-star': favCat == space.category_space }"></i>
-            <div class="rootlabel" on-tap="toggle(space)" class="button button-light button-block button-clear" ng-if="!back">
-                <div class="label">
+            <button class="button button-small button-clear legend icon ion-android-pin"
+                    style="color:{{space.color}};{{favCat === space.category_space ? 'background-color:' + space.color+ ';':''}}"
+                    ng-class="{'selected': favCat === space.category_space }"
+                    ng-if="!back"
+                    on-tap="iconToggle(space.category_space)">
+            </button>
+            <div class="rootlabel" on-tap="toggle(space)" class="button button-light button-block button-clear" >
+                <div class="label" style="box-shadow:inset 4px 4px 0px {{space.color}}, inset -4px -4px 0px {{space.color}};">
                     {{space.name}}
                 </div>
             </div>
