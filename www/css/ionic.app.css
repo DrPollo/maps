@@ -13247,10 +13247,11 @@ ion-side-menu {
   height: 16px; }
 
 .leaflet-control-zoom {
-  border-radius: 0px !important;
-  box-shadow: none;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65) !important;
   margin-right: 8px;
-  margin-top: 8px; }
+  margin-top: 8px;
+  border: none !important; }
   .leaflet-control-zoom .leaflet-bar a:first-child {
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important; }
@@ -15064,8 +15065,8 @@ timeline {
       font-weight: bold; }
     timeline #time-controls.nomobile button.time-control {
       min-height: auto;
-      height: 26px;
-      width: 26px;
+      height: 30px;
+      width: 30px;
       line-height: initial;
       margin: 0px 0 0 -4px;
       border-left: 1px #ccc solid;
