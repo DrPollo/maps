@@ -23,9 +23,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var tries = 0;
 
 
-            // se non e' presente c in $location.search() c lo imposto al centro della mappa
-            if(!$location.search().c)
-                $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
+
 
 
             var isMobile = PlatformService.isMobile();
@@ -189,6 +187,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     function (map) {
                         // $log.debug('save map reference');
                         mapRef = map;
+
+                        initCentre();
+                        initListners();
                         // se definito
                         if(zoomControl)
                             mapRef.addControl(zoomControl);
@@ -229,74 +230,94 @@ angular.module('firstlife.directives').directive('flmap',function () {
             });
 
             var timer = null;
-            $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
-                if(event.defaultPrevented)
-                    return ;
+            function initListners() {
+                $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
+                    if(event.defaultPrevented)
+                        return ;
 
-                event.preventDefault();
+                    event.preventDefault();
 
-                // $log.debug('moveend');
-                timer = $timeout(flushMarkers,500);
-                if($scope.editMode){
                     var center = mapRef.getCenter();
                     var z = mapRef.getZoom();
-                    var hash =
-                        $location.search("c",center.lat+':'+center.lng+':'+z);
-                }
-            });
-            $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
-                if(event.defaultPrevented)
-                    return ;
+                    $location.search("c",center.lat+':'+center.lng+':'+z);
+                    // $log.debug('moveend');
+                    timer = $timeout(flushMarkers,500);
+                    // if($scope.editMode){
+                    //     var center = mapRef.getCenter();
+                    //     var z = mapRef.getZoom();
+                    //     var hash =
+                    //         $location.search("c",center.lat+':'+center.lng+':'+z);
+                    // }
+                });
+                $scope.$on('leafletDirectiveMap.mymap.movestart', function(event, args) {
+                    if(event.defaultPrevented)
+                        return ;
 
-                event.preventDefault();
+                    event.preventDefault();
 
-                // $log.debug('movestart');
-                if(timer)
-                    $timeout.cancel(timer);
-            });
+                    // $log.debug('movestart');
+                    if(timer)
+                        $timeout.cancel(timer);
+                });
 
-            /*
-             * gestione stato parametri search
-             */
-
-
-            // al cambio del centro della mappa aggiorno il parametro search c
-            $scope.$on("centerUrlHash", function(event, centerHash) {
-                if(event.defaultPrevented)
-                    return;
-                event.preventDefault();
-                // $log.debug("url", centerHash);
-                $location.search('c', centerHash);
-            });
+                /*
+                 * gestione stato parametri search
+                 */
 
 
-            $scope.$on('wallMarkerClick',function (event,args) {
-                if(event.defaultPrevented)
-                    return;
-                event.preventDefault();
+                // al cambio del centro della mappa aggiorno il parametro search c
+                $scope.$on("centerUrlHash", function(event, centerHash) {
+                    if(event.defaultPrevented)
+                        return;
+                    event.preventDefault();
+                    // $log.debug("url", centerHash);
+                    $location.search('c', centerHash);
+                });
 
-                if(args.id){
-                    locateEntity(args.id);
-                    $location.search('entity',args.id);
-                    $scope.$emit('wallClick',{id: args.id});
-                }
-            });
+
+                $scope.$on('wallMarkerClick',function (event,args) {
+                    if(event.defaultPrevented)
+                        return;
+                    event.preventDefault();
+
+                    if(args.id){
+                        locateEntity(args.id);
+                        $location.search('entity',args.id);
+                        $scope.$emit('wallClick',{id: args.id});
+                    }
+                });
+            }
+
 
 
             /*
              * Funzioni private
              */
 
+            // se non e' presente c in $location.search() c lo imposto al centro della mappa
+            function initCentre() {
+                if($location.search().c){
+                    var c = $location.search().c.split(':');
+                    // $log.debug($location.search(),c);
+                    mapRef.setView(L.latLng(c[0], c[1]),c[2]);
+                }else{
+                    $location.search('c', $scope.map.center.lat+':'+$scope.map.center.lng+':'+$scope.map.center.zoom);
+                }
+            }
+
+
             function changeLocation(params) {
                 var hash = params.lat+':'+params.lng;
                 hash = hash.concat(':',params.zoom || mapRef.getZoom());
 
-                $log.debug('change location',hash);
+                // $log.debug('change location',hash);
                 if(mapRef){
                     var z = params.zoom || mapRef.getZoom();
                     mapRef.setView(L.latLng(params.lat, params.lng),z);
                 }
-                $location.search({ c: hash });
+                if($location.search().c !== hash){
+                    $location.search({ c: hash });
+                }
             }
 
             function locateEntity(entityId){
