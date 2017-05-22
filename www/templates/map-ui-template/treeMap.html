@@ -5,7 +5,7 @@
             <button class="backtoroot button button-light button-block button-clear" 
                     ng-if="back && (back == space.category_space)"
                     on-tap="close()">
-                <i class="icon ion-android-arrow-dropleft-circle"></i>
+                <i class="icon ion-android-arrow-dropleft"></i>
                 {{space.name}}
             </button>
             <button class="button button-small button-clear legend icon ion-android-pin"
@@ -22,14 +22,15 @@
             <div class="child" ng-show="back && (back == space.category_space)">
                 <div class="childblock"
                      ng-repeat="cat in space.list track by $index"
-                     ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],color: toggled[space.name][cat[space.check]] ? 'white' : cat.color,background:toggled[space.name][cat[space.check]]?cat.color:'#fff'}"
-                     on-tap="toggleCat(space.name,cat[space.check])">
-                    <i class="checker icon medium-dark" 
-                       ng-class="{ 'ion-close-circled': !toggled[space.name][cat[space.check]], 'ion-checkmark-circled': toggled[space.name][cat[space.check]]}"
-                       style="color:{{ toggled[space.name][cat[space.check]] ? 'white' : cat.color }};"></i>
-                    <button class="label button linear-animation" style="color:{{ toggled[space.name][cat[space.check]] ? 'white' : cat.color }};">
-                        <i class="icon {{cat.icon_name}}"></i>
-                        {{cat.name}}
+                     ng-style="{left:cat.rect[0],top:cat.rect[1],width:cat.rect[2],height:cat.rect[3],'box-shadow':'inset 4px 4px 0px '+cat.color+',inset -4px -4px 0px '+cat.color}"
+                     on-tap="toggleCat(space.name,cat[space.check])"
+                     ng-class="{'selected': toggled[space.name][cat[space.check]] }">
+                    <i class="checker icon medium-dark fast-ease-in-out-animation"
+                       ng-class="{ 'ion-ios-close-empty': !toggled[space.name][cat[space.check]], 'ion-ios-checkmark-empty': toggled[space.name][cat[space.check]]}"
+                       style="{{toggled[space.name][cat[space.check]] ? 'color:'+cat.color+';':''}}"></i>
+                    <button class="label button fast-ease-in-out-animation icon {{cat.icon_name}}"
+                            style="{{toggled[space.name][cat[space.check]] ? 'color:'+cat.color+';':''}}">
+                        <span class="text">{{cat.name}}</span>
                     </button>
                 </div>
         </div>

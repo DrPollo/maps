@@ -15318,8 +15318,12 @@ timeline {
     font-size: 2em; }
   #treemapfilter .label {
     font-size: 1.1em;
+    line-height: 1.1em;
     font-weight: 500;
     color: #333; }
+  #treemapfilter .label:before {
+    line-height: 1.1em;
+    font-size: 1.1em; }
   #treemapfilter .root {
     position: absolute;
     background-color: white; }
@@ -15377,20 +15381,22 @@ timeline {
       position: relative; }
       #treemapfilter .root .child .childblock {
         position: absolute;
-        box-shadow: inset 0px 0px 0px 1px #fff;
-        -o-box-shadow: inset 0px 0px 0px 1px #fff;
-        -moz-box-shadow: inset 0px 0px 0px 1px #fff;
-        -webkit-box-shadow: inset 0px 0px 0px 1px #fff; }
+        border-radius: 4px;
+        border: 1px solid white; }
         #treemapfilter .root .child .childblock .label {
           width: 100%;
           min-height: 100%;
           height: auto;
           border-radius: 0px;
-          background: transparent; }
+          background: transparent;
+          color: #666; }
         #treemapfilter .root .child .childblock .checker {
           position: absolute;
           z-index: 1;
-          padding: 10px; }
+          padding: 10px;
+          color: #666; }
+      #treemapfilter .root .child .childblock.selected .label .text {
+        color: #333; }
 
 #landingpage {
   background: #fafafa; }
