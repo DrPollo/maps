@@ -295,7 +295,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         // templateUrl: "templates/side-menu.html",
         controller: 'AppCtrl as app'
     }).state('app.maps', {
-        url: "/maps?c&entity&embed&date&unit&types&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
+        url: "/maps?c&entity&embed&date&unit&excluded&"+config.map.filters.map(function(e){return e.search_param;}).join('&'),
         reloadOnSearch: false,
         views: {
             'menuContent': {

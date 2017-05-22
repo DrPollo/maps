@@ -116,7 +116,7 @@ angular.module('firstlife.directives')
 
             }
         };
-    }]).directive('entityFilter',['$log','myConfig','ThingsService', 'PlatformService', function ($log,myConfig,ThingsService, PlatformService) {
+    }]).directive('entityFilter',['$log','$location','myConfig','ThingsService', 'PlatformService', function ($log,$location,myConfig,ThingsService, PlatformService) {
     return {
         restrict: 'EG',
         templateUrl: '/templates/wall/entityTypeFilter.html',
@@ -135,10 +135,40 @@ angular.module('firstlife.directives')
             scope.types = myConfig.types.list;
 
             scope.isMobile = PlatformService.isMobile();
+
+            //init filtri in url
+            var types = $location.search().excluded;
+            // $log.debug('types ',types);
+            if(types){
+                var disabled = types.split(',');
+                // $log.debug('selected ',disabled);
+                disabled.map(function (type) {
+                    //set filter
+                    // $log.debug('init types, excluding',type);
+                    ThingsService.toggleFilter('entity_type',type);
+                });
+            }
+
+            // gestione parametri search
+            $log.debug('types',scope.types);
+
+
             scope.toggle = function (key) {
-                // $log.debug('toggle filter entity_type',key);
+                $log.debug('toggle filter entity_type',key);
                 ThingsService.toggleFilter('entity_type',key);
                 scope.$emit('toggleFilter');
+
+                // genero hash dei tipi disabilitati
+                $log.debug(scope.filter.list);
+                var hash = scope.filter.list.reduce(function (result,e) {
+                    $log.debug(result,e);
+                    if(!e.visible) {
+                        result.push(e.key);
+                    }
+                    return result;
+                },[]).join(',');
+                // $log.debug('hash',hash);
+                $location.search('excluded',hash);
             }
         }
     }
