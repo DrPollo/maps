@@ -131,6 +131,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             event.preventDefault();
                             $state.go('app.maps',search_params);
                         }
+                        $log.debug('going home');
                         break;
                     case 'app.editor':
                         if(authenticate && !AuthService.isAuth()){

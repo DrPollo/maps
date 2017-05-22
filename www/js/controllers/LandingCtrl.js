@@ -9,12 +9,16 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
+            $log.debug('qui',event.preventLandingEvent);
+
             if(event.preventLandingEvent)
-                return
+                return;
             event.preventLandingEvent = true;
+
+            $log.debug('qui',toState.name);
             // se non devo gestire l'evento
-            if(toState.name != 'home')
-                return
+            if(toState.name !== 'home')
+                return;
 
             var params = $location.search();
 
