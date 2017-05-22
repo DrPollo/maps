@@ -1,3 +1,12 @@
 <button id="wall-toggler" class="button" on-tap="toggle()" title="{{'TOGGLE_WALL_TITLE'|translate}}">
     <i class="icon ion-android-list"></i>
 </button>
+<div id="map-legend" on-tap="toggle()" style="position: absolute;">
+    <div ng-repeat="category in filter.list | orderBy:'id' track by $index"
+            ng-style="category.visible ? {'color':  colors[category.index]}:{'color' : '#999'}"
+            ng-class="[(category.visible) ? 'active' : 'inactive']"
+            class="legend-item"
+            title="{{category.name | translate}}">
+        <i class="icon {{category.icon}}"></i>
+    </div>
+</div>

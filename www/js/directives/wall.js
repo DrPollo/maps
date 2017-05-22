@@ -1,5 +1,5 @@
 angular.module('firstlife.directives')
-    .directive('wallToggler',['$log', function ($log) {
+    .directive('wallToggler',['$log','myConfig', 'PlatformService','ThingsService',function ($log,myConfig, PlatformService,ThingsService) {
         return{
             restrict:'E',
             scope:{},
@@ -16,7 +16,13 @@ angular.module('firstlife.directives')
                 scope.toggle = function () {
                     // $log.debug('toggle wall');
                     scope.$emit('toggleSideLeft');
-                }
+                };
+
+                scope.filter = ThingsService.getFilter('entity_type');
+                scope.colors = myConfig.design.colors;
+                scope.types = myConfig.types.list;
+
+                scope.isMobile = PlatformService.isMobile();
 
             }
         }

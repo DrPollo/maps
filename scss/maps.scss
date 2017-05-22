@@ -25,6 +25,19 @@
         border-bottom-right-radius: 0px !important;
     }
 }
+#map-legend {
+    background: white;
+    padding: 10px;
+    border-radius: 0px 0px 4px 0px;
+    box-shadow: 1px 1px 3px #666;
+    z-index: -1;
+    text-align: center;
+    .legend-item {
+        i{
+            font-size: 1.2em;
+        }
+    }
+}
 #menu-switch{
     background: #fafafa;
     position: absolute;

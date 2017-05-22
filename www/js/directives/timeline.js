@@ -273,9 +273,11 @@ angular.module('firstlife.timeline',[])
                             var end = angular.copy(n)
                             end.add((i+1)*duration,'hour').subtract(1,'millisecond');
                             var interval = moment.interval(start,end);
-                            var e = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm'),class:'noclick'};
-                            e.class = "six";
-                            array.push(e);
+                            var obj = {label:phases[i],interval:interval,upLabel:interval.start().format('HH:mm'),class:'noclick'};
+                            if(!$scope.isMobile){
+                                obj.class='six';
+                            }
+                            array.push(obj);
                             //$log.debug('check interval phases ',interval.start(),interval.end());
                         }
                         //$log.debug('check interval phases ',array);
@@ -299,7 +301,9 @@ angular.module('firstlife.timeline',[])
                             var obj = {label:weekday,//start.format(format),
                                        interval:interval,
                                       upLabel:interval.start().format('DD')};
-                            obj.class = 'four';
+                            if(!$scope.isMobile){
+                                obj.class='four';
+                            }
                             //$log.debug('is sunday?',interval.start().format('dddd'),interval.start().format('dddd') === 'Sunday')
                             if(interval.start().format('dddd') === 'Sunday' || interval.start().format('dddd') === 'Domenica')
                                 obj.class = obj.class+' red';
@@ -355,10 +359,13 @@ angular.module('firstlife.timeline',[])
                             }
 
                             var monthLabel = $scope.isMobile ? localeData.monthsShort(interval.start()) : localeData.months(interval.start());
-                            weeks.push({
+                            var obj = {
                                 interval:interval,
-                                upLabel:interval.start().format('DD').concat(" ",monthLabel),
-                                class:'seven'});
+                                upLabel:interval.start().format('DD').concat(" ",monthLabel)};
+                            if(!$scope.isMobile){
+                                obj.class='seven';
+                            }
+                            weeks.push(obj);
 //                            weeks.push({label:label,interval:interval,upLabel:interval.start().format('DD MMMM')}); 
                             //                            $log.debug('check interval date ',interval.start().format('DD/MM/YYYY'),interval.end().format('DD/MM/YYYY'));
                         }
