@@ -145,8 +145,14 @@ angular.module('firstlife.directives')
                 disabled.map(function (type) {
                     //set filter
                     // $log.debug('init types, excluding',type);
-                    ThingsService.toggleFilter('entity_type',type);
+                    try{
+                        ThingsService.toggleFilter('entity_type',type);
+                    }catch(e){
+                        $location.search('excluded',null);
+                    }
                 });
+            }else {
+                $location.search('excluded',null);
             }
 
             // gestione parametri search
@@ -168,7 +174,7 @@ angular.module('firstlife.directives')
                     return result;
                 },[]).join(',');
                 // $log.debug('hash',hash);
-                $location.search('excluded',hash);
+                $location.search('excluded',hash||null);
             }
         }
     }
