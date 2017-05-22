@@ -155,19 +155,14 @@ angular.module('firstlife.directives')
                 $location.search('excluded',null);
             }
 
-            // gestione parametri search
-            $log.debug('types',scope.types);
-
-
             scope.toggle = function (key) {
-                $log.debug('toggle filter entity_type',key);
+                // $log.debug('toggle filter entity_type',key);
                 ThingsService.toggleFilter('entity_type',key);
                 scope.$emit('toggleFilter');
-
                 // genero hash dei tipi disabilitati
                 $log.debug(scope.filter.list);
                 var hash = scope.filter.list.reduce(function (result,e) {
-                    $log.debug(result,e);
+                    // $log.debug(result,e);
                     if(!e.visible) {
                         result.push(e.key);
                     }
