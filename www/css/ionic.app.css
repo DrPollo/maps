@@ -13269,7 +13269,7 @@ ion-side-menu {
   #map-legend .legend-item i {
     font-size: 1.2em; }
 
-#menu-switch {
+user-handler #menu-switch {
   background: #fafafa;
   position: absolute;
   top: 0px;
@@ -13281,9 +13281,8 @@ ion-side-menu {
   border-radius: 0px 0px 0px 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   border: none;
-  z-index: 12;
   overflow: hidden; }
-  #menu-switch .badge {
+  user-handler #menu-switch .badge {
     position: absolute;
     bottom: -2px;
     top: initial;
@@ -15091,7 +15090,6 @@ timeline {
       border-radius: 0px 4px 4px 0px; }
   timeline #buttons {
     position: relative;
-    z-index: 2;
     border-top: #ccc 1px solid;
     width: 100%;
     height: 34px;

@@ -38,26 +38,30 @@
         }
     }
 }
-#menu-switch{
-    background: #fafafa;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 45px;
-    min-width: 45px;
-    height: 45px;
-    min-height: 45px;
-    border-radius: 0px 0px 0px 4px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    border: none;
-    z-index: 12;
-    overflow: hidden;
-    .badge{
+user-handler{
+    //position: absolute;
+    //z-index: 12;
+    #menu-switch{
+        background: #fafafa;
         position: absolute;
-        bottom:-2px;
-        top:initial;
-        left: -2px;
-        border-radius: 0px 12px 0px 4px;
+        top: 0px;
+        right: 0px;
+        width: 45px;
+        min-width: 45px;
+        height: 45px;
+        min-height: 45px;
+        border-radius: 0px 0px 0px 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        border: none;
+        //z-index: 12;
+        overflow: hidden;
+        .badge{
+            position: absolute;
+            bottom:-2px;
+            top:initial;
+            left: -2px;
+            border-radius: 0px 12px 0px 4px;
+        }
     }
 }
 .maps-view{
