@@ -27,7 +27,11 @@ angular.module('firstlife.directives', [])
                     }
                     var token = AuthService.token();
                     var url = attrs.url.concat('&client_id=',myConfig.authentication.client_id);
-                    url = token ? url.concat('&access_token=',token.access_token) : url;
+                    if(token) {
+                        url = url.concat('&access_token=', token.access_token);
+                    } else {
+                       url = url.concat('&login_url=',AuthService.auth_url());
+                    }
                     $log.debug('navbar request', url);
                     $http.get(url).then(
                         function(response){
