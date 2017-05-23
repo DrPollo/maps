@@ -30,7 +30,8 @@
         "scopes":["userinfo.profile"],
         "session_check": false,
         "session_params":false,
-        "token_check":"tokens/check"
+        "token_check":"tokens/check",
+        "autologin":false
     },
     "design":{
         "logo" : {

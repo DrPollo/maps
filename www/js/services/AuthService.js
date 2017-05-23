@@ -55,6 +55,7 @@ angular.module('firstlife.services')
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
+                        headers:{},
                         data: {}
                     };
 

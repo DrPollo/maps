@@ -61,7 +61,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         //self.cache.isStateCached = false;
         // semaforo per autoLogin();
         // se non loggato provo una volta
-        var tryAutoLogin = !AuthService.isAuth();
+        var tryAutoLogin = !AuthService.isAuth() && myConfig.authentication.autologin;
 
         // check validita' token al caricamento
         // $log.debug('check token init');
@@ -109,7 +109,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 if(tryAutoLogin && toState.name !== 'callback' && !search_params.code ){
                     tryAutoLogin = false;
                     // todo debug
-                    // autoLogin();
+                    autoLogin();
                 }
 
                 switch (toState.name){
@@ -1146,7 +1146,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             return {
                 request: function(config) {
-                    if(config.method !== 'GET'){
+                    console.log('setting header to ',config)
+                    if(config.method !== 'GET' && !config.headers){
+                        console.log('changing headers');
                         config.headers['Content-Type'] = 'application/json';
                         // inject del token nell'header se esiste
                         var token = $localStorage[myConfig.authentication.token_mem_key];
