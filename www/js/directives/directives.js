@@ -30,7 +30,7 @@ angular.module('firstlife.directives', [])
                     if(token) {
                         url = url.concat('&access_token=', token.access_token);
                     } else {
-                       url = url.concat('&login_url=',AuthService.auth_url());
+                       url = url.concat('&login_url=',encodeURIComponent(AuthService.auth_url()));
                     }
                     $log.debug('navbar request', url);
                     $http.get(url).then(
