@@ -1146,9 +1146,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             return {
                 request: function(config) {
-                    console.log('setting header to ',config)
-                    if(config.method !== 'GET' && !config.headers){
-                        console.log('changing headers');
+                    // console.log('setting header to ',config.url)
+                    if(config.method !== 'GET'){
+                        // console.log('changing headers',config.headers !== false, config.headers);
                         config.headers['Content-Type'] = 'application/json';
                         // inject del token nell'header se esiste
                         var token = $localStorage[myConfig.authentication.token_mem_key];

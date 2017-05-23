@@ -11,7 +11,6 @@ angular.module('firstlife.services')
         var embed = searchParams.embed || false;
         // $log.debug('embed?',embed);
 
-
         //C: (P&(~Q))
         return {
             checkToken: function () {
@@ -55,17 +54,12 @@ angular.module('firstlife.services')
                     var req = {
                         url: myConfig.authentication.api_session,
                         method: 'POST',
-                        headers:{},
-                        data: {}
+                        headers:false
                     };
 
-                    // setup dei parametri specifici dell'oauth
-                    if(myConfig.authentication.session_params)
-                        angular.extend(req, myConfig.authentication.session_params);
-
-                    $log.debug('check session ',req);
+                    // $log.debug('check session ',req.headers);
                     $http(req).then(function (response) {
-                        $log.debug('check session', response.data);
+                        // $log.debug('check session', response.data);
                         // se devo controllare un parametro
                         if(myConfig.authentication.session_check){
                             if(response.data[myConfig.authentication.session_check]){
