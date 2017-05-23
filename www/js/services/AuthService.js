@@ -123,7 +123,8 @@ angular.module('firstlife.services')
                     },
                     data: {
                         code:code,
-                        redirect_uri:myConfig.authentication.redirect_uri_auth
+                        redirect_uri:myConfig.authentication.redirect_uri_auth,
+                        client_id:myConfig.authentication.client_id
                     }
                 };
                 $http(req).then(function(response) {

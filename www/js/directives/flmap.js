@@ -22,16 +22,13 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var triesLimit = 5;
             var tries = 0;
 
-
-
-
+            var timer = null;
 
             var isMobile = PlatformService.isMobile();
 
             // disabilito i comandi zoom in caso di mobile
             if(!isMobile)
                 var zoomControl = L.control.zoom({position:'bottomleft'});
-
 
             // todo sposta configurazione in un provider
             var scales = myConfig.map.scales;
@@ -188,6 +185,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('save map reference');
                         mapRef = map;
 
+                        // init dei marker
+                        $timeout(flushMarkers,500);
+
                         initCentre();
                         initListners();
                         // se definito
@@ -229,13 +229,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 );
             });
 
-            var timer = null;
+
             function initListners() {
                 $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
                     if(event.defaultPrevented)
                         return ;
 
                     event.preventDefault();
+
+                    if(timer)
+                        $timeout.cancel(timer);
 
                     var center = mapRef.getCenter();
                     var z = mapRef.getZoom();
