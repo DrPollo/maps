@@ -31,7 +31,7 @@
         "session_check": false,
         "session_params":false,
         "token_check":"tokens/check",
-        "autologin":true
+        "autologin":false
     },
     "design":{
         "logo" : {
