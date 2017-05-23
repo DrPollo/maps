@@ -900,7 +900,7 @@
         }
     },
     "behaviour":{
-        "is_login_required" : true,
+        "is_login_required" : false,
         "bbox_timeout": 5000,
         "moveend_delay": 1000,
         "searchend_delay": 1000,
