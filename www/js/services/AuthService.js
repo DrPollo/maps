@@ -105,6 +105,7 @@ angular.module('firstlife.services')
                 return myConfig.authentication["signature_url"];
             },
             logout: function(){
+                MemoryFactory.delete(indentityKey);
                 return MemoryFactory.delete(tokenKey);
             },
             token: function(){
@@ -152,7 +153,8 @@ angular.module('firstlife.services')
             logout: function (){
                 // cancello il token
                 MemoryFactory.delete(tokenKey);
-                return MemoryFactory.delete(tokenKey) && MemoryFactory.delete(identityKey);
+                MemoryFactory.delete(identityKey);
+                return true;
             },
             checkPerms: function(source){
 

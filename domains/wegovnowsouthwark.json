@@ -78,6 +78,9 @@
     "map_default_lng" : -0.082088,
     "zoom_level" : 14,
     "map_view" : "https://api.mapbox.com/styles/v1/drp0ll0/cj0tausco00tb2rt87i5c8pi0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ"
+  },
+  "behaviour":{
+    "is_login_required" : false
   }
 }
 }

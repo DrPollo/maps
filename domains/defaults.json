@@ -31,7 +31,7 @@
         "session_check": false,
         "session_params":false,
         "token_check":"tokens/check",
-        "autologin":false
+        "autologin":true
     },
     "design":{
         "logo" : {
@@ -900,7 +900,7 @@
         }
     },
     "behaviour":{
-        "is_login_required" : false,
+        "is_login_required" : true,
         "bbox_timeout": 5000,
         "moveend_delay": 1000,
         "searchend_delay": 1000,

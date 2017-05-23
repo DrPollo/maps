@@ -5,7 +5,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         self.config = myConfig;
         // init utente
         $rootScope.isLoggedIn = AuthService.isAuth();
-
+        var landingEnabled = myConfig.behaviour.is_login_required;
 
         // fix callback
         myConfig.base_callback = $location.protocol().concat( "://" ,$location.host(),'/');
@@ -124,8 +124,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         }
                         break;
                     case 'home':
-                        // if it is a viewer and it is not already going to the map
-                        if(embed){
+                        // if it is a viewer
+                        // OR
+                        // if landingpage is not mandatory
+                        // then go to the map
+                        if(embed || !landingEnabled){
                             // go directly to the map
                             $log.debug('embed, redirect a app.maps');
                             event.preventDefault();
