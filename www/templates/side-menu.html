@@ -30,10 +30,10 @@
             <ion-list>
                 <ion-item class="heading-item item item-avatar">
                     <img ng-src="{{config.design.logo_menu}}">
-                    <h2 class="greeting">{{'WELCOME'|translate}} {{displayName}}</h2>
+                    <h2 class="greeting">{{'WELCOME'|translate}} {{user.fullname ? user.fullname : 'GUEST'|translate}}</h2>
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
-                <ion-item class="item-divider">{{'CURRENT_SIGNATURE'|translate}}</ion-item>
+                <ion-item class="item-divider" ng-if="user.signature || user.fullname">{{'CURRENT_SIGNATURE'|translate}}</ion-item>
                 <ion-item class="item-text-wrap">{{ (user.signature && user.signature !== '') ? user.signature : user.fullname}}</ion-item>
                 <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <notification-link check="checkNotifications"></notification-link>
