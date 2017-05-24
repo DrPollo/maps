@@ -65,9 +65,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
         // check validita' token al caricamento
         // $log.debug('check token init');
-        AuthService.checkToken().then(function (response) {
-            // $log.debug('check token response',response);
-        });
+        var toCheck = true;
 
 
         // gestione errori http
@@ -106,9 +104,22 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 $rootScope.previousState = fromState.name;
 
                 // $log.debug('is auth?',AuthService.isAuth());
-                if(tryAutoLogin && toState.name !== 'callback' && !search_params.code ){
+                // primo controllo token esistente
+                if(toCheck && !tryAutoLogin){
+                    toCheck = false;
+                    AuthService.checkToken().then(
+                        // se il token e' ok
+                        function (response) {
+                        // $log.debug('check token response',response);
+                        },
+                        // se il token non e' ok
+                        function (err) {
+                            tryAutoLogin = false;
+                            autoLogin();
+                        }
+                    );
+                } else if(tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code ){
                     tryAutoLogin = false;
-                    // todo debug
                     autoLogin();
                 }
 

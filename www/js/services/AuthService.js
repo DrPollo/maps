@@ -18,7 +18,7 @@ angular.module('firstlife.services')
                 // $log.debug('check token validity',!MemoryFactory.get(tokenKey),!myConfig.authentication.token_check);
                 // se non ho token da controllare
                 if(!MemoryFactory.get(tokenKey)){
-                    deferred.resolve('no token to check');
+                    deferred.reject('no token to check');
                     return deferred.promise;
                 }
                 // se il servizio non e' definito
@@ -39,6 +39,10 @@ angular.module('firstlife.services')
                     deferred.resolve(response);
                 },function(err){
                     // $log.debug("check token",err);
+                    // token non valido faccio logout
+                    MemoryFactory.delete(indentityKey);
+                    MemoryFactory.delete(tokenKey);
+
                     deferred.reject(err);
                 });
 
@@ -106,7 +110,8 @@ angular.module('firstlife.services')
             },
             logout: function(){
                 MemoryFactory.delete(indentityKey);
-                return MemoryFactory.delete(tokenKey);
+                MemoryFactory.delete(tokenKey);
+                return true;
             },
             token: function(){
                 return MemoryFactory.get(tokenKey) || false;
