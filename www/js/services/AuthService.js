@@ -30,7 +30,7 @@ angular.module('firstlife.services')
                 // $log.debug('check token validity');
                 var token = MemoryFactory.get(tokenKey).access_token;
                 var req = {
-                    url: myConfig.authentication.token_check+"?access_token="+token,
+                    url: myConfig.authentication.token_check+"?access_token="+token+'&auth_server='+myConfig.authentication.auth_server_name,
                     method: 'GET',
                     data: false
                 };

@@ -198,11 +198,10 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                     params = {lat:marker.lat, lng:marker.lng, zoom_level:marker.zoom_level, rel: marker.id, parent_type:marker.entity_type};
 
                 $log.debug('addChildEntity',params);
-                // mando il messaggio
-                $scope.$emit("startEditing",params);
-
                 //fai uscire la wizardPlace con placeholder dati vecchi
-                $scope.closeModal();
+                $scope.exit();
+                // mando il messaggio
+                $scope.$emit("requestEditing",params);
             };
 
             // click su tag o categoria per filtrare

@@ -175,6 +175,15 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('startUpdating',args);
         });
 
+        $scope.$on('requestEditing',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('startEditing',args);
+        });
+
 
 
 
