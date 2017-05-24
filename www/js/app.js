@@ -139,6 +139,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         // OR
                         // if landingpage is not mandatory
                         // then go to the map
+                        $log.debug('embed?',embed,'landingEnabled',landingEnabled);
                         if(embed || !landingEnabled){
                             // go directly to the map
                             $log.debug('embed, redirect a app.maps');
