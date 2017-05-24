@@ -6,7 +6,6 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
         restrict: 'EG',
         scope: {
             marker: '<marker',
-            show: '&click',
             add: '&'
         },
         templateUrl: '/templates/children/children.html',
@@ -137,7 +136,7 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
 
                 scope.click = function (id) {
                     // $log.debug('show',id,scope.show);
-                    scope.show({id:id});
+                    scope.$emit('wallClick',{id:id});
                 }
 
             }
