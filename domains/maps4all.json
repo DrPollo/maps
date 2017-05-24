@@ -386,9 +386,9 @@
     ]
   },
   "map":{
-    "tile_view" : "https://api.mapbox.com/styles/v1/drp0ll0/cizl1thgs000u2ro17h1cv4y2/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_view" : "https://api.mapbox.com/styles/v1/mooncake79/cj333ko27000o2rquil5ecujd/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibW9vbmNha2U3OSIsImEiOiJjajJ0YjgzZDYwMDB3MnFtcmV4M3E4a2l6In0.eCzb3rjSh9X_ITTOwQrRrA",
     "tile_view_attribution" : "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
-    "tile_edit": "https://api.mapbox.com/styles/v1/drp0ll0/cizl1sb0l000t2ro16uptawtf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_edit": "https://api.mapbox.com/styles/v1/mooncake79/cj333ko27000o2rquil5ecujd/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibW9vbmNha2U3OSIsImEiOiJjajJ0YjgzZDYwMDB3MnFtcmV4M3E4a2l6In0.eCzb3rjSh9X_ITTOwQrRrA",
     "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
     "map_default_lat" : 45.070312,
     "map_default_lng" : 7.686856,
