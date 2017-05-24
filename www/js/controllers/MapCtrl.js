@@ -288,9 +288,9 @@ angular.module('firstlife.controllers')
             event.preventDefault();
 
             // go to editor
-            // $log.debug('createEntity',args,$scope.updateEntity);
+            $log.debug('createEntity',args,$scope.updateEntity);
             try {
-                var params = angular.extend(args,$scope.updateEntity);
+                var params = angular.extend(args, {id: $scope.updateEntity.id ? $scope.updateEntity.id : null} );
             }catch(e){
                 $log.error(e,'$scope.updateEntity',$scope.updateEntity);
                 var params = angular.extend({}, args);
