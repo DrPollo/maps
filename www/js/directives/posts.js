@@ -145,17 +145,21 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         // $log.debug('posts',results.length);
                         scope.posts = results;
                         deferred.resolve(results);
+                        requestUpdate(results.length);
                     },
                     function (err) {
                         $log.error(err);
                         deferred.reject(err)
                     }
                 );
+                requestUpdate()
                 return deferred.promise;
             }
 
 
-
+            function requestUpdate(counter) {
+                scope.$emit('counterUpdate',{posts:counter});
+            }
 
             // init perms
             function initPerms (author){

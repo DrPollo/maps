@@ -7,7 +7,7 @@
   .modal-header{
     padding: 24px 16px 16px;
     position: relative;
-    background-color: #f5f5f5;
+    background-color: #fafafa;
     color:white;
     form{
       input{
@@ -22,12 +22,11 @@
     h1 {
       color:black;
       margin: 0px;
-      padding: 0px 16px 0px 0px;
-      left:16px !important;
-      font-size: 2em;
+      padding: 0px 26px 0px 16px;
+      font-size: 1.3em;
       text-align: left;
       letter-spacing: 1px;
-      font-weight: 400;
+      font-weight: 500;
     }
     h1:first-letter {
       text-transform: uppercase;
@@ -219,7 +218,7 @@
   .message{font-size: .9em; color: $mediumDark;}
 
   .button-bar-striped{
-    background: #f5f5f5;
+    background: #fafafa;
     box-shadow: 0 2px 2px #ddd;
     .button {
       padding-bottom:4px;

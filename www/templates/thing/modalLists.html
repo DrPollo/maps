@@ -1,20 +1,36 @@
 <div class="list" id="modalLists">
     <div class="button-bar button-bar-striped list-toggler">
-        <button class="button button-positive button-clear icon-left" on-tap="setToggle(0)" ng-class="toggle === 0 ? 'selected' : '' ">
+        <button class="button button-positive button-clear icon-left"
+                on-tap="setToggle(0)"
+                title="{{ 'POSTS' |translate}}"
+                ng-class="toggle === 0 ? 'selected' : '' ">
             <i class="icon ion-chatbox-working"></i>
             <span ng-if="!isMobile">{{ 'POSTS' |translate}}</span>
+            <span ng-if="posts">{{posts}}</span>
         </button>
-        <button class="button button-positive button-clear icon-left" on-tap="setToggle(1)" ng-class="toggle === 1 ? 'selected' : '' ">
+        <button class="button button-positive button-clear icon-left"
+                on-tap="setToggle(1)"
+                title="{{ 'INITIATIVES' |translate}}"
+                ng-class="toggle === 1 ? 'selected' : '' ">
             <i class="icon ion-cube"></i>
             <span ng-if="!isMobile">{{ 'INITIATIVES' |translate}}</span>
+            <span ng-if="initiatives">{{initiatives}}</span>
         </button>
-        <button class="button button-positive button-clear icon-left" on-tap="setToggle(2)" ng-class="toggle === 2 ? 'selected' : '' ">
+        <button class="button button-positive button-clear icon-left"
+                on-tap="setToggle(2)"
+                title="{{ 'CONTENTS' |translate}}"
+                ng-class="toggle === 2 ? 'selected' : '' ">
             <i class="icon ion-social-buffer"></i>
             <span ng-if="!isMobile">{{ 'CONTENTS' |translate}}</span>
         </button>
-        <button ng-if="marker.entity_type === 'FL_GROUPS'" class="button button-positive button-clear icon-left" on-tap="setToggle(3)" ng-class="toggle === 3 ? 'selected' : '' ">
+        <button ng-if="marker.entity_type === 'FL_GROUPS' && !isMobile"
+                class="button button-positive button-clear icon-left"
+                title="{{ 'MEMBERS' |translate}}"
+                on-tap="setToggle(3)"
+                ng-class="toggle === 3 ? 'selected' : '' ">
             <i class="icon ion-android-people"></i>
             <span ng-if="!isMobile">{{ 'MEMBERS' |translate}}</span>
+            <span ng-if="members">{{members}}</span>
         </button>
     </div>
     <!-- lista dei post -->

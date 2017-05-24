@@ -33,6 +33,7 @@ angular.module('firstlife.directives')
                         function(results){
                             $log.debug('check members',results);
                             scope.membersList = results;
+                            requestUpdate(results.length);
                             // $log.debug('member list',results);
                             if(scope.user){
                                 var index = results.map(function(e){return e.id}).indexOf(scope.user.id);
@@ -115,6 +116,11 @@ angular.module('firstlife.directives')
                         },
                         function(response){$log.error('memers list, groupsFactory.removeUser, errore ',response);}
                     );
+                }
+
+
+                function requestUpdate(counter) {
+                    scope.$emit('counterUpdate',{members:counter});
                 }
             }
         };

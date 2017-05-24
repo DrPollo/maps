@@ -39,8 +39,10 @@
     }
 }
 user-handler{
-    //position: absolute;
-    //z-index: 12;
+    position: absolute;
+    z-index: 12;
+    top:0px;
+    right:0px;
     #menu-switch{
         background: #fafafa;
         position: absolute;

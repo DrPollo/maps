@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             id:"<"
         },
         templateUrl:"/templates/thing/card.html",
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', 'PlatformService',function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory, PlatformService) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -21,7 +21,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
 
 
             // visualizzazione web o mobile?
-            $scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+            $scope.isMobile = PlatformService.isMobile();
 
             $scope.$on('$destroy', function(e) {
                 if(e.defaultPrevented)
@@ -432,7 +432,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             }
         }]
     }
-}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','$window','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'clipboard','myConfig',function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,$window,AuthService,groupsFactory,MemoryFactory,notificationFactory, clipboard,myConfig) {
+}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','$window','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'clipboard','myConfig', 'PlatformService',function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,$window,AuthService,groupsFactory,MemoryFactory,notificationFactory, clipboard,myConfig, PlatformService) {
     return {
         restrict: 'EG',
         scope: {
@@ -461,7 +461,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
 
             scope.user = AuthService.getUser();
             // visualizzazione web o mobile?
-            scope.isMobile = (ionic.Platform.isIPad() || ionic.Platform.isIOS() || ionic.Platform.isAndroid() || ionic.Platform.isWindowsPhone());
+            scope.isMobile = PlatformService.isMobile();
 
             init();
             var subscribers = null;
@@ -809,7 +809,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
         restrict: 'E',
         template:'<div style="width:100%;text-align:center;padding:40px;"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></div>'
     }
-}).directive('modalLists',  ['$log', '$ionicScrollDelegate', '$location','AuthService',function($log, $ionicScrollDelegate,$location, AuthService){
+}).directive('modalLists',  ['$log', '$ionicScrollDelegate', '$location','AuthService','PlatformService','notificationFactory' , 'groupsFactory', 'postFactory',function($log, $ionicScrollDelegate,$location, AuthService, PlatformService, notificationFactory, groupsFactory ,postFactory){
     return{
         restrict: 'E',
         scope: {
@@ -830,6 +830,12 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 delete scope;
             });
 
+            scope.isMobile = PlatformService.isMobile();
+            scope.subscribers = 0;
+            scope.initiatives = 0;
+            scope.posts = 0;
+            scope.members = 0;
+
             // numero di tab
             var tabs = 4;
             // parto con la prima tag
@@ -839,11 +845,75 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 scope.toggle = i > -1 && i < tabs ? i : scope.toggle;
                 $location.hash('modalLists');
                 $ionicScrollDelegate.anchorScroll(true);
-            }
+            };
             scope.click = function (id) {
                 // $log.debug('modal.js',id);
                 scope.show({id:id});
-            }
+            };
+
+            scope.$on('counterUpdate',function (event,args) {
+               if(event.defaultPrevented)
+                   return;
+               event.preventDefault();
+
+               if(args.subscribers){
+                   scope.subscribers = args.subscribers;
+               }
+               if(args.posts){
+                   scope.posts = args.posts;
+               }
+               if(args.initiatives){
+                   scope.initiatives = args.initiatives;
+               }
+               if(args.members){
+                   scope.members = args.members;
+               }
+            });
+
+
+            // initCounters();
+            //
+            // function initCounters() {
+            //     if(scope.subscribers)
+            //         delete scope.subscribers;
+            //     if(scope.posts)
+            //         delete scope.posts;
+            //     if(scope.members)
+            //         delete scope.members;
+            //
+            //
+            //     switch (scope.marker.entity_type){
+            //         case 'FL_GROUPS':
+            //             // init counter members
+            //             scope.members = 0;
+            //             groupsFactory.getMembers(scope.marker.id).then(
+            //                 function (results) {
+            //                     scope.members = results.length;
+            //                 }
+            //             );
+            //         default:
+            //             // init counter subscribers
+            //             scope.subscribers = 0;
+            //             notificationFactory.subscribers(scope.marker.id).then(
+            //                 function (results) {
+            //                     scope.subscribers = results.length;
+            //                 }
+            //             );
+            //             // init counter posts
+            //             scope.posts = 0;
+            //             postFactory.getPosts(scope.marker.id).then(
+            //                 function (results) {
+            //                     scope.posts = results.length;
+            //                 }
+            //             );
+            //             // init counter initiatives
+            //             scope.initiatives = scope.marker.initiative_list ? scope.marker.initiative_list.length : 0;
+            //         // todo init counter contents
+            //     }
+            //
+            // }
+
+
         }
     }
 }]).directive('reportEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'ThingsService', 'myConfig', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, ThingsService, myConfig){

@@ -53,12 +53,17 @@ angular.module('firstlife.directives')
                     InitiativeFactory.getAllInitiatives(scope.thingId).then(
                         function (results) {
                             scope.initiatives = angular.copy(results);
+                            requestUpdate(results.length);
                             // $log.debug('list of initiatives',results);
                         },
                         function (error) {
                             $log.error(error);
                         }
                     );
+                }
+
+                function requestUpdate(counter) {
+                    scope.$emit('counterUpdate',{initiatives:counter});
                 }
 
             }
