@@ -105,7 +105,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
                 // $log.debug('is auth?',AuthService.isAuth());
                 // primo controllo token esistente
-                if(toCheck && !tryAutoLogin){
+                if(toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout'){
                     toCheck = false;
                     AuthService.checkToken().then(
                         // se il token e' ok
