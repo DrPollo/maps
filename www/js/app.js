@@ -99,7 +99,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
                 $log.debug('state ',$state);
 
-                $log.debug("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+                console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
 
                 $rootScope.previousState = fromState.name;
 
