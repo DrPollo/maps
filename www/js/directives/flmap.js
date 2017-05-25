@@ -244,13 +244,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     var z = mapRef.getZoom();
                     $location.search("c",center.lat+':'+center.lng+':'+z);
                     // $log.debug('moveend');
-
-                    if($scope.editMode){
-                        timer = $timeout(updateGridStyle,500);
-                        tries = 0;
-                    }else{
-                        timer = $timeout(flushMarkers,500);
-                    }
+                    timer = $timeout(flushMarkers,500);
                     // if($scope.editMode){
                     //     var center = mapRef.getCenter();
                     //     var z = mapRef.getZoom();
@@ -510,6 +504,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 addEditLayers();
                 tries = 0;
                 $timeout(updateGridStyle,500);
+                mapRef.on('moveend',function (e) {
+                    // $log.debug(e);
+                    tries = 0;
+                    $timeout(updateGridStyle,500);
+                })
             });
             $scope.$on('exitEditMode',function (e,args) {
                 if(e.defaultPrevented)
@@ -539,14 +538,16 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     } catch (e){
                         $log.debug('no properties');
                     };
-                    var args = {id:null, tile: tile, zoom_level:z, tile_id:tileid, lat:center.lat, lng:center.lng};
+                    var args = {id:null, tile: tile, zoom_level:z, tile_id:tileid};
                     if(properties){
                         args.area_id = properties.id;
                         args.type = properties.type;
                     }
+                    // $log.debug('got',mapRef._targets[id].properties);
+                    var info = angular.extend(args,center);
                     //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
-                    $log.debug('createEntity',args);
-                    $scope.$emit('createEntity',args);
+                    // $log.debug('createEntity',properties,info);
+                    $scope.$emit('createEntity',info);
                     // removeEditLayers();
                 },300);
             };
@@ -603,7 +604,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function removeEditLayers(){
                 if(currentFeature)
                     vGrid.resetFeatureStyle(currentFeature);
-                // mapRef.off('moveend');
+                mapRef.off('moveend');
                 vGrid.off('mouseover');
                 // vGrid.off('mouseout');
                 vGrid.off('click');
