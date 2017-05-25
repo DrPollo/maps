@@ -444,9 +444,9 @@
     ]
   },
   "map":{
-    "map_default_lat" : 45.070312,
-    "map_default_lng" : 7.686856,
-    "zoom_level" : 10
+    "map_default_lat" : 45.08806600338162,
+    "map_default_lng" : 7.966461181640626,
+    "zoom_level" : 9
   },
   "behaviour":{
     "is_login_required" : true

@@ -5,7 +5,7 @@ angular.module('firstlife.timeline',[])
         restrict: 'EG',
         scope: {},
         templateUrl:'/templates/map-ui-template/timeline.html',
-        controller: ['$scope','$rootScope','$log', '$filter','$translate', '$location','myConfig','ThingsService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,$location,myConfig,ThingsService,PlatformService, leafletData){
+        controller: ['$scope','$rootScope','$log', '$filter','$translate', '$location', '$window','myConfig','ThingsService','PlatformService', 'leafletData', function($scope,$rootScope,$log, $filter,$translate,$location, $window,myConfig,ThingsService,PlatformService, leafletData){
 
             $scope.$on('destroy',function(){
                 $scope.stopClock();
@@ -38,6 +38,9 @@ angular.module('firstlife.timeline',[])
 
             // c'e' la navbar
             $scope.navbar = myConfig.design.navbar;
+
+            // e' in embed?
+            $scope.flUri = $location.search().embed ? $window.location.href.replace('embed=viewer','') : false;
 
             //setup lingua di moment js
             moment.locale($translate.use());

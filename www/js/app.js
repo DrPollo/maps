@@ -655,7 +655,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         PICTURE_DISCLAIMER:"La dimensione dell'immagine non deve superare 2 MB.",
         IMAGE_FORMATS:"Sono supportati i seguenti formati .jpg, .png e .gif",
         ADVANCED_TIME:"Gestione avanzata del tempo",
-        EMBED_MAP: "Exporta",
+        EMBED_MAP: "Esporta",
         INFO_LABEL:"Info",
         INFO_PLACEHOLDER:"Informazioni utili, istruzioni, regole, etc...",
         CLOSE:"Chiudi",
