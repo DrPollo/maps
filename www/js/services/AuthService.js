@@ -64,7 +64,7 @@ angular.module('firstlife.services')
                     if(myConfig.authentication.session_params){
                         angular.extend(req,myConfig.authentication.session_params);
                     }
-                    $log.log('check session ',req);
+                    console.log('check session ',req);
                     $http(req).then(function (response) {
                         // $log.debug('check session', response.data);
                         // se devo controllare un parametro
