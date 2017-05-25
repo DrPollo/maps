@@ -174,6 +174,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             }
         });
         function autoLogin(){
+            if(AuthService.isAuth())
+                return;
             // se l'utente non e' loggato
             // controllo se posso fare l'autologin con l'auth server
             AuthService.checkSession().then(
