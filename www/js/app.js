@@ -270,7 +270,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             });
         }
 
-    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
@@ -365,10 +365,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         }
     });
 
-
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
-
 
     //error handler
     $provide.decorator("$exceptionHandler", ["$delegate", '$log', function($delegate,$log){
