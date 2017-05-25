@@ -188,7 +188,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         console.log('loggato? ',AuthService.isAuth());
                         if(AuthService.isAuth())
                             return;
-                        $window.location.href = AuthService.auth_url();
+                        var authUrl = AuthService.auth_url();
+                        console.log('go to url ',authUrl);
+                        $window.location.href = authUrl;
                     },1);
                 },
                 function (err) {
@@ -225,21 +227,22 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     ];
                     break;
                 case 'auth_required':
-                    title = 'AUTH_REQ_ERROR';
-                    text = 'AUTH_REQ_ERROR_TEXT';
-                    buttons = [
-                        { text: $filter('translate')('ABORT') },
-                        {
-                            text: '<b>Login</b>',
-                            type: 'button-positive',
-                            onTap: function(e) {
-                                confirmPopup.close();
-                                $timeout(function(){
-                                    $window.location.href = AuthService.auth_url();
-                                },1);
-                            }
-                        }
-                    ];
+                    //
+                    // title = 'AUTH_REQ_ERROR';
+                    // text = 'AUTH_REQ_ERROR_TEXT';
+                    // buttons = [
+                    //     { text: $filter('translate')('ABORT') },
+                    //     {
+                    //         text: '<b>Login</b>',
+                    //         type: 'button-positive',
+                    //         onTap: function(e) {
+                    //             confirmPopup.close();
+                    //             $timeout(function(){
+                    //                 $window.location.href = AuthService.auth_url();
+                    //             },1);
+                    //         }
+                    //     }
+                    // ];
                     break;
                 default:
                     title = 'ERROR';
