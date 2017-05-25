@@ -370,7 +370,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
 
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/callback');
 
 
     //error handler
