@@ -94,6 +94,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 var authenticate = toState.data.authenticate;
                 var search_params = $location.search();
                 var embed = search_params.embed ? true : false;
+
                 // tolgo i caricamenti
                 $ionicLoading.hide();
 
