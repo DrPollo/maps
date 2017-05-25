@@ -60,7 +60,10 @@ angular.module('firstlife.services')
                         method: 'POST',
                         headers:false
                     };
-
+                    // parametri extra di sessione
+                    if(myConfig.authentication.session_params){
+                        angular.extend(req,myConfig.authentication.session_params);
+                    }
                     // $log.debug('check session ',req.headers);
                     $http(req).then(function (response) {
                         // $log.debug('check session', response.data);
