@@ -940,14 +940,13 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 }
             });
             var hideSheet = null;
-            var dev = myConfig.dev;
 
             scope.disclaimer = $filter('translate')('REPORT_DISCLAIMER');
             scope.user = AuthService.getUser();
             scope.report = {
                 content:{
                     thing_id: scope.id,
-                    message: dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
+                    message: !myConfig.dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
                 },
                 form:{}
             };
