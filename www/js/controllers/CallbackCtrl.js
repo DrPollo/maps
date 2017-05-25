@@ -23,22 +23,22 @@ angular.module('firstlife.controllers')
             // se non devo gestire l'evento
             if(toState.name !== 'callback')
                 return;
-            $log.debug("sono in login, questi i parametri ",toState);
+            $log.log("sono in login, questi i parametri ",toState);
 
             // controllo parametro code
             var params = $location.search();
-            $log.debug("check $location",params);
+            $log.log("check $location",params);
             if(params.error){
-                $log.debug('errore login');
+                $log.log('errore login');
                 // gestisco l'errore
                 loginError();
                 return;
             }else if(params.code){
-                $log.debug('trovato code',params.code);
+                $log.log('trovato code',params.code);
                 // controllo dello stato
                 if(params.state){
                     var currentState = MemoryFactory.get(stateKey);
-                    $log.debug('ho trovato state',params.state, currentState);
+                    $log.log('ho trovato state',params.state, currentState);
                     if(params.state === currentState){
                         generateToken(params.code)
                     }else{// errore stato non coincide
