@@ -17,8 +17,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
         $log.debug('auth server check',myConfig.authentication);
 
-        myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
-        myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;
+        myConfig.authentication["redirect_uri_auth"] = encodeURIComponent(redirect_uri_auth);
+        myConfig.authentication["redirect_uri_logout"] = encodeURIComponent(redirect_uri_logout);
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
 
         if(myConfig.authentication["auth_url"])
