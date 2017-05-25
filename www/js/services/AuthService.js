@@ -40,7 +40,7 @@ angular.module('firstlife.services')
                 },function(err){
                     // $log.debug("check token",err);
                     // token non valido faccio logout
-                    MemoryFactory.delete(indentityKey);
+                    MemoryFactory.delete(identityKey);
                     MemoryFactory.delete(tokenKey);
 
                     deferred.reject(err);
