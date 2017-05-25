@@ -184,6 +184,9 @@ gulp.task('notify',function () {
 gulp.task('config',['mergeconfig','setupenv','buildconfig']);
 
 gulp.task('rebuild',function(){
+    if(gutil.env.norebuild)
+        return;
+
     if(gutil.env.dev){
         var c1 = sh.exec('git reset --hard').code;
         console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
@@ -200,8 +203,6 @@ gulp.task('rebuild',function(){
         console.log('pull dev result', (c3 === 0) ? 'ok' : 'error '+c3);
     }
 
-    if(gutil.env.norebuild)
-        return;
 
     try{
         run('npm build .');

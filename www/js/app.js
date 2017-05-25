@@ -88,90 +88,87 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
 
-            if(!event.preventRedirectState){
-                event.preventRedirectState = true;
+            var authenticate = toState.data.authenticate;
+            var search_params = $location.search();
+            var embed = search_params.embed ? true : false;
+            // tolgo i caricamenti
+            $ionicLoading.hide();
 
-                var authenticate = toState.data.authenticate;
-                var search_params = $location.search();
-                var embed = search_params.embed ? true : false;
-                // tolgo i caricamenti
-                $ionicLoading.hide();
+            $log.debug('state ',$state);
 
-                $log.debug('state ',$state);
+            console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
 
-                console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+            $rootScope.previousState = fromState.name;
 
-                $rootScope.previousState = fromState.name;
-
-                // $log.debug('is auth?',AuthService.isAuth());
-                // primo controllo token esistente
-                if(toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout'){
-                    toCheck = false;
-                    console.log('check token 1');
-                    AuthService.checkToken().then(
-                        // se il token e' ok
-                        function (response) {
+            // $log.debug('is auth?',AuthService.isAuth());
+            // primo controllo token esistente
+            if(toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout'){
+                toCheck = false;
+                console.log('check token 1');
+                AuthService.checkToken().then(
+                    // se il token e' ok
+                    function (response) {
                         // $log.debug('check token response',response);
-                        },
-                        // se il token non e' ok
-                        function (err) {
-                            if(tryAutoLogin) {
-                                tryAutoLogin = false;
-                                console.log('autologin 1');
-                                autoLogin();
-                            }
+                    },
+                    // se il token non e' ok
+                    function (err) {
+                        if(tryAutoLogin) {
+                            tryAutoLogin = false;
+                            console.log('autologin 1');
+                            // autoLogin();
                         }
-                    );
-                } else if(tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code ){
-                    tryAutoLogin = false;
-                    console.log('autologin 2');
-                    autoLogin();
-                }
-
-                switch (toState.name){
-                    case 'app.maps':
-                        if(embed){
-                            // ok vado avanti
-                        } else if(authenticate && !AuthService.isAuth()){
-                            $log.debug('login obbligatorio, redirect a home');
-                            // vai a login per effettuare l'autenticazione
-                            event.preventDefault();
-                            $state.go('home',search_params);
-                        }
-                        break;
-                    case 'home':
-                        // if it is a viewer
-                        // OR
-                        // if landingpage is not mandatory
-                        // then go to the map
-                        $log.debug('embed?',embed,'landingEnabled',landingEnabled);
-                        if(embed || !landingEnabled){
-                            // go directly to the map
-                            $log.debug('embed, redirect a app.maps');
-                            event.preventDefault();
-                            $state.go('app.maps',search_params);
-                        }
-                        $log.debug('going home');
-                        break;
-                    case 'app.editor':
-                        if(authenticate && !AuthService.isAuth()){
-                            $log.debug('login obbligatorio, redirect a home');
-                            // vai a login per effettuare l'autenticazione
-                            event.preventDefault();
-                            $state.go('home',search_params);
-                        }
-                        break;
-                    default:
-                        //$log.debug("Continuo a ", toState.name);
-                        // if it is a viewer and it is not already going to the map
-                        if(embed){
-                            // go directly to the map
-                            $log.debug('embed, redirect a app.maps');
-                            event.preventDefault();
-                            $state.go('app.maps',search_params);
-                        }
-                }
+                    }
+                );
+            } else if(tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code ){
+                tryAutoLogin = false;
+                console.log('autologin 2');
+                // autoLogin();
             }
+
+            switch (toState.name){
+                case 'app.maps':
+                    if(embed){
+                        // ok vado avanti
+                    } else if(authenticate && !AuthService.isAuth()){
+                        $log.debug('login obbligatorio, redirect a home');
+                        // vai a login per effettuare l'autenticazione
+                        event.preventDefault();
+                        $state.go('home',search_params);
+                    }
+                    break;
+                case 'home':
+                    // if it is a viewer
+                    // OR
+                    // if landingpage is not mandatory
+                    // then go to the map
+                    $log.debug('embed?',embed,'landingEnabled',landingEnabled);
+                    if(embed || !landingEnabled){
+                        // go directly to the map
+                        $log.debug('embed, redirect a app.maps');
+                        event.preventDefault();
+                        $state.go('app.maps',search_params);
+                    }
+                    $log.debug('going home');
+                    break;
+                case 'app.editor':
+                    if(authenticate && !AuthService.isAuth()){
+                        $log.debug('login obbligatorio, redirect a home');
+                        // vai a login per effettuare l'autenticazione
+                        event.preventDefault();
+                        $state.go('home',search_params);
+                    }
+                    break;
+                default:
+                    console.log("Continuo a ", toState.name);
+                    // if it is a viewer and it is not already going to the map
+                    if(embed){
+                        // go directly to the map
+                        $log.debug('embed, redirect a app.maps');
+                        event.preventDefault();
+                        $state.go('app.maps',search_params);
+                    }
+            }
+
         });
         function autoLogin(){
             console.log('loggato? ',AuthService.isAuth());
@@ -346,27 +343,27 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             authenticate: config.behaviour.is_login_required
         }
     }).state('app.editor', {
-            // aggiunta dinamica di parametri presi dalle relazioni
-            url: '/editor/?lat&lng&zoom_level&area_id&id&entity_type&group&rel&parent_type',
-            views: {
-                'menuContent': {
-                    // templateUrl: 'templates/form/wizard.html',
-                    templateUrl: function() {
-                        var page = 'templates/form/wizard.html';
-                        var useHTTPS = window.location.href.indexOf('https') > -1;
-                        if (useHTTPS) {
-                            return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
-                        } else {
-                            return page;
-                        }
-                    },
-                    controller: 'EditorCtrl as editor'
-                }
-            },
-            data: {
-                authenticate: true
+        // aggiunta dinamica di parametri presi dalle relazioni
+        url: '/editor/?lat&lng&zoom_level&area_id&id&entity_type&group&rel&parent_type',
+        views: {
+            'menuContent': {
+                // templateUrl: 'templates/form/wizard.html',
+                templateUrl: function() {
+                    var page = 'templates/form/wizard.html';
+                    var useHTTPS = window.location.href.indexOf('https') > -1;
+                    if (useHTTPS) {
+                        return window.location.protocol.concat( "//" ,window.location.host,'/')+ page;
+                    } else {
+                        return page;
+                    }
+                },
+                controller: 'EditorCtrl as editor'
             }
-        });
+        },
+        data: {
+            authenticate: true
+        }
+    });
 
 
 
@@ -1182,7 +1179,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         // inject del token nell'header se esiste
                         var token = $localStorage[myConfig.authentication.token_mem_key];
                         if(!token)
-                           return config;
+                            return config;
                         config.headers.Authorization = 'Bearer ' + token.access_token;
                         config.headers.Authentication_server = myConfig.authentication.auth_server_name;
                     }
