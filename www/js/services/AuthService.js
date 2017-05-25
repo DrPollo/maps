@@ -142,7 +142,7 @@ angular.module('firstlife.services')
                     token.member.member_id = token.member_id;
                     MemoryFactory.save(tokenKey,token);
                     MemoryFactory.save(identityKey,token.member);
-                    // $log.debug('getToken, response',response,MemoryFactory.get(tokenKey));
+                    console.log('getToken, response',response,MemoryFactory.get(tokenKey));
                     deferred.resolve(response);
                 },function(err){
                     $log.debug(err);

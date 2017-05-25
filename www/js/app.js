@@ -174,6 +174,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             }
         });
         function autoLogin(){
+            console.log('loggato? ',AuthService.isAuth());
             if(AuthService.isAuth())
                 return;
             // se l'utente non e' loggato
@@ -184,6 +185,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     $log.log('checkSession',result, 'go to ',AuthService.auth_url());
                     // redirect all'auth server
                     $timeout(function(){
+                        console.log('loggato? ',AuthService.isAuth());
                         if(AuthService.isAuth())
                             return;
                         $window.location.href = AuthService.auth_url();
