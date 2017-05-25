@@ -184,6 +184,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     $log.log('checkSession',result, 'go to ',AuthService.auth_url());
                     // redirect all'auth server
                     $timeout(function(){
+                        if(AuthService.isAuth())
+                            return;
                         $window.location.href = AuthService.auth_url();
                     },1);
                 },
