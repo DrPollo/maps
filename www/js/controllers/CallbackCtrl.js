@@ -19,7 +19,6 @@ angular.module('firstlife.controllers')
                 return;
             event.preventDefault();
 
-
             // se non devo gestire l'evento
             if(toState.name !== 'callback')
                 return;
