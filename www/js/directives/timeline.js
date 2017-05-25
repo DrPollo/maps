@@ -36,6 +36,9 @@ angular.module('firstlife.timeline',[])
             // mobile o no?
             $scope.isMobile = PlatformService.isMobile();
 
+            // c'e' la navbar
+            $scope.navbar = myConfig.design.navbar;
+
             //setup lingua di moment js
             moment.locale($translate.use());
             moment().isoWeek(1);
