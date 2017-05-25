@@ -107,6 +107,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 // primo controllo token esistente
                 if(toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout'){
                     toCheck = false;
+                    console.log('check token 1');
                     AuthService.checkToken().then(
                         // se il token e' ok
                         function (response) {
@@ -114,12 +115,16 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         },
                         // se il token non e' ok
                         function (err) {
-                            tryAutoLogin = false;
-                            autoLogin();
+                            if(tryAutoLogin) {
+                                tryAutoLogin = false;
+                                console.log('autologin 1');
+                                autoLogin();
+                            }
                         }
                     );
                 } else if(tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code ){
                     tryAutoLogin = false;
+                    console.log('autologin 2');
                     autoLogin();
                 }
 
