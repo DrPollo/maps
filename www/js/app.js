@@ -224,22 +224,24 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     ];
                     break;
                 case 'auth_required':
-                    //
-                    // title = 'AUTH_REQ_ERROR';
-                    // text = 'AUTH_REQ_ERROR_TEXT';
-                    // buttons = [
-                    //     { text: $filter('translate')('ABORT') },
-                    //     {
-                    //         text: '<b>Login</b>',
-                    //         type: 'button-positive',
-                    //         onTap: function(e) {
-                    //             confirmPopup.close();
-                    //             $timeout(function(){
-                    //                 $window.location.href = AuthService.auth_url();
-                    //             },1);
-                    //         }
-                    //     }
-                    // ];
+                    return;
+                    
+                    //todo debug
+                    title = 'AUTH_REQ_ERROR';
+                    text = 'AUTH_REQ_ERROR_TEXT';
+                    buttons = [
+                        { text: $filter('translate')('ABORT') },
+                        {
+                            text: '<b>Login</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                confirmPopup.close();
+                                $timeout(function(){
+                                    $window.location.href = AuthService.auth_url();
+                                },1);
+                            }
+                        }
+                    ];
                     break;
                 default:
                     title = 'ERROR';
@@ -365,9 +367,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         }
     });
 
-    $locationProvider.html5Mode(
-        {enable:true,
-            requireBase: false});
+
+    $locationProvider.hashPrefix('')
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
 
     //error handler
