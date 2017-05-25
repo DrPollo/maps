@@ -191,6 +191,13 @@ gulp.task('rebuild',function(){
         console.log('checkout dev result', (c2 === 0) ? 'ok' : 'error '+c2);
         var c3 = sh.exec('git pull').code;
         console.log('pull dev result', (c3 === 0) ? 'ok' : 'error '+c3);
+    }else{
+        var c1 = sh.exec('git reset --hard').code;
+        console.log('reset repo result', (c1 === 0) ? 'ok' : 'error '+c1);
+        var c2 = sh.exec('git checkout master').code;
+        console.log('checkout master result', (c2 === 0) ? 'ok' : 'error '+c2);
+        var c3 = sh.exec('git pull').code;
+        console.log('pull dev result', (c3 === 0) ? 'ok' : 'error '+c3);
     }
 
     if(gutil.env.norebuild)
