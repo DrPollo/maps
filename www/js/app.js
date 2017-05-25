@@ -366,7 +366,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     });
 
 
-
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
 
 
