@@ -143,7 +143,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('updateMarkers');
+                $log.debug('updateMarkers');
                 updateMarkers();
             });
             $scope.$on('deleteMarker',function (e,args) {
@@ -471,6 +471,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             function removeMarker(markerId) {
                 if(markerId && $scope.currentMarkers[markerId]){
+                    // $log.debug('removing',$scope.currentMarkers[markerId]);
                     pieRef.removeLayer($scope.currentMarkers[markerId]);
                     delete $scope.currentMarkers[markerId];
                 }

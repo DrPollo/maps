@@ -185,6 +185,16 @@ angular.module('firstlife.controllers')
         });
 
 
+        $scope.$on('requestDeleteMarker',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('deleteMarker',args);
+        });
+
+
 
 
 

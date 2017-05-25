@@ -143,8 +143,10 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                                     // success function
                                     function(response) {
                                         $scope.showASDeletedPlace(marker.id);
+                                        // $log.debug('deleteMarker',marker.id,response);
                                         // notifico la mappa
-                                        $scope.$emit("deleteMarker",{id:marker.id});
+
+                                        $scope.$emit("requestDeleteMarker",{id:marker.id});
                                         $scope.exit();
                                     },
                                     // error function

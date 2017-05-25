@@ -192,15 +192,7 @@ angular.module('firstlife.controllers')
             //clickMarker(args.id);
             updateMarkers();
         });
-        //
-        $scope.$on("deleteMarker",function(event,args){
-            if(event.defaultPrevented)
-                return ;
 
-            event.preventDefault();
-            // reload markers
-            deleteMarker(args.id);
-        });
         $scope.$on("lostMarker",function(event,args){
             if(event.defaultPrevented)
                 return ;
@@ -290,14 +282,14 @@ angular.module('firstlife.controllers')
             // go to editor
             // $log.debug('createEntity',args,$scope.updateEntity);
             try {
-                var params = angular.extend(args,$scope.updateEntity);
+                var params = angular.extend(args,{id: $scope.updateEntity.id});
             }catch(e){
                 $log.error(e,'$scope.updateEntity',$scope.updateEntity);
                 var params = angular.extend({}, args);
             }
             // reset buffer
             $scope.updateEntity = {};
-            $log.debug('going to editor',params);
+            // $log.debug('going to editor',params);
             $state.go('app.editor',params);
             $timeout(changeMode,400);
         });
@@ -626,11 +618,6 @@ angular.module('firstlife.controllers')
 
         function updateMarkers() {
             $scope.$broadcast('updateMarkers');
-        }
-
-        function deleteMarker(id){
-            ThingsService.removeFromBuffer([id]);
-            $scope.$broadcast('resetMarkers',{id:id});
         }
 
         // passa il centro della mappa all'editor
