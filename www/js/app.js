@@ -96,7 +96,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             $log.debug('state ',$state);
 
-            console.log("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
+            $log.info("Changing state from ", fromState.name, " ...to... ", toState.name, " parametri di stato: ",search_params);
 
             $rootScope.previousState = fromState.name;
 
@@ -104,7 +104,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             // primo controllo token esistente
             if(toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout'){
                 toCheck = false;
-                console.log('check token 1');
                 AuthService.checkToken().then(
                     // se il token e' ok
                     function (response) {
@@ -114,14 +113,12 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     function (err) {
                         if(tryAutoLogin) {
                             tryAutoLogin = false;
-                            console.log('autologin 1');
                             autoLogin();
                         }
                     }
                 );
             } else if(tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code ){
                 tryAutoLogin = false;
-                console.log('autologin 2');
                 autoLogin();
             }
 
@@ -159,7 +156,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     }
                     break;
                 default:
-                    console.log("Continuo a ", toState.name);
+                    $log.debug("Continuo a ", toState.name);
                     // if it is a viewer and it is not already going to the map
                     if(embed){
                         // go directly to the map
@@ -171,7 +168,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
         });
         function autoLogin(){
-            console.log('loggato? ',AuthService.isAuth());
+            $log.debug('loggato? ',AuthService.isAuth());
             if(AuthService.isAuth())
                 return;
             // se l'utente non e' loggato
@@ -179,14 +176,14 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             AuthService.checkSession().then(
                 function (result) {
                     // l'utente e' attualmente loggato nell'auth server
-                    $log.log('checkSession',result, 'go to ',AuthService.auth_url());
+                    $log.debug('checkSession',result, 'go to ',AuthService.auth_url());
                     // redirect all'auth server
                     $timeout(function(){
-                        console.log('loggato? ',AuthService.isAuth());
+                        $log.debug('loggato? ',AuthService.isAuth());
                         if(AuthService.isAuth())
                             return;
                         var authUrl = AuthService.auth_url();
-                        console.log('go to url ',authUrl);
+                        $log.debug('go to url ',authUrl);
                         $window.location.href = authUrl;
                     },1);
                 },
