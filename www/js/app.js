@@ -368,8 +368,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     });
 
 
-    $locationProvider.hashPrefix('')
-    $locationProvider.html5Mode(true);
+    // $locationProvider.hashPrefix('')
+    // $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
 
     //error handler
