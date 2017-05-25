@@ -12,13 +12,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         var client_id = myConfig.authentication.client_id;
         var auth_server = myConfig.authentication.auth_server;
 
-        var redirect_uri_auth = myConfig.base_callback.concat("callback");
-        var redirect_uri_logout = myConfig.base_callback.concat("logout");
+        var redirect_uri_auth = encodeURIComponent(myConfig.base_callback.concat("callback"));
+        var redirect_uri_logout = encodeURIComponent(myConfig.base_callback.concat("logout"));
 
         $log.debug('auth server check',myConfig.authentication);
 
-        myConfig.authentication["redirect_uri_auth"] = encodeURIComponent(redirect_uri_auth);
-        myConfig.authentication["redirect_uri_logout"] = encodeURIComponent(redirect_uri_logout);
+        myConfig.authentication["redirect_uri_auth"] = redirect_uri_auth;
+        myConfig.authentication["redirect_uri_logout"] = redirect_uri_logout;
         myConfig.authentication["token_url"] = myConfig.domain_signature.concat("tokens/",auth_server);
 
         if(myConfig.authentication["auth_url"])
@@ -276,7 +276,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     self.config = myConfig;
 
     $stateProvider.state('home', {
-        url: "/?embed&error",
+        url: "/?embed&error&code",
         controller: 'LandingCtrl as landing',
         templateUrl: function(stateParams) {
             var page = "templates/landing-page.html";
@@ -368,7 +368,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     });
 
 
-    $locationProvider.hashPrefix('!');
+    // $locationProvider.hashPrefix('');
     // $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
 
