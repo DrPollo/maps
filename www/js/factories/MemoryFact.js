@@ -3,7 +3,7 @@ angular.module('firstlife.factories')
 
         self.config = myConfig;    
 
-        self.keys = {user: 'user', token:'token', config:'config' };
+        self.keys = {user: 'user', token:'token', config:'config', language:'language' };
 
         return {
             save: function(key,data){

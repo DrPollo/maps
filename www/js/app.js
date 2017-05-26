@@ -1,6 +1,6 @@
 angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'firstlife.directives', 'firstlife.filters', 'firstlife.services', 'firstlife.factories','firstlife.timeline', 'ionic', 'angularMoment',  'ui-leaflet', 'ngCordova', 'ngTagsInput', 'ui.router',  'ionic.wizard', 'ionic-datepicker','ionic-timepicker', 'ngMessages', 'angucomplete', 'cbuffer', 'pascalprecht.translate','ngStorage','naif.base64','angular-clipboard'])
 
-    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, $filter, myConfig, AuthService) {
+    .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, $filter,$translate, myConfig, AuthService, MemoryFactory) {
 
         self.config = myConfig;
         // init utente
@@ -51,6 +51,19 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             }
         });
 
+
+        //supporto lingua
+        var agentLang = navigator.language|| navigator.userLanguage;
+        var language = myConfig.design.default_language;
+        if(agentLang.search('en') > -1){
+            language = 'en';
+        }else if(agentLang.search('en') > -1) {
+            language = 'it';
+        }
+        if(MemoryFactory.get('language')){
+            language = MemoryFactory.get('language');
+        }
+        $translate.use(language);
 
         // supporto al routing tra stati
         // $rootScope.previousState;
@@ -1131,7 +1144,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
     $translateProvider.translations('it', itLabels);
     $translateProvider.translations('en', enLabels);
-    //$translateProvider.preferredLanguage('en');
+
+    // gestione lingua
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
     .config(['$httpProvider', function($httpProvider) {

@@ -298,6 +298,7 @@ angular.module('firstlife.controllers')
             $translate.use(key);
             $rootScope.currentLang = $translate.use();
             $scope.$broadcast('changeLanguage',{id:$translate.use()});
+            MemoryFactory.save('language',key);
         };
 
         $scope.myMap = function(){
