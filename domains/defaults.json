@@ -225,7 +225,7 @@
                 "show_author":true, "shape":"diamond",
                 "properties":{
                     "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
-                    "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true},
+                    "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true,"min_length":50},
                     "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_NEWS_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":false,"advanced":true}
@@ -242,7 +242,7 @@
                 "properties":{
                     "parent_id":{ "key": "parent_id", "label": "PARENT_POST_LABEL", "placeholder":"PARENT_POST_PLACEHOLDER", "default":null},
                     "article_of":{ "key": "article_of", "label": "ARTICLE_OF_LABEL", "placeholder":"ARTICLE_OF_PLACEHOLDER", "default":null},
-                    "description":{"key":"description","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":""},
+                    "description":{"key":"description","label":"TEXT_LABEL","placeholder":"TEXT_PLACEHOLDER","required":true, "default":"","min_length":50},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"advanced":true,"is_editable":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"required":true,"advanced":true}
                 },
@@ -257,7 +257,7 @@
             {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":4,
                 "show_author":false, "shape":"exagon",
                 "properties":{
-                    "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true},
+                    "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"min_length":30},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
                     "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
                     "location":{ "key": "location", "label": "LOCATION_LABEL", "placeholder":"LOCATION_PLACEHOLDER", "default":null},
@@ -279,7 +279,7 @@
             {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":5,
                 "show_author":false, "shape":"octagon",
                 "properties":{
-                    "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true},
+                    "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true,"min_length":30},
                     "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
                     "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},
                     "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true,"advanced":true},
