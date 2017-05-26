@@ -15934,8 +15934,12 @@ div.search-tag-card {
         width: 30px;
         height: 30px; }
       #post-list .post-outer .comments-list .comment .comment-update-editor {
-        position: relative; }
+        position: relative;
+        margin-right: 8px;
+        border: 1px solid #d1d3d6;
+        border-radius: 2px; }
         #post-list .post-outer .comments-list .comment .comment-update-editor .comment-box {
+          padding: 0px 0px 4px 8px;
           width: 100%;
           line-height: 30px;
           height: 30px; }

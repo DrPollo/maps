@@ -291,7 +291,11 @@ $radius: 10px;
         }
         .comment-update-editor {
           position: relative;
+          margin-right:8px;
+          border:1px solid #d1d3d6;
+          border-radius: 2px;
           .comment-box {
+            padding:0px 0px 4px 8px;
             width: 100%;
             line-height: 30px;
             height: 30px;

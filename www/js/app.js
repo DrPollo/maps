@@ -1110,7 +1110,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         COMMENTEDITOR_PLACEHOLDER:"Leave a comment...",
         DELETE_COMMENT: "Delete the comment",
         REPORT_COMMENT: "Report an abuse",
-        UPDATE_COMMENT: "Update commento",
+        UPDATE_COMMENT: "Update comment",
         REPORT_POST: "Report an abuse",
         DELETE_POST: "Delete the post",
         UPDATE_POST: "Update the post",
