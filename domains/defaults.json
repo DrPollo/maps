@@ -918,6 +918,9 @@
             "max_width":800,
             "mime_type":"image/jpg",
             "quality":0.7
+        },
+        "logs":{
+            "url":"https://hooks.slack.com/services/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"
         }
     },
     "custom_labels":false

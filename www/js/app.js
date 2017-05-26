@@ -285,7 +285,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
             });
         }
 
-    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider) {
+    }).config(function(myConfig, $stateProvider, $urlRouterProvider, $httpProvider, $provide) {
     self.config = myConfig;
 
     $stateProvider.state('home', {
@@ -386,12 +386,30 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     $urlRouterProvider.otherwise('/');
 
     //error handler
-    $provide.decorator("$exceptionHandler", ["$delegate", '$log', function($delegate,$log){
+    $provide.decorator("$exceptionHandler", ["$delegate", '$log', function($delegate,$log,$window){
+        // var $http = $injector.get('$http');
         return function(exception, cause){
             $delegate(exception, cause);
-            //alert(exception.message);
             $log.error("EXCP: ", exception.message);
+            sendLog(exception,cause);
+        };
+
+        function sendLog(exception,cause){
+            var location = window.location.href;
+            var message = ('HREF: ').concat(location,' EXEPTION: ',exception,' CAUSE: ',JSON.stringify(cause));
+            // console.log(message);
+            try{
+                var xhr = new XMLHttpRequest();
+                var url = 'https://hooks.slack.com/services/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';
+                xhr.open("POST", url, true);
+                // xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify({text:message}));
+            }catch (e){
+                $log.warn("Error server-side logging failed");
+                $log.log(e);
+            }
         }
+
     }]);
 
 }).config(['$translateProvider','myConfig',function($translateProvider,myConfig){
