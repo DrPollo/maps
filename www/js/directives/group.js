@@ -27,7 +27,11 @@ angular.module('firstlife.directives')
                     scope.role = false;
                     scope.counter = [];
                     scope.membersList = [];
-                    scope.canDelete = (scope.user.id === scope.marker.owner.id);
+                    scope.canDelete = false;
+
+                    if(AuthService.isAuth()) {
+                        scope.canDelete = (scope.user.id === scope.marker.owner.id);
+                    }
 
                     groupsFactory.getMembers(scope.marker.id).then(
                         function(results){

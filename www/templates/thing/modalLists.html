@@ -40,5 +40,5 @@
     <!-- lista dei figli -->
     <entity-children ng-if="marker.id" ng-show="toggle === 2" marker="marker" add="add()" class="fast-ease-in-noout-animation fade-in"></entity-children>
     <!--list dei membri del gruppo-->
-    <members ng-if="marker.entity_type === 'FL_GROUPS' && marker.id" ng-show="toggle === 3" marker="marker"></members>
+    <members ng-if="marker.id && marker.entity_type === 'FL_GROUPS'" ng-show="toggle === 3" marker="marker"></members>
 </div>

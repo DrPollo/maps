@@ -500,7 +500,12 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                     function(response){
                         // $log.debug('groupFactory, getMembers: there are members')
                         scope.users = response;
-                        var index = response.map(function(e){return e.id}).indexOf(scope.user.id);
+                        var index = -1;
+                        if(AuthService.isAuth()) {
+                            index = response.map(function (e) {
+                                return e.id
+                            }).indexOf(scope.user.id);
+                        }
                         if(index > -1){
                             // se esiste allora membro
                             scope.member = true;
@@ -508,7 +513,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                             scope.member = false;
                             scope.owner = false;
                         }
-                        if(scope.markerOwner === scope.user.id){
+                        if(scope.user && scope.markerOwner === scope.user.id){
                             // se ha impostato il ruolo proprietario
                             scope.owner = true;
                             scope.member = true;
