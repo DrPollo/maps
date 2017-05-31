@@ -432,7 +432,7 @@ angular.module('firstlife.services')
                 layer:'pie'
             };
             angular.extend(marker, feature.properties);
-            angular.extend(marker,{id: feature.properties.id, lat: parseFloat(feature.geometry.coordinates[1]), lng : parseFloat(feature.geometry.coordinates[0])});
+            angular.extend(marker,{id: feature.id || feature._id, lat: parseFloat(feature.geometry.coordinates[1]), lng : parseFloat(feature.geometry.coordinates[0])});
 
             // set lista categorie
             var clist = marker.categories.reduce(function(cats,cat){
@@ -465,9 +465,6 @@ angular.module('firstlife.services')
             angular.extend(marker, {icon:icons[favCat] ? icons[favCat] : icons[0]});
             // nome tipo
             angular.extend(marker,{type_name: $filter('translate')(marker.entity_type)});
-            // se id non presente
-            if(!marker.id)
-                marker.id = feature._id;
             // fix url senza protocollo
             if(marker.link_url && marker.link_url.search('http') < 0 && marker.link_url.search('//') < 0 && marker.link_url.search('@') >= 0){
                 // email
