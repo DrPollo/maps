@@ -10,6 +10,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
         templateUrl:'/templates/map/flmap.html',
         controller: ['$scope','$log', '$location', '$timeout','myConfig','ThingsService', 'leafletData', 'PlatformService', function ($scope, $log, $location,$timeout, myConfig, ThingsService, leafletData, PlatformService) {
 
+            $scope.embed = $location.search().embed || false;
+
             // markers
             $scope.markers = {};
             $scope.currentMarkers = {};
@@ -773,6 +775,22 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     delete scope.scale;
                 }
             });
+        }
+    }
+}]).directive('disclaimer',['$log','myConfig',function($log,myConfig){
+    return{
+        scope:{},
+        template:'<div id="embed-disclaimer">{{"EMBED_MODE"|translate}}<a class="right" target="_blank" href="{{uri}}">{{"ACCESS_TO"|translate}} {{name}}</a></div>',
+        link:function (scope,element,attr) {
+            scope.$on('$destroy',function (e) {
+                if(e.defaultPrevented)
+                    return;
+                e.preventDefault();
+                delete scope;
+            });
+
+            scope.name = myConfig.app_name;
+            scope.uri = $window.location.href.replace('embed=viewer','');
         }
     }
 }]);

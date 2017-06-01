@@ -779,9 +779,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SHARE_THING:"Condividi",
         STARTDATE_NEWS_LABEL:"Data",
         LINK_JOIN:"Entra nel gruppo",
-        LINK_LEAVE:"Esci dal gruppo"
+        LINK_LEAVE:"Esci dal gruppo",
+        EMBED_MODE:"Modalità Visualizzazione",
+        ACCESS_TO:"Accedi a "
     };
     var enLabels = {
+        ACCESS_TO:"Access to ",
+        EMBED_MODE:"View Mode",
         LINK_JOIN:"Joind the group",
         LINK_LEAVE:"Leave the group",
         STARTDATE_NEWS_LABEL:"Date",

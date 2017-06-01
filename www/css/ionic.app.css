@@ -13603,6 +13603,19 @@ user-handler {
 #notifications .notification.highlight {
   font-weight: 700; }
 
+disclaimer {
+  width: 100%;
+  position: absolute;
+  bottom: 35px;
+  background: #fafafa;
+  z-index: 999;
+  font-size: 0.9em;
+  color: #333;
+  padding: 0px 6px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35); }
+  disclaimer .right {
+    float: right; }
+
 @-webkit-keyframes glow {
   from {
     -webkit-transform: rotate(-45deg) scale(1); }
