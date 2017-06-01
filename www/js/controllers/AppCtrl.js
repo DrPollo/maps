@@ -311,6 +311,16 @@ angular.module('firstlife.controllers')
             // creo link per lo share
             var url = $window.location.href+'&embed=viewer';
             // $log.debug('embed url ',url);
+            urlPopup(url);
+        };
+        $scope.makeSharable = function(){
+            // creo link per lo share
+            var url = $window.location.href;
+            // $log.debug('embed url ',url);
+            urlPopup(url);
+        };
+
+        function urlPopup(url){
             var buttons = [{text:$filter('translate')('OK')}];
             if(clipboard.supported){
                 var copy = {
@@ -334,8 +344,7 @@ angular.module('firstlife.controllers')
             alertPopup.then(function(res) {
                 // $log.debug('embed url ',url);
             });
-        };
-
+        }
         /*
          * Gestione controllata side menu
          * serve ad ottimizzare l'aggiornamento del wall
