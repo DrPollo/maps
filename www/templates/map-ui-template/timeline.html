@@ -31,7 +31,7 @@
                 ng-repeat="unit in units track by $index" 
                 ng-show="$index <= indexDefaultUnit"
                 ng-disabled="$index == indexDefaultUnit || viewer"
-                ng-class="indexDefaultUnit == $index || viewer ? 'current-button button-light' : 'button-stable'"
+                ng-class="indexDefaultUnit == $index ? 'current-button button-light' : 'button-stable'"
                 ng-click="scaleUpTo($index)">
             <span>{{unit.label| translate}}</span>
         </button>

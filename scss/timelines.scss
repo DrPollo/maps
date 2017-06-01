@@ -67,17 +67,23 @@ timeline{
             line-height: 25px;
             //min-width: 60px;
             color:$lightDark;
-            background: #fafafa;
+
             text-transform: capitalize;
             .icon:before{
                 line-height:25px;
             }
+            border-color: $positive;
+            background-color: white !important;
+        }
+        .current-button, .current-button[disabled] {
+            background-color: transparent !important;
+            text-shadow: 1px 1px 0px white;
+            border-color:transparent;
+            color:$positive;
         }
         .button.disabled, .button[disabled]{
             opacity:1;
-            background: transparent;
-        }
-        .current-button {
+            background-color: transparent !important;
         }
         .group{
             margin:0px 16px 0px 0px; 

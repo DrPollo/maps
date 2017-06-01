@@ -777,7 +777,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             });
         }
     }
-}]).directive('disclaimer',['$log','myConfig',function($log,myConfig){
+}]).directive('disclaimer',['$log','$window','myConfig',function($log,$window,myConfig){
     return{
         scope:{},
         template:'<div id="embed-disclaimer">{{"EMBED_MODE"|translate}}<a class="right" target="_blank" href="{{uri}}">{{"ACCESS_TO"|translate}} {{name}}</a></div>',

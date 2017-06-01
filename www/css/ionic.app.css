@@ -13609,9 +13609,9 @@ disclaimer {
   bottom: 35px;
   background: #fafafa;
   z-index: 999;
-  font-size: 0.9em;
+  font-weight: 500;
   color: #333;
-  padding: 0px 6px;
+  padding: 2px 6px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35); }
   disclaimer .right {
     float: right; }
@@ -15122,13 +15122,19 @@ timeline {
       max-height: 25px;
       line-height: 25px;
       color: #444;
-      background: #fafafa;
-      text-transform: capitalize; }
+      text-transform: capitalize;
+      border-color: #FC4A00;
+      background-color: white !important; }
       timeline #buttons button .icon:before {
         line-height: 25px; }
+    timeline #buttons .current-button, timeline #buttons .current-button[disabled] {
+      background-color: transparent !important;
+      text-shadow: 1px 1px 0px white;
+      border-color: transparent;
+      color: #FC4A00; }
     timeline #buttons .button.disabled, timeline #buttons .button[disabled] {
       opacity: 1;
-      background: transparent; }
+      background-color: transparent !important; }
     timeline #buttons .group {
       margin: 0px 16px 0px 0px; }
     timeline #buttons .right {
