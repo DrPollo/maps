@@ -507,7 +507,7 @@ angular.module('firstlife.controllers')
 
         // imposto il form con i dati del marker da modificare
         function setToEdit(data){
-            $log.debug('setToEdit');
+            // $log.debug('setToEdit');
             var mark = EntityService.preprocessMarker(data);
             // se il type e' settato
             if(mark.entity_type){
@@ -517,9 +517,18 @@ angular.module('firstlife.controllers')
 
             //imposto i permessi
             $scope.checkList = angular.copy(_this.types.perms[type]);
+            // template timepicker door_time
+            if($scope.checkList.door_time){
+                initDoorTime();
+            }
+            // template timepicker duration
+            if($scope.checkList.duration){
+                initDuration();
+            }
 
-            $log.debug("EditorCtrl, setToEdit, checkList: ", $scope.checkList);
-            $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
+
+            // $log.debug("EditorCtrl, setToEdit, checkList: ", $scope.checkList);
+            // $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
             _this.wizard.dataForm = angular.copy(mark);
             _this.wizard.title = _this.labels.edit;
@@ -541,15 +550,15 @@ angular.module('firstlife.controllers')
             }
             // se door_time e' richiesto e non e' nel marker
             if($scope.checkList.door_time && !_this.wizard.dataForm.door_time){
-                $log.debug("Entro in initDoorTime");
+                // $log.debug("Entro in initDoorTime");
                 initDoorTime();
             }
             // se duration e' richiesto e non e' nel marker
             if($scope.checkList.duration && !_this.wizard.dataForm.duration){
-                $log.debug("Entro in initDuration");
+                // $log.debug("Entro in initDuration");
                 initDuration();
             }
-            $log.debug('fine setToEdit', $scope.checkList);
+            // $log.debug('fine setToEdit', $scope.checkList);
         }
 
         function setParent(parent_id){

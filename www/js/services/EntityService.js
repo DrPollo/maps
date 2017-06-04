@@ -161,6 +161,16 @@ angular.module('firstlife.services')
                 tmp.valid_to = new Date(tmp.valid_to);
             }
 
+
+            // fix door_time
+            if(tmp.valid_from) {
+                tmp.door_time = (tmp.valid_from.getHours()) * 3600 + (tmp.valid_from.getMinutes() * 60);;
+            }
+            // fix close_time
+            if(tmp.valid_to){
+                tmp.close_time = (tmp.valid_to.getHours()) * 3600 + (tmp.valid_to.getMinutes() * 60);
+            }
+
             // fix delle tag
             tmp.tags = tmp.tags.map(function(e){return {tag:e}});
 
@@ -189,13 +199,15 @@ angular.module('firstlife.services')
             // $log.debug("processData, type properties : ", data, dataForServer);
 
 
+            // controllo il tempo
+            dataForServer = checkTime(data, dataForServer);
 
             // semantica di tipo 
             //todo da spostare su server
             switch(data.entity_type){
                 case 'FL_EVENTS':
                     // controlla duration da doortime, le combina con valid_from e valid_to
-                    dataForServer = checkEventTime(data,dataForServer);
+                    dataForServer = fixDoorTime(data,dataForServer);
                     break;
                 case 'FL_NEWS':
                     // forzo tempo puntuale
@@ -288,38 +300,47 @@ angular.module('firstlife.services')
 
 
 
-        function checkEventTime(data, dataForServer){
+        function checkTime(data, dataForServer) {
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
             // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
 
             // se per qualche ragione le date sono invertite faccio il fix
-            if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+            if (data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()) {
                 data.valid_to = angular.copy(data.valid_from);
             }
 
             // se le date non sono state impostate
-            if(!data.valid_to){
+            if (!data.valid_to) {
                 dataForServer.valid_to = moment(Date.now());
-                dataForServer.valid_to.set({'hour':23,'minute':59,'second':59,'millisecond':999});
+                dataForServer.valid_to.set({'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999});
                 // se per qualche ragione le date si incrociano
-                if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+                if (data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()) {
                     data.valid_to = angular.copy(data.valid_from);
                 }
             }
-            if(!data.valid_from){
+            if (!data.valid_from) {
                 dataForServer.valid_from = moment(Date.now());
-                dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
+                dataForServer.valid_from.set({'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0});
                 // se per qualche ragione le date si incrociano
-                if(data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()){
+                if (data.valid_from && data.valid_to && data.valid_from.getTime() > data.valid_to.getTime()) {
                     data.valid_from = angular.copy(data.valid_to);
                 }
             }
 
+            return dataForServer;
+        }
 
 
+
+
+        // logica door time e duration
+        function fixDoorTime(data, dataForServer){
+
+            // combino valid from e door time
             if(data.valid_from){
                 dataForServer.valid_from = moment(data.valid_from);
+                // imposto l'orario nel valid from
                 if(data.door_time){
                     dataForServer.valid_from.set({'hour':0,'minute':0,'second':0,'millisecond':0});
                     dataForServer.valid_from.add(data.door_time,'seconds');
@@ -328,6 +349,7 @@ angular.module('firstlife.services')
             }
 
 
+            // combino valid to e close time
             if(data.valid_to){
                 dataForServer.valid_to = moment(data.valid_to);
                 if(data.close_time){
