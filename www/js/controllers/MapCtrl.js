@@ -282,7 +282,14 @@ angular.module('firstlife.controllers')
             // go to editor
             // $log.debug('createEntity',args,$scope.updateEntity);
             try {
-                var params = angular.extend(args,{id: $scope.updateEntity.id});
+                var refs = {};
+                if($scope.updateEntity.id)
+                    refs.id = $scope.updateEntity.id;
+                if($scope.updateEntity.rel)
+                    refs.rel = $scope.updateEntity.rel;
+                if($scope.updateEntity.parent_type)
+                    refs.parent_type = $scope.updateEntity.parent_type;
+                var params = angular.extend(args,refs);
             }catch(e){
                 $log.error(e,'$scope.updateEntity',$scope.updateEntity);
                 var params = angular.extend({}, args);
@@ -378,31 +385,22 @@ angular.module('firstlife.controllers')
 
         //creazione di una thing
         $scope.showASEdit = function(){
+            $log.debug('showASEdit',$scope.updateEntity);
             // se devo aggionare una entita'
             if($scope.updateEntity && $scope.updateEntity.id){
                 // back to view
                 // changeMode('view');
 
                 // parametri per l'editor
-                var params = {lat: $scope.flmap.center.lat, lng:$scope.flmap.center.lng,zoom_level:$scope.flmap.center.zoom,id:$scope.updateEntity.id};
+                var params = {
+                    lat: $scope.flmap.center.lat,
+                    lng:$scope.flmap.center.lng,
+                    zoom_level:$scope.flmap.center.zoom,
+                    id:$scope.updateEntity.id
+                };
                 // $log.debug('going to editor',params);
                 $state.go('app.editor', params);
 
-            }if($scope.updateEntity){
-                // back to view
-                // changeMode('view');
-
-                // se ho gia' dei parametri per la insert
-                var params = {};
-                for(var k in $scope.updateEntity){
-                    params[k] = $scope.updateEntity[k];
-                }
-                // sovrascrivo lat e lng del parent
-                params.lat = $scope.flmap.center.lat;
-                params.lng = $scope.flmap.center.lng;
-                params.zoom_level = $scope.flmap.center.zoom;
-                // $log.debug('going to editor2',params);
-                $state.go('app.editor', params);
             }else{
                 // back to view
                 // changeMode('view');
