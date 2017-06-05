@@ -163,7 +163,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                 e.preventDefault();
 
-                // $log.debug('goToLocation!',args);
+                $log.debug('goToLocation!',args);
 
                 changeLocation(args);
             });
@@ -318,9 +318,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // $log.debug('change location',hash);
                 if(mapRef){
                     var z = params.zoom || mapRef.getZoom();
+                    // $log.debug('set view',L.latLng(params.lat, params.lng),z);
                     mapRef.setView(L.latLng(params.lat, params.lng),z);
                 }
                 if($location.search().c !== hash){
+                    // $log.debug('set hash',hash);
                     $location.search({ c: hash });
                 }
             }
@@ -507,11 +509,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 addEditLayers();
                 tries = 0;
                 $timeout(updateGridStyle,500);
-                mapRef.on('moveend',function (e) {
-                    // $log.debug(e);
-                    tries = 0;
-                    $timeout(updateGridStyle,500);
-                })
+                mapRef.on('moveend',updateGrid);
             });
             $scope.$on('exitEditMode',function (e,args) {
                 if(e.defaultPrevented)
@@ -574,6 +572,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
 
             var editLayer = null;
+            function updateGrid(e) {
+                // $log.debug(e);
+                tries = 0;
+                $timeout(updateGridStyle,500);
+            }
             function addEditLayers(){
                 editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url,$scope.map.layers.baselayers.edit.layerOptions);
                 // $log.debug(editLayer);
@@ -607,7 +610,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             function removeEditLayers(){
                 if(currentFeature)
                     vGrid.resetFeatureStyle(currentFeature);
-                mapRef.off('moveend');
+                mapRef.off('moveend',updateGrid);
                 vGrid.off('mouseover');
                 // vGrid.off('mouseout');
                 vGrid.off('click');

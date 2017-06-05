@@ -159,12 +159,14 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
-            $log.debug('startUpdating',args);
+            // $log.debug('startUpdating',args);
             $scope.updateEntity = args;
-            // centro la mappa sul luogo dei parametri
-            changeLocation(args);
+
             // entro in edit mode
             changeMode('edit');
+
+            // centro la mappa sul luogo dei parametri
+            changeLocation(args);
         });
         $scope.$on("startEditing",function(event,args){
             if(event.defaultPrevented)
@@ -174,10 +176,13 @@ angular.module('firstlife.controllers')
 
             // $log.debug('startEditing',args);
             $scope.updateEntity = args;
-            // centro la mappa sul luogo dei parametri
-            locate(args);
+
             // entro in edit mode
             changeMode('edit');
+
+
+            // centro la mappa sul luogo dei parametri
+            locate(args);
         });
 
         $scope.$on("endEditing",function(event,args){

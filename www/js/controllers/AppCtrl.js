@@ -172,6 +172,8 @@ angular.module('firstlife.controllers')
 
             event.preventDefault();
 
+
+            $log.debug('updateThing',args);
             $scope.$broadcast('startUpdating',args);
         });
 
