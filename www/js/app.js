@@ -1173,6 +1173,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     $translateProvider.preferredLanguage(myConfig.design.default_language);
 }])
     .config(['$httpProvider', function($httpProvider) {
+
+
         $httpProvider.interceptors.push(function($log,$localStorage,$q,$injector,$location,myConfig){
             // token di sviluppo
             // if(myConfig.dev){
@@ -1212,8 +1214,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             return {
                 request: function(config) {
-                    // console.log('setting header to ',config.url)
-                    if(config.method !== 'GET'){
+                    if(config.method !== 'GET' || config.method !== 'get'){
                         // console.log('changing headers',config.headers !== false, config.headers);
                         config.headers['Content-Type'] = 'application/json';
                         // inject del token nell'header se esiste

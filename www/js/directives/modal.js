@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             id:"<"
         },
         templateUrl:"/templates/thing/card.html",
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', 'PlatformService',function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory, PlatformService) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', 'PlatformService', 'shareFactory',function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory, PlatformService, shareFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -273,7 +273,8 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                             initPerms(marker.owner.id);
                         // recupero il tipo e lo metto dentro $scope.currentType
                         initTypeChecks(marker.entity_type);
-                    },
+
+                     },
                     function(err){
                         $log.error("changeModal, errore ",err);
                         $scope.loaded = true;
