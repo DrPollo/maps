@@ -923,13 +923,6 @@
             "url":"https://hooks.slack.com/services/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"
         }
     },
-    "custom_labels":false,
-    "email":{
-        "headers":{
-            "Content-Type":"application/x-www-form-urlencoded",
-            "api-key":"21VAaOqEkgWFJmnw"
-        },
-        "share_thing":"https://api.sendinblue.com/v2.0/template/4"
-    }
+    "custom_labels":false
 }
 }

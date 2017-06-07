@@ -1,23 +1,20 @@
 angular.module('firstlife.factories')
     .factory('shareFactory', ['$http', '$q', '$log', 'myConfig', 'AuthService', function($http, $q,  $log, myConfig, AuthService) {
-        var config = myConfig.email;
+
         return {
-            thing: function (thing,emails,message) {
+            thing: function (thingId,emails,message,url) {
                 var deferred = $q.defer();
                 // se l'utente e' loggato
-                if(AuthService.isAuth()) {
+                if(AuthService.isAuth() && thingId) {
                     var user = AuthService.getUser();
                     var options = {
-                        url:config.share_thing,
+                        url:myConfig.backend_things.concat('/',thingId,'/share'),
                         method:'put',
-                        headers:config.headers,
                         data: {
                             "to": emails.join('||'),
                             "attr": {
-                                "TITLE": thing.title,
-                                "SIGNATURE": user.signature || user.fullname,
                                 "SELF": thing.self,
-                                "MESSAGE": message
+                                "MESSAGE": url
                             }
                         }
                     };

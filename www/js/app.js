@@ -380,9 +380,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         }
     });
 
-
-    // $locationProvider.hashPrefix('');
-    // $locationProvider.html5Mode(true);
+    // rotta di default
     $urlRouterProvider.otherwise('/');
 
     //error handler
