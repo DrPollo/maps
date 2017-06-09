@@ -15,7 +15,7 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon1_citytelling_sfondo.svg",
+        "image":"img/landing/Icon1_citytelling_sfondo_ombra.svg",
         "alt": {
           "it":"Logo FirstLife CityTelling",
           "en":"FirstLife CityTelling logo"

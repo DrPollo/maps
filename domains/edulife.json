@@ -15,7 +15,7 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon6_edu_sfondo.svg",
+        "image":"img/landing/Icon6_edu_sfondo_ombra.svg",
         "alt": {
           "it":"Logo FirstLife EduLife",
           "en":"FirstLife EduLife logo"

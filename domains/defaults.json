@@ -129,42 +129,42 @@
                 {
                     "name":"Linee guida di Comunità",
                     "url":"http://openlabs.firstlife.org/comingsoon.html",
-                    "img":"img/icone-linee-guida-comunita-0.svg",
-                    "alt":"Prova",
+                    "img":"img/icona-guidacomunita.svg",
+                    "alt":"Guide di Comunità",
                     "lang":"it"
                 },
                 {
                     "name":"Esempi e Applicazioni",
                     "url":"http://tutorials.firstlife.org",
                     "img":"img/icone-tutorial.svg",
-                    "alt":"Prova",
+                    "alt":"Tutorial",
                     "lang":"it"
                 },
                 {
                     "name":"Scopri di più su FirstLife",
                     "url":"http://www.firstlife.org",
-                    "img":"img/firstlife-logo-solologo.svg",
-                    "alt":"Prova",
+                    "img":"img/firstlife_logo_solologo_ombra.svg",
+                    "alt":"Progetto FirstLife",
                     "lang":"it"
                 },
                 {
                     "name":"Community Guidelines",
                     "url":"http://openlabs.firstlife.org/comingsoon.html",
-                    "img":"img/icone-linee-guida-comunita-0.svg",
-                    "alt":"Test",
+                    "img":"img/icona-guidacomunita.svg",
+                    "alt":"Community Guidelines",
                     "lang":"en"
                 },
                 {
                     "name":"User Guide & examples",
                     "url":"http://tutorials.firstlife.org",
                     "img":"img/icone-tutorial.svg",
-                    "alt":"Test",
+                    "alt":"Tutorials",
                     "lang":"en"},
                 {
                     "name":"About FirstLife project",
                     "url":"http://www.firstlife.org",
-                    "img":"img/firstlife-logo-solologo.svg",
-                    "alt":"Test",
+                    "img":"img/firstlife_logo_solologo_ombra.svg",
+                    "alt":"FirstLife Project",
                     "lang":"en"
                 }
             ],

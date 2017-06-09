@@ -15,7 +15,7 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon2_resources_sfondo.svg",
+        "image":"img/landing/Icon2_resources_sfondo_ombra.svg",
         "alt": {
           "it":"Logo FirstLife Resources",
           "en":"FirstLife Resources logo"

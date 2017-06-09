@@ -15,7 +15,7 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon3_regeneration_sfondo.svg",
+        "image":"img/landing/Icon3_regeneration_sfondo_ombra.svg",
         "alt": {
           "it":"Logo FirstLife Regeneration",
           "en":"FirstLife Regeneration logo"
