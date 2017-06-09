@@ -49,7 +49,6 @@ angular.module('firstlife.controllers')
         $scope.langSelector = function(key){
             $translate.use(key);
             $scope.currentLang = $translate.use();
-            $rootScope.currentLang = $translate.use();
         };
 
     }]);

@@ -246,7 +246,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     var z = mapRef.getZoom();
                     $location.search("c",center.lat+':'+center.lng+':'+z);
                     // $log.debug('moveend');
-                    timer = $timeout(flushMarkers,500);
+                    $timeout(flushMarkers,500);
+                    timer = $timeout(flushMarkers,1000);
                     // if($scope.editMode){
                     //     var center = mapRef.getCenter();
                     //     var z = mapRef.getZoom();
