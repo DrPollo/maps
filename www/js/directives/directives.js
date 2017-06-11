@@ -1,5 +1,13 @@
 angular.module('firstlife.directives', [])
-    .directive('focusOn', function($timeout) {
+    .directive('selectOnClick', function () {
+    // Linker function
+    return function (scope, element, attrs) {
+        element.bind('click', function () {
+            this.focus();
+            this.select();
+        });
+    };
+}).directive('focusOn', function($timeout) {
           return function(scope, element, attr) {
               scope.$on(attr.focusOn, function(e) {
                   $timeout(function() {

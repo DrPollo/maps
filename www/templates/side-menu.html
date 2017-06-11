@@ -11,23 +11,23 @@
             <side-wall filter="toggleFilter(cat,key)"></side-wall>
         </ion-content>
         <div class="bar bar-footer wall-actions">
+            <button class="button button-dark button-outline item-button ion-arrow-left-b"
+                    ng-if="wallIndex > 0"
+                    style="margin-right: 6px;"
+                    on-tap="backToStart()">
+                {{'BACK'|translate}}
+            </button>
             <button ng-if="config.actions.map_tab"
                     class="button button-outline button-dark item-button ion-share"
                     on-tap="makeEmbed()"
                     style="margin-right: 6px;">
                 {{'EMBED_MAP'|translate}}
             </button>
-            <button ng-if="config.actions.map_tab" style="margin-right: 6px;" class="button button-outline button-dark item-button ion-link" on-tap="makeSharable()">
-                {{'SHARE_LINK'|translate}}
-            </button>
+            <!--<button ng-if="config.actions.map_tab" style="margin-right: 6px;" class="button button-outline button-dark item-button ion-link" on-tap="makeSharable()">-->
+                <!--{{'SHARE_LINK'|translate}}-->
+            <!--</button>-->
             <button ng-if="config.actions.map_tab" class="button button-positive item-button ion-paper-airplane" on-tap="invite()">
                 {{'INVITE'|translate}}
-            </button>
-            <button class="button button-dark button-outline item-button ion-arrow-left-b"
-                    ng-if="wallIndex > 0"
-                    style="margin-left: 4px;"
-                    on-tap="backToStart()">
-                {{'BACK'|translate}}
             </button>
             <button ng-if="config.actions.map_tab" class="right button button-dark button-outline item-button ion-close-round" menu-close on-tap="closeSideLeft()">
                 <span ng-if="!isMobile">{{'CLOSE'|translate}}</span>

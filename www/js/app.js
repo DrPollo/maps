@@ -783,14 +783,22 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EMBED_MODE:"Modalità Visualizzazione",
         ACCESS_TO:"Accedi a ",
         INVITE:"Condividi",
-        INVITE_ALERT_TITLE:"Invita",
-        INVITE_ALERT_SUBTITLE:"Invia un invito a ",
+        INVITE_ALERT_TITLE:"Condividi link",
+        INVITE_ALERT_SUBTITLE:"Copia link o invia un collegamento via email...",
         INVITE_EMAILS_PLACEHOLDER:"Lista di email da invitare",
-        INVITE_MESSAGE_PLACEHOLDER:"Messaggio d'invito..."
+        INVITE_MESSAGE_PLACEHOLDER:"Messaggio d'invito...",
+        SEND:"Invia",
+        COPIED_TO_CLIPBOARD:"Link copiato negli appunti",
+        EMAIL_LIST:"Email",
+        EMAIL_MESSAGE:"Messaggio"
     };
     var enLabels = {
-        INVITE_ALERT_TITLE:"Share",
-        INVITE_ALERT_SUBTITLE:"Send an invitation to ",
+        EMAIL_MESSAGE:"Message",
+        EMAIL_LIST:"Email",
+        COPIED_TO_CLIPBOARD:"Link copied to clipboard",
+        SEND:"Send",
+        INVITE_ALERT_TITLE:"Share link",
+        INVITE_ALERT_SUBTITLE:"Copy the url or send an invitation email...",
         INVITE_EMAILS_PLACEHOLDER:"List of email address",
         INVITE_MESSAGE_PLACEHOLDER:"Invitation message...",
         INVITE:"Share",

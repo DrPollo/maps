@@ -339,7 +339,7 @@ angular.module('firstlife.controllers')
             var alertPopup = $ionicPopup.alert({
                 title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
                 subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
-                template: '<input type="text" value="'+url+'" readonly>',
+                templateUrl: '<input type="text" value="'+url+'" readonly>',
                 buttons: buttons
             });
 
@@ -347,36 +347,47 @@ angular.module('firstlife.controllers')
                 // $log.debug('embed url ',url);
             });
         }
+
+        /*
+         * Manda Invito
+         */
         $scope.invite = function(){
-            $scope.inviteForm = {};
-            var shareButton = {};
-            if($location.search().entity) {
-                shareButton = {
-                    text: $filter('translate')('INVITE'),
+            $scope.inviteForm = {
+                url: $window.location.href,
+                emails:null,
+                message: null,
+                inClipboard: false
+            };
+            $scope.copyToClipboard = function(){
+                if(clipboard.supported) {
+                    clipboard.copyText($scope.inviteForm.url);
+                    $scope.inviteForm.inClipboard = true;
+                }
+            };
+            if($location.search().entity){
+                angular.extend($scope.inviteForm,{id: $location.search().entity});
+            }
+            var buttons = [
+                {
+                    text:$filter('translate')('ABORT')
+                },
+                {
+                    text: $filter('translate')('SEND'),
                     type: 'button-positive',
                     scope: $scope,
                     onTap: function (e) {
-                        // e.preventDefault();
-                        // alertPopup.close();
-                        return $scope.inviteForm;
+                        if(!$scope.inviteForm.emails) {
+                            e.preventDefault();
+                        }else{
+                            // alertPopup.close();
+                            return $scope.inviteForm;
+                        }
                     }
-                };
-            }else{
-                shareButton = {
-                    text: $filter('translate')('INVITE'),
-                    type: 'button-positive',
-                    onTap: function (e) {
-                        // e.preventDefault();
-                        // alertPopup.close();
-                        return $scope.inviteForm;
-                    }
-                };
-            }
-            var buttons = [{text:$filter('translate')('ABORT')},shareButton];
+                }];
             var options = {
                 title: $filter('translate')('INVITE_ALERT_TITLE'),
-                subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE').concat(myConfig.app_name),
-                template: '<textarea style="padding:6px;margin-bottom:12px;border-radius:4px;line-height:1.2em;" row="1" value="" ng-model="inviteForm.emails" placeholder="'+$filter('translate')('INVITE_EMAILS_PLACEHOLDER')+'" autogrow required></textarea><textarea  style="padding:6px;min-height:6em;border-radius:4px;line-height:1.2em;" row="6" ng-model="inviteForm.message" value="" placeholder="'+$filter('translate')('INVITE_MESSAGE_PLACEHOLDER')+'" autogrow></textarea>',
+                subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE'),
+                templateUrl: 'templates/popup/share.html',
                 buttons: buttons,
                 scope: $scope
             };
@@ -384,22 +395,20 @@ angular.module('firstlife.controllers')
             var alertPopup = $ionicPopup.show(options,$scope);
 
             alertPopup.then(function(res) {
-                var thingId = $location.search().entity;
-                var url = $window.location.href;
-
-                // $log.debug('onTap',res,thingId,url);
-
-                if(!res.emails){
+                // $log.debug('onTap',res);
+                if(!res){
                     return;
                 }
-
-                if(thingId){
-                    shareFactory.thing(thingId, res.emails, res.message, url);
+                // se sto guardando una thing
+                if(res.id){
+                    shareFactory.thing(res);
                 }else{
-                    shareFactory.map(res.emails, res.message, url);
+                    shareFactory.map(res);
                 }
             });
         };
+
+
         /*
          * Gestione controllata side menu
          * serve ad ottimizzare l'aggiornamento del wall

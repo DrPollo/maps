@@ -1,0 +1,35 @@
+
+<form name="sharethislink">
+    <div style="margin-bottom:12px;">
+    <input type="text"
+           style="padding:6px;margin-bottom:12px;border-radius:4px;line-height:1.2em;"
+           ng-model="inviteForm.url"
+           on-tap="copyToClipboard($event)"
+           select-on-click>
+        <div style="color: #2ca02c;text-align:center;margin-bottom:12px;min-height:1em;">
+            <span ng-if="inviteForm.inClipboard">{{'COPIED_TO_CLIPBOARD' | translate}}</span>
+        </div>
+    </div>
+    <div style="margin-bottom:12px;">
+        <span class="input-label">{{'EMAIL_LIST'|translate}}</span>
+        <textarea style="padding:6px;border-radius:4px;line-height:1.2em;"
+                  row="1" value="" name="emails"
+                  ng-model="inviteForm.emails"
+                  placeholder="{{'INVITE_EMAILS_PLACEHOLDER'|translate}}" minlength="5" maxlength="500" autogrow required>
+        </textarea>
+        <div class="form-errors" ng-messages="sharethislink.emails.$error">
+            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+        </div>
+    </div>
+    <div>
+        <span class="input-label">{{'EMAIL_MESSAGE'|translate}}</span>
+        <textarea style="padding:6px;min-height:6em;border-radius:4px;line-height:1.2em;"
+                  row="6" value="" name="message"
+                  ng-model="inviteForm.message"
+                  placeholder="{{'INVITE_MESSAGE_PLACEHOLDER'|translate}}" minlength="3" maxlength="500" autogrow>
+        </textarea>
+        <div class="form-errors" ng-messages="sharethislink.message.$error">
+            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+        </div>
+    </div>
+</form>
