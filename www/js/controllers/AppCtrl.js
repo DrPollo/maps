@@ -1,6 +1,6 @@
 angular.module('firstlife.controllers')
 
-    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$ionicSlideBoxDelegate', '$translate', '$filter', '$location', '$log', '$window', '$timeout','myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, $translate, $filter, $location, $log, $window, $timeout, myConfig, MemoryFactory, AuthService, ThingsService, clipboard ) {
+    .controller('AppCtrl', ['$scope', '$state', '$rootScope', '$ionicHistory', '$ionicPopup', '$ionicSideMenuDelegate', '$ionicSlideBoxDelegate', '$translate', '$filter', '$location', '$log', '$window', '$timeout','myConfig', 'MemoryFactory', 'AuthService', 'ThingsService', 'clipboard', 'shareFactory',function($scope, $state, $rootScope, $ionicHistory, $ionicPopup, $ionicSideMenuDelegate, $ionicSlideBoxDelegate, $translate, $filter, $location, $log, $window, $timeout, myConfig, MemoryFactory, AuthService, ThingsService, clipboard, shareFactory ) {
 
 
         $scope.config = myConfig;
@@ -347,6 +347,59 @@ angular.module('firstlife.controllers')
                 // $log.debug('embed url ',url);
             });
         }
+        $scope.invite = function(){
+            $scope.inviteForm = {};
+            var shareButton = {};
+            if($location.search().entity) {
+                shareButton = {
+                    text: $filter('translate')('INVITE'),
+                    type: 'button-positive',
+                    scope: $scope,
+                    onTap: function (e) {
+                        // e.preventDefault();
+                        // alertPopup.close();
+                        return $scope.inviteForm;
+                    }
+                };
+            }else{
+                shareButton = {
+                    text: $filter('translate')('INVITE'),
+                    type: 'button-positive',
+                    onTap: function (e) {
+                        // e.preventDefault();
+                        // alertPopup.close();
+                        return $scope.inviteForm;
+                    }
+                };
+            }
+            var buttons = [{text:$filter('translate')('ABORT')},shareButton];
+            var options = {
+                title: $filter('translate')('INVITE_ALERT_TITLE'),
+                subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE').concat(myConfig.app_name),
+                template: '<textarea style="padding:6px;margin-bottom:12px;border-radius:4px;line-height:1.2em;" row="1" value="" ng-model="inviteForm.emails" placeholder="'+$filter('translate')('INVITE_EMAILS_PLACEHOLDER')+'" autogrow required></textarea><textarea  style="padding:6px;min-height:6em;border-radius:4px;line-height:1.2em;" row="6" ng-model="inviteForm.message" value="" placeholder="'+$filter('translate')('INVITE_MESSAGE_PLACEHOLDER')+'" autogrow></textarea>',
+                buttons: buttons,
+                scope: $scope
+            };
+
+            var alertPopup = $ionicPopup.show(options,$scope);
+
+            alertPopup.then(function(res) {
+                var thingId = $location.search().entity;
+                var url = $window.location.href;
+
+                // $log.debug('onTap',res,thingId,url);
+
+                if(!res.emails){
+                    return;
+                }
+
+                if(thingId){
+                    shareFactory.thing(thingId, res.emails, res.message, url);
+                }else{
+                    shareFactory.map(res.emails, res.message, url);
+                }
+            });
+        };
         /*
          * Gestione controllata side menu
          * serve ad ottimizzare l'aggiornamento del wall
