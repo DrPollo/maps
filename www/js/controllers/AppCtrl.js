@@ -322,16 +322,26 @@ angular.module('firstlife.controllers')
             urlPopup(url);
         };
 
+
+
         function urlPopup(url){
+            $scope.embed = {
+                iframe : '<iframe border="0" src="'+url+'"></iframe>',
+                inClipboard:false
+            };
+            $scope.copyToClipboard = function(){
+                if(clipboard.supported) {
+                    clipboard.copyText($scope.embed.iframe);
+                    $scope.embed.inClipboard = true;
+                }
+            };
             var buttons = [{text:$filter('translate')('OK')}];
             if(clipboard.supported){
                 var copy = {
                     text:$filter('translate')('COPY'),
                     type: 'button-positive',
                     onTap: function(e) {
-                        clipboard.copyText(url);
-                        e.preventDefault();
-                        alertPopup.close();
+                        return clipboard.copyText($scope.embed.iframe);
                     }
                 };
                 buttons.push(copy);
@@ -339,8 +349,9 @@ angular.module('firstlife.controllers')
             var alertPopup = $ionicPopup.alert({
                 title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
                 subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
-                templateUrl: '<input type="text" value="'+url+'" readonly>',
-                buttons: buttons
+                templateUrl: '/templates/popup/embed.html',
+                buttons: buttons,
+                scope:$scope
             });
 
             alertPopup.then(function(res) {

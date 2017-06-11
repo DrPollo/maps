@@ -788,14 +788,14 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         INVITE_EMAILS_PLACEHOLDER:"Lista di email da invitare",
         INVITE_MESSAGE_PLACEHOLDER:"Messaggio d'invito...",
         SEND:"Invia",
-        COPIED_TO_CLIPBOARD:"Link copiato negli appunti",
+        COPIED_TO_CLIPBOARD:"Copiato negli appunti",
         EMAIL_LIST:"Email",
         EMAIL_MESSAGE:"Messaggio"
     };
     var enLabels = {
         EMAIL_MESSAGE:"Message",
         EMAIL_LIST:"Email",
-        COPIED_TO_CLIPBOARD:"Link copied to clipboard",
+        COPIED_TO_CLIPBOARD:"Text pasted to clipboard",
         SEND:"Send",
         INVITE_ALERT_TITLE:"Share link",
         INVITE_ALERT_SUBTITLE:"Copy the url or send an invitation email...",
