@@ -790,9 +790,15 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         SEND:"Invia",
         COPIED_TO_CLIPBOARD:"Copiato negli appunti",
         EMAIL_LIST:"Email",
-        EMAIL_MESSAGE:"Messaggio"
+        EMAIL_MESSAGE:"Messaggio",
+        EXPORT_ALERT_TITLE:"Esporta ",
+        EXPORT_ALERT_SUBTITLE:"Copia e includi il codice seguente nel tuo HTML per visualizzare questa vista nel tuo sito.",
+        EXPORT:"Esporta"
     };
     var enLabels = {
+        EXPORT:"Export",
+        EXPORT_ALERT_TITLE:"Export ",
+        EXPORT_ALERT_SUBTITLE:"Copy and include the following code in your HTML to embed the current view in your website.",
         EMAIL_MESSAGE:"Message",
         EMAIL_LIST:"Email",
         COPIED_TO_CLIPBOARD:"Text pasted to clipboard",

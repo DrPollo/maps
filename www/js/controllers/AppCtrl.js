@@ -347,8 +347,8 @@ angular.module('firstlife.controllers')
                 buttons.push(copy);
             }
             var alertPopup = $ionicPopup.alert({
-                title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
-                subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
+                title: $filter('translate')('EXPORT_ALERT_TITLE')+myConfig.app_name,
+                subTitle: $filter('translate')('EXPORT_ALERT_SUBTITLE'),
                 templateUrl: '/templates/popup/embed.html',
                 buttons: buttons,
                 scope:$scope
