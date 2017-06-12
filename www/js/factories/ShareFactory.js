@@ -10,11 +10,13 @@ angular.module('firstlife.factories')
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
                     // $log.debug('sono un test ',thingId,emails,message,url);
                     var options = {
+                        id:4,
                         url:myConfig.backend_things.concat('/',data.id,'/share'),
                         method:'put',
                         data: {
                             "to": emails,
                             "attr": {
+                                "PROJECT":myConfig.app_name,
                                 "SELF": data.url,
                                 "MESSAGE": data.message
                             }
@@ -40,11 +42,13 @@ angular.module('firstlife.factories')
                 if(AuthService.isAuth() && data.id) {
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
                     var options = {
+                        id:7,
                         url:myConfig.backend_things.concat('/share'),
                         method:'put',
                         data: {
                             "to": emails,
                             "attr": {
+                                "PROJECT":myConfig.app_name,
                                 "SELF": data.url,
                                 "MESSAGE": data.message
                             }
