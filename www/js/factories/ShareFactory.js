@@ -48,7 +48,7 @@ angular.module('firstlife.factories')
                 if(AuthService.isAuth() && data) {
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
                     var options = {
-                        url:myConfig.backend_things.concat('/share'),
+                        url:myConfig.domain_signature.concat('/share'),
                         method:'put',
                         data:{}
                     };
