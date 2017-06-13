@@ -10,20 +10,26 @@ angular.module('firstlife.factories')
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
                     // $log.debug('sono un test ',thingId,emails,message,url);
                     var options = {
-                        id:4,
                         url:myConfig.backend_things.concat('/',data.id,'/share'),
                         method:'put',
-                        data: {
-                            "to": emails,
+                        data: {}
+                    };
+                    $log.debug('share thing',options);
+                    var promises = [];
+                    for (var i = 0; i < emails.length; i++){
+                        var payload =  {
+                            "id":4,
+                            "to": emails[i],
                             "attr": {
                                 "PROJECT":myConfig.app_name,
                                 "SELF": data.url,
                                 "MESSAGE": data.message
                             }
-                        }
-                    };
-                    $log.debug('share thing',options);
-                    $http(options).then(
+                        };
+                        promises.push($http(angular.extend({},options,{data:payload})));
+                    }
+                    // $log.debug('share map',options);
+                    $q.all(promises).then(
                         function (response) {
                             deferred.resolve(response);
                         },
@@ -39,27 +45,34 @@ angular.module('firstlife.factories')
             map: function (data) {
                 var deferred = $q.defer();
                 // se l'utente e' loggato
-                if(AuthService.isAuth() && data.id) {
+                if(AuthService.isAuth() && data) {
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
                     var options = {
-                        id:7,
                         url:myConfig.backend_things.concat('/share'),
                         method:'put',
-                        data: {
-                            "to": emails,
+                        data:{}
+                    };
+                    var promises = [];
+                    for (var i = 0; i < emails.length; i++){
+                        var payload =  {
+                            "id": 7,
+                            "to": emails[i],
                             "attr": {
                                 "PROJECT":myConfig.app_name,
                                 "SELF": data.url,
                                 "MESSAGE": data.message
                             }
-                        }
-                    };
-                    // $log.debug('share map',options);
-                    $http(options).then(
+                        };
+                        promises.push($http(angular.extend({},options,{data:payload})));
+                    }
+                    $log.debug('share map',promises,emails);
+                    $q.all(promises).then(
                         function (response) {
+                            $log.debug('share map tutto ok');
                             deferred.resolve(response);
                         },
                         function (err) {
+                            $log.error('share map failed');
                             deferred.reject(err);
                         }
                     );

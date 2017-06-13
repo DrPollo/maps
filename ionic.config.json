@@ -9,7 +9,8 @@
   "watchPatterns": [
     "www/scss/**/*",
     "www/**/*",
-    "!www/lib/**/*"
+    "!www/lib/**/*",
+    "scss/**/*"
   ],
   "type": "ionic1"
 }
