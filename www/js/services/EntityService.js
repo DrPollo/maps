@@ -185,7 +185,7 @@ angular.module('firstlife.services')
             var dataForServer = {};
 
 
-            // $log.debug("processData init: ", data, typeInfo);
+            $log.debug("processData init: ", data, typeInfo);
 
 
             var typeProperties = typeInfo.perms;
@@ -200,7 +200,7 @@ angular.module('firstlife.services')
 
 
             // controllo il tempo
-            dataForServer = checkTime(data, dataForServer);
+            dataForServer = checkTime(data, dataForServer, typeProperties);
 
             // semantica di tipo 
             //todo da spostare su server
@@ -222,27 +222,30 @@ angular.module('firstlife.services')
                 case 'FL_GROUPS':
                     break;
                 default: // FL_PLACES
+                    // todo delete
                     // gestione type
-                    if(data.type){
-                        // $log.debug("trovato il type: ", data.type);
-                        dataForServer.type = parseInt(data.type);
-                    } else {
-                        dataForServer.type = 1;
-                    }
+                    // if(data.type){
+                    //     // $log.debug("trovato il type: ", data.type);
+                    //     dataForServer.type = parseInt(data.type);
+                    // } else {
+                    //     dataForServer.type = 1;
+                    // }
 
             }
             
             // conversione formato data
             // bug va in errore il toISOString
-            if(dataForServer.valid_to)
+            if(dataForServer.valid_to) {
                 dataForServer.valid_to = dataForServer.valid_to.toISOString();
-            else
+            } else {
                 dataForServer.valid_to = null;
-            if(dataForServer.valid_from)
+            }
+            if(dataForServer.valid_from) {
                 dataForServer.valid_from = dataForServer.valid_from.toISOString();
-            else
+            } else {
                 dataForServer.valid_from = null;
-            
+            }
+
             // $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
 
@@ -300,7 +303,7 @@ angular.module('firstlife.services')
 
 
 
-        function checkTime(data, dataForServer) {
+        function checkTime(data, dataForServer, perms) {
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
             // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
             // aggiungo l'orario alle date
@@ -310,8 +313,9 @@ angular.module('firstlife.services')
                 data.valid_to = angular.copy(data.valid_from);
             }
 
+            // controlla che siano obbligatorie
             // se le date non sono state impostate
-            if (!data.valid_to) {
+            if (perms.valid_to.required && !data.valid_to) {
                 dataForServer.valid_to = moment(Date.now());
                 dataForServer.valid_to.set({'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999});
                 // se per qualche ragione le date si incrociano
@@ -319,7 +323,7 @@ angular.module('firstlife.services')
                     data.valid_to = angular.copy(data.valid_from);
                 }
             }
-            if (!data.valid_from) {
+            if (perms.valid_from.required && !data.valid_from) {
                 dataForServer.valid_from = moment(Date.now());
                 dataForServer.valid_from.set({'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0});
                 // se per qualche ragione le date si incrociano
