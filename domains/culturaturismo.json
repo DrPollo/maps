@@ -392,6 +392,57 @@
         "entities":[
           "FL_EVENTS"
         ]
+      },
+      {
+        "category_space":13,
+        "name":"Tipo di Luogo",
+        "slug":"tipo-di-luogo",
+        "description":"Caratteristiche generali del luogo",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":19,
+        "categories":[
+          {
+            "id":-90,
+            "name":"Spazio aperto",
+            "description":"Piazze, giardini, slarghi, strade",
+            "category_index":1,
+            "icon_name":"ion-leaf"
+          },
+          {
+            "id":-91,
+            "name":"Spazio istituzionale",
+            "description":"Spazi di enti pubblici e istituzioni",
+            "category_index":2,
+            "icon_name":"ion-ios-flag"
+          },
+          {
+            "id":-92,
+            "name":"Spazio privato",
+            "description":"Aree residenziali, cortili interni",
+            "category_index":3,
+            "icon_name":"ion-ios-home"
+          },
+          {
+            "id":-93,
+            "name":"Spazio produttivo",
+            "description":"Edifici commerciali, industriali, artigianali",
+            "category_index":4,
+            "icon_name":"ion-gear-a"
+          },
+          {
+            "id":-94,
+            "name":"Monumento e luogo storico",
+            "description":"Palazzi storici, aree archeologiche, complessi di valore storico-artistico",
+            "category_index":5,
+            "icon_name":"ion-ribbon-b"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
       }
     ]
   },

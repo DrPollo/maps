@@ -476,15 +476,15 @@ angular.module('firstlife.controllers')
         $scope.getUserLocation = function () {
 
             var options = {
-                timeout:5000,
-                maximumAge: 0,
+                timeout: 5000,
+                maximumAge: 3000,
                 enableHighAccuracy: true
             };
             $ionicLoading.show({hideOnStateChange:true});
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                 $log.debug('user position',position);
                 $ionicLoading.hide();
-                changeLocation({lat:position.coords.latitude,lng:position.coords.longitude});
+                changeLocation({lat:position.coords.latitude,lng:position.coords.longitude,zoom:20});
             },function (err) {
                 $log.error(err);
                 $ionicLoading.hide();
