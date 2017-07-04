@@ -252,6 +252,10 @@ gulp.task('setupenv',function(){
     // config.myConfig.map.tile_edit_attribution = '<a target="_blank" href="https://carto.com/">Carto</a> | OpenStreetMap contributors';
     // config.myConfig.map.tile_edit = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicDBsbDBwMGxsMCIsImEiOiJjajF3azJhYjkwMDR0MndtY3p1c3d0ZWZ4In0.g9Uod3QEzx0VxVK5i6qwOA';
 
+    if(gutil.env.satellite){
+        config.myConfig.map.tile_edit = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ';
+        config.myConfig.map.tile_view = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ';
+    }
     console.log('setup env host: ',config.myConfig.api_base_domain);
     // cancello il file
     try{

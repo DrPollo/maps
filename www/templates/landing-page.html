@@ -15,7 +15,13 @@
         </div>
     </div>
     <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="defaults.design.navbar"  url="{{defaults.design.navbar}}" ng-if="!viewer"></navbar>
-    <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
+    <ion-content scroll="true"
+                 scroll-event-interval="10"
+                 overflow-scroll="true"
+                 scrollbar-x="false"
+                 direction="y"
+                 data-tap-disabled="false"
+                 style="{{defaults.design.landingpage.css}}">
         <div class="row main-content">
             <div class="col col-center box">
                 <!--logo, infografica e azioni-->

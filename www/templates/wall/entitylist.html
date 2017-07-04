@@ -8,7 +8,10 @@
         </form>
     </div>
     <div class="bar bar-subheader">
-        <button class="button button-positive icon ion-android-checkmark-circle" on-tap="openTreeMap()"></button>
+        <button class="button button-positive icon ion-grid" on-tap="openTreeMap()">
+            <!--<i ng-if="!isMobile" class="icon ion-grid"></i>-->
+            <!--<span>{{'CATEGORIES' |translate}}</span>-->
+        </button>
         <entity-filter></entity-filter>
     </div>
 </ion-header-bar>

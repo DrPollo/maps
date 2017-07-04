@@ -793,9 +793,21 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EMAIL_MESSAGE:"Messaggio",
         EXPORT_ALERT_TITLE:"Esporta ",
         EXPORT_ALERT_SUBTITLE:"Copia e includi il codice seguente nel tuo HTML per visualizzare questa vista nel tuo sito.",
-        EXPORT:"Esporta"
+        EXPORT:"Esporta",
+        CATEGORIES: "Categorie",
+        NAME_A_GROUP: "Nome del gruppo",
+        NAME_A_PLACE: "Nome del luogo",
+        TITLE_OF_NEWS: "Titolo della notizia",
+        TITLE_OF_ARTICLE: "Titolo della storia",
+        TITLE_OF_EVENT: "Titolo dell'evento"
     };
     var enLabels = {
+        TITLE_OF_NEWS: "Title of the news",
+        TITLE_OF_ARTICLE: "Title of the story",
+        TITLE_OF_EVENT: "Title of the event",
+        NAME_A_GROUP: "Name of the group",
+        NAME_A_PLACE: "Name of the place",
+        CATEGORIES: "Categories",
         EXPORT:"Export",
         EXPORT_ALERT_TITLE:"Export ",
         EXPORT_ALERT_SUBTITLE:"Copy and include the following code in your HTML to embed the current view in your website.",

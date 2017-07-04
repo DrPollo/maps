@@ -22,7 +22,7 @@ angular.module('firstlife.factories')
                             "to": emails[i],
                             "attr": {
                                 "PROJECT":myConfig.app_name,
-                                "SELF": data.url,
+                                "SELF": data.url.replace('http://','').replace('https://',''),
                                 "MESSAGE": data.message
                             }
                         };
@@ -59,7 +59,7 @@ angular.module('firstlife.factories')
                             "to": emails[i],
                             "attr": {
                                 "PROJECT":myConfig.app_name,
-                                "SELF": data.url,
+                                "SELF": data.url.replace('http://','').replace('https://',''),
                                 "MESSAGE": data.message
                             }
                         };
