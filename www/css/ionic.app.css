@@ -15491,7 +15491,8 @@ timeline {
             display: inline-block;
             width: auto; }
             #landingpage .main-content .box .central-content .alternative-actions .wrap .disclaimer {
-              text-align: right; }
+              text-align: right;
+              font-size: 0.75em; }
             #landingpage .main-content .box .central-content .alternative-actions .wrap .button {
               padding: 0;
               font-size: 14px;
@@ -15506,14 +15507,21 @@ timeline {
               opacity: 0.9; }
       #landingpage .main-content .box .divider {
         margin: 20px auto;
-        width: 70%;
+        width: calc(100% - 32px);
         height: 3px;
         background: #666;
         border-radius: 1px; }
-      #landingpage .main-content .box #about .about-description {
-        padding: 16px;
+      #landingpage .main-content .box .about .about-description {
+        text-align: justify;
+        padding: 0px;
         font-size: 1.2em;
         line-height: 20px; }
+      #landingpage .main-content .box .about .right {
+        text-align: right; }
+      #landingpage .main-content .box .about .button {
+        border-radius: 20px;
+        font-weight: 700;
+        padding: 0px 24px; }
       #landingpage .main-content .box .upper-menu {
         margin: 0px;
         padding: 16px; }
@@ -15559,16 +15567,16 @@ timeline {
       width: 100%;
       color: #f1f1f1; }
     #landingpage .footer-content #lower-menu {
-      background: #4d4d4d;
+      background: #999;
       color: #f1f1f1;
       margin: 0px;
       padding: 0px;
       overflow: hidden;
       width: 100%; }
       #landingpage .footer-content #lower-menu a {
-        font-size: 1.2em;
+        font-size: 1em;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 400;
         color: #fff; }
     #landingpage .footer-content #partners {
       min-height: 60px;

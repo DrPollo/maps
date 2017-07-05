@@ -125,6 +125,30 @@
                     }
                 }
             },
+            "about":
+                {
+                "image":{
+                    "url":"img/loghi/firstlife-logo-solologo.svg",
+                    "alt":{
+                        "it":"Logo FirstLife",
+                        "en":"Logo of FirstLife"
+                    }
+                },
+                "content":{
+                    "it":"FirstLife è un progetto ...",
+                    "en":"FirstLife è un progetto ..."
+                },
+                "action":{
+                    "it":{
+                        "label":"Scopri di più",
+                        "url": "http://openlabs.firstlife.org/comingsoon.html"
+                    },
+                    "en":{
+                        "label":"About FirstLife",
+                        "url": "http://openlabs.firstlife.org/comingsoon.html"
+                    }
+                }
+            },
             "upper_menu":[
                 {
                     "name":"Linee guida di Comunità",
@@ -171,16 +195,38 @@
             "lower_menu":[
                 {"name":"Terms of use","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
                 {"name":"Privacy policy","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
-                {"name":"Help center","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
+                {"name":"Help Center","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
+                {"name":"Community Guidelines","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
                 {"name":"Condizioni d'uso","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
                 {"name":"Trattamento dati","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
-                {"name":"Centro assistenza","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"}
+                {"name":"Centro Assistenza","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
+                {"name":"Linee guida di Comunità","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"}
             ],
             "credits":[
                 {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino - P.I. 02099550010 C.F. 80088230018","lang":"it"},
                 {"text":"Social Computing, Dept. of Computer Science, University of Turin - P.I. 02099550010 C.F. 80088230018","lang":"en"}
             ],
-            "logo_partners" : []
+            "logo_partners" : [
+                {
+                    "label":{
+                        "it":"Sito dell'Università degli Studi di Torino",
+                        "en":"Website of the University of Turin"
+                    },
+                    "url":"https://www.unito.it/",
+                    "image": {
+                        "height":80,
+                        "url":"img/partners/logo_Unito_nero.png",
+                        "title": {
+                            "it": "Università degli Studi di Torino",
+                            "en": "University of Turin"
+                        },
+                        "alt": {
+                            "it": "Logo dell'Università degli Studi di Torino",
+                            "en": "Logo of the University of Turin"
+                        }
+                    }
+                }
+            ]
         }
     },
     "types" : {

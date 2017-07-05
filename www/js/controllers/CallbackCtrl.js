@@ -54,7 +54,8 @@ angular.module('firstlife.controllers')
                 return;
             }
 
-
+            // gestione del token in arrivo dal oauth server
+            // connettori social
             if(params.token) {
                 $log.log('trovato token',param.token);
                 return saveToken(params.token);

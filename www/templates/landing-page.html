@@ -3,18 +3,25 @@
         <div class="left">
         </div>
         <div class="title">
-            <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}' title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
+            <img ng-if="(defaults.design.landingpage.logo.url != '')" src='{{defaults.design.landingpage.logo.url}}'
+                 title="{{defaults.design.landingpage.logo.title}}" alt="{{defaults.design.landingpage.logo.title}}"/>
 
-            <ion-title id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1" style="{{defaults.design.logo.landingpage.label.style}}">
+            <ion-title id="text-logo" ng-if="(defaults.design.logo.url == '')" class="col-logo h1"
+                       style="{{defaults.design.logo.landingpage.label.style}}">
                 {{defaults.design.landingpage.logo.title}}
             </ion-title>
         </div>
         <div class="right">
-            <div class="button button-outline" ng-class="(currentLang == 'it') ? 'button-positive' : 'button-stable'" ng-click="langSelector('it')">It</div>
-            <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'" ng-click="langSelector('en')">En</div>
+            <div class="button button-outline" ng-class="(currentLang == 'it') ? 'button-positive' : 'button-stable'"
+                 ng-click="langSelector('it')">It
+            </div>
+            <div class="button button-outline" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable'"
+                 ng-click="langSelector('en')">En
+            </div>
         </div>
     </div>
-    <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="defaults.design.navbar"  url="{{defaults.design.navbar}}" ng-if="!viewer"></navbar>
+    <navbar style="box-shadow: 1px 1px 3px #666;display:block;" ng-if="defaults.design.navbar"
+            url="{{defaults.design.navbar}}" ng-if="!viewer"></navbar>
     <ion-content scroll="true"
                  scroll-event-interval="10"
                  overflow-scroll="true"
@@ -27,16 +34,22 @@
                 <!--logo, infografica e azioni-->
                 <div class="row responsive-sm central-content">
                     <div class="col col-center" ng-if="!error">
-                        <h1><img src="{{defaults.design.landingpage.center.image}}" alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/></h1>
-                        <h2 class="message" ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
+                        <img src="{{defaults.design.landingpage.center.image}}"
+                                 alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/>
+                    </div>
+                    <div class="col col-center">
+                        <h2 class="message"
+                            ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
                     </div>
                     <div class="col col-center error" ng-if="(error == 'working')">
                         <h1><img src="{{defaults.design.landingpage.errors.working.img}}"/></h1>
-                        <h2 ng-if="error == 'working'" class="message">{{defaults.design.landingpage.errors.working.message[currentLang]}}</h2>
+                        <h2 ng-if="error == 'working'" class="message">
+                            {{defaults.design.landingpage.errors.working.message[currentLang]}}</h2>
                     </div>
                     <div class="col col-center error" ng-if=" (error == 'any') ">
                         <h1><img src="{{defaults.design.landingpage.errors.any.img}}"/></h1>
-                        <h2 ng-if="error == 'any'" class="message">{{defaults.design.landingpage.errors.any.message[currentLang]}}</h2>
+                        <h2 ng-if="error == 'any'" class="message">
+                            {{defaults.design.landingpage.errors.any.message[currentLang]}}</h2>
                     </div>
                 </div>
                 <div class="row responsive-sm central-content">
@@ -55,44 +68,81 @@
                 </div>
                 <div class="divider" ng-if="defaults.design.landingpage.about"></div>
                 <!-- about del progetto-->
-                <div class="row upper-menu responsive-sm" id="about" ng-if="defaults.design.landingpage.about">
-                    <div class="col col-center about-logo">
-                        <a href="{{defaults.design.landingpage.about.url}}" title="defaults.design.landingpage.about.label[currentLang]}}">
+                <div id="about" class="about upper-menu"
+                     ng-if="defaults.design.landingpage.about">
+                    <div class="row responsive-sm">
+                        <div class="col-33 col-center about-logo">
                             <img src="{{defaults.design.landingpage.about.image.url}}" alt="{{defaults.design.landingpage.about.image.alt[currentLang]}}">
+                        </div>
+                        <div class="col-67 col-center about-description">
+                            {{defaults.design.landingpage.about.content[currentLang]}}
+                        </div>
+                    </div>
+                    <div class="right">
+                        <a href="{{defaults.design.landingpage.about.action[currentLang].url}}" target="_blank">
+                            <button  class="button button-positive button-small" >
+                                {{defaults.design.landingpage.about.action[currentLang].label}}
+                            </button>
                         </a>
                     </div>
-                    <div class="col col-center about-description">
-                        {{defaults.design.landingpage.about.content[currentLang]}}
+                </div>
+                <div id="about_project" class="about upper-menu"
+                     ng-if="defaults.design.landingpage.about_project">
+                    <div class="row responsive-sm">
+                        <div class="col-33 col-center about-logo">
+                            <img src="{{defaults.design.landingpage.about_project.image.url}}" alt="{{defaults.design.landingpage.about_project.image.alt[currentLang]}}">
+                        </div>
+                        <div class="col-67 col-center about-description">
+                            {{defaults.design.landingpage.about_project.content[currentLang]}}
+                        </div>
+                    </div>
+                    <div class="right">
+                        <a href="{{defaults.design.landingpage.about_project.action[currentLang].url}}" target="_blank">
+                            <button  class="button button-positive  button-small" >
+                                {{defaults.design.landingpage.about_project.action[currentLang].label}}
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div class="divider"></div>
+                <div class="divider" ng-if="defaults.design.landingpage.logo_partners.length > 0"></div>
+                <div id="partners" class="row responsive-sm"
+                     ng-if="defaults.design.landingpage.logo_partners.length > 0">
+                    <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
+                        <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
+                            <img width="{{logo.image.width}}" height="{{logo.image.height}}"
+                                 title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}"
+                                 ng-src="{{logo.image.url}}"/>
+                        </a>
+                    </div>
+                </div>
                 <!--menu superiore-->
-                <div class="row upper-menu responsive-sm">
-                    <div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">
-                        <h3 class="row responsive-sm">
-                            <img class="col" src="{{link.img}}" alt="{{link.alt}}" >
-                            <a class="col col-center" href="{{link.url}}"ng-bind-html="link.name"></a>
-                        </h3>
-                    </div>
-                </div>
+                <!--<div class="row upper-menu responsive-sm">-->
+                <!--<div class="col" ng-repeat="link in defaults.design.landingpage.upper_menu | filter:{lang:currentLang}">-->
+                <!--<h3 class="row responsive-sm">-->
+                <!--<img class="col" src="{{link.img}}" alt="{{link.alt}}" >-->
+                <!--<a class="col col-center" href="{{link.url}}"ng-bind-html="link.name"></a>-->
+                <!--</h3>-->
+                <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
         <div class="footer-content">
-            <div id="partners" class="row responsive-sm" ng-if="defaults.design.landingpage.logo_partners.length > 0">
-                <div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">
-                    <a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">
-                        <img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>
-                    </a>
-                </div>
-            </div>
+            <!--<div id="partners" class="row responsive-sm" ng-if="defaults.design.landingpage.logo_partners.length > 0">-->
+            <!--<div class="col  col-bottom" ng-repeat="logo in defaults.design.landingpage.logo_partners">-->
+            <!--<a href="{{logo.url}}" target="_blank" title="logo.label[currentLang]">-->
+            <!--<img width="{{logo.image.width}}" height="{{logo.image.height}}" title="{{logo.image.title[currentLang]}}" alt="{{logo.image.alt[currentLang]}}" ng-src="{{logo.image.url}}"/>-->
+            <!--</a>-->
+            <!--</div>-->
+            <!--</div>-->
             <div id="lower-menu" class="row lower-menu">
                 <div class="row responsive-sm">
-                    <div class="col" ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
+                    <div class="col"
+                         ng-repeat="link in defaults.design.landingpage.lower_menu | filter:{lang:currentLang}">
                         <h4><a href="{{link.url}}">{{link.name}}</a></h4>
                     </div>
                 </div>
             </div>
-            <div id="credits" class="row" >
+            <div id="credits" class="row">
                 <div class="col col-bottom">
                     <div class="row">
                         <div id="credits" class="col col-bottom">

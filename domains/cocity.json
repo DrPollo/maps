@@ -1,180 +1,220 @@
-{"myConfig":
 {
-  "app_name" : "CO-City",
-  "domain_name" : "cocity",
-  "domain_id" : 17,
-  "read_domains":false,
-  "design":{
-    "logo" : {"url": "img/firstlife-logo-orizzontale.svg", "title": "CO-City", "alt":"CO-City", "label":{"text": "CO-City", "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}},
-    "landingpage":{
-      "center":{
-        "image":"img/infografica-landingpage3.svg",
-        "alt": {
-          "it":"Logo FirstLife",
-          "en":"FirstLife logo"
-        },
-        "message":{
-          "it":"",
-          "en":""
+  "myConfig": {
+    "app_name": "CO-City",
+    "domain_name": "cocity",
+    "domain_id": 17,
+    "read_domains": false,
+    "design": {
+      "logo": {
+        "url": "img/firstlife-logo-orizzontale.svg",
+        "title": "CO-City",
+        "alt": "CO-City",
+        "label": {
+          "text": "CO-City",
+          "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
         }
       },
-      "about":{
-        "url":"http://www.uia-initiative.eu/en/uia-cities/turin",
-        "label":{
-          "it":"Pagina del portale web di UIA per la Città di Torino",
-          "en":"Official page of the UIA action of City of Turin"
-        },
-        "image":{
-          "url":"img/partners/icona_co-city.svg",
-          "alt":{
-            "it":"Logo CO-City",
-            "en":"Logo of CO-City"
+      "landingpage": {
+        "center": {
+          "image": "img/infografica-landingpage3.svg",
+          "alt": {
+            "it": "Logo FirstLife",
+            "en": "FirstLife logo"
+          },
+          "message": {
+            "it": "",
+            "en": ""
           }
         },
-        "content":{
-          "it":"Co-City è un progetto Urban Innovation Action UIA della Commissione Europea...",
-          "en":""
-        }
-      },
-      "logo_partners" : [
-        {
-          "label":{
-            "it":"Portale web dei Fondi dell'Unione Europea per lo sviluppo regionale",
-            "en":"Webportal of Euroean Union founds for regional development"
+        "about": {
+          "label": {
+            "it": "Pagina del portale web di UIA per la Città di Torino",
+            "en": "Official page of the UIA action of City of Turin"
           },
-          "url":"http://ec.europa.eu/regional_policy/index.cfm/it/funding/erdf/",
-          "image":{
-            "height":40,
-            "url":"img/partners/logo-unione-europeaorizzontale_testobianco.svg",
-            "title":{
-              "it":"Fondi dell'Unione Europea per lo sviluppo regionale",
-              "en":"Euroean Union founds for regional development"
-            },
-            "alt":{
-              "it":"Unione Europea - Fondi per lo Sviluppo Regionale",
-              "en":"European Union - European Regional Development Founds"
-            }
-          }
-        },
-        {
-          "label":{
-            "it":"Pagina del portale web di UIA per la Città di Torino",
-            "en":"Official page of the UIA action of City of Turin"
-          },
-          "url":"http://www.uia-initiative.eu/en/uia-cities/turin",
-          "image":{
-            "height":40,
-            "url":"img/partners/nuvola_co-city.svg",
-            "title":{
-              "it":"Urban Innovative Action - Torino",
-              "en":"Urban Innovative Action - Torino"
-            },
-            "alt":{
-              "it":"Logo di UIA della Città di Torino",
-              "en":"Logo of UIA city of Turin"
-            }
-          }
-        },
-        {
-          "label":{
-            "it":"Portale web della Città di Torino",
-            "en":"Webportal  of the City of Turin"
-          },
-          "url":"http://www.comune.torino.it/",
-          "image":{
-            "height":40,
-            "url":"img/partners/città-di-torino_b-n.png",
-            "title":{
-              "it":"Città di Torino",
-              "en":"City of Turin"
-            },
-            "alt":{
-              "it":"Logo della Città di Torino",
-              "en":"Logo of the City of Turin"
-            }
-          }
-        },
-        {
-          "label":{
-            "it":"Sito dell'Università degli Studi di Torino",
-            "en":"Website of the University of Turin"
-          },
-          "url":"https://www.unito.it/",
           "image": {
-            "height":40,
-            "url":"img/partners/Logo-Unito-orizzontale_testobianco.svg",
-            "title": {
-              "it": "Università degli Studi di Torino",
-              "en": "University of Turin"
-            },
+            "url": "img/partners/icona_co-city.svg",
             "alt": {
-              "it": "Logo dell'Università degli Studi di Torino",
-              "en": "Logo of the University of Turin"
+              "it": "Logo CO-City",
+              "en": "Logo of CO-City"
+            }
+          },
+          "content": {
+            "it": "Co-City è un progetto Urban Innovation Action UIA della Commissione Europea...",
+            "en": ""
+          },
+          "action": {
+            "it": {
+              "label": "Scopri di più",
+              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
+            },
+            "en": {
+              "label": "About CoCity",
+              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
             }
           }
         },
-        {
-          "label":{
-            "it":"Sito della Rete delle Case del Quartiere di Torino",
-            "en":"Website of the Network of Case del Quartiere of Turin"
-          },
-          "url":"http://www.casedelquartieretorino.org/",
+        "about_project": {
           "image": {
-            "height":40,
-            "url":"img/partners/rete-casedel-quartiere_logo-orizzontale_bianco.png",
-            "title": {
-              "it": "Rete delle Case del Quartiere di Torino",
-              "en": "Network of Case del Quartiere of Turin"
-            },
+            "url": "img/partners/icona_co-city.svg",
             "alt": {
-              "it": "Logo della Rete delle Case del Quartiere di Torino",
-              "en": "Logo of the Network of Case del Quartiere of Turin"
+              "it": "Logo CO-City",
+              "en": "Logo of CO-City"
+            }
+          },
+          "content": {
+            "it": "Co-City è un progetto Urban Innovation Action UIA della Commissione Europea...",
+            "en": ""
+          },
+          "action": {
+            "it": {
+              "label": "Scopri di più",
+              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
+            },
+            "en": {
+              "label": "About CoCity",
+              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
             }
           }
         },
-        {
-          "label":{
-            "it":"Sito di Cascina Roccafranca",
-            "en":"Website of Cascina Roccafranca"
-          },
-          "url":"http://www.cascinaroccafranca.it/",
-          "image": {
-            "height":40,
-            "url":"img/partners/logo-orizzontale-roccafranca_b-n.png",
-            "title": {
-              "it": "Cascina Roccafranca",
-              "en": "Cascina Roccafranca"
+        "logo_partners": [
+          {
+            "label": {
+              "it": "Portale web dei Fondi dell'Unione Europea per lo sviluppo regionale",
+              "en": "Webportal of Euroean Union founds for regional development"
             },
-            "alt": {
-              "it": "Logo di Cascina Roccafranca",
-              "en": "Logo of Cascina Roccafranca"
+            "url": "http://ec.europa.eu/regional_policy/index.cfm/it/funding/erdf/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/logo-unione-europeaorizzontale_testobianco.svg",
+              "title": {
+                "it": "Fondi dell'Unione Europea per lo sviluppo regionale",
+                "en": "Euroean Union founds for regional development"
+              },
+              "alt": {
+                "it": "Unione Europea - Fondi per lo Sviluppo Regionale",
+                "en": "European Union - European Regional Development Founds"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Pagina del portale web di UIA per la Città di Torino",
+              "en": "Official page of the UIA action of City of Turin"
+            },
+            "url": "http://www.uia-initiative.eu/en/uia-cities/turin",
+            "image": {
+              "height": 40,
+              "url": "img/partners/nuvola_co-city.svg",
+              "title": {
+                "it": "Urban Innovative Action - Torino",
+                "en": "Urban Innovative Action - Torino"
+              },
+              "alt": {
+                "it": "Logo di UIA della Città di Torino",
+                "en": "Logo of UIA city of Turin"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Portale web della Città di Torino",
+              "en": "Webportal  of the City of Turin"
+            },
+            "url": "http://www.comune.torino.it/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/città-di-torino_b-n.png",
+              "title": {
+                "it": "Città di Torino",
+                "en": "City of Turin"
+              },
+              "alt": {
+                "it": "Logo della Città di Torino",
+                "en": "Logo of the City of Turin"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Sito dell'Università degli Studi di Torino",
+              "en": "Website of the University of Turin"
+            },
+            "url": "https://www.unito.it/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/Logo-Unito-orizzontale_testobianco.svg",
+              "title": {
+                "it": "Università degli Studi di Torino",
+                "en": "University of Turin"
+              },
+              "alt": {
+                "it": "Logo dell'Università degli Studi di Torino",
+                "en": "Logo of the University of Turin"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Sito della Rete delle Case del Quartiere di Torino",
+              "en": "Website of the Network of Case del Quartiere of Turin"
+            },
+            "url": "http://www.casedelquartieretorino.org/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/rete-casedel-quartiere_logo-orizzontale_bianco.png",
+              "title": {
+                "it": "Rete delle Case del Quartiere di Torino",
+                "en": "Network of Case del Quartiere of Turin"
+              },
+              "alt": {
+                "it": "Logo della Rete delle Case del Quartiere di Torino",
+                "en": "Logo of the Network of Case del Quartiere of Turin"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Sito di Cascina Roccafranca",
+              "en": "Website of Cascina Roccafranca"
+            },
+            "url": "http://www.cascinaroccafranca.it/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/logo-orizzontale-roccafranca_b-n.png",
+              "title": {
+                "it": "Cascina Roccafranca",
+                "en": "Cascina Roccafranca"
+              },
+              "alt": {
+                "it": "Logo di Cascina Roccafranca",
+                "en": "Logo of Cascina Roccafranca"
+              }
+            }
+          },
+          {
+            "label": {
+              "it": "Sito Associazione Nazionale Comuni Italiani",
+              "en": "Website of the Italian Association of Cities"
+            },
+            "url": "http://www.anci.it/",
+            "image": {
+              "height": 40,
+              "url": "img/partners/anci_logo orizzontale_b-n.png",
+              "title": {
+                "it": "Associazione Nazionale Comuni Italiani",
+                "en": "Italian Association of Cities"
+              },
+              "alt": {
+                "it": "Logo dell'Associazione Nazionale Comuni Italiani",
+                "en": "Logo of the Italian Association of Cities"
+              }
             }
           }
-        },
-        {
-          "label":{
-            "it":"Sito Associazione Nazionale Comuni Italiani",
-            "en":"Website of the Italian Association of Cities"
-          },
-          "url":"http://www.anci.it/",
-          "image": {
-            "height":40,
-            "url":"img/partners/anci_logo orizzontale_b-n.png",
-            "title": {
-              "it": "Associazione Nazionale Comuni Italiani",
-              "en": "Italian Association of Cities"
-            },
-            "alt": {
-              "it": "Logo dell'Associazione Nazionale Comuni Italiani",
-              "en": "Logo of the Italian Association of Cities"
-            }
-          }
-        }
-      ]
+        ]
+      }
+    },
+    "behaviour": {
+      "is_login_required": true
     }
-  },
-  "behaviour":{
-    "is_login_required" : true
   }
-}
 }
