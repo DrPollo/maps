@@ -119,6 +119,13 @@ angular.module('firstlife.services')
             token: function(){
                 return MemoryFactory.get(tokenKey) || false;
             },
+            saveToken: function(token){
+                if(!token || !token.member)
+                    return false;
+                MemoryFactory.save(tokenKey,token);
+                MemoryFactory.save(identityKey,token.member);
+                return true;
+            },
             generateToken: function (code){
                 // richiedo il token al server
                 var deferred = $q.defer();
