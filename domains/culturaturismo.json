@@ -15,16 +15,109 @@
       "default_language": "it",
       "landingpage": {
         "center": {
-          "image": "img/landing/Icon1_citytelling_sfondo.svg",
+          "image": "img/infografiche/infografica_landingpage_regione piemonte.svg",
           "alt": {
             "it": "Cultura & Turismo Piemonte",
             "en": "Cultura & Turismo Piemonte logo"
           },
           "message": {
-            "it": "",
-            "en": ""
+            "it": "Il social network per le comunità del territorio",
+            "en": "The social network for local communities"
+          },
+          "scope" :{
+            "it": "a supporto delle reti<br>per la cultura e il turismo<br>nella Regione Piemonte",
+            "en": "supporting cultural and tourism networks of Piedmont"
           }
-        }
+        },
+        "about_project": {
+          "image": {
+            "url": "img/infografiche/infografica_landingpage_regione piemonte semplificata1.svg",
+            "alt": {
+              "it": "Logo di FirstLife per Cultura e Turismo Piemonte",
+              "en": "Logo of FirstLife for Culture and Tourism in Piedmont"
+            }
+          },
+          "title": {
+            "it":"FirstLife per la cultura e il turismo in Piemonte",
+            "en":"FirstLife for Culture and Tourism in Piedmont"
+          },
+          "content": {
+            "it": "Il partenariato tra la Direzione della Cultura, del Turismo e dello Sport della Regione Piemonte e il Dipartimento di Informatica dell’Università di Torino si inserisce all’interno del percorso di sperimentazione e diffusione di FirstLife come strumento a supporto delle reti locali per lo sviluppo del territorio. FirstLife è lo strumento per raccontare e condividere in uno spazio comune progetti e iniziative che coinvolgono le associazioni culturali, i musei, le biblioteche, i consorzi di promozione locale, le imprese culturali e turistiche e ogni cittadino che vi contribuisce e partecipa.",
+            "en": ""
+          },
+          "action": {
+            "it": {
+              "label": "Scopri come utilizzarlo",
+              "url": "http://culturaturismo.firstlife.org"
+            },
+            "en": {
+              "label": "How to use it",
+              "url": "http://culturaturismo.firstlife.org"
+            }
+          }
+        },
+        "logo_partners" : [
+          {
+            "url":"http://di.unito.it/",
+            "image": {
+              "height":50,
+              "url":"img/partners/LogoDip-UFFICIALE - due colori testo nero.png",
+              "title": {
+                "it": "Dipartimento di Informatica, Università degli Studi di Torino",
+                "en": "Computer Science Department of the University of Turin"
+              },
+              "alt": {
+                "it": "Logo del Dipartimento di Informatica, Università degli Studi di Torino",
+                "en": "Logo of the Computer Science Department of the University of Turin"
+              }
+            }
+          },
+          {
+            "url":"http://www.regione.piemonte.it/",
+            "image": {
+              "height":40,
+              "url":"img/partners/logo_regione piemonte.png",
+              "title": {
+                "it": "Regione Piemonte",
+                "en": "Piedmont region"
+              },
+              "alt": {
+                "it": "Logo della Regione Piemonte",
+                "en": "Logo of Piedmont region"
+              }
+            }
+          },
+          {
+            "url":"http://www.facciamoculturismo.it/",
+            "image": {
+              "height":40,
+              "url":"img/partners/logo_turismo-cultura piemonte.png",
+              "title": {
+                "it": "Facciamo CulTurismo",
+                "en": "Facciamo CulTurismo"
+              },
+              "alt": {
+                "it": "Logo dei Facciamo CulTurismo",
+                "en": "Logo of Facciamo CulTurismo"
+              }
+            }
+          },
+          {
+            "url":"http://www.unito.it/",
+            "image": {
+              "height":50,
+              "url":"img/partners/logo_Unito_nero.png",
+              "title": {
+                "it": "Università degli Studi di Torino",
+                "en": "University of Turin"
+              },
+              "alt": {
+                "it": "Logo dell'Università degli Studi di Torino",
+                "en": "Logo of the University of Turin"
+              }
+            }
+          }
+        ]
       }
     },
     "types": {

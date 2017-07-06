@@ -20,6 +20,10 @@
             position:absolute;
             right:3px;
         }
+        .lang {
+            min-width: 34px;
+            font-weight: 500;
+        }
 
     }
     ion-content{
@@ -75,6 +79,14 @@
                     font-weight: 500;
                     color:#333;
                     padding: 16px 0px;
+                    margin: 0px;
+                }
+                .scope {
+                    font-size: 1.5em;
+                    font-weight: 500;
+                    color:#333;
+                    padding: 0px;
+                    margin: 0px;
                 }
                 .alternative-actions{
                     margin: 0px;
@@ -124,9 +136,10 @@
                     text-align: right;
                 }
                 .button {
-                    border-radius: 20px;
+                    //border-radius: 20px;
                     font-weight: 700;
                     padding: 0px 24px;
+                    margin-top: 12px;
                 }
             }
             .upper-menu {

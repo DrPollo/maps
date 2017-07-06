@@ -3,7 +3,7 @@ angular.module('firstlife.directives')
         return{
             strict:'EG',
             replace: true,
-            template:'<button class="sign-up button button-block button-dark" ng-click="goToSignUp()">{{"SIGNUP"|translate}}</button>',
+            template:'<button class="sign-up button button-block button-dark" style="background-color: #4d4d4d;" ng-click="goToSignUp()">{{"SIGNUP"|translate}}</button>',
             link:function(scope, element, attrs){
                 scope.goToSignUp = function(){$window.location.href = AuthService.registration_url();}
             }

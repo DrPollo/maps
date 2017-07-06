@@ -15439,6 +15439,9 @@ timeline {
   #landingpage .bar-header .right, #landingpage .bar .right {
     position: absolute;
     right: 3px; }
+  #landingpage .bar-header .lang, #landingpage .bar .lang {
+    min-width: 34px;
+    font-weight: 500; }
   #landingpage ion-content {
     background-position: fixed center top;
     background-repeat: no-repeat;
@@ -15483,7 +15486,14 @@ timeline {
           font-size: 2em;
           font-weight: 500;
           color: #333;
-          padding: 16px 0px; }
+          padding: 16px 0px;
+          margin: 0px; }
+        #landingpage .main-content .box .central-content .scope {
+          font-size: 1.5em;
+          font-weight: 500;
+          color: #333;
+          padding: 0px;
+          margin: 0px; }
         #landingpage .main-content .box .central-content .alternative-actions {
           margin: 0px; }
           #landingpage .main-content .box .central-content .alternative-actions .wrap {
@@ -15519,9 +15529,9 @@ timeline {
       #landingpage .main-content .box .about .right {
         text-align: right; }
       #landingpage .main-content .box .about .button {
-        border-radius: 20px;
         font-weight: 700;
-        padding: 0px 24px; }
+        padding: 0px 24px;
+        margin-top: 12px; }
       #landingpage .main-content .box .upper-menu {
         margin: 0px;
         padding: 16px; }

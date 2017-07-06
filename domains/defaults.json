@@ -12,7 +12,7 @@
     "app_name" : "FirstLife",
     "domain_name" : "firstlife",
     "domain_id" : 1,
-    "read_domains":[10,11,12,13,14,16],
+    "read_domains":[10,11,12,13,14,16,19],
     "authentication": {
         "auth_server":"fl_auth",
         "auth_server_name":"FIRSTLIFE",
@@ -35,7 +35,7 @@
     },
     "design":{
         "logo" : {
-            "url": "img/loghi/firstlife-logo-solologo.svg",
+            "url": "img/loghi/firstlife-logo-solologo_ombra_small.svg",
             "title": "FirstLife",
             "alt":"FirstLife",
             "label":{
@@ -44,7 +44,7 @@
             }
         },
         "logo_bar" : "img/loghi/firstlife-logo-soloscritta.svg",
-        "logo_menu" : "img/loghi/firstlife-logo-solologo.svg",
+        "logo_menu" : "img/loghi/firstlife-logo-solologo_ombra_small.svg",
         "logo_viewer" : "img/loghi/firstlife-logo-orizzontale.svg",
         "logo_width" : 160,
         "logo_height" : 160,
@@ -85,14 +85,14 @@
                 "style":""
             },
             "center":{
-                "image":"img/infografica-landingpage3.svg",
+                "image":"img/infografiche/firstlife.gif",
                 "alt": {
                     "it":"Logo FirstLife",
                     "en":"FirstLife logo"
                 },
                 "message":{
-                    "it":"il Social Network Civico",
-                    "en":"the Civic Social Network"
+                    "it":"il social network civico<br>per partecipare, collaborare e vivere la città",
+                    "en":"the civic social network<br>to participate, collaborate and living the city"
                 }
             },
             "errors":{
@@ -128,85 +128,58 @@
             "about":
                 {
                 "image":{
-                    "url":"img/loghi/firstlife-logo-solologo.svg",
+                    "url":"img/loghi/firstlife-logo-solologo_ombra_small.svg",
                     "alt":{
                         "it":"Logo FirstLife",
                         "en":"Logo of FirstLife"
                     }
                 },
                 "content":{
-                    "it":"FirstLife è un progetto ...",
-                    "en":"FirstLife è un progetto ..."
+                    "it":"FirstLife è il social network civico progettato per sostenere nuove forme di collaborazione sul territorio e in città a varie scale attraverso la condivisione di informazioni e la costruzione di proposte, progetti e iniziative locali. È una piattaforma di crowdsourcing basata su una mappa per rappresentare in modo intuitivo lo spazio comune in cui si svolgono le nostre attività e attiviamo le nostre reti. Ha un calendario globale per facilitare il coordinamento e documentare le attività nel tempo.",
+                    "en":"FirstLife is the civic social network designed to support new forms of collaboration in terrotory of cities at multiple scales trough sharing of information and construction of proposals, projects and initiatives. "
                 },
                 "action":{
                     "it":{
-                        "label":"Scopri di più",
-                        "url": "http://openlabs.firstlife.org/comingsoon.html"
+                        "label":"Leggi di più",
+                        "url": "http://firstlife.org"
                     },
                     "en":{
-                        "label":"About FirstLife",
-                        "url": "http://openlabs.firstlife.org/comingsoon.html"
+                        "label":"Read more",
+                        "url": "http://firstlife.org"
                     }
                 }
             },
-            "upper_menu":[
-                {
-                    "name":"Linee guida di Comunità",
-                    "url":"http://openlabs.firstlife.org/comingsoon.html",
-                    "img":"img/icona-guidacomunita.svg",
-                    "alt":"Guide di Comunità",
-                    "lang":"it"
-                },
-                {
-                    "name":"Esempi e Applicazioni",
-                    "url":"http://tutorials.firstlife.org",
-                    "img":"img/icone-tutorial.svg",
-                    "alt":"Tutorial",
-                    "lang":"it"
-                },
-                {
-                    "name":"Scopri di più su FirstLife",
-                    "url":"http://www.firstlife.org",
-                    "img":"img/firstlife_logo_solologo_ombra.svg",
-                    "alt":"Progetto FirstLife",
-                    "lang":"it"
-                },
-                {
-                    "name":"Community Guidelines",
-                    "url":"http://openlabs.firstlife.org/comingsoon.html",
-                    "img":"img/icona-guidacomunita.svg",
-                    "alt":"Community Guidelines",
-                    "lang":"en"
-                },
-                {
-                    "name":"User Guide & examples",
-                    "url":"http://tutorials.firstlife.org",
-                    "img":"img/icone-tutorial.svg",
-                    "alt":"Tutorials",
-                    "lang":"en"},
-                {
-                    "name":"About FirstLife project",
-                    "url":"http://www.firstlife.org",
-                    "img":"img/firstlife_logo_solologo_ombra.svg",
-                    "alt":"FirstLife Project",
-                    "lang":"en"
-                }
-            ],
+            "about_project":false,
             "lower_menu":[
                 {"name":"Terms of use","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
                 {"name":"Privacy policy","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
                 {"name":"Help Center","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
                 {"name":"Community Guidelines","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"en"},
-                {"name":"Condizioni d'uso","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
+                {"name":"Termini d'uso","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
                 {"name":"Trattamento dati","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
                 {"name":"Centro Assistenza","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"},
                 {"name":"Linee guida di Comunità","url":"http://openlabs.firstlife.org/comingsoon.html","lang":"it"}
             ],
             "credits":[
-                {"text":"Social Computing, Dip. di Informatica, Università degli Studi di Torino - P.I. 02099550010 C.F. 80088230018","lang":"it"},
-                {"text":"Social Computing, Dept. of Computer Science, University of Turin - P.I. 02099550010 C.F. 80088230018","lang":"en"}
+                {"text":"Dipartimento di Informatica, Università degli Studi di Torino - P.I. 02099550010 C.F. 80088230018","lang":"it"},
+                {"text":"Department of Computer Science, University of Turin - P.I. 02099550010 C.F. 80088230018","lang":"en"}
             ],
             "logo_partners" : [
+                {
+                    "url":"http://di.unito.it/",
+                    "image": {
+                        "height":60,
+                        "url":"img/partners/LogoDip-UFFICIALE - due colori testo nero.png",
+                        "title": {
+                            "it": "Dipartimento di Informatica, Università degli Studi di Torino",
+                            "en": "Computer Science Department of the University of Turin"
+                        },
+                        "alt": {
+                            "it": "Logo del Dipartimento di Informatica, Università degli Studi di Torino",
+                            "en": "Logo of the Computer Science Department of the University of Turin"
+                        }
+                    }
+                },
                 {
                     "label":{
                         "it":"Sito dell'Università degli Studi di Torino",
@@ -214,7 +187,7 @@
                     },
                     "url":"https://www.unito.it/",
                     "image": {
-                        "height":80,
+                        "height":60,
                         "url":"img/partners/logo_Unito_nero.png",
                         "title": {
                             "it": "Università degli Studi di Torino",

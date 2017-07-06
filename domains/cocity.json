@@ -26,33 +26,6 @@
             "en": ""
           }
         },
-        "about": {
-          "label": {
-            "it": "Pagina del portale web di UIA per la Città di Torino",
-            "en": "Official page of the UIA action of City of Turin"
-          },
-          "image": {
-            "url": "img/partners/icona_co-city.svg",
-            "alt": {
-              "it": "Logo CO-City",
-              "en": "Logo of CO-City"
-            }
-          },
-          "content": {
-            "it": "Co-City è un progetto Urban Innovation Action UIA della Commissione Europea...",
-            "en": ""
-          },
-          "action": {
-            "it": {
-              "label": "Scopri di più",
-              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
-            },
-            "en": {
-              "label": "About CoCity",
-              "url": "http://www.uia-initiative.eu/en/uia-cities/turin"
-            }
-          }
-        },
         "about_project": {
           "image": {
             "url": "img/partners/icona_co-city.svg",
