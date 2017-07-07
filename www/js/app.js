@@ -159,7 +159,6 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         $state.go('app.maps',search_params);
                     }
                     // $log.debug('going home');
-                    // if()$state.go('home',search_params);
                     break;
                 case 'app.editor':
                     if(authenticate && !AuthService.isAuth()){

@@ -96,12 +96,6 @@ angular.module('firstlife.controllers')
             );
         }
 
-        function loginError() {
-            $log.debug('go to home');
-            $location.search('error', 'login')
-            $state.go('home', {error: 'login'});
-        }
-
 
         function getUser(token) {
             $log.debug('getting the user',token);
@@ -118,6 +112,12 @@ angular.module('firstlife.controllers')
                     loginError();
                 }
             );
+        }
+
+        function loginError() {
+            $log.debug('go to home');
+            // $location.search('error', 'login');
+            $state.go('home', {error:'login'} );
         }
 
     }]);

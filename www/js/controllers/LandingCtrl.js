@@ -9,7 +9,7 @@ angular.module('firstlife.controllers')
 
         // check cambio di stato
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState) {
-            $log.debug('qui',event.preventLandingEvent);
+            $log.debug('qui',event.preventLandingEvent,toParams);
 
             if(event.preventLandingEvent)
                 return;
