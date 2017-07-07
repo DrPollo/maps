@@ -37,7 +37,7 @@
                         <img src="{{defaults.design.landingpage.center.image}}"
                                  alt="{{defaults.design.landingpage.center.alt[currentLang ? currentLang : 0]}}"/>
                     </div>
-                    <div class="col col-center">
+                    <div class="col col-center" ng-if="!error">
                         <h2 class="message"
                             ng-bind-html="defaults.design.landingpage.center.message[currentLang ? currentLang : 0]"></h2>
                         <h3 class="scope" ng-bind-html="defaults.design.landingpage.center.scope[currentLang ? currentLang : 0]"></h3>
