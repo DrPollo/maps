@@ -35,7 +35,7 @@ angular.module('firstlife.controllers')
             }
 
 
-            if (params.code) {
+           if (params.code) {
                 $log.log('trovato code', params.code);
                 // controllo dello stato
                 if (params.state) {
@@ -51,30 +51,24 @@ angular.module('firstlife.controllers')
                     $log.debug('non ho trovato state');
                     generateToken(params.code);
                 }
-                return;
             }
 
             // gestione del token in arrivo dal oauth server
             // connettori social
-            if(params.token) {
+            else if(params.token) {
                 $log.log('trovato token',param.token);
-                return saveToken(params.token);
-            }
-
-            if (params.profile && params.profile === 'true') {
+                getUser(params.token);
+            } else if (params.profile && params.profile === 'true') {
                 $log.debug('update profilo');
                 // profilo modificato
                 $scope.message = 'UPDATE_PROFILE_SUCCESS';
                 // redirect alla landingpage
                 $state.go('app.maps');
-                return;
+            } else {
+                $log.debug('default');
+                // altrimenti torno alla landing
+                $state.go('home');
             }
-
-
-
-            $log.debug('default');
-            // altrimenti torno alla landing
-            $state.go('home');
         });
 
         // cambio lingua
@@ -111,10 +105,21 @@ angular.module('firstlife.controllers')
         }
 
 
-        function saveToken(token) {
+        function getUser(token) {
             $log.debug('saving the token');
-
-            return AuthService.saveToken(token);
+            AuthService.getUser(token).then(
+                function (result) {
+                    $log.debug('tutto ok con il token', result);
+                    // se ho il token
+                    $state.go('app.maps');
+                },
+                function (err) {
+                    $log.debug('getToken, error', err);
+                    // se non riesco a generare il token
+                    // gestione errori
+                    loginError();
+                }
+            );
         }
 
     }]);

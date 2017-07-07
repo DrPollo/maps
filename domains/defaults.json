@@ -31,7 +31,8 @@
         "session_check": false,
         "session_params":false,
         "token_check":"tokens/check",
-        "autologin":false
+        "autologin":false,
+        "userinfo": "userinfo"
     },
     "design":{
         "logo" : {
@@ -43,9 +44,9 @@
                 "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"
             }
         },
-        "logo_bar" : "img/loghi/firstlife-logo-soloscritta.svg",
+        "logo_bar" : "img/loghi/firstlife-logo-soloscritta_ombra_small.svg",
         "logo_menu" : "img/loghi/firstlife-logo-solologo_ombra_small.svg",
-        "logo_viewer" : "img/loghi/firstlife-logo-orizzontale.svg",
+        "logo_viewer" : "img/loghi/firstlife-logo-orizzontale_ombra_small.svg",
         "logo_width" : 160,
         "logo_height" : 160,
         "default_thumb" : "img/thumb.jpg",

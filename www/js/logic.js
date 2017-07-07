@@ -57,6 +57,8 @@ angular.module('firstlife.config')
         if(params.signature_url)
             myConfig.authentication.signature_url = url.concat(params.signature_url);
         myConfig.authentication.registration_url = url.concat(params.registration_url);
+        if(params.userinfo)
+            myConfig.authentication.userinfo = url.concat(params.userinfo);
    })
 // logica
     .config(

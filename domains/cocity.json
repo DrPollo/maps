@@ -16,10 +16,10 @@
       },
       "landingpage": {
         "center": {
-          "image": "img/infografica-landingpage3.svg",
+          "image": "img/infografiche/cocity.gif",
           "alt": {
-            "it": "Logo FirstLife",
-            "en": "FirstLife logo"
+            "it": "Infografica CoCity",
+            "en": "Concept of CoCity"
           },
           "message": {
             "it": "",
@@ -58,7 +58,7 @@
             "url": "http://ec.europa.eu/regional_policy/index.cfm/it/funding/erdf/",
             "image": {
               "height": 40,
-              "url": "img/partners/logo-unione-europeaorizzontale_testobianco.svg",
+              "url": "img/partners/logo-unioneeuropea-orizzontale_testonero.png",
               "title": {
                 "it": "Fondi dell'Unione Europea per lo sviluppo regionale",
                 "en": "Euroean Union founds for regional development"
@@ -96,7 +96,7 @@
             "url": "http://www.comune.torino.it/",
             "image": {
               "height": 40,
-              "url": "img/partners/città-di-torino_b-n.png",
+              "url": "img/partners/logo_cittaditorino_colorato.png",
               "title": {
                 "it": "Città di Torino",
                 "en": "City of Turin"
@@ -115,7 +115,7 @@
             "url": "https://www.unito.it/",
             "image": {
               "height": 40,
-              "url": "img/partners/Logo-Unito-orizzontale_testobianco.svg",
+              "url": "img/partners/logo_Unito_nero.png",
               "title": {
                 "it": "Università degli Studi di Torino",
                 "en": "University of Turin"
@@ -134,7 +134,7 @@
             "url": "http://www.casedelquartieretorino.org/",
             "image": {
               "height": 40,
-              "url": "img/partners/rete-casedel-quartiere_logo-orizzontale_bianco.png",
+              "url": "img/partners/rete-casedel-quartiere_logo-orizzontale_colorato.png",
               "title": {
                 "it": "Rete delle Case del Quartiere di Torino",
                 "en": "Network of Case del Quartiere of Turin"
@@ -153,7 +153,7 @@
             "url": "http://www.cascinaroccafranca.it/",
             "image": {
               "height": 40,
-              "url": "img/partners/logo-orizzontale-roccafranca_b-n.png",
+              "url": "img/partners/logo-orizzontale-cascinaroccafranca.png",
               "title": {
                 "it": "Cascina Roccafranca",
                 "en": "Cascina Roccafranca"
@@ -172,7 +172,7 @@
             "url": "http://www.anci.it/",
             "image": {
               "height": 40,
-              "url": "img/partners/anci_logo orizzontale_b-n.png",
+              "url": "img/partners/anci_logo orizzontale_colorato.png",
               "title": {
                 "it": "Associazione Nazionale Comuni Italiani",
                 "en": "Italian Association of Cities"
