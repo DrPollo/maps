@@ -51,13 +51,11 @@ angular.module('firstlife.controllers')
                     $log.debug('non ho trovato state');
                     generateToken(params.code);
                 }
-            }
-
-            // gestione del token in arrivo dal oauth server
-            // connettori social
-            else if(params.token) {
-                $log.log('trovato token',param.token);
-                getUser(params.token);
+            }else if(params.token) {
+               // gestione del token in arrivo dal oauth server
+               // connettori social
+                $log.log('trovato token',params.token);
+                return getUser(params.token);
             } else if (params.profile && params.profile === 'true') {
                 $log.debug('update profilo');
                 // profilo modificato
@@ -106,8 +104,8 @@ angular.module('firstlife.controllers')
 
 
         function getUser(token) {
-            $log.debug('saving the token');
-            AuthService.getUser(token).then(
+            $log.debug('getting the user',token);
+            AuthService.retrieveUser(token).then(
                 function (result) {
                     $log.debug('tutto ok con il token', result);
                     // se ho il token

@@ -13,7 +13,7 @@ angular.module('firstlife.services')
 
         //C: (P&(~Q))
         return {
-            userInfo: function (token) {
+            retrieveUser: function (token) {
                 var deferred = $q.defer();
 
                 if (!myConfig.authentication.userinfo) {
@@ -26,19 +26,21 @@ angular.module('firstlife.services')
                     return deferred.promise;
                 }
 
+                $log.debug('retrieveUser',myConfig.authentication.userinfo + "?access_token=" + token);
+
                 var req = {
                     url: myConfig.authentication.userinfo + "?access_token=" + token,
                     method: 'GET',
                     data: false
                 };
                 $http(req).then(function (member) {
-                    // $log.debug('check token, response',response);
+                    $log.debug('check token, response',member);
                     MemoryFactory.save(identityKey, member);
                     // salvo il token
                     MemoryFactory.save(tokenKey, {access_token: token});
                     deferred.resolve(member);
                 }, function (err) {
-                    // $log.debug("check token",err);
+                    $log.debug("check token",err);
                     // token non valido faccio logout
                     MemoryFactory.delete(identityKey);
                     MemoryFactory.delete(tokenKey);
