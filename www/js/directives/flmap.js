@@ -148,8 +148,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         mapRef = map;
 
                         initCentre();
-                        initListners();
                         initTiles();
+
+                        initListners();
+
                         // se definito
                         if(zoomControl)
                             mapRef.addControl(zoomControl);
@@ -208,15 +210,19 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 for(var i = 0; i <= Math.abs(swTile[0] - neTile[0] ); i++){
                     // delta diff swTile e neTile y
                     for(var j = 0; j <= Math.abs(swTile[1] - neTile[1] ); j++) {
-                        var tile = {x:swTile[0]+(i*xDelta),y:swTile[1]+(j*yDelta),z:z};
+                        var tile = {
+                            x:swTile[0]+(i*xDelta),
+                            y:swTile[1]+(j*yDelta),
+                            z:z
+                        };
                         // $log.debug(tile);
                         // add tile
                         addTile(tile);
                     }
                 }
                 // flush delle tile
-                $log.debug('initTiles > fushMarkers');
-                flushMarkers();
+                // $log.debug('initTiles > fushMarkers');
+                // flushMarkers();
             }
 
 
@@ -293,7 +299,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                     e.preventDefault();
 
-                    // $log.debug('filterMarkers!');
+                    $log.debug('filterMarkers > flushTiles');
                     filterMarkers();
                 });
                 $scope.$on('updateMarkers',function (e) {
@@ -302,7 +308,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                     e.preventDefault();
 
-                    $log.debug('updateMarkers');
+                    $log.debug('updateMarkers > flushTiles');
                     updateMarkers();
                 });
                 $scope.$on('deleteMarker',function (e,args) {
@@ -390,6 +396,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 if(!pieRef)
                     return
                 // chiamate alle tile attive
+                $log.debug('flushMarkers > flushTiles');
                 ThingsService.flushTiles().then(
                     function (markers) {
                         // $log.debug('updated markers',Object.keys(markers).length);
@@ -408,7 +415,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     return;
 
                 // reset markers
-
+                $log.debug('updateMarkers > flushTiles');
                 // chiamate alle tile attive
                 ThingsService.flushTiles().then(
                     function (markers) {
@@ -426,7 +433,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // query for a tile
             function addTile(tile){
-                $log.debug(tile);
+                // $log.debug(tile);
                 ThingsService.addTile(tile);
                 // todo grid based query
                 // ThingsService.getTile(tile).then(
@@ -449,6 +456,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // filtro i marker in cache
             function filterMarkers() {
                 // chiedo cosa devo eliminare
+                $log.debug('filterMarkers > filter');
                 ThingsService.filter().then(
                     function (markers) {
                         removeMarkers();
