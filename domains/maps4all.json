@@ -62,6 +62,7 @@
       {"name":"PLACE_NAME","id":5,"icon":"ion-location","slug":"place","url":"places","key":"FL_PLACES","index":1,
         "show_author":false, "shape":"triangle",
         "properties":{
+          "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE", "required":true, "default":"" ,"min_length":3},
           "parent_id":{ "key": "parent_id", "label": "PARENT_PLACE_LABEL", "placeholder":"PARENT_PLACE_PLACEHOLDER", "default":null},
           "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true},
           "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":null,"advanced":true,"is_editable":true}
@@ -76,6 +77,7 @@
       {"name":"COMMENT_NAME","id":3,"icon":"ion-quote","slug":"news","url":"news","key":"FL_NEWS","index":5,
         "show_author":true, "shape":"diamond",
         "properties":{
+          "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE_OF_NEWS", "required":true, "default":"" ,"min_length":3},
           "news_of":{ "key": "news_of", "label": "COMMENT_OF_LABEL", "placeholder":"COMMENT_OF_PLACEHOLDER", "default":null},
           "description":{"key":"description", "label": "MESSAGE_LABEL", "placeholder": "MESSAGE_PLACEHOLDER", "default":"","required":true,"min_length":3},
           "group_id":{ "key": "group_id", "label":"GROUP","placeholder":"GROUP", "default":null},
@@ -92,6 +94,7 @@
       {"name":"EVENT_NAME","id":2,"icon":"ion-android-calendar","slug":"event","url":"events","key":"FL_EVENTS","index":4,
         "show_author":false, "shape":"exagon",
         "properties":{
+          "name":{ "key": "name", "label": "TITLE", "placeholder": "TITLE_OF_EVENT", "required":true, "default":"" ,"min_length":3},
           "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"min_length":3},
           "valid_from":{ "key": "valid_from", "label": "STARTDATE_LABEL","placeholder":"STARTDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
           "valid_to":{ "key": "valid_to", "label": "ENDDATE_LABEL","placeholder":"ENDDATE_PLACEHOLDER", "default":"","required":true,"is_editable":true},
@@ -113,6 +116,7 @@
       {"name":"GROUPS_NAME","id":1,"icon":"ion-android-people","slug":"group","url":"groups","key":"FL_GROUPS","index":2,
         "show_author":false, "shape":"octagon",
         "properties":{
+          "name":{ "key": "name", "label": "NAME", "placeholder": "NAME_A_GROUP", "required":true, "default":"" ,"min_length":3},
           "description":{"key":"description","label":"INFO_LABEL","placeholder":"INFO_PLACEHOLDER","default":"","required":true,"is_editable":true,"min_length":3},
           "parent_id":{ "key": "parent_id", "label": "PARENT_GROUP_LABEL", "placeholder":"PARENT_GROUP_PLACEHOLDER", "default":null},
           "group_of":{ "key": "group_of", "label": "GROUP_OF_LABEL", "placeholder":"GROUP_OF_PLACEHOLDER", "default":null},
