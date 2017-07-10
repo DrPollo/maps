@@ -33,7 +33,8 @@ angular.module('firstlife.services')
                     method: 'GET',
                     data: false
                 };
-                $http(req).then(function (member) {
+                $http(req).then(function (response) {
+                    var member = response.data;
                     $log.debug('check token, response',member);
                     MemoryFactory.save(identityKey, member);
                     // salvo il token
