@@ -126,47 +126,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             // vector grid
             var vGrid = L.vectorGrid.protobuf(vectormapUrl, vectormapConfig);
 
-            /*
-             * Listner esterni
-             */
 
-            $scope.$on('filterMarkers',function (e) {
-                if(e.defaultPrevented)
-                    return;
-
-                e.preventDefault();
-
-                // $log.debug('filterMarkers!');
-                filterMarkers();
-            });
-            $scope.$on('updateMarkers',function (e) {
-                if(e.defaultPrevented)
-                    return;
-
-                e.preventDefault();
-
-                $log.debug('updateMarkers');
-                updateMarkers();
-            });
-            $scope.$on('deleteMarker',function (e,args) {
-                if(e.defaultPrevented)
-                    return;
-
-                e.preventDefault();
-
-                // $log.debug('deleteMarkers!',args);
-                removeMarker(args.id);
-            });
-            $scope.$on('goToLocation',function (e,args) {
-                if(e.defaultPrevented)
-                    return;
-
-                e.preventDefault();
-
-                $log.debug('goToLocation!',args);
-
-                changeLocation(args);
-            });
 
             /*
              * Listner interni
@@ -187,11 +147,9 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         // $log.debug('save map reference');
                         mapRef = map;
 
-                        // init dei marker
-                        $timeout(flushMarkers,500);
-
                         initCentre();
                         initListners();
+                        initTiles();
                         // se definito
                         if(zoomControl)
                             mapRef.addControl(zoomControl);
@@ -232,7 +190,39 @@ angular.module('firstlife.directives').directive('flmap',function () {
             });
 
 
+            function initTiles(){
+                var bounds = mapRef.getBounds();
+                var z = mapRef.getZoom();
+                // pointToTile(lon, lat, z)
+                // tile = [x,y,z];
+                var sw = bounds.getSouthWest();
+                var ne = bounds.getNorthEast();
+
+                var swTile = pointToTile(sw.lng, sw.lat, z);
+                var neTile = pointToTile(ne.lng, ne.lat, z);
+                // $log.debug('tiles',swTile,neTile);
+                var xDelta = swTile[0] < neTile[0] ? 1 : -1;
+                var yDelta = swTile[1] < neTile[1] ? 1 : -1;
+                // $log.debug('deltas',xDelta,yDelta);
+                // delta diff swTile e neTile x
+                for(var i = 0; i <= Math.abs(swTile[0] - neTile[0] ); i++){
+                    // delta diff swTile e neTile y
+                    for(var j = 0; j <= Math.abs(swTile[1] - neTile[1] ); j++) {
+                        var tile = {x:swTile[0]+(i*xDelta),y:swTile[1]+(j*yDelta),z:z};
+                        // $log.debug(tile);
+                        // add tile
+                        addTile(tile);
+                    }
+                }
+                // flush delle tile
+                $log.debug('initTiles > fushMarkers');
+                flushMarkers();
+            }
+
+
+
             function initListners() {
+
                 $scope.$on('leafletDirectiveMap.mymap.moveend', function(event, args) {
                     if(event.defaultPrevented)
                         return ;
@@ -245,8 +235,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     var center = mapRef.getCenter();
                     var z = mapRef.getZoom();
                     $location.search("c",center.lat+':'+center.lng+':'+z);
-                    // $log.debug('moveend');
-                    $timeout(flushMarkers,500);
+                    $log.debug('moveend > flushMarker');
                     timer = $timeout(flushMarkers,1000);
                     // if($scope.editMode){
                     //     var center = mapRef.getCenter();
@@ -291,6 +280,49 @@ angular.module('firstlife.directives').directive('flmap',function () {
                         $location.search('entity',args.id);
                         $scope.$emit('wallClick',{id: args.id});
                     }
+                });
+
+
+                /*
+                 * Listner esterni
+                 */
+
+                $scope.$on('filterMarkers',function (e) {
+                    if(e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    // $log.debug('filterMarkers!');
+                    filterMarkers();
+                });
+                $scope.$on('updateMarkers',function (e) {
+                    if(e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    $log.debug('updateMarkers');
+                    updateMarkers();
+                });
+                $scope.$on('deleteMarker',function (e,args) {
+                    if(e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    // $log.debug('deleteMarkers!',args);
+                    removeMarker(args.id);
+                });
+                $scope.$on('goToLocation',function (e,args) {
+                    if(e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    $log.debug('goToLocation!',args);
+
+                    changeLocation(args);
                 });
             }
 
@@ -394,6 +426,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // query for a tile
             function addTile(tile){
+                $log.debug(tile);
                 ThingsService.addTile(tile);
                 // todo grid based query
                 // ThingsService.getTile(tile).then(
