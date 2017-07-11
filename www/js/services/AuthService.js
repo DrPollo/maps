@@ -38,7 +38,7 @@ angular.module('firstlife.services')
                     $log.debug('check token, response',member);
                     MemoryFactory.save(identityKey, member);
                     // salvo il token
-                    MemoryFactory.save(tokenKey, {access_token: token});
+                    MemoryFactory.save(tokenKey, {access_token: token, id: member.member_id+'@'+myConfig.authentication.auth_server_name });
                     deferred.resolve(member);
                 }, function (err) {
                     $log.debug("check token",err);
