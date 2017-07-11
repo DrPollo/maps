@@ -221,8 +221,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     }
                 }
                 // flush delle tile
-                // $log.debug('initTiles > fushMarkers');
-                // flushMarkers();
+                $log.debug('initTiles > fushMarkers');
+                flushMarkers();
             }
 
 

@@ -208,12 +208,12 @@ angular.module('firstlife.controllers')
         });
 
         $scope.$on("timeUpdate",function(event,args){
-            // $log.debug('timeUpdate');
             if(event.defaultPrevented)
                 return ;
 
             event.preventDefault();
             // al cambio filtro temporale ricalcolo i dati
+            $log.debug('timeUpdate > flush');
             updateMarkers();
         });
         // cattura q
