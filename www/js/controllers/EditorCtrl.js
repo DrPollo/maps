@@ -481,9 +481,16 @@ angular.module('firstlife.controllers')
                         $log.error('creation error ',error);
                         // moderazione
                         var status = -2;
-                        if(error.status == 500){
-                            // errore di rete o bug
+                        switch(error.status){
+                            case 500:
+                                // errore sconosciuto
+                            case 422:
+                                // errore di form
                             status = -1;
+                            break;
+                            default:
+                                status = -2;
+
                         }
                         $state.go("app.maps",{entity:status,lat:params.lat,lng:params.lng,zoom:params.zoom_level});
 
