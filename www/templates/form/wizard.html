@@ -76,31 +76,31 @@
                         <div class="item item-divider" class="item item-input item-floating-label" ng-class="{ 'has-error' : editor.form.wizardform.name.$invalid, 'no-error' : !editor.form.wizardform.name.$invalid }">
                             {{checkList.name.label | translate}}
                         </div>
-                        <div class="list card">
-                            <div class="item item-divider">
-                                {{checkList.tags.label|translate}}
-                            </div>
-                            <div class="item item-iput autocompletetags">
-                                <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
-                            </div>
-                        </div>
-                        <div class="list card">
-                            <div class="item item-divider">
-                                {{checkList.link_url.label|translate}}
-                            </div>
-                            <div class="item item-input">
-                                <input type="url" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{checkList.link_url.placeholder |translate}}" ng-required="checkList.link_url.required">
-                                <div class="form-errors" ng-messages="editor.form.wizardform.link_url.$error">
-                                    <div class="form-error" ng-message="url">{{'NOT_VALID_URL'|translate}}</div>
-                                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="item item-text-wrap" class="item item-input">
                             <input type="text" name="name" ng-model="editor.wizard.dataForm.name" placeholder="{{checkList.name.placeholder |translate}}" ng-minlength="3" ng-maxlength="100" ng-required="checkList.name.required">
                             <div class="form-errors" ng-messages="form.wizardform.name.$error">
                                 <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 3 {{'CHARACTERS'|translate}}</div>
                                 <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 100 {{'CHARACTERS'|translate}}</div>
+                                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list card">
+                        <div class="item item-divider">
+                            {{checkList.tags.label|translate}}
+                        </div>
+                        <div class="item item-iput autocompletetags">
+                            <tags-input ng-model="editor.wizard.dataForm.tags" display-property="tag" placeholder="{{checkList.tags.placeholder |translate}}" replace-spaces-with-dashes="false"></tags-input>
+                        </div>
+                    </div>
+                    <div class="list card">
+                        <div class="item item-divider">
+                            {{checkList.link_url.label|translate}}
+                        </div>
+                        <div class="item item-input">
+                            <input type="url" name="link_url" ng-model="editor.wizard.dataForm.link_url" placeholder="{{checkList.link_url.placeholder |translate}}" ng-required="checkList.link_url.required">
+                            <div class="form-errors" ng-messages="editor.form.wizardform.link_url.$error">
+                                <div class="form-error" ng-message="url">{{'NOT_VALID_URL'|translate}}</div>
                                 <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
                             </div>
                         </div>
