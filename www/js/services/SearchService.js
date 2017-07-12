@@ -33,7 +33,7 @@ angular.module('firstlife.services')
                 var req = {
                         url: url,
                         method: 'GET',
-                        headers:{"Content-Type":"application/json"},
+                        headers: { "Content-Type": "application/json" },
                         data:'',
                         cache: true
                     };
@@ -59,22 +59,42 @@ angular.module('firstlife.services')
                 var query = escape(val);
                 //$log.debug("SearchService, query, url: ", searchUrl);
                 var url = geoUrl.concat(search_key,"=",query);
-                var req = {
-                        url: url,
-                        method: 'GET',
-                        headers:{"Content-Type":"application/json"},
-                        data:'',
-                        cache: true
-                    };
-                $http(req)
-                .then(function(response) {
-//                    $log.debug("SearchService, query, response: ", response);
-                    deferred.resolve(geocodingDecoder(response.data));
-                    
-                },function(response) {
-                    $log.error("SearchService, query, errore: ", response);
-                    deferred.reject(response);
-                });
+                // var url = geoUrl.concat(text,"=",query,'&api_key=','search-ZDnkvxb');
+                // var req = {
+                //         url: url,
+                //         method: 'GET',
+                //         headers: {'Content-Type':'text/plain'},
+                //         data:'',
+                //         cache: true
+                //     };
+                // $http(req)
+                // .then(function(response) {
+                //    $log.debug("SearchService, query, response: ", response);
+                //     deferred.resolve(geocodingDecoder(response.data));
+                //
+                // },function(response) {
+                //     $log.error("SearchService, query, errore: ", response);
+                //     deferred.reject(response);
+                // });
+
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState === 4) {
+                        // $log.debug("SearchService, status",xmlHttp.status);
+                        if (xmlHttp.status == 200) {
+                            var data = JSON.parse(xmlHttp.response);
+                            $log.debug("SearchService, query, response: ", data);
+
+                            deferred.resolve(geocodingDecoder(data));
+                        } else {
+                            $log.error("SearchService, query, errore: ", xmlHttp.responseText);
+                            deferred.reject(xmlHttp.status);
+                        }
+                    }
+
+                };
+                xmlHttp.open("GET", url, true); // true for asynchronous
+                xmlHttp.send(null);
 
                 return deferred.promise;
             } 
