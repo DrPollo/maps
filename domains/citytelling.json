@@ -15,14 +15,14 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon1_citytelling_sfondo_ombra.svg",
+        "image":"img/openlabs/icon1_citytelling_sfondo_ombra_small.svg",
         "alt": {
           "it":"Logo FirstLife CityTelling",
           "en":"FirstLife CityTelling logo"
         },
         "message":{
-          "it":"il Social Network Civico",
-          "en":"the Civic Social Network"
+          "it":"Citytelling: la città raccontata con FirstLife",
+          "en":"Citytelling"
         }
       }
     }

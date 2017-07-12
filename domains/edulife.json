@@ -15,14 +15,14 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon6_edu_sfondo_ombra.svg",
+        "image":"img/openlabs/icon6_edu_sfondo_ombra_small.svg",
         "alt": {
           "it":"Logo FirstLife EduLife",
           "en":"FirstLife EduLife logo"
         },
         "message":{
-          "it":"il Social Network Civico",
-          "en":"the Civic Social Network"
+          "it":"FirstLife - Edulife",
+          "en":"FirstLife - Edulife"
         }
       }
     }

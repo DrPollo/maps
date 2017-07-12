@@ -15,14 +15,14 @@
        "default_language" : "it",
        "landingpage":{
          "center":{
-           "image":"img/landing/Icon5_communities_sfondo_ombra.svg",
+           "image":"img/openlabs/icon5_communities_sfondo_ombra_small.svg",
            "alt": {
              "it":"Logo FirstLife Prossimità",
              "en":"FirstLife Prossimità logo"
            },
            "message":{
-             "it":"il Social Network Civico",
-             "en":"the Civic Social Network"
+             "it":"FirstLife per la Biennale della Prossimità 2017",
+             "en":"FirstLife for Biennale della Prossimità 2017"
            }
          }
        }

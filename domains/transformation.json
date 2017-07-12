@@ -15,14 +15,14 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon8_transformation_sfondo_ombra.svg",
+        "image":"img/openlabs/icon8_transformation_sfondo_ombra_small.svg",
         "alt": {
           "it":"Logo FirstLife Transformation",
           "en":"FirstLife Transformation logo"
         },
         "message":{
-          "it":"il Social Network Civico",
-          "en":"the Civic Social Network"
+          "it":"FirstLife - Transformation",
+          "en":"FirstLife - Transformation"
         }
       }
     }

@@ -15,14 +15,14 @@
     "default_language" : "it",
     "landingpage":{
       "center":{
-        "image":"img/landing/Icon2_resources_sfondo_ombra.svg",
+        "image":"img/openlabs/icon2_resources_sfondo_ombra_small.svg",
         "alt": {
           "it":"Logo FirstLife Resources",
           "en":"FirstLife Resources logo"
         },
         "message":{
-          "it":"il Social Network Civico",
-          "en":"the Civic Social Network"
+          "it":"FirstLife - Resources",
+          "en":"FirstLife - Resources"
         }
       }
     }
