@@ -34,11 +34,13 @@ angular.module('firstlife.services')
                     data: false
                 };
                 $http(req).then(function (response) {
-                    var member = response.data;
-                    $log.debug('check token, response',member);
+                    var member = angular.extend({},
+                        response.data,
+                        {id: response.data.member_id+'@'+myConfig.authentication.auth_server_name} );
+                    $log.log('check token, response',response,member);
                     MemoryFactory.save(identityKey, member);
                     // salvo il token
-                    MemoryFactory.save(tokenKey, {access_token: token, id: member.member_id+'@'+myConfig.authentication.auth_server_name });
+                    MemoryFactory.save(tokenKey, {access_token: token});
                     deferred.resolve(member);
                 }, function (err) {
                     $log.debug("check token",err);
