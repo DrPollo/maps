@@ -12,7 +12,7 @@
         <div ng-if="post.tags && post.tags.length > 0" class="tags">
             <span ng-repeat="entry in post.tags track by $index" class="tag ion-pricetag">{{entry.tag}}</span>
         </div>
-        <div class="credits">
+        <div class="credits item-text-wrap">
             {{'CONTRIBUTE_OF'|translate}} <span class="username">{{post.owner.display_name}}</span>,  {{post.timestamp_insert | date : 'd/MM/yyyy'}}
         </div>
     </div>
