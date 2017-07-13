@@ -6,7 +6,8 @@
     </h3>
     <div class="item item-text-wrap main fast-ease-in-out-animation">
         <div class="subheader meta">
-                <span ng-repeat="icon in marker.icons track by icon.index" class="type-icon">
+                <!--<span ng-repeat="icon in marker.icons track by icon.index" class="type-icon">-->
+                <span ng-repeat="icon in marker.icons track by $index" class="type-icon">
                     <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
                     {{icon.name |translate}}
                 </span>
