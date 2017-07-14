@@ -12,6 +12,14 @@
           "text": "Cultura & Turismo Piemonte"
         }
       },
+      "side_menu":[
+        {"name":"Sito web FirstLife","url":"http://www.firstlife.org","icon":"ion-social-rss","lang":"it"},
+        {"name":"Sito del progetto","url":"https://culturaturismo.firstlife.org/","icon":"ion-information-circled","lang":"it"},
+        {"name":"Guida all'uso","url":"https://www.youtube.com/channel/UCgLJ3Mbga4IEPOfzvpQeyUA","icon":"ion-social-youtube","lang":"it"},
+        {"name":"Fanpage","url":"https://www.facebook.com/firstlife.org/","icon":"ion-social-facebook","lang":"it"},
+        {"name":"Supporto","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"it"},
+        {"name":"Helpdesk","url":"http://help.firstlife.di.unito.it/","icon":"ion-help","lang":"en"}
+      ],
       "default_language": "it",
       "landingpage": {
         "center": {
