@@ -297,10 +297,12 @@ gulp.task('mergeconfig', function(){
             });
         }
         if(extras){
-            // console.log('domain configs',extras);
+            // console.log('domain configs',extras.types.categories);
             try{
             config = override(defaults,extras,true);
-            // console.log(config.myConfig);
+            // console.log(config.myConfig.types.categories);
+                //bugfix merge
+            config.myConfig.types.categories = extras.types.categories;
             }catch (e){
                 throw new gutil.PluginError({
                     plugin: 'json-override',
