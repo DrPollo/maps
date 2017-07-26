@@ -302,7 +302,7 @@ gulp.task('mergeconfig', function(){
             config = override(defaults,extras,true);
             // console.log(config.myConfig.types.categories);
                 //bugfix merge
-            config.myConfig.types.categories = extras.types.categories;
+            // config.myConfig.types.categories = extras.types.categories;
             }catch (e){
                 throw new gutil.PluginError({
                     plugin: 'json-override',
