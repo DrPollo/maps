@@ -570,7 +570,9 @@ angular.module('firstlife.controllers')
 
         // action sheet di ritorno dall'editor
         function backFromEditor(entityId){
-
+            changeMode('view');
+            //update markers
+            updateMarkers();
             $log.debug("MapCtrl, backFromEditor, entityId: ", entityId);
             var content={};
             if(entityId === -1){
@@ -608,9 +610,6 @@ angular.module('firstlife.controllers')
             }else if(entityId){
                 clickMarker(entityId);
             }
-            changeMode('view');
-            //update markers
-            updateMarkers();
         };
 
 

@@ -18,7 +18,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Get all initiatives',res);
+                    // $log.debug('Get all initiatives',res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -39,7 +39,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Get all initiatives of',thingId,res);
+                    // $log.debug('Get all initiatives of',thingId,res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -65,7 +65,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Get all things related to',initiativeId,res);
+                    // $log.debug('Get all things related to',initiativeId,res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -91,7 +91,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Create initiative',res);
+                    // $log.debug('Create initiative',res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -116,7 +116,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Get initiative',res);
+                    // $log.debug('Get initiative',res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -142,7 +142,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Update initiative',res);
+                    // $log.debug('Update initiative',res);
                     deferred.resolve(res.data);
                 },
                 function(err){
@@ -168,7 +168,7 @@ angular.module('firstlife.factories')
             };
             $http(req).then(
                 function(res){
-                    $log.debug('Delete initiative',res);
+                    // $log.debug('Delete initiative',res);
                     deferred.resolve(res.data);
                 },
                 function(err){

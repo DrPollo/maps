@@ -393,8 +393,12 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
             // filtro i marker in cache
             function flushMarkers() {
-                if(!pieRef)
-                    return
+                // if(!pieRef && layers.overlays.pie){
+                //     pieRef = layers.overlays.pie;
+                // } else if(!pieRef){
+                //     return;
+                // }
+
                 // chiamate alle tile attive
                 $log.debug('flushMarkers > flushTiles');
                 ThingsService.flushTiles().then(
@@ -411,8 +415,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
             // filtro i marker in cache
             function updateMarkers() {
-                if(!pieRef)
-                    return;
+                // if(!pieRef && layers.overlays.pie){
+                //     pieRef = layers.overlays.pie;
+                // } else if(!pieRef){
+                //     return;
+                // }
 
                 // reset markers
                 $log.debug('updateMarkers > flushTiles');

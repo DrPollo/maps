@@ -349,6 +349,7 @@ angular.module('firstlife.services')
          */
 
         function flushTiles() {
+            // $log.debug('flush start');
             var deferred = $q.defer();
             var tiles = angular.copy(Object.keys(cache));
             var params = {tiles: tiles, time: filters.time};
