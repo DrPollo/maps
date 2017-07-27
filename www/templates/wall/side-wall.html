@@ -1,13 +1,20 @@
-<div id="wall" style="height: 100%">
-    <ion-slide-box style="height: 100%">
-        <ion-slide style="height: 100%">
-            <entity-list style="" close="closeWall()" click="clickWallItem(id)" filter="toggleFilter(cat,key)"></entity-list>
-        </ion-slide>
-        <ion-slide style="height: 100%">
-            <category-filters style="position:absolute;height:100%;width:100%;" array="filtred" toggle="toggleFilter(cat,key)" filters="filters" change-fav-cat="changeFavCat(id)"></category-filters>
-        </ion-slide>
-        <ion-slide style="height: 100%">
-            <thing-card id="markerId"></thing-card>
-        </ion-slide>
-    </ion-slide-box>
-</div>
+<ion-content drag-content="false"
+             scroll-event-interval="10"
+             overflow-scroll="true"
+             scrollbar-x="false"
+             direction="y"
+             data-tap-disabled="false">
+    <div id="wall" style="min-height: 100%">
+        <ion-slide-box style="height: 100%">
+            <ion-slide style="height: 100%">
+                <entity-list style="" close="closeWall()" click="clickWallItem(id)" filter="toggleFilter(cat,key)"></entity-list>
+            </ion-slide>
+            <ion-slide style="height: 100%">
+                <category-filters style="position:absolute;height:100%;width:100%;" array="filtred" toggle="toggleFilter(cat,key)" filters="filters" change-fav-cat="changeFavCat(id)"></category-filters>
+            </ion-slide>
+            <ion-slide style="height: 100%">
+                <thing-card id="markerId"></thing-card>
+            </ion-slide>
+        </ion-slide-box>
+    </div>
+</ion-content>
