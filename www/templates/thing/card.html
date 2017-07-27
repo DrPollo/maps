@@ -5,7 +5,12 @@
             <button ng-if="!embed" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
         </div>
     </ion-header-bar>
-    <ion-content scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
+    <ion-content
+            scroll-event-interval="10"
+            overflow-scroll="true"
+            scrollbar-x="false"
+            direction="y"
+            data-tap-disabled="false">
         <div class="top-modal">
             <div ng-if="infoPlace.marker.valid_from || infoPlace.marker.valid_to" class="modal-subheader time">
                 <span class="valid-time modal-subheader-item">

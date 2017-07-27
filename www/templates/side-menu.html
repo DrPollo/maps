@@ -1,12 +1,24 @@
 <ion-side-menus enable-menu-with-back-views="true" >
-    <ion-side-menu-content class="post-size-14px" drag-content="false">
+    <ion-side-menu-content
+            class="post-size-14px"
+            drag-content="false"
+            scroll-event-interval="10"
+            overflow-scroll="true"
+            scrollbar-x="false"
+            direction="y"
+            data-tap-disabled="false">
         <ion-nav-view name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu
             side="left"
             width = "{{sideWidth}}"
             id="side-menu"
-            drag-content="false">
+            drag-content="false"
+            scroll-event-interval="10"
+            overflow-scroll="true"
+            scrollbar-x="false"
+            direction="y"
+            data-tap-disabled="false">
         <ion-content drag-content="false">
             <side-wall filter="toggleFilter(cat,key)"></side-wall>
         </ion-content>
