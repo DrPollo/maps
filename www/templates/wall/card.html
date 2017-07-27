@@ -1,4 +1,7 @@
-<div class="card" ng-class="{'focus' : highlight === marker.id}" ng-focus="focus()" ng-blur="close()">
+<div class="card"
+     ng-class="{'focus' : highlight === marker.id}"
+     ng-focus="focus()"
+     ng-blur="close()">
     <button ng-if="highlight === marker.id" on-tap="close()"></button>
     <h3 class="title item" on-tap="show({id:marker.id})" title="{{'OPEN_THING' |translate}} {{marker.name}}">
         <i  class="icon {{marker.icon.icon}}" style="color:{{marker.icon.color}}"></i>

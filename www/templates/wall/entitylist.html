@@ -17,7 +17,12 @@
 </ion-header-bar>
 <ion-content class="modal-content"
         style="margin: 44px 0px 0px;"
-             scroll-event-interval="10" overflow-scroll="true" scrollbar-x="false" direction="y" data-tap-disabled="false">
+             drag-content="false"
+             scroll-event-interval="10"
+             overflow-scroll="true"
+             scrollbar-x="false"
+             direction="y"
+             data-tap-disabled="false">
     <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
     <div class="cover" ng-show="focus"></div>
     <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by marker.id"
