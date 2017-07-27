@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="true" >
+<ion-side-menus enable-menu-with-back-views="true">
     <ion-side-menu-content
             class="post-size-14px"
             drag-content="false">
@@ -6,9 +6,17 @@
     </ion-side-menu-content>
     <ion-side-menu
             side="left"
-            width = "{{sideWidth}}"
+            width="{{sideWidth}}"
             id="side-menu">
-        <side-wall filter="toggleFilter(cat,key)"></side-wall>
+        <ion-content id="wall"
+                     drag-content="false"
+                     scroll-event-interval="10"
+                     overflow-scroll="true"
+                     scrollbar-x="false"
+                     direction="y"
+                     data-tap-disabled="false">
+            <side-wall filter="toggleFilter(cat,key)"></side-wall>
+        </ion-content>
         <div class="bar bar-footer wall-actions">
             <button class="button button-dark button-outline item-button ion-arrow-left-b"
                     ng-if="wallIndex > 0"
@@ -23,12 +31,15 @@
                 {{'EXPORT'|translate}}
             </button>
             <!--<button ng-if="config.actions.map_tab" style="margin-right: 6px;" class="button button-outline button-dark item-button ion-link" on-tap="makeSharable()">-->
-                <!--{{'SHARE_LINK'|translate}}-->
+            <!--{{'SHARE_LINK'|translate}}-->
             <!--</button>-->
-            <button ng-if="config.actions.map_tab" class="button button-positive item-button ion-paper-airplane" on-tap="invite()">
+            <button ng-if="config.actions.map_tab" class="button button-positive item-button ion-paper-airplane"
+                    on-tap="invite()">
                 {{'INVITE'|translate}}
             </button>
-            <button ng-if="config.actions.map_tab" class="right button button-dark button-outline item-button ion-close-round" menu-close on-tap="closeSideLeft()">
+            <button ng-if="config.actions.map_tab"
+                    class="right button button-dark button-outline item-button ion-close-round" menu-close
+                    on-tap="closeSideLeft()">
                 <span ng-if="!isMobile">{{'CLOSE'|translate}}</span>
             </button>
         </div>
@@ -43,12 +54,18 @@
             <ion-list>
                 <ion-item class="heading-item item item-avatar">
                     <img ng-src="{{config.design.logo_menu}}">
-                    <h2 class="greeting">{{'WELCOME'|translate}} {{user.fullname ? user.fullname : 'GUEST'|translate}}</h2>
+                    <h2 class="greeting">{{'WELCOME'|translate}} {{user.fullname ? user.fullname :
+                        'GUEST'|translate}}</h2>
                     <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
                 </ion-item>
-                <ion-item class="item-divider" ng-if="user.signature || user.fullname">{{'CURRENT_SIGNATURE'|translate}}</ion-item>
-                <ion-item class="item-text-wrap">{{ (user.signature && user.signature !== '') ? user.signature : user.fullname}}</ion-item>
-                <ion-item ng-if="config.authentication.signature_url" ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close ng-click="signature()">
+                <ion-item class="item-divider" ng-if="user.signature || user.fullname">
+                    {{'CURRENT_SIGNATURE'|translate}}
+                </ion-item>
+                <ion-item class="item-text-wrap">{{ (user.signature && user.signature !== '') ? user.signature :
+                    user.fullname}}
+                </ion-item>
+                <ion-item ng-if="config.authentication.signature_url" ng-show="isLoggedIn"
+                          class="item-icon-left item-button" nav-clear menu-close ng-click="signature()">
                     <i class="icon ion-edit"></i>
                     <h3 class="menu-text">{{'EDIT_SIGNATURE'|translate}}</h3>
                 </ion-item>
@@ -58,40 +75,50 @@
                     <i class="icon ion-map"></i>
                     <h3 class="menu-text">{{'MY_MAP'|translate}}</h3>
                 </ion-item>
-                <ion-item ng-if="config.authentication.profile_url" ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close ng-click="profile()">
+                <ion-item ng-if="config.authentication.profile_url" ng-show="isLoggedIn"
+                          class="item-icon-left item-button" nav-clear menu-close ng-click="profile()">
                     <i class="icon ion-android-person"></i>
                     <h3 class="menu-text">{{'EDIT_PROFILE'|translate}}</h3>
                 </ion-item>
-                <ion-item ng-show="!isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng-click="login()">
+                <ion-item ng-show="!isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button"
+                          nav-clear menu-close ng-click="login()">
                     <i class="icon ion-log-in"></i>
                     <h3 class="menu-text">{{'LOGIN'|translate}}</h3>
                 </ion-item>
-                <ion-item ng-show="isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button" nav-clear menu-close ng-click="showConfirmLogout()">
+                <ion-item ng-show="isLoggedIn" ng-if="config.actions.logout_tab" class="item-icon-left item-button"
+                          nav-clear menu-close ng-click="showConfirmLogout()">
                     <i class="icon ion-log-out"></i>
                     <h3 class="menu-text">{{'LOGOUT'|translate}}</h3>
                 </ion-item>
                 <ion-item ng-if="config.actions.switch_language" class="item-divider">{{'LANG'|translate}}</ion-item>
-                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('it')" nav-clear menu-close>
+                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button"
+                          ng-click="langSelector('it')" nav-clear menu-close>
                     <i class="icon" ng-class="(currentLang == 'it') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
                     <h3 class="menu-text">Italiano</h3>
                 </ion-item>
-                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button" ng-click="langSelector('en')" nav-clear menu-close>
+                <ion-item ng-if="config.actions.switch_language" class="item-icon-left item-button"
+                          ng-click="langSelector('en')" nav-clear menu-close>
                     <i class="icon" ng-class="(currentLang == 'en') ? 'ion-ios-flag' : 'ion-ios-flag-outline'"></i>
                     <h3 class="menu-text">English</h3>
                 </ion-item>
                 <ion-item class="item-divider">{{'MENU'|translate}}</ion-item>
-                <ion-item ng-repeat="entry in config.design.side_menu |filter:{lang:currentLang} as menu track by $index" class="item-icon-left item-button" nav-clear menu-close ng-href="{{entry.url}}" target="_blank">
+                <ion-item
+                        ng-repeat="entry in config.design.side_menu |filter:{lang:currentLang} as menu track by $index"
+                        class="item-icon-left item-button" nav-clear menu-close ng-href="{{entry.url}}" target="_blank">
                     <i class="icon" ng-class="entry.icon ? entry.icon : 'ion-android-bookmark'"></i>
                     <h3 class="menu-text">{{entry.name}}</h3>
                 </ion-item>
-                <ion-item ng-if="config.actions.helpdesk_tab" class="item-icon-left item-button" nav-clear menu-close ng-href="{{config.actions.helpdesk_tab}}">
+                <ion-item ng-if="config.actions.helpdesk_tab" class="item-icon-left item-button" nav-clear menu-close
+                          ng-href="{{config.actions.helpdesk_tab}}">
                     <i class="icon ion-help"></i>
                     <h3 class="menu-text">{{'HELP_MESSAGE'|translate}}</h3>
                 </ion-item>
             </ion-list>
         </ion-content>
         <div class="bar bar-footer">
-            <button ng-if="config.actions.map_tab" class="right button button-dark button-outline item-button ion-close-round" menu-close on-tap="closeSideRight()">
+            <button ng-if="config.actions.map_tab"
+                    class="right button button-dark button-outline item-button ion-close-round" menu-close
+                    on-tap="closeSideRight()">
                 <span ng-if="!isMobile">{{'CLOSE'|translate}}</span>
             </button>
         </div>
