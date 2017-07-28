@@ -13812,8 +13812,8 @@ wall-toggler #wall-toggler {
     margin-left: 6px; }
 
 #wall .container {
-  height: 214px;
-  min-height: 214px;
+  height: 180px;
+  min-height: 180px;
   overflow: hidden; }
   #wall .container .card {
     margin: 6px 6px 0px; }
