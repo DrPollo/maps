@@ -13892,7 +13892,8 @@ wall-toggler #wall-toggler {
 .container:focus, .container:hover, .container:active {
   height: auto !important;
   z-index: 999;
-  overflow-y: visible; }
+  overflow-y: visible;
+  padding-bottom: 10px; }
   .container:focus .card, .container:hover .card, .container:active .card {
     height: auto !important; }
     .container:focus .card .main, .container:hover .card .main, .container:active .card .main {
