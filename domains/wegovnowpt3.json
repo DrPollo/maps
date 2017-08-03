@@ -1,0 +1,415 @@
+{"myConfig":
+{
+  "app_name" : "WeGovNow!",
+  "domain_name" : "wegovnow",
+  "domain_id" : 8,
+  "ssl": true,
+  "read_domains":false,
+  "authentication": {
+    "auth_server":"uwum_auth_pt3",
+    "auth_server_name":"UWUM_PT3",
+    "token_mem_key":"token",
+    "identity_mem_key":"user",
+    "state_name":"oauth_state",
+    "profile_url": null,
+    "signature_url": null,
+    "auth_base_domain": "https://wegovnow-pt3.liquidfeedback.com/",
+    "auth_url": "api/1/authorization",
+    "api_session":"api/1/session",
+    "client_id": "wegovnowsandbox.firstlife.org",
+    "scopes":["identification", "profile"],
+    "session_check": "member_id",
+    "session_params":{
+      "withCredentials": true
+    },
+    "autologin":true
+  },
+  "design":{
+    "logo" : {
+      "url": "http://www.firstlife.org/wp-content/uploads/2016/04/WeGovNow_logo_as_outline.svg",
+      "title": "WeGovNow!",
+      "alt":"WeGovNow!",
+      "label":{
+        "text": "WeGovNow!",
+        "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}
+    },
+    "navbar":"https://wegovnow-pt1.liquidfeedback.com/api/1/navigation?format=raw_html",
+    "default_language" : "en",
+    "side_menu":[],
+    "colors":["#FC4A00",
+      "#f44336","#88BA5C","#FFB310","#823256","#3f7f91",
+      "#FF7027",
+      "#800000","#b30000", "#E60000", "#E63900", "#FF8000", "#FF7027", "#DD312A", "#f3a46a", "#FF6666", "#ef9a9a", "#c64028","#a31c1c",
+      "#c64028",
+      "#790f2d","#a30f2d","#ee4466","#dc143c","#f48aa0",
+      "#11a265", "#0a5c3a","#11a265","#5deeb2","#18c291",
+      "#00e676",
+      "#00c853","#00e676",
+      "#96ca68",
+      "#007a27","#92d395","#689f38","#388e3c","#3e5e21","#7bbd42","#49b64e","#56842e","#96ca68",
+      "#FFDB4D",
+      "#FFDB4D","#FFB310","#FF8C10",
+      "#2F5D6A",
+      "#263B59","#3f7f91","#2F5D6A",
+      "#f44336","#88BA5C","#FFB310","#823256","#3f7f91",
+      "#FF7027",
+      "#800000","#b30000", "#E60000", "#E63900", "#FF8000", "#FF7027", "#DD312A", "#f3a46a", "#FF6666", "#ef9a9a", "#c64028","#a31c1c",
+      "#c64028",
+      "#790f2d","#a30f2d","#ee4466","#dc143c","#f48aa0",
+      "#11a265", "#0a5c3a","#11a265","#5deeb2","#18c291",
+      "#00e676",
+      "#00c853","#00e676",
+      "#96ca68",
+      "#007a27","#92d395","#689f38","#388e3c","#3e5e21","#7bbd42","#49b64e","#56842e","#96ca68",
+      "#FFDB4D",
+      "#FFDB4D","#FFB310","#FF8C10",
+      "#2F5D6A",
+      "#263B59","#3f7f91","#2F5D6A",
+      "#ccc"]
+  },
+  "types" : {
+    "categories":[
+      {
+        "category_space":29,
+        "name":"Categories",
+        "slug":"categories",
+        "description":"Categories",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":6,
+        "categories":[
+          {
+            "id":-510,
+            "name":"Culture and Arts",
+            "description":"Culture and Arts",
+            "category_index":1,
+            "icon_name":"ion-paintbrush"
+          },
+          {
+            "id":-511,
+            "name":"Education and Training",
+            "description":"Education and Training",
+            "category_index":2,
+            "icon_name":"ion-university"
+          },
+          {
+            "id":-512,
+            "name":"Social Activities",
+            "description":"Social Activities",
+            "category_index":3,
+            "icon_name":"ion-android-people"
+          },
+          {
+            "id":-513,
+            "name":"Sports",
+            "description":"Sports",
+            "category_index":4,
+            "icon_name":"ion-ios-football"
+          },
+          {
+            "id":-514,
+            "name":"Food and Provisions",
+            "description":"Food and Provisions",
+            "category_index":5,
+            "icon_name":"ion-android-restaurant"
+          },
+          {
+            "id":-515,
+            "name":"Free Time",
+            "description":"Free Time",
+            "category_index":6,
+            "icon_name":"ion-chatbubbles"
+          },
+          {
+            "id":-516,
+            "name":"Public Offices",
+            "description":"Public Offices",
+            "category_index":7,
+            "icon_name":"ion-social-buffer"
+          },
+          {
+            "id":-517,
+            "name":"Professional Services",
+            "description":"Professional Services",
+            "category_index":8,
+            "icon_name":"ion-briefcase"
+          },
+          {
+            "id":-518,
+            "name":"Industry and Craft",
+            "description":"Industry and Craft",
+            "category_index":9,
+            "icon_name":"ion-settings"
+          },
+          {
+            "id":-519,
+            "name":"Service and Trade",
+            "description":"Service and Trade",
+            "category_index":10,
+            "icon_name":"ion-bag"
+          },
+          {
+            "id":-520,
+            "name":"Transport and Mobility",
+            "description":"Transport and Mobility",
+            "category_index":11,
+            "icon_name":"ion-android-subway"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS",
+          "FL_GROUPS",
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space":30,
+        "name":"Typology of Spaces",
+        "slug":"typology-of spaces",
+        "description":"Typology of Spaces",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":18,
+        "categories":[
+          {
+            "id":-530,
+            "name":"Green and Open Spaces",
+            "description":"Green and Open Spaces",
+            "category_index":1,
+            "icon_name":"ion-leaf"
+          },
+          {
+            "id":-531,
+            "name":"nstitutional Spaces",
+            "description":"nstitutional Spaces",
+            "category_index":2,
+            "icon_name":"ion-ios-flag"
+          },
+          {
+            "id":-532,
+            "name":"Residences and Neighborhoods",
+            "description":"Residences and Neighborhoods",
+            "category_index":3,
+            "icon_name":"ion-ios-home"
+          },
+          {
+            "id":-533,
+            "name":"Productive Spaces",
+            "description":"Productive Spaces",
+            "category_index":4,
+            "icon_name":"ion-gear-a"
+          },
+          {
+            "id":-534,
+            "name":"Monuments and Historic Sites",
+            "description":"Monuments and Historic Sites",
+            "category_index":5,
+            "icon_name":"ion-ribbon-b"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space":31,
+        "name":"Cost",
+        "slug":"cost",
+        "description":"Cost",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":24,
+        "categories":[
+          {
+            "id":-540,
+            "name":"Free (Services)",
+            "description":"Free (Services)",
+            "category_index":1,
+            "icon_name":"ion-happy-outline"
+          },
+          {
+            "id":-541,
+            "name":"Payment (Services)",
+            "description":"Payment (Services)",
+            "category_index":2,
+            "icon_name":"ion-cash"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":32,
+        "name":"Access",
+        "slug":"access",
+        "description":"Access",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":27,
+        "categories":[
+          {
+            "id":-550,
+            "name":"Free Access",
+            "description":"Free Access",
+            "category_index":1,
+            "icon_name":"ion-radio-waves"
+          },
+          {
+            "id":-551,
+            "name":"By Invitation/On Reservation",
+            "description":"By Invitation/On Reservation",
+            "category_index":2,
+            "icon_name":"ion-paper-airplane"
+          },
+          {
+            "id":-552,
+            "name":"Reserved for Groups",
+            "description":"Reserved for Groups",
+            "category_index":3,
+            "icon_name":"ion-android-hand"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":33,
+        "name":"Participation",
+        "slug":"participation",
+        "description":"Participation",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":31,
+        "categories":[
+          {
+            "id":-560,
+            "name":"For All",
+            "description":"For All",
+            "category_index":1,
+            "icon_name":"ion-load-b"
+          },
+          {
+            "id":-561,
+            "name":"For Kids and Teens",
+            "description":"For Kids and Teens",
+            "category_index":2,
+            "icon_name":"ion-ios-color-wand"
+          },
+          {
+            "id":-562,
+            "name":"For Young Adults",
+            "description":"For Young Adults",
+            "category_index":3,
+            "icon_name":"ion-android-bar"
+          },
+          {
+            "id":-563,
+            "name":"For Families",
+            "description":"For Families",
+            "category_index":4,
+            "icon_name":"ion-icecream"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":34,
+        "name":"Contributions",
+        "slug":"contributions",
+        "description":"Contributions",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":36,
+        "categories":[
+          {
+            "id":-570,
+            "name":"Histories",
+            "description":"Histories",
+            "category_index":1,
+            "icon_name":"ion-chatboxes"
+          },
+          {
+            "id":-571,
+            "name":"Stories",
+            "description":"Stories",
+            "category_index":2,
+            "icon_name":"ion-edit"
+          },
+          {
+            "id":-572,
+            "name":"Reports",
+            "description":"Reports",
+            "category_index":3,
+            "icon_name":"ion-android-clipboard"
+          }
+        ],
+        "entities":[
+          "FL_ARTICLES"
+        ]
+      },
+      {
+        "category_space":35,
+        "name":"Groups",
+        "slug":"groups",
+        "description":"Groups",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":40,
+        "categories":[
+          {
+            "id":-580,
+            "name":"Newsgroups",
+            "description":"Newsgroups",
+            "category_index":1,
+            "icon_name":"ion-android-chat"
+          },
+          {
+            "id":-581,
+            "name":"Coordination Groups",
+            "description":"Coordination Groups",
+            "category_index":2,
+            "icon_name":"ion-ios-people"
+          },
+          {
+            "id":-582,
+            "name":"Design Groups",
+            "description":"Design Groups",
+            "category_index":3,
+            "icon_name":"ion-wand"
+          }
+        ],
+        "entities":[
+          "FL_GROUPS"
+        ]
+      }
+    ]
+  },
+  "map":{
+    "map_default_lat" : 45.070312,
+    "map_default_lng" : 7.686856,
+    "zoom_level" : 14,
+    "tile_view" : "https://api.mapbox.com/styles/v1/drp0ll0/cj0tausco00tb2rt87i5c8pi0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ"
+  },
+  "behaviour":{
+    "is_login_required" : false
+  }
+}
+}

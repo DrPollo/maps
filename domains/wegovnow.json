@@ -13,7 +13,7 @@
       "state_name":"oauth_state",
       "profile_url": null,
       "signature_url": null,
-      "auth_base_domain": "https://wegovnow-pt1.liquidfeedback.com/",
+      "auth_base_domain": "https://wegovnow.liquidfeedback.com/",
       "auth_url": "api/1/authorization",
       "api_session":"api/1/session",
       "client_id": "wegovnowsandbox.firstlife.org",
