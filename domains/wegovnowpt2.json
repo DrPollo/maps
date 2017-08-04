@@ -33,7 +33,7 @@
         "text": "WeGovNow!",
         "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}
     },
-    "navbar":"https://wegovnow-pt1.liquidfeedback.com/api/1/navigation?format=raw_html",
+    "navbar":"https://wegovnow-pt2.liquidfeedback.com/api/1/navigation?format=raw_html",
     "default_language" : "en",
     "side_menu":[],
     "colors":["#FC4A00",
