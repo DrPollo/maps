@@ -16,7 +16,7 @@
     "auth_base_domain": "https://wegovnow-pt2.liquidfeedback.com/",
     "auth_url": "api/1/authorization",
     "api_session":"api/1/session",
-    "client_id": "wegovnowsandbox.firstlife.org",
+    "client_id": "pt2.wegovnow.firstlife.org",
     "scopes":["identification", "profile"],
     "session_check": "member_id",
     "session_params":{
