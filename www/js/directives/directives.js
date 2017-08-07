@@ -41,22 +41,46 @@ angular.module('firstlife.directives', [])
                        url = url.concat('&login_url=',encodeURIComponent(AuthService.auth_url()));
                     }
                     $log.debug('navbar request', url);
-                    $http.get(url).then(
-                        function(response){
-                            $log.debug('navbar, response',response);
-                            ele.html(response.data);
-                            $log.debug('navbar, html',ele);
-                            $compile(ele.contents())(scope);
-                        },
-                        function(err){
-                            // riprovo se il problema e' il token
-                            if(err.status === 401){
-                                errors++;
-                                getNavBar();
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.readyState === 4) {
+                            $log.debug("get navbar, status",xmlHttp.status);
+                            if (xmlHttp.status === 200) {
+                                $log.debug('navbar, response',xmlHttp.response);
+                                ele.html(xmlHttp.response);
+                                $log.debug('navbar, html',ele);
+                                $compile(ele.contents())(scope);
+                            } else {
+                                // riprovo se il problema e' il token
+                                if(xmlHttp.status === 401){
+                                    errors++;
+                                    getNavBar();
+                                }
+                                $log.error(err);
                             }
-                            $log.error(err);
                         }
-                    );
+
+                    };
+                    xmlHttp.open("GET", url, true); // true for asynchronous
+                    xmlHttp.send(null);
+
+
+                    // $http.get(url).then(
+                    //     function(response){
+                    //         $log.debug('navbar, response',response);
+                    //         ele.html(response.data);
+                    //         $log.debug('navbar, html',ele);
+                    //         $compile(ele.contents())(scope);
+                    //     },
+                    //     function(err){
+                    //         // riprovo se il problema e' il token
+                    //         if(err.status === 401){
+                    //             errors++;
+                    //             getNavBar();
+                    //         }
+                    //         $log.error(err);
+                    //     }
+                    // );
                 }
 
             }
