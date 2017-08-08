@@ -1,0 +1,152 @@
+{"myConfig":
+{
+  "app_name" : "Distretti del Commercio",
+  "domain_name" : "sandonadipiave",
+  "domain_id" : 21,
+  "read_domains":false,
+  "design":{
+    "logo" : {
+      "title": "San Donà di Piave",
+      "alt":"San Donà di Piave",
+      "label":{
+        "text": "San Donà di Piave"
+      }
+    },
+    "landingpage": {
+      "css": "",
+      "logo": {
+        "url": "img/loghi/firstlife-logo-orizzontale.svg",
+        "title": "Distretti del Commercio",
+        "style": ""
+      },
+      "center": {
+        "image": "img/infografiche/firstlife.gif",
+        "alt": {
+          "it": "Logo Municipalità di San Donà di Piave",
+          "en": "City of San Donà di Piave logo"
+        },
+        "message": {
+          "it": "i Distretti del Commercio<br>di San Donà di Piave",
+          "en": "the business and handicraft districts<br>of the municipality of San Donà di Piave"
+        }
+      },
+      "about": {
+        "image": {
+          "url": "img/partners/stemma-sandonadipiave.png",
+          "alt": {
+            "it": "Stemma della Città di San Donà di Piave",
+            "en": "Logo of the City of San Donà di Piave"
+          }
+        },
+        "content": {
+          "it": "FirstLife è il social network civico progettato per sostenere nuove forme di collaborazione sul territorio e in città a varie scale attraverso la condivisione di informazioni e la costruzione di proposte, progetti e iniziative locali. È una piattaforma di crowdsourcing basata su una mappa per rappresentare in modo intuitivo lo spazio comune in cui si svolgono le nostre attività e attiviamo le nostre reti. Ha un calendario globale per facilitare il coordinamento e documentare le attività nel tempo.",
+          "en": "FirstLife is the civic social network designed to support new forms of collaboration in terrotory of cities at multiple scales trough sharing of information and construction of proposals, projects and initiatives. "
+        },
+        "action": {
+          "it": {
+            "label": "Leggi di più",
+            "url": "http://firstlife.org"
+          },
+          "en": {
+            "label": "Read more",
+            "url": "http://firstlife.org"
+          }
+        }
+      },
+      "credits": [
+        {
+          "text": "Città di San Donà di Piave (VE) - 30027 - Piazza Indipendenza 13 - tel. 0421 5901 - fax 0421 50961",
+          "lang": "it"
+        },
+        {
+          "text": "City of San Donà di Piave (VE) - 30027 - Piazza Indipendenza 13 - tel. 0421 5901 - fax 0421 50961",
+          "lang": "en"
+        }
+      ],
+      "logo_partners": [
+        {
+          "url": "http://www.sandonadipiave.net/",
+          "image": {
+            "height": 60,
+            "url": "img/partners/stemma-sandonadipiave.png",
+            "title": {
+              "it": "Città di San Donà di Piave",
+              "en": "City of San Donà di Piave"
+            },
+            "alt": {
+              "it": "Stemma della Città di San Donà di Piave",
+              "en": "Logo of the City of San Donà di Piave"
+            }
+          }
+        }
+      ]
+    },
+    "colors": [
+      "#141566",
+      "#f44336",
+      "#823256",
+      "#FFB310",
+      "#88BA5C",
+      "#3f7f91",
+      "#FF7027",
+      "#800000",
+      "#b30000",
+      "#E60000",
+      "#E63900",
+      "#FF8000",
+      "#FF7027",
+      "#DD312A",
+      "#f3a46a",
+      "#FF6666",
+      "#ef9a9a",
+      "#c64028",
+      "#a31c1c",
+      "#c64028",
+      "#790f2d",
+      "#a30f2d",
+      "#ee4466",
+      "#dc143c",
+      "#f48aa0",
+      "#11a265",
+      "#0a5c3a",
+      "#11a265",
+      "#5deeb2",
+      "#18c291",
+      "#00e676",
+      "#00c853",
+      "#00e676",
+      "#96ca68",
+      "#007a27",
+      "#92d395",
+      "#689f38",
+      "#388e3c",
+      "#3e5e21",
+      "#7bbd42",
+      "#49b64e",
+      "#56842e",
+      "#96ca68",
+      "#FFDB4D",
+      "#FFDB4D",
+      "#FFB310",
+      "#FF8C10",
+      "#2F5D6A",
+      "#263B59",
+      "#3f7f91",
+      "#2F5D6A",
+      "#ccc"
+    ],
+    "default_language" : "it"
+  },
+  "behaviour":{
+    "is_login_required" : true
+  },
+  "map": {
+    "tile_view": "https://api.mapbox.com/styles/v1/drp0ll0/cj0tausco00tb2rt87i5c8pi0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_view_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
+    "tile_edit": "https://api.mapbox.com/styles/v1/drp0ll0/cizl1sb0l000t2ro16uptawtf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
+    "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
+    "map_default_lat": 45.630373,
+    "map_default_lng": 12.566082
+  }
+}
+}

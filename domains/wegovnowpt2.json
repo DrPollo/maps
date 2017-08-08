@@ -2,7 +2,7 @@
 {
   "app_name" : "WeGovNow!",
   "domain_name" : "wegovnow",
-  "domain_id" : 8,
+  "domain_id" : 23,
   "ssl": true,
   "read_domains":false,
   "authentication": {
