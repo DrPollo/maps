@@ -39,17 +39,17 @@
           }
         },
         "content": {
-          "it": "FirstLife è il social network civico progettato per sostenere nuove forme di collaborazione sul territorio e in città a varie scale attraverso la condivisione di informazioni e la costruzione di proposte, progetti e iniziative locali. È una piattaforma di crowdsourcing basata su una mappa per rappresentare in modo intuitivo lo spazio comune in cui si svolgono le nostre attività e attiviamo le nostre reti. Ha un calendario globale per facilitare il coordinamento e documentare le attività nel tempo.",
-          "en": "FirstLife is the civic social network designed to support new forms of collaboration in terrotory of cities at multiple scales trough sharing of information and construction of proposals, projects and initiatives. "
+          "it": "Distretti del Commercio di San Donà di Piave è un progetto per il supporto delle specificità locali, di mappatura delle eccellenze e per il supporto delle reti di produttori e commercianti.",
+          "en": "San Donà di Piave Districts of Commerce is a project to support local specificities, mapping excellence and supporting networking producers and traders."
         },
         "action": {
           "it": {
             "label": "Leggi di più",
-            "url": "http://firstlife.org"
+            "url": "http://sandonadipiave.sity.life"
           },
           "en": {
             "label": "Read more",
-            "url": "http://firstlife.org"
+            "url": "http://sandonadipiave.sity.life"
           }
         }
       },
