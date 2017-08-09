@@ -799,9 +799,21 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         NAME_A_PLACE: "Nome del luogo",
         TITLE_OF_NEWS: "Titolo della notizia",
         TITLE_OF_ARTICLE: "Titolo della storia",
-        TITLE_OF_EVENT: "Titolo dell'evento"
+        TITLE_OF_EVENT: "Titolo dell'evento",
+        CLAIM: "Acquisici",
+        CLAIM_CONTENT_MESSAGE: "Motivazione della richiesta",
+        CLAIM_MESSAGE: "il contenuto è stato importato automaticamente importato o inserito da altri utenti, ma riguarda una tua attività o iniziativa?",
+        CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
+        CLAIM_SUCCESS_FEEDBACK: "La tua richiesta è stata accolta, ricarica il contenuto per procedere alle modifiche.",
+        CLAIM_ERROR_FEEDBACK: "La tua richiesta è stata presa in carico e verrà valutata, riceverai in tempi brevi una comunicazione email."
     };
     var enLabels = {
+        CLAIM: "Claim",
+        CLAIM_CONTENT_MESSAGE: "Request motivation",
+        CLAIM_MESSAGE: "the content is imported by external source or by other users, but it is about your activity or initiative?",
+        CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
+        CLAIM_SUCCESS_FEEDBACK: "Your request has been accepted, please reload the content to start to edit.",
+        CLAIM_ERROR_FEEDBACK: "Your request has been collected, soon you will receive an email communication.",
         TITLE_OF_NEWS: "Title of the news",
         TITLE_OF_ARTICLE: "Title of the story",
         TITLE_OF_EVENT: "Title of the event",
@@ -1133,7 +1145,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         REPORT_ERROR_FEEDBACK:"Whops! A unexpected error made impossible to receive your report.",
         REPORT_SUCCESS_FEEDBACK:"We got your report, we will check the entity soon.",
         REPORT_CONTENT:"Report",
-        REPORT_CONTENT_MESSAGE:"Motivazione della segnalazione",
+        REPORT_CONTENT_MESSAGE:"Report motivation",
         REPORT_DISCLAIMER:"reporting this content you will make public that is violating the <a href='http://firstlife.org/community-standards' target='_blank'>community standards</a>, the <a href='http://firstlife.org/privacy-policy' target='_blank'>privacy policy</a> or the <a href='http://firstlife.org/terms-of-use' target='_blank'>terms of use</a>",
         REPORT:"Report",
         REPORT_MESSAGE_TITLE:"Motivation of the report",

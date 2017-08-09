@@ -66,6 +66,9 @@ angular.module('firstlife.services')
             report: function(report){
                 return ThingsFact.report(report);
             },
+            claim: function(claim){
+                return ThingsFact.claim(claim);
+            },
             filter: function () {
 
                 // se il buffer e' valido

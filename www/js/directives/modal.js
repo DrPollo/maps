@@ -934,8 +934,8 @@ angular.module('firstlife.directives').directive('thingCard',function () {
         link: function(scope, element, attrs){
 
             scope.$on('$destroy', function(e) {
-                if(!e.preventDestroyActions){
-                    e.preventDestroyActions = true;
+                if(!e.preventDestroyReportEntity){
+                    e.preventDestroyReportEntity = true;
                     if(hideSheet){
                         hideSheet.hide();
                     }
@@ -990,6 +990,90 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                         // se non e' possibile fare il report
                         $log.error('errore segnalazione',err)
                         feedback('REPORT_ERROR_FEEDBACK');
+                    }
+                );
+            }
+
+            function feedback(title){
+                hideSheet = $ionicActionSheet.show({
+                    titleText: $filter('translate')(title),
+                    cancelText: '<i class="icon ion-ios-arrow-down"></i>',
+                    cancel: function() {
+                        // $log.debug('CANCELLED');
+                    }
+                });
+            }
+
+        }
+
+    }
+}]).directive('claimEntity',['$log', '$ionicModal', '$ionicActionSheet', '$filter','AuthService', 'ThingsService', 'myConfig', function($log,$ionicModal, $ionicActionSheet,$filter, AuthService, ThingsService, myConfig){
+    return {
+        scope:{
+            id: '=',
+            close:'='
+        },
+        restrict: 'E',
+        template:'<ion-item class="item item-button-right">{{"CLAIM_CONTENT"|translate}}<button class="button button-positive"  on-tap="claim.open()"><i class="icon ion-magnet"></i></button></ion-item>',
+        link: function(scope, element, attrs){
+
+            scope.$on('$destroy', function(e) {
+                if(!e.preventDestroyClaimEntity){
+                    e.preventDestroyClaimEntity = true;
+                    if(hideSheet){
+                        hideSheet.hide();
+                    }
+                    if(scope.claim.modal && scope.claim.modal.remove){
+                        scope.claim.modal.remove();
+                    }
+                    delete scope;
+                }
+            });
+            var hideSheet = null;
+
+            scope.disclaimer = $filter('translate')('CLAIM_DISCLAIMER');
+            scope.user = AuthService.getUser();
+            scope.claim = {
+                content:{
+                    thing_id: scope.id,
+                    message: !myConfig.dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
+                },
+                form:{}
+            };
+            // apro la lista dei membri
+            scope.claim.open = AuthService.doAction(
+                function (){
+                    scope.close();
+                    // apro la modal
+                    scope.report.modal = {};
+                    $ionicModal.fromTemplateUrl('templates/modals/claimEntity.html', {
+                        scope: scope,
+                        animation: 'fade-in',//'slide-in-up',
+                        backdropClickToClose : true,
+                        hardwareBackButtonClose : true
+                    }).then(function(membersmodal) {
+                        scope.claim.modal = membersmodal;
+                        scope.claim.modal.show();
+                    });
+
+                }
+            );
+
+            scope.submit = function(){
+                // $log.debug('check fields',scope.claim.content);
+
+                // invio la segnalazione
+                ThingsService.claim(scope.claim.content).then(
+                    function (result) {
+                        // tutto ok
+                        // $log.debug('claim ok',result);
+                        scope.claim.modal.remove();
+                        feedback('CLAIM_SUCCESS_FEEDBACK');
+                    },
+                    function (err) {
+                        // se non e' possibile fare il claim
+                        $log.error('errore claim',err)
+                        feedback('CLAIM_ERROR_FEEDBACK');
                     }
                 );
             }

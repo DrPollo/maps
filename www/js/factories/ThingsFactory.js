@@ -112,6 +112,15 @@ angular.module('firstlife.factories')
                 };
                 return $http(req);
             },
+            claim: function (claim) {
+                var urlId = myConfig.backend_things.concat(claim.content.thing_id,'/claim');
+                var req = {
+                    url: urlId,
+                    method: 'PUT',
+                    data:claim
+                };
+                return $http(req);
+            },
             bbox: function (params) {
                 var deferred = $q.defer();
                 // costruisco i parametri

@@ -1,0 +1,44 @@
+<ion-modal-view id="claimForm">
+    <ion-header-bar class="modal-header">
+        <h1 class="title title-modal">
+            <i class="icon {{simpleEditor.type_info.icon}}"></i>
+            {{'CLAIM'|translate}}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="content modal-content">
+            <div class="message">
+                <span class="username">{{user.username}}</span>
+                <span ng-bind-html="disclaimer"></span>
+            </div>
+            <form name="claim.form" onsubmit="submit()" novalidate>
+                <label class="item item-input item-floating-label" ng-class="{ 'has-error' : claim.form.message.$invalid, 'no-error' : !claim.form.message.$invalid}">
+                    <span class="input-label">{{'CLAIM_CONTENT_MESSAGE'|translate}}</span>
+                    <textarea style="border:none;min-height: 300px;"
+                              row="10"
+                              name="message"
+                              ng-model="claim.content.message"
+                              placeholder="{{'CLAIM_MESSAGE'|translate}}"
+                              ng-minlength="50" ng-maxlength="500" autofocus required></textarea>
+                </label>
+                <div class="form-errors" ng-messages="claim.form.message.$error">
+                    <div class="form-error" ng-message="minlength">{{'MORE_THAN_MESSAGE'|translate}} 50 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="maxlength">{{'LESS_THAN_MESSAGE'|translate}} 500 {{'CHARACTERS'|translate}}</div>
+                    <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons">
+            <button type="reset" class="button button-stable button-clear icon ion-close-round" on-tap="claim.modal.remove()" >{{'ABORT'|translate}}</button>
+        </div>
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button type="submit"
+                    class="button button-stable button-clear icon ion-checkmark-round"
+                    on-tap="submit()"
+                    ng-disabled="claim.form.message.$invalid">{{'CLAIM'|translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>
