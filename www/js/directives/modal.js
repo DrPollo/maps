@@ -1045,7 +1045,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 function (){
                     scope.close();
                     // apro la modal
-                    scope.report.modal = {};
+                    scope.claim.modal = {};
                     $ionicModal.fromTemplateUrl('templates/modals/claimEntity.html', {
                         scope: scope,
                         animation: 'fade-in',//'slide-in-up',
