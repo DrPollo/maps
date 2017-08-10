@@ -800,7 +800,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         TITLE_OF_NEWS: "Titolo della notizia",
         TITLE_OF_ARTICLE: "Titolo della storia",
         TITLE_OF_EVENT: "Titolo dell'evento",
-        CLAIM: "Acquisici",
+        CLAIM: "Acquisisci",
         CLAIM_CONTENT_MESSAGE: "Motivazione della richiesta",
         CLAIM_MESSAGE: "il contenuto è stato importato automaticamente importato o inserito da altri utenti, ma riguarda una tua attività o iniziativa?",
         CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
