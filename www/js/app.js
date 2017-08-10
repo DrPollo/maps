@@ -801,6 +801,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         TITLE_OF_ARTICLE: "Titolo della storia",
         TITLE_OF_EVENT: "Titolo dell'evento",
         CLAIM: "Acquisisci",
+        CLAIM_CONTENT: "Acquisisci contenuto",
         CLAIM_CONTENT_MESSAGE: "Motivazione della richiesta",
         CLAIM_MESSAGE: "il contenuto è stato importato automaticamente importato o inserito da altri utenti, ma riguarda una tua attività o iniziativa?",
         CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
@@ -809,6 +810,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     };
     var enLabels = {
         CLAIM: "Claim",
+        CLAIM_CONTENT: "Reclaim content",
         CLAIM_CONTENT_MESSAGE: "Request motivation",
         CLAIM_MESSAGE: "the content is imported by external source or by other users, but it is about your activity or initiative?",
         CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
