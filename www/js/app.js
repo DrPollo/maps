@@ -920,8 +920,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADD_ENTITY_ALLERT:'Your contribution will be published on the Web and will be visible to all.',
         COMMENT_TO:'Comment of',
         // menu edit
-        CANCEL: 'Trash',
-        SUCCESS_CANCEL:"Success: the content is no more!",
+        CANCEL: 'Delete',
+        SUCCESS_CANCEL:"Success: the content has been deleted.",
         ERROR_CANCEL:"Sorry, an error as occured, please try again later.",
         // walktrhough
         SIGNUP: 'Signup',
