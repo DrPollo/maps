@@ -1035,7 +1035,6 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             scope.user = AuthService.getUser();
             scope.claim = {
                 content:{
-                    thing_id: scope.id,
                     message: !myConfig.dev ? '' : 'sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una prova sono una '
                 },
                 form:{}
@@ -1063,7 +1062,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 // $log.debug('check fields',scope.claim.content);
 
                 // invio la segnalazione
-                ThingsService.claim(scope.claim.content).then(
+                ThingsService.claim(scope.id,scope.claim.content).then(
                     function (result) {
                         // tutto ok
                         // $log.debug('claim ok',result);

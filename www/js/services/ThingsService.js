@@ -66,8 +66,8 @@ angular.module('firstlife.services')
             report: function(report){
                 return ThingsFact.report(report);
             },
-            claim: function(claim){
-                return ThingsFact.claim(claim);
+            claim: function(thingId,claim){
+                return ThingsFact.claim(thingId,claim);
             },
             filter: function () {
 

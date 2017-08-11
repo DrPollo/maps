@@ -112,11 +112,11 @@ angular.module('firstlife.factories')
                 };
                 return $http(req);
             },
-            claim: function (claim) {
-                var urlId = myConfig.backend_things.concat(claim.content.thing_id,'/claim');
+            claim: function (thingId,claim) {
+                var urlId = myConfig.backend_things.concat('/',thingId,'/claims');
                 var req = {
                     url: urlId,
-                    method: 'PUT',
+                    method: 'POST',
                     data:claim
                 };
                 return $http(req);
