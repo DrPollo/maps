@@ -8,7 +8,7 @@ angular.module('firstlife.factories')
         var urlThings= myConfig.backend_things;
         var urlNotifications= myConfig.backend_notifications;
         var format = config.format;
-        var domainId = myConfig.project;
+        var domainId = myConfig.domain_id;
         var subscriptions = {};
 
         return {
