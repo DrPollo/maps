@@ -23,7 +23,7 @@
             <i class="icon ion-social-buffer"></i>
             <span ng-if="!isMobile">{{ 'CONTENTS' |translate}}</span>
         </button>
-        <button ng-if="marker.entity_type === 'FL_GROUPS' && !isMobile"
+        <button ng-if="marker.entity_type === 'FL_GROUPS'"
                 class="button button-positive button-clear icon-left"
                 title="{{ 'MEMBERS' |translate}}"
                 on-tap="setToggle(3)"

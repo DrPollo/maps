@@ -146,7 +146,29 @@
     "tile_edit": "https://api.mapbox.com/styles/v1/drp0ll0/cizl1sb0l000t2ro16uptawtf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
     "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
     "map_default_lat": 45.630373,
-    "map_default_lng": 12.566082
+    "map_default_lng": 12.566082,
+    "shouthWest_bounds": [
+      12.524405,
+      45.554897
+    ],
+    "northEast_bounds": [
+      12.660154,
+      45.697617
+    ],
+    "default_marker_icon":47
+  },
+  "navigator":{
+    "search": {
+      "geocoding": "https://search.mapzen.com/v1/search",
+      "params": {
+        "api_key": "search-ZDnkvxb",
+        "focus.point.lat": 45.633576,
+        "focus.point.lon": 12.566082,
+        "boundary.country": "IT"
+      },
+      "search_key": "text",
+      "name": "name"
+    }
   },
   "types" : {
     "categories": [

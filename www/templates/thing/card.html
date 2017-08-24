@@ -42,7 +42,7 @@
                     </span>
                 </span>
             </div>
-            <div class="modal-subheader credits" ng-if="config.dev">
+            <div class="modal-subheader credits" ng-if="config.dev || currentType.show_author">
                 {{'LAST_AUTHOR' | translate}}{{' '}}
                 <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
                         {{infoPlace.marker.updater.display_name}}

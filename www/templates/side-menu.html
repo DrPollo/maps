@@ -18,7 +18,7 @@
                     on-tap="backToStart()">
                 {{'BACK'|translate}}
             </button>
-            <button ng-if="config.actions.map_tab"
+            <button ng-if="config.actions.map_tab && wallIndex === 0"
                     class="button button-outline button-dark item-button ion-share"
                     on-tap="makeEmbed()"
                     style="margin-right: 6px;">
@@ -27,7 +27,7 @@
             <!--<button ng-if="config.actions.map_tab" style="margin-right: 6px;" class="button button-outline button-dark item-button ion-link" on-tap="makeSharable()">-->
             <!--{{'SHARE_LINK'|translate}}-->
             <!--</button>-->
-            <button ng-if="config.actions.map_tab" class="button button-positive item-button ion-paper-airplane"
+            <button ng-if="config.actions.map_tab && wallIndex === 0" class="button button-positive item-button ion-paper-airplane"
                     on-tap="invite()">
                 {{'INVITE'|translate}}
             </button>

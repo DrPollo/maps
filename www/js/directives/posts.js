@@ -89,7 +89,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
             scope.deletePost = function(id){
                 scope.loading = true;
                 scope.popover.hide();
-                postFactory.deletePost(id).then(
+                postFactory.deletePost(id,scope.id).then(
                     function (response) {
                         $log.log('ok delete post',response);
                         initList().then(

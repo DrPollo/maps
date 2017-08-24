@@ -15595,6 +15595,11 @@ timeline {
       background: #999; }
       #landingpage .footer-content #partners .col {
         margin: 0px 10px; }
+  #landingpage .spinner svg {
+    width: 48px;
+    height: 48px;
+    stroke: #444;
+    fill: #444; }
 
 #searchbar {
   margin: 6px 4px 10px 4px;

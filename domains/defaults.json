@@ -1763,6 +1763,7 @@
         7.655708,
         45.083202
       ],
+      "default_marker_icon":0,
       "zoom": true,
       "zoom_position": "bottomleft",
       "attribution": true,

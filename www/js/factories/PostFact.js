@@ -80,9 +80,9 @@ angular.module('firstlife.factories')
                 });
             return deferred.promise;
         },
-        deletePost: function(id){
+        deletePost: function(postId,thingId){
             var deferred = $q.defer();
-            var url = urlPosts.concat("/",id,format);
+            var url = urlThings.concat("/",thingId,"/posts/",postId,format);
             //$log.debug('x',x,'y',y,'z',z);
             //$log.debug('url ',url)
             var req = {

@@ -1,5 +1,6 @@
 angular.module('firstlife.factories')
     .factory('InitiativeFactory',['$q','$http',"$log",'AuthService', 'myConfig', function($q, $http, $log, AuthService, myConfig){
+
     return {
         list: function () {
             var deferred = $q.defer();
@@ -30,7 +31,7 @@ angular.module('firstlife.factories')
         },
         getAllInitiatives : function (thingId) {
             var deferred = $q.defer();
-            var urlId = myConfig.backend_things.concat("/",thingId,'/initiatives');
+            var urlId = myConfig.backend_things.concat("/",thingId,'/initiatives?domain_id=',myConfig.domain_id);
             var req = {
                 url: urlId,
                 method: 'GET',

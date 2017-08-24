@@ -466,6 +466,7 @@ angular.module('firstlife.services')
             angular.extend(icons, catIcons);
             angular.extend(marker,{icons:icons});
             // icona di default
+            // $log.debug('set icon',favCat,icons, icons[favCat]);
             angular.extend(marker, {icon:icons[favCat] ? icons[favCat] : icons[0]});
             // nome tipo
             angular.extend(marker,{type_name: $filter('translate')(marker.entity_type)});
@@ -641,7 +642,7 @@ angular.module('firstlife.services')
     self.cache = {};
     self.buffer = [];
     self.query = null;
-    self.favCat = 0;
+    self.favCat = myConfig.map.default_marker_icon;
     self.filters = {
         time:{
             from: new Date().toISOString(),
