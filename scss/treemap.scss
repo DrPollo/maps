@@ -80,6 +80,9 @@
                 text-align: center;
                 border-radius: 4px;
             }
+            .label:hover {
+              text-decoration: underline;
+            }
         }
         
         .child{
@@ -103,6 +106,9 @@
                     .text {
                         color:$dark;
                     }
+                }
+                .label:hover {
+                  text-decoration: underline;
                 }
                 .checker {
                     position:absolute;

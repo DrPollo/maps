@@ -146,3 +146,21 @@ wall-toggler {
         }
     }
 }
+
+#shareform {
+  .action {
+    padding: 0px 20px;
+  }
+  .right {
+    float: right;
+  }
+  .tab, .actions {
+    margin-top: 12px;
+  }
+  .button-bar-striped {
+    padding-bottom: 4px;
+    .button.selected {
+      border-bottom: 4px solid;
+    }
+  }
+}

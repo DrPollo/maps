@@ -35,13 +35,12 @@
                 #searchresults {
                     margin: -4px 0px 0px;
                     display: block;
-                    width: auto;
                     background: #fff;
                     border-radius: 4px;
                     overflow: hidden;
                     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-                    width: 100%;
-                    left: 0px;
+                    width: calc(100% - 54px);
+                    left: 47px;
                     position: absolute;
                     z-index: -1;
                     button.entry {
@@ -56,6 +55,7 @@
                         text-align: left;
                         box-shadow: none;
                         border-bottom: 1px solid #ccc;
+                        font-size: 1em;
                     }
                     button.entry:last-children {
                         border-bottom: none;

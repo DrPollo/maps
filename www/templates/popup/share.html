@@ -1,34 +1,86 @@
-<form name="sharethislink">
-    <div style="margin-bottom:12px;">
-    <input type="text"
+<form id="shareform" name="sharethislink">
+    <div class="button-bar button-bar-striped list-toggler">
+        <button class="button button-positive button-clear"
+                on-tap="inviteForm.toggle(0)"
+                title="{{ 'EMAIL_LIST' |translate}}"
+                ng-class="inviteForm.tab === 0 ? 'selected' : '' ">
+            <i class="icon ion-paper-airplane"></i>
+            <!--<span ng-if="!isMobile">{{ 'EMAIL_LIST' |translate}}</span>-->
+        </button>
+        <button class="button button-positive button-clear"
+                on-tap="inviteForm.toggle(1)"
+                title="{{ 'SHARABLE_LINK' |translate}}"
+                ng-class="inviteForm.tab === 1 ? 'selected' : '' ">
+            <i class="icon ion-link"></i>
+            <!--<span ng-if="!isMobile">{{ 'SHARABLE_LINK' |translate}}</span>-->
+        </button>
+        <button class="button button-positive button-clear"
+                on-tap="inviteForm.toggle(2)"
+                title="{{ 'EMBEDDABLE_IFRAME' |translate}}"
+                ng-class="inviteForm.tab === 2 ? 'selected' : '' ">
+            <i class="icon ion-code-download"></i>
+            <!--<span ng-if="!isMobile">{{ 'EMBEDDABLE_IFRAME' |translate}}</span>-->
+        </button>
+    </div>
+    <div class="tab" ng-if="inviteForm.tab === 0">
+        <div style="margin-bottom:12px;">
+            <label>{{'EMAIL_LIST'|translate}}</label>
+            <textarea style="padding:6px;border-radius:4px;line-height:1.2em;"
+                      row="1" value="" name="emails"
+                      ng-model="inviteForm.emails"
+                      placeholder="{{'INVITE_EMAILS_PLACEHOLDER'|translate}}" minlength="5" maxlength="500" autogrow required>
+        </textarea>
+            <div class="form-errors" ng-messages="sharethislink.emails.$error">
+                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+            </div>
+        </div>
+        <div>
+            <span>{{'EMAIL_MESSAGE'|translate}}</span>
+            <textarea style="padding:6px;min-height:6em;border-radius:4px;line-height:1.2em;"
+                      row="6" value="" name="message"
+                      ng-model="inviteForm.message"
+                      placeholder="{{'INVITE_MESSAGE_PLACEHOLDER'|translate}}" minlength="3" maxlength="500" autogrow>
+        </textarea>
+            <div class="form-errors" ng-messages="sharethislink.message.$error">
+                <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+            </div>
+        </div>
+        <div ng-if="inviteForm.sendError" style="color:red;text-align:center;margin-bottom:12px;min-height:1em;">
+            <span >{{'SEND_EMAIL_ERROR' | translate}}</span>
+        </div>
+        <div ng-if="inviteForm.sendOk" style="color: #2ca02c;text-align:center;margin-bottom:12px;min-height:1em;">
+            <span>{{'SEND_EMAIL_OK' | translate}}</span>
+        </div>
+    </div>
+    <div class="tab" ng-if="inviteForm.tab === 1">
+        <label>{{'SHARABLE_LINK'|translate}}</label>
+        <input type="text"
            style="padding:6px;margin-bottom:12px;border-radius:4px;line-height:1.2em;"
            ng-model="inviteForm.url"
-           on-tap="copyToClipboard($event)"
+           on-tap="copyToClipboard('url')"
            select-on-click>
         <div style="color: #2ca02c;text-align:center;margin-bottom:12px;min-height:1em;">
             <span ng-if="inviteForm.inClipboard">{{'COPIED_TO_CLIPBOARD' | translate}}</span>
         </div>
     </div>
-    <div style="margin-bottom:12px;">
-        <span class="input-label">{{'EMAIL_LIST'|translate}}</span>
-        <textarea style="padding:6px;border-radius:4px;line-height:1.2em;"
-                  row="1" value="" name="emails"
-                  ng-model="inviteForm.emails"
-                  placeholder="{{'INVITE_EMAILS_PLACEHOLDER'|translate}}" minlength="5" maxlength="500" autogrow required>
+    <div class="tab" ng-if="inviteForm.tab === 2">
+        <label>{{'EMBEDDABLE_IFRAME'|translate}}</label>
+        <textarea name="iframe"
+                  rows="6"
+                  ng-model="inviteForm.embed.iframe"
+                  on-tap="copyToClipboard('embed')"
+                  select-on-click>
         </textarea>
-        <div class="form-errors" ng-messages="sharethislink.emails.$error">
-            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
+        <div style="color: #2ca02c;text-align:center;margin-bottom:12px;min-height:1em;">
+            <span ng-if="inviteForm.embed.inClipboard">{{'COPIED_TO_CLIPBOARD' | translate}}</span>
         </div>
     </div>
-    <div>
-        <span class="input-label">{{'EMAIL_MESSAGE'|translate}}</span>
-        <textarea style="padding:6px;min-height:6em;border-radius:4px;line-height:1.2em;"
-                  row="6" value="" name="message"
-                  ng-model="inviteForm.message"
-                  placeholder="{{'INVITE_MESSAGE_PLACEHOLDER'|translate}}" minlength="3" maxlength="500" autogrow>
-        </textarea>
-        <div class="form-errors" ng-messages="sharethislink.message.$error">
-            <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
-        </div>
+    <div class="actions">
+        <button type="reset"
+                class="button button-clear button-dark action"
+                on-tap="inviteForm.close()">{{'ABORT'|translate}}</button>
+        <button type="submit"
+                class="button button-positive right action"
+                on-tap="inviteForm.action()">{{inviteForm.tab === 0 ? 'SEND' : 'COPY'|translate}}</button>
     </div>
 </form>

@@ -4,6 +4,7 @@
          ng-style="back && (back == space.category_space) ? {height: '100%',width: '100%',top: '0px',left:'0px','z-index': '1'}:{height: space.rect[3],width: space.rect[2],top: space.rect[1],left:space.rect[0],'z-index': '0'}">
             <button class="backtoroot button button-light button-block button-clear" 
                     ng-if="back && (back == space.category_space)"
+                    title="{{'BACK_TO'|translate}} {{space.name}}"
                     on-tap="close()">
                 <i class="icon ion-android-arrow-dropleft"></i>
                 {{space.name}}
@@ -12,9 +13,13 @@
                     style="color:{{space.color}};{{favCat === space.category_space ? 'background-color:' + space.color+ ';':''}}"
                     ng-class="{'selected': favCat === space.category_space }"
                     ng-if="!back"
+                    title="{{'TOGGLE_THEMING'|translate}} {{space.name}}"
                     on-tap="iconToggle(space.category_space)">
             </button>
-            <div class="rootlabel" on-tap="toggle(space)" class="button button-light button-block button-clear" >
+            <div class="rootlabel"
+                 title="{{'SHOWS_CATEGORIES'|translate}} {{space.name}}"
+                 on-tap="toggle(space)"
+                 class="button button-light button-block button-clear" >
                 <div class="label" style="box-shadow:inset 4px 4px 0px {{space.color}}, inset -4px -4px 0px {{space.color}};">
                     {{space.name}}
                 </div>
@@ -29,6 +34,7 @@
                        ng-class="{ 'ion-ios-close-empty': !toggled[space.name][cat[space.check]], 'ion-ios-checkmark-empty': toggled[space.name][cat[space.check]]}"
                        style="{{toggled[space.name][cat[space.check]] ? 'color:'+cat.color+';':''}}"></i>
                     <button class="label button fast-ease-in-out-animation icon {{cat.icon_name}}"
+                            title="{{toggled[space.name][cat[space.check]] ? 'HIDE_CATEGORY' : 'SHOW_CATEGORY' |translate}} {{cat.name}}"
                             style="{{toggled[space.name][cat[space.check]] ? 'color:'+cat.color+';':''}}">
                         <span class="text">{{cat.name}}</span>
                     </button>

@@ -13899,6 +13899,20 @@ wall-toggler #wall-toggler {
     .container:focus .card .main, .container:hover .card .main, .container:active .card .main {
       height: auto !important; }
 
+#shareform .action {
+  padding: 0px 20px; }
+
+#shareform .right {
+  float: right; }
+
+#shareform .tab {
+  margin-top: 12px; }
+
+#shareform .button-bar-striped {
+  padding-bottom: 4px; }
+  #shareform .button-bar-striped .button.selected {
+    border-bottom: 4px solid; }
+
 .pie-cluster {
   border-radius: 30px;
   overflow: hidden;
@@ -15398,6 +15412,8 @@ timeline {
         border: none;
         text-align: center;
         border-radius: 4px; }
+      #treemapfilter .root .rootlabel .label:hover {
+        text-decoration: underline; }
     #treemapfilter .root .child {
       background: #fff;
       border-color: #f8f8f8;
@@ -15417,6 +15433,8 @@ timeline {
           font-size: 1em; }
           #treemapfilter .root .child .childblock .label .text {
             color: #333; }
+        #treemapfilter .root .child .childblock .label:hover {
+          text-decoration: underline; }
         #treemapfilter .root .child .childblock .checker {
           position: absolute;
           z-index: 1;
@@ -15703,13 +15721,12 @@ div.search-tag-card {
   #mapHeader #headerControllers #omnibox geocoding-bar #searchresults {
     margin: -4px 0px 0px;
     display: block;
-    width: auto;
     background: #fff;
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-    width: 100%;
-    left: 0px;
+    width: calc(100% - 54px);
+    left: 47px;
     position: absolute;
     z-index: -1; }
     #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry {
@@ -15723,7 +15740,8 @@ div.search-tag-card {
       overflow: hidden;
       text-align: left;
       box-shadow: none;
-      border-bottom: 1px solid #ccc; }
+      border-bottom: 1px solid #ccc;
+      font-size: 1em; }
     #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry:last-children {
       border-bottom: none; }
     #mapHeader #headerControllers #omnibox geocoding-bar #searchresults button.entry::before {
