@@ -324,14 +324,14 @@
             "label": "STARTDATE_LABEL",
             "placeholder": "STARTDATE_PLACEHOLDER",
             "default": null,
-            "is_editable": false
+            "is_editable": true
           },
           "valid_to": {
             "key": "valid_to",
             "label": "ENDDATE_LABEL",
             "placeholder": "ENDDATE_PLACEHOLDER",
             "default": null,
-            "is_editable": false
+            "is_editable": true
           },
           "link_url": {
             "key": "link_url",
@@ -418,8 +418,8 @@
           "properties": {
             "name": {
               "key": "name",
-              "label": "TITLE",
-              "placeholder": "TITLE",
+              "label": "NAME",
+              "placeholder": "NAME_A_PLACE",
               "required": true,
               "default": "",
               "min_length": 3
@@ -445,6 +445,14 @@
               "default": null,
               "advanced": true,
               "is_editable": true
+            },
+            "description": {
+              "key": "description",
+              "label": "INFO_LABEL",
+              "placeholder": "INFO_PLACEHOLDER",
+              "default": "",
+              "required": true,
+              "min_length": 50
             }
           },
           "relations": {
@@ -543,7 +551,7 @@
               "placeholder": "ENDDATE_PLACEHOLDER",
               "default": "",
               "required": true,
-              "is_editable": false,
+              "is_editable": true,
               "advanced": true
             }
           },
@@ -639,7 +647,8 @@
               "placeholder": "ENDDATE_PLACEHOLDER",
               "default": null,
               "required": true,
-              "advanced": true
+              "advanced": true,
+              "is_editable": true
             }
           },
           "relations": {
@@ -867,7 +876,7 @@
               "key": "valid_to",
               "label": "ENDDATE_LABEL",
               "placeholder": "ENDDATE_PLACEHOLDER",
-              "default": "",
+              "default": null,
               "required": true,
               "is_editable": true,
               "advanced": true

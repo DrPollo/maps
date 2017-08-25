@@ -1,6 +1,11 @@
 <ion-popover-view>
-    <ion-content>
-        <ion-list>
+    <ion-content drag-content="false"
+                 scroll-event-interval="10"
+                 overflow-scroll="true"
+                 scrollbar-x="false"
+                 direction="y"
+                 data-tap-disabled="false">
+        <ion-list >
             <entity-actions ng-if="infoPlace.marker.id" actions="currentType.actions" marker="infoPlace.marker" close="closePopover" label="currentType.name" ></entity-actions>
             <ion-item ng-if="config.actions.can_modify && checkPerms['u']" class="delimited item item-button-right">
                 {{'EDIT'|translate}}

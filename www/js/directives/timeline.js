@@ -180,7 +180,9 @@ angular.module('firstlife.timeline',[])
 
             // inizializzo la timeline
             function initBuffer(skip){
+                // $log.debug('skipping override params',skip);
                 if(!skip) {
+                    $log.log('setting unit');
                     // setup dei parametri search
                     $location.search('date',$scope.moment.toISOString());
                     // fix unit nei parametri search
@@ -193,7 +195,7 @@ angular.module('firstlife.timeline',[])
                 // parametri temporali nell'url
                 // "date" e' la data centrale e "unit" la granularita'
                 var params = $location.search();
-                // $log.debug('timeline search date',params.date, ' - unit', params.unit);
+                $log.log('timeline search date',angular.extend({},$location.search()),params.date, ' - unit', params.unit);
                 // se parametro date impostato sovrascrivo il now
                 if(params.date && moment(params.date)){
                     // recupero il moment da parametro
@@ -235,6 +237,7 @@ angular.module('firstlife.timeline',[])
                 // evento di update per mapCtrl
                 $scope.$emit("timeUpdate",{time:newInterval});
                 if(skip) {
+                    $log.log('setting unit',$scope.units[$scope.indexDefaultUnit].key);
                     // setup dei parametri search
                     $location.search('date',$scope.moment.toISOString());
                     // fix unit nei parametri search

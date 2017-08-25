@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'InitiativeFactory','myConfig', 'AuthService', 'leafletData', function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService,InitiativeFactory, myConfig, AuthService, leafletData) {
+    .controller('MapCtrl', ['$scope', '$state', '$ionicModal', '$ionicActionSheet', '$ionicPopup', '$cordovaGeolocation', '$ionicLoading', '$rootScope', '$location', '$filter', '$timeout', '$log', 'ThingsService', 'InitiativeFactory','myConfig', 'AuthService', 'leafletData', 'MemoryFactory', function($scope, $state, $ionicModal, $ionicActionSheet, $ionicPopup, $cordovaGeolocation, $ionicLoading, $rootScope, $location, $filter, $timeout, $log, ThingsService,InitiativeFactory, myConfig, AuthService, leafletData, MemoryFactory) {
 
 
 
@@ -77,7 +77,16 @@ angular.module('firstlife.controllers')
         // cambio di stato, ingresso in app.maps
         // controllore del comportamento della mappa
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            $log.debug("vengo da ",fromState.name," sono in app.map e vengo per lo stato",toState);
+            if(fromState.name === toState)
+                return;
+
+            // restore dei parametri
+            var curr_params = angular.extend({},
+                MemoryFactory.get('mapPrevParams'),
+                $location.search());
+            $location.search(curr_params);
+
+            $log.log("vengo da ",fromState.name," sono in app.map e vengo per lo stato",toState," with params ",angular.extend({},$location.search()));
 
             if(event.preventMapsEvent)
                 return;

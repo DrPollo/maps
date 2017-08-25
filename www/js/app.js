@@ -3,6 +3,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
     .run(function($rootScope, $ionicPlatform, $state, $stateParams, $location, $ionicPopup, $ionicConfig, $ionicLoading, $log, $window,$timeout, $filter,$translate, myConfig, AuthService, MemoryFactory) {
 
         self.config = myConfig;
+        self.mapPrevParams = {};
         // init utente
         $rootScope.isLoggedIn = AuthService.isAuth();
         var landingEnabled = myConfig.behaviour.is_login_required;
@@ -135,8 +136,29 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 autoLogin();
             }
 
+
+            // gestione parametri della mappa
+            // salvo i parametri all'uscita
+            // se sono in app.maps e sto andando da un'altra parte
+            if(fromState.name === 'app.maps' && fromState.name !== toState.name){
+                MemoryFactory.save('mapPrevParams',$location.search());
+                $log.log('saving map current params',MemoryFactory.get('mapPrevParams'));
+            }
+
+
             switch (toState.name){
                 case 'app.maps':
+                    // ripristino i parametri di mapp
+                    // tempo e luogo della mappa precedente
+                    // sovrascritto dai parametri di ritorno di altri stati
+                    var curr_params = angular.extend({},
+                        MemoryFactory.get('mapPrevParams'),
+                        search_params);
+                    $log.log('restore params',curr_params,$location.search());
+                    $location.search(curr_params);
+                    $stateParams = angular.extend({},$stateParams,curr_params);
+                    $state = angular.extend({},$state,curr_params);
+
                     if(embed){
                         // ok vado avanti
                     } else if(authenticate && !AuthService.isAuth()){
@@ -551,7 +573,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         STARTDATE_PLACEHOLDER:'Data inizio',
         ENDDATE_LABEL:'Data di fine',
         ENDDATE_PLACEHOLDER:'Data fine',
-        TAGS_LABEL:'Tags',
+        TAGS_LABEL:'Tag',
         TAGS_PLACEHOLDER:'Tag, es. Palazzo, giardino, concerto...',
         GROUP:'Gruppo',
         GROUPS:'Gruppi',
@@ -806,9 +828,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         CLAIM_MESSAGE: "il contenuto è stato importato automaticamente importato o inserito da altri utenti, ma riguarda una tua attività o iniziativa?",
         CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
         CLAIM_SUCCESS_FEEDBACK: "La tua richiesta è stata accolta, ricarica il contenuto per procedere alle modifiche.",
-        CLAIM_ERROR_FEEDBACK: "La tua richiesta è stata presa in carico e verrà valutata, riceverai in tempi brevi una comunicazione email."
+        CLAIM_ERROR_FEEDBACK: "La tua richiesta è stata presa in carico e verrà valutata, riceverai in tempi brevi una comunicazione email.",
+        NAME: "Nome"
     };
     var enLabels = {
+        NAME: "Name",
         CLAIM: "Claim",
         CLAIM_CONTENT: "Reclaim content",
         CLAIM_CONTENT_MESSAGE: "Request motivation",
