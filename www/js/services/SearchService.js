@@ -97,8 +97,50 @@ angular.module('firstlife.services')
                 xmlHttp.send(null);
 
                 return deferred.promise;
-            } 
-        }
+            },
+            searchInitiatives : function (query) {
+                var deferred = $q.defer();
+                var urlId = myConfig.initiatives.concat("/search?domain_id=",myConfig.domain_id,"&query=",query);
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    headers:{"Content-Type":"application/json"},
+                    data: false
+                };
+                $http(req).then(
+                    function(res){
+                        // $log.debug('search for initiatives',query,res);
+                        deferred.resolve(res.data);
+                    },
+                    function(err){
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
+            },
+            searchTags : function (query) {
+                var deferred = $q.defer();
+                var urlId = myConfig.backend_things.concat("/tagsearch?domain_id=",myConfig.domain_id,"&query=",query);
+                var req = {
+                    url: urlId,
+                    method: 'GET',
+                    headers:{"Content-Type":"application/json"},
+                    data: false
+                };
+                $http(req).then(
+                    function(res){
+                        // $log.debug('search for tags',query,res);
+                        deferred.resolve(res.data);
+                    },
+                    function(err){
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
+            }
+        };
 
         
         

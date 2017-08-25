@@ -212,7 +212,7 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             }
 
-            var urlId = myConfig.initiatives.concat("/",initiativeId,'/things/re/',thingId);
+            var urlId = myConfig.initiatives.concat("/",initiativeId,'/things/rel/',thingId);
             var req = {
                 url: urlId,
                 method: 'DELETE',

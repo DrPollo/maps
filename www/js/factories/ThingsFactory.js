@@ -234,6 +234,28 @@ angular.module('firstlife.factories')
                     }
                 );
                 return deferred.promise;
+            },
+            addTags: function (id,tags) {
+                var deferred = $q.defer();
+
+                var urlId = urlThings.concat('/',id,'/addTags').concat(format);
+
+                var req = {
+                    url: urlId,
+                    method: 'PUT',
+                    data: {tags:tags}
+                };
+                $http(req).then(
+                    function (response) {
+                        //$log.debug("add tags to Thing ",tags, response);
+                        deferred.resolve(response.data.data);
+                    },
+                    function (err) {
+                        $log.error(err);
+                        deferred.reject(err);
+                    }
+                );
+                return deferred.promise;
             }
         }
     }]);

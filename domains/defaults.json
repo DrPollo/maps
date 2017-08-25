@@ -319,6 +319,13 @@
         "id": 1,
         "icon": "ion-location",
         "properties": {
+          "address": {
+            "key": "address",
+            "label": "ADDRESS_LABEL",
+            "placeholder": "ADDRESS_PLACEHOLDER",
+            "default": "",
+            "is_editable": true
+          },
           "valid_from": {
             "key": "valid_from",
             "label": "STARTDATE_LABEL",

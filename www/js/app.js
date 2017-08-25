@@ -655,7 +655,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADD_COMMENT:'Aggiungi commento',
         ADD_IMAGE:'Aggiungi immagine',
         TITLE:'Titolo',
-        DELETE_ASK : 'Vuoi davvero cancellare questa entità?',
+        DELETE_ASK : 'Vuoi davvero cancellare questo contenuto?',
         DELETE:'Elimina',
         SEARCH_CRONOLOGY:'Cronologia ricerche',
         SEARCH_ENTITIES_RESULTS:'Risultato entità',
@@ -829,9 +829,17 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         CLAIM_DISCLAIMER: "a seguito della richiesta ti verranno assegnati i permessi di modifica e cancellazione del contenuto, la richiesta deve essere motivata. Per richiedere invece la correzione di un contenuto, è sufficiente inviare una segnalazione.",
         CLAIM_SUCCESS_FEEDBACK: "La tua richiesta è stata accolta, ricarica il contenuto per procedere alle modifiche.",
         CLAIM_ERROR_FEEDBACK: "La tua richiesta è stata presa in carico e verrà valutata, riceverai in tempi brevi una comunicazione email.",
-        NAME: "Nome"
+        NAME: "Nome",
+        ADDRESS_LABEL: "Indirizzo",
+        ADDRESS_PLACEHOLDER: "via/piazza, CAP, città...",
+        SHOW_INITIATIVE: "Mostra iniziativa",
+        UNLINK_INITIATIVE: "Scollega iniziativa"
     };
     var enLabels = {
+        SHOW_INITIATIVE: "Show initiative",
+        UNLINK_INITIATIVE: "Unlink initiative",
+        ADDRESS_LABEL: "Address",
+        ADDRESS_PLACEHOLDER: "street, CAP, city...",
         NAME: "Name",
         CLAIM: "Claim",
         CLAIM_CONTENT: "Reclaim content",
@@ -1101,7 +1109,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         ADD_COMMENT:'Add Comment',
         ADD_IMAGE:'Add Image',
         TITLE:'Title',
-        DELETE_ASK: 'Do you really wish to delete the content?',
+        DELETE_ASK: 'Do you really wish to delete this content?',
         DELETE:'Delete',
         SEARCH_CRONOLOGY:'Search history',
         SEARCH_ENTITIES_RESULTS:'Entity results',

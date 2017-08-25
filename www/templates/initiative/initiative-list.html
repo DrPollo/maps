@@ -8,9 +8,18 @@
     <initiative-editor id="thingId" close="closeEditor()" ng-if="edit"></initiative-editor>
     <ul ng-if="initiatives.length > 0" ng-show="!edit">
         <li class="item item-divider">{{'CONNECTED_INITIATIVES' | translate}}</li>
-        <li ng-repeat="initiative in initiatives track by $index" class="item item-button-right">
+        <li ng-repeat="initiative in initiatives track by $index"
+            class="item item-button-right"
+            ng-class="{'item-button-left':checkPerms['d']}">
+            <button class="button button-dark button-clear"
+                    on-tap="unlink(initiative)"
+                    ng-if="checkPerms['d']"
+                    title="{{'UNLINK_INITIATIVE' | translate}}">
+                <i class="icon ion-android-cancel"></i>
+            </button>
             {{initiative.name}}
-            <button class="button button-positive" on-tap="show(initiative)">
+            <button class="button button-positive" on-tap="show(initiative)"
+                    title="{{'SHOW_INITIATIVE' | translate}}">
                 <i class="icon ion-android-search"></i>
             </button>
         </li>

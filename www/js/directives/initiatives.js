@@ -2,12 +2,13 @@
  * Created by drpollo on 07/04/2017.
  */
 angular.module('firstlife.directives')
-    .directive('initiativeList',['$log', '$location','AuthService','InitiativeFactory',function ($log,$location, AuthService,InitiativeFactory) {
+    .directive('initiativeList',['$log', '$location', '$ionicPopup','$filter','AuthService','InitiativeFactory',function ($log,$location, $ionicPopup,$filter, AuthService,InitiativeFactory) {
         return {
             restrict: 'EG',
             scope: {
                 thingId: '< id',
-                close: '&'
+                close: '&',
+                owner: '< owner'
             },
             templateUrl:'/templates/initiative/initiative-list.html',
             link: function (scope,element,attr) {
@@ -46,9 +47,22 @@ angular.module('firstlife.directives')
                     scope.close();
                 };
 
+                scope.unlink = function (initiative) {
+                    InitiativeFactory.unlink(scope.thingId, initiative.id).then(
+                        function (results) {
+                            initList();
+                        },
+                        function (error) {
+                            // error feedback
+                            error();
+                            $log.error(error);
+                        }
+                    );
+                };
 
                 // init initiative list
-                function initList (){
+                function initList(){
+                    initPerms ();
                     // $log.debug('init initiative list',scope.thingId);
                     InitiativeFactory.getAllInitiatives(scope.thingId).then(
                         function (results) {
@@ -64,6 +78,30 @@ angular.module('firstlife.directives')
 
                 function requestUpdate(counter) {
                     scope.$emit('counterUpdate',{initiatives:counter});
+                }
+
+                // init perms
+                function initPerms(){
+                    if(!scope.user)
+                        scope.user = AuthService.getUser();
+                    // se l'utente non e' definito
+                    if(!scope.user)
+                        return false;
+
+                    var source = 'others';
+                    if(scope.owner.id === scope.user.id)
+                        source = 'self';
+
+                    scope.checkPerms = AuthService.checkPerms(source);
+                    // $log.debug("checkPerms",scope.owner ,'==',scope.user.id,scope.checkPerms)
+                }
+
+                // gestione errore
+                function error() {
+                    var alertPopup = $ionicPopup.alert({
+                        title: $filter('translate')('ERROR'),
+                        template: $filter('translate')('SORRY_NETWORK_ERROR')
+                    });
                 }
 
             }

@@ -108,6 +108,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                     }
                 );
             }
+
             // segnalo il post
             scope.reportPost = function(id){
                 scope.loading = true;
