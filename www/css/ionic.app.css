@@ -13811,44 +13811,58 @@ wall-toggler #wall-toggler {
   #wall #ricerca .button {
     margin-left: 6px; }
 
-#wall .container {
-  height: 180px;
-  min-height: 180px;
-  overflow: hidden; }
-  #wall .container .card {
-    margin: 6px 6px 0px; }
-    #wall .container .card .title {
-      font-size: 1.3em;
-      font-weight: 500;
-      cursor: pointer;
-      background: #fafafa; }
-    #wall .container .card .title:hover, #wall .container .card .title:active, #wall .container .card .title:focus {
-      background: #f8f8f8; }
-    #wall .container .card .main {
-      height: 148px;
-      min-height: 148px;
-      overflow: hidden;
-      font-size: 1em; }
-      #wall .container .card .main .subheader {
-        margin-bottom: 10px; }
-        #wall .container .card .main .subheader .type-icon, #wall .container .card .main .subheader .tag {
-          display: inline-block;
-          margin-right: 8px; }
-        #wall .container .card .main .subheader .tag {
-          cursor: pointer; }
-        #wall .container .card .main .subheader .tag:hover {
-          text-decoration: underline; }
-    #wall .container .card .actions {
-      text-align: right;
-      background: #fafafa;
-      height: 32px;
-      padding: 7px 8px; }
-      #wall .container .card .actions .action {
+#wall .bar-subheader #sorterer .tip {
+  padding: 7px 9px 0px 12px;
+  display: inline-block;
+  color: #444;
+  font-style: italic;
+  font-weight: 500; }
+
+#wall .bar-subheader #sorterer .button {
+  font-weight: 500;
+  font-size: 1em; }
+
+#wall .bar-subheader #sorterer i::before {
+  font-size: 1em; }
+
+#wall #scroller wall-card .card .title {
+  font-size: 1.3em;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fafafa; }
+
+#wall #scroller wall-card .card .title:hover, #wall #scroller wall-card .card .title:active, #wall #scroller wall-card .card .title:focus {
+  background: #f8f8f8; }
+
+#wall #scroller wall-card .card .main {
+  font-size: 1em; }
+  #wall #scroller wall-card .card .main .subheader {
+    margin-bottom: 12px; }
+    #wall #scroller wall-card .card .main .subheader .type-icon, #wall #scroller wall-card .card .main .subheader .tag {
+      display: inline-block;
+      margin-right: 8px; }
+    #wall #scroller wall-card .card .main .subheader .tag {
+      cursor: pointer; }
+    #wall #scroller wall-card .card .main .subheader .tag:hover {
+      text-decoration: underline; }
+    #wall #scroller wall-card .card .main .subheader .lastactivity {
+      min-height: 1em; }
+      #wall #scroller wall-card .card .main .subheader .lastactivity span {
         color: #444;
-        height: 16px;
-        min-width: 30px;
-        margin-left: 12px;
-        font-size: 18px; }
+        font-style: italic;
+        font-size: 1em; }
+    #wall #scroller wall-card .card .main .subheader .lastupdater span {
+      color: #444;
+      font-style: italic; }
+  #wall #scroller wall-card .card .main .subheader:last-child {
+    margin-bottom: 0px; }
+  #wall #scroller wall-card .card .main .actions {
+    text-align: right; }
+    #wall #scroller wall-card .card .main .actions span {
+      vertical-align: sub;
+      font-size: 0.9em; }
+    #wall #scroller wall-card .card .main .actions button {
+      margin-left: 12px; }
 
 #wall entity-filter, #wall #typeFilter {
   width: 100%;
@@ -13905,7 +13919,7 @@ wall-toggler #wall-toggler {
 #shareform .right {
   float: right; }
 
-#shareform .tab {
+#shareform .tab, #shareform .actions {
   margin-top: 12px; }
 
 #shareform .button-bar-striped {

@@ -161,6 +161,15 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('goToLocation',params);
         }
 
+        $scope.$on('locateMarker',function(event,args){
+            if(event.defaultPrevented)
+                return ;
+
+            event.preventDefault();
+
+            locate(args);
+        });
+
 
         $scope.$on("startUpdating",function(event,args){
             if(event.defaultPrevented)

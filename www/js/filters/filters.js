@@ -25,16 +25,11 @@ angular.module('firstlife.filters', [])
             }
         }
     };
-})
-
-    .filter('split', function() {
+}).filter('split', function() {
     return function(input, splitChar, splitIndex) {
         return input.split(splitChar)[splitIndex];
     }
-})
-
-
-    .filter('isEmpty', function() {
+}).filter('isEmpty', function() {
     return function(obj) {
         if(obj && ( 
             (Array.isArray(obj) && obj.length > 0) || 
@@ -60,5 +55,30 @@ angular.module('firstlife.filters', [])
             }
         });
         return filtered;
+    }
+}).filter('startFrom', function() {
+    return function(input, start) {
+        // console.log('startFrom',input,start);
+        if(input) {
+            start = +start; //parse to int
+            var res = angular.copy(input);
+            if(!Array.isArray(input)){
+                res = Object.keys(input).map(function (i) {
+                    // console.log(i,input[i]);
+                    return input[i];
+                });
+            }
+            // console.log('startFrom',input,start,res);
+            return res.slice(start);
+        }
+        return [];
+    }
+}).filter('prettyDate', function() {
+    return function(input) {
+        var now = moment();
+        // var date = moment(input);
+        var then = moment(input);
+        // console.log('prettyDate',now, date);
+        return moment.duration(now.diff(then)).humanize();
     }
 });

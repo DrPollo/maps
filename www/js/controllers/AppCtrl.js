@@ -111,6 +111,16 @@ angular.module('firstlife.controllers')
             // }
         });
 
+        $scope.$on('locateThing',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+            event.preventDefault();
+
+            // $log.debug('locateThing',args);
+            $scope.closeSideLeft();
+            $scope.$broadcast('locateMarker',args);
+        });
+
 
         $scope.$on('wallClick',function (event,args) {
             if(event.defaultPrevented)

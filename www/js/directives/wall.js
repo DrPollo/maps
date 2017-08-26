@@ -106,6 +106,14 @@ angular.module('firstlife.directives')
                     init();
                 });
 
+                scope.$on('changeLanguage',function (event,args) {
+                    // $log.debug('changeLanguage',args);
+                    if(args.id){
+                        moment.localeData(args.id);
+                        init();
+                    }
+                });
+
                 var buffer = [];
                 var index = 0;
                 scope.markers = [];
@@ -135,6 +143,45 @@ angular.module('firstlife.directives')
                 };
 
 
+                scope.sorting = {
+                    current: 'time',
+                    time: 'newer',
+                    text: 'alphabetical',
+                    newer : ['-last_activity','-last_update'],
+                    older : ['last_activity','last_update'],
+                    alphabetical: ['name'],
+                    nalphabetical: ['-name'],
+                    params: ['-last_activity','-last_update','name'],
+                    toggleTime: function () {
+                        if(scope.sorting.time === 'newer') {
+                            scope.sorting.time = 'older';
+                        }else{
+                            scope.sorting.time = 'newer';
+                        }
+                        scope.sorting.current = 'time';
+                        scope.sorting.resetList();
+                    },
+                    toggleText: function () {
+                        if(scope.sorting.text === 'alphabetical') {
+                            scope.sorting.text = 'nalphabetical';
+                        }else{
+                            scope.sorting.text = 'alphabetical';
+                        }
+                        scope.sorting.current = 'text';
+                        scope.sorting.resetList();
+                    },
+                    resetList: function () {
+                        // combine filter params
+                        if(scope.sorting.current === 'text'){
+                            scope.sorting.params = scope.sorting[scope.sorting.text].concat(scope.sorting[scope.sorting.time]);
+                        } else {
+                            scope.sorting.params = scope.sorting[scope.sorting.time].concat(scope.sorting[scope.sorting.text]);
+                        }
+                        // reset list
+                        init();
+                    }
+                };
+
                 init();
 
 
@@ -154,7 +201,7 @@ angular.module('firstlife.directives')
                                 markers : [],
                                 buffer: 30
                             };
-                            scope.markers = $filter('orderBy')(Object.keys(current).map(function(e){return current[e];}), ['-last_update','name']);
+                            scope.markers = $filter('orderBy')(Object.keys(current).map(function(e){return current[e];}), scope.sorting.params);
                             // scope.adapterContainer.adapter.reload(0);
                             scope.adapterContainer.adapter.reload(0);
                             // $log.debug('markers',scope.markers.length);
@@ -188,13 +235,17 @@ angular.module('firstlife.directives')
                     scope.$emit('handleUpdateQ',{q:q});
                     scope.close();
                 };
-
+                // applica filtro testuale
+                scope.qFiltering = function () {
+                    var q = scope.query ? scope.query : null;
+                    // $log.debug('qFiltering from entity-list with',q);
+                    scope.$emit('handleUpdateQ',{q:q});
+                };
 
                 // gestione filtri categoria
                 scope.openTreeMap = function () {
                   scope.$emit('openTreeMap');
                 };
-
 
                 /*
                  * todo gestione del focus su singla card
@@ -233,6 +284,12 @@ angular.module('firstlife.directives')
 
             // scope.$broadcast('initActions',{id:scope.marker.id});
             // $log.debug(scope.marker.name);
+
+            scope.locateOnMap = function (thingId) {
+                // $log.debug('locateOnMap',thingId);
+
+                scope.$emit('locateThing',{id:thingId});
+            };
 
             scope.filter = function(tag){
                 // aggiorno il parametro q

@@ -25,56 +25,87 @@ wall-toggler {
             //border-radius: 20px;
         }
     }
-    .container {
-        height: 180px;
-        min-height: 180px;
-        overflow: hidden;
+    .bar-subheader{
+      #sorterer {
+        .tip{
+          padding: 7px 9px 0px 12px;
+          display: inline-block;
+          color:$lightDark;
+          font-style: italic;
+          font-weight: 500;
+        }
+        .button{
+          font-weight: 500;
+          font-size: 1em;
+        }
+        i::before{
+          font-size: 1em;
+        }
+      }
+    }
+    #scroller{
+      wall-card {
         .card {
-            margin: 6px 6px 0px;
-            .title {
-                font-size: 1.3em;
-                font-weight: 500;
+          .title {
+            font-size: 1.3em;
+            font-weight: 500;
+            cursor: pointer;
+            background: #fafafa;
+          }
+          .title:hover,.title:active,.title:focus {
+            //text-decoration: underline;
+            background: #f8f8f8;
+          }
+          .main {
+            //height: 148px;
+            //min-height: 148px;
+            //overflow: hidden;
+            font-size: 1em;
+            .subheader {
+              margin-bottom: 12px;
+              .type-icon, .tag {
+                display: inline-block;
+                margin-right: 8px;
+              }
+              .tag {
                 cursor: pointer;
-                background: #fafafa;
-            }
-            .title:hover,.title:active,.title:focus {
-                //text-decoration: underline;
-                background: #f8f8f8;
-            }
-            .main {
-                height: 148px;
-                min-height: 148px;
-                overflow: hidden;
-                font-size: 1em;
-                .subheader {
-                    margin-bottom: 10px;
-                    .type-icon, .tag {
-                        display: inline-block;
-                        margin-right: 8px;
-                    }
-                    .tag {
-                        cursor: pointer;
-                    }
-                    .tag:hover {
-                        text-decoration: underline;
-                    }
+              }
+              .tag:hover {
+                text-decoration: underline;
+              }
+              .lastactivity {
+                min-height: 1em;
+                span {
+                  color: $lightDark;
+                  font-style: italic;
+                  font-size: 1em;
                 }
+              }
+              .lastupdater {
+                span {
+                  color: $lightDark;
+                  font-style: italic;
+                }
+              }
+            }
+            .subheader:last-child {
+              margin-bottom: 0px;
             }
             .actions {
-                text-align: right;
-                background: #fafafa;
-                height: 32px;
-                padding: 7px 8px;
-                .action {
-                    color: #444;
-                    height: 16px;
-                    min-width:30px;
-                    margin-left: 12px;
-                    font-size: 18px;
-                }
+              text-align: right;
+              span {
+                vertical-align: sub;
+                font-size: 0.9em;
+              }
+              button{
+                margin-left:12px;
+              }
             }
+          }
         }
+      }
     }
+
     entity-filter,#typeFilter{
         width: 100%;
         display: block;

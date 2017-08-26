@@ -9,17 +9,33 @@
     </h3>
     <div class="item item-text-wrap main fast-ease-in-out-animation">
         <div class="subheader meta">
-                <!--<span ng-repeat="icon in marker.icons track by icon.index" class="type-icon">-->
-                <span ng-repeat="icon in marker.icons track by $index" class="type-icon">
-                    <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
-                    {{icon.name |translate}}
-                </span>
+            <span ng-repeat="icon in marker.icons | startFrom: 1 track by $index" class="type-icon">
+                <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
+                {{icon.name |translate}}
+            </span>
+        </div>
+        <div class="subheader initiatives">
+            <span ng-repeat="initiative in marker.initiatives track by $index" class="tag" on-tap="filter(initiative)">
+                <i class="icon ion-pricetag positive"></i>
+                {{initiative |translate}}
+            </span>
         </div>
         <div class="subheader tags">
-                <span ng-repeat="tag in marker.tags track by $index" class="tag" on-tap="filter(tag)">
-                    <i class="icon ion-pricetag positive"></i>
-                    {{tag |translate}}
-                </span>
+            <span ng-repeat="tag in marker.tags track by $index" class="tag" on-tap="filter(tag)">
+                <i class="icon ion-pricetag positive"></i>
+                {{tag |translate}}
+            </span>
+        </div>
+        <div class="subheader actions">
+            <span class="lastactivity">{{'LAST_ACTIVITY' |translate}} {{ (marker.last_activity || marker.last_update) | prettyDate}} {{'AGO'|translate}}</span>
+            <!--{{','}} <span class="lastupdater">{{'IS_OWNER' |translate}} {{ marker.owner.name}}</span>-->
+            <button
+                    class="button button-positive button-small button-clear icon-left"
+                    title="{{'SHOW_ON_MAP'| translate}} {{marker.name}}"
+                    on-tap="locateOnMap(marker.id)">
+                <i class="icon ion-pinpoint"></i>
+                {{"SHOW_ON_MAP"| translate}}
+            </button>
         </div>
     </div>
 </div>

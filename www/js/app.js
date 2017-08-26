@@ -843,9 +843,27 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EMBEDDABLE_IFRAME: "Codice da incorporare",
         SHARABLE_LINK: "Link da condividere",
         SEND_EMAIL_ERROR: "Errore invio email",
-        SEND_EMAIL_OK: "Inviti inviati"
+        SEND_EMAIL_OK: "Inviti inviati",
+        LAST_ACTIVITY: "Ultima attività",
+        AGO: "fa",
+        newer: 'Ultimo',
+        older: 'Primo',
+        alphabetical: 'Az',
+        nalphabetical: 'Za',
+        SORT:'Ordina per:',
+        IS_OWNER: "Contributo di",
+        SHOW_ON_MAP: "Localizza sulla mappa"
     };
     var enLabels = {
+        SHOW_ON_MAP: "Locate on map",
+        IS_OWNER: "Contribute of",
+        SORT:'Sort by:',
+        newer: 'Latest',
+        older: 'Oldest',
+        alphabetical: 'Az',
+        nalphabetical: 'Za',
+        LAST_ACTIVITY: "Last activity",
+        AGO: "ago",
         SEND_EMAIL_OK: "Email sent",
         SEND_EMAIL_ERROR: "Errore invio email",
         EMBEDDABLE_IFRAME: "Code to include",
