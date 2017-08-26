@@ -106,12 +106,40 @@ angular.module('firstlife.directives')
                     init();
                 });
 
-                init();
                 var buffer = [];
                 var index = 0;
                 scope.markers = [];
+                scope.adapterContainer = {
+                    topVisible : 0
+                };
+                scope.datasource = {
+                    get: function (index, count, success) {
+                        // ordinamento
+                        // orderBy: ['-last_update','name'] |filter:query
+                        // console.log('request from total of',scope.markers.length,' by index = ' + index + ', count = ' + count);
+                        var i = Math.max(index,0);
+                        var c = count;
+                        if(index < 0)
+                            c = count + index;
+                        // $log.log('count',c,'index',i);
+
+                        if(c < 0) {
+                            success([]);
+                            return;
+                        }
+
+                        var results = $filter('limitTo')(scope.markers,c,i);
+
+                        $timeout(function(){success(results);},100);
+                    }
+                };
+
+
+                init();
+
+
                 function init(){
-                    delete scope.markers;
+                    scope.markers = [];
 
                     var params = $location.search();
                     if(params.q)
@@ -120,9 +148,17 @@ angular.module('firstlife.directives')
                     // $log.debug('init entity list');
                     ThingsService.filter().then(
                         function (current) {
-                            delete scope.markers;
-                            scope.markers = Object.keys(current).map(function(e){return current[e];});
+                            scope.markers = [];
+                            scope.bufferMarkers = {
+                                index : 0,
+                                markers : [],
+                                buffer: 30
+                            };
+                            scope.markers = $filter('orderBy')(Object.keys(current).map(function(e){return current[e];}), ['-last_update','name']);
+                            // scope.adapterContainer.adapter.reload(0);
+                            scope.adapterContainer.adapter.reload(0);
                             // $log.debug('markers',scope.markers.length);
+                            // scope.$emit('list:filtered');
                             scope.loading = false;
                         },
                         function (err) {

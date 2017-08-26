@@ -15,23 +15,44 @@
         <entity-filter></entity-filter>
     </div>
 </ion-header-bar>
-<ion-content class="modal-content"
-        style="margin: 44px 0px 0px;"
-             drag-content="false"
-             scroll-event-interval="10"
-             overflow-scroll="true"
-             scrollbar-x="false"
-             direction="y"
-             data-tap-disabled="false">
-    <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
-    <div class="cover" ng-show="focus"></div>
-    <div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by marker.id"
-         collection-item-height="214"
-         collection-item-width="'100%'"
-         class="container"
-         ng-class="{'focus' : focus === marker.id}"
-         ng-show="!loading">
-        <wall-card ng-if="marker.id" marker="marker" query="query" show="show(id)"></wall-card>
+    <ion-content class="modal-content"
+                 style="margin: 44px 0px 0px;"
+                 overflow-scroll="true"
+                 scrollbar-x="false"
+                 data-tap-disabled="false"
+                 drag-content="false"
+                 scroll-event-interval="10"
+                 direction="y">
+        <div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>
+        <div class="cover" ng-show="focus"></div>
+    <div id="scroller" ng-if="datasource" style="height: 100%;" class="list" ui-scroll-viewport>
+            <div ui-scroll="item in datasource"
+                 adapter="adapterContainer.adapter"
+                 top-visible-scope="adapterContainer.topVisible"
+                 buffer-size="20"
+                 start-index="0">
+                <wall-card ng-if="item.id" marker="item" query="query" show="show(id)"></wall-card>
+            </div>
     </div>
     <nothing-to-read ng-if="!loading && markers.length < 1"></nothing-to-read>
 </ion-content>
+<!--<ion-content class="modal-content"-->
+        <!--style="margin: 44px 0px 0px;"-->
+             <!--drag-content="false"-->
+             <!--scroll-event-interval="10"-->
+             <!--overflow-scroll="true"-->
+             <!--scrollbar-x="false"-->
+             <!--direction="y"-->
+             <!--data-tap-disabled="false">-->
+    <!--<div class="cover" ng-show="loading" ng-init="loading = false"><ion-spinner icon="android"></ion-spinner></div>-->
+    <!--<div class="cover" ng-show="focus"></div>-->
+    <!--<div collection-repeat="marker in markers | orderBy: ['-last_update','name'] |filter:query track by marker.id"-->
+         <!--collection-item-height="214"-->
+         <!--collection-item-width="'100%'"-->
+         <!--class="container"-->
+         <!--ng-class="{'focus' : focus === marker.id}"-->
+         <!--ng-show="!loading">-->
+        <!--<wall-card ng-if="marker.id" marker="marker" query="query" show="show(id)"></wall-card>-->
+    <!--</div>-->
+    <!--<nothing-to-read ng-if="!loading && markers.length < 1"></nothing-to-read>-->
+<!--</ion-content>-->
