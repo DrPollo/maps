@@ -1,8 +1,28 @@
 <div id="thingcard">
-    <ion-header-bar class="modal-header" style="position:relative;" ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
+    <ion-header-bar class="modal-header" style="position:relative;"
+                    ng-class="{'inappropriate':infoPlace.marker.inappropriate}">
         <h1 class="title title-modal" title="{{infoPlace.marker.name}}">{{infoPlace.marker.name}}</h1>
         <div class="buttons">
-            <button ng-if="!embed" class="button button-clear icon ion-android-more-vertical" on-tap="openPopover($event)"></button>
+            <button ng-if="!embed" class="button button-clear icon ion-android-more-vertical"
+                    on-tap="openPopover($event)"></button>
+        </div>
+    </ion-header-bar>
+    <ion-header-bar class="bar bar-subheader">
+        <div class="button-bar">
+            <button
+                    class="action button button-positive button-small button-clear icon-left"
+                    title="{{'SHOW_ON_MAP'| translate}} {{marker.name}}"
+                    on-tap="share(infoPlace.marker.id)">
+                <i class="icon ion-android-share-alt"></i>
+                {{"SHARE"| translate}}
+            </button>
+            <button
+                    class="action button button-positive button-small button-clear icon-left"
+                    title="{{'SHOW_ON_MAP'| translate}} {{infoPlace.marker.name}}"
+                    on-tap="locateOnMap(infoPlace.marker.id)">
+                <i class="icon ion-pinpoint"></i>
+                {{"SHOW_ON_MAP"| translate}}
+            </button>
         </div>
     </ion-header-bar>
     <ion-content
@@ -28,7 +48,7 @@
                 <span class="icons">
                     <span ng-repeat="icon in infoPlace.marker.icons track by $index"
                           class="modal-subheader-item tag">
-                        <i class="icon {{icon.icon}}"  style="color:{{icon.color}}"></i>
+                        <i class="icon {{icon.icon}}" style="color:{{icon.color}}"></i>
                         <span>{{icon.name |translate}}</span>
                     </span>
                 </span>
@@ -53,8 +73,10 @@
                     </span>
             </div>
             <div class="modal-subheader">
-                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i class="icon ion-android-bookmark"></i></span>
-                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i class="icon ion-android-people"></i></span></span>
+                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i
+                        class="icon ion-android-bookmark"></i></span>
+                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i
+                        class="icon ion-android-people"></i></span></span>
             </div>
             <div ng-if="infoPlace.marker.link_url" class="modal-subheader">
                 <span class="modal-subheader-item">
@@ -75,20 +97,23 @@
             <!--</div>-->
         </div>
 
-        <modal-lists ng-if="infoPlace.marker" marker="infoPlace.marker" show="showMCardPlace(id)" add="addChildEntity()" close="closeModal()"></modal-lists>
+        <modal-lists ng-if="infoPlace.marker" marker="infoPlace.marker" show="showMCardPlace(id)" add="addChildEntity()"
+                     close="closeModal()"></modal-lists>
 
         <loader ng-if="!infoPlace.marker"></loader>
 
-        <div ng-if="config.dev"><pre>{{infoPlace.marker | json}}</pre></div>
+        <div ng-if="config.dev">
+            <pre>{{infoPlace.marker | json}}</pre>
+        </div>
     </ion-content>
 
     <!--<ion-footer-bar >-->
-        <!--<div class="buttons right-buttons">-->
-            <!--<entity-actions ng-if="infoPlace.marker.id" actions="currentType.actions" marker="infoPlace.marker" close="closeModal()" label="currentType.name" ></entity-actions>-->
-        <!--</div>-->
-        <!--<h1 class="title"></h1>-->
-        <!--&lt;!&ndash;<div class="buttons left-buttons">&ndash;&gt;-->
-        <!--&lt;!&ndash;<button class="button button-stable button-clear icon ion-close-round" on-tap="closeModal()" ></button>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<div class="buttons right-buttons">-->
+    <!--<entity-actions ng-if="infoPlace.marker.id" actions="currentType.actions" marker="infoPlace.marker" close="closeModal()" label="currentType.name" ></entity-actions>-->
+    <!--</div>-->
+    <!--<h1 class="title"></h1>-->
+    <!--&lt;!&ndash;<div class="buttons left-buttons">&ndash;&gt;-->
+    <!--&lt;!&ndash;<button class="button button-stable button-clear icon ion-close-round" on-tap="closeModal()" ></button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
     <!--</ion-footer-bar>-->
 </div>

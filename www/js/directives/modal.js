@@ -5,7 +5,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             id:"<"
         },
         templateUrl:"/templates/thing/card.html",
-        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', 'PlatformService', 'shareFactory',function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, myConfig, ThingsService, AuthService, notificationFactory, groupsFactory, PlatformService, shareFactory) {
+        controller:['$scope', '$timeout', '$location', '$ionicModal', '$ionicPopover', '$ionicActionSheet', '$ionicLoading', '$ionicPopup','$log', '$filter', '$window', 'myConfig', 'ThingsService', 'AuthService', 'notificationFactory', 'groupsFactory', 'PlatformService', 'shareFactory',function($scope,$timeout, $location, $ionicModal, $ionicPopover, $ionicActionSheet, $ionicLoading, $ionicPopup, $log,$filter, $window,myConfig, ThingsService, AuthService, notificationFactory, groupsFactory, PlatformService, shareFactory) {
 
             $scope.config = myConfig;
             $scope.infoPlace = {};
@@ -72,6 +72,11 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 $scope.$emit('wallClick',{id:initEntity})
             }
 
+            $scope.locateOnMap = function (thingId) {
+                $log.log('locateOnMap',$scope.id);
+                $scope.$emit('locateThing',{id:thingId});
+            };
+
             //action sheet init-info sul place
             $scope.showASDeletedPlace = function(entityId){
                 var title="";
@@ -89,6 +94,87 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 });
                 //$log.debug("actionSheet", hideSheet);
                 // to do serve per il routing, chiudo l'action sheet con il pulsante back
+            };
+
+            $scope.share = function(thingId){
+                $scope.inviteForm = {
+                    url: $window.location.href,
+                    id: thingId,
+                    inClipboard: false,
+                    embed: {
+                        iframe : '<iframe border="0" src="'+$window.location.href+'&embed=viewer'+'"></iframe>',
+                        inClipboard:false
+                    },
+                    emails:null,
+                    message: null,
+                    tab: 0,
+                    sendError: false,
+                    sendOk: false,
+                    toggle: function(i){ $scope.inviteForm.tab = i; },
+                    close: function () { alertPopup.close(); },
+                    action: function () {
+                        switch ($scope.inviteForm.tab){
+                            case 1:
+                                $scope.copyToClipboard('url');
+                                break;
+                            case 2:
+                                $scope.copyToClipboard('embed');
+                                break;
+                            default:
+                                if(!$scope.inviteForm.emails) {
+                                    return;
+                                }else{
+                                    shareFactory.thing(thingId).then(
+                                        function (res) {
+                                            $scope.inviteForm.sendError = false;
+                                            $scope.inviteForm.emails = null;
+                                            $scope.inviteForm.message = null;
+                                            $scope.inviteForm.sendOk = true;
+                                            $timeout(function () {
+                                                alertPopup.close();
+                                            },2000);
+                                        },
+                                        function (err) {
+                                            $scope.inviteForm.sendError = true;
+                                        }
+                                    );
+                                }
+                        }
+
+                    }
+                };
+                if($location.search().entity){
+                    angular.extend($scope.inviteForm,{id: $location.search().entity});
+                }
+                $scope.copyToClipboard = function(type){
+                    if(!clipboard.supported)
+                        return;
+                    switch(type) {
+                        case 'embed':
+                            clipboard.copyText($scope.inviteForm.embed.iframe);
+                            $scope.inviteForm.embed.inClipboard = true;
+                            $scope.inviteForm.inClipboard = false;
+                            break;
+                        default:
+                            clipboard.copyText($scope.inviteForm.url);
+                            $scope.inviteForm.inClipboard = true;
+                            $scope.inviteForm.embed.inClipboard = false;
+                    }
+                };
+                var buttons = [];
+                var options = {
+                    title: $filter('translate')('INVITE_ALERT_TITLE'),
+                    subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE'),
+                    templateUrl: 'templates/popup/share.html',
+                    buttons: buttons,
+                    scope: $scope
+                };
+
+                var alertPopup = $ionicPopup.show(options,$scope);
+
+                alertPopup.then(function(res) {
+                    // $log.debug('onTap',res);
+                });
             };
 
 
@@ -434,7 +520,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             }
         }]
     }
-}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','$window','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'clipboard','myConfig', 'PlatformService',function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,$window,AuthService,groupsFactory,MemoryFactory,notificationFactory, clipboard,myConfig, PlatformService) {
+}).directive('entityActions', ['$location','$log','$filter','$ionicLoading','$ionicPopup','$ionicActionSheet','$q','$window','$timeout','AuthService','groupsFactory','MemoryFactory','notificationFactory', 'clipboard','myConfig', 'PlatformService', 'shareFactory',function($location, $log, $filter,$ionicLoading,$ionicPopup,$ionicActionSheet,$q,$window,$timeout,AuthService,groupsFactory,MemoryFactory,notificationFactory, clipboard,myConfig, PlatformService, shareFactory) {
     return {
         restrict: 'EG',
         scope: {
@@ -706,35 +792,88 @@ angular.module('firstlife.directives').directive('thingCard',function () {
 
             });
 
-
-            scope.makeSharable = function(){
-                // creo link per lo share
-                var url = $window.location.href+'&embed=viewer';
-                // $log.debug('embed url ',url);
-                var buttons = [{text:$filter('translate')('OK')}];
-                if(clipboard.supported){
-                    var copy = {
-                        text:$filter('translate')('COPY'),
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            clipboard.copyText(url);
-                            e.preventDefault();
-                            alertPopup.close();
-                        }
-                    };
-                    buttons.push(copy);
-                }
-                var alertPopup = $ionicPopup.alert({
-                    title: $filter('translate')('SHARE_ALERT_TITLE')+myConfig.app_name,
-                    subTitle: $filter('translate')('SHARE_ALERT_SUBTITLE'),
-                    template: '<input type="text" value="'+url+'" readonly>',
-                    buttons: buttons
-                });
-
-                alertPopup.then(function(res) {
-                    // $log.debug('embed url ',url);
-                });
-            };
+            // scope.makeSharable = function(){
+            //     // todo chiudo menu
+            //
+            //     scope.inviteForm = {
+            //         url: $window.location.href,
+            //         id: scope.marker.id,
+            //         inClipboard: false,
+            //         embed: {
+            //             iframe : '<iframe border="0" src="'+$window.location.href+'&embed=viewer'+'"></iframe>',
+            //             inClipboard:false
+            //         },
+            //         emails:null,
+            //         message: null,
+            //         tab: 0,
+            //         sendError: false,
+            //         sendOk: false,
+            //         toggle: function(i){ scope.inviteForm.tab = i; },
+            //         close: function () { alertPopup.close(); },
+            //         action: function () {
+            //             switch (scope.inviteForm.tab){
+            //                 case 1:
+            //                     scope.copyToClipboard('url');
+            //                     break;
+            //                 case 2:
+            //                     scope.copyToClipboard('embed');
+            //                     break;
+            //                 default:
+            //                     if(!scope.inviteForm.emails) {
+            //                         return;
+            //                     }else{
+            //                         shareFactory.thing(scope.inviteForm).then(
+            //                             function (res) {
+            //                                 scope.inviteForm.sendError = false;
+            //                                 scope.inviteForm.emails = null;
+            //                                 scope.inviteForm.message = null;
+            //                                 scope.inviteForm.sendOk = true;
+            //                                 $timeout(function () {
+            //                                     alertPopup.close();
+            //                                 },2000);
+            //                             },
+            //                             function (err) {
+            //                                 scope.inviteForm.sendError = true;
+            //                             }
+            //                         );
+            //                     }
+            //             }
+            //
+            //         }
+            //     };
+            //     if($location.search().entity){
+            //         angular.extend(scope.inviteForm,{id: $location.search().entity});
+            //     }
+            //     scope.copyToClipboard = function(type){
+            //         if(!clipboard.supported)
+            //             return;
+            //         switch(type) {
+            //             case 'embed':
+            //                 clipboard.copyText(scope.inviteForm.embed.iframe);
+            //                 scope.inviteForm.embed.inClipboard = true;
+            //                 scope.inviteForm.inClipboard = false;
+            //                 break;
+            //             default:
+            //                 clipboard.copyText(scope.inviteForm.url);
+            //                 scope.inviteForm.inClipboard = true;
+            //                 scope.inviteForm.embed.inClipboard = false;
+            //         }
+            //     };
+            //     var buttons = [];
+            //     var options = {
+            //         title: $filter('translate')('INVITE_ALERT_TITLE'),
+            //         subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE'),
+            //         templateUrl: 'templates/popup/share.html',
+            //         buttons: buttons,
+            //         scope: scope
+            //     };
+            //
+            //     var alertPopup = $ionicPopup.show(options,scope);
+            //
+            //     alertPopup.then(function(res) {
+            //         // $log.debug('onTap',res);
+            //     });
+            // };
 
 
             // calcolo i permessi per le azioni

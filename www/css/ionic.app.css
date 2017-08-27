@@ -13094,7 +13094,7 @@ ion-side-menu {
     margin: 0px;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0.1;
+    letter-spacing: 0.1em;
     color: #333; }
     .modal .content form {
       padding: 20px 0; }
@@ -13811,19 +13811,22 @@ wall-toggler #wall-toggler {
   #wall #ricerca .button {
     margin-left: 6px; }
 
-#wall .bar-subheader #sorterer .tip {
-  padding: 7px 9px 0px 12px;
-  display: inline-block;
-  color: #444;
-  font-style: italic;
-  font-weight: 500; }
-
-#wall .bar-subheader #sorterer .button {
-  font-weight: 500;
-  font-size: 1em; }
-
-#wall .bar-subheader #sorterer i::before {
-  font-size: 1em; }
+#wall .bar-subheader #sorterer {
+  width: 100%; }
+  #wall .bar-subheader #sorterer .tip {
+    padding: 7px 9px 0px 12px;
+    display: inline-block;
+    color: #444;
+    font-style: italic;
+    font-weight: 500; }
+  #wall .bar-subheader #sorterer .button {
+    font-weight: 500;
+    font-size: 1em; }
+  #wall .bar-subheader #sorterer i::before {
+    font-size: 1em; }
+  #wall .bar-subheader #sorterer .right {
+    float: right;
+    margin-right: 8px; }
 
 #wall #scroller wall-card .card .title {
   font-size: 1.3em;
@@ -16137,6 +16140,12 @@ div.search-tag-card {
   margin: 0px; }
   #thingcard .modal-header, #thingcard .bar-footer {
     box-shadow: 0px 0px 6px #ddd; }
+  #thingcard .bar-subheader .action {
+    font-weight: 500;
+    font-size: 1em; }
+    #thingcard .bar-subheader .action i::before {
+      font-size: 0.9em;
+      line-height: 2em; }
   #thingcard .modal-header {
     padding: 24px 16px 16px;
     position: relative;

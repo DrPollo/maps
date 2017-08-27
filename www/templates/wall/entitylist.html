@@ -31,6 +31,10 @@
             <i class="icon" ng-class="sorting.text === 'alphabetical' ? 'ion-arrow-down-c' : 'ion-arrow-up-c'"></i>
             <span>{{ sorting.text |translate}}</span>
         </button>
+        <button class="right button button-positive button-clear item-button ion-android-share-alt"
+                on-tap="share()">
+            {{'SHARE'|translate}}
+        </button>
     </div>
 </ion-header-bar>
     <ion-content class="modal-content"

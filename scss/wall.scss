@@ -27,6 +27,7 @@ wall-toggler {
     }
     .bar-subheader{
       #sorterer {
+        width: 100%;
         .tip{
           padding: 7px 9px 0px 12px;
           display: inline-block;
@@ -40,6 +41,10 @@ wall-toggler {
         }
         i::before{
           font-size: 1em;
+        }
+        .right {
+          float: right;
+          margin-right: 8px;
         }
       }
     }

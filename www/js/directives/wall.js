@@ -57,7 +57,7 @@ angular.module('firstlife.directives')
             }
         }
     }])
-    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','$ionicSideMenuDelegate','myConfig', 'MemoryFactory', 'ThingsService',  function($rootScope,$location,$log,$filter,$timeout,$ionicSideMenuDelegate, myConfig,MemoryFactory,ThingsService) {
+    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','$ionicSideMenuDelegate', '$window', '$ionicPopup', 'myConfig', 'MemoryFactory', 'ThingsService', 'shareFactory', 'clipboard', function($rootScope,$location,$log,$filter,$timeout,$ionicSideMenuDelegate, $window, $ionicPopup, myConfig,MemoryFactory,ThingsService, shareFactory, clipboard) {
         return {
             restrict: 'E',
             scope: {
@@ -180,6 +180,89 @@ angular.module('firstlife.directives')
                         // reset list
                         init();
                     }
+                };
+
+                /*
+                 * Share FirstLife
+                 */
+                scope.share = function(){
+                    scope.inviteForm = {
+                        url: $window.location.href,
+                        inClipboard: false,
+                        embed: {
+                            iframe : '<iframe border="0" src="'+$window.location.href+'&embed=viewer'+'"></iframe>',
+                            inClipboard:false
+                        },
+                        emails:null,
+                        message: null,
+                        tab: 0,
+                        sendError: false,
+                        sendOk: false,
+                        toggle: function(i){ scope.inviteForm.tab = i; },
+                        close: function () { alertPopup.close(); },
+                        action: function () {
+                            switch (scope.inviteForm.tab){
+                                case 1:
+                                    scope.copyToClipboard('url');
+                                    break;
+                                case 2:
+                                    scope.copyToClipboard('embed');
+                                    break;
+                                default:
+                                    if(!scope.inviteForm.emails) {
+                                        return;
+                                    }else{
+                                        shareFactory.map(scope.inviteForm).then(
+                                            function (res) {
+                                                scope.inviteForm.sendError = false;
+                                                scope.inviteForm.emails = null;
+                                                scope.inviteForm.message = null;
+                                                scope.inviteForm.sendOk = true;
+                                                $timeout(function () {
+                                                    alertPopup.close();
+                                                },2000);
+                                            },
+                                            function (err) {
+                                                scope.inviteForm.sendError = true;
+                                            }
+                                        );
+                                    }
+                            }
+
+                        }
+                    };
+                    if($location.search().entity){
+                        angular.extend(scope.inviteForm,{id: $location.search().entity});
+                    }
+                    scope.copyToClipboard = function(type){
+                        if(!clipboard.supported)
+                            return;
+                        switch(type) {
+                            case 'embed':
+                                clipboard.copyText(scope.inviteForm.embed.iframe);
+                                scope.inviteForm.embed.inClipboard = true;
+                                scope.inviteForm.inClipboard = false;
+                                break;
+                            default:
+                                clipboard.copyText(scope.inviteForm.url);
+                                scope.inviteForm.inClipboard = true;
+                                scope.inviteForm.embed.inClipboard = false;
+                        }
+                    };
+                    var buttons = [];
+                    var options = {
+                        title: $filter('translate')('INVITE_ALERT_TITLE'),
+                        subTitle: $filter('translate')('INVITE_ALERT_SUBTITLE'),
+                        templateUrl: 'templates/popup/share.html',
+                        buttons: buttons,
+                        scope: scope
+                    };
+
+                    var alertPopup = $ionicPopup.show(options,scope);
+
+                    alertPopup.then(function(res) {
+                        // $log.debug('onTap',res);
+                    });
                 };
 
                 init();
