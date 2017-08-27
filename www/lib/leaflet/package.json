@@ -1,6 +1,55 @@
 {
-  "name": "leaflet",
-  "version": "1.0.3",
+  "_args": [
+    [
+      {
+        "raw": "leaflet",
+        "scope": null,
+        "escapedName": "leaflet",
+        "name": "leaflet",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/drpollo/projects/areaviewer"
+    ]
+  ],
+  "_from": "leaflet@latest",
+  "_id": "leaflet@1.0.3",
+  "_inCache": true,
+  "_location": "/leaflet",
+  "_nodeVersion": "7.4.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/leaflet-1.0.3.tgz_1485169846271_0.5662385951727629"
+  },
+  "_npmUser": {
+    "name": "ivansanchez",
+    "email": "ivan@sanchezortega.es"
+  },
+  "_npmVersion": "4.0.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "leaflet",
+    "scope": null,
+    "escapedName": "leaflet",
+    "name": "leaflet",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/leaflet/-/leaflet-1.0.3.tgz",
+  "_shasum": "1f401b98b45c8192134c6c8d69686253805007c8",
+  "_shrinkwrap": null,
+  "_spec": "leaflet",
+  "_where": "/Users/drpollo/projects/areaviewer",
+  "bugs": {
+    "url": "https://github.com/Leaflet/Leaflet/issues"
+  },
+  "dependencies": {},
   "description": "JavaScript library for mobile-friendly interactive maps",
   "devDependencies": {
     "eslint": "^3.5.0 <3.6.0",
@@ -22,12 +71,10 @@
     "source-map": "^0.5.6",
     "uglify-js": "~2.7.3"
   },
-  "main": "dist/leaflet-src.js",
-  "style": "dist/leaflet.css",
-  "scripts": {
-    "test": "jake test",
-    "build": "jake build",
-    "release": "./build/publish.sh"
+  "directories": {},
+  "dist": {
+    "shasum": "1f401b98b45c8192134c6c8d69686253805007c8",
+    "tarball": "https://registry.npmjs.org/leaflet/-/leaflet-1.0.3.tgz"
   },
   "eslintConfig": {
     "root": true,
@@ -60,13 +107,44 @@
       "consistent-return": 0
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Leaflet/Leaflet.git"
-  },
+  "gitHead": "ed36a04aefd12cb92c78074fe63a8e460db1d464",
+  "homepage": "https://github.com/Leaflet/Leaflet#readme",
   "keywords": [
     "gis",
     "map"
   ],
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "main": "dist/leaflet-src.js",
+  "maintainers": [
+    {
+      "name": "ivansanchez",
+      "email": "ivan@sanchezortega.es"
+    },
+    {
+      "name": "liedman",
+      "email": "per@liedman.net"
+    },
+    {
+      "name": "mourner",
+      "email": "agafonkin@gmail.com"
+    },
+    {
+      "name": "ybon",
+      "email": "yb@enix.org"
+    }
+  ],
+  "name": "leaflet",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Leaflet/Leaflet.git"
+  },
+  "scripts": {
+    "build": "jake build",
+    "release": "./build/publish.sh",
+    "test": "jake test"
+  },
+  "style": "dist/leaflet.css",
+  "version": "1.0.3"
 }

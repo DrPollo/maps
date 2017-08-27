@@ -42,7 +42,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var yellow = '#ffc900';
             var white = '#fff';
             // defaults vectorGrid
-            var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
+            // var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
+            var vectormapUrl = "https://tiles.fldev.di.unito.it/tile/{z}/{x}/{y}";
             // reset styles
             var resetStyle = {
                 color: 'transparent',
@@ -138,23 +139,23 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 16:
                         return [
                             "comuni",
-                            "city_block",
                             "landusages",
-                            "waterareas",
-                            "waterways",
-                            "quartieri",];
-                        break;
-                    case 17:
-                    case 18:
-                        return [
-                            "site",
-                            "landusages",
-                            "building",
-                            "roads",
                             "waterareas",
                             "waterways",
                             "quartieri",
                             "city_block",];
+                        break;
+                    case 17:
+                    case 18:
+                        return [
+                            "quartieri",
+                            "city_block",
+                            "landusages",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "site",
+                            "building",];
                         break;
                     case 19:
                     case 20:
@@ -171,6 +172,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 }
             };
             var featureStyle = function(properties,z) {
+                $log.log(properties);
                 var style = {
                     weight: 1,
                     color: orange,
@@ -193,10 +195,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 city_block: featureStyle,
                 site: featureStyle,
                 building: featureStyle,
-                landusages: featureStyle,
-                roads: featureStyle,
-                waterareas: featureStyle,
-                waterways: featureStyle,
+                // landusages: featureStyle,
+                // roads: featureStyle,
+                // waterareas: featureStyle,
+                // waterways: featureStyle,
                 indoor: featureStyle,
                 interactive: featureStyle
             };
@@ -211,6 +213,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     opacity: 1
                 };
                 switch(type){
+                    case 'nazioni':
+                    case 'regioni':
+                    case 'provincie':
+                    case 'comuni':
+                    case 'quartieri':
                     case 'administrative':
                         style.weight = 2;
                         style.fillColor = red;
@@ -219,6 +226,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 'highway':
                         style = {};
                         break;
+                    case 'landusages':
                     case 'landuse':
                         style.fillColor = green;
                         break;

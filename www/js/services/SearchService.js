@@ -59,23 +59,6 @@ angular.module('firstlife.services')
                 var query = escape(val);
                 //$log.debug("SearchService, query, url: ", searchUrl);
                 var url = geoUrl.concat(search_key,"=",query);
-                // var url = geoUrl.concat(text,"=",query,'&api_key=','search-ZDnkvxb');
-                // var req = {
-                //         url: url,
-                //         method: 'GET',
-                //         headers: {'Content-Type':'text/plain'},
-                //         data:'',
-                //         cache: true
-                //     };
-                // $http(req)
-                // .then(function(response) {
-                //    $log.debug("SearchService, query, response: ", response);
-                //     deferred.resolve(geocodingDecoder(response.data));
-                //
-                // },function(response) {
-                //     $log.error("SearchService, query, errore: ", response);
-                //     deferred.reject(response);
-                // });
 
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.onreadystatechange = function() {
