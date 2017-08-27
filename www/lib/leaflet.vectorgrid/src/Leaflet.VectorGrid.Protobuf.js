@@ -2,14 +2,68 @@
 import Pbf from 'pbf';
 import {VectorTile} from 'vector-tile';
 
-// Network & Protobuf powered!
-// NOTE: Assumes the globals `VectorTile` and `Pbf` exist!!!
+/*
+ * 🍂class VectorGrid.Protobuf
+ * 🍂extends VectorGrid
+ *
+ * A `VectorGrid` for vector tiles fetched from the internet.
+ * Tiles are supposed to be protobufs (AKA "protobuffer" or "Protocol Buffers"),
+ * containing data which complies with the
+ * [MapBox Vector Tile Specification](https://github.com/mapbox/vector-tile-spec/tree/master/2.1).
+ *
+ * This is the format used by:
+ * - Mapbox Vector Tiles
+ * - Mapzen Vector Tiles
+ * - ESRI Vector Tiles
+ * - [OpenMapTiles hosted Vector Tiles](https://openmaptiles.com/hosting/)
+ *
+ * 🍂example
+ *
+ * You must initialize a `VectorGrid.Protobuf` with a URL template, just like in
+ * `L.TileLayer`s. The difference is that the template must point to vector tiles
+ * (usually `.pbf` or `.mvt`) instead of raster (`.png` or `.jpg`) tiles, and that
+ * you should define the styling for all the features.
+ *
+ * <br><br>
+ *
+ * For OpenMapTiles, with a key from [https://openmaptiles.org/docs/host/use-cdn/](https://openmaptiles.org/docs/host/use-cdn/),
+ * initialization looks like this:
+ *
+ * ```
+ * L.vectorGrid.protobuf("https://free-{s}.tilehosting.com/data/v3/{z}/{x}/{y}.pbf.pict?key={key}", {
+ * 	vectorTileLayerStyles: { ... },
+ * 	subdomains: "0123",
+ * 	key: 'abcdefghi01234567890',
+ * 	maxNativeZoom: 14
+ * }).addTo(map);
+ * ```
+ *
+ * And for Mapbox vector tiles, it looks like this:
+ *
+ * ```
+ * L.vectorGrid.protobuf("https://{s}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={token}", {
+ * 	vectorTileLayerStyles: { ... },
+ * 	subdomains: "abcd",
+ * 	token: "pk.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTS.TUVWXTZ0123456789abcde"
+ * }).addTo(map);
+ * ```
+ */
 L.VectorGrid.Protobuf = L.VectorGrid.extend({
 
 	options: {
+		// 🍂section
+		// As with `L.TileLayer`, the URL template might contain a reference to
+		// any option (see the example above and note the `{key}` or `token` in the URL
+		// template, and the corresponding option).
+		//
+		// 🍂option subdomains: String = 'abc'
+		// Akin to the `subdomains` option for `L.TileLayer`.
 		subdomains: 'abc',	// Like L.TileLayer
+		//
+		// 🍂option fetchOptions: Object = {}
+		// options passed to `fetch`, e.g. {credentials: 'same-origin'} to send cookie for the current domain
+		fetchOptions: {}
 	},
-
 
 	initialize: function(url, options) {
 		// Inherits options from geojson-vt!
@@ -18,9 +72,7 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 		L.VectorGrid.prototype.initialize.call(this, options);
 	},
 
-
 	_getSubdomain: L.TileLayer.prototype._getSubdomain,
-
 
 	_getVectorTilePromise: function(coords) {
 		var data = {
@@ -39,8 +91,8 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 		}
 
 		var tileUrl = L.Util.template(this._url, L.extend(data, this.options));
-
-		return fetch(tileUrl).then(function(response){
+		var layersOrdering = this.layersOrdering ? this.layersOrdering : null;
+		return fetch(tileUrl, this.options.fetchOptions).then(function(response){
 
 			if (!response.ok) {
 				return {layers:[]};
@@ -69,7 +121,7 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 // 			console.log('Vector tile water:', json.layers.water);	// Instance of VectorTileLayer
 
 			// Normalize feature getters into actual instanced features
-			for (var layerName in json.layers) {
+            for (var layerName in layersKeys) {
 				var feats = [];
 
 				for (var i=0; i<json.layers[layerName].length; i++) {
@@ -87,6 +139,8 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 });
 
 
+// 🍂factory L.vectorGrid.protobuf(url: String, options)
+// Instantiates a new protobuf VectorGrid with the given URL template and options
 L.vectorGrid.protobuf = function (url, options) {
 	return new L.VectorGrid.Protobuf(url, options);
 };

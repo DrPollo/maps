@@ -12,10 +12,6 @@ L.SVG.Tile = L.SVG.extend({
 		this._container.setAttribute('height', this._size.y);
 		this._container.setAttribute('viewBox', [0, 0, this._size.x, this._size.y].join(' '));
 
-		if (options.interactive) {
-			// By default, Leaflet tiles do not have pointer events
-			this._container.style.pointerEvents = 'auto';
-		}
 		this._layers = {};
 	},
 
@@ -34,9 +30,21 @@ L.SVG.Tile = L.SVG.extend({
 		if (this.options.interactive) {
 			for (var i in this._layers) {
 				var layer = this._layers[i];
+				// By default, Leaflet tiles do not have pointer events.
+				layer._path.style.pointerEvents = 'auto';
 				this._map._targets[L.stamp(layer._path)] = layer;
 			}
 		}
+	},
+
+	removeFrom: function (map) {
+		if (this.options.interactive) {
+			for (var i in this._layers) {
+				var layer = this._layers[i];
+				delete this._map._targets[L.stamp(layer._path)];
+			}
+		}
+		delete this._map;
 	},
 
 	_initContainer: function() {

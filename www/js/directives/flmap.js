@@ -57,21 +57,150 @@ angular.module('firstlife.directives').directive('flmap',function () {
             L.CircleMarker.mergeOptions(resetStyle);
             // config del layer
 
-            var vectorMapStyling = {
-                interactive:function(properties,z) {
-                    var style = {
-                        weight: 1,
-                        color: orange,
-                        opacity: 1,
-                        fill: true
-                    };
-                    if (properties.type === 'indoor') {
-                        style.fillColor = orange;
-                        style.fillOpacity = 0.5;
-                    }
-                    return style;
+
+
+
+            var ordering = function (layers, zoom) {
+                // console.debug('reordering....',layers);
+                switch (zoom) {
+                    case 1:
+                    case 2:
+                        return [
+                            "nazioni",
+                            "waterareas",
+                            "waterways"
+                        ];
+                        break;
+                    case 3:
+                    case 4:
+                        return [
+                            "nazioni",
+                            "regioni",
+                            "provincie",
+                            "waterareas",
+                            "waterways"
+                        ];
+                        break;
+                    case 5:
+                    case 6:
+                        return [
+                            "nazioni",
+                            "regioni",
+                            "provincie",
+                            "landusages",
+                            "roads",
+                            "waterareas",
+                            "waterways"];
+                        break;
+                    case 7:
+                    case 8:
+                        return [
+                            "nazioni",
+                            "regioni",
+                            "provincie",
+                            "landusages",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "comuni",];
+                        break;
+                    case 9:
+                    case 10:
+                        return [
+                            "nazioni",
+                            "regioni",
+                            "provincie",
+                            "landusages",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "comuni"];
+                        break;
+                    case 11:
+                    case 12:
+                        return [
+                            "provincie",
+                            "landusages",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "comuni"];
+                        break;
+                    case 13:
+                    case 14:
+                        return [
+                            "provincie",
+                            "quartieri",
+                            "landusages",
+                            "comuni"];
+                        break;
+                    case 15:
+                    case 16:
+                        return [
+                            "comuni",
+                            "city_block",
+                            "landusages",
+                            "waterareas",
+                            "waterways",
+                            "quartieri",];
+                        break;
+                    case 17:
+                    case 18:
+                        return [
+                            "site",
+                            "landusages",
+                            "building",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "quartieri",
+                            "city_block",];
+                        break;
+                    case 19:
+                    case 20:
+                        return [
+                            "site",
+                            "building",
+                            "roads",
+                            "waterareas",
+                            "waterways",
+                            "indoor"];
+                        break;
+                    default:
+                        return Object.keys(layers);
                 }
             };
+            var featureStyle = function(properties,z) {
+                var style = {
+                    weight: 1,
+                    color: orange,
+                    opacity: 1,
+                    fill: true
+                };
+                if (properties.type === 'indoor') {
+                    style.fillColor = orange;
+                    style.fillOpacity = 0.5;
+                }
+                return style;
+            };
+            var vectorMapStyling = {
+                nazioni: featureStyle,
+                regioni: featureStyle,
+                provincie: featureStyle,
+                comuni: featureStyle,
+                circoscrizioni: featureStyle,
+                quartieri: featureStyle,
+                city_block: featureStyle,
+                site: featureStyle,
+                building: featureStyle,
+                landusages: featureStyle,
+                roads: featureStyle,
+                waterareas: featureStyle,
+                waterways: featureStyle,
+                indoor: featureStyle,
+                interactive: featureStyle
+            };
+
             function interactiveStyle(type){
                 var style = {
                     fill: true,
@@ -121,7 +250,8 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 rendererFactory: L.svg.tile,
                 attribution: false,
                 vectorTileLayerStyles: vectorMapStyling,
-                interactive: true
+                interactive: true,
+                layersOrdering: ordering
             };
             // vector grid
             var vGrid = L.vectorGrid.protobuf(vectormapUrl, vectormapConfig);
