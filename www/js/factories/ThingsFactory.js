@@ -1,14 +1,14 @@
 angular.module('firstlife.factories')
-    .factory('ThingsFact',['$q','$http','$log','AuthService', 'myConfig', function ($q, $http, $log, AuthService, myConfig) {
+    .factory('ThingsFact', ['$q', '$http', '$log', 'AuthService', 'myConfig', function ($q, $http, $log, AuthService, myConfig) {
 
         var config = myConfig;
         var format = myConfig.format;
-        var urlThings= myConfig.backend_things;
-        var urlBbox= myConfig.backend_bbox;
-        var urlTile= myConfig.backend_tilesearch;
+        var urlThings = myConfig.backend_things;
+        var urlBbox = myConfig.backend_bbox;
+        var urlTile = myConfig.backend_tilesearch;
         var fields = 'fields=valid_from,valid_to,categories,geometry,name,id,tags';
         var domains = self.config.read_domains ? [self.config.domain_id].concat(self.config.read_domains).join(',') : self.config.domain_id;
-        var limit= 99999;
+        var limit = 99999;
 
         return {
             get: function (id) {
@@ -57,7 +57,7 @@ angular.module('firstlife.factories')
 
                 return deferred.promise;
             },
-            update: function (id,thing) {
+            update: function (id, thing) {
                 var deferred = $q.defer();
 
                 var urlId = urlThings.concat('/').concat(id).concat(format);
@@ -108,16 +108,16 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    data:report
+                    data: report
                 };
                 return $http(req);
             },
-            claim: function (thingId,claim) {
-                var urlId = myConfig.backend_things.concat('/',thingId,'/claims');
+            claim: function (thingId, claim) {
+                var urlId = myConfig.backend_things.concat('/', thingId, '/claims');
                 var req = {
                     url: urlId,
                     method: 'POST',
-                    data:claim
+                    data: claim
                 };
                 return $http(req);
             },
@@ -125,10 +125,10 @@ angular.module('firstlife.factories')
                 var deferred = $q.defer();
                 // costruisco i parametri
                 var p = Object.keys(params).reduce(function (list, key) {
-                    list.push(key+'='+params[key]);
+                    list.push(key + '=' + params[key]);
                     return list;
-                },[]);
-                var urlId = urlBbox.concat(format,'?domainId=',domains,'&limit=',limit,'&',fields,'&',p.join('&'));
+                }, []);
+                var urlId = urlBbox.concat(format, '?domainId=', domains, '&limit=', limit, '&', fields, '&', p.join('&'));
 
                 var req = {
                     url: urlId,
@@ -151,16 +151,16 @@ angular.module('firstlife.factories')
             tile: function (params) {
                 var deferred = $q.defer();
                 // controllo i parametri
-                if(!params.z || !params.y, !params.x){
+                if (!params.z || !params.y, !params.x) {
                     deferred.reject('no tile param');
                     return deferred.promise;
                 }
 
-                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tile);
-                if(params.from)
-                    urlId = urlId.concat('&from=',params.from);
-                if(params.to)
-                    urlId = urlId.concat('&to=',params.to);
+                var urlId = urlTile.concat(format, '?domainId=', domains, '&limit=', limit, '&tiles=', params.tile);
+                if (params.from)
+                    urlId = urlId.concat('&from=', params.from);
+                if (params.to)
+                    urlId = urlId.concat('&to=', params.to);
                 var req = {
                     url: urlId,
                     method: 'GET',
@@ -182,29 +182,33 @@ angular.module('firstlife.factories')
             tiles: function (params) {
                 var deferred = $q.defer();
                 // controllo i parametri
-                if(!params || !params.tiles || params.tiles.length < 1){
+                if (!params || !params.tiles || params.tiles.length < 1) {
                     deferred.reject('no tiles to check');
                     return deferred.promise;
                 }
                 // $log.debug('tiles',params);
-                var urlId = urlTile.concat('?format=pbf','&domainId=',domains,'&limit=',limit,'&tiles=',params.tiles.join(','));
+                var urlId = urlTile.concat('?format=pbf', '&domainId=', domains, '&limit=', limit, '&tiles=', params.tiles.join(','));
                 // var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tiles.join(','));
-                if(params.time.from)
-                    urlId = urlId.concat('&from=',params.time.from);
-                if(params.time.to)
-                    urlId = urlId.concat('&to=',params.time.to);
+                if (params.time.from)
+                    urlId = urlId.concat('&from=', params.time.from);
+                if (params.time.to)
+                    urlId = urlId.concat('&to=', params.time.to);
 
                 // $log.debug('tiles url',urlId);
                 var req = {
                     url: urlId,
                     method: 'GET',
                     responseType: 'arraybuffer',
-                    transformResponse: function(data, headersGetter, status){
-                        var type = headersGetter("Content-Type");
-                        if (type.startsWith("application/json")) {
-                            return data;
+                    transformResponse: function (data, headersGetter, status) {
+                        try {
+                            var type = headersGetter("Content-Type");
+                            if (type.startsWith("application/json")) {
+                                return data;
+                            }
+                            return geobuf.decode(new PBF(data));
+                        } catch (e) {
+                            throw Error(e);
                         }
-                        return geobuf.decode(new Pbf(data));
                     },
                     data: {}
                 };
@@ -221,10 +225,10 @@ angular.module('firstlife.factories')
 
                 return deferred.promise;
             },
-            children: function (id,relation) {
+            children: function (id, relation) {
                 var deferred = $q.defer();
 
-                var urlId = urlThings.concat('/',id,'/',relation).concat(format);
+                var urlId = urlThings.concat('/', id, '/', relation).concat(format);
 
                 var req = {
                     url: urlId,
@@ -235,7 +239,7 @@ angular.module('firstlife.factories')
                     function (response) {
                         //$log.debug("get Thing children ", response);
                         // todo togli il bugfix
-                        deferred.resolve(response.data.data ? response.data.data.features: response.data.features );
+                        deferred.resolve(response.data.data ? response.data.data.features : response.data.features);
                     },
                     function (err) {
                         $log.error(err);
@@ -244,15 +248,15 @@ angular.module('firstlife.factories')
                 );
                 return deferred.promise;
             },
-            addTags: function (id,tags) {
+            addTags: function (id, tags) {
                 var deferred = $q.defer();
 
-                var urlId = urlThings.concat('/',id,'/addTags').concat(format);
+                var urlId = urlThings.concat('/', id, '/addTags').concat(format);
 
                 var req = {
                     url: urlId,
                     method: 'PUT',
-                    data: {tags:tags}
+                    data: {tags: tags}
                 };
                 $http(req).then(
                     function (response) {

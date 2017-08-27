@@ -42,8 +42,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
             var yellow = '#ffc900';
             var white = '#fff';
             // defaults vectorGrid
-            // var vectormapUrl = "https://tiles.firstlife.org/tile/{z}/{x}/{y}";
-            var vectormapUrl = "https://tiles.fldev.di.unito.it/tile/{z}/{x}/{y}";
+            var vectormapUrl = myConfig.map.tile_vector;
             // reset styles
             var resetStyle = {
                 color: 'transparent',
@@ -172,7 +171,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 }
             };
             var featureStyle = function(properties,z) {
-                $log.log(properties);
+                // $log.debug(properties);
                 var style = {
                     weight: 1,
                     color: orange,

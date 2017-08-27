@@ -1764,6 +1764,7 @@
       "tile_view_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
       "tile_edit": "https://api.mapbox.com/styles/v1/drp0ll0/cizl1sb0l000t2ro16uptawtf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
       "tile_edit_attribution": "<a target='_blank' href='http://mapbox.com/'>©Mapbox</a> | OpenStreetMap contributors",
+      "tile_vector": "https://tiles.firstlife.org/tile/{z}/{x}/{y}",
       "map_default_lat": 45.070312,
       "map_default_lng": 7.686856,
       "map_autocenter": false,

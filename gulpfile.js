@@ -233,6 +233,7 @@ gulp.task('setupenv',function(){
         config.myConfig.authentication.auth_base_domain = "https://secure.fldev.di.unito.it/";
         config.myConfig.map.tile_view = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
         config.myConfig.map.tile_edit = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
+        config.myConfig.map.tile_vector = 'https://tiles.fldev.di.unito.it/tile/{z}/{x}/{y}';
     }else{ // default
         console.log('env prod');
         // config.myConfig.api_base_domain = "api.firstlife.org/";
