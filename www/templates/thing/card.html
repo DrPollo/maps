@@ -65,12 +65,12 @@
             <div class="modal-subheader credits" ng-if="config.dev || currentType.show_author">
                 {{'LAST_AUTHOR' | translate}}{{' '}}
                 <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
-                        {{infoPlace.marker.updater.display_name}}
-                    </span>
-                {{'LAST_UPDATE'|translate}}
-                <span ng-if="infoPlace.marker.last_update" class="time modal-subheader-item">
-                        {{infoPlace.marker.last_update | date:'(HH:mm) dd/MM/yyyy'}}
-                    </span>
+                    {{infoPlace.marker.updater.display_name}}
+                </span>
+
+                <span ng-if="infoPlace.marker.last_activity || infoPlace.marker.last_update">
+                    {{'LAST_ACTIVITY'|translate}} {{infoPlace.marker.last_activity || infoPlace.marker.last_update | prettyDate}} {{'AGO' |translate}}
+                </span>
             </div>
             <div class="modal-subheader">
                 <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i
