@@ -852,9 +852,17 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         nalphabetical: 'Za',
         SORT:'Ordina per:',
         IS_OWNER: "Contributo di",
-        SHOW_ON_MAP: "Localizza sulla mappa"
+        SHOW_ON_MAP: "Localizza sulla mappa",
+        LOCATE_USER: "Centra mappa sulla tua posizione",
+        RESET_MAP: "Reset della mappa",
+        TOGGLE_TO_EDIT_MODE: "Passa alla modalità di inserimento",
+        TOGGLE_TO_VIEW_MODE: "Passa alla modalità di visualizzazione"
     };
     var enLabels = {
+        LOCATE_USER: "Locate your position",
+        RESET_MAP: "Map reset",
+        TOGGLE_TO_EDIT_MODE: "Switch the map to entry mode",
+        TOGGLE_TO_VIEW_MODE: "Switch the map to view mode",
         SHOW_ON_MAP: "Locate on map",
         IS_OWNER: "Contribute of",
         SORT:'Sort by:',

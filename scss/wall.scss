@@ -169,6 +169,10 @@ wall-toggler {
     .button {
         font-weight: 500;
     }
+    .right {
+      position: absolute;
+      right: 5px;
+    }
 }
 .container:focus, .container:hover, .container:active{
     height: auto !important;

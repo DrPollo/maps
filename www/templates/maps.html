@@ -40,14 +40,27 @@
         <div id="map-action-menu">
             <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item">
-                    <button class="button button-float button-float-small" ng-click="getUserLocation()">
+                    <button class="button button-float button-float-small"
+                            title="{{'LOCATE_USER' | translate}}"
+                            ng-click="getUserLocation()">
                         <i class="icon ion-android-locate"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-container flex-container-style fixed-height">
+                <div class="flex-item">
+                    <button class="button button-float button-float-small"
+                            title="{{'RESET_MAP' | translate}}"
+                            ng-click="resetMap()">
+                        <i class="icon ion-android-refresh"></i>
                     </button>
                 </div>
             </div>
             <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item"  ng-if="config.actions.edit_mode" >
-                    <button class="button button-float" ng-click="switchEditMode()">
+                    <button class="button button-float"
+                            title="{{ (!editMode ? 'TOGGLE_TO_EDIT_MODE' : 'TOGGLE_TO_VIEW_MODE') | translate}}"
+                            ng-click="switchEditMode()">
                         <i class="icon ease-animation" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>
                     </button>
                 </div>

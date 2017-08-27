@@ -2,6 +2,7 @@
     <ion-side-menu-content
             class="post-size-14px"
             drag-content="false">
+        <div ng-show="cover" id="coveroverlay"></div>
         <ion-nav-view name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu
@@ -18,25 +19,6 @@
                     on-tap="backToStart()">
                 {{'BACK'|translate}}
             </button>
-            <!--<button ng-if="config.actions.map_tab && wallIndex === 0"-->
-                    <!--style="margin-right: 6px;"-->
-                    <!--class="button button-positive item-button ion-android-share-alt"-->
-                    <!--on-tap="share()">-->
-            <!--{{'SHARE'|translate}}-->
-            <!--</button>-->
-            <!--<button ng-if="config.actions.map_tab && wallIndex === 0"-->
-                    <!--class="button button-outline button-dark item-button ion-share"-->
-                    <!--on-tap="makeEmbed()"-->
-                    <!--style="margin-right: 6px;">-->
-                <!--{{'EXPORT'|translate}}-->
-            <!--</button>-->
-            <!--<button ng-if="config.actions.map_tab" style="margin-right: 6px;" class="button button-outline button-dark item-button ion-link" on-tap="makeSharable()">-->
-            <!--{{'SHARE_LINK'|translate}}-->
-            <!--</button>-->
-            <!--<button ng-if="config.actions.map_tab && wallIndex === 0" class="button button-positive item-button ion-paper-airplane"-->
-                    <!--on-tap="invite()">-->
-                <!--{{'INVITE'|translate}}-->
-            <!--</button>-->
             <button ng-if="config.actions.map_tab"
                     class="right button button-dark button-outline item-button ion-close-round" menu-close
                     on-tap="closeSideLeft()">

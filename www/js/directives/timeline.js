@@ -22,6 +22,13 @@ angular.module('firstlife.timeline',[])
                 // todo calcolo dati da visualizzare nella timeline
             });
 
+            $scope.$on('timelineReset', function(event, args) {
+                if(event.defaultPrevented)
+                    event.preventDefault();
+
+                $scope.reset();
+            });
+
             $scope.$on('changeLanguage',function (event,args) {
                $log.debug('changeLanguage',args);
                if(args.id){
@@ -29,6 +36,8 @@ angular.module('firstlife.timeline',[])
                    initBuffer(true);
                }
             });
+
+
 
 
             $scope.config = myConfig;

@@ -209,7 +209,6 @@ angular.module('firstlife.controllers')
 
 
 
-
         /*
          * Gestione card
          */
@@ -339,7 +338,19 @@ angular.module('firstlife.controllers')
          * serve ad ottimizzare l'aggiornamento del wall
          */
 
+        // cover della mappa per menu aperti
+        $scope.cover = false;
+        $scope.$watch(function () {
+                return $ionicSideMenuDelegate.isOpenLeft();
+            },
+            function (isOpen) {
+                if (isOpen){
+                    $scope.cover = true;
+                } else {
+                    $scope.cover = false;
+                }
 
+            });
         // left side (wall)
         $scope.openSideLeft = function () {
             if(!isOpenLeft()){
