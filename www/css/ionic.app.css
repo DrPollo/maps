@@ -13843,6 +13843,13 @@ wall-toggler #wall-toggler {
   cursor: pointer;
   background: #fafafa; }
 
+#wall #scroller wall-card .card .description {
+  max-height: 5.6em;
+  overflow: hidden;
+  font-size: 1em;
+  line-height: 1.4em;
+  color: #333; }
+
 #wall #scroller wall-card .card .title:hover, #wall #scroller wall-card .card .title:active, #wall #scroller wall-card .card .title:focus {
   background: #f8f8f8; }
 

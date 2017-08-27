@@ -57,6 +57,13 @@ wall-toggler {
             cursor: pointer;
             background: #fafafa;
           }
+          .description {
+            max-height: 5.6em;
+            overflow: hidden;
+            font-size: 1em;
+            line-height: 1.4em;
+            color:$dark;
+          }
           .title:hover,.title:active,.title:focus {
             //text-decoration: underline;
             background: #f8f8f8;
