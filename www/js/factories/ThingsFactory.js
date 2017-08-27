@@ -207,14 +207,15 @@ angular.module('firstlife.factories')
                             }
                             return geobuf.decode(new PBF(data));
                         } catch (e) {
-                            throw Error(e);
+                            $log.error(e);
+                            // throw Error(e);
                         }
                     },
                     data: {}
                 };
                 $http(req).then(
                     function (response) {
-                        // $log.debug("tiles response",response);
+                        // $log.debug("tiles response",response.data.features);
                         deferred.resolve(response.data.features);
                     },
                     function (err) {
