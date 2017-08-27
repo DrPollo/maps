@@ -1,5 +1,5 @@
 angular.module('firstlife.controllers')
-    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate','myConfig', 'EntityService', 'ThingsService',  'AuthService', 'PlatformService',function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, $ionicSlideBoxDelegate,$timeout, $ionicScrollDelegate, myConfig, EntityService, ThingsService,  AuthService, PlatformService) {
+    .controller('EditorCtrl', ['$state', '$scope','$location', '$ionicPopup', '$window', '$filter', '$ionicLoading', '$log', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate','myConfig', 'EntityService', 'ThingsService',  'AuthService', 'PlatformService', 'SearchService', function($state, $scope, $location, $ionicPopup, $window, $filter,$ionicLoading, $log, $ionicSlideBoxDelegate,$timeout, $ionicScrollDelegate, myConfig, EntityService, ThingsService,  AuthService, PlatformService, SearchService) {
 
         var _this = this;
         _this.config = myConfig;
@@ -290,6 +290,15 @@ angular.module('firstlife.controllers')
             }
 
             // fine gesione relazioni
+            SearchService.reverseGeocoding({zoom:params.zoom_level, lat: params.lat, lng: params.lng}).then(
+                function (res) {
+                    $log.log('address',res);
+                    _this.wizard.dataForm.address = res.display_name;
+                },
+                function (err) {
+
+                }
+            );
         };
 
 

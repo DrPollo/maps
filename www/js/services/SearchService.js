@@ -5,6 +5,7 @@ angular.module('firstlife.services')
         var format = myConfig.format;
         var searchUrl = self.config.backend_search,
             geoUrl = self.config.navigator.search.url,
+            revGeoUrl = self.config.navigator.reverse_geocoding.url,
             search_key = self.config.navigator.search.search_key;
         //var bound = String(self.config.navigator.default_area.bound).replace("[","").replace("]","");
         var bound = String(self.config.map.shouthWest_bounds).replace("[","").replace("]","");
@@ -66,9 +67,31 @@ angular.module('firstlife.services')
                         // $log.debug("SearchService, status",xmlHttp.status);
                         if (xmlHttp.status == 200) {
                             var data = JSON.parse(xmlHttp.response);
-                            $log.debug("SearchService, query, response: ", data);
-
+                            // $log.debug("SearchService, query, response: ", data);
                             deferred.resolve(geocodingDecoder(data));
+                        } else {
+                            $log.error("SearchService, query, errore: ", xmlHttp.responseText);
+                            deferred.reject(xmlHttp.status);
+                        }
+                    }
+
+                };
+                xmlHttp.open("GET", url, true); // true for asynchronous
+                xmlHttp.send(null);
+
+                return deferred.promise;
+            },
+            reverseGeocoding: function(params){
+                var deferred = $q.defer();
+                var url = revGeoUrl.concat("?format=json","&lat=",params.lat,"&lon=",params.lng,"&zoom=",params.zoom);
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState === 4) {
+                        // $log.debug("SearchService, status",xmlHttp.status);
+                        if (xmlHttp.status == 200) {
+                            var data = JSON.parse(xmlHttp.response);
+                            $log.debug("Reverse Geocoding, response: ", data);
+                            deferred.resolve({display_name: data.display_name, address: data.address});
                         } else {
                             $log.error("SearchService, query, errore: ", xmlHttp.responseText);
                             deferred.reject(xmlHttp.status);
