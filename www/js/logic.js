@@ -26,7 +26,8 @@ angular.module('firstlife.config')
         myConfig.retrieve_password = myConfig.backend_users.concat('/resetpass');
         myConfig.reset_password = myConfig.backend_users.concat('/resetpass');
         myConfig.backend_tags = url.concat('tags');
-        myConfig.backend_search = url.concat('things/search');
+        myConfig.backend_initiatives = url.concat('initiatives');
+        myConfig.backend_search = url.concat('Things/search');
         myConfig.backend_autocomplete = myConfig.backend_search.concat("?q="); 
         myConfig.report_thing = url.concat("inappropriates");
         myConfig.initiatives = url.concat("initiatives");

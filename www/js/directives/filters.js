@@ -284,9 +284,12 @@ angular.module('firstlife.directives')
                         }
                     });
                 }
-
+                scope.results = false;
                 scope.visible = false;
                 scope.locations = [];
+                scope.entries = [];
+                scope.initiatives = [];
+                scope.tags = [];
                 scope.query = '';
                 scope.card = false;
                 scope.editMode = false;
@@ -307,11 +310,19 @@ angular.module('firstlife.directives')
                     // clear query
                     scope.query = '';
                     scope.locations = [];
+                    scope.entries = [];
+                    scope.tags = [];
+                    scope.initiatives = [];
                 }
 
                 function emptyResults(){
-                    scope.results = false;
-                    setTimeout(function(){scope.locations = [];},500);
+                    setTimeout(function(){
+                        scope.results = false;
+                        scope.locations = [];
+                        scope.entries = [];
+                        scope.initiatives = [];
+                        scope.tags = [];
+                        },250);
                 }
 
                 // listner sul campo input
@@ -326,16 +337,41 @@ angular.module('firstlife.directives')
 
                 // lancio la funzione definita di localizzazione
                 scope.clickOnResult = function (entry){
-                    scope.results = false;
-                    scope.locate({'location': entry.position});
+                    if(entry.type === 'location'){
+                        scope.results = false;
+                        scope.locate({'location': entry.position});
+                        // emptyResults();
+                    } else if(entry.type === 'thing'){
+                        scope.results = false;
+                        scope.$emit('wallClick', entry);
+                        // emptyResults();
+                    } else if(entry.type === 'initiative'){
+                        scope.results = false;
+                        // emptyResults();
+                        $location.search('initiative',initiative.id);
+                        scope.$emit('showInitiative',{initiative:{id : entry.id, name:entry.name}});
+                    } else {
+                        scope.results = false;
+                        // emptyResults();
+                        scope.$emit('handleUpdateQ',{q:entry.name});
+                    }
+
                 };
 
                 // lancio la ricerca
                 function checkQuery(e){
-                    // controlla lo stradario
-                    SearchService.geocoding(e).then(
+                    scope.results = false;
+                    scope.entries = [];
+                    scope.tags = [];
+                    scope.initiatives = [];
+                    scope.locations = [];
+                    if (searchendSetTimeout) {
+                        clearTimeout(searchendSetTimeout);
+                    }
+                    SearchService.tagQuery(e).then(
                         function(response){
-                            scope.locations = response.slice();
+                            // $log.debug(response);
+                            scope.tags = response;
                             scope.results = true;
                             // buffer di ricerca disabilitato
                             // if(scope.query != '')
@@ -343,7 +379,41 @@ angular.module('firstlife.directives')
                         },
                         function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
                     );
-
+                    SearchService.thingQuery(e).then(
+                        function(response){
+                            // $log.debug(response);
+                            scope.entries = response;
+                            scope.results = true;
+                            // buffer di ricerca disabilitato
+                            // if(scope.query != '')
+                            // pushCache(scope.query);
+                        },
+                        function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
+                    );
+                    SearchService.initiativeQuery(e).then(
+                        function(response){
+                            // $log.debug(response);
+                            scope.initiatives = response;
+                            scope.results = true;
+                            // buffer di ricerca disabilitato
+                            // if(scope.query != '')
+                            // pushCache(scope.query);
+                        },
+                        function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
+                    );
+                    // controlla lo stradario
+                    SearchService.geocoding(e).then(
+                        function(response){
+                            // $log.debug(response);
+                            scope.locations = response;
+                            scope.results = true;
+                            // buffer di ricerca disabilitato
+                            // if(scope.query != '')
+                            // pushCache(scope.query);
+                        },
+                        function(response){ console.log("SearchCtrl, watch query, SearchService.geocoding, error: ",response);}
+                    );
+                    // $log.log(scope.entries);
                 }
 
                 // aggiunge una ricerca nei buffer di ricerca

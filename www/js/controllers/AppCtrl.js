@@ -9,7 +9,7 @@ angular.module('firstlife.controllers')
 
         $scope.apiVersion = 'API: ' + myConfig.api_version;
         $scope.clientVersion = 'Client: v' + myConfig.version;
-        $scope.sideWidth = Math.min($window.innerWidth,500);
+        $scope.sideWidth = Math.min($window.innerWidth,640);
 
         $scope.wallOpen = false;
 

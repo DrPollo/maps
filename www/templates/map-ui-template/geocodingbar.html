@@ -1,10 +1,19 @@
-<form id="geocodingbar" class="fast-ease-out-animation" ng-submit="search()" style="width: 100%;">
+<form id="geocodingbar" class="fast-ease-out-animation" ng-submit="search()" style="width: 100%;" autocomplete="off">
     <input id="inputofsearchbar" type="text" ng-model="query" placeholder="{{ 'GEOLOCATION_HINTS' |translate}}" ng-focus="loadCache();">
     <button type="submit" class="button-geocoding button fixed-button button-icon ion-android-search" ng-click="search()" ng-disabled="(query.length == 0)"></button>
     <button type="reset" class="button-geocoding fixed-button button button-icon ion-android-close" ng-click="deleteSearch()" ng-disabled="(query.length == 0)"></button>
 </form>
 <form id="searchresults" ng-show="results" class="fast-ease-out-animation fade-in">
-    <button type="button" ng-repeat="l in locations | orderBy:'distance' track by $index" class="button button-icon button-clear button-full entry icon-left {{l.icon}}" ng-click="clickOnResult(l)">
+    <button type="button" ng-repeat="l in locations | orderBy:['distance','name'] track by $index" class="button button-icon button-clear button-full entry icon-left {{l.icon}}" ng-click="clickOnResult(l)">
         {{l.name}}
+    </button>
+    <button type="button" ng-repeat="e in entries | orderBy:['distance','name'] track by $index" class="button button-icon button-clear button-full entry icon-left {{e.icon}}" ng-click="clickOnResult(e)">
+        {{e.name}}
+    </button>
+    <button type="button" ng-repeat="i in initiatives | orderBy:['name'] track by $index" class="button button-icon button-clear button-full entry icon-left {{i.icon}}" ng-click="clickOnResult(i)">
+        {{i.name}}
+    </button>
+    <button type="button" ng-repeat="t in tags | orderBy:['name'] track by $index" class="button button-icon button-clear button-full entry icon-left {{t.icon}}" ng-click="clickOnResult(t)">
+        {{t.name}}
     </button>
 </form>
