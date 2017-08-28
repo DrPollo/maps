@@ -124,7 +124,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                                 if(!$scope.inviteForm.emails) {
                                     return;
                                 }else{
-                                    shareFactory.thing(thingId).then(
+                                    shareFactory.thing($scope.inviteForm).then(
                                         function (res) {
                                             $scope.inviteForm.sendError = false;
                                             $scope.inviteForm.emails = null;

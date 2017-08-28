@@ -37,6 +37,13 @@
                 <i class="icon ion-pinpoint"></i>
                 {{"SHOW_ON_MAP"| translate}}
             </button>
+            <button
+                    class="button button-positive button-small button-clear icon-left"
+                    title="{{'SHARE'| translate}} {{marker.name}}"
+                    on-tap="share(marker.id)">
+                <i class="icon ion-android-share-alt"></i>
+                {{"SHARE"| translate}}
+            </button>
         </div>
     </div>
 </div>

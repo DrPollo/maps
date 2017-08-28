@@ -1,227 +1,228 @@
 #landingpage {
-    $images-path: "../img";
-    //background:rgb(252,74,0);
-    background:#fafafa;//radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));
-    .bar-header {
-        box-shadow: 0px 0px 5px rgba(0,0,0,0.35);
+  $images-path: "../img";
+  //background:rgb(252,74,0);
+  background: #fafafa; //radial-gradient(rgba(252,74,0,1),rgba(252,74,0,0.7));
+  .bar-header {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
+  }
+  .bar-header, .bar {
+    .title {
+      img {
+        max-height: 40px;
+        padding-top: 6px;
+      }
     }
-    .bar-header, .bar {
-        .title {
-            img {
-                max-height: 40px;
-                padding-top:6px;
-            }
+    .left {
+      position: absolute;
+      left: 3px;
+    }
+    .right {
+      position: absolute;
+      right: 3px;
+    }
+    .lang {
+      min-width: 34px;
+      font-weight: 500;
+    }
+
+  }
+  ion-content {
+    background-position: fixed center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    z-index: -1;
+    opacity: 1;
+  }
+  //min-height: 440px;
+  ion-content:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.7;
+    display: block;
+  }
+
+  .main-content {
+    min-height: 90%;
+    margin: 0px;
+    padding: 44px 0px 0px;
+    text-align: center;
+    .box {
+      max-width: 800px;
+      margin: 0px auto;
+      padding: 0px;
+      .central-content {
+        margin: 0px 0px 20px;
+        padding: 0px 16px 0px;
+        .error {
+          //background: #d1d3d6;
+          border-radius: 16px;
+          padding: 16px;
+          .message {
+            font-style: italic;
+          }
         }
-        .left {
-            position:absolute;
-            left:3px;
+        img {
+          max-width: 600px;
+          max-height: 300px;
+          width: 100%;
+        }
+        .message {
+          font-size: 2em;
+          font-weight: 500;
+          color: #333;
+          padding: 16px 0px;
+          margin: 0px;
+        }
+        .scope {
+          font-size: 1.5em;
+          font-weight: 500;
+          color: #333;
+          padding: 0px;
+          margin: 0px;
+        }
+        .alternative-actions {
+          margin: 0px;
+          .wrap {
+            margin: 0px auto;
+            display: inline-block;
+            width: auto;
+            .disclaimer {
+              text-align: right;
+              font-size: 0.75em;
+            }
+            .button {
+              padding: 0;
+              font-size: 14px;
+              margin: 20px 0 0px auto;
+              border-radius: 2px;
+              width: 250px;
+              font-weight: 700;
+              font-size: 1.2em;
+              padding: 6px 0;
+              box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+            }
+            .button.disabled, .button[disabled] {
+              opacity: 0.9;
+            }
+          }
+        }
+      }
+      .divider {
+        margin: 20px auto;
+        width: calc(100% - 32px);
+        height: 3px;
+        background: #666;
+        border-radius: 1px;
+      }
+      .about {
+        .about-image {
+
+        }
+        .about-description {
+          text-align: justify;
+          padding: 0px;
+          font-size: 1.2em;
+          line-height: 20px;
         }
         .right {
-            position:absolute;
-            right:3px;
+          text-align: right;
         }
-        .lang {
-            min-width: 34px;
-            font-weight: 500;
+        .button {
+          //border-radius: 20px;
+          font-weight: 700;
+          padding: 0px 24px;
+          margin-top: 12px;
+          box-shadow: 1px 1px 3px rgba(0,0,0,0.35);
+          border-radius: 2px;
         }
-
+      }
+      .upper-menu {
+        margin: 0px;
+        padding: 16px;
+        //background: rgba(0,0,0,0.1);
+        img {
+          display: block;
+          max-height: 100px;
+          margin: 0px auto 10px;
+        }
+        a {
+          font-size: 1em;
+          text-decoration: none;
+          font-weight: 500;
+          color: $dark;
+          text-align: left;
+        }
+      }
     }
-    ion-content{
-        background-position:fixed center top;
-        background-repeat: no-repeat;
-        background-size:  cover;
-        -moz-background-size:  cover;
-        -webkit-background-size:  cover;
-        z-index:-1;
-        opacity: 1;
-    }
-    //min-height: 440px;
-    ion-content:before
-    {
-        content: "";
+  }
+  .positive-message {
+    color: $balanced;
+    font-style: italic;
+    margin: 40px 0px;
+  }
+  .error-message {
+    color: $error;
+    font-style: italic;
+    margin: 40px 0px;
+  }
+  .footer-content {
+    min-height: 10%;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.35);
+    span {
+      margin: 0 10px;
+      display: inline-block;
+      position: relative;
+      color: #f1f1f1;
+      img {
+        vertical-align: top;
+      }
+      label {
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: -1;
-        opacity: 0.7;
+        color: #fff;
+        width: 100%;
         display: block;
+        font-size: 8px;
+      }
     }
-
-    .main-content {
-        min-height:90%;
-        margin: 0px;
-        padding: 44px 0px 0px;
-        text-align: center;
-        .box {
-            max-width: 800px;
-            margin: 0px auto;
-            padding: 0px;
-            .central-content{
-                margin: 0px 0px 20px;
-                padding: 0px 16px 0px;
-                .error {
-                    //background: #d1d3d6;
-                    border-radius: 16px;
-                    padding: 16px;
-                    .message {
-                        font-style: italic;
-                    }
-                }
-                img {
-                    max-width: 600px;
-                    max-height: 300px;
-                    width: 100%;
-                }
-                .message {
-                    font-size: 2em;
-                    font-weight: 500;
-                    color:#333;
-                    padding: 16px 0px;
-                    margin: 0px;
-                }
-                .scope {
-                    font-size: 1.5em;
-                    font-weight: 500;
-                    color:#333;
-                    padding: 0px;
-                    margin: 0px;
-                }
-                .alternative-actions{
-                    margin: 0px;
-                    .wrap{
-                        margin: 0px auto;
-                        display: inline-block;
-                        width: auto;
-                        .disclaimer {
-                            text-align: right;
-                            font-size: 0.75em;
-                        }
-                        .button {
-                            padding: 0;
-                            font-size: 14px;
-                            margin: 20px 0 0px auto;
-                            border-radius: 4px;
-                            width: 250px;
-                            font-weight: 700;
-                            font-size: 1.2em;
-                            padding: 6px 0;
-                            box-shadow: 1px 1px 5px rgba(0,0,0,0.35);
-                        }
-                        .button.disabled, .button[disabled] {
-                            opacity: 0.9;
-                        }
-                    }
-                }        
-            }
-            .divider{
-                margin:20px auto;
-                width: calc(100% - 32px);
-                height: 3px;
-                background: #666;
-                border-radius: 1px;
-            }
-            .about{
-                .about-image{
-
-                }
-                .about-description{
-                    text-align: justify;
-                    padding: 0px;
-                    font-size: 1.2em;
-                    line-height: 20px;
-                }
-                .right{
-                    text-align: right;
-                }
-                .button {
-                    //border-radius: 20px;
-                    font-weight: 700;
-                    padding: 0px 24px;
-                    margin-top: 12px;
-                }
-            }
-            .upper-menu {
-                margin: 0px;
-                padding: 16px;
-                //background: rgba(0,0,0,0.1);
-                img {
-                    display: block;
-                    max-height: 100px;
-                    margin:0px auto 10px;
-                }
-                a {
-                    font-size: 1em;
-                    text-decoration: none;
-                    font-weight: 500;
-                    color:$dark;
-                    text-align: left;
-                }
-            }
-        }
+    #credits {
+      background: #4d4d4d;
+      width: 100%;
+      color: #f1f1f1;
     }
-    .positive-message{
-        color:$balanced;
-        font-style: italic;
-        margin: 40px 0px;
+    #lower-menu {
+      background: #999;
+      color: #f1f1f1;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+      width: 100%;
+      a {
+        font-size: 1em;
+        text-decoration: none;
+        font-weight: 400;
+        color: #fff;
+      }
     }
-    .error-message{
-        color:$error;
-        font-style: italic;
-        margin: 40px 0px;
+    #partners {
+      min-height: 60px;
+      text-align: center;
+      width: 100%;
+      background: #999;
+      .col {
+        margin: 0px 10px;
+      }
     }
-    .footer-content {
-        min-height:10%;
-        margin: 0px;
-        padding: 0px;
-        text-align: center;
-        box-shadow: 0px -1px 5px rgba(0,0,0,0.35);
-        span{
-            margin: 0 10px;
-            display: inline-block;
-            position: relative;
-            color: #f1f1f1;
-            img {
-                vertical-align: top;
-            }
-            label{
-                position: absolute;
-                color: #fff;
-                width: 100%;
-                display: block;
-                font-size: 8px;
-            }
-        }
-        #credits{
-            background: #4d4d4d;
-            width: 100%;
-            color: #f1f1f1;
-        }
-        #lower-menu {
-            background: #999;
-            color: #f1f1f1;
-            margin: 0px;
-            padding: 0px;
-            overflow: hidden;
-            width: 100%;
-            a {
-                font-size: 1em;
-                text-decoration: none;
-                font-weight: 400;
-                color:#fff;
-            }
-        }
-        #partners{
-            min-height: 60px;
-            text-align: center;
-            width: 100%;
-            background: #999;
-            .col{
-                margin: 0px 10px;
-            }
-        }
-    }
+  }
   .spinner svg {
     width: 48px;
     height: 48px;

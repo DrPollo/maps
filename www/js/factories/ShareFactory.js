@@ -5,6 +5,7 @@ angular.module('firstlife.factories')
             thing: function (data) {
                 var deferred = $q.defer();
                 // se l'utente e' loggato
+                // $log.debug(data,AuthService.isAuth(),data.id,AuthService.isAuth() && data.id);
                 if(AuthService.isAuth() && data.id) {
                     // $log.debug('sono un test ',data);
                     var emails = data.emails.match(/[a-zA-Z0-9.-]*@[a-zA-Z0-9.-]*/g);
