@@ -856,9 +856,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOCATE_USER: "Centra mappa sulla tua posizione",
         RESET_MAP: "Reset della mappa",
         TOGGLE_TO_EDIT_MODE: "Passa alla modalità di inserimento",
-        TOGGLE_TO_VIEW_MODE: "Passa alla modalità di visualizzazione"
+        TOGGLE_TO_VIEW_MODE: "Passa alla modalità di visualizzazione",
+        SEARCH_HINT: "Cerca"
     };
     var enLabels = {
+        SEARCH_HINT: "Search",
         LOCATE_USER: "Locate your position",
         RESET_MAP: "Map reset",
         TOGGLE_TO_EDIT_MODE: "Switch the map to entry mode",
@@ -938,7 +940,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         LOGIN_REQUIRED:"Login reuired",
         LOGIN_REQUIRED_MESSAGE:"Logging in is required to proceed",
         SEACH_NO_RESULTS:'No results...',
-        GEOLOCATION_HINTS:'Search an address',
+        GEOLOCATION_HINTS:'Search address',
         SEARCH_HINTS:'Search for a key word...',
         FILTER_HINTS:'Filter by name, category or tag...',
         ENTRIES:'entries',
