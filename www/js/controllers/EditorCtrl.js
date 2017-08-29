@@ -116,14 +116,16 @@ angular.module('firstlife.controllers')
             // if( previousState && previousState.state && previousState.state.name == 'app.editor' )
             //     return
 
+            $scope.chooseType = true;
             // cancello il form
             _this.wizard.dataForm = {};
-            // torno allo step 0
             _this.wizard.step = 0;
+            _this.wizard.index = 0;
 
             var params = $location.search();
 
-            $log.debug("sono in EditorCtrl  parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+            $log.log("sono in EditorCtrl  parametri di cambio stato: ",params, toState, toParams, fromState, fromParams);
+            $log.log("check",$scope);
             // attualmente non e' necessario gestire gli stati di arrivo
             // if(previousState && previousState.state && previousState.state.name == 'app.maps'){
 
@@ -138,13 +140,13 @@ angular.module('firstlife.controllers')
             _this.currentUser = AuthService.getUser();
 
 
-            $log.debug('update?',(params.id && params.id!= ""),params.id)
+            $log.debug('update?',(params.id && params.id!= ""),params.id);
 
 
             // scelgo se fare update di un marker esistente o crearne uno nuovo
             // update place: init dataForm con dati del place...
             if(params.id && params.id != ""){
-                $log.debug('update',params.id);
+                $log.log('update',params.id);
                 _this.wizard.title = _this.labels.edit;
                 $scope.chooseType = false;
                 //get place(id)
@@ -162,9 +164,9 @@ angular.module('firstlife.controllers')
                         //bug datapicker che non modifica la data a cacchio
                         // se la data e' settata allora metto a true il check
                         if(_this.wizard.dataForm.valid_from)
-                            _this.valid_from = true
+                            _this.valid_from = true;
                         if(_this.wizard.dataForm.valid_to)
-                            _this.valid_to = true
+                            _this.valid_to = true;
 
                     },function(error) {
                         $log.error(error);
@@ -179,6 +181,7 @@ angular.module('firstlife.controllers')
             }
             //create place: init empty dataForm
             else{
+                $log.log('new thing');
                 // init del titolo
                 _this.wizard.title = _this.labels.create;
 
@@ -186,9 +189,12 @@ angular.module('firstlife.controllers')
                 $scope.chooseType = true;
 
                 // fine regole gestione campi speciali
-                // $log.debug("EditCtrl, init del form: ",_this.wizard.dataForm);
+                $log.log("EditCtrl, init del form: ",_this.wizard);
                 $timeout(function(){
                     $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+                    $scope.wizardHandler.slide(0);
+                    $ionicScrollDelegate.scrollTop();
+                    $scope.wizardHandler.update();
                     $log.debug('handler',$scope.wizardHandler);
                     $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
                     $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
@@ -209,28 +215,45 @@ angular.module('firstlife.controllers')
 
         $scope.initType = function (type) {
             initEntity(type);
-            $scope.nextStep();
+            var check = $filter('filter')(_this.categories, $scope.isCatRelevant);
+            $scope.checkCat = ( check.length > 0 );
+            //$log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
+            // $log.debug('check',(check.length > 0));
+            // check cats
+            if( $scope.checkCat ){
+                $scope.nextStep();
+            }else{
+                $scope.wizardHandler.slide(2);
+                $ionicScrollDelegate.scrollTop();
+            }
+
             $scope.wizardHandler.update();
         }
 
         $scope.nextStep = function(){
             // passo allo step 2
-            $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+            // $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
             $scope.wizardHandler.next();
             $ionicScrollDelegate.scrollTop();
         };
         $scope.prevStep = function(){
             // passo allo step 2
-            $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
-            $scope.wizardHandler.previous();
-            $ionicScrollDelegate.scrollTop();
+            // $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+            // $log.debug('prev or 0?', $scope.checkCat, $scope.checkCat && $scope.wizardHandler.currentIndex() === 2);
+            if(!$scope.checkCat && $scope.wizardHandler.currentIndex() === 2){
+                $scope.wizardHandler.slide(0);
+                $ionicScrollDelegate.scrollTop();
+            } else {
+                $scope.wizardHandler.previous();
+                $ionicScrollDelegate.scrollTop();
+            }
         };
 
         // aggiorno lo stato del wizard dato il tipo
         function initEntity(entity_type){
             var params = $location.search();
 
-            $log.debug('entity_type',entity_type,_this.types.list.map(function(e){return e.key;}))
+            // $log.debug('entity_type',entity_type,_this.types.list.map(function(e){return e.key;}));
 
             var typeIndex = _this.types.list.map(function(e){return e.key;}).indexOf(entity_type);
             var type = _this.types.list[typeIndex].key;
