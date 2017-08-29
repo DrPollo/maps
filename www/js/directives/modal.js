@@ -365,8 +365,15 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                         $log.error("changeModal, errore ",err);
                         $scope.loaded = true;
                         $scope.error = true;
-                        showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
-                        $scope.$emit("lostMarker",{id:markerId});
+                        switch(err.status){
+                            case 404:
+                                showAlert({text:'DELETED_MARKER_MESSAGE',title:'DELETED_MARKER_TITLE'});
+                                $scope.$emit("lostMarker",{id:markerId});
+                                break;
+                            default:
+                                showAlert({text:'SORRY_NETWORK_ERROR',title:'ERROR_NETWORK'});
+                        }
+
                         $scope.exit();
                     }
                 );

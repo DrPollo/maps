@@ -46,11 +46,11 @@
                 <ion-item class="item-text-wrap">{{ (user.signature && user.signature !== '') ? user.signature :
                     user.fullname}}
                 </ion-item>
-                <ion-item ng-if="config.authentication.signature_url" ng-show="isLoggedIn"
-                          class="item-icon-left item-button" nav-clear menu-close ng-click="signature()">
-                    <i class="icon ion-edit"></i>
-                    <h3 class="menu-text">{{'EDIT_SIGNATURE'|translate}}</h3>
-                </ion-item>
+                <!--<ion-item ng-if="config.authentication.signature_url" ng-show="isLoggedIn"-->
+                          <!--class="item-icon-left item-button" nav-clear menu-close ng-click="signature()">-->
+                    <!--<i class="icon ion-edit"></i>-->
+                    <!--<h3 class="menu-text">{{'EDIT_SIGNATURE'|translate}}</h3>-->
+                <!--</ion-item>-->
                 <ion-item class="item-divider">{{'PROFILE'|translate}}</ion-item>
                 <notification-link check="checkNotifications"></notification-link>
                 <ion-item ng-show="isLoggedIn" class="item-icon-left item-button" nav-clear menu-close on-tap="myMap()">

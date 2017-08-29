@@ -202,7 +202,7 @@ angular.module('firstlife.factories')
                     transformResponse: function (data, headersGetter, status) {
                         try {
                             var type = headersGetter("Content-Type");
-                            if (type.startsWith("application/json")) {
+                            if (type && type.startsWith("application/json")) {
                                 return data;
                             }
                             return geobuf.decode(new PBF(data));
