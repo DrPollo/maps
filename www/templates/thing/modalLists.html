@@ -1,3 +1,15 @@
+<div ng-if="parent.label" class="item">
+    <div class=" item-button-right">
+        <span style="font-size: 1em;font-style: italic;margin-right: 6px;">{{parent.label |translate}}</span>
+        <i class="icon {{parent.marker.icons[0].icon}}"
+           style="color:{{parent.marker.icons[0].color}}"></i>
+        {{parent.marker.name}}
+        <button class="button button-positive"
+                on-tap="click(parent.marker.id)">
+            <i class="icon ion-android-search"></i>
+        </button>
+    </div>
+</div>
 <div class="list" id="modalLists">
     <div class="button-bar button-bar-striped list-toggler">
         <button class="button button-positive button-clear icon-left"
@@ -22,6 +34,7 @@
                 ng-class="toggle === 2 ? 'selected' : '' ">
             <i class="icon ion-social-buffer"></i>
             <span ng-if="!isMobile">{{ 'CONTENTS' |translate}}</span>
+            <span ng-if="contents">{{contents}}</span>
         </button>
         <button ng-if="marker.entity_type === 'FL_GROUPS'"
                 class="button button-positive button-clear icon-left"

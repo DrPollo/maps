@@ -37,7 +37,13 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
 
             loadSiblings();
 
+
+            var contents = 0;
+
+
             function loadSiblings (){
+                contents = 0;
+
                 if(!scope.marker || !scope.marker.entity_type){
                     scope.loading = false;
                     return;
@@ -65,6 +71,10 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                                 });
                                 // $log.debug('markers children',list);
                                 if(list.length > 0){
+                                    // update counter
+                                    contents += list.length;
+                                    scope.$emit('counterUpdate',{contents: contents});
+
                                     var type = list[0].entity_type;
                                     var entry = angular.extend({},childrenRelations[type]);
                                     angular.extend(entry,{markers:list});
@@ -106,6 +116,10 @@ angular.module('firstlife.directives').directive('entityChildren',['$log','$filt
                                         scope.relations.parents.push(entry);
                                         // qualcosa da leggere
                                         scope.ok = true;
+
+
+                                        $log.log('parent',parent);
+                                        scope.$emit('updateParent',{parent:scope.relations.parents[0]});
                                     }
                                     scope.loading = false;
                                 },

@@ -7,16 +7,16 @@
 <div id="children">
     <div class="cover" ng-show="loading"><ion-spinner icon="android"></ion-spinner></div>
     <nothing-to-read ng-if="!loading && !ok"></nothing-to-read>
-    <div class="parent_relation" ng-if="relations.parents.length > 0"
-         ng-repeat="parent in relations.parents track by $index">
-        <div class="item item-divider">{{parent.label |translate}}</div>
-        <div class="item item-button-right">
-            <i class="icon {{parent.marker.icons[0].icon}}"  style="color:{{parent.marker.icons[0].color}}"></i>
-            {{parent.marker.name}}
-            <button class="button button-positive" on-tap="click(parent.marker.id)">
-                <i class="icon ion-android-search"></i>
-            </button>
-        </div>
+    <!--<div class="parent_relation" ng-if="relations.parents.length > 0"-->
+         <!--ng-repeat="parent in relations.parents track by $index">-->
+        <!--<div class="item item-divider">{{parent.label |translate}}</div>-->
+        <!--<div class="item item-button-right">-->
+            <!--<i class="icon {{parent.marker.icons[0].icon}}"  style="color:{{parent.marker.icons[0].color}}"></i>-->
+            <!--{{parent.marker.name}}-->
+            <!--<button class="button button-positive" on-tap="click(parent.marker.id)">-->
+                <!--<i class="icon ion-android-search"></i>-->
+            <!--</button>-->
+        <!--</div>-->
     </div>
     <div class="child_relation" ng-if="!isEmpty(relations.children)"
          ng-repeat="children in relations.children track by $index">

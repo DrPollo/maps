@@ -55,12 +55,12 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                 scope.edit = id;
                 // chiudi menu
                 scope.popover.hide();
-            }
+            };
             // annullo l'update
             scope.abortUpdate = function(){
                 // tolgo l'id
                 scope.edit = null;
-            }
+            };
             // aggiorno il post
             scope.sendUpdate = function(id, post){
                 $log.debug('sendUpdate init',id,post);
@@ -84,7 +84,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         // todo messaggio d'errore all'utente
                     }
                 );
-            }
+            };
             // cancello il commento
             scope.deletePost = function(id){
                 scope.loading = true;
@@ -107,7 +107,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         // todo messaggio d'errore all'utente
                     }
                 );
-            }
+            };
 
             // segnalo il post
             scope.reportPost = function(id){
@@ -136,7 +136,7 @@ angular.module('firstlife.directives').directive('posts',['$log', '$q', '$ionicP
                         // todo messaggio d'errore all'utente
                     }
                 );
-            }
+            };
 
             function initList(){
                 scope.posts = [];

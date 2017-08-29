@@ -897,6 +897,7 @@ angular.module('firstlife.directives').directive('thingCard',function () {
             scope.initiatives = 0;
             scope.posts = 0;
             scope.members = 0;
+            scope.contents = 0;
 
             // numero di tab
             var tabs = 4;
@@ -909,9 +910,19 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                 $ionicScrollDelegate.anchorScroll(true);
             };
             scope.click = function (id) {
-                // $log.debug('modal.js',id);
-                scope.show({id:id});
+                // $log.debug('click',id);
+                scope.$emit('wallClick',{id: id});
             };
+
+            scope.parent = {};
+
+            scope.$on('updateParent',function (event,args) {
+                if(event.defaultPrevented)
+                    return;
+                event.preventDefault();
+
+                scope.parent = args.parent || {};
+            });
 
             scope.$on('counterUpdate',function (event,args) {
                if(event.defaultPrevented)
@@ -929,6 +940,9 @@ angular.module('firstlife.directives').directive('thingCard',function () {
                }
                if(args.members){
                    scope.members = args.members;
+               }
+               if(args.contents){
+                   scope.contents = args.contents;
                }
             });
 
