@@ -537,10 +537,10 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // }
 
                 // chiamate alle tile attive
-                $log.debug('flushMarkers > flushTiles');
+                // $log.debug('flushMarkers > flushTiles');
                 ThingsService.flushTiles().then(
                     function (markers) {
-                        // $log.debug('updated markers',Object.keys(markers).length);
+                        // $log.debug('updated markers',markers);
                         // angular.extend($scope.markers,markers);
                         addMarkers(markers);
                         $scope.$emit('markerUpdated');
@@ -559,11 +559,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 // }
 
                 // reset markers
-                $log.debug('updateMarkers > flushTiles');
+                // $log.debug('updateMarkers > flushTiles');
                 // chiamate alle tile attive
                 ThingsService.flushTiles().then(
                     function (markers) {
-                        // $log.debug('updated markers',Object.keys(markers).length);
+                        // $log.debug('updated markers',markers);
                         // $scope.markers = angular.extend({},markers);
                         removeMarkers();
                         addMarkers(markers);

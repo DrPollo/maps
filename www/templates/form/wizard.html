@@ -55,7 +55,7 @@
                         </div>
                         <ion-radio name="cat{{category.id}}"
                                    ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
-                                   ng-value="{{category.id}}"
+                                   ng-value="category.id"
                                    ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
                                    class="item"
                                    ng-required="space.is_mandatory">
@@ -281,7 +281,7 @@
             <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
         </h3>
         <div class="buttons">
-            <button type="submit" ng-if="wizardIndex < wizardSteps"
+            <button type="submit" ng-if="wizardIndex === 1"
                     ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
@@ -289,7 +289,15 @@
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button type="submit" ng-if="wizardIndex === wizardSteps"
+            <button type="submit" ng-if="wizardIndex === 2"
+                    ng-disabled="!editor.wizard.dataForm.entity_type"
+                    class="button button-positive"
+                    title="{{'NEXT'|translate}}"
+                    on-tap="nextStep()">
+                {{'NEXT'|translate}}
+                <i class="icon ion-android-arrow-dropright"></i>
+            </button>
+            <button type="submit" ng-if="wizardIndex === 3"
                     ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid"
                     class="button button-positive"
                     title="{{'SAVE'|translate}}"

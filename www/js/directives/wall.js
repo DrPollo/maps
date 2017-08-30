@@ -147,11 +147,11 @@ angular.module('firstlife.directives')
                     current: 'time',
                     time: 'newer',
                     text: 'alphabetical',
-                    newer : ['-last_activity','-last_update'],
-                    older : ['last_activity','last_update'],
+                    newer : ['last_activity','last_update'],
+                    older : ['-last_activity','-last_update'],
                     alphabetical: ['name'],
                     nalphabetical: ['-name'],
-                    params: ['-last_activity','-last_update','name'],
+                    params: ['last_activity','last_update','name'],
                     toggleTime: function () {
                         if(scope.sorting.time === 'newer') {
                             scope.sorting.time = 'older';

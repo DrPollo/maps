@@ -359,8 +359,10 @@ angular.module('firstlife.services')
             // $log.debug('fushTiles',tiles.length);
             ThingsFact.tiles(params).then(
                 function (results) {
-                    // $log.debug('risultati',results.length);
-                    deferred.resolve(makeMarkers(results));
+                    $log.debug('risultati',results);
+                    var markers = makeMarkers(results);
+                    $log.debug(markers);
+                    deferred.resolve(markers);
                     buffer = results;
                     isBufferValid = true;
                 },function (err) {
@@ -423,6 +425,8 @@ angular.module('firstlife.services')
                 markers[marker.id] = marker;
                 return markers;
             },{});
+
+            // $log.debug('makeMarkers',markers);
             return markers;
         }
 
@@ -536,7 +540,7 @@ angular.module('firstlife.services')
 
             // per ogni condizione
             var testCondition = false;
-
+            // $log.debug("filterConditions",filterConditions);
             for(var key in filterConditions){
                 // se non devo escludere la regola
 

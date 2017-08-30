@@ -187,8 +187,8 @@ angular.module('firstlife.factories')
                     return deferred.promise;
                 }
                 // $log.debug('tiles',params);
-                var urlId = urlTile.concat('?format=pbf', '&domainId=', domains, '&limit=', limit, '&tiles=', params.tiles.join(','));
-                // var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tiles.join(','));
+                // var urlId = urlTile.concat('?format=pbf', '&domainId=', domains, '&limit=', limit, '&tiles=', params.tiles.join(','));
+                var urlId = urlTile.concat(format,'?domainId=',domains,'&limit=',limit,'&tiles=',params.tiles.join(','));
                 if (params.time.from)
                     urlId = urlId.concat('&from=', params.time.from);
                 if (params.time.to)
@@ -198,25 +198,27 @@ angular.module('firstlife.factories')
                 var req = {
                     url: urlId,
                     method: 'GET',
-                    responseType: 'arraybuffer',
-                    transformResponse: function (data, headersGetter, status) {
-                        try {
-                            var type = headersGetter("Content-Type");
-                            if (type && type.startsWith("application/json")) {
-                                return data;
-                            }
-                            return geobuf.decode(new PBF(data));
-                        } catch (e) {
-                            $log.error(e);
-                            // throw Error(e);
-                        }
-                    },
+                    // responseType: 'arraybuffer',
+                    // transformResponse: function (data, headersGetter, status) {
+                    //     // $log.debug(data,new PBF(data));
+                    //     try {
+                    //         var type = headersGetter("Content-Type");
+                    //         if (type && type.startsWith("application/json")) {
+                    //             return data;
+                    //         }
+                    //         return geobuf.decode(new PBF(data));
+                    //     } catch (e) {
+                    //         $log.error(e);
+                    //         // throw Error(e);
+                    //     }
+                    // },
                     data: {}
                 };
                 $http(req).then(
                     function (response) {
-                        // $log.debug("tiles response",response.data.features);
-                        deferred.resolve(response.data.features);
+                        // $log.debug("tiles response",response);
+                        // deferred.resolve(response.data.features);
+                        deferred.resolve(response.data.things.features);
                     },
                     function (err) {
                         // $log.error(err);
