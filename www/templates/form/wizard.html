@@ -281,7 +281,7 @@
             <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
         </h3>
         <div class="buttons">
-            <button type="submit" ng-if="wizardIndex === 1"
+            <button type="submit" ng-if="wizardIndex === 1 && editor.wizard.newThing"
                     ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
@@ -289,7 +289,7 @@
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button type="submit" ng-if="wizardIndex === 2"
+            <button type="submit" ng-if="(wizardIndex === 2 && editor.wizard.newThing) || (wizardIndex === 1 && !editor.wizard.newThing)"
                     ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
@@ -297,7 +297,7 @@
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button type="submit" ng-if="wizardIndex === 3"
+            <button type="submit" ng-if="(wizardIndex === 3 && editor.wizard.newThing)|| (wizardIndex === 2 && !editor.wizard.newThing)"
                     ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid"
                     class="button button-positive"
                     title="{{'SAVE'|translate}}"

@@ -146,8 +146,10 @@ angular.module('firstlife.controllers')
             // scelgo se fare update di un marker esistente o crearne uno nuovo
             // update place: init dataForm con dati del place...
             if(params.id && params.id != ""){
-                $log.log('update',params.id);
+                $log.debug('update',params.id);
                 _this.wizard.title = _this.labels.edit;
+                _this.wizard.newThing = false;
+
                 $scope.chooseType = false;
                 //get place(id)
                 ThingsService.get(params.id)
@@ -159,6 +161,7 @@ angular.module('firstlife.controllers')
                         mark.lng = params.lng ? parseFloat(params.lng) : mark.lng;
                         mark.zoom_level = params.zoom_level ? parseInt(params.zoom_level) : mark.zoom_level;
                         mark.area_id = params.area_id ? params.area_id.toString() : mark.area_id;
+
                         // init dell'edit
                         setToEdit(mark);
                         //bug datapicker che non modifica la data a cacchio
@@ -175,15 +178,19 @@ angular.module('firstlife.controllers')
                 // valori per update (salto step tipo)
                 $timeout(function(){
                     $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+                    $scope.wizardHandler.slide(0);
+                    $ionicScrollDelegate.scrollTop();
+                    $scope.wizardHandler.update();
                     $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
                     $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
                 },100);
             }
             //create place: init empty dataForm
             else{
-                $log.log('new thing');
+                $log.debug('new thing');
                 // init del titolo
                 _this.wizard.title = _this.labels.create;
+                _this.wizard.newThing = true;
 
                 // enables type form
                 $scope.chooseType = true;
@@ -313,15 +320,19 @@ angular.module('firstlife.controllers')
             }
 
             // fine gesione relazioni
-            SearchService.reverseGeocoding({zoom:params.zoom_level, lat: params.lat, lng: params.lng}).then(
-                function (res) {
-                    $log.log('address',res);
-                    _this.wizard.dataForm.address = res.display_name;
-                },
-                function (err) {
 
-                }
-            );
+            // autofill address
+            if(!_this.wizard.dataForm.address){
+                SearchService.reverseGeocoding({zoom:params.zoom_level, lat: params.lat, lng: params.lng}).then(
+                    function (res) {
+                        $log.log('address',res);
+                        _this.wizard.dataForm.address = res.display_name;
+                    },
+                    function (err) {
+
+                    }
+                );
+            }
         };
 
 
@@ -565,7 +576,6 @@ angular.module('firstlife.controllers')
                 initDuration();
             }
 
-
             // $log.debug("EditorCtrl, setToEdit, checkList: ", $scope.checkList);
             // $log.debug("EditorCtrl received marker: ", mark, _this.types.list[ typeIndex ]);
 
@@ -598,6 +608,18 @@ angular.module('firstlife.controllers')
                 initDuration();
             }
             // $log.debug('fine setToEdit', $scope.checkList);
+
+            if(!_this.wizard.dataForm.address){
+                SearchService.reverseGeocoding({zoom:params.zoom_level, lat: params.lat, lng: params.lng}).then(
+                    function (res) {
+                        $log.log('address',res);
+                        _this.wizard.dataForm.address = res.display_name;
+                    },
+                    function (err) {
+
+                    }
+                );
+            }
         }
 
         function setParent(parent_id){
