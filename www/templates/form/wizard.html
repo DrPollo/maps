@@ -48,7 +48,7 @@
             <ion-slide>
                 <div class="list card">
                     <ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index"
-                             name="form.wizardform.cats{{space.category_space}}" novalidate>
+                             name="editor.form.wizardform.cats{{space.category_space}}" novalidate>
                         <div class="item item-divider"
                              ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">
                             {{space.name}}
@@ -56,6 +56,7 @@
                         <ion-radio name="cat{{category.id}}"
                                    ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"
                                    ng-value="category.id"
+                                   ng-change="catStepInvalid()"
                                    ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"
                                    class="item"
                                    ng-required="space.is_mandatory">
@@ -68,7 +69,7 @@
                                 </span>
                             </div>
                         </ion-radio>
-                        <div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">
+                        <div class="form-errors" ng-messages="editor.form.wizardform['cats'+space.category_space].$error">
                             <div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>
                         </div>
                     </ng-form>
@@ -268,7 +269,7 @@
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
             <button type="submit" ng-if="(wizardIndex === 2 && editor.wizard.newThing) || (wizardIndex === 1 && !editor.wizard.newThing && checkCat)"
-                    ng-disabled="!editor.wizard.dataForm.entity_type"
+                    ng-disabled="isCatStepInvalid"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
                     on-tap="nextStep()">
