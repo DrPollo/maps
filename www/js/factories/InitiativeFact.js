@@ -102,12 +102,8 @@ angular.module('firstlife.factories')
             );
             return deferred.promise;
         },
-        get : function (initiativeId,initiative) {
+        get : function (initiativeId) {
             var deferred = $q.defer();
-            if(!AuthService.isAuth()){
-                deferred.reject('no authenticated');
-                return deferred.promise;
-            }
 
             var urlId = myConfig.initiatives.concat('/',initiativeId);
             var req = {

@@ -897,6 +897,7 @@ angular.module('firstlife.controllers')
                 $location.search('initiative', null);
                 return false;
             }
+            // $log.debug('searching for initiative',e.initiative);
             InitiativeFactory.get(e.initiative).then(
                 function (result) {
                     // $log.debug('check4initiative',result);

@@ -212,9 +212,14 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     opacity: 1
                 };
                 switch(type){
+                    case 'nazioni_mondo':
                     case 'nazioni':
+                    case 'regioni_europa':
                     case 'regioni':
+                    case 'province_europa':
                     case 'provincie':
+                    case 'comuni_italia':
+                    case 'comune':
                     case 'comuni':
                     case 'quartieri':
                     case 'administrative':
