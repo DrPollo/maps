@@ -456,7 +456,7 @@
             "description": {
               "key": "description",
               "label": "INFO_LABEL",
-              "placeholder": "INFO_PLACEHOLDER",
+              "placeholder": "INFO_PLACE_PLACEHOLDER",
               "default": "",
               "required": true,
               "min_length": 50
@@ -708,7 +708,7 @@
           "url": "events",
           "key": "FL_EVENTS",
           "index": 4,
-          "show_author": false,
+          "show_author": true,
           "shape": "exagon",
           "properties": {
             "name": {
@@ -838,7 +838,7 @@
           "url": "groups",
           "key": "FL_GROUPS",
           "index": 5,
-          "show_author": false,
+          "show_author": true,
           "shape": "octagon",
           "properties": {
             "name": {

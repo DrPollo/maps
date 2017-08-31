@@ -14,7 +14,12 @@
             <div class="button button-outline" ng-class="(currentLang === enCode) ? selected: noSelected" ng-click="langSelector(enCode)">En</div>
         </div>
     </div>
-    <ion-content scroll="true" style="{{defaults.design.landingpage.css}}">
+    <ion-content scroll="true" style="{{defaults.design.landingpage.css}}"
+                 overflow-scroll="false"
+                 scrollbar-x="false"
+                 scrollbar-y="false"
+                 data-tap-disabled="false"
+                 drag-content="false">
         <div class="row main-content">
             <div class="col col-center box">
                 <div class="row responsive-sm central-content ">

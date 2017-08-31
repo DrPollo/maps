@@ -229,29 +229,6 @@
                             </label>
                         </div>
                     </div>
-                    <!--<div class="list card">-->
-                    <!--<ng-form ng-repeat="space in editor.categories | filter:isCatRelevant track by $index" name="form.wizardform.cats{{space.category_space}}" novalidate>-->
-                    <!--<div class="item item-divider" ng-class="{ 'has-error' : form.wizardform['cats'+space.category_space].$invalid, 'no-error' : !form.wizardform['cats'+space.category_space].$invalid}">-->
-                    <!--{{space.name}}-->
-                    <!--</div>-->
-                    <!--<ion-radio name="cat{{category.id}}" ng-repeat="category in space.categories | orderBy: 'colorIndex' | filter:{name: '!null'} | filter:  editor.differentThan( 'id', 0 )"-->
-                    <!--ng-value="{{category.id}}"-->
-                    <!--ng-model="editor.wizard.dataForm.categories[$parent.$index].categories[0]"-->
-                    <!--class="item"-->
-                    <!--ng-required="space.is_mandatory">-->
-                    <!--<div class="item-icon-left" >-->
-                    <!--<i class="icon {{category.icon}}" ng-style="{'color' : editor.config.design.colors[ category.colorIndex % editor.config.design.colors.length]}"></i>-->
-                    <!--{{ category.name }}-->
-                    <!--<span class="item-note" ng-if="category.description">-->
-                    <!--<span ng-if="!isMobile">{{category.description}}</span>-->
-                    <!--</span>-->
-                    <!--</div>-->
-                    <!--</ion-radio>-->
-                    <!--<div class="form-errors" ng-messages="form.wizardform['cats'+space.category_space].$error">-->
-                    <!--<div class="form-error" ng-message="required">{{'MANDATORY_FIELD'|translate}}</div>-->
-                    <!--</div>-->
-                    <!--</ng-form>-->
-                    <!--</div>-->
                 </form>
             </ion-slide>
         </ion-slide-box>

@@ -715,7 +715,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         EMBED_MAP: "Embed",
         SHARE_MAP: "Condividi",
         INFO_LABEL: "Info",
-        INFO_PLACEHOLDER: "Informazioni utili, istruzioni, regole, etc...",
+        INFO_PLACEHOLDER: "Informazioni utili, istruzioni, regole, etc.",
         CLOSE: "Chiudi",
         PASSWORD_CONFIRM_ERROR: "Le password non corrispondono",
         NIGHT: 'Notte',
@@ -864,9 +864,11 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         RESET_MAP: "Reset della mappa",
         TOGGLE_TO_EDIT_MODE: "Passa alla modalità di inserimento",
         TOGGLE_TO_VIEW_MODE: "Passa alla modalità di visualizzazione",
-        SEARCH_HINT: "Cerca"
+        SEARCH_HINT: "Cerca",
+        INFO_PLACE_PLACEHOLDER: "Informazioni utili, istruzioni, regole, etc."
     };
     var enLabels = {
+        INFO_PLACE_PLACEHOLDER: "Useful information, instructions, rules, etc.",
         SEARCH_HINT: "Search",
         LOCATE_USER: "Locate your position",
         RESET_MAP: "Map reset",
