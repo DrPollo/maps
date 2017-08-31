@@ -347,8 +347,9 @@ angular.module('firstlife.directives')
                         // emptyResults();
                     } else if(entry.type === 'initiative'){
                         scope.results = false;
+                        // $log.log();
                         // emptyResults();
-                        $location.search('initiative',initiative.id);
+                        $location.search('initiative',entry.id);
                         scope.$emit('showInitiative',{initiative:{id : entry.id, name:entry.name}});
                     } else {
                         scope.results = false;

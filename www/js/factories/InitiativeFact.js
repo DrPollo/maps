@@ -9,18 +9,18 @@ angular.module('firstlife.factories')
                 return deferred.promise;
             }
 
-            var urlId = myConfig.initiatives;
+            var urlId = myConfig.backend_initiatives.concat("/search", format);
 
             var req = {
-                url: urlId.concat('?domainId=',myConfig.domain_id),
+                url: urlId.concat('?domain_id=',myConfig.domain_id),
                 method: 'GET',
                 headers:{"Content-Type":"application/json"},
                 data: false
             };
             $http(req).then(
                 function(res){
-                    // $log.debug('Get all initiatives',res);
-                    deferred.resolve(res.data);
+                    // $log.debug('Get all initiatives',res.data.initiatives);
+                    deferred.resolve(res.data.initiatives);
                 },
                 function(err){
                     $log.error(err);
