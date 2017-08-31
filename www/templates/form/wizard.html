@@ -246,7 +246,7 @@
             <i class="icon ion-android-close"></i>
             {{'ABORT'|translate}}
         </button>
-        <button ng-if="editor.wizard.dataForm.entity_type && wizardIndex > 1"
+        <button ng-if="editor.wizard.dataForm.entity_type && wizardIndex > 1 && !(!checkCat && !editor.wizard.newThing)"
                 ng-show="wizardIndex > 1"
                 class="button button-outline button-dark"
                 title="{{'BACK'|translate}}"
@@ -258,7 +258,8 @@
             <span ng-if="!isMobile">{{'STEPS_OF'|translate}} {{wizardIndex}}/{{wizardSteps}}</span>
         </h3>
         <div class="buttons">
-            <button type="submit" ng-if="wizardIndex === 1 && editor.wizard.newThing"
+            <button type="submit"
+                    ng-if="wizardIndex === 1 && editor.wizard.newThing"
                     ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
@@ -266,7 +267,7 @@
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button type="submit" ng-if="(wizardIndex === 2 && editor.wizard.newThing) || (wizardIndex === 1 && !editor.wizard.newThing)"
+            <button type="submit" ng-if="(wizardIndex === 2 && editor.wizard.newThing) || (wizardIndex === 1 && !editor.wizard.newThing && checkCat)"
                     ng-disabled="!editor.wizard.dataForm.entity_type"
                     class="button button-positive"
                     title="{{'NEXT'|translate}}"
@@ -274,7 +275,7 @@
                 {{'NEXT'|translate}}
                 <i class="icon ion-android-arrow-dropright"></i>
             </button>
-            <button type="submit" ng-if="(wizardIndex === 3 && editor.wizard.newThing)|| (wizardIndex === 2 && !editor.wizard.newThing)"
+            <button type="submit" ng-if="(wizardIndex === 3 && editor.wizard.newThing) || (wizardIndex === 2 && !editor.wizard.newThing) || (!checkCat && !editor.wizard.newThing)"
                     ng-disabled="!editor.wizard.dataForm.entity_type || editor.form.wizardform.$invalid"
                     class="button button-positive"
                     title="{{'SAVE'|translate}}"

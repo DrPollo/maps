@@ -151,6 +151,9 @@ angular.module('firstlife.controllers')
                 _this.wizard.newThing = false;
 
                 $scope.chooseType = false;
+
+
+
                 //get place(id)
                 ThingsService.get(params.id)
                     .then( function(mark) {
@@ -164,6 +167,24 @@ angular.module('firstlife.controllers')
 
                         // init dell'edit
                         setToEdit(mark);
+
+                        //gestione steps
+                        $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+
+                        // controllo se serve la scheda categorie
+                        var check = $filter('filter')(_this.categories, $scope.isCatRelevant);
+                        $scope.checkCat = ( check.length > 0 );
+                        $log.log('skip to next',!$scope.checkCat);
+                        var initialStep = 0;
+                        if(!$scope.checkCat){
+                            initialStep = 1;
+                        }
+                        $scope.wizardHandler.slide(initialStep);
+                        $ionicScrollDelegate.scrollTop();
+                        $scope.wizardHandler.update();
+                        $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
+                        $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
+
                         //bug datapicker che non modifica la data a cacchio
                         // se la data e' settata allora metto a true il check
                         if(_this.wizard.dataForm.valid_from)
@@ -175,15 +196,15 @@ angular.module('firstlife.controllers')
                         $log.error(error);
                     });
 
-                // valori per update (salto step tipo)
-                $timeout(function(){
-                    $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
-                    $scope.wizardHandler.slide(0);
-                    $ionicScrollDelegate.scrollTop();
-                    $scope.wizardHandler.update();
-                    $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
-                    $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
-                },100);
+                // // valori per update (salto step tipo)
+                // $timeout(function(){
+                //     $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
+                //     $scope.wizardHandler.slide(0);
+                //     $ionicScrollDelegate.scrollTop();
+                //     $scope.wizardHandler.update();
+                //     $scope.wizardIndex = $scope.wizardHandler.currentIndex() || 1;
+                //     $scope.wizardSteps = $scope.wizardHandler.slidesCount() || 2;
+                // },100);
             }
             //create place: init empty dataForm
             else{
@@ -197,9 +218,9 @@ angular.module('firstlife.controllers')
 
                 // fine regole gestione campi speciali
                 $log.log("EditCtrl, init del form: ",_this.wizard);
+
                 $timeout(function(){
                     $scope.wizardHandler = $ionicSlideBoxDelegate.$getByHandle('wizard');
-                    $scope.wizardHandler.slide(0);
                     $ionicScrollDelegate.scrollTop();
                     $scope.wizardHandler.update();
                     $log.debug('handler',$scope.wizardHandler);
