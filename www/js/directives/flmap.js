@@ -454,8 +454,17 @@ angular.module('firstlife.directives').directive('flmap',function () {
 
                     e.preventDefault();
 
-                    // $log.debug('deleteMarkers!',args);
+                    // $log.debug('deleteMarker!',args);
                     removeMarker(args.id);
+                });
+                $scope.$on('updateMarker',function (e,args) {
+                    if(e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    // $log.debug('updateMarker!',args);
+                    updateMarker(args.id);
                 });
                 $scope.$on('goToLocation',function (e,args) {
                     if(e.defaultPrevented)
@@ -660,218 +669,230 @@ angular.module('firstlife.directives').directive('flmap',function () {
             }
 
             function removeMarker(markerId) {
-                if(markerId && $scope.currentMarkers[markerId]){
+                if (markerId && $scope.currentMarkers[markerId]) {
                     // $log.debug('removing',$scope.currentMarkers[markerId]);
                     pieRef.removeLayer($scope.currentMarkers[markerId]);
                     delete $scope.currentMarkers[markerId];
                 }
             }
 
-
-
-
-
-
-
-
-            /*
-             * Gestione edit mode
-             *
-             * Listners:
-             * <enterEditMode> attiva la modalita' edit, setup flags e modifica layers
-             * <exitEditMode> reset mappa e disiscrizione listners
-             *
-             * Funzioni pubbliche:
-             * [getLocation] al click utente invia le informazioni per l'edit/creazione di un entita'
-             */
-            $scope.$on('enterEditMode',function (e,args) {
-                if(e.defaultPrevented)
+            function updateMarker(markerId) {
+                if (!markerId) {
                     return;
-
-                e.preventDefault();
-
-                // $log.debug('deleteMarkers!',args);
-                $scope.editMode = true;
-                addEditLayers();
-                tries = 0;
-                $timeout(updateGridStyle,500);
-                mapRef.on('moveend',updateGrid);
-            });
-            $scope.$on('exitEditMode',function (e,args) {
-                if(e.defaultPrevented)
-                    return;
-
-                e.preventDefault();
-
-                removeEditLayers();
-                // hide pointer
-                $scope.editMode = false;
-            });
-
-            $scope.getLocation = function(){
-                // get geo feature
-                var size = mapRef.getSize();
-                var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
-                var center = mapRef.getCenter();
-                var z = mapRef.getZoom();
-                var tile = pointToTile(center.lat,center.lng,z);
-                var tileid = tile[0]+':'+tile[1]+':'+tile[2];
-                $scope.editMode = false;
-                $timeout(function () {
-                    var el = document.elementFromPoint(point.x,point.y);
-                    var id = L.stamp(el);
-                    try{
-                        var properties = mapRef._targets[id].properties;
-                    } catch (e){
-                        $log.debug('no properties');
-                    };
-                    var args = {id:null, tile: tile, zoom_level:z, tile_id:tileid};
-                    if(properties){
-                        args.area_id = properties.id;
-                        args.type = properties.type;
+                }
+                ThingsService.get(markerId).then(
+                    function (marker) {
+                        removeMarker(markerId);
+                        addMarker(marker);
+                    },
+                    function (err) {
+                        $log.error("updateMarker", err);
                     }
-                    // $log.debug('got',mapRef._targets[id].properties);
-                    var info = angular.extend(args,center);
-                    //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
-                    // $log.debug('createEntity',properties,info);
-                    $scope.$emit('createEntity',info);
-                    // removeEditLayers();
-                },300);
-            };
-
-            $scope.maxZoom = myConfig.map.max_zoom;
-            $scope.minZoom = myConfig.map.min_zoom;
-
-            $scope.zoomIn = function(){
-                // zoom in
-                $scope.z = scales[mapRef.getZoom()].zoomin;
-                $log.debug('go to zoom ',$scope.z);
-                mapRef.setZoom($scope.z);
-            };
-            $scope.zoomOut = function(){
-                // zoom
-                $scope.z = scales[mapRef.getZoom()].zoomout;
-                $log.debug('go to zoom ',$scope.z);
-                mapRef.setZoom($scope.z);
-            };
+                );
+                }
 
 
+                /*
+                 * Gestione edit mode
+                 *
+                 * Listners:
+                 * <enterEditMode> attiva la modalita' edit, setup flags e modifica layers
+                 * <exitEditMode> reset mappa e disiscrizione listners
+                 *
+                 * Funzioni pubbliche:
+                 * [getLocation] al click utente invia le informazioni per l'edit/creazione di un entita'
+                 */
+                $scope.$on('enterEditMode', function (e, args) {
+                    if (e.defaultPrevented)
+                        return;
 
-            var editLayer = null;
-            function updateGrid(e) {
-                // $log.debug(e);
-                tries = 0;
-                $timeout(updateGridStyle,500);
-            }
-            function addEditLayers(){
-                editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url,$scope.map.layers.baselayers.edit.layerOptions);
-                // $log.debug(editLayer);
-                // add tile layer
-                editLayer.addTo(mapRef);
+                    e.preventDefault();
 
-                // add the vectory grid layer
-                vGrid.addTo(mapRef);
-                // add mouse events
-                // vGrid.on('mouseover',function (e) {
-                //     $log.debug('mouseover',e);
-                // });
-                // vGrid.on('mouseout',function (e) {
-                //     $log.debug('mouseout',e);
-                // });
-                vGrid.on('click',function (e) {
-                    $log.debug('click',e);
-                    // vGrid.setFeatureStyle(currentFeature,style);
-                    mapRef.setView(e.latlng);
+                    // $log.debug('deleteMarkers!',args);
+                    $scope.editMode = true;
+                    addEditLayers();
+                    tries = 0;
+                    $timeout(updateGridStyle, 500);
+                    mapRef.on('moveend', updateGrid);
+                });
+                $scope.$on('exitEditMode', function (e, args) {
+                    if (e.defaultPrevented)
+                        return;
+
+                    e.preventDefault();
+
+                    removeEditLayers();
+                    // hide pointer
+                    $scope.editMode = false;
                 });
 
-                // se definito
-                if(zoomControl)
-                    mapRef.removeControl(zoomControl);
-
-                // snap to scale
-                var scale = scales[mapRef.getZoom()];
-                // $log.debug('scale?',scales, scale, mapRef.getZoom());
-                mapRef.setZoom(scale.z);
-            }
-            function removeEditLayers(){
-                if(currentFeature)
-                    vGrid.resetFeatureStyle(currentFeature);
-                mapRef.off('moveend',updateGrid);
-                vGrid.off('mouseover');
-                // vGrid.off('mouseout');
-                vGrid.off('click');
-                // remove vectory grid layer
-                mapRef.removeLayer(vGrid);
-                // remove tile layer
-                mapRef.removeLayer(editLayer);
-                if(currentFeature)
-                    vGrid.resetFeatureStyle(currentFeature);
-
-                // se definito
-                if(zoomControl)
-                    mapRef.addControl(zoomControl);
-            }
-
-
-            function updateGridStyle() {
-                var size = mapRef.getSize();
-                var point = L.point(Math.floor(size.x/2),Math.floor(size.y/2));
-                var el = document.elementFromPoint(point.x,point.y);
-                // $log.debug('el',el);
-                var id = L.stamp(el);
-                var target = mapRef._targets[id];
-                // $log.debug('target',target);
-                // todo controlla che il target sia alla scala attuale
-                if(target && target.properties && target.properties.id){
-                    if(currentFeature !== target.properties.id){
-                        try{
-                            if(currentFeature)
-                                vGrid.resetFeatureStyle(currentFeature);
-                            currentFeature = target.properties.id;
-                            var style = interactiveStyle(target.properties.type);
-                            // $log.debug('type',target.properties);
-                            vGrid.setFeatureStyle(currentFeature,style);
-                            // vGrid.setFeatureStyle(currentFeature,highlightStyle);
-                            $scope.$broadcast('setInfo',{info:target.properties});
-                        }catch(e){
-                            $scope.$broadcast('setInfo');
+                $scope.getLocation = function () {
+                    // get geo feature
+                    var size = mapRef.getSize();
+                    var point = L.point(Math.floor(size.x / 2), Math.floor(size.y / 2));
+                    var center = mapRef.getCenter();
+                    var z = mapRef.getZoom();
+                    var tile = pointToTile(center.lat, center.lng, z);
+                    var tileid = tile[0] + ':' + tile[1] + ':' + tile[2];
+                    $scope.editMode = false;
+                    $timeout(function () {
+                        var el = document.elementFromPoint(point.x, point.y);
+                        var id = L.stamp(el);
+                        try {
+                            var properties = mapRef._targets[id].properties;
+                        } catch (e) {
+                            $log.debug('no properties');
                         }
-                        tries = 0;
-                    }else if(tries < triesLimit){
-                        tries++;
-                        // $log.debug('tries2',tries);
-                        $timeout(updateGridStyle,200);
-                    }
-                }else if(tries >= triesLimit){
-                    $scope.$broadcast('setInfo');
+                        ;
+                        var args = {id: null, tile: tile, zoom_level: z, tile_id: tileid};
+                        if (properties) {
+                            args.area_id = properties.id;
+                            args.type = properties.type;
+                        }
+                        // $log.debug('got',mapRef._targets[id].properties);
+                        var info = angular.extend(args, center);
+                        //{lat:e.target.options.latlng.lat,lng:e.target.options.latlng.lng,zoom_level:e.target.options.zoom_level,area_id:e.target.options.id,id:null}
+                        // $log.debug('createEntity',properties,info);
+                        $scope.$emit('createEntity', info);
+                        // removeEditLayers();
+                    }, 300);
+                };
+
+                $scope.maxZoom = myConfig.map.max_zoom;
+                $scope.minZoom = myConfig.map.min_zoom;
+
+                $scope.zoomIn = function () {
+                    // zoom in
+                    $scope.z = scales[mapRef.getZoom()].zoomin;
+                    $log.debug('go to zoom ', $scope.z);
+                    mapRef.setZoom($scope.z);
+                };
+                $scope.zoomOut = function () {
+                    // zoom
+                    $scope.z = scales[mapRef.getZoom()].zoomout;
+                    $log.debug('go to zoom ', $scope.z);
+                    mapRef.setZoom($scope.z);
+                };
+
+
+                var editLayer = null;
+
+                function updateGrid(e) {
+                    // $log.debug(e);
                     tries = 0;
-                }else if(tries < triesLimit){
-                    tries++;
-                    // $log.debug('tries1',tries);
-                    $timeout(updateGridStyle,200);
+                    $timeout(updateGridStyle, 500);
                 }
-                // $log.debug('setting scale',scales[mapRef.getZoom()]);
-                $scope.$broadcast('setScale',{scale:scales[mapRef.getZoom()]});
-            }
 
-            // code from @mapbox/tilebelt
-            function pointToTile(lon, lat, z) {
-                var tile = pointToTileFraction(lon, lat, z);
-                tile[0] = Math.floor(tile[0]);
-                tile[1] = Math.floor(tile[1]);
-                return tile;
-            }
+                function addEditLayers() {
+                    editLayer = L.tileLayer($scope.map.layers.baselayers.edit.url, $scope.map.layers.baselayers.edit.layerOptions);
+                    // $log.debug(editLayer);
+                    // add tile layer
+                    editLayer.addTo(mapRef);
 
-            function pointToTileFraction(lon, lat, z) {
-                var sin = Math.sin(lat * Math.PI / 180),
-                    z2 = Math.pow(2, z),
-                    x = z2 * (lon / 360 + 0.5),
-                    y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
-                return [x, y, z];
-            }
-        }]
-    }
-}).directive('wall',['$log','$ionicModal',function ($log,$ionicModal) {
+                    // add the vectory grid layer
+                    vGrid.addTo(mapRef);
+                    // add mouse events
+                    // vGrid.on('mouseover',function (e) {
+                    //     $log.debug('mouseover',e);
+                    // });
+                    // vGrid.on('mouseout',function (e) {
+                    //     $log.debug('mouseout',e);
+                    // });
+                    vGrid.on('click', function (e) {
+                        $log.debug('click', e);
+                        // vGrid.setFeatureStyle(currentFeature,style);
+                        mapRef.setView(e.latlng);
+                    });
+
+                    // se definito
+                    if (zoomControl)
+                        mapRef.removeControl(zoomControl);
+
+                    // snap to scale
+                    var scale = scales[mapRef.getZoom()];
+                    // $log.debug('scale?',scales, scale, mapRef.getZoom());
+                    mapRef.setZoom(scale.z);
+                }
+
+                function removeEditLayers() {
+                    if (currentFeature)
+                        vGrid.resetFeatureStyle(currentFeature);
+                    mapRef.off('moveend', updateGrid);
+                    vGrid.off('mouseover');
+                    // vGrid.off('mouseout');
+                    vGrid.off('click');
+                    // remove vectory grid layer
+                    mapRef.removeLayer(vGrid);
+                    // remove tile layer
+                    mapRef.removeLayer(editLayer);
+                    if (currentFeature)
+                        vGrid.resetFeatureStyle(currentFeature);
+
+                    // se definito
+                    if (zoomControl)
+                        mapRef.addControl(zoomControl);
+                }
+
+
+                function updateGridStyle() {
+                    var size = mapRef.getSize();
+                    var point = L.point(Math.floor(size.x / 2), Math.floor(size.y / 2));
+                    var el = document.elementFromPoint(point.x, point.y);
+                    // $log.debug('el',el);
+                    var id = L.stamp(el);
+                    var target = mapRef._targets[id];
+                    // $log.debug('target',target);
+                    // todo controlla che il target sia alla scala attuale
+                    if (target && target.properties && target.properties.id) {
+                        if (currentFeature !== target.properties.id) {
+                            try {
+                                if (currentFeature)
+                                    vGrid.resetFeatureStyle(currentFeature);
+                                currentFeature = target.properties.id;
+                                var style = interactiveStyle(target.properties.type);
+                                // $log.debug('type',target.properties);
+                                vGrid.setFeatureStyle(currentFeature, style);
+                                // vGrid.setFeatureStyle(currentFeature,highlightStyle);
+                                $scope.$broadcast('setInfo', {info: target.properties});
+                            } catch (e) {
+                                $scope.$broadcast('setInfo');
+                            }
+                            tries = 0;
+                        } else if (tries < triesLimit) {
+                            tries++;
+                            // $log.debug('tries2',tries);
+                            $timeout(updateGridStyle, 200);
+                        }
+                    } else if (tries >= triesLimit) {
+                        $scope.$broadcast('setInfo');
+                        tries = 0;
+                    } else if (tries < triesLimit) {
+                        tries++;
+                        // $log.debug('tries1',tries);
+                        $timeout(updateGridStyle, 200);
+                    }
+                    // $log.debug('setting scale',scales[mapRef.getZoom()]);
+                    $scope.$broadcast('setScale', {scale: scales[mapRef.getZoom()]});
+                }
+
+                // code from @mapbox/tilebelt
+                function pointToTile(lon, lat, z) {
+                    var tile = pointToTileFraction(lon, lat, z);
+                    tile[0] = Math.floor(tile[0]);
+                    tile[1] = Math.floor(tile[1]);
+                    return tile;
+                }
+
+                function pointToTileFraction(lon, lat, z) {
+                    var sin = Math.sin(lat * Math.PI / 180),
+                        z2 = Math.pow(2, z),
+                        x = z2 * (lon / 360 + 0.5),
+                        y = z2 * (0.5 - 0.25 * Math.log((1 + sin) / (1 - sin)) / Math.PI);
+                    return [x, y, z];
+                }
+
+            }]}
+    }).directive('wall',['$log','$ionicModal',function ($log,$ionicModal) {
     return {
         restrict:'EG',
         scope:{},

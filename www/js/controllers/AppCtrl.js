@@ -206,6 +206,15 @@ angular.module('firstlife.controllers')
             $scope.$broadcast('deleteMarker',args);
         });
 
+        $scope.$on('requestUpdateMarker',function (event,args) {
+            if(event.defaultPrevented)
+                return;
+
+            event.preventDefault();
+
+            $scope.$broadcast('updateMarker',args);
+        });
+
 
 
 

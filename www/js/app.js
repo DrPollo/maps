@@ -947,7 +947,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         POSTCOMMENTS_ADDED: 'added a comment to',
         TOGGLE_WALL_TITLE: 'Toggle content wall',
         USER_MENU_TOGGLE: 'Toggle user menu',
-        LOGIN_REQUIRED: "Login reuired",
+        LOGIN_REQUIRED: "Login required",
         LOGIN_REQUIRED_MESSAGE: "Logging in is required to proceed",
         SEACH_NO_RESULTS: 'No results...',
         GEOLOCATION_HINTS: 'Search address',

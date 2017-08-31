@@ -51,6 +51,7 @@ angular.module('firstlife.directives')
                     InitiativeFactory.unlink(scope.thingId, initiative.id).then(
                         function (results) {
                             initList();
+                            scope.$emit('requestUpdateMarker',{id:scope.thingId});
                         },
                         function (error) {
                             // error feedback
@@ -221,6 +222,8 @@ angular.module('firstlife.directives')
                         scope.loading = false;
                         // $log.debug('link ',id,' to ',scope.thingId);
                         scope.close();
+
+                        scope.$emit('requestUpdateMarker',{id:scope.thingId});
                     },
                     function (error) {
                         scope.loading = false;
