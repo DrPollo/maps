@@ -4,6 +4,33 @@
   "domain_name" : "sandonadipiave",
   "domain_id" : 21,
   "read_domains":false,
+  "custom_labels":{
+    "it":{
+      "PLACE_NAME":"Attività",
+      "FL_PLACES":"Attività",
+      "CREATE_POST": "Crea aggiornamento",
+      "POSTS": "Aggiornamenti",
+      "DELETE_POST": "Cancella aggiornamento",
+      "UPDATE_POST": "Modifica aggiornamento",
+      "ADDPOST": "Aggiungi aggiornamento",
+      "POSTS_ADDED": "aggiunto un aggiornamento a",
+      "TAGS_PLACE_PLACEHOLDER": "Inserisci le parole chiave per descrivere la tua attività",
+      "INFO_PLACE_PLACEHOLDER": "Descrivi la tua attività, i tuoi servizi o prodotti"
+    },
+    "en":{
+      "PLACE_NAME":"Activities",
+      "FL_PLACES":"Activities",
+      "CREATE_POST": "Create an update",
+      "POSTS": "Updates",
+      "REPORT_POST": "Report an abuse",
+      "DELETE_POST": "Delete the update",
+      "UPDATE_POST": "Edit the update",
+      "ADDPOST": "Add an update",
+      "POSTS_ADDED": "added an update to",
+      "TAGS_PLACE_PLACEHOLDER": "Insert keywords to describe your actity",
+      "INFO_PLACE_PLACEHOLDER": "Description of the activity, services or products"
+    }
+  },
   "design":{
     "logo" : {
       "title": "San Donà di Piave",
@@ -12,6 +39,38 @@
         "text": "San Donà di Piave"
       }
     },
+    "side_menu": [
+      {
+        "name": "Guida all'uso di FirstLife",
+        "url": "http://tutorials.firstlife.di.unito.it/",
+        "icon": "ion-information",
+        "lang": "it"
+      },
+      {
+        "name": "Supporto",
+        "url": "https://sity-desk.atlassian.net/servicedesk/customer/portal/1",
+        "icon": "ion-help",
+        "lang": "it"
+      },
+      {
+        "name": "Helpdesk",
+        "url": "https://sity-desk.atlassian.net/servicedesk/customer/portal/1",
+        "icon": "ion-help",
+        "lang": "en"
+      },
+      {
+        "name": "Sito web Sity",
+        "url": "http://www.sity.life",
+        "icon": "ion-social-rss",
+        "lang": "it"
+      },
+      {
+        "name": "Website Sity",
+        "url": "http://www.sity.life",
+        "icon": "ion-social-rss",
+        "lang": "en"
+      }
+    ],
     "landingpage": {
       "css": "",
       "logo": {
