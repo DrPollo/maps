@@ -92,7 +92,7 @@ angular.module('firstlife.directives').directive('thingCard', function () {
                 // to do serve per il routing, chiudo l'action sheet con il pulsante back
             };
 
-            $scope.share = function (thingId) {
+            $scope.share = AuthService.doAction(function (thingId) {
                 $scope.inviteForm = {
                     url: $window.location.href,
                     id: thingId,
@@ -175,10 +175,10 @@ angular.module('firstlife.directives').directive('thingCard', function () {
                 alertPopup.then(function (res) {
                     // $log.debug('onTap',res);
                 });
-            };
+            });
 
 
-            $scope.toggleFollow = function () {
+            $scope.toggleFollow = AuthService.doAction(function () {
 
                 // $log.debug('is subscriber', $scope.isSubscriber);
 
@@ -238,7 +238,7 @@ angular.module('firstlife.directives').directive('thingCard', function () {
                     $scope.showConfirm();
                 }
 
-            };
+            });
 
             // menu popover della modals
             function initPopoverMenu() {

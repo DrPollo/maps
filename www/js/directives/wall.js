@@ -57,7 +57,7 @@ angular.module('firstlife.directives')
             }
         }
     }])
-    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','$ionicSideMenuDelegate', '$window', '$ionicPopup', 'myConfig', 'MemoryFactory', 'ThingsService', 'shareFactory', 'clipboard', function($rootScope,$location,$log,$filter,$timeout,$ionicSideMenuDelegate, $window, $ionicPopup, myConfig,MemoryFactory,ThingsService, shareFactory, clipboard) {
+    .directive('entityList', [ '$rootScope', '$location', '$log', '$filter', '$timeout','$ionicSideMenuDelegate', '$window', '$ionicPopup', 'myConfig', 'MemoryFactory', 'ThingsService', 'shareFactory', 'clipboard', 'AuthService',function($rootScope,$location,$log,$filter,$timeout,$ionicSideMenuDelegate, $window, $ionicPopup, myConfig,MemoryFactory,ThingsService, shareFactory, clipboard, AuthService) {
         return {
             restrict: 'E',
             scope: {
@@ -185,7 +185,7 @@ angular.module('firstlife.directives')
                 /*
                  * Share FirstLife
                  */
-                scope.share = function(){
+                scope.share = AuthService.doAction(function(){
                     scope.inviteForm = {
                         url: $window.location.href,
                         inClipboard: false,
@@ -263,7 +263,7 @@ angular.module('firstlife.directives')
                     alertPopup.then(function(res) {
                         // $log.debug('onTap',res);
                     });
-                };
+                });
 
                 init();
 
