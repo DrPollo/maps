@@ -67,6 +67,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 2:
                         return [
                             "nazioni",
+                            "nazioni_mondo",
                             "waterareas",
                             "waterways"
                         ];
@@ -75,8 +76,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 4:
                         return [
                             "nazioni",
+                            "nazioni_mondo",
                             "regioni",
+                            "regioni_europa",
                             "provincie",
+                            "province_europa",
                             "waterareas",
                             "waterways"
                         ];
@@ -85,8 +89,11 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 6:
                         return [
                             "nazioni",
+                            "nazioni_mondo",
                             "regioni",
+                            "regioni_europa",
                             "provincie",
+                            "province_europa",
                             "landusages",
                             "roads",
                             "waterareas",
@@ -96,48 +103,60 @@ angular.module('firstlife.directives').directive('flmap',function () {
                     case 8:
                         return [
                             "nazioni",
+                            "nazioni_mondo",
                             "regioni",
+                            "regioni_europa",
                             "provincie",
+                            "province_europa",
                             "landusages",
                             "roads",
                             "waterareas",
-                            "waterways",
-                            "comuni",];
+                            "waterways"];
                         break;
                     case 9:
                     case 10:
                         return [
                             "nazioni",
+                            "nazioni_mondo",
                             "regioni",
+                            "regioni_europa",
                             "provincie",
+                            "province_europa",
                             "landusages",
                             "roads",
                             "waterareas",
-                            "waterways",
-                            "comuni"];
+                            "waterways"];
                         break;
                     case 11:
                     case 12:
                         return [
                             "provincie",
+                            "province_europa",
                             "landusages",
                             "roads",
                             "waterareas",
                             "waterways",
-                            "comuni"];
+                            "comuni",
+                            "comuni_italia",
+                            "comune"];
                         break;
                     case 13:
                     case 14:
                         return [
                             "provincie",
+                            "province_europa",
                             "quartieri",
                             "landusages",
-                            "comuni"];
+                            "comuni",
+                            "comuni_italia",
+                            "comune"];
                         break;
                     case 15:
                     case 16:
                         return [
                             "comuni",
+                            "comuni_italia",
+                            "comune",
                             "landusages",
                             "waterareas",
                             "waterways",
@@ -185,10 +204,15 @@ angular.module('firstlife.directives').directive('flmap',function () {
                 return style;
             };
             var vectorMapStyling = {
+                nazioni_mondo: featureStyle,
                 nazioni: featureStyle,
+                regioni_europa: featureStyle,
                 regioni: featureStyle,
+                province_europa: featureStyle,
                 provincie: featureStyle,
+                comuni_italia: featureStyle,
                 comuni: featureStyle,
+                comune: featureStyle,
                 circoscrizioni: featureStyle,
                 quartieri: featureStyle,
                 city_block: featureStyle,
