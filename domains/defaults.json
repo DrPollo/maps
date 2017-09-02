@@ -394,22 +394,7 @@
             "placeholder": "LEVEL_PLACEHOLDER"
           }
         },
-        "actions": [
-          {
-            "label": "SUBSCRIBE",
-            "key": "subscribe",
-            "icon": "ion-android-bookmark",
-            "search": false,
-            "check": "noSubscriber"
-          },
-          {
-            "label": "UNSUBSCRIBE",
-            "key": "unsubscribe",
-            "icon": "ion-android-share",
-            "search": false,
-            "check": "subscriber"
-          }
-        ]
+        "actions": []
       },
       "list": [
         {

@@ -359,9 +359,9 @@ angular.module('firstlife.services')
             // $log.debug('fushTiles',tiles.length);
             ThingsFact.tiles(params).then(
                 function (results) {
-                    $log.debug('risultati',results);
+                    // $log.debug('risultati',results);
                     var markers = makeMarkers(results);
-                    $log.debug(markers);
+                    // $log.debug(markers);
                     deferred.resolve(markers);
                     buffer = results;
                     isBufferValid = true;

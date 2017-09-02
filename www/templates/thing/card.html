@@ -9,15 +9,19 @@
     </ion-header-bar>
     <ion-header-bar class="bar bar-subheader">
         <div class="button-bar">
-            <button
-                    class="action button button-positive button-small button-clear icon-left"
+            <button class="action button button-positive button-small button-clear icon-left"
+                    title="{{isSubscriber ? 'UNFOLLOW' : 'FOLLOW'| translate}} {{marker.name}}"
+                    on-tap="toggleFollow(infoPlace.marker.id)">
+                <i class="icon" ng-class="isSubscriber ? 'ion-minus-round': 'ion-plus-round'"></i>
+                {{isSubscriber ? 'UNFOLLOW' : 'FOLLOW'| translate}}
+            </button>
+            <button class="action button button-positive button-small button-clear icon-left"
                     title="{{'SHOW_ON_MAP'| translate}} {{marker.name}}"
                     on-tap="share(infoPlace.marker.id)">
                 <i class="icon ion-android-share-alt"></i>
                 {{"SHARE"| translate}}
             </button>
-            <button
-                    class="action button button-positive button-small button-clear icon-left"
+            <button class="action button button-positive button-small button-clear icon-left"
                     title="{{'SHOW_ON_MAP'| translate}} {{infoPlace.marker.name}}"
                     on-tap="locateOnMap(infoPlace.marker.id)">
                 <i class="icon ion-pinpoint"></i>
@@ -44,6 +48,22 @@
                     </span>
                 </span>
             </div>
+            <div class="modal-subheader credits" ng-if="config.dev || currentType.show_author">
+                {{'LAST_AUTHOR' | translate}}{{' '}}
+                <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
+                    {{infoPlace.marker.updater.display_name}}
+                </span>
+            </div>
+            <div class="modal-subheader">
+                <span class="modal-subheader-item" ng-if="infoPlace.marker.last_activity || infoPlace.marker.last_update">
+                    {{'LAST_ACTIVITY'|translate}} {{infoPlace.marker.last_activity || infoPlace.marker.last_update | prettyDate}} {{'AGO' |translate}}.
+                </span>
+                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i
+                        class="icon ion-android-bookmark"></i></span>
+                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i
+                        class="icon ion-android-people"></i></span></span>
+            </div>
+
             <div class="modal-subheader tag-list icon-list">
                 <span class="icons">
                     <span ng-repeat="icon in infoPlace.marker.icons track by $index"
@@ -62,22 +82,6 @@
                     </span>
                 </span>
             </div>
-            <div class="modal-subheader credits" ng-if="config.dev || currentType.show_author">
-                {{'LAST_AUTHOR' | translate}}{{' '}}
-                <span ng-if="infoPlace.marker.updater.display_name" class="username modal-subheader-item">
-                    {{infoPlace.marker.updater.display_name}}
-                </span>
-
-                <span ng-if="infoPlace.marker.last_activity || infoPlace.marker.last_update">
-                    {{'LAST_ACTIVITY'|translate}} {{infoPlace.marker.last_activity || infoPlace.marker.last_update | prettyDate}} {{'AGO' |translate}}
-                </span>
-            </div>
-            <div class="modal-subheader">
-                <span class="modal-subheader-item">{{"SUBSCRIBERS"|translate}} {{subscribers}} <i
-                        class="icon ion-android-bookmark"></i></span>
-                <span ng-if="members"><span class="modal-subheader-item">{{"MEMBERS"|translate}} {{members}} <i
-                        class="icon ion-android-people"></i></span></span>
-            </div>
             <div ng-if="infoPlace.marker.link_url" class="modal-subheader">
                 <span class="modal-subheader-item">
                     <a href="{{infoPlace.marker.link_url}}" target="_blank" class="modal-url">
@@ -86,7 +90,13 @@
                     </a>
                 </span>
             </div>
+            <!--<div ng-if="infoPlace.marker.name" class="content modal-content text-field">-->
+                <!--{{infoPlace.marker.name}}-->
+            <!--</div>-->
             <div ng-if="infoPlace.marker.description" class="content modal-content text-field">
+                <h3 style="font-size: 1em;font-weight:500;color:#333;line-height: 1em;white-space: initial;">
+                    {{infoPlace.marker.name}}
+                </h3>
                 {{infoPlace.marker.description}}
             </div>
             <!--<div ng-if="config.design.can_permalink && infoPlace.marker.self" id="modalPlacePermalink" class="content modal-url">-->

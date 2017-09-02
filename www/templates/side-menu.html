@@ -37,9 +37,12 @@
             <ion-list>
                 <ion-item class="heading-item item item-avatar">
                     <img ng-src="{{config.design.logo_menu}}">
-                    <h2 class="greeting">{{'WELCOME'|translate}} {{user.fullname ? user.fullname :
-                        'GUEST'|translate}}</h2>
-                    <p class="message">{{'WELCOME_MESSAGE' |translate}} {{config.app_name}}!</p>
+                    <h2 class="greeting">
+                        {{'WELCOME'|translate}} {{user.fullname ? user.fullname : 'GUEST'|translate}}
+                    </h2>
+                    <p class="message" style="overflow-y: visible;white-space: normal;">
+                        {{'WELCOME_MESSAGE' |translate}} {{config.app_name}}
+                    </p>
                 </ion-item>
                 <ion-item class="item-divider" ng-if="user.signature || user.fullname">
                     {{'CURRENT_SIGNATURE'|translate}}

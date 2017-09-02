@@ -865,9 +865,13 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
         TOGGLE_TO_EDIT_MODE: "Passa alla modalità di inserimento",
         TOGGLE_TO_VIEW_MODE: "Passa alla modalità di visualizzazione",
         SEARCH_HINT: "Cerca",
-        INFO_PLACE_PLACEHOLDER: "Informazioni utili, istruzioni, regole, etc."
+        INFO_PLACE_PLACEHOLDER: "Informazioni utili, istruzioni, regole, etc.",
+        FOLLOW: "Segui",
+        UNFOLLOW: "Non seguire"
     };
     var enLabels = {
+        FOLLOW: "Follow",
+        UNFOLLOW: "Unfollow",
         INFO_PLACE_PLACEHOLDER: "Useful information, instructions, rules, etc.",
         SEARCH_HINT: "Search",
         LOCATE_USER: "Locate your position",
