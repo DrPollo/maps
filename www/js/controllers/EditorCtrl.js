@@ -656,15 +656,15 @@ function setToEdit(data) {
         initDuration();
     }
     // $log.debug('fine setToEdit', $scope.checkList);
-
+    // $log.debug('data?',data);
     if (!_this.wizard.dataForm.address) {
-        SearchService.reverseGeocoding({zoom: params.zoom_level, lat: params.lat, lng: params.lng}).then(
+        SearchService.reverseGeocoding({zoom: data.zoom_level, lat: data.lat, lng: data.lng}).then(
             function (res) {
-                $log.log('address', res);
+                // $log.debug('address', res);
                 _this.wizard.dataForm.address = res.display_name;
             },
             function (err) {
-
+                $log.error(err);
             }
         );
     }
