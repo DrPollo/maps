@@ -16,7 +16,7 @@
                 {{isSubscriber ? 'UNFOLLOW' : 'FOLLOW'| translate}}
             </button>
             <button class="action button button-positive button-small button-clear icon-left"
-                    title="{{'SHOW_ON_MAP'| translate}} {{marker.name}}"
+                    title="{{'SHARE'| translate}} {{marker.name}}"
                     on-tap="share(infoPlace.marker.id)">
                 <i class="icon ion-android-share-alt"></i>
                 {{"SHARE"| translate}}
@@ -80,6 +80,16 @@
                         <i class="ion-pricetag" style="color:{{infoPlace.marker.icons[0].color}};"></i>
                         {{tag}}
                     </span>
+                </span>
+            </div>
+            <div ng-if="infoPlace.marker.address" class="modal-subheader">
+                <span class="modal-subheader-item">
+                    <button on-tap="locateOnMap(infoPlace.marker.id)"
+                            title="{{'SHOW_ON_MAP'| translate}} {{infoPlace.marker.address}}"
+                            class="action button button-dark button-small button-clear icon-left ion-pinpoint">
+                        <!--<i class="icon ion-pinpoint"></i>-->
+                        <span>{{infoPlace.marker.address}}</span>
+                    </button>
                 </span>
             </div>
             <div ng-if="infoPlace.marker.link_url" class="modal-subheader">
