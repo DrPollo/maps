@@ -3,7 +3,7 @@
     "app_name" : "Atlante del Cibo di Torino Metropolitana",
     "domain_name" : "atlantedelcibo",
     "domain_id" : 18,
-    "read_domains":[12],
+    "read_domains":false,
     "design":{
       "logo" : {
         "title": "Atlante del Cibo di Torino Metropolitana",
