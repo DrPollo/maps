@@ -169,33 +169,74 @@ angular.module('firstlife.services')
                 // richiedo il token al server
                 var deferred = $q.defer();
                 $log.debug('recupero il token con il code', code, " con redirect uri", myConfig.authentication.redirect_uri_auth, 'a url: ', myConfig.authentication.token_url);
-                var req = {
-                    url: myConfig.authentication.token_url,
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: {
-                        code: code,
-                        redirect_uri: myConfig.authentication.redirect_uri_auth,
-                        client_id: myConfig.authentication.client_id
-                    }
-                };
-                $http(req).then(function (response) {
-                    $log.debug('getToken, response', response);
 
-                    var token = response.data.token;
-                    token.member.member_id = token.member_id;
-                    MemoryFactory.save(tokenKey, token);
-                    MemoryFactory.save(identityKey, token.member);
-                    console.log('getToken, response', response, MemoryFactory.get(tokenKey));
-                    deferred.resolve(response);
-                }, function (err) {
-                    $log.debug(err);
-                    deferred.reject(err);
-                });
+                var data = {
+                    code: code,
+                    redirect_uri: myConfig.authentication.redirect_uri_auth,
+                    client_id: myConfig.authentication.client_id
+                };
+                try {
+                    var xhr = new XMLHttpRequest();
+                    // callback
+                    xhr.onload = function(res){
+                        var response = JSON.parse(xhr.response);
+                        // $log.debug('getToken, response', response);
+                        var token = response.token;
+                        token.member.member_id = token.member_id;
+                        MemoryFactory.save(tokenKey, token);
+                        MemoryFactory.save(identityKey, token.member);
+                        $log.debug('getToken, response', response, MemoryFactory.get(tokenKey));
+                        deferred.resolve(response);
+                    };
+                    // error
+                    xhr.onerror = function (err) {
+                        $log.debug(err);
+                        deferred.reject(err);
+                    };
+                    // set url
+                    var url = myConfig.authentication.token_url;
+                    xhr.open("POST", url, true);
+                    // set header
+                    xhr.setRequestHeader('Content-type', 'application/json');
+                    // xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.send(JSON.stringify(data));
+                } catch (e) {
+                    $log.warn("Error server-side logging failed");
+                    $log.log(e);
+                }
                 return deferred.promise;
             },
+            // generateToken: function (code) {
+            //     // richiedo il token al server
+            //     var deferred = $q.defer();
+            //     $log.debug('recupero il token con il code', code, " con redirect uri", myConfig.authentication.redirect_uri_auth, 'a url: ', myConfig.authentication.token_url);
+            //     var req = {
+            //         url: myConfig.authentication.token_url,
+            //         method: 'POST',
+            //         headers: {
+            //             "Content-Type": "application/json"
+            //         },
+            //         data: {
+            //             code: code,
+            //             redirect_uri: myConfig.authentication.redirect_uri_auth,
+            //             client_id: myConfig.authentication.client_id
+            //         }
+            //     };
+            //     $http(req).then(function (response) {
+            //         $log.debug('getToken, response', response);
+            //
+            //         var token = response.data.token;
+            //         token.member.member_id = token.member_id;
+            //         MemoryFactory.save(tokenKey, token);
+            //         MemoryFactory.save(identityKey, token.member);
+            //         console.log('getToken, response', response, MemoryFactory.get(tokenKey));
+            //         deferred.resolve(response);
+            //     }, function (err) {
+            //         $log.debug(err);
+            //         deferred.reject(err);
+            //     });
+            //     return deferred.promise;
+            // },
             isAuth: function () {
                 // $log.debug('isAuth?',(MemoryFactory.get(tokenKey) && !embed) ? true : false);
 

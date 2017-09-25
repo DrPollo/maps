@@ -1,8 +1,8 @@
 {"myConfig":
 {
-  "app_name" : "WeGovNow!",
-  "domain_name" : "wegovnow",
-  "domain_id" : 8,
+  "app_name" : "WeGovNow",
+  "domain_name" : "wegovnow-sandona",
+  "domain_id" : 21,
   "ssl": true,
   "read_domains":false,
   "authentication": {
