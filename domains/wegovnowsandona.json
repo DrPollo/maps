@@ -34,9 +34,11 @@
         "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}
     },
     "navbar":"https://sandona.liquidfeedback.net/api/1/navigation?format=raw_html",
+    "logo_menu":"img/partners/stemma-sandonadipiave-square.png",
     "default_language" : "it",
     "side_menu":[],
-    "colors":["#FC4A00",
+    "colors":[
+      "#FC4A00",
       "#f44336","#88BA5C","#FFB310","#823256","#3f7f91",
       "#FF7027",
       "#800000","#b30000", "#E60000", "#E63900", "#FF8000", "#FF7027", "#DD312A", "#f3a46a", "#FF6666", "#ef9a9a", "#c64028","#a31c1c",

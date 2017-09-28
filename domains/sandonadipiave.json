@@ -32,6 +32,7 @@
     }
   },
   "design":{
+    "logo_menu":"img/partners/stemma-sandonadipiave-square.png",
     "logo" : {
       "title": "San Donà di Piave",
       "alt":"San Donà di Piave",
