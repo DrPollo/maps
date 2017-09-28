@@ -13,7 +13,7 @@
     "state_name":"oauth_state",
     "profile_url": null,
     "signature_url": null,
-    "auth_base_domain": "https://wegovnow-sandona-cert.liquidfeedback.com/",
+    "auth_base_domain": "https://sandona.liquidfeedback.net/",
     "auth_url": "api/1/authorization",
     "api_session":"api/1/session",
     "client_id": "wegovnowsandona.firstlife.org",
