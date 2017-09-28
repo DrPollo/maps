@@ -22,7 +22,7 @@
     "session_params":{
       "withCredentials": true
     },
-    "autologin":true
+    "autologin":false
   },
   "design":{
     "logo" : {
