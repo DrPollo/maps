@@ -13,10 +13,10 @@
     "state_name":"oauth_state",
     "profile_url": null,
     "signature_url": null,
-    "auth_base_domain": "https://wegovnow.liquidfeedback.com/",
+    "auth_base_domain": "https://wegovnow-sandona-cert.liquidfeedback.com/",
     "auth_url": "api/1/authorization",
     "api_session":"api/1/session",
-    "client_id": "wegovnowsandbox.firstlife.org",
+    "client_id": "wegovnowsandona.firstlife.org",
     "scopes":["identification", "profile"],
     "session_check": "member_id",
     "session_params":{
@@ -33,7 +33,7 @@
         "text": "WeGovNow!",
         "style": "color:white; font-family:sans-serif, arial, verdana; font-style: normal; font-weight: normal; font-size:8em; letter-spacing:-10px; text-shadow:1px 1px 3px #333;"}
     },
-    "navbar":"https://wegovnow-pt1.liquidfeedback.com/api/1/navigation?format=raw_html",
+    "navbar":"https://sandona.liquidfeedback.net/api/1/navigation?format=raw_html",
     "default_language" : "it",
     "side_menu":[],
     "colors":["#FC4A00",
