@@ -2,11 +2,11 @@
 {
   "app_name" : "WeGovNow",
   "domain_name" : "wegovnow-sandona",
-  "domain_id" : 21,
+  "domain_id" : 25,
   "ssl": true,
-  "read_domains":false,
+  "read_domains":[21],
   "authentication": {
-    "auth_server":"uwum_auth",
+    "auth_server":"uwum_auth_sandona",
     "auth_server_name":"UWUM",
     "token_mem_key":"token",
     "identity_mem_key":"user",
