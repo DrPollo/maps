@@ -41,12 +41,14 @@ angular.module('firstlife.controllers')
                 if (params.state) {
                     var currentState = MemoryFactory.get(stateKey);
                     $log.log('ho trovato state', params.state, currentState);
-                    if (params.state === currentState) {
-                        generateToken(params.code)
-                    } else {// errore stato non coincide
-                        // todo verifica corretta gestione state
-                        loginError();
-                    }
+                    generateToken(params.code);
+                    // todo fix state check
+                    // if (params.state === currentState) {
+                    //     generateToken(params.code)
+                    // } else {// errore stato non coincide
+                    //     // todo verifica corretta gestione state
+                    //     loginError();
+                    // }
                 } else {
                     $log.debug('non ho trovato state');
                     generateToken(params.code);
