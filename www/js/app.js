@@ -121,7 +121,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 AuthService.checkToken().then(
                     // se il token e' ok
                     function (response) {
-                        // $log.debug('check token response',response);
+                        $log.debug('autologin: check token response',response);
                     },
                     // se il token non e' ok
                     function (err) {

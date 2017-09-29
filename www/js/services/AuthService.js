@@ -56,6 +56,7 @@ angular.module('firstlife.services')
                 var deferred = $q.defer();
                 // $log.debug('check token validity',!MemoryFactory.get(tokenKey),!myConfig.authentication.token_check);
                 // se non ho token da controllare
+                $log.info('is user logged in?',MemoryFactory.get(tokenKey));
                 if (!MemoryFactory.get(tokenKey)) {
                     deferred.reject('no token to check');
                     return deferred.promise;
@@ -90,7 +91,7 @@ angular.module('firstlife.services')
             checkSession: function () {
                 // chiedo all'oauth server se c'e' un utente attivo nell'agent
                 var deferred = $q.defer();
-                // $log.debug('session url ',myConfig.authentication.api_session);
+                $log.log('session url ',myConfig.authentication.api_session);
                 if (!myConfig.authentication.api_session) {
                     deferred.reject('undefined api_session');
                 } else {
@@ -103,9 +104,9 @@ angular.module('firstlife.services')
                     if (myConfig.authentication.session_params) {
                         angular.extend(req, myConfig.authentication.session_params);
                     }
-                    console.log('check session ', req);
+                    $log.log('check session ', req);
                     $http(req).then(function (response) {
-                        // $log.debug('check session', response.data);
+                        $log.log('check session', response.data);
                         // se devo controllare un parametro
                         if (myConfig.authentication.session_check) {
                             if (response.data[myConfig.authentication.session_check]) {
