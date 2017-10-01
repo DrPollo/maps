@@ -1376,7 +1376,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     } else {
                         config.timeout = 20000;
                     }
-                    $log.log('request headers',config);
+                    $log.debug('request headers',config);
                     return config;
                 },
                 response: function (response) {

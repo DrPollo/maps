@@ -239,7 +239,7 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             isAuth: function () {
-                $log.log('isAuth?',MemoryFactory.get(tokenKey),(MemoryFactory.get(tokenKey) && !embed) ? true : false);
+                // $log.debug('isAuth?',MemoryFactory.get(tokenKey),(MemoryFactory.get(tokenKey) && !embed) ? true : false);
 
                 return (MemoryFactory.get(tokenKey) && !embed) ? true : false;
             },
