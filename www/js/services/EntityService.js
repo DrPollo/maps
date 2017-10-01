@@ -45,7 +45,7 @@ angular.module('firstlife.services')
             var typeKey = type.key;
             // $log.debug("EntityService, getDefaults, type ",type);
             // costruisco descrizione di default
-            var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.username).concat(" - ").concat(day);
+            // var defaultDescription = $filter('translate')(type.name).concat(", ").concat($filter("translate")("CREATED_BY")).concat(" ").concat(user.username||user.fullname).concat(" - ").concat(day);
             
             // lorem ipsum di dev per i campi testuali principali
             var devContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius dolor non mauris cursus consectetur. Cras eget interdum ipsum, non accumsan ligula. In ultricies fermentum velit in finibus. Fusce euismod posuere nisi id tempor. Aliquam erat volutpat. Ut pulvinar a mauris nec maximus. In volutpat justo ac est convallis, vitae pellentesque orci ultricies.";
