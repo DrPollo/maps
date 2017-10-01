@@ -224,7 +224,7 @@ angular.module('firstlife.services')
                     }
                 };
                 $http(req).then(function (response) {
-                    $log.debug('getToken, response', response);
+                    $log.log('getToken, response', response);
 
                     var token = response.data.token;
                     token.member.member_id = token.member_id;
