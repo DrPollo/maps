@@ -7,7 +7,7 @@
   "read_domains":[21],
   "authentication": {
     "auth_server":"uwum_auth_sandona",
-    "auth_server_name":"UWUM",
+    "auth_server_name":"UWUM_SANDONA",
     "token_mem_key":"token",
     "identity_mem_key":"user",
     "state_name":"oauth_state",

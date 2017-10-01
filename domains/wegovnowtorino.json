@@ -7,7 +7,7 @@
   "read_domains":false,
   "authentication": {
     "auth_server":"uwum_auth_torino",
-    "auth_server_name":"UWUM",
+    "auth_server_name":"UWUM_TORINO",
     "token_mem_key":"token",
     "identity_mem_key":"user",
     "state_name":"oauth_state",
