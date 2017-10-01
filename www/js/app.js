@@ -114,7 +114,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             $rootScope.previousState = fromState.name;
 
-            $log.debug('is auth?', AuthService.isAuth());
+            $log.log('is auth?', AuthService.isAuth());
             // primo controllo token esistente
             if (toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout') {
                 toCheck = false;
@@ -186,8 +186,9 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     // $log.debug('going home');
                     break;
                 case 'app.editor':
+                    $log.log('login pre editor', authenticate, AuthService.isAuth());
                     if (authenticate && !AuthService.isAuth()) {
-                        $log.debug('login obbligatorio, redirect a home');
+                        $log.log('login obbligatorio, redirect a home');
                         // vai a login per effettuare l'autenticazione
                         event.preventDefault();
                         $state.go('home', search_params);
