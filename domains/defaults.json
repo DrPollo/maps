@@ -61,6 +61,10 @@
       "logo_height": 160,
       "default_thumb": "img/thumb.jpg",
       "default_background": "img/bg/modulo-bg-bianco.svg",
+      "default_colors": {
+        "primary": "florange",
+        "secondary": "darkgray"
+      },
       "colors": [
         "#FC4A00",
         "#f44336",

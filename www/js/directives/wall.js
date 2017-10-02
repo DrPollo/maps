@@ -68,7 +68,7 @@ angular.module('firstlife.directives')
             link: function(scope, element, attr){
 
                 scope.loading = true;
-
+                scope.color = myConfig.design.default_colors;
                 var searchendSetTimeout;
                 var SEARCH_DELAY = myConfig.behaviour.searchend_delay;
                 var text_limit = 3;
@@ -347,7 +347,7 @@ angular.module('firstlife.directives')
                 })
             }
         }
-    }]).directive('wallCard',['$log', '$window', '$location', '$filter', '$ionicPopup', '$timeout', 'shareFactory', 'AuthService',function ($log, $window, $location, $filter, $ionicPopup, $timeout, shareFactory, AuthService) {
+    }]).directive('wallCard',['$log', '$window', '$location', '$filter', '$ionicPopup', '$timeout', 'shareFactory', 'AuthService', 'myConfig',function ($log, $window, $location, $filter, $ionicPopup, $timeout, shareFactory, AuthService, myConfig) {
     return{
         strict:'EG',
         scope:{
@@ -364,7 +364,7 @@ angular.module('firstlife.directives')
                 delete scope;
             });
 
-
+            scope.color = myConfig.design.default_colors;
             // scope.$broadcast('initActions',{id:scope.marker.id});
             // $log.debug(scope.marker.name);
 

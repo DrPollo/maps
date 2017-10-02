@@ -17,7 +17,7 @@
              ng-class="now == $index ? 'current' : ''"
              title="{{slot.upLabel}}"
              ng-click="scaleDown(slot)">
-            <div class="divider-label">{{slot.upLabel}}</div>
+            <div class="divider-label" ng-class="now == $index ? color.secondary : ''">{{slot.upLabel}}</div>
             <div class="label">{{slot.label | translate}}</div>
             <div class="entities" ng-init="c = counter(slot)">
                 <span ng-repeat="(k, val) in slot.markers" 
@@ -27,11 +27,11 @@
         </div>
     </ion-scroll>
     <div id="buttons">
-        <button class="button button-outline"
+        <button class="button"
                 ng-repeat="unit in units track by $index" 
                 ng-show="$index <= indexDefaultUnit"
                 ng-disabled="$index == indexDefaultUnit || viewer"
-                ng-class="indexDefaultUnit == $index ? 'current-button button-light' : 'button-stable'"
+                ng-class="indexDefaultUnit == $index ? 'button-clear button-'+color.secondary : 'button-outline button-'+color.secondary"
                 ng-click="scaleUpTo($index)">
             <span>{{unit.label| translate}}</span>
         </button>

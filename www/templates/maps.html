@@ -59,6 +59,7 @@
             <div class="flex-container flex-container-style fixed-height" ng-if="!viewer">
                 <div class="flex-item"  ng-if="config.actions.edit_mode" >
                     <button class="button button-float"
+                            ng-class="'button-'+color.primary"
                             title="{{ (!editMode ? 'TOGGLE_TO_EDIT_MODE' : 'TOGGLE_TO_VIEW_MODE') | translate}}"
                             ng-click="switchEditMode()">
                         <i class="icon ease-animation" ng-class="{'ion-plus-round': !editMode, 'ion-close-round': editMode}"></i>

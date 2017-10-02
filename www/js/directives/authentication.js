@@ -1,19 +1,21 @@
 angular.module('firstlife.directives')
-    .directive('registration',['$log','$window','AuthService', function($log,$window,AuthService){
+    .directive('registration',['$log','$window','AuthService', 'myConfig', function($log,$window,AuthService, myConfig){
         return{
             strict:'EG',
             replace: true,
-            template:'<button class="sign-up button button-block button-dark" style="background-color: #4d4d4d;" ng-click="goToSignUp()">{{"SIGNUP"|translate}}</button>',
+            templateUrl:'./templates/buttons/signup.html',
             link:function(scope, element, attrs){
+                scope.color = myConfig.design.default_colors;
                 scope.goToSignUp = function(){$window.location.href = AuthService.registration_url();}
             }
         }
-    }]).directive('login',['$window','$log','$location','AuthService', function($window,$log,$location,AuthService){
+    }]).directive('login',['$window','$log','$location','AuthService', 'myConfig',function($window,$log,$location,AuthService, myConfig){
         return{
             strict:'EG',
             replace: true,
-            template:'<button class="button button-positive button-block" ng-click="doLogIn()">{{"LOGIN"|translate}}</button>',
+            templateUrl:'./templates/buttons/login.html',
             link:function(scope, element, attrs){
+                scope.color = myConfig.design.default_colors;
                 scope.doLogIn = function(){
                     $window.location.href = AuthService.auth_url();
                 }

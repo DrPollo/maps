@@ -12,6 +12,8 @@ angular.module('firstlife.timeline',[])
                 delete $scope;
             });
 
+            $scope.color = myConfig.design.default_colors;
+
             // todo gestione dati nella timeline
             $scope.data = {};
             //listner cambio dei parametri get

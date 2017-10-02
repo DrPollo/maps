@@ -22,7 +22,7 @@
         <!--</div>-->
         <div class="subheader tags">
             <span ng-repeat="tag in marker.tags track by $index" class="tag" on-tap="filter(tag)">
-                <i class="icon ion-pricetag positive"></i>
+                <i class="icon ion-pricetag" ng-class="color.primary"></i>
                 {{tag |translate}}
             </span>
         </div>
@@ -31,14 +31,16 @@
             <span class="lastactivity">{{'LAST_ACTIVITY' |translate}} {{ (marker.last_activity || marker.last_update) | prettyDate}} {{'AGO'|translate}}</span>
             <!--{{','}} <span class="lastupdater">{{'IS_OWNER' |translate}} {{ marker.owner.name}}</span>-->
             <button
-                    class="button button-positive button-small button-clear icon-left"
+                    class="button button-small button-clear icon-left"
+                    ng-class="'button-'+color.primary"
                     title="{{'SHOW_ON_MAP'| translate}} {{marker.name}}"
                     on-tap="locateOnMap(marker.id)">
                 <i class="icon ion-pinpoint"></i>
                 {{"SHOW_ON_MAP"| translate}}
             </button>
             <button
-                    class="button button-positive button-small button-clear icon-left"
+                    class="button button-small button-clear icon-left"
+                    ng-class="'button-'+color.primary"
                     title="{{'SHARE'| translate}} {{marker.name}}"
                     on-tap="share(marker.id)">
                 <i class="icon ion-android-share-alt"></i>

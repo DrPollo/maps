@@ -1,5 +1,7 @@
 <ion-header-bar>
-    <button class="button button-positive icon ion-grid" on-tap="openTreeMap()">
+    <button class="button icon ion-grid"
+            ng-class="'button-'+color.secondary"
+            on-tap="openTreeMap()">
         <!--<i ng-if="!isMobile" class="icon ion-grid"></i>-->
         <!--<span>{{'CATEGORIES' |translate}}</span>-->
     </button>
@@ -11,7 +13,9 @@
         <!--<i class="icon ion-android-search"></i>-->
         <input type="search" placeholder="{{'FILTER_HINTS'| translate}}" ng-model="query">
         <i ng-show="query.length > 0" on-tap="clearQuery()" class="icon ion-close"></i>
-        <button type="submit" ng-disabled="query === ''" on-tap="qFiltering()" class="button button-positive icon ion-funnel"></button>
+        <button type="submit" ng-disabled="query === ''" on-tap="qFiltering()"
+                class="button icon ion-funnel"
+                ng-class="'button-'+color.primary"></button>
     </form>
 </ion-header-bar>
 <ion-header-bar class="bar bar-subheader">
@@ -20,7 +24,7 @@
         <button class="button button-clear icon-left button-small"
                 on-tap="sorting.toggleTime()"
                 title="{{ sorting.time |translate}}"
-                ng-class="sorting.current === 'time'? 'button-positive': 'button-dark'">
+                ng-class="sorting.current === 'time'? 'button-'+color.secondary: 'button-dark'">
             <i class="icon" ng-class="sorting.time === 'newer' ? 'ion-arrow-up-c' : 'ion-arrow-down-c'"></i>
             <span>{{ sorting.time |translate}}</span>
         </button>
@@ -31,7 +35,8 @@
             <i class="icon" ng-class="sorting.text === 'alphabetical' ? 'ion-arrow-down-c' : 'ion-arrow-up-c'"></i>
             <span>{{ sorting.text |translate}}</span>
         </button>
-        <button class="right button button-positive button-clear item-button ion-android-share-alt"
+        <button class="right button button-clear item-button ion-android-share-alt"
+                ng-class="'button-'+color.secondary"
                 on-tap="share()">
             {{'SHARE'|translate}}
         </button>

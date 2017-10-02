@@ -21,7 +21,7 @@ border-radius: 50% !important;
 
 
 .button-float {
-    background: #FC4A00 !important;
+    /*background: #FC4A00 !important;*/
     opacity: 1;
     color: white !important;
     z-index: 12 !important;

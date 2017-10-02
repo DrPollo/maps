@@ -5,6 +5,8 @@ angular.module('firstlife.controllers')
         var consoleCheck = false;
         var mapName = 'myMap';
 
+        $scope.color = myConfig.design.default_colors;
+
         var levels = {check: false};
         if (myConfig.map.area.levels) {
             levels = {check: true};

@@ -72,14 +72,14 @@ timeline{
             .icon:before{
                 line-height:25px;
             }
-            border-color: $positive;
+            //border-color: $positive;
             background-color: white !important;
         }
         .current-button, .current-button[disabled] {
             background-color: transparent !important;
             text-shadow: 1px 1px 0px white;
             border-color:transparent;
-            color:$positive;
+            //color:$positive;
         }
         .button.disabled, .button[disabled]{
             opacity:1;
@@ -214,7 +214,7 @@ timeline{
                 color:$positive;
             }
             .divider-label {
-                color: $positive;
+                //color: $positive;
                 font-weight: 500;
             }
         }

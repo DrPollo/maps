@@ -15,6 +15,175 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+
+
+// Button Mixins
+// --------------------------------------------------
+
+@mixin button-style($bg-color, $border-color, $active-bg-color, $active-border-color, $color) {
+  border-color: $border-color;
+  background-color: $bg-color;
+  color: $color;
+
+  // Give desktop users something to play with
+  &:hover {
+    color: $color;
+    text-decoration: none;
+  }
+  &.active,
+  &.activated {
+    border-color: $active-border-color;
+    background-color: $active-bg-color;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+  }
+}
+
+@mixin button-clear($color, $font-size:"") {
+  &.button-clear {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    color: $color;
+
+    @if $font-size != "" {
+      font-size: $font-size;
+    }
+  }
+  &.button-icon {
+    border-color: transparent;
+    background: none;
+  }
+}
+
+@mixin button-outline($color, $text-color:"") {
+  &.button-outline {
+    border-color: $color;
+    background: transparent;
+    @if $text-color == "" {
+      $text-color: $color;
+    }
+    color: $text-color;
+    &.active,
+    &.activated {
+      background-color: $color;
+      box-shadow: none;
+      color: #fff;
+    }
+  }
+}
+
+
+// Bar Mixins
+// --------------------------------------------------
+
+@mixin bar-style($bg-color, $border-color, $color) {
+  border-color: $border-color;
+  background-color: $bg-color;
+  background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+  color: $color;
+
+  .title {
+    color: $color;
+  }
+}
+
+
+// Tab Mixins
+// --------------------------------------------------
+
+@mixin tab-style($bg-color, $border-color, $color) {
+  border-color: $border-color;
+  background-color: $bg-color;
+  background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+  color: $color;
+}
+
+@mixin tab-badge-style($bg-color, $color) {
+  .tab-item .badge {
+    background-color: $bg-color;
+    color: $color;
+  }
+}
+
+
+// Item Mixins
+// --------------------------------------------------
+
+@mixin item-style($bg-color, $border-color, $color) {
+  border-color: $border-color;
+  background-color: $bg-color;
+  color: $color;
+}
+
+@mixin item-active-style($active-bg-color, $active-border-color) {
+  border-color: $active-border-color;
+  background-color: $active-bg-color;
+}
+
+
+// Badge Mixins
+// --------------------------------------------------
+
+@mixin badge-style($bg-color, $color) {
+  background-color: $bg-color;
+  color: $color;
+}
+
+
+// Range Mixins
+// --------------------------------------------------
+
+@mixin range-style($track-bg-color) {
+  &::-webkit-slider-thumb:before {
+    background: $track-bg-color;
+  }
+  &::-ms-fill-lower{
+    background: $track-bg-color;
+  }
+}
+
+
+// Checkbox Mixins
+// --------------------------------------------------
+
+@mixin checkbox-style($off-border-color, $on-bg-color, $on-border-color) {
+  & input:before,
+  & .checkbox-icon:before {
+    border-color: $off-border-color;
+  }
+
+  // what the background looks like when its checked
+  & input:checked:before,
+  & input:checked + .checkbox-icon:before {
+    background: $on-bg-color;
+    border-color: $on-border-color;
+  }
+}
+
+
+// Toggle Mixins
+// --------------------------------------------------
+
+@mixin toggle-style($on-border-color, $on-bg-color) {
+  // the track when the toggle is "on"
+  & input:checked + .track {
+    border-color: $on-border-color;
+    background-color: $on-bg-color;
+  }
+}
+@mixin toggle-small-style($on-bg-color) {
+  // the track when the toggle is "on"
+  & input:checked + .track {
+    background-color: rgba($on-bg-color, .5);
+  }
+  & input:checked + .track .handle {
+    background-color: $on-bg-color;
+  }
+}
+
+
+
+
 $positive:                        #FC4A00 !default;
 $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
@@ -27,6 +196,34 @@ $dark:                            #333 !default;
 $lightDark:                       #444 !default;
 $mediumDark:                      #666 !default;
 $lighterDark:                     #999 !default;
+
+
+$florange:          #FC4A00 !default;
+$orange:            #FF9800 !default;
+$pink :             #E91E63 !default;
+$deeporange:        #FF5722 !default;
+$blue:              #2196f3 !default;
+$lightblue:         #03a9f3 !default;
+$deeppurle:         #673AB7 !default;
+$cyan:              #00BCD4 !default;
+$teal:              #009688 !default;
+$light:             #03A9F4 !default;
+$indingo:           #3F51B5 !default;
+$purple:            #9C27B0 !default;
+$green:             #4CAF50 !default;
+$lightgreen:        #8BC34A !default;
+$yellow:            #FFEB3B !default;
+$amber:             #FFC107 !default;
+$lime:              #CDDC39 !default;
+$red:               #F44336 !default;
+$wgnred:            #c32630 !default;
+$gray:              #9E9E9E !default;
+$brown:             #795548 !default;
+$bluegray:          #607D8B !default;
+$darkgray:          #4d4d4d !default;
+
+
+
 
 $error:                           #ef473a !default;
 $valid:                           #33cd5f !default;
@@ -86,6 +283,339 @@ input::-ms-input-placeholder,textarea::-ms-input-placeholder { /* IE10+ */
     }
 
 }
+
+
+//$florange:          #FC4A00 !default;
+//$orange:            #FF9800 !default;
+//$pink :             #E91E63 !default;
+//$deeporange:        #FF5722 !default;
+//$blue:              #82b1ff !default;
+//$deeppurle:         #673AB7 !default;
+//$cyan:              #00BCD4 !default;
+//$teal:              #009688 !default;
+//$light:             #03A9F4 !default;
+//$indingo:           #3F51B5 !default;
+//$purple:            #9C27B0 !default;
+//$green:             #4CAF50 !default;
+//$lightgreen:        #8BC34A !default;
+//$yellow:            #FFEB3B !default;
+//$amber:             #FFC107 !default;
+//$lime:              #CDDC39 !default;
+//$red:               #F44336 !default;
+//$wgnred:            #c32630 !default;
+//$gray:              #9E9E9E !default;
+//$brown:             #795548 !default;
+//$bluegray:          #607D8B !default;
+//$darkgray:          #4d4d4d !default;
+
+
+// custom buttons
+$button-florange-bg:              $florange !default;
+$button-florange-text:            #fff !default;
+$button-florange-border:          darken($florange, 10%) !default;
+$button-florange-active-bg:       darken($florange, 10%) !default;
+$button-florange-active-border:   darken($florange, 10%) !default;
+
+$button-wgnred-bg:               $wgnred !default;
+$button-wgnred-text:            #fff !default;
+$button-wgnred-border:          darken($wgnred, 10%) !default;
+$button-wgnred-active-bg:       darken($wgnred, 10%) !default;
+$button-wgnred-active-border:   darken($wgnred, 10%) !default;
+
+$button-indingo-bg:              $indingo !default;
+$button-indingo-text:            #fff !default;
+$button-indingo-border:          darken($indingo, 10%) !default;
+$button-indingo-active-bg:       darken($indingo, 10%) !default;
+$button-indingo-active-border:   darken($indingo, 10%) !default;
+
+$button-lightblue-bg:                 $lightblue !default;
+$button-lightblue-text:               #fff !default;
+$button-lightblue-border:             darken($lightblue, 10%) !default;
+$button-lightblue-active-bg:          darken($lightblue, 10%) !default;
+$button-lightblue-active-border:      darken($lightblue, 10%) !default;
+
+$button-blue-bg:                 $blue !default;
+$button-blue-text:               #fff !default;
+$button-blue-border:             darken($blue, 10%) !default;
+$button-blue-active-bg:          darken($blue, 10%) !default;
+$button-blue-active-border:      darken($blue, 10%) !default;
+
+$button-green-bg:                 $green !default;
+$button-green-text:               #fff !default;
+$button-green-border:             darken($green, 10%) !default;
+$button-green-active-bg:          darken($green, 10%) !default;
+$button-green-active-border:      darken($green, 10%) !default;
+
+$button-darkgray-bg:                 $darkgray !default;
+$button-darkgray-text:               #fff !default;
+$button-darkgray-border:             darken($darkgray, 10%) !default;
+$button-darkgray-active-bg:          darken($darkgray, 10%) !default;
+$button-darkgray-active-border:      darken($darkgray, 10%) !default;
+
+
+$bar-transparency : 0 !default;
+// custom bars
+$bar-florange-bg:                    rgba($button-florange-bg, $bar-transparency) !default;
+$bar-florange-text:                  $button-florange-text !default;
+$bar-florange-border:                $button-florange-border !default;
+$bar-florange-active-bg:             $button-florange-active-bg !default;
+$bar-florange-active-border:         $button-florange-active-border !default;
+
+$bar-wgnred-bg:                    rgba($button-wgnred-bg, $bar-transparency) !default;
+$bar-wgnred-text:                  $button-wgnred-text !default;
+$bar-wgnred-border:                $button-wgnred-border !default;
+$bar-wgnred-active-bg:             $button-wgnred-active-bg !default;
+$bar-wgnred-active-border:         $button-wgnred-active-border !default;
+
+$bar-blue-bg:                    rgba($button-blue-bg, $bar-transparency) !default;
+$bar-blue-text:                  $button-blue-text !default;
+$bar-blue-border:                $button-blue-border !default;
+$bar-blue-active-bg:             $button-blue-active-bg !default;
+$bar-blue-active-border:         $button-blue-active-border !default;
+
+$bar-lightblue-bg:                    rgba($button-lightblue-bg, $bar-transparency) !default;
+$bar-lightblue-text:                  $button-lightblue-text !default;
+$bar-lightblue-border:                $button-lightblue-border !default;
+$bar-lightblue-active-bg:             $button-lightblue-active-bg !default;
+$bar-lightblue-active-border:         $button-lightblue-active-border !default;
+
+$bar-green-bg:                    rgba($button-green-bg, $bar-transparency) !default;
+$bar-green-text:                  $button-green-text !default;
+$bar-green-border:                $button-green-border !default;
+$bar-green-active-bg:             $button-green-active-bg !default;
+$bar-green-active-border:         $button-green-active-border !default;
+
+$bar-indingo-bg:                    rgba($button-indingo-bg, $bar-transparency) !default;
+$bar-indingo-text:                  $button-indingo-text !default;
+$bar-indingo-border:                $button-indingo-border !default;
+$bar-indingo-active-bg:             $button-indingo-active-bg !default;
+$bar-indingo-active-border:         $button-indingo-active-border !default;
+
+$bar-darkgray-bg:                    rgba($button-darkgray-bg, $bar-transparency) !default;
+$bar-darkgray-text:                  $button-darkgray-text !default;
+$bar-darkgray-border:                $button-darkgray-border !default;
+$bar-darkgray-active-bg:             $button-darkgray-active-bg !default;
+$bar-darkgray-active-border:         $button-darkgray-active-border !default;
+
+// custom tabs
+$tabs-florange-bg:                   $button-florange-bg !default;
+$tabs-florange-border:               $button-florange-border !default;
+$tabs-florange-text:                 $button-florange-text !default;
+
+$tabs-wgnred-bg:                   $button-wgnred-bg !default;
+$tabs-wgnred-border:               $button-wgnred-border !default;
+$tabs-wgnred-text:                 $button-wgnred-text !default;
+
+$tabs-green-bg:                   $button-green-bg !default;
+$tabs-green-border:               $button-green-border !default;
+$tabs-green-text:                 $button-green-text !default;
+
+$tabs-blue-bg:                   $button-blue-bg !default;
+$tabs-blue-border:               $button-blue-border !default;
+$tabs-blue-text:                 $button-blue-text !default;
+
+$tabs-lightblue-bg:                   $button-lightblue-bg !default;
+$tabs-lightblue-border:               $button-lightblue-border !default;
+$tabs-lightblue-text:                 $button-lightblue-text !default;
+
+$tabs-indingo-bg:                   $button-indingo-bg !default;
+$tabs-indingo-border:               $button-indingo-border !default;
+$tabs-indingo-text:                 $button-indingo-text !default;
+
+$tabs-darkgray-bg:                   $button-darkgray-bg !default;
+$tabs-darkgray-border:               $button-darkgray-border !default;
+$tabs-darkgray-text:                 $button-darkgray-text !default;
+// custom items
+$item-florange-bg:                   $button-florange-bg !default;
+$item-florange-border:               $button-florange-border !default;
+$item-florange-text:                 $button-florange-text !default;
+$item-florange-active-bg:            $button-florange-active-bg !default;
+$item-florange-active-border:        $button-florange-active-border !default;
+
+$item-wgnred-bg:                   $button-wgnred-bg !default;
+$item-wgnred-border:               $button-wgnred-border !default;
+$item-wgnred-text:                 $button-wgnred-text !default;
+$item-wgnred-active-bg:            $button-wgnred-active-bg !default;
+$item-wgnred-active-border:        $button-wgnred-active-border !default;
+
+$item-green-bg:                   $button-green-bg !default;
+$item-green-border:               $button-green-border !default;
+$item-green-text:                 $button-green-text !default;
+$item-green-active-bg:            $button-green-active-bg !default;
+$item-green-active-border:        $button-green-active-border !default;
+
+$item-blue-bg:                   $button-blue-bg !default;
+$item-blue-border:               $button-blue-border !default;
+$item-blue-text:                 $button-blue-text !default;
+$item-blue-active-bg:            $button-blue-active-bg !default;
+$item-blue-active-border:        $button-blue-active-border !default;
+
+$item-lightblue-bg:                   $button-lightblue-bg !default;
+$item-lightblue-border:               $button-lightblue-border !default;
+$item-lightblue-text:                 $button-lightblue-text !default;
+$item-lightblue-active-bg:            $button-lightblue-active-bg !default;
+$item-lightblue-active-border:        $button-lightblue-active-border !default;
+
+$item-indingo-bg:                   $button-indingo-bg !default;
+$item-indingo-border:               $button-indingo-border !default;
+$item-indingo-text:                 $button-indingo-text !default;
+$item-indingo-active-bg:            $button-indingo-active-bg !default;
+$item-indingo-active-border:        $button-indingo-active-border !default;
+
+$item-darkgray-bg:                   $button-darkgray-bg !default;
+$item-darkgray-border:               $button-darkgray-border !default;
+$item-darkgray-text:                 $button-darkgray-text !default;
+$item-darkgray-active-bg:            $button-darkgray-active-bg !default;
+$item-darkgray-active-border:        $button-darkgray-active-border !default;
+// custom toggles
+$toggle-on-florange-bg:              $button-florange-border !default;
+$toggle-on-florange-border:          $toggle-on-florange-bg !default;
+
+$toggle-on-wgnred-bg:              $button-wgnred-border !default;
+$toggle-on-wgnred-border:          $toggle-on-wgnred-bg !default;
+
+$toggle-on-green-bg:              $button-green-border !default;
+$toggle-on-green-border:          $toggle-on-green-bg !default;
+
+$toggle-on-blue-bg:              $button-blue-border !default;
+$toggle-on-blue-border:          $toggle-on-blue-bg !default;
+
+$toggle-on-lightblue-bg:              $button-lightblue-border !default;
+$toggle-on-lightblue-border:          $toggle-on-lightblue-bg !default;
+
+$toggle-on-indingo-bg:              $button-indingo-border !default;
+$toggle-on-indingo-border:          $toggle-on-indingo-bg !default;
+
+$toggle-on-darkgray-bg:              $button-darkgray-border !default;
+$toggle-on-darkgray-border:          $toggle-on-darkgray-bg !default;
+// custom checkboxes
+$checkbox-off-border-florange:       $button-florange-border !default;
+$checkbox-on-bg-florange:            $button-florange-border !default;
+
+$checkbox-off-border-wgnred:       $button-wgnred-border !default;
+$checkbox-on-bg-wgnred:            $button-wgnred-border !default;
+
+$checkbox-off-border-green:       $button-green-border !default;
+$checkbox-on-bg-green:            $button-green-border !default;
+
+$checkbox-off-border-blue:       $button-blue-border !default;
+$checkbox-on-bg-blue:            $button-blue-border !default;
+
+$checkbox-off-border-lightblue:       $button-lightblue-border !default;
+$checkbox-on-bg-lightblue:            $button-lightblue-border !default;
+
+$checkbox-off-border-indingo:       $button-indingo-border !default;
+$checkbox-on-bg-indingo:            $button-indingo-border !default;
+
+$checkbox-off-border-darkgray:       $button-darkgray-border !default;
+$checkbox-on-bg-darkgray:            $button-darkgray-border !default;
+// custom range
+$range-florange-track-bg:            $button-florange-border !default;
+
+$range-wgnred-track-bg:            $button-wgnred-border !default;
+
+$range-green-track-bg:            $button-green-border !default;
+
+$range-blue-track-bg:            $button-blue-border !default;
+
+$range-lightblue-track-bg:            $button-lightblue-border !default;
+
+$range-indingo-track-bg:            $button-indingo-border !default;
+
+$range-darkgray-track-bg:            $button-darkgray-border !default;
+// custom badges
+$badge-florange-bg:                  $button-florange-bg !default;
+$badge-florange-text:                $button-florange-text !default;
+
+$badge-wgnred-bg:                  $button-wgnred-bg !default;
+$badge-wgnred-text:                $button-wgnred-text !default;
+
+$badge-green-bg:                  $button-green-bg !default;
+$badge-green-text:                $button-green-text !default;
+
+$badge-blue-bg:                  $button-blue-bg !default;
+$badge-blue-text:                $button-blue-text !default;
+
+$badge-lightblue-bg:                  $button-lightblue-bg !default;
+$badge-lightblue-text:                $button-lightblue-text !default;
+
+$badge-indingo-bg:                  $button-indingo-bg !default;
+$badge-indingo-text:                $button-indingo-text !default;
+
+$badge-darkgray-bg:                  $button-darkgray-bg !default;
+$badge-darkgray-text:                $button-darkgray-text !default;
+// custom spinners
+$spinner-florange-stroke:         $florange !default;
+$spinner-florange-fill:           $florange !default;
+
+$spinner-wgnred-stroke:         $wgnred !default;
+$spinner-wgnred-fill:           $wgnred !default;
+
+$spinner-green-stroke:         $green !default;
+$spinner-green-fill:           $green !default;
+
+$spinner-blue-stroke:         $blue !default;
+$spinner-blue-fill:           $blue !default;
+
+$spinner-lightblue-stroke:         $lightblue !default;
+$spinner-lightblue-fill:           $lightblue !default;
+
+$spinner-indingo-stroke:         $indingo !default;
+$spinner-indingo-fill:           $indingo !default;
+
+$spinner-darkgray-stroke:         $darkgray !default;
+$spinner-darkgray-fill:           $darkgray !default;
+
+.florange{ color: $florange;}
+.wgnred{ color: $wgnred;}
+.green{ color: $green;}
+.blue{ color: $blue;}
+.lightblue{ color: $lightblue;}
+.indingo{ color: $indingo;}
+.darkgray{ color: $darkgray;}
+
+
+
+.button{
+  &.button-florange {
+    @include button-style($button-florange-bg, $button-florange-border, $button-florange-active-bg, $button-florange-active-border, $button-florange-text);
+    @include button-clear($button-florange-border);
+    @include button-outline($button-florange-border);
+  }
+  &.button-wgnred {
+    @include button-style($button-wgnred-bg, $button-wgnred-border, $button-wgnred-active-bg, $button-wgnred-active-border, $button-wgnred-text);
+    @include button-clear($button-wgnred-border);
+    @include button-outline($button-wgnred-border);
+  }
+  &.button-green {
+    @include button-style($button-green-bg, $button-green-border, $button-green-active-bg, $button-green-active-border, $button-green-text);
+    @include button-clear($button-green-border);
+    @include button-outline($button-green-border);
+  }
+  &.button-blue {
+    @include button-style($button-blue-bg, $button-blue-border, $button-blue-active-bg, $button-blue-active-border, $button-blue-text);
+    @include button-clear($button-blue-border);
+    @include button-outline($button-blue-border);
+  }
+  &.button-lightblue {
+    @include button-style($button-lightblue-bg, $button-lightblue-border, $button-lightblue-active-bg, $button-lightblue-active-border, $button-lightblue-text);
+    @include button-clear($button-lightblue-border);
+    @include button-outline($button-lightblue-border);
+  }
+  &.button-indingo {
+    @include button-style($button-indingo-bg, $button-indingo-border, $button-indingo-active-bg, $button-indingo-active-border, $button-indingo-text);
+    @include button-clear($button-indingo-border);
+    @include button-outline($button-indingo-border);
+  }
+  &.button-darkgray {
+    @include button-style($button-darkgray-bg, $button-darkgray-border, $button-darkgray-active-bg, $button-darkgray-active-border, $button-darkgray-text);
+    @include button-clear($button-darkgray-border);
+    @include button-outline($button-darkgray-border);
+  }
+}
+
+
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 // $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -161,3 +691,7 @@ $ionicons-font-path: "../lib/ionicons/fonts" !default;
 
 // thingcard
 @import "scss/thing";
+
+
+
+

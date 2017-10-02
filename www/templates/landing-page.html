@@ -12,10 +12,10 @@
             </ion-title>
         </div>
         <div class="right">
-            <div class="button lang" ng-class="(currentLang == 'it') ? 'button-positive' : 'button-stable button-outline'"
+            <div class="button lang" ng-class="(currentLang == 'it') ? 'button-'+defaults.design.default_colors.secondary : 'button-stable button-outline'"
                  ng-click="langSelector('it')">It
             </div>
-            <div class="button lang" ng-class="(currentLang == 'en') ? 'button-positive' : 'button-stable button-outline'"
+            <div class="button lang" ng-class="(currentLang == 'en') ? 'button-'+defaults.design.default_colors.secondary : 'button-stable button-outline'"
                  ng-click="langSelector('en')">En
             </div>
         </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="right">
                         <a href="{{defaults.design.landingpage.about.action[currentLang].url}}" target="_blank">
-                            <button  class="button button-positive button-small" >
+                            <button  class="button button-small" ng-class="'button-'+defaults.design.default_colors.primary" >
                                 {{defaults.design.landingpage.about.action[currentLang].label}}
                             </button>
                         </a>
