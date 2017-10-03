@@ -56,7 +56,7 @@ angular.module('firstlife.directives', [])
                                     errors++;
                                     getNavBar();
                                 }
-                                $log.error(err);
+                                $log.error(xmlHttp);
                             }
                         }
 
