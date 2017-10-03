@@ -59,7 +59,6 @@ angular.module('firstlife.directives', [])
                                 $log.error(xmlHttp);
                             }
                         }
-
                     };
                     xmlHttp.open("GET", url, true); // true for asynchronous
                     xmlHttp.send(null);

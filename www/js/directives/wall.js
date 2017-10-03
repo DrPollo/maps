@@ -118,7 +118,8 @@ angular.module('firstlife.directives')
                 var index = 0;
                 scope.markers = [];
                 scope.adapterContainer = {
-                    topVisible : 0
+                    topVisible : 0,
+                    adapter: {}
                 };
                 scope.datasource = {
                     get: function (index, count, success) {
