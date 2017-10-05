@@ -258,8 +258,8 @@ $scope.initType = function (type) {
     var check = $filter('filter')(_this.categories, $scope.isCatRelevant);
     $scope.checkCat = ( check.length > 0 );
     $scope.catStepInvalid();
-    //$log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
-    // $log.debug('check',(check.length > 0));
+    $log.debug("filtro categoria ",check, _this.categories, _this.wizard.dataForm.entity_type);
+    $log.debug('check',(check.length > 0));
     // check cats
     if ($scope.checkCat) {
         $scope.nextStep();
@@ -273,14 +273,14 @@ $scope.initType = function (type) {
 
 $scope.nextStep = function () {
     // passo allo step 2
-    // $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+    $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
     $scope.wizardHandler.next();
     $ionicScrollDelegate.scrollTop();
 };
 $scope.prevStep = function () {
     // passo allo step 2
-    // $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
-    // $log.debug('prev or 0?', $scope.checkCat, $scope.checkCat && $scope.wizardHandler.currentIndex() === 2);
+    $log.debug('slide to next',$ionicSlideBoxDelegate.$getByHandle('wizard'));
+    $log.debug('prev or 0?', $scope.checkCat, $scope.checkCat && $scope.wizardHandler.currentIndex() === 2);
     if (!$scope.checkCat && $scope.wizardHandler.currentIndex() === 2) {
         $scope.wizardHandler.slide(0);
         $ionicScrollDelegate.scrollTop();
@@ -416,7 +416,7 @@ _this.datePickerTo = function (val) {
 
 $scope.isCatRelevant = function (item) {
     var check = ((item.entities.indexOf(_this.wizard.dataForm.entity_type) > -1) && item.is_editable);
-    //$log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
+    $log.debug("filtro categoria ",item, check, _this.wizard.dataForm.entity_type);
     return check;
 };
 

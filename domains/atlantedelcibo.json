@@ -51,6 +51,7 @@
           "category_space":14,
           "name":"Costo dell'Evento",
           "slug":"Costo dell'Evento",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -70,16 +71,13 @@
               "icon_name":"ion-cash"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_EVENTS"
-            }
-          ]
+          "entities":["FL_EVENTS"]
         },
         {
           "category_space":16,
           "name":"Partecipazione all'Evento",
           "slug":"Partecipazione all'Evento",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -111,16 +109,13 @@
               "icon_name":"ion-load-b"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_EVENTS"
-            }
-          ]
+          "entities":["FL_EVENTS"]
         },
         {
           "category_space":49,
           "name":"Tipo di Luogo",
           "slug":"Tipo di Luogo",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -205,16 +200,13 @@
               "icon_name":"ion-ios-information-empty"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_PLACES"
-            }
-          ]
+          "entities":["FL_PLACES"]
         },
         {
           "category_space":50,
           "name":"Tipo di Extra",
           "slug":"Tipo di Extra",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -243,16 +235,13 @@
               "icon_name":"ion-chatbox-working"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_ARTICLES"
-            }
-          ]
+          "entities":["FL_ARTICLES"]
         },
         {
           "category_space":51,
           "name":"Tipo di Gruppo",
           "slug":"tipo-di-gruppo",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -281,20 +270,13 @@
               "icon_name":"ion-briefcase"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_GROUPS",
-              "is_editable":true,
-              "is_mandatory":true,
-              "multiple_categories_allowed":false,
-              "is_visible":true
-            }
-          ]
+          "entities":["FL_GROUPS"]
         },
         {
           "category_space":52,
           "name":"Tipo di Evento ",
           "slug":"tipo-di-evento",
+          "description": "",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
@@ -372,11 +354,7 @@
               "icon_name":"ion-ios-information-empty"
             }
           ],
-          "entities":[
-            {
-              "entity":"FL_EVENTS"
-            }
-          ]
+          "entities":["FL_EVENTS"]
         }
       ]
     }
