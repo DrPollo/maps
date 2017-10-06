@@ -402,6 +402,35 @@
   "behaviour":{
     "min_text_length":3
   },
-  "custom_labels":false
+  "custom_labels":{
+    "en":{
+      "Tipo di Evento":"Events types",
+      "Eventi culturali":"Cultural events",
+      "Eventi sportivi":"Sport events",
+      "Attività di intrattenimento":"Entertainment",
+      "Musica":"Live Music",
+      "incontri di approfondimento":"Briefing",
+      "Qualità degli eventi":"Events Quality",
+      "Affollati":"Crowded",
+      "All'aperto":"Outdoors",
+      "Al chiuso":"Indoors",
+      "Tipo di Luogo":"Place Types",
+      "Parchi e natura":"Parks and nature",
+      "Mercati e negozi":"Markets and Shops",
+      "Aggregazione e community":"Meeting and community",
+      "Sport e attività fisica":"Sport",
+      "Cultura e musei":"Culture and museum",
+      "Ristorazione":"Eating places",
+      "Servizi per la persona":"Personal services",
+      "Qualità dei luoghi":"Place Quality",
+      "Trafficati":"Congested",
+      "Isolati":"Isolated",
+      "Silenziosi":"Quiet",
+      "Tipo di news":"News Types",
+      "Trasporti":"Transportation",
+      "Uffici pubblici":"Public Offices",
+      "Altro":"Others"
+    }
+  }
 }
 }
