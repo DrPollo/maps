@@ -294,8 +294,8 @@
       },
       {
         "category_space": 43,
-        "name": "Tipo di evento",
-        "slug": "Tipo di evento",
+        "name": "Tipo di Evento",
+        "slug": "tipo-evento",
         "description": "Tipo di evento per maps4all",
         "is_editable":true,
         "is_mandatory":true,
