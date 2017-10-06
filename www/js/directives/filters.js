@@ -339,7 +339,9 @@ angular.module('firstlife.directives')
                 scope.clickOnResult = function (entry){
                     if(entry.type === 'location'){
                         scope.results = false;
-                        scope.locate({'location': entry.position});
+                        $log.log('ask change location',entry);
+                        var pos = angular.extend({},entry.position,{zoom:myConfig.map.zoom_create});
+                        scope.locate({'location': pos});
                         // emptyResults();
                     } else if(entry.type === 'thing'){
                         scope.results = false;

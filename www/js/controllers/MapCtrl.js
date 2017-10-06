@@ -563,7 +563,7 @@ angular.module('firstlife.controllers')
         // centra la mappa
         // accetta paramentri per la locate: center, marker, coords
         function locate(params) {
-            // $log.debug("centro su luogo: ",params);
+            $log.log("centro su luogo: ",params);
             // se ho i parametri centro
             if (params.lat && params.lng) {
                 // posiziono la mappa
