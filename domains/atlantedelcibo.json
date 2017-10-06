@@ -37,14 +37,12 @@
     },
     "custom_labels":{
       "it":{
-        "PLACE_NAME":"Attività",
-        "FL_PLACES":"Attività",
-        "INITIATIVES": "Progetti"
+        "INITIATIVES": "Progetti",
+        "CONTENT": "Aggiungi"
       },
       "en":{
-        "PLACE_NAME":"Activity",
-        "FL_PLACES":"Activity",
-        "INITIATIVES": "Projects"
+        "INITIATIVES": "Projects",
+        "CONTENT": "Add"
       }
     },
     "types":{
