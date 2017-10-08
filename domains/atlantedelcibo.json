@@ -119,9 +119,9 @@
         },
         {
           "category_space":49,
-          "name":"Tipo di Attività",
-          "slug":"tipi-attivita",
-          "description": "Tipologie di attività",
+          "name":"Tipo di Luogo",
+          "slug":"tipi-luogo",
+          "description": "Tipologie di luoghi",
           "is_editable":true,
           "is_mandatory":true,
           "multiple_categories_allowed":false,
