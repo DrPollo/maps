@@ -163,8 +163,6 @@
           }
         ],
         "entities":[
-          "FL_EVENTS",
-          "FL_GROUPS",
           "FL_PLACES"
         ]
       },

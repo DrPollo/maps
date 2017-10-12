@@ -75,7 +75,337 @@
       "#ccc"]
   },
   "types" : {
-    "categories":[{"category_space":12,"name":"Generico","slug":"generico","description":"Generico","is_editable":false,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":false,"color_index":6,"categories":[{"id":-80,"name":"Commento(cat)","description":"Commento(cat)","category_index":1,"icon_name":"ion-android-radio-button-off"},{"id":-82,"name":"Articolo(cat)","description":"Articolo(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"},{"id":-81,"name":"Immagine(cat)","description":"Immagine(cat)","category_index":2,"icon_name":"ion-android-radio-button-off"}],"entities":["FL_COMMENTS","FL_IMAGES"]},{"category_space":29,"name":"Categories","slug":"categories","description":"Categories","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":6,"categories":[{"id":-510,"name":"Culture and Arts","description":"Culture and Arts","category_index":1,"icon_name":"ion-paintbrush"},{"id":-511,"name":"Education and Training","description":"Education and Training","category_index":2,"icon_name":"ion-university"},{"id":-512,"name":"Social Activities","description":"Social Activities","category_index":3,"icon_name":"ion-android-people"},{"id":-513,"name":"Sports","description":"Sports","category_index":4,"icon_name":"ion-ios-football"},{"id":-514,"name":"Food and Provisions","description":"Food and Provisions","category_index":5,"icon_name":"ion-android-restaurant"},{"id":-515,"name":"Free Time","description":"Free Time","category_index":6,"icon_name":"ion-chatbubbles"},{"id":-516,"name":"Public Offices","description":"Public Offices","category_index":7,"icon_name":"ion-social-buffer"},{"id":-517,"name":"Professional Services","description":"Professional Services","category_index":8,"icon_name":"ion-briefcase"},{"id":-518,"name":"Industry and Craft","description":"Industry and Craft","category_index":9,"icon_name":"ion-settings"},{"id":-519,"name":"Service and Trade","description":"Service and Trade","category_index":10,"icon_name":"ion-bag"},{"id":-520,"name":"Transport and Mobility","description":"Transport and Mobility","category_index":11,"icon_name":"ion-android-subway"}],"entities":["FL_EVENTS","FL_GROUPS","FL_PLACES"]},{"category_space":30,"name":"Typology of Spaces","slug":"typology-of spaces","description":"Typology of Spaces","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":18,"categories":[{"id":-530,"name":"Green and Open Spaces","description":"Green and Open Spaces","category_index":1,"icon_name":"ion-leaf"},{"id":-531,"name":"nstitutional Spaces","description":"nstitutional Spaces","category_index":2,"icon_name":"ion-ios-flag"},{"id":-532,"name":"Residences and Neighborhoods","description":"Residences and Neighborhoods","category_index":3,"icon_name":"ion-ios-home"},{"id":-533,"name":"Productive Spaces","description":"Productive Spaces","category_index":4,"icon_name":"ion-gear-a"},{"id":-534,"name":"Monuments and Historic Sites","description":"Monuments and Historic Sites","category_index":5,"icon_name":"ion-ribbon-b"}],"entities":["FL_PLACES"]},{"category_space":31,"name":"Cost","slug":"cost","description":"Cost","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":24,"categories":[{"id":-540,"name":"Free (Services)","description":"Free (Services)","category_index":1,"icon_name":"ion-happy-outline"},{"id":-541,"name":"Payment (Services)","description":"Payment (Services)","category_index":2,"icon_name":"ion-cash"}],"entities":["FL_EVENTS"]},{"category_space":32,"name":"Access","slug":"access","description":"Access","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":27,"categories":[{"id":-550,"name":"Free Access","description":"Free Access","category_index":1,"icon_name":"ion-radio-waves"},{"id":-551,"name":"By Invitation/On Reservation","description":"By Invitation/On Reservation","category_index":2,"icon_name":"ion-paper-airplane"},{"id":-552,"name":"Reserved for Groups","description":"Reserved for Groups","category_index":3,"icon_name":"ion-android-hand"}],"entities":["FL_EVENTS"]},{"category_space":33,"name":"Participation","slug":"participation","description":"Participation","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":31,"categories":[{"id":-560,"name":"For All","description":"For All","category_index":1,"icon_name":"ion-load-b"},{"id":-561,"name":"For Kids and Teens","description":"For Kids and Teens","category_index":2,"icon_name":"ion-ios-color-wand"},{"id":-562,"name":"For Young Adults","description":"For Young Adults","category_index":3,"icon_name":"ion-android-bar"},{"id":-563,"name":"For Families","description":"For Families","category_index":4,"icon_name":"ion-icecream"}],"entities":["FL_EVENTS"]},{"category_space":34,"name":"Contributions","slug":"contributions","description":"Contributions","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":36,"categories":[{"id":-570,"name":"Histories","description":"Histories","category_index":1,"icon_name":"ion-chatboxes"},{"id":-571,"name":"Stories","description":"Stories","category_index":2,"icon_name":"ion-edit"},{"id":-572,"name":"Reports","description":"Reports","category_index":3,"icon_name":"ion-android-clipboard"}],"entities":["FL_ARTICLES"]},{"category_space":35,"name":"Groups","slug":"groups","description":"Groups","is_editable":true,"is_mandatory":true,"multiple_categories_allowed":false,"is_visible":true,"color_index":40,"categories":[{"id":-580,"name":"Newsgroups","description":"Newsgroups","category_index":1,"icon_name":"ion-android-chat"},{"id":-581,"name":"Coordination Groups","description":"Coordination Groups","category_index":2,"icon_name":"ion-ios-people"},{"id":-582,"name":"Design Groups","description":"Design Groups","category_index":3,"icon_name":"ion-wand"}],"entities":["FL_GROUPS"]}]
+    "categories":[
+      {
+        "category_space":29,
+        "name":"Categories",
+        "slug":"categories",
+        "description":"Categories",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":6,
+        "categories":[
+          {
+            "id":-510,
+            "name":"Culture and Arts",
+            "description":"Culture and Arts",
+            "category_index":1,
+            "icon_name":"ion-paintbrush"
+          },
+          {
+            "id":-511,
+            "name":"Education and Training",
+            "description":"Education and Training",
+            "category_index":2,
+            "icon_name":"ion-university"
+          },
+          {
+            "id":-512,
+            "name":"Social Activities",
+            "description":"Social Activities",
+            "category_index":3,
+            "icon_name":"ion-android-people"
+          },
+          {
+            "id":-513,
+            "name":"Sports",
+            "description":"Sports",
+            "category_index":4,
+            "icon_name":"ion-ios-football"
+          },
+          {
+            "id":-514,
+            "name":"Food and Provisions",
+            "description":"Food and Provisions",
+            "category_index":5,
+            "icon_name":"ion-android-restaurant"
+          },
+          {
+            "id":-515,
+            "name":"Free Time",
+            "description":"Free Time",
+            "category_index":6,
+            "icon_name":"ion-chatbubbles"
+          },
+          {
+            "id":-516,
+            "name":"Public Offices",
+            "description":"Public Offices",
+            "category_index":7,
+            "icon_name":"ion-social-buffer"
+          },
+          {
+            "id":-517,
+            "name":"Professional Services",
+            "description":"Professional Services",
+            "category_index":8,
+            "icon_name":"ion-briefcase"
+          },
+          {
+            "id":-518,
+            "name":"Industry and Craft",
+            "description":"Industry and Craft",
+            "category_index":9,
+            "icon_name":"ion-settings"
+          },
+          {
+            "id":-519,
+            "name":"Service and Trade",
+            "description":"Service and Trade",
+            "category_index":10,
+            "icon_name":"ion-bag"
+          },
+          {
+            "id":-520,
+            "name":"Transport and Mobility",
+            "description":"Transport and Mobility",
+            "category_index":11,
+            "icon_name":"ion-android-subway"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space":30,
+        "name":"Typology of Spaces",
+        "slug":"typology-of spaces",
+        "description":"Typology of Spaces",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":18,
+        "categories":[
+          {
+            "id":-530,
+            "name":"Green and Open Spaces",
+            "description":"Green and Open Spaces",
+            "category_index":1,
+            "icon_name":"ion-leaf"
+          },
+          {
+            "id":-531,
+            "name":"nstitutional Spaces",
+            "description":"nstitutional Spaces",
+            "category_index":2,
+            "icon_name":"ion-ios-flag"
+          },
+          {
+            "id":-532,
+            "name":"Residences and Neighborhoods",
+            "description":"Residences and Neighborhoods",
+            "category_index":3,
+            "icon_name":"ion-ios-home"
+          },
+          {
+            "id":-533,
+            "name":"Productive Spaces",
+            "description":"Productive Spaces",
+            "category_index":4,
+            "icon_name":"ion-gear-a"
+          },
+          {
+            "id":-534,
+            "name":"Monuments and Historic Sites",
+            "description":"Monuments and Historic Sites",
+            "category_index":5,
+            "icon_name":"ion-ribbon-b"
+          }
+        ],
+        "entities":[
+          "FL_PLACES"
+        ]
+      },
+      {
+        "category_space":31,
+        "name":"Cost",
+        "slug":"cost",
+        "description":"Cost",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":24,
+        "categories":[
+          {
+            "id":-540,
+            "name":"Free (Services)",
+            "description":"Free (Services)",
+            "category_index":1,
+            "icon_name":"ion-happy-outline"
+          },
+          {
+            "id":-541,
+            "name":"Payment (Services)",
+            "description":"Payment (Services)",
+            "category_index":2,
+            "icon_name":"ion-cash"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":32,
+        "name":"Access",
+        "slug":"access",
+        "description":"Access",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":27,
+        "categories":[
+          {
+            "id":-550,
+            "name":"Free Access",
+            "description":"Free Access",
+            "category_index":1,
+            "icon_name":"ion-radio-waves"
+          },
+          {
+            "id":-551,
+            "name":"By Invitation/On Reservation",
+            "description":"By Invitation/On Reservation",
+            "category_index":2,
+            "icon_name":"ion-paper-airplane"
+          },
+          {
+            "id":-552,
+            "name":"Reserved for Groups",
+            "description":"Reserved for Groups",
+            "category_index":3,
+            "icon_name":"ion-android-hand"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":33,
+        "name":"Participation",
+        "slug":"participation",
+        "description":"Participation",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":31,
+        "categories":[
+          {
+            "id":-560,
+            "name":"For All",
+            "description":"For All",
+            "category_index":1,
+            "icon_name":"ion-load-b"
+          },
+          {
+            "id":-561,
+            "name":"For Kids and Teens",
+            "description":"For Kids and Teens",
+            "category_index":2,
+            "icon_name":"ion-ios-color-wand"
+          },
+          {
+            "id":-562,
+            "name":"For Young Adults",
+            "description":"For Young Adults",
+            "category_index":3,
+            "icon_name":"ion-android-bar"
+          },
+          {
+            "id":-563,
+            "name":"For Families",
+            "description":"For Families",
+            "category_index":4,
+            "icon_name":"ion-icecream"
+          }
+        ],
+        "entities":[
+          "FL_EVENTS"
+        ]
+      },
+      {
+        "category_space":34,
+        "name":"Contributions",
+        "slug":"contributions",
+        "description":"Contributions",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":36,
+        "categories":[
+          {
+            "id":-570,
+            "name":"Histories",
+            "description":"Histories",
+            "category_index":1,
+            "icon_name":"ion-chatboxes"
+          },
+          {
+            "id":-571,
+            "name":"Stories",
+            "description":"Stories",
+            "category_index":2,
+            "icon_name":"ion-edit"
+          },
+          {
+            "id":-572,
+            "name":"Reports",
+            "description":"Reports",
+            "category_index":3,
+            "icon_name":"ion-android-clipboard"
+          }
+        ],
+        "entities":[
+          "FL_ARTICLES"
+        ]
+      },
+      {
+        "category_space":35,
+        "name":"Groups",
+        "slug":"groups",
+        "description":"Groups",
+        "is_editable":true,
+        "is_mandatory":true,
+        "multiple_categories_allowed":false,
+        "is_visible":true,
+        "color_index":40,
+        "categories":[
+          {
+            "id":-580,
+            "name":"Newsgroups",
+            "description":"Newsgroups",
+            "category_index":1,
+            "icon_name":"ion-android-chat"
+          },
+          {
+            "id":-581,
+            "name":"Coordination Groups",
+            "description":"Coordination Groups",
+            "category_index":2,
+            "icon_name":"ion-ios-people"
+          },
+          {
+            "id":-582,
+            "name":"Design Groups",
+            "description":"Design Groups",
+            "category_index":3,
+            "icon_name":"ion-wand"
+          }
+        ],
+        "entities":[
+          "FL_GROUPS"
+        ]
+      }
+    ]
   },
   "map":{
     "map_default_lat" : 45.630373,
