@@ -114,7 +114,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
 
             $rootScope.previousState = fromState.name;
 
-            $log.log('is auth?', AuthService.isAuth());
+
+
             // primo controllo token esistente
             if (toCheck && !tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout') {
                 toCheck = false;
@@ -122,6 +123,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                     // se il token e' ok
                     function (response) {
                         $log.debug('autologin: check token response',response);
+                        $log.log('is auth?', AuthService.isAuth());
                     },
                     // se il token non e' ok
                     function (err) {
@@ -129,6 +131,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             tryAutoLogin = false;
                             autoLogin();
                         }
+                        $log.log('is auth?', AuthService.isAuth());
                     }
                 );
             } else if (tryAutoLogin && toState.name !== 'callback' && toState.name !== 'logout' && !search_params.code) {
@@ -136,6 +139,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                 autoLogin();
             }
 
+            $log.log('is auth?', AuthService.isAuth());
 
             // gestione parametri della mappa
             // salvo i parametri all'uscita
