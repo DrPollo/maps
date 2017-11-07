@@ -75,10 +75,10 @@ angular.module('firstlife.services')
                     data: false
                 };
                 $http(req).then(function (response) {
-                    // $log.debug('check token, response',response);
+                    $log.debug('check token, response',response);
                     deferred.resolve(response);
                 }, function (err) {
-                    // $log.debug("check token",err);
+                    $log.debug("check token",err);
                     // token non valido faccio logout
                     MemoryFactory.delete(identityKey);
                     MemoryFactory.delete(tokenKey);
@@ -239,8 +239,7 @@ angular.module('firstlife.services')
                 return deferred.promise;
             },
             isAuth: function () {
-                // $log.debug('isAuth?',MemoryFactory.get(tokenKey),(MemoryFactory.get(tokenKey) && !embed) ? true : false);
-
+                $log.log('isAuth?',MemoryFactory.get(tokenKey),(MemoryFactory.get(tokenKey) && !embed) ? true : false);
                 return (MemoryFactory.get(tokenKey) && !embed) ? true : false;
             },
             getUser: function () {
