@@ -130,6 +130,8 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                         if (tryAutoLogin) {
                             tryAutoLogin = false;
                             autoLogin();
+                        }else{
+                            $state.go('home');
                         }
                         $log.log('is auth?', AuthService.isAuth());
                     }
