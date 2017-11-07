@@ -131,6 +131,7 @@ angular.module('firstlife', ['firstlife.config', 'firstlife.controllers', 'first
                             tryAutoLogin = false;
                             autoLogin();
                         }else{
+                            $log.log('invalid token, going home');
                             $state.go('home');
                         }
                         $log.log('is auth?', AuthService.isAuth());
