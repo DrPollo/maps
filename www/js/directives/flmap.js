@@ -11,7 +11,7 @@ angular.module('firstlife.directives').directive('flmap',function () {
         controller: ['$scope','$log', '$location', '$timeout','myConfig','ThingsService', 'leafletData', 'PlatformService', function ($scope, $log, $location,$timeout, myConfig, ThingsService, leafletData, PlatformService) {
 
             $scope.embed = $location.search().embed || false;
-
+            $scope.config = myConfig;
             // markers
             $scope.markers = {};
             $scope.currentMarkers = {};

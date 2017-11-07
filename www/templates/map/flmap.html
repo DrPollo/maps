@@ -12,7 +12,7 @@
         layers="map.layers"
         event-broadcast="map.events"
 ></leaflet>
-<div id="pointer" class="padding" ng-if="editMode" style="z-index: 9999">
+<div id="pointer" class="padding" ng-if="editMode" style="z-index: 9999" ng-class="{'navbarpointer' : config.design.navbar}">
     <div class='pin' on-tap="getLocation()"><i class="icon ion-checkmark-circled positive"></i></div>
     <!--<div class='pulse'></div>-->
     <button class="floating-button button-small zoomin button button-icon light ion-plus-round" on-tap="zoomIn()" ng-disabled="z === maxZoom"></button>

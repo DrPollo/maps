@@ -131,7 +131,7 @@ angular.module('firstlife.services')
             // },
             doAction: function (action) {
                 return function(params){
-                    if (MemoryFactory.get(tokenKey)){
+                    if (MemoryFactory.get(tokenKey) || myConfig.dev){
                         action(params);
                     }else{
                         loginToAct();
