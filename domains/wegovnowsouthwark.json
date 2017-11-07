@@ -226,14 +226,14 @@
         "categories":[
           {
             "id":-540,
-            "name":"Free (Services)",
+            "name":"Free",
             "description":"Free (Services)",
             "category_index":1,
             "icon_name":"ion-happy-outline"
           },
           {
             "id":-541,
-            "name":"Payment (Services)",
+            "name":"Paid",
             "description":"Payment (Services)",
             "category_index":2,
             "icon_name":"ion-cash"
@@ -244,41 +244,81 @@
         ]
       },
       {
-        "category_space":32,
-        "name":"Access",
-        "slug":"access",
-        "description":"Access",
+        "category_space":39,
+        "name":"Typology of event",
+        "slug":"Typology of event",
+        "description":"",
         "is_editable":true,
         "is_mandatory":true,
         "multiple_categories_allowed":false,
         "is_visible":true,
-        "color_index":27,
+        "color_index":31,
         "categories":[
           {
-            "id":-550,
-            "name":"Free Access",
-            "description":"Free Access",
+            "id":-600,
+            "name":"Exhibition",
+            "description":"",
             "category_index":1,
-            "icon_name":"ion-radio-waves"
+            "icon_name":"ion-easel"
           },
           {
-            "id":-551,
-            "name":"By Invitation/On Reservation",
-            "description":"By Invitation/On Reservation",
+            "id":-601,
+            "name":"Concert",
+            "description":"",
             "category_index":2,
-            "icon_name":"ion-paper-airplane"
+            "icon_name":"ion-music-note"
           },
           {
-            "id":-552,
-            "name":"Reserved for Groups",
-            "description":"Reserved for Groups",
+            "id":-602,
+            "name":"Show",
+            "description":"",
             "category_index":3,
-            "icon_name":"ion-android-hand"
+            "icon_name":"ion-film-marker"
+          },
+          {
+            "id":-603,
+            "name":"Public event",
+            "description":"",
+            "category_index":4,
+            "icon_name":"ion-speakerphone"
+          },
+          {
+            "id":-604,
+            "name":"Workshop",
+            "description":"",
+            "category_index":5,
+            "icon_name":"ion-hammer"
+          },
+          {
+            "id":-605,
+            "name":"Voluntary initiative",
+            "description":"",
+            "category_index":6,
+            "icon_name":"ion-thumbsup"
+          },
+          {
+            "id":-606,
+            "name":"Conference or seminary",
+            "description":"",
+            "category_index":7,
+            "icon_name":"ion-mic-c"
+          },
+          {
+            "id":-607,
+            "name":"Festival",
+            "description":"",
+            "category_index":8,
+            "icon_name":"ion-android-sunny"
+          },
+          {
+            "id":-608,
+            "name":"Sport event",
+            "description":"",
+            "category_index":9,
+            "icon_name":"ion-trophy"
           }
         ],
-        "entities":[
-          "FL_EVENTS"
-        ]
+        "entities":["FL_EVENTS"]
       },
       {
         "category_space":33,

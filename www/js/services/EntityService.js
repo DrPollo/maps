@@ -235,16 +235,16 @@ angular.module('firstlife.services')
             
             // conversione formato data
             // bug va in errore il toISOString
-            if(dataForServer.valid_to) {
-                dataForServer.valid_to = dataForServer.valid_to.toISOString();
-            } else {
-                dataForServer.valid_to = null;
-            }
-            if(dataForServer.valid_from) {
-                dataForServer.valid_from = dataForServer.valid_from.toISOString();
-            } else {
-                dataForServer.valid_from = null;
-            }
+            // if(dataForServer.valid_to) {
+            //     dataForServer.valid_to = dataForServer.valid_to.toISOString();
+            // } else {
+            //     dataForServer.valid_to = null;
+            // }
+            // if(dataForServer.valid_from) {
+            //     dataForServer.valid_from = dataForServer.valid_from.toISOString();
+            // } else {
+            //     dataForServer.valid_from = null;
+            // }
 
             // $log.debug("EntityService, processData, semantica del tipo: ", data, dataForServer);
             
@@ -305,7 +305,11 @@ angular.module('firstlife.services')
 
         function checkTime(data, dataForServer, perms) {
             var duration = 0;// _this.wizard.dataForm.door_time - _this.wizard.dataForm.close_time;
-            // $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
+            $log.debug("Set data valid_from , valid_to, door_time, close_time, duration ",data.valid_from,data.valid_to,data.door_time,data.close_time,data.duration);
+
+            var defaultProperties = self.config.types.keys[data.entity_type].properties;
+
+
             // aggiungo l'orario alle date
 
             // se per qualche ragione le date sono invertite faccio il fix
@@ -315,7 +319,8 @@ angular.module('firstlife.services')
 
             // controlla che siano obbligatorie
             // se le date non sono state impostate
-            if (perms.valid_to.required && !data.valid_to) {
+            $log.debug('check fix valid to',perms.valid_to.required && !data.valid_to && defaultProperties.valid_to.default,defaultProperties.valid_to.default);
+            if (perms.valid_to.required && !data.valid_to && defaultProperties.valid_to.default) {
                 dataForServer.valid_to = moment(Date.now());
                 dataForServer.valid_to.set({'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999});
                 // se per qualche ragione le date si incrociano
@@ -323,7 +328,8 @@ angular.module('firstlife.services')
                     data.valid_to = angular.copy(data.valid_from);
                 }
             }
-            if (perms.valid_from.required && !data.valid_from) {
+            $log.debug('check fix valid from',perms.valid_from.required && !data.valid_from && defaultProperties.valid_from.default,defaultProperties.valid_from.default);
+            if (perms.valid_from.required && !data.valid_from && defaultProperties.valid_from.default) {
                 dataForServer.valid_from = moment(Date.now());
                 dataForServer.valid_from.set({'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0});
                 // se per qualche ragione le date si incrociano
@@ -331,6 +337,8 @@ angular.module('firstlife.services')
                     data.valid_from = angular.copy(data.valid_to);
                 }
             }
+
+            console.debug('data checkTime',dataForServer);
 
             return dataForServer;
         }
