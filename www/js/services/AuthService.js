@@ -123,11 +123,20 @@ angular.module('firstlife.services')
                 }
                 return deferred.promise;
             },
+            // doAction: function (action) {
+            //     if (MemoryFactory.get(tokenKey))
+            //         return action
+            //
+            //     return loginToAct;
+            // },
             doAction: function (action) {
-                if (MemoryFactory.get(tokenKey))
-                    return action
-
-                return loginToAct;
+                return function(params){
+                    if (MemoryFactory.get(tokenKey)){
+                        action(params);
+                    }else{
+                        loginToAct();
+                    }
+                };
             },
             registration_url: function () {
                 // chiamo per recuperare l'url di registrazione
