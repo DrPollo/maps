@@ -135,7 +135,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             "landusages",
                             "roads",
                             "waterareas",
-                            "waterways",
                             "comuni",
                             "comuni_italia",
                             "comune"];
@@ -159,7 +158,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             "comune",
                             "landusages",
                             "waterareas",
-                            "waterways",
                             "quartieri",
                             "city_block",];
                         break;
@@ -171,7 +169,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             "landusages",
                             "roads",
                             "waterareas",
-                            "waterways",
                             "site",
                             "building",];
                         break;
@@ -182,7 +179,6 @@ angular.module('firstlife.directives').directive('flmap',function () {
                             "building",
                             "roads",
                             "waterareas",
-                            "waterways",
                             "indoor"];
                         break;
                     default:

@@ -4,6 +4,20 @@
     "domain_name": "teencarto",
     "domain_id": 28,
     "read_domains": false,
+    "behaviour": {
+      "is_login_required": false,
+      "umask": 744,
+      "disable_claim": true
+    },
+    "map": {
+      "tile_view" : "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "tile_view_attribution": "Tiles and Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>.",
+      "tile_edit" : "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "tile_edit_attribution": "Tiles and Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>.",
+      "cluster_limit": 18,
+      "zoom_level": 12,
+      "max_zoom": 19
+    },
     "design": {
       "logo": {
         "title": "TeenCarTo",
@@ -75,11 +89,6 @@
       "#FF8C10",
       "#ccc"
     ]
-  },
-  "map": {
-    "tile_view": "http://api.mapbox.com/v4/mapbox.emerald/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZHJwMGxsMCIsImEiOiI4bUpPVm9JIn0.NCRmAUzSfQ_fT3A86d9RvQ",
-    "tile_edit": "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-    "cluster_limit": 18
   },
   "types": {
     "categories": [
@@ -242,16 +251,5 @@
         ]
       }
     ]
-  },
-  "actions": {
-    "geolocation": true,
-    "favourite_place": true,
-    "alow_login": true,
-    "alow_signup": false,
-    "show_menu": true
-  },
-  "behaviour": {
-    "is_login_required": false,
-    "umask": 744
   }
 }

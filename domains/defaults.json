@@ -1610,7 +1610,8 @@
       },
       "logs": {
         "url": "https://hooks.slack.com/services/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"
-      }
+      },
+      "disable_claim": false
     },
     "custom_labels": false
   }

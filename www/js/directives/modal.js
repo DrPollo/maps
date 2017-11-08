@@ -1140,7 +1140,7 @@ angular.module('firstlife.directives').directive('thingCard', function () {
             close: '='
         },
         restrict: 'E',
-        template: '<ion-item class="item item-button-right">{{"CLAIM_CONTENT"|translate}}<button class="button button-positive"  on-tap="claim.open()"><i class="icon ion-magnet"></i></button></ion-item>',
+        template: '<ion-item ng-if="!disabled" class="item item-button-right">{{"CLAIM_CONTENT"|translate}}<button class="button button-positive"  on-tap="claim.open()"><i class="icon ion-magnet"></i></button></ion-item>',
         link: function (scope, element, attrs) {
 
             scope.$on('$destroy', function (e) {
@@ -1156,6 +1156,8 @@ angular.module('firstlife.directives').directive('thingCard', function () {
                 }
             });
             var hideSheet = null;
+
+            scope.disabled = myConfig.behaviour.disable_claim;
 
             scope.disclaimer = $filter('translate')('CLAIM_DISCLAIMER');
             scope.user = AuthService.getUser();
