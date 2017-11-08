@@ -13464,7 +13464,7 @@ ion-side-menu {
 
 .leaflet-bottom .leaflet-control {
   position: relative;
-  bottom: 100px; }
+  bottom: 120px; }
 
 .leaflet-bottom .leaflet-control-attribution {
   position: relative;
@@ -13484,6 +13484,12 @@ ion-side-menu {
   .leaflet-control-zoom .leaflet-bar a:last-child {
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important; }
+
+.timelineattribution .leaflet-bottom .leaflet-control-attribution {
+  margin-top: -85px; }
+
+.embedattribution .leaflet-bottom .leaflet-control-attribution {
+  margin-top: -75px; }
 
 #map-legend {
   background: white;
@@ -13777,7 +13783,7 @@ user-handler {
     margin-top: -90px; }
   .maps-view #map-action-menu {
     position: absolute;
-    bottom: 80px;
+    bottom: 90px;
     right: 8px;
     display: inline-block;
     z-index: 2000; }
@@ -13836,7 +13842,7 @@ disclaimer {
   position: absolute;
   bottom: 35px;
   background: #fafafa;
-  z-index: 999;
+  z-index: 1000;
   font-weight: 500;
   color: #333;
   padding: 2px 6px;
@@ -15345,7 +15351,7 @@ timeline {
   width: 100%; }
   timeline #time-controls {
     position: absolute;
-    bottom: 76px;
+    bottom: 92px;
     display: inline-block; }
   timeline #time-controls.mobile {
     left: 6px; }

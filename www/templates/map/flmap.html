@@ -11,6 +11,7 @@
         markers-watch-options="map.watch"
         layers="map.layers"
         event-broadcast="map.events"
+        ng-class="{'timelineattribution':!(editMode || embed),'embedattribution':embed,'editattribution':editMode}"
 ></leaflet>
 <div id="pointer" class="padding" ng-if="editMode" style="z-index: 9999" ng-class="{'navbarpointer' : config.design.navbar}">
     <div class='pin' on-tap="getLocation()"><i class="icon ion-checkmark-circled positive"></i></div>
